@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Data-driven battle markers for vanilla incidents.
+  This file belongs under Patches: PatchOperation nodes are not Defs and must
+  not be loaded by the Def parser. The capture patch reads only this extension.
+-->
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/IncidentDef[defName="RaidEnemy"]</xpath>
+    <value>
+      <modExtensions>
+        <li Class="PersonalChronicle.Capture.IncidentBattleExtension">
+          <isBattle>true</isBattle>
+        </li>
+      </modExtensions>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/IncidentDef[defName="Infestation"]</xpath>
+    <value>
+      <modExtensions>
+        <li Class="PersonalChronicle.Capture.IncidentBattleExtension">
+          <isBattle>true</isBattle>
+        </li>
+      </modExtensions>
+    </value>
+  </Operation>
+</Patch>

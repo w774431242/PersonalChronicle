@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Chronicle · 档案馆 UI 预览 v4.0（强度评价）</title>
+  <style>
+    :root {
+      --bg: #1a1a1a; --panel: #242424; --panel-2: #2c2c2c; --panel-3: #333;
+      --border: #4a4a4a; --border-soft: #3a3a3a; --text: #e8e8e8; --muted: #b8b8b8;
+      --dim: #787878; --accent: #5c9ed4; --accent-soft: rgba(92,158,212,.18);
+      --alive: #6bcf8f; --dead: #f06161; --tag: #e69e3b;
+      --select: rgba(180,160,90,.28); --hover: rgba(255,255,255,.06); --line: #4a4a4a;
+      --window-w: 1100px; --window-h: 720px; --header-h: 44px; --sidebar-w: 220px; --gap: 10px;
+      --font: "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #0e0e0e; color: var(--text); font-family: var(--font); font-size: 13px; }
+    body { display: flex; flex-direction: column; align-items: center; padding: 20px 16px 48px; gap: 14px; }
+
+    .toolbar {
+      width: min(var(--window-w), 100%); display: flex; flex-wrap: wrap; gap: 10px;
+      align-items: center; justify-content: space-between; background: #161616;
+      border: 1px solid #2a2a2a; border-radius: 8px; padding: 10px 14px;
+    }
+    .toolbar h1 { margin: 0; font-size: 14px; font-weight: 600; color: #ddd; }
+    .toolbar .meta { color: var(--dim); font-size: 12px; margin-top: 2px; }
+    .toolbar-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .toolbar button {
+      background: #2a2a2a; color: var(--text); border: 1px solid #444; border-radius: 4px;
+      padding: 5px 10px; cursor: pointer; font: inherit; font-size: 12px;
+    }
+    .toolbar button:hover { background: #363636; }
+    .toolbar button.active { background: var(--accent-soft); border-color: var(--accent); color: #cfe6f7; }
+    .badge-v { background: #3a4a20; color: #c6e08a; font-size: 11px; padding: 1px 6px; border-radius: 3px; }
+
+    .legend {
+      width: min(var(--window-w), 100%); display: flex; flex-wrap: wrap; gap: 12px;
+      color: var(--muted); font-size: 12px;
+    }
+    .legend b { color: #ccc; }
+
+    .window {
+      width: min(var(--window-w), 100%); height: var(--window-h); max-height: calc(100vh - 160px);
+      background: var(--bg); border: 1px solid #555; box-shadow: 0 12px 40px rgba(0,0,0,.55);
+      display: grid; grid-template-rows: var(--header-h) 1fr; overflow: hidden;
+    }
+    .window.annotate [data-component] { outline: 1px dashed rgba(230,158,59,.45); position: relative; }
+    .window.annotate [data-component]::after {
+      content: attr(data-component); position: absolute; top: 2px; right: 2px; z-index: 5;
+      font-size: 9px; padding: 1px 4px; background: rgba(230,158,59,.9); color: #111;
+      border-radius: 2px; pointer-events: none; max-width: 55%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .header {
+      display: flex; align-items: center; padding: 0 12px; gap: 16px;
+      border-bottom: 1px solid var(--border); background: #1f1f1f;
+    }
+    .header .title { font-size: 18px; font-weight: 500; min-width: 200px; }
+    .header .breadcrumb { color: var(--muted); font-size: 12px; flex: 1; }
+    .header .ver { color: var(--dim); font-size: 11px; }
+
+    .body {
+      display: grid; grid-template-columns: var(--sidebar-w) 1fr; gap: var(--gap);
+      padding: var(--gap); min-height: 0; height: 100%;
+    }
+    .sidebar, .content {
+      background: var(--panel); border: 1px solid var(--border-soft); min-height: 0; overflow: auto;
+    }
+    .sidebar { padding: 8px; }
+    .side-label { color: var(--muted); font-size: 11px; padding: 4px 6px 6px; }
+    .side-item {
+      display: flex; align-items: center; justify-content: space-between; height: 30px;
+      padding: 0 8px; margin-bottom: 3px; border: none; background: transparent; color: var(--text);
+      font: inherit; text-align: left; cursor: pointer; border-radius: 2px; width: 100%;
+    }
+    .side-item:hover { background: var(--hover); }
+    .side-item.active { background: var(--select); }
+    .side-item.disabled { color: var(--dim); cursor: default; }
+    .side-spacer { height: 8px; }
+
+    .content { padding: 10px 12px; }
+    .view { display: none; min-height: 100%; }
+    .view.active { display: block; }
+
+    .page-title { font-size: 18px; margin: 0 0 4px; font-weight: 500; }
+    .page-desc { color: var(--muted); font-size: 11px; margin: 0 0 14px; }
+
+    .stats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 14px; }
+    .stats.kpi6 { grid-template-columns: repeat(6, 1fr); }
+    .stats.kpi4 { grid-template-columns: repeat(4, 1fr); }
+    .stat-cell {
+      background: var(--panel-2); border: 1px solid var(--border-soft); min-height: 64px; padding: 6px 8px;
+    }
+    .stat-cell .label { font-size: 11px; }
+    .stat-cell .value { font-size: 18px; margin-top: 4px; font-weight: 500; }
+    .stat-cell .sub { font-size: 10px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .section-title {
+      display: flex; align-items: center; gap: 10px; margin: 14px 0 8px; font-size: 13px;
+    }
+    .section-title:first-child { margin-top: 0; }
+    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+    .section-hint { font-size: 11px; color: var(--dim); margin: -4px 0 10px; line-height: 1.4; }
+
+    .blurb {
+      background: var(--panel-2); border: 1px solid var(--border-soft); border-left: 3px solid var(--tag);
+      padding: 10px 12px; margin-bottom: 12px; font-size: 13px; line-height: 1.55; color: #ddd;
+    }
+    .blurb .k { color: var(--muted); font-size: 11px; margin-bottom: 4px; }
+
+    .home-cols { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+
+    .event-row {
+      display: grid; grid-template-columns: 140px 1fr 140px; gap: 8px; align-items: center;
+      min-height: 34px; padding: 4px; border-bottom: 1px solid var(--border-soft); cursor: pointer;
+    }
+    .event-row:hover { background: var(--hover); }
+    .event-row.static { cursor: default; }
+    .event-row.static:hover { background: transparent; }
+    .event-row .date { font-size: 11px; }
+    .event-row .title { font-size: 13px; }
+    .event-row .type { font-size: 11px; color: var(--muted); text-align: right; }
+
+    .card {
+      background: var(--panel-2); border: 1px solid var(--border-soft); padding: 8px 10px;
+      margin-bottom: 8px; cursor: pointer; min-height: 58px;
+    }
+    .card:hover { background: var(--panel-3); }
+    .card .tag { color: var(--tag); font-size: 11px; }
+    .card .name { font-size: 13px; margin: 2px 0; }
+    .card .sub { font-size: 11px; color: var(--muted); }
+
+    .ov-section { margin-bottom: 18px; }
+    .ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 190px)); gap: 12px; }
+    .obj-card {
+      background: var(--panel-2); border: 1px solid var(--border-soft); min-height: 70px;
+      padding: 6px 8px; cursor: pointer;
+    }
+    .obj-card:hover { background: var(--panel-3); }
+    .obj-card.stat-only { cursor: default; opacity: .92; }
+    .obj-card .cat { font-size: 11px; color: var(--muted); }
+    .obj-card .name { font-size: 13px; margin: 4px 0; }
+    .obj-card .sub { font-size: 11px; color: var(--muted); }
+
+    .obj-header { margin-bottom: 10px; }
+    .obj-header .name { font-size: 18px; margin: 0 0 8px; }
+    .pill {
+      display: inline-block; font-size: 11px; padding: 2px 9px; border: 1px solid;
+      border-radius: 2px; margin-right: 6px;
+    }
+    .pill.alive { color: var(--alive); border-color: var(--alive); background: rgba(107,207,143,.14); }
+    .pill.dead { color: var(--dead); border-color: var(--dead); background: rgba(240,97,97,.14); }
+    .pill.blue { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+    .meta-line { color: var(--muted); font-size: 11px; margin-top: 8px; line-height: 1.45; }
+    .live-badge {
+      display: inline-block; font-size: 10px; color: var(--accent); border: 1px solid var(--accent);
+      padding: 1px 6px; border-radius: 2px; margin-left: 6px; vertical-align: middle;
+    }
+
+    .tabs {
+      display: flex; gap: 2px; border-bottom: 1px solid var(--line);
+      padding-bottom: 6px; margin-bottom: 12px;
+    }
+    .tab {
+      flex: 1; min-width: 0; height: 30px; padding: 0 6px; background: transparent;
+      border: 1px solid transparent; color: var(--text); font: inherit; font-size: 13px;
+      cursor: pointer; border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .tab:hover { background: var(--hover); }
+    .tab.active { background: var(--select); border-color: #6a5a30; }
+
+    .detail-row {
+      display: grid; grid-template-columns: 150px 1fr; gap: 6px; min-height: 26px;
+      align-items: center; margin-bottom: 2px;
+    }
+    .detail-row .k { font-size: 11px; color: var(--muted); }
+    .detail-row .v { font-size: 13px; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 900px) {
+      .two-col, .home-cols { grid-template-columns: 1fr; }
+      .stats, .stats.kpi6, .stats.kpi4 { grid-template-columns: repeat(3, 1fr); }
+      :root { --window-h: auto; }
+      .window { height: auto; min-height: 640px; }
+    }
+
+    table.stat { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 8px; }
+    table.stat th {
+      text-align: left; color: var(--muted); font-weight: 500; font-size: 11px;
+      border-bottom: 1px solid var(--border); padding: 4px 6px;
+    }
+    table.stat td { border-bottom: 1px solid var(--border-soft); padding: 7px 6px; vertical-align: middle; }
+    table.stat tr.clickable { cursor: pointer; }
+    table.stat tr.clickable:hover { background: var(--hover); }
+    table.stat tr.primary td { color: #e8d48a; }
+    .share-bar {
+      display: inline-block; height: 10px; background: #1a1a1a; border: 1px solid #444;
+      width: 80px; vertical-align: middle; margin-right: 6px;
+    }
+    .share-bar > i { display: block; height: 100%; background: linear-gradient(90deg, #4a7a3a, #7ab85a); }
+
+    .chip {
+      display: inline-block; font-size: 11px; color: var(--accent); margin-right: 8px;
+      cursor: pointer; padding: 2px 4px;
+    }
+    .chip:hover { background: var(--accent-soft); }
+    .chip.plain { color: var(--muted); cursor: default; }
+    .chip.filter {
+      border: 1px solid var(--border); border-radius: 10px; padding: 2px 8px; margin: 0 4px 6px 0; color: var(--muted);
+    }
+    .chip.filter.active { border-color: var(--accent); color: #cfe6f7; background: var(--accent-soft); }
+
+    .timeline-block { border-bottom: 1px solid var(--border-soft); padding: 4px 0 8px; }
+    .timeline-block .desc { font-size: 11px; color: var(--muted); padding: 2px 4px 4px; }
+
+    .tree-panel {
+      background: var(--panel-2); border: 1px solid var(--border-soft);
+      padding: 8px 10px 12px; margin-bottom: 16px;
+    }
+    .tree-line { font-size: 11px; min-height: 22px; display: flex; align-items: center; color: #c7c7c7; }
+    .tree-line a { color: var(--accent); cursor: pointer; text-decoration: none; }
+    .tree-line a:hover { text-decoration: underline; }
+    .tree-line .indent { color: #666; white-space: pre; }
+
+    .desc-box {
+      border: 1px solid #737373; background: rgba(255,255,255,.04); min-height: 90px;
+      padding: 12px; font-size: 11px; color: #c7c7c7; line-height: 1.5;
+    }
+    .empty { color: var(--muted); font-size: 12px; padding: 8px 0; line-height: 1.5; }
+    .footnote { font-size: 11px; color: var(--dim); margin-top: 10px; }
+    .milestone {
+      display: grid; grid-template-columns: 120px 1fr; gap: 8px; padding: 6px 4px;
+      border-bottom: 1px solid var(--border-soft); font-size: 12px;
+    }
+    .milestone .when { color: var(--muted); font-size: 11px; }
+    .milestone .what { color: var(--tag); }
+
+    .footer-note {
+      width: min(var(--window-w), 100%); color: var(--dim); font-size: 12px; line-height: 1.55;
+    }
+    .footer-note code { background: #222; padding: 1px 5px; border-radius: 3px; color: #cfcfcf; }
+    .footer-note table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 12px; }
+    .footer-note th, .footer-note td { border: 1px solid #333; padding: 6px 8px; text-align: left; color: #aaa; }
+    .footer-note th { background: #1a1a1a; color: #ccc; }
+    .assess { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0; }
+    .assess .box {
+      background: #161616; border: 1px solid #2a2a2a; border-radius: 6px; padding: 10px;
+    }
+    .assess .box h3 { margin: 0 0 6px; font-size: 12px; color: #c6e08a; }
+    .assess .box p { margin: 0; font-size: 11px; color: #999; line-height: 1.45; }
+
+    /* v4 archive shell: denser hierarchy, restrained contrast, no global tabs. */
+    :root {
+      --bg: #12181c;
+      --panel: #182126;
+      --panel-2: #202a30;
+      --panel-3: #29343b;
+      --border: #49565e;
+      --border-soft: #303b42;
+      --text: #edf0ef;
+      --muted: #a6b0b4;
+      --dim: #718087;
+      --accent: #d3a45b;
+      --accent-soft: rgba(211,164,91,.16);
+      --alive: #69c98e;
+      --dead: #db7778;
+      --tag: #d3a45b;
+      --select: rgba(211,164,91,.14);
+      --hover: rgba(255,255,255,.055);
+      --line: #38464e;
+      --info: #79adc2;
+      --window-w: 1100px;
+      --window-h: 720px;
+      --header-h: 56px;
+      --sidebar-w: 208px;
+      --gap: 12px;
+    }
+
+    html, body {
+      background: #0b1013;
+      color: var(--text);
+    }
+
+    body {
+      padding: 24px 16px 52px;
+      gap: 16px;
+    }
+
+    .toolbar {
+      background: #11181c;
+      border-color: #29353c;
+      border-radius: 3px;
+      padding: 12px 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.22);
+    }
+
+    .toolbar h1 {
+      color: #e4e8e7;
+      letter-spacing: .01em;
+    }
+
+    .toolbar button {
+      background: #20292e;
+      border-color: #3b484f;
+      border-radius: 3px;
+    }
+
+    .toolbar button:hover {
+      background: #2b373d;
+      border-color: #64737a;
+    }
+
+    .toolbar button.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: #f1d9a5;
+    }
+
+    .legend {
+      gap: 16px;
+      color: var(--dim);
+    }
+
+    .legend b {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .window {
+      background: #11181c;
+      border-color: #526069;
+      box-shadow: 0 18px 46px rgba(0,0,0,.56), 0 0 0 1px rgba(255,255,255,.025);
+    }
+
+    .header {
+      position: relative;
+      padding: 0 16px;
+      gap: 14px;
+      background: linear-gradient(180deg, #1a2328 0%, #151d21 100%);
+      border-bottom-color: #42515a;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: -1px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), rgba(211,164,91,0));
+      opacity: .72;
+    }
+
+    .header .title {
+      font-size: 19px;
+      font-weight: 500;
+      min-width: 190px;
+      letter-spacing: .015em;
+    }
+
+    .header .breadcrumb {
+      color: var(--muted);
+      opacity: .88;
+    }
+
+    .header .ver {
+      color: var(--dim);
+      letter-spacing: .04em;
+    }
+
+    .body {
+      grid-template-columns: var(--sidebar-w) 1fr;
+      gap: var(--gap);
+      padding: var(--gap);
+    }
+
+    .sidebar, .content {
+      background: var(--panel);
+      border-color: var(--border-soft);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+    }
+
+    .sidebar {
+      padding: 10px 8px;
+      scrollbar-color: #3a474e #172025;
+    }
+
+    .side-label {
+      color: var(--dim);
+      font-size: 10px;
+      letter-spacing: .08em;
+      padding: 6px 10px 7px;
+    }
+
+    .side-item {
+      position: relative;
+      height: 34px;
+      padding: 0 10px 0 13px;
+      margin-bottom: 4px;
+      border-left: 3px solid transparent;
+      border-radius: 2px;
+      color: #dbe0df;
+      transition: background .12s ease, border-color .12s ease, color .12s ease;
+    }
+
+    .side-item:hover {
+      background: var(--hover);
+      color: #fff;
+    }
+
+    .side-item.active {
+      background: var(--select);
+      border-left-color: var(--accent);
+      color: #f0d8a4;
+      box-shadow: inset 0 0 0 1px rgba(211,164,91,.08);
+    }
+
+    .side-item.disabled {
+      color: #65737a;
+    }
+
+    .side-item.disabled:hover {
+      background: transparent;
+      color: #65737a;
+    }
+
+    .side-spacer {
+      height: 12px;
+    }
+
+    .content {
+      padding: 14px 16px;
+      scrollbar-color: #3a474e #172025;
+    }
+
+    .page-title {
+      font-size: 20px;
+      margin-bottom: 5px;
+      letter-spacing: .01em;
+    }
+
+    .page-desc {
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .stats {
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .stat-cell {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #253037 0%, #20292f 100%);
+      border-color: #3b4850;
+      min-height: 68px;
+      padding: 8px 10px;
+    }
+
+    .stat-cell::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: .72;
+    }
+
+    .stat-cell .label {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .02em;
+    }
+
+    .stat-cell .value {
+      color: #f0f1ed;
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+
+    .stat-cell .sub {
+      color: var(--dim);
+      margin-top: 3px;
+    }
+
+    .section-title {
+      gap: 8px;
+      margin: 18px 0 9px;
+      color: #e4e7e4;
+      font-weight: 600;
+      letter-spacing: .015em;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 4px;
+      height: 13px;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(211,164,91,.22);
+    }
+
+    .section-title::after {
+      background: linear-gradient(90deg, var(--line), rgba(56,70,78,0));
+    }
+
+    .section-hint {
+      color: var(--dim);
+      margin: -3px 0 11px;
+    }
+
+    .home-cols {
+      grid-template-columns: minmax(0, 1.35fr) minmax(250px, 1fr);
+      gap: 18px;
+    }
+
+    .event-row {
+      grid-template-columns: 132px minmax(0, 1fr) 132px;
+      gap: 10px;
+      min-height: 38px;
+      padding: 6px 8px;
+      border-bottom-color: var(--border-soft);
+      border-left: 2px solid transparent;
+      transition: background .12s ease, border-color .12s ease;
+    }
+
+    .event-row:hover {
+      background: var(--hover);
+      border-left-color: var(--accent);
+    }
+
+    .event-row.static:hover {
+      background: var(--hover);
+      border-left-color: rgba(211,164,91,.45);
+    }
+
+    .event-row .date {
+      color: var(--dim);
+    }
+
+    .event-row .title {
+      color: #e4e8e7;
+    }
+
+    .event-row .type {
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #253037 0%, #20292f 100%);
+      border-color: #3b4850;
+      border-left: 3px solid var(--tag);
+      padding: 10px 11px;
+      margin-bottom: 9px;
+      min-height: 66px;
+      transition: background .12s ease, transform .12s ease, border-color .12s ease;
+    }
+
+    .card:hover {
+      background: #2b373e;
+      border-color: #66757d;
+      border-left-color: var(--accent);
+      transform: translateX(1px);
+    }
+
+    .card .tag {
+      color: var(--tag);
+      letter-spacing: .04em;
+    }
+
+    .card .name {
+      color: #f0f2ef;
+      margin: 3px 0;
+    }
+
+    .card .sub {
+      color: var(--muted);
+    }
+
+    .ov-section {
+      margin-bottom: 22px;
+    }
+
+    .ov-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .obj-card {
+      position: relative;
+      background: #202a30;
+      border-color: #3b4850;
+      border-left: 3px solid var(--info);
+      min-height: 82px;
+      padding: 9px 10px;
+      transition: background .12s ease, border-color .12s ease, transform .12s ease;
+    }
+
+    .obj-card:hover {
+      background: #2b373e;
+      border-color: #66757d;
+      border-left-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .obj-card.stat-only {
+      border-left-color: #66737a;
+    }
+
+    .obj-card .cat {
+      color: var(--dim);
+      letter-spacing: .04em;
+    }
+
+    .obj-card .name {
+      color: #f0f2ef;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .obj-card .sub {
+      color: var(--muted);
+    }
+
+    .obj-header {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .obj-header .name {
+      font-size: 22px;
+      margin-bottom: 9px;
+    }
+
+    .pill {
+      border-radius: 3px;
+      padding: 3px 9px;
+      font-weight: 600;
+    }
+
+    .pill.alive {
+      color: #9be4b5;
+      border-color: #4c9f6d;
+      background: rgba(105,201,142,.14);
+    }
+
+    .pill.dead {
+      color: #f0a5a4;
+      border-color: #a9565c;
+      background: rgba(219,119,120,.14);
+    }
+
+    .pill.blue {
+      color: #a8d0df;
+      border-color: #4c8094;
+      background: rgba(121,173,194,.14);
+    }
+
+    .meta-line {
+      color: var(--muted);
+      margin-top: 9px;
+    }
+
+    .live-badge {
+      color: #a8d9e9;
+      border-color: #4c8094;
+      background: rgba(121,173,194,.1);
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    .tabs {
+      gap: 4px;
+      padding-bottom: 0;
+      margin-bottom: 16px;
+      border-bottom-color: var(--line);
+    }
+
+    .tab {
+      height: 34px;
+      padding: 0 10px;
+      border: 1px solid transparent;
+      border-bottom: 2px solid transparent;
+      border-radius: 3px 3px 0 0;
+      color: var(--muted);
+    }
+
+    .tab:hover {
+      background: var(--hover);
+      color: var(--text);
+    }
+
+    .tab.active {
+      background: var(--select);
+      border-color: rgba(211,164,91,.24);
+      border-bottom-color: var(--accent);
+      color: #f0d8a4;
+    }
+
+    .detail-row {
+      grid-template-columns: 132px 1fr;
+      min-height: 30px;
+      padding: 3px 0;
+      margin-bottom: 1px;
+      border-bottom: 1px solid rgba(48,59,66,.55);
+    }
+
+    .detail-row .k {
+      color: var(--dim);
+    }
+
+    .detail-row .v {
+      color: #e4e8e7;
+    }
+
+    .two-col {
+      gap: 18px;
+    }
+
+    table.stat th {
+      color: var(--dim);
+      border-bottom-color: var(--line);
+      padding: 7px 8px;
+    }
+
+    table.stat td {
+      border-bottom-color: rgba(48,59,66,.72);
+      padding: 8px;
+    }
+
+    table.stat tr.clickable:hover {
+      background: var(--hover);
+    }
+
+    table.stat tr.primary td {
+      color: #f0d8a4;
+    }
+
+    .share-bar {
+      background: #131a1e;
+      border-color: #445158;
+      height: 9px;
+    }
+
+    .share-bar > i {
+      background: linear-gradient(90deg, #658c52, #9ecf72);
+    }
+
+    .chip {
+      color: var(--info);
+      border-radius: 3px;
+    }
+
+    .chip:hover {
+      background: rgba(121,173,194,.13);
+    }
+
+    .chip.filter {
+      border-color: #48565e;
+      border-radius: 3px;
+      padding: 4px 9px;
+      color: var(--muted);
+    }
+
+    .chip.filter.active {
+      border-color: var(--accent);
+      color: #f0d8a4;
+      background: var(--accent-soft);
+    }
+
+    .timeline-block {
+      background: rgba(32,42,48,.42);
+      border-bottom-color: var(--border-soft);
+      border-left: 2px solid rgba(121,173,194,.46);
+      padding: 3px 0 8px 4px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-block .desc {
+      color: var(--muted);
+      padding-left: 8px;
+    }
+
+    .tree-panel {
+      background: #202a30;
+      border-color: #3b4850;
+      padding: 10px 12px 14px;
+      margin-bottom: 18px;
+    }
+
+    .tree-line {
+      min-height: 25px;
+      color: #d4dbd9;
+    }
+
+    .tree-line a {
+      color: var(--info);
+    }
+
+    .tree-line .indent {
+      color: #65747b;
+    }
+
+    .desc-box {
+      border-color: #4f5d64;
+      background: rgba(255,255,255,.035);
+      min-height: 96px;
+    }
+
+    .empty {
+      color: var(--dim);
+      padding: 10px 0;
+    }
+
+    .milestone {
+      grid-template-columns: 132px 1fr;
+      padding: 8px 4px;
+      border-bottom-color: var(--border-soft);
+    }
+
+    .milestone .when {
+      color: var(--dim);
+    }
+
+    .milestone .what {
+      color: var(--tag);
+    }
+
+    /* v4.0 生涯：工作时长强度评价 */
+    .intensity-hero {
+      display: flex; gap: 12px; align-items: stretch;
+      background: linear-gradient(180deg, #253037 0%, #20292f 100%);
+      border-color: #3b4850; border-left: 3px solid var(--accent);
+      border-radius: 3px; padding: 12px; margin-bottom: 12px;
+    }
+    .intensity-badge {
+      flex: 0 0 168px; border-radius: 3px; padding: 12px 10px; text-align: center;
+      color: #11161a; display: flex; flex-direction: column; justify-content: center;
+    }
+    .intensity-badge .tcode { font-size: 11px; font-weight: 700; letter-spacing: .08em; opacity: .85; }
+    .intensity-badge .tname { font-size: 21px; font-weight: 800; margin: 3px 0 4px; }
+    .intensity-badge .ttag { font-size: 11px; font-weight: 600; opacity: .92; }
+    .intensity-stats { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .intensity-stats .hs {
+      background: #1c262b; border: 1px solid #3b4850; border-radius: 3px; padding: 9px 10px;
+    }
+    .intensity-stats .hs .k { font-size: 10px; color: var(--muted); margin-bottom: 3px; letter-spacing: .02em; }
+    .intensity-stats .hs .v { font-size: 18px; font-weight: 600; color: #f0f1ed; }
+    .intensity-stats .hs .v small { font-size: 11px; color: var(--muted); font-weight: 400; }
+    .intensity-stats .hs .s { font-size: 10px; color: var(--dim); margin-top: 2px; }
+    .ladder {
+      display: flex; gap: 0; height: 28px; border-radius: 3px; overflow: hidden;
+      margin: 4px 0 14px;
+    }
+    .ladder .rung {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: rgba(0,0,0,.72); position: relative;
+    }
+    .ladder .rung.cur { box-shadow: inset 0 0 0 2px rgba(255,255,255,.85); }
+    .ladder-cap { display: flex; justify-content: space-between; font-size: 9px; color: var(--dim); margin-bottom: 14px; }
+    .ladder-cap b { color: var(--muted); }
+
+    .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .work-card {
+      background: linear-gradient(135deg, #253037 0%, #20292f 100%);
+      border: 1px solid #3b4850; border-left: 4px solid var(--info);
+      border-radius: 3px; padding: 9px 11px; min-height: 84px;
+    }
+    .work-card .top { display: flex; justify-content: space-between; align-items: baseline; }
+    .work-card .wname { font-size: 13px; color: #f0f2ef; font-weight: 500; }
+    .work-card .wh { font-size: 17px; color: #f0f2ef; font-weight: 600; }
+    .work-card .wh small { font-size: 11px; color: var(--muted); font-weight: 400; }
+    .work-card .rank { font-size: 11px; color: var(--tag); margin-top: 6px; }
+    .work-card .share { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .work-card .bar { height: 6px; background: #131a1e; border: 1px solid #445158; border-radius: 2px; margin-top: 8px; overflow: hidden; }
+    .work-card .bar > i { display: block; height: 100%; background: linear-gradient(90deg, #658c52, #9ecf72); }
+
+    .prod-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .prod-metric {
+      background: linear-gradient(180deg, #253037 0%, #20292f 100%);
+      border: 1px solid #3b4850; border-radius: 3px; padding: 9px 11px;
+    }
+    .prod-metric .k { font-size: 10px; color: var(--muted); margin-bottom: 3px; }
+    .prod-metric .v { font-size: 16px; color: #f0f1ed; font-weight: 600; }
+    .prod-metric .s { font-size: 10px; color: var(--dim); margin-top: 2px; }
+    .prod-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .prod-card {
+      background: #202a30; border: 1px solid #3b4850; border-left: 3px solid var(--info);
+      border-radius: 3px; padding: 8px 10px; min-height: 46px;
+    }
+    .prod-card .pn { font-size: 13px; color: #f0f2ef; }
+    .prod-card .ps { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    @media (max-width: 900px) {
+      .home-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .stats, .stats.kpi6, .stats.kpi4 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .body {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        max-height: 250px;
+      }
+
+      .stats, .stats.kpi6, .stats.kpi4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .event-row {
+        grid-template-columns: 1fr 96px;
+      }
+
+      .event-row .date {
+        grid-column: 1 / -1;
+      }
+
+      .event-row .type {
+        grid-column: 2;
+        grid-row: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div>
+      <h1>Personal Chronicle · 档案馆 UI 预览 <span class="badge-v">v4.0 强度评价</span></h1>
+      <div class="meta">方案：docs/档案馆Tab重构优化方案.md（v3.1）· 落地 v4.0 强度评价 / 生产市场价值 · 5 Tab（去统计）· 概览加厚 · 生涯加深（含强度）· 战斗履历 · 社会关系</div>
+    </div>
+    <div class="toolbar-actions">
+      <button type="button" id="btn-lang">文案: 中文</button>
+      <button type="button" id="btn-annotate">标注组件</button>
+      <button type="button" id="btn-home">首页</button>
+      <button type="button" id="btn-overview">全部档案</button>
+      <button type="button" id="btn-pawn">示例人物</button>
+      <button type="button" id="btn-dead">已故样例</button>
+      <button type="button" id="btn-weapon">示例武器</button>
+      <button type="button" id="btn-event">示例事件</button>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><b>人物</b> 概览 · 编年 · 生涯 · 战斗履历 · 社会关系</span>
+    <span><b>武器</b> 概览 · 编年 · 战斗履历 · 流转</span>
+    <span>无「统计」Tab · KPI 在概览</span>
+    <span>生涯 = 强度评价（五档）+ 同工种卡片 + 生产市场价值</span>
+  </div>
+
+  <div class="window" id="window" data-component="DoWindowContents">
+    <header class="header" data-component="DrawHeader">
+      <div class="title" id="hdr-title">殖民地档案馆</div>
+      <div class="breadcrumb" id="breadcrumb">Home</div>
+      <div class="ver">UI Spec v4.0</div>
+    </header>
+
+    <div class="body">
+      <aside class="sidebar" data-component="DrawSidebar">
+        <div class="side-label" data-i18n="nav">导航</div>
+        <button class="side-item active" data-nav="home" data-i18n="homeOverview">首页总览</button>
+        <button class="side-item" data-nav="overview" data-i18n="allArchives">全部档案</button>
+        <div class="side-spacer"></div>
+        <div class="side-label" data-i18n="categories">档案分类</div>
+        <button class="side-item" data-nav="overview" data-filter="Pawn"><span data-i18n="catPawn">人物</span> <span>(4)</span></button>
+        <button class="side-item" data-nav="overview" data-filter="Thing"><span data-i18n="catThing">物品</span> <span>(3)</span></button>
+        <button class="side-item" data-nav="overview" data-filter="Battle"><span data-i18n="catBattle">战役</span> <span>(2)</span></button>
+        <button class="side-item" data-nav="overview" data-filter="Location"><span data-i18n="catLocation">地点</span> <span>(1)</span></button>
+        <div class="side-spacer"></div>
+        <div class="side-label" data-i18n="tools">快捷</div>
+        <button class="side-item disabled" data-i18n="favorites">收藏</button>
+        <button class="side-item disabled" data-i18n="milestones">里程碑</button>
+        <button class="side-item disabled" data-i18n="search">搜索</button>
+      </aside>
+
+      <main class="content" data-component="DrawContent">
+        <section class="view active" id="view-home" data-component="DrawHomeContent">
+          <h2 class="page-title" data-i18n="colonyArchive">殖民地档案馆</h2>
+          <p class="page-desc" data-i18n="homeDesc">殖民地档案馆：记录殖民地的历史、人物与事件。</p>
+          <div class="stats" data-component="DrawHomeStats">
+            <div class="stat-cell"><div class="label" data-i18n="catPawn">人物</div><div class="value">4</div></div>
+            <div class="stat-cell"><div class="label" data-i18n="catThing">物品</div><div class="value">3</div></div>
+            <div class="stat-cell"><div class="label" data-i18n="catBattle">战役</div><div class="value">2</div></div>
+            <div class="stat-cell"><div class="label" data-i18n="catLocation">地点</div><div class="value">1</div></div>
+            <div class="stat-cell"><div class="label" data-i18n="currentColonists">当前殖民者</div><div class="value">3</div></div>
+            <div class="stat-cell">
+              <div class="label" data-i18n="archivePawnRecords">档案记录</div>
+              <div class="value">4</div>
+              <div class="sub"><span data-i18n="active">在世</span> 3 · <span data-i18n="archived">已归档</span> 1</div>
+            </div>
+          </div>
+          <div class="home-cols">
+            <div>
+              <div class="section-title" data-i18n="recentHistory">最近发生的历史</div>
+              <div class="event-row" data-goto="event" data-id="ev-death"><span class="date">5503 年 秋 12 日</span><span class="title">汤姆 死亡</span><span class="type" data-i18n="evDeath">死亡</span></div>
+              <div class="event-row" data-goto="event" data-id="ev-battle"><span class="date">5503 年 秋 12 日</span><span class="title">机械族袭击</span><span class="type" data-i18n="evBattle">战役</span></div>
+              <div class="event-row" data-goto="event" data-id="ev-craft"><span class="date">5503 年 夏 41 日</span><span class="title">充电步枪 · 艾拉</span><span class="type" data-i18n="evCrafted">制造</span></div>
+              <div class="event-row" data-goto="event" data-id="ev-built"><span class="date">5503 年 夏 18 日</span><span class="title">太阳能发电机 · 马可</span><span class="type" data-i18n="evBuilt">建造</span></div>
+              <div class="event-row" data-goto="event" data-id="ev-join"><span class="date">5502 年 春 3 日</span><span class="title">莉娜 加入殖民地</span><span class="type" data-i18n="evJoin">加入殖民地</span></div>
+            </div>
+            <div>
+              <div class="section-title" data-i18n="importantArchives">重要档案</div>
+              <div class="card" data-goto="pawn" data-id="pawn-tom"><div class="tag" data-i18n="evDeath">死亡</div><div class="name">汤姆</div><div class="sub">已故 · 210h · 猎人</div></div>
+              <div class="card" data-goto="weapon" data-id="thing-rifle"><div class="tag" data-i18n="evCrafted">制造</div><div class="name">充电步枪</div><div class="sub">艾拉 · 击杀 1</div></div>
+              <div class="card" data-goto="pawn" data-id="pawn-ela"><div class="tag" data-i18n="character">人物</div><div class="name">艾拉</div><div class="sub">在世 · 主业烹饪 · 278h</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-overview" data-component="DrawOverviewContent">
+          <h2 class="page-title" data-i18n="overviewTitle">档案总览</h2>
+          <p class="page-desc" data-i18n="overviewDesc">所有已建档对象 · 按类型浏览 · 深度差异化</p>
+          <div class="ov-section" data-cat="Pawn">
+            <div class="section-title"><span data-i18n="catPawn">人物</span> · 5</div>
+            <div class="ov-grid">
+              <div class="obj-card" data-goto="pawn" data-id="pawn-ela"><div class="cat" data-i18n="catPawn">人物</div><div class="name">艾拉</div><div class="sub">在世 · 烹饪 · 278h</div></div>
+              <div class="obj-card" data-goto="pawn" data-id="pawn-marco"><div class="cat" data-i18n="catPawn">人物</div><div class="name">马可</div><div class="sub">在世 · 建造 · 312h</div></div>
+              <div class="obj-card" data-goto="pawn" data-id="pawn-lina"><div class="cat" data-i18n="catPawn">人物</div><div class="name">莉娜</div><div class="sub">在世 · 医护 · 96h</div></div>
+              <div class="obj-card" data-goto="pawn" data-id="pawn-tom"><div class="cat" data-i18n="catPawn">人物</div><div class="name">汤姆</div><div class="sub">已故 · 打猎 · 210h</div></div>
+              <div class="obj-card" data-goto="pawn" data-id="pawn-noa"><div class="cat" data-i18n="catPawn">人物</div><div class="name">诺亚</div><div class="sub">在世 · 开采 · 预估</div></div>
+            </div>
+          </div>
+          <div class="ov-section" data-cat="Thing">
+            <div class="section-title"><span data-i18n="catThing">物品</span> · 3</div>
+            <div class="ov-grid">
+              <div class="obj-card" data-goto="weapon" data-id="thing-rifle"><div class="cat" data-i18n="catThing">物品</div><div class="name">充电步枪</div><div class="sub">击杀 1 · 流转 2</div></div>
+              <div class="obj-card" data-goto="weapon" data-id="thing-knife"><div class="cat" data-i18n="catThing">物品</div><div class="name">短刀</div><div class="sub">流转 1</div></div>
+              <div class="obj-card" data-goto="weapon" data-id="thing-solar"><div class="cat" data-i18n="catThing">物品</div><div class="name">太阳能发电机</div><div class="sub">建造 · 马可</div></div>
+            </div>
+          </div>
+          <div class="ov-section" data-cat="Battle">
+            <div class="section-title"><span data-i18n="catBattle">战役</span> · 2</div>
+            <div class="ov-grid">
+              <div class="obj-card stat-only"><div class="cat" data-i18n="statsOnlyNote">仅统计</div><div class="name">机械族袭击</div><div class="sub">5503 秋 12</div></div>
+              <div class="obj-card stat-only"><div class="cat" data-i18n="statsOnlyNote">仅统计</div><div class="name">海盗袭击</div><div class="sub">5503 春 22</div></div>
+            </div>
+          </div>
+          <div class="ov-section" data-cat="Location">
+            <div class="section-title"><span data-i18n="catLocation">地点</span> · 1</div>
+            <div class="ov-grid">
+              <div class="obj-card stat-only"><div class="cat" data-i18n="statsOnlyNote">仅统计</div><div class="name">新希望定居点</div><div class="sub">温带森林</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-pawn" data-component="DrawDetailContent">
+          <div class="obj-header" data-component="DrawObjectHeader">
+            <h2 class="name" id="pawn-name">艾拉</h2>
+            <span class="pill alive" id="pawn-pill">在世</span>
+            <span class="live-badge" id="pawn-live-badge" hidden></span>
+            <div class="meta-line" id="pawn-meta"></div>
+          </div>
+          <div class="tabs" id="pawn-tabs" data-component="DrawTabBar"></div>
+          <div id="pawn-panel" data-component="DrawDetailPanel"></div>
+        </section>
+
+        <section class="view" id="view-weapon" data-component="DrawDetailContent">
+          <div class="obj-header" data-component="DrawObjectHeader">
+            <h2 class="name" id="weapon-name">充电步枪</h2>
+            <span class="pill blue" data-i18n="catThing">物品</span>
+            <div class="meta-line" id="weapon-meta">Gun_ChargeRifle</div>
+          </div>
+          <div class="tabs" id="weapon-tabs" data-component="DrawTabBar"></div>
+          <div id="weapon-panel" data-component="DrawDetailPanel"></div>
+        </section>
+
+        <section class="view" id="view-event" data-component="DrawEventContent">
+          <h2 class="page-title" data-i18n="events">事件</h2>
+          <p class="page-desc" id="event-meta"></p>
+          <div class="tree-panel">
+            <div class="section-title" style="margin-bottom:8px" data-i18n="relatedNetwork">关联档案网络</div>
+            <div id="event-tree"></div>
+          </div>
+          <div class="section-title" data-i18n="eventDescription">事件描述</div>
+          <div class="desc-box" id="event-desc"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <strong>v4.0 产品内容（预览即方案示例）· 相对 v3.1 新增强度评价</strong>
+    <div class="assess">
+      <div class="box"><h3>覆盖是否广泛？</h3><p>身份→时间→劳动贡献(强度)→战斗→人际 五轴齐全；统计并入概览不丢数字。研究/医疗/理念为二期缺口，不靠加 Tab。</p></div>
+      <div class="box"><h3>是否符合档案馆？</h3><p>只记已发生事实与累计；死后可回看；禁止优先级/实时伤口/opinion 墙。目录 5+4，少而厚。</p></div>
+      <div class="box"><h3>强度评价是否就位？</h3><p>生涯页顶「五档统筹头部」(日均工时 D=H/N 评等) + 同工种卡片矩阵(排名/占殖民地比)；档位颜色/阈值 Def 驱动，UI 零硬编码阈值。</p></div>
+    </div>
+    方案正文：<code>docs/档案馆Tab重构优化方案.md</code>（v3.1）· 强度设计 <code>docs/工时强度评价设计.md</code>（v4.0 已落地）
+    <table>
+      <tr><th>Tab</th><th>解决的人生问题</th><th>相对 v3.0/v3.1</th></tr>
+      <tr><td>概览</td><td>是谁 · 来去 · 数字头条(含产出市场价值) · 足迹 · 里程碑</td><td>加厚；吸收统计</td></tr>
+      <tr><td>编年</td><td>时间线上发生了什么</td><td>保留 + 过滤</td></tr>
+      <tr><td>生涯</td><td>靠什么立足、贡献了什么、劳动强度</td><td><b>v4.0 新增强度五档头部 + 同工种卡片</b>；加深主副业/贡献/排名</td></tr>
+      <tr><td>战斗履历</td><td>打过什么、如何倒下</td><td>改名 + 阵亡档案</td></tr>
+      <tr><td>社会关系</td><td>和谁绑定命运</td><td>改名；去物品/地点</td></tr>
+      <tr><td>~~统计~~</td><td>—</td><td><b>移除</b></td></tr>
+    </table>
+  </div>
+
+  <script>
+    const I18N = {
+      zh: {
+        nav: "导航", homeOverview: "首页总览", allArchives: "全部档案", categories: "档案分类",
+        tools: "快捷", favorites: "收藏", milestones: "里程碑", search: "搜索",
+        colonyArchive: "殖民地档案馆", homeDesc: "殖民地档案馆：记录殖民地的历史、人物与事件。",
+        catPawn: "人物", catThing: "物品", catBattle: "战役", catLocation: "地点",
+        currentColonists: "当前殖民者", archivePawnRecords: "档案记录",
+        active: "在世", archived: "已归档", dead: "已故", alive: "在世", character: "人物",
+        recentHistory: "最近发生的历史", importantArchives: "重要档案",
+        overviewTitle: "档案总览", overviewDesc: "所有已建档对象 · 按类型浏览 · 深度差异化",
+        statsOnlyNote: "仅统计", events: "事件", relatedNetwork: "关联档案网络", eventDescription: "事件描述",
+        evJoin: "加入殖民地", evDeath: "死亡", evCrafted: "制造", evBuilt: "建造", evBattle: "战役",
+        tab: { Overview: "概览", Timeline: "编年", Career: "生涯", CombatLog: "战斗履历", Social: "社会关系", Custody: "流转" },
+        status: "状态", kind: "职业", faction: "派系", joinDate: "加入时间", deathDate: "逝世时间",
+        deathCause: "死亡原因", killer: "凶手", daysInColony: "在殖天数", backstory: "背景",
+        kpiEvents: "事件", kpiWorkHours: "累计工时", kpiProduction: "产出", kpiBattles: "参战",
+        kpiKills: "击杀", kpiRelations: "关系",
+        lifecycle: "生命周期", careerBlurb: "生涯摘要", footprint: "足迹", keyMilestones: "人生里程碑", keyEvents: "关键事件",
+        primaryPlace: "主驻地", placeCount: "到访地点",
+        careerSummary: "生涯结论", primaryWork: "主业", secondaryWork: "副业", totalWork: "劳动总工时",
+        contribution: "贡献摘要",
+        workTime: "工作累计工时", workType: "工作类型", hours: "累计工时", share: "占比", lastWorked: "最近从事", rank: "排名",
+        workFootnote: "工时自本版本起约每 2 秒采样累计；死后冻结。此表不是原版工作优先级。",
+        production: "产出履历", productionType: "物品", productionCount: "数量", productionLast: "最近一次", productionCat: "类别",
+        skillArchive: "技能档案", skillName: "技能", skillJoin: "入档", skillNow: "当前/死亡", skillDelta: "成长",
+        deathDossier: "阵亡档案", battleRecords: "参战记录", killRecords: "击杀记录",
+        battlesN: "参战次数", killsN: "击杀数", noBattle: "暂无战斗履历。",
+        importantRel: "重要关系", intertwined: "命运交织", relEvents: "关系事件",
+        relType: "关系", person: "人物", relStatus: "状态",
+        type: "类型", crafter: "制造者", craftedAt: "制造时间", holders: "持有人次",
+        custody: "持有流转", holder: "持有者", from: "起", to: "止", duration: "时长",
+        filterAll: "全部", liveJob: "当前任务", liveLoc: "当前位置",
+        colonist: "殖民者", factionName: "新希望殖民地",
+        samplingNote: "以下为可存档履历数据，人物去世后仍可完整回看。",
+        catWeapon: "武器", catApparel: "服装", catBuilding: "建筑",
+        intensityDaily: "日均工时", intensityWeekly: "周平均", intensityMonthly: "30日估算",
+        intensitySampleInsufficient: "样本不足", intensityObservedWindow: "观察窗口",
+        intensityEstimated: "预估", intensityActual: "实际",
+        intensityEstimatedHint: "样本<5天·按当前情况预估",
+        intensityRank: "同工种 #", intensityRankUnknown: "同工种排名未知",
+        intensityWorkShare: "占殖民地比 / 占本类峰值",
+        tierT0: "核动力驴", tierT1: "超级牛马", tierT2: "常规牛马", tierT3: "劣质牛马", tierT4: "社会懒汉",
+        tierTagT0: "觉醒即干 · 终日不休", tierTagT1: "远超常人 · 顶梁柱", tierTagT2: "标准勤勉 · 可靠主力",
+        tierTagT3: "干得不情愿 · 低于均值", tierTagT4: "基本在摸鱼 · 闲晃"
+      },
+      en: {
+        nav: "Navigation", homeOverview: "Home Overview", allArchives: "All Archives", categories: "Categories",
+        tools: "Tools", favorites: "Favorites", milestones: "Milestones", search: "Search",
+        colonyArchive: "Colony Archive", homeDesc: "Recording colony history, people and events.",
+        catPawn: "Pawns", catThing: "Items", catBattle: "Battles", catLocation: "Locations",
+        currentColonists: "Current colonists", archivePawnRecords: "Pawn records",
+        active: "Active", archived: "Archived", dead: "Deceased", alive: "Alive", character: "Character",
+        recentHistory: "Recent History", importantArchives: "Important Archives",
+        overviewTitle: "Archive Overview", overviewDesc: "All objects · by type · depth differentiated",
+        statsOnlyNote: "Stats Only", events: "Events", relatedNetwork: "Related network", eventDescription: "Description",
+        evJoin: "Joined", evDeath: "Died", evCrafted: "Crafted", evBuilt: "Built", evBattle: "Battle",
+        tab: { Overview: "Overview", Timeline: "Chronicle", Career: "Career", CombatLog: "Combat record", Social: "Social", Custody: "Custody" },
+        status: "Status", kind: "Kind", faction: "Faction", joinDate: "Joined", deathDate: "Died",
+        deathCause: "Cause", killer: "Killer", daysInColony: "Days in colony", backstory: "Backstory",
+        kpiEvents: "Events", kpiWorkHours: "Work hours", kpiProduction: "Output", kpiBattles: "Battles",
+        kpiKills: "Kills", kpiRelations: "Relations",
+        lifecycle: "Lifecycle", careerBlurb: "Career summary", footprint: "Footprint", keyMilestones: "Milestones", keyEvents: "Key events",
+        primaryPlace: "Home place", placeCount: "Places",
+        careerSummary: "Career verdict", primaryWork: "Primary", secondaryWork: "Secondary", totalWork: "Total work",
+        contribution: "Contribution",
+        workTime: "Work time by type", workType: "Work type", hours: "Hours", share: "Share", lastWorked: "Last", rank: "Rank",
+        workFootnote: "Sampled ~2s since this version; frozen on death. Not vanilla priorities.",
+        production: "Production", productionType: "Item", productionCount: "Count", productionLast: "Last", productionCat: "Category",
+        skillArchive: "Skills archive", skillName: "Skill", skillJoin: "At join", skillNow: "Now/death", skillDelta: "Δ",
+        deathDossier: "Death dossier", battleRecords: "Battles", killRecords: "Kills",
+        battlesN: "Battles", killsN: "Kills", noBattle: "No combat record.",
+        importantRel: "Significant ties", intertwined: "Intertwined fates", relEvents: "Relation events",
+        relType: "Tie", person: "Person", relStatus: "Status",
+        type: "Type", crafter: "Crafter", craftedAt: "Crafted", holders: "Holders",
+        custody: "Custody", holder: "Holder", from: "From", to: "To", duration: "Duration",
+        filterAll: "All", liveJob: "Current job", liveLoc: "Location",
+        colonist: "Colonist", factionName: "New Hope",
+        samplingNote: "Archived biography data — fully readable after death.",
+        catWeapon: "Weapon", catApparel: "Apparel", catBuilding: "Building",
+        intensityDaily: "Daily avg", intensityWeekly: "Weekly avg", intensityMonthly: "30-day est",
+        intensitySampleInsufficient: "Sampling", intensityObservedWindow: "Window",
+        intensityEstimated: "Estimated", intensityActual: "Actual",
+        intensityEstimatedHint: "Sample<5d · projected from current data",
+        intensityRank: "Peer #", intensityRankUnknown: "Peer rank n/a",
+        intensityWorkShare: "Of colony / of peak",
+        tierT0: "Reactor Mule", tierT1: "Super Workhorse", tierT2: "Regular Workhorse",
+        tierT3: "Poor Workhorse", tierT4: "Social Slacker",
+        tierTagT0: "Never rests", tierTagT1: "Pillar", tierTagT2: "Reliable",
+        tierTagT3: "Reluctant", tierTagT4: "Slacking",
+        productionValue: "Market value", productionQuantity: "Total output", productionTypeCount: "Types"
+      }
+    };
+
+    const PAWN_TABS = ["Overview", "Timeline", "Career", "CombatLog", "Social"];
+    const WEAPON_TABS = ["Overview", "Timeline", "CombatLog", "Custody"];
+
+    // v4.0 强度五档（高→低），颜色取 WorkIntensity.xml 真实色值
+    const INTENSITY_TIERS = [
+      { code: "T0", nameKey: "tierT0", tagKey: "tierTagT0", color: "#D85A30", min: 12 },
+      { code: "T1", nameKey: "tierT1", tagKey: "tierTagT1", color: "#BA7517", min: 9 },
+      { code: "T2", nameKey: "tierT2", tagKey: "tierTagT2", color: "#D8A42E", min: 6 },
+      { code: "T3", nameKey: "tierT3", tagKey: "tierTagT3", color: "#6BAA84", min: 3 },
+      { code: "T4", nameKey: "tierT4", tagKey: "tierTagT4", color: "#6B7A8F", min: 0 }
+    ];
+
+    const pawns = {
+      "pawn-ela": {
+        name: { zh: "艾拉", en: "Ella" }, alive: true,
+        kind: { zh: "殖民者", en: "Colonist" },
+        backstory: { zh: "矿工的孩子 → 工匠学徒", en: "Miner's child → Craft apprentice" },
+        join: { zh: "5502 年 春 1 日", en: "5502 Spring 1" }, days: 412,
+        liveJob: { zh: "制作部件", en: "Crafting components" },
+        liveLoc: { zh: "新希望定居点", en: "New Hope" },
+        workHours: 278.1, kills: 1,
+        intensity: {
+          tier: "T4", totalHours: 278.1, days: 412, daily: 0.7, weekly: 4.6, monthly: 19.6,
+          relLabel: { zh: "相对负荷偏低", en: "Low relative load" }
+        },
+        contribution: {
+          zh: "殖民地主要厨师与步枪工匠：累计劳动 278 小时，交付充电步枪 1、头盔 2。",
+          en: "Lead cook & rifle crafter: 278h labour, 1 charge rifle + 2 helmets."
+        },
+        work: [
+          { type: { zh: "烹饪", en: "Cooking" }, h: 128.4, last: { zh: "5503 夏 40", en: "5503 Summer 40" }, rank: 1, colony: 38, peak: 100, color: "#C77D3A" },
+          { type: { zh: "手工", en: "Crafting" }, h: 96.2, last: { zh: "5503 夏 41", en: "5503 Summer 41" }, rank: 1, colony: 30, peak: 90, color: "#d3a45b" },
+          { type: { zh: "种植", en: "Growing" }, h: 41.0, last: { zh: "5503 春 12", en: "5503 Spring 12" }, rank: 4, colony: 12, peak: 55, color: "#639922" },
+          { type: { zh: "建造", en: "Construction" }, h: 12.5, last: { zh: "5502 冬 3", en: "5502 Winter 3" }, rank: 7, colony: 4, peak: 25, color: "#BA7517" }
+        ],
+        production: [
+          { type: { zh: "充电步枪", en: "Charge rifle" }, n: 1, last: { zh: "5503 夏 41", en: "5503 Summer 41" }, cat: "weapon", id: "thing-rifle", value: 880 },
+          { type: { zh: "简易头盔", en: "Simple helmet" }, n: 2, last: { zh: "5503 夏 12", en: "5503 Summer 12" }, cat: "apparel", value: 240 }
+        ],
+        skills: [
+          { n: { zh: "手工", en: "Crafting" }, join: 8, now: 14 },
+          { n: { zh: "烹饪", en: "Cooking" }, join: 6, now: 10 },
+          { n: { zh: "射击", en: "Shooting" }, join: 7, now: 12 },
+          { n: { zh: "社交", en: "Social" }, join: 9, now: 11 },
+          { n: { zh: "种植", en: "Plants" }, join: 5, now: 7 }
+        ],
+        combat: [
+          { date: { zh: "5503 秋 12", en: "5503 Autumn 12" }, title: { zh: "机械族袭击", en: "Mechanoid raid" }, sub: { zh: "参战", en: "Fought" } }
+        ],
+        killsList: [
+          { date: { zh: "5503 秋 12", en: "5503 Autumn 12" }, title: { zh: "侦察者", en: "Scout" }, sub: { zh: "充电步枪", en: "Charge rifle" }, weaponId: "thing-rifle" }
+        ],
+        relations: [
+          { type: { zh: "恋人", en: "Lover" }, who: { zh: "马可", en: "Marco" }, status: { zh: "存续", en: "Active" }, id: "pawn-marco" }
+        ],
+        intertwined: [
+          { n: { zh: "汤姆", en: "Tom" }, r: { zh: "同场战役", en: "Same battle" }, id: "pawn-tom" },
+          { n: { zh: "马可", en: "Marco" }, r: { zh: "恋人 · 同殖民地", en: "Lover" }, id: "pawn-marco" }
+        ],
+        relEvents: [
+          { date: { zh: "5502 夏 20", en: "5502 Summer 20" }, title: { zh: "与马可结为恋人", en: "Became lovers with Marco" }, sub: "" }
+        ],
+        footprint: {
+          primary: { zh: "新希望定居点", en: "New Hope" },
+          count: 1,
+          range: { zh: "5502 春 1 — 今", en: "5502 Spring 1 — now" }
+        },
+        milestones: [
+          { when: { zh: "5502 春 1", en: "5502 Sp1" }, what: { zh: "加入殖民地", en: "Joined colony" } },
+          { when: { zh: "5502 夏 20", en: "5502 Su20" }, what: { zh: "与马可结为恋人", en: "Lovers with Marco" } },
+          { when: { zh: "5503 夏 41", en: "5503 Su41" }, what: { zh: "制成第一支充电步枪", en: "First charge rifle" } },
+          { when: { zh: "5503 秋 12", en: "5503 Au12" }, what: { zh: "首战机械族 · 击杀 1", en: "First mechanoid battle" } }
+        ],
+        events: [
+          { kind: "Join", date: { zh: "5502 年 春 1 日", en: "5502 Spring 1" }, name: { zh: "加入殖民地", en: "Joined" }, params: "", desc: { zh: "这位人物加入了殖民地。", en: "Joined." }, chips: [] },
+          { kind: "Crafted", date: { zh: "5503 年 夏 41 日", en: "5503 Summer 41" }, name: { zh: "制造", en: "Crafted" }, params: { zh: "充电步枪", en: "Charge rifle" }, desc: { zh: "此物品由殖民地制造。", en: "Crafted." }, chips: [{ label: { zh: "物品·充电步枪", en: "Item·rifle" }, goto: "weapon", id: "thing-rifle" }] },
+          { kind: "Battle", date: { zh: "5503 年 秋 12 日", en: "5503 Autumn 12" }, name: { zh: "战役", en: "Battle" }, params: { zh: "机械族袭击", en: "Raid" }, desc: "", chips: [] }
+        ]
+      },
+      "pawn-marco": {
+        name: { zh: "马可", en: "Marco" }, alive: true,
+        kind: { zh: "殖民者", en: "Colonist" },
+        backstory: { zh: "工地苦力 → 殖民地建筑师", en: "Site labourer → Architect" },
+        join: { zh: "5502 年 春 1 日", en: "5502 Spring 1" }, days: 412,
+        liveJob: { zh: "建造墙壁", en: "Building wall" }, liveLoc: { zh: "新希望定居点", en: "New Hope" },
+        workHours: 312.0, kills: 0,
+        intensity: {
+          tier: "T4", totalHours: 312.0, days: 412, daily: 0.8, weekly: 5.3, monthly: 22.7,
+          relLabel: { zh: "相对负荷偏低", en: "Low relative load" }
+        },
+        contribution: { zh: "基建支柱：建造 210h，落成太阳能发电机，撑起电网第一期。", en: "Builder backbone: 210h construction, first solar grid." },
+        work: [
+          { type: { zh: "建造", en: "Construction" }, h: 210.0, last: { zh: "5503 秋 10", en: "5503 Autumn 10" }, rank: 1, colony: 62, peak: 100, color: "#BA7517" },
+          { type: { zh: "采矿", en: "Mining" }, h: 88.0, last: { zh: "5503 夏 2", en: "5503 Summer 2" }, rank: 2, colony: 28, peak: 70, color: "#8B6FB0" },
+          { type: { zh: "灭火", en: "Firefight" }, h: 14.0, last: { zh: "5503 春 5", en: "5503 Spring 5" }, rank: 3, colony: 9, peak: 40, color: "#D85A30" }
+        ],
+        production: [
+          { type: { zh: "太阳能发电机", en: "Solar generator" }, n: 1, last: { zh: "5503 夏 18", en: "5503 Summer 18" }, cat: "building", id: "thing-solar", value: 220 }
+        ],
+        skills: [
+          { n: { zh: "建造", en: "Construction" }, join: 10, now: 15 },
+          { n: { zh: "采矿", en: "Mining" }, join: 8, now: 11 }
+        ],
+        combat: [
+          { date: { zh: "5503 秋 12", en: "5503 Autumn 12" }, title: { zh: "机械族袭击", en: "Mechanoid raid" }, sub: { zh: "参战", en: "Fought" } },
+          { date: { zh: "5503 春 22", en: "5503 Spring 22" }, title: { zh: "海盗袭击", en: "Pirate raid" }, sub: { zh: "参战", en: "Fought" } }
+        ],
+        killsList: [],
+        relations: [
+          { type: { zh: "恋人", en: "Lover" }, who: { zh: "艾拉", en: "Ella" }, status: { zh: "存续", en: "Active" }, id: "pawn-ela" }
+        ],
+        intertwined: [{ n: { zh: "艾拉", en: "Ella" }, r: { zh: "恋人", en: "Lover" }, id: "pawn-ela" }],
+        relEvents: [{ date: { zh: "5502 夏 20", en: "5502 Summer 20" }, title: { zh: "与艾拉结为恋人", en: "Lovers with Ella" }, sub: "" }],
+        footprint: { primary: { zh: "新希望定居点", en: "New Hope" }, count: 1, range: { zh: "5502 春 1 — 今", en: "5502 Sp1 — now" } },
+        milestones: [
+          { when: { zh: "5502 春 1", en: "5502 Sp1" }, what: { zh: "加入殖民地", en: "Joined" } },
+          { when: { zh: "5503 夏 18", en: "5503 Su18" }, what: { zh: "建成首台太阳能发电机", en: "First solar generator" } }
+        ],
+        events: [
+          { kind: "Join", date: { zh: "5502 年 春 1 日", en: "5502 Spring 1" }, name: { zh: "加入殖民地", en: "Joined" }, params: "", desc: "", chips: [] },
+          { kind: "Built", date: { zh: "5503 年 夏 18 日", en: "5503 Summer 18" }, name: { zh: "建造", en: "Built" }, params: { zh: "太阳能发电机", en: "Solar" }, desc: "", chips: [{ label: { zh: "物品·太阳能", en: "Item·Solar" }, goto: "weapon", id: "thing-solar" }] }
+        ]
+      },
+      "pawn-lina": {
+        name: { zh: "莉娜", en: "Lina" }, alive: true,
+        kind: { zh: "殖民者", en: "Colonist" },
+        backstory: { zh: "战地护士 → 殖民地医师", en: "Field nurse → Doctor" },
+        join: { zh: "5502 年 春 3 日", en: "5502 Spring 3" }, days: 410,
+        liveJob: { zh: "照料病人", en: "Tending" }, liveLoc: { zh: "新希望定居点", en: "New Hope" },
+        workHours: 96.0, kills: 0,
+        intensity: {
+          tier: "T4", totalHours: 96.0, days: 410, daily: 0.2, weekly: 1.5, monthly: 6.4,
+          relLabel: { zh: "相对负荷偏低", en: "Low relative load" }
+        },
+        contribution: { zh: "医疗线：医护 72h，多次战后救治（细账二期）。", en: "Medical line: 72h doctoring." },
+        work: [
+          { type: { zh: "医护", en: "Doctor" }, h: 72.0, last: { zh: "5503 秋 11", en: "5503 Autumn 11" }, rank: 2, colony: 22, peak: 60, color: "#D85A30" },
+          { type: { zh: "研究", en: "Research" }, h: 24.0, last: { zh: "5503 夏 1", en: "5503 Summer 1" }, rank: 3, colony: 8, peak: 35, color: "#79adc2" }
+        ],
+        production: [],
+        skills: [{ n: { zh: "医疗", en: "Medicine" }, join: 9, now: 13 }],
+        combat: [], killsList: [], relations: [], intertwined: [],
+        relEvents: [],
+        footprint: { primary: { zh: "新希望定居点", en: "New Hope" }, count: 1, range: { zh: "5502 春 3 — 今", en: "5502 Sp3 — now" } },
+        milestones: [{ when: { zh: "5502 春 3", en: "5502 Sp3" }, what: { zh: "加入殖民地", en: "Joined" } }],
+        events: [
+          { kind: "Join", date: { zh: "5502 年 春 3 日", en: "5502 Spring 3" }, name: { zh: "加入殖民地", en: "Joined" }, params: "", desc: "", chips: [] }
+        ]
+      },
+      "pawn-tom": {
+        name: { zh: "汤姆", en: "Tom" }, alive: false,
+        kind: { zh: "殖民者", en: "Colonist" },
+        backstory: { zh: "荒野猎人 → 殖民地前锋", en: "Wild hunter → Vanguard" },
+        join: { zh: "5502 年 春 1 日", en: "5502 Spring 1" }, days: 390,
+        death: { zh: "5503 年 秋 12 日", en: "5503 Autumn 12" },
+        cause: { zh: "枪伤", en: "Gunshot" },
+        killer: { zh: "机械族 centipede", en: "Mechanoid centipede" },
+        deathBattle: { zh: "机械族袭击", en: "Mechanoid raid" },
+        liveJob: null, liveLoc: null,
+        workHours: 210.4, kills: 3,
+        intensity: {
+          tier: "T4", totalHours: 210.4, days: 390, daily: 0.5, weekly: 3.7, monthly: 15.9,
+          relLabel: { zh: "相对负荷偏低", en: "Low relative load" }
+        },
+        contribution: {
+          zh: "猎人与前锋：打猎 120h，参战 2 次，击杀 3；阵亡于机械族袭击。",
+          en: "Hunter & vanguard: 120h hunting, 2 battles, 3 kills; KIA vs mechanoids."
+        },
+        work: [
+          { type: { zh: "打猎", en: "Hunting" }, h: 120.0, last: { zh: "5503 秋 11", en: "5503 Autumn 11" }, rank: 1, colony: 40, peak: 100, color: "#7FA05A" },
+          { type: { zh: "射击操练", en: "Shooting practice" }, h: 60.4, last: { zh: "5503 秋 10", en: "5503 Autumn 10" }, rank: 2, colony: 20, peak: 55, color: "#79adc2" },
+          { type: { zh: "搬运", en: "Hauling" }, h: 30.0, last: { zh: "5503 夏 20", en: "5503 Summer 20" }, rank: 5, colony: 10, peak: 40, color: "#9AA0A6" }
+        ],
+        production: [],
+        skills: [
+          { n: { zh: "射击", en: "Shooting" }, join: 6, now: 11 },
+          { n: { zh: "近战", en: "Melee" }, join: 4, now: 7 },
+          { n: { zh: "动物", en: "Animals" }, join: 5, now: 8 }
+        ],
+        combat: [
+          { date: { zh: "5503 秋 12", en: "5503 Autumn 12" }, title: { zh: "机械族袭击", en: "Mechanoid raid" }, sub: { zh: "阵亡", en: "KIA" } },
+          { date: { zh: "5503 春 22", en: "5503 Spring 22" }, title: { zh: "海盗袭击", en: "Pirate raid" }, sub: { zh: "参战", en: "Fought" } }
+        ],
+        killsList: [
+          { date: { zh: "5503 春 22", en: "5503 Spring 22" }, title: { zh: "海盗", en: "Pirate" }, sub: { zh: "短刀", en: "Knife" }, weaponId: "thing-knife" },
+          { date: { zh: "5503 春 22", en: "5503 Spring 22" }, title: { zh: "海盗", en: "Pirate" }, sub: { zh: "短刀", en: "Knife" }, weaponId: "thing-knife" },
+          { date: { zh: "5503 夏 5", en: "5503 Summer 5" }, title: { zh: "巨型甲虫", en: "Megascarab" }, sub: { zh: "打猎", en: "Hunt" } }
+        ],
+        relations: [],
+        intertwined: [
+          { n: { zh: "艾拉", en: "Ella" }, r: { zh: "同场战役 · 曾持其步枪", en: "Same battle · held her rifle" }, id: "pawn-ela" }
+        ],
+        relEvents: [],
+        footprint: {
+          primary: { zh: "新希望定居点", en: "New Hope" }, count: 1,
+          range: { zh: "5502 春 1 — 5503 秋 12", en: "5502 Sp1 — 5503 Au12" }
+        },
+        milestones: [
+          { when: { zh: "5502 春 1", en: "5502 Sp1" }, what: { zh: "加入殖民地", en: "Joined" } },
+          { when: { zh: "5503 春 22", en: "5503 Sp22" }, what: { zh: "海盗战 · 双杀", en: "Pirate fight · 2 kills" } },
+          { when: { zh: "5503 秋 12", en: "5503 Au12" }, what: { zh: "阵亡于机械族袭击", en: "KIA mechanoid raid" } }
+        ],
+        events: [
+          { kind: "Join", date: { zh: "5502 年 春 1 日", en: "5502 Spring 1" }, name: { zh: "加入殖民地", en: "Joined" }, params: "", desc: "", chips: [] },
+          { kind: "Death", date: { zh: "5503 年 秋 12 日", en: "5503 Autumn 12" }, name: { zh: "死亡", en: "Died" }, params: { zh: "枪伤", en: "Gunshot" }, desc: { zh: "这位人物已故。", en: "Deceased." }, chips: [
+            { label: { zh: "凶手·centipede", en: "Killer·centipede" }, plain: true }
+          ] }
+        ]
+      },
+      "pawn-noa": {
+        id: "pawn-noa", name: { zh: "诺亚", en: "Noa" }, alive: true,
+        kind: { zh: "殖民者", en: "Colonist" },
+        backstory: { zh: "新兵 → 殖民地新人", en: "Recruit → Newcomer" },
+        join: { zh: "5503 年 秋 10 日", en: "5503 Autumn 10" }, days: 3,
+        liveJob: { zh: "开采石块", en: "Mining" }, liveLoc: { zh: "新希望定居点", en: "New Hope" },
+        workHours: 33.6, kills: 0,
+        intensity: {
+          tier: "T1", totalHours: 33.6, days: 3, daily: 11.2, weekly: 78.4, monthly: 336.0,
+          relLabel: { zh: "相对负荷偏高", en: "High relative load" }
+        },
+        contribution: {
+          zh: "刚加入 3 天，当前工时折算约 11.2h/天，按当前情况预估为超级牛马（样本不足 5 天，状态为预估）。",
+          en: "Joined 3 days ago; ~11.2h/day projected as Super Workhorse (sample <5d, status estimated)."
+        },
+        work: [
+          { type: { zh: "开采", en: "Mining" }, h: 28.0, last: { zh: "5503 秋 12", en: "5503 Autumn 12" }, rank: 1, colony: 60, peak: 100, color: "#8B6F47" },
+          { type: { zh: "建造", en: "Construction" }, h: 5.6, last: { zh: "5503 秋 11", en: "5503 Autumn 11" }, rank: 2, colony: 22, peak: 40, color: "#BA7517" }
+        ],
+        production: [],
+        skills: [
+          { n: { zh: "开采", en: "Mining" }, join: 4, now: 5 },
+          { n: { zh: "建造", en: "Construction" }, join: 3, now: 4 }
+        ],
+        combat: [],
+        killsList: [],
+        relations: [],
+        intertwined: [],
+        relEvents: [],
+        footprint: {
+          primary: { zh: "新希望定居点", en: "New Hope" }, count: 1,
+          range: { zh: "5503 秋 10 — 5503 秋 12", en: "5503 Au10 — 5503 Au12" }
+        },
+        milestones: [
+          { when: { zh: "5503 秋 10", en: "5503 Au10" }, what: { zh: "加入殖民地", en: "Joined" } }
+        ],
+        events: [
+          { kind: "Join", date: { zh: "5503 年 秋 10 日", en: "5503 Autumn 10" }, name: { zh: "加入殖民地", en: "Joined" }, params: "", desc: "", chips: [] }
+        ]
+      }
+    };
+
+    const weapons = {
+      "thing-rifle": {
+        name: { zh: "充电步枪", en: "Charge rifle" }, def: "Gun_ChargeRifle",
+        crafter: { zh: "艾拉", en: "Ella" }, crafterId: "pawn-ela",
+        craftedAt: { zh: "5503 年 夏 41 日", en: "5503 Summer 41" },
+        kills: 1, holderCount: 2,
+        currentHolder: { zh: "艾拉", en: "Ella" }, currentHolderId: "pawn-ela",
+        custody: [
+          { who: { zh: "艾拉", en: "Ella" }, id: "pawn-ela", from: { zh: "5503 夏 41", en: "5503 Su41" }, to: { zh: "今", en: "now" }, dur: { zh: "主持有", en: "Primary" } },
+          { who: { zh: "汤姆", en: "Tom" }, id: "pawn-tom", from: { zh: "5503 夏 42", en: "5503 Su42" }, to: { zh: "5503 夏 45", en: "5503 Su45" }, dur: { zh: "3 日", en: "3 days" } }
+        ],
+        combat: [
+          { date: { zh: "5503 秋 12", en: "5503 Au12" }, title: { zh: "击杀：侦察者", en: "Kill: scout" }, sub: { zh: "持有者 艾拉", en: "Held by Ella" } }
+        ],
+        events: [
+          { kind: "Crafted", date: { zh: "5503 年 夏 41 日", en: "5503 Summer 41" }, name: { zh: "制造", en: "Crafted" }, params: { zh: "艾拉", en: "Ella" }, desc: { zh: "此物品由殖民地制造。", en: "Crafted." }, chips: [{ label: { zh: "人物·艾拉", en: "Pawn·Ella" }, goto: "pawn", id: "pawn-ela" }] }
+        ]
+      },
+      "thing-knife": {
+        name: { zh: "短刀", en: "Knife" }, def: "MeleeWeapon_Knife",
+        crafter: null, craftedAt: null, kills: 2, holderCount: 1,
+        currentHolder: { zh: "仓库", en: "Stockpile" }, currentHolderId: null,
+        custody: [
+          { who: { zh: "汤姆", en: "Tom" }, id: "pawn-tom", from: { zh: "5502 夏 1", en: "5502 Su1" }, to: { zh: "5503 秋 12", en: "5503 Au12" }, dur: { zh: "直至阵亡", en: "Until death" } }
+        ],
+        combat: [
+          { date: { zh: "5503 春 22", en: "5503 Sp22" }, title: { zh: "击杀：海盗 ×2", en: "Kills: pirates ×2" }, sub: { zh: "持有者 汤姆", en: "Tom" } }
+        ],
+        events: []
+      },
+      "thing-solar": {
+        name: { zh: "太阳能发电机", en: "Solar generator" }, def: "SolarGenerator",
+        crafter: { zh: "马可", en: "Marco" }, crafterId: "pawn-marco",
+        craftedAt: { zh: "5503 年 夏 18 日", en: "5503 Summer 18" },
+        kills: 0, holderCount: 0, currentHolder: null, currentHolderId: null,
+        custody: [], combat: [],
+        events: [
+          { kind: "Built", date: { zh: "5503 年 夏 18 日", en: "5503 Summer 18" }, name: { zh: "建造", en: "Built" }, params: { zh: "马可", en: "Marco" }, desc: "", chips: [{ label: { zh: "人物·马可", en: "Pawn·Marco" }, goto: "pawn", id: "pawn-marco" }] }
+        ]
+      }
+    };
+
+    const eventsDb = {
+      "ev-death": {
+        meta: { zh: "5503 年 秋 12 日 · 汤姆", en: "5503 Autumn 12 · Tom" },
+        desc: { zh: "这位人物已故。", en: "This colonist died." },
+        tree: [
+          { depth: 0, text: { zh: "死亡 · 汤姆", en: "Died · Tom" } },
+          { depth: 1, text: { zh: "主对象 · 汤姆", en: "Primary · Tom" }, goto: "pawn", id: "pawn-tom" },
+          { depth: 1, text: { zh: "凶手", en: "Killer" } },
+          { depth: 2, text: { zh: "机械族 centipede", en: "Mechanoid centipede" } },
+          { depth: 1, text: { zh: "战役", en: "Battle" } },
+          { depth: 2, text: { zh: "机械族袭击", en: "Mechanoid raid" } }
+        ]
+      },
+      "ev-battle": {
+        meta: { zh: "5503 年 秋 12 日 · 机械族袭击", en: "5503 Autumn 12 · raid" },
+        desc: { zh: "一场重大战役开始了。", en: "A major battle began." },
+        tree: [
+          { depth: 0, text: { zh: "战役 · 机械族袭击", en: "Battle" } },
+          { depth: 1, text: { zh: "参与者", en: "Participants" } },
+          { depth: 2, text: { zh: "艾拉", en: "Ella" }, goto: "pawn", id: "pawn-ela" },
+          { depth: 2, text: { zh: "马可", en: "Marco" }, goto: "pawn", id: "pawn-marco" },
+          { depth: 2, text: { zh: "汤姆", en: "Tom" }, goto: "pawn", id: "pawn-tom" }
+        ]
+      },
+      "ev-craft": {
+        meta: { zh: "5503 年 夏 41 日 · 充电步枪", en: "5503 Summer 41 · rifle" },
+        desc: { zh: "此物品由殖民地制造。", en: "Crafted." },
+        tree: [
+          { depth: 0, text: { zh: "制造 · 充电步枪", en: "Crafted" } },
+          { depth: 1, text: { zh: "充电步枪", en: "Rifle" }, goto: "weapon", id: "thing-rifle" },
+          { depth: 1, text: { zh: "艾拉", en: "Ella" }, goto: "pawn", id: "pawn-ela" }
+        ]
+      },
+      "ev-built": {
+        meta: { zh: "5503 年 夏 18 日 · 太阳能发电机", en: "5503 Summer 18 · solar" },
+        desc: { zh: "此建筑由殖民地建造完成。", en: "Built." },
+        tree: [
+          { depth: 0, text: { zh: "建造 · 太阳能发电机", en: "Built" } },
+          { depth: 1, text: { zh: "太阳能发电机", en: "Solar" }, goto: "weapon", id: "thing-solar" },
+          { depth: 1, text: { zh: "马可", en: "Marco" }, goto: "pawn", id: "pawn-marco" }
+        ]
+      },
+      "ev-join": {
+        meta: { zh: "5502 年 春 3 日 · 莉娜", en: "5502 Spring 3 · Lina" },
+        desc: { zh: "这位人物加入了殖民地。", en: "Joined." },
+        tree: [
+          { depth: 0, text: { zh: "加入 · 莉娜", en: "Join · Lina" } },
+          { depth: 1, text: { zh: "莉娜", en: "Lina" }, goto: "pawn", id: "pawn-lina" }
+        ]
+      }
+    };
+
+    const state = {
+      lang: "zh", view: "home", filter: null,
+      pawnTab: 0, weaponTab: 0,
+      pawnId: "pawn-ela", weaponId: "thing-rifle", eventId: "ev-death",
+      timelineFilter: "All", annotate: false
+    };
+
+    function t(k) { return I18N[state.lang][k] ?? k; }
+    function L(o) {
+      if (o == null) return "";
+      if (typeof o === "string") return o;
+      return o[state.lang] ?? o.zh ?? o.en ?? "";
+    }
+    function hours(n) { return n.toFixed(1) + " h"; }
+    function catLabel(c) {
+      if (c === "weapon") return t("catWeapon");
+      if (c === "apparel") return t("catApparel");
+      if (c === "building") return t("catBuilding");
+      return c || "—";
+    }
+
+    function applyI18n() {
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.getAttribute("data-i18n");
+        if (I18N[state.lang][k] !== undefined) el.textContent = I18N[state.lang][k];
+      });
+      document.getElementById("hdr-title").textContent = t("colonyArchive");
+      document.getElementById("btn-lang").textContent = state.lang === "zh" ? "文案: 中文" : "Copy: EN";
+      renderAll();
+    }
+
+    function setView(view, opts = {}) {
+      state.view = view;
+      if (opts.filter !== undefined) state.filter = opts.filter;
+      if (opts.pawnId) { state.pawnId = opts.pawnId; state.pawnTab = opts.pawnTab ?? 0; state.timelineFilter = "All"; }
+      if (opts.weaponId) { state.weaponId = opts.weaponId; state.weaponTab = 0; }
+      if (opts.eventId) state.eventId = opts.eventId;
+
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      document.getElementById({ home: "view-home", overview: "view-overview", pawn: "view-pawn", weapon: "view-weapon", event: "view-event" }[view]).classList.add("active");
+
+      document.querySelectorAll(".side-item[data-nav]").forEach(btn => {
+        const nav = btn.getAttribute("data-nav");
+        const filter = btn.getAttribute("data-filter");
+        let active = false;
+        if (view === "home" && nav === "home") active = true;
+        if (view === "overview" && nav === "overview") {
+          if (!filter && !state.filter) active = true;
+          if (filter && state.filter === filter) active = true;
+        }
+        btn.classList.toggle("active", active);
+      });
+      document.querySelectorAll(".ov-section").forEach(sec => {
+        sec.style.display = (!state.filter || state.filter === sec.getAttribute("data-cat")) ? "" : "none";
+      });
+
+      const crumbs = {
+        home: "Home",
+        overview: state.filter ? `Overview › ${state.filter}` : "Overview",
+        pawn: `Pawn › ${state.pawnId} › ${PAWN_TABS[state.pawnTab]}`,
+        weapon: `Weapon › ${state.weaponId} › ${WEAPON_TABS[state.weaponTab]}`,
+        event: `Event › ${state.eventId}`
+      };
+      document.getElementById("breadcrumb").textContent = crumbs[view];
+      renderAll();
+    }
+
+    function renderTabs(elId, keys, selected, onPick) {
+      const el = document.getElementById(elId);
+      el.innerHTML = keys.map((k, i) =>
+        `<button type="button" class="tab ${i === selected ? "active" : ""}" data-i="${i}">${t("tab")[k]}</button>`
+      ).join("");
+      el.querySelectorAll(".tab").forEach(btn => btn.addEventListener("click", () => onPick(+btn.dataset.i)));
+    }
+
+    function row(k, v) { return `<div class="detail-row"><div class="k">${k}</div><div class="v">${v}</div></div>`; }
+    function section(s) { return `<div class="section-title">${s}</div>`; }
+    function eventLine(date, title, type) {
+      return `<div class="event-row static"><span class="date">${date}</span><span class="title">${title}</span><span class="type">${type || ""}</span></div>`;
+    }
+    function shareBar(ratio) {
+      const pct = Math.round(Math.min(1, Math.max(0, ratio)) * 100);
+      return `<span class="share-bar"><i style="width:${pct}%"></i></span>${pct}%`;
+    }
+    function sortedWork(p) { return p.work.slice().sort((a, b) => b.h - a.h); }
+    function primarySecondary(p) {
+      const s = sortedWork(p);
+      return { primary: s[0] ? L(s[0].type) : "—", secondary: s[1] ? L(s[1].type) : "—" };
+    }
+    function tierOf(daily) {
+      for (const t of INTENSITY_TIERS) if ((daily || 0) >= t.min) return t;
+      return INTENSITY_TIERS[INTENSITY_TIERS.length - 1];
+    }
+    function renderIntensityHero(p) {
+      const it = p.intensity || { tier: null, totalHours: p.workHours, days: p.days, daily: 0, weekly: 0, monthly: 0, relLabel: null };
+      const hasData = (it.totalHours || 0) > 0 || (it.daily || 0) > 0;
+      const cur = hasData ? (it.tier ? INTENSITY_TIERS.find(t => t.code === it.tier) : tierOf(it.daily)) : null;
+      // N < 5: project current data as an estimate; N >= 5: confirmed actual rating.
+      const estimated = cur ? it.days < 5 : false;
+      const statusTxt = cur ? (estimated ? t("intensityEstimated") : t("intensityActual")) : "";
+      const name = cur ? t(cur.nameKey) : t("intensitySampleInsufficient");
+      const tag = cur ? t(cur.tagKey) : t("intensityObservedWindow");
+      const color = cur ? cur.color : "#718087";
+      const ladder = INTENSITY_TIERS.map(tier => {
+        const isCur = cur && cur.code === tier.code;
+        const op = isCur ? 1 : 0.28;
+        return `<div class="rung ${isCur ? "cur" : ""}" style="background:${tier.color};opacity:${op}">${tier.code}</div>`;
+      }).join("");
+      return `<div class="intensity-hero" data-component="DrawWorkIntensityHeader">
+        <div class="intensity-badge" style="background:${color}">
+          <div class="tcode">${cur ? cur.code : "—"}</div>
+          <div class="tname">${statusTxt ? statusTxt + " · " + name : name}</div>
+          <div class="ttag">${tag}</div>
+        </div>
+        <div class="intensity-stats">
+          <div class="hs"><div class="k">${t("totalWork")}</div><div class="v">${it.totalHours.toFixed(1)}<small> h</small></div><div class="s">${t("intensityObservedWindow")} ${it.days}</div></div>
+          <div class="hs"><div class="k">${t("intensityDaily")}</div><div class="v">${it.daily.toFixed(1)}<small> h/天</small></div><div class="s">${t("intensityMonthly")} ${it.monthly.toFixed(0)}h</div></div>
+          <div class="hs"><div class="k">${t("intensityWeekly")}</div><div class="v">${it.weekly.toFixed(1)}<small> h/周</small></div><div class="s">${it.relLabel ? L(it.relLabel) : ""}</div></div>
+        </div>
+      </div>
+      <div class="ladder">${ladder}</div>
+      <div class="ladder-cap"><span>${t("tierT0")} ▸ ${t("tierT4")}</span><span>${estimated ? t("intensityEstimatedHint") : ""} 阈值 ≥12 / 9 / 6 / 3 h·天⁻¹</span></div>`;
+    }
+    function renderWorkCards(p) {
+      if (!p.work || !p.work.length) return `<div class="empty">—</div>`;
+      return `<div class="work-grid" data-component="DrawWorkIntensityCards">` + p.work.map(w => {
+        const shareColony = w.colony != null ? w.colony : 0;
+        const peak = w.peak != null ? w.peak : 100;
+        const rank = w.rank != null ? w.rank : 0;
+        const rankTxt = rank > 0 ? `${t("intensityRank")} ${rank}` : t("intensityRankUnknown");
+        const shareTxt = `${t("intensityWorkShare")} ${shareColony}% / ${peak}%`;
+        const barPct = Math.round((peak / 100) * 100);
+        return `<div class="work-card" style="border-left-color:${w.color || "var(--info)"}">
+          <div class="top"><div class="wname">${L(w.type)}</div><div class="wh">${w.h.toFixed(1)}<small> h</small></div></div>
+          <div class="rank">${rankTxt}</div>
+          <div class="share">${shareTxt}</div>
+          <div class="bar"><i style="width:${barPct}%"></i></div>
+        </div>`;
+      }).join("") + `</div>`;
+    }
+
+    function renderPawnPanel() {
+      const p = pawns[state.pawnId] || pawns["pawn-ela"];
+      const tab = PAWN_TABS[state.pawnTab];
+      document.getElementById("pawn-name").textContent = L(p.name);
+      const pill = document.getElementById("pawn-pill");
+      pill.textContent = p.alive ? t("alive") : t("dead");
+      pill.className = "pill " + (p.alive ? "alive" : "dead");
+      const live = document.getElementById("pawn-live-badge");
+      if (p.alive && p.liveJob) {
+        live.hidden = false;
+        live.textContent = `${t("liveJob")}: ${L(p.liveJob)}`;
+      } else live.hidden = true;
+      document.getElementById("pawn-meta").textContent =
+        `${L(p.kind)} · ${t("factionName")} · ${L(p.backstory)} · ${t("daysInColony")} ${p.days}`;
+
+      renderTabs("pawn-tabs", PAWN_TABS, state.pawnTab, i => {
+        state.pawnTab = i; state.timelineFilter = "All"; setView("pawn");
+      });
+
+      let html = "";
+      const ps = primarySecondary(p);
+      const prodTotal = p.production.reduce((s, x) => s + x.n, 0);
+      const relCount = p.relations.length + p.intertwined.length;
+
+      if (tab === "Overview") {
+        html += `<div class="stats kpi6" data-component="DrawHeadlineStats">
+          <div class="stat-cell"><div class="label">${t("kpiEvents")}</div><div class="value">${p.events.length}</div></div>
+          <div class="stat-cell"><div class="label">${t("kpiWorkHours")}</div><div class="value">${p.workHours.toFixed(0)}h</div><div class="sub">${ps.primary}</div></div>
+          <div class="stat-cell"><div class="label">${t("kpiProduction")}</div><div class="value">${prodTotal}</div><div class="sub">${(p.production || []).reduce((s, r) => s + (r.value || 0) * r.n, 0).toLocaleString()} sv</div></div>
+          <div class="stat-cell"><div class="label">${t("kpiBattles")}</div><div class="value">${p.combat.length}</div></div>
+          <div class="stat-cell"><div class="label">${t("kpiKills")}</div><div class="value">${p.kills}</div></div>
+          <div class="stat-cell"><div class="label">${t("kpiRelations")}</div><div class="value">${relCount}</div></div>
+        </div>`;
+        html += `<p class="section-hint">${t("samplingNote")}</p>`;
+
+        html += section(t("lifecycle"));
+        html += row(t("status"), p.alive ? t("alive") : t("dead"));
+        html += row(t("kind"), L(p.kind));
+        html += row(t("faction"), t("factionName"));
+        html += row(t("backstory"), L(p.backstory));
+        html += row(t("joinDate"), L(p.join));
+        html += row(t("daysInColony"), String(p.days));
+        if (!p.alive) {
+          html += row(t("deathDate"), L(p.death));
+          html += row(t("deathCause"), L(p.cause));
+          html += row(t("killer"), L(p.killer));
+        }
+        if (p.alive && p.liveLoc) html += row(t("liveLoc"), L(p.liveLoc));
+
+        html += section(t("careerBlurb"));
+        html += `<div class="blurb"><div class="k">${t("contribution")}</div>${L(p.contribution)}</div>`;
+        html += row(t("primaryWork"), ps.primary);
+        html += row(t("secondaryWork"), ps.secondary);
+        html += row(t("totalWork"), hours(p.workHours));
+
+        html += section(t("footprint"));
+        html += row(t("primaryPlace"), L(p.footprint.primary));
+        html += row(t("placeCount"), String(p.footprint.count));
+        html += row(state.lang === "zh" ? "驻留时段" : "Period", L(p.footprint.range));
+
+        html += section(t("keyMilestones"));
+        p.milestones.forEach(m => {
+          html += `<div class="milestone"><div class="when">${L(m.when)}</div><div class="what">${L(m.what)}</div></div>`;
+        });
+
+        html += section(t("keyEvents"));
+        p.events.slice(-3).forEach(e => { html += eventLine(L(e.date), L(e.name), L(e.params)); });
+      }
+
+      if (tab === "Timeline") {
+        const kinds = ["All", ...new Set(p.events.map(e => e.kind))];
+        html += kinds.map(k => {
+          const label = k === "All" ? t("filterAll") : (I18N[state.lang]["ev" + k] || k);
+          return `<span class="chip filter ${state.timelineFilter === k ? "active" : ""}" data-filter-kind="${k}">${label}</span>`;
+        }).join("");
+        const list = p.events.filter(e => state.timelineFilter === "All" || e.kind === state.timelineFilter);
+        if (!list.length) html += `<div class="empty">—</div>`;
+        list.forEach(e => {
+          html += `<div class="timeline-block">`;
+          html += eventLine(L(e.date), L(e.name), L(e.params));
+          if (e.desc) html += `<div class="desc">${L(e.desc)}</div>`;
+          if (e.chips && e.chips.length) {
+            html += `<div style="padding:2px 4px">` + e.chips.map(c =>
+              c.plain ? `<span class="chip plain">${L(c.label)}</span>`
+                : `<span class="chip" data-goto="${c.goto}" data-id="${c.id}">${L(c.label)}</span>`
+            ).join("") + `</div>`;
+          }
+          html += `</div>`;
+        });
+      }
+
+      if (tab === "Career") {
+        const sw = sortedWork(p);
+        const totalH = sw.reduce((s, w) => s + w.h, 0) || p.workHours;
+
+        html += renderIntensityHero(p);
+
+        html += section(t("workTime"));
+        html += `<p class="section-hint">${t("workFootnote")}</p>`;
+        html += renderWorkCards(p);
+
+        html += section(t("production"));
+        if (!p.production || !p.production.length) html += `<div class="empty">—</div>`;
+        else {
+          const totalQty = p.production.reduce((s, r) => s + r.n, 0);
+          const totalVal = p.production.reduce((s, r) => s + (r.value || 0) * r.n, 0);
+          const typeCount = p.production.length;
+          html += `<div class="prod-metrics" data-component="DrawProductionSummary">
+            <div class="prod-metric"><div class="k">${t("productionValue")}</div><div class="v">${totalVal.toLocaleString()} sv</div><div class="s">${t("productionQuantity")} ${totalQty}</div></div>
+            <div class="prod-metric"><div class="k">${t("productionQuantity")}</div><div class="v">${totalQty}</div><div class="s">${t("productionTypeCount")} ${typeCount}</div></div>
+          </div>`;
+          html += `<div class="prod-grid">`;
+          p.production.forEach(r => {
+            const click = r.id ? `data-goto="weapon" data-id="${r.id}" style="cursor:pointer"` : "";
+            const val = r.value != null ? `${(r.value * r.n).toLocaleString()} sv` : "—";
+            html += `<div class="prod-card" ${click}><div class="pn">${L(r.type)}</div><div class="ps">×${r.n} · ${val}</div></div>`;
+          });
+          html += `</div>`;
+        }
+
+        if (!p.alive) {
+          html += `<p class="section-hint">${state.lang === "zh" ? "「当前/死亡」为死亡时快照，档案永久可回看。" : "Now/death is the death snapshot."}</p>`;
+        }
+      }
+
+      if (tab === "CombatLog") {
+        if (!p.alive) {
+          html += section(t("deathDossier"));
+          html += row(t("deathDate"), L(p.death));
+          html += row(t("deathCause"), L(p.cause));
+          html += row(t("killer"), L(p.killer));
+          if (p.deathBattle) html += row(state.lang === "zh" ? "关联战役" : "Battle", L(p.deathBattle));
+        }
+        html += section(t("battleRecords"));
+        if (!p.combat.length) html += `<div class="empty">${t("noBattle")}</div>`;
+        else p.combat.forEach(c => { html += eventLine(L(c.date), L(c.title), L(c.sub)); });
+
+        html += section(t("killRecords"));
+        if (!p.killsList.length) html += `<div class="empty">—</div>`;
+        else p.killsList.forEach(k => {
+          const extra = k.weaponId
+            ? ` <span class="chip" data-goto="weapon" data-id="${k.weaponId}">${L(k.sub)}</span>`
+            : "";
+          html += `<div class="event-row static"><span class="date">${L(k.date)}</span><span class="title">${L(k.title)}${extra}</span><span class="type">${L(k.sub)}</span></div>`;
+        });
+        html += `<div class="footnote">${t("battlesN")}: <b>${p.combat.length}</b> · ${t("killsN")}: <b>${p.kills}</b></div>`;
+      }
+
+      if (tab === "Social") {
+        html += section(t("importantRel"));
+        if (!p.relations.length) html += `<div class="empty">${state.lang === "zh" ? "暂无已记录的重要关系（婚姻/仇敌等事件采集为二期）。" : "No significant ties recorded yet."}</div>`;
+        else {
+          html += `<table class="stat"><thead><tr>
+            <th>${t("relType")}</th><th>${t("person")}</th><th>${t("relStatus")}</th>
+          </tr></thead><tbody>`;
+          p.relations.forEach(r => {
+            html += `<tr class="clickable" data-goto="pawn" data-id="${r.id}">
+              <td>${L(r.type)}</td><td>${L(r.who)}</td><td>${L(r.status)}</td></tr>`;
+          });
+          html += `</tbody></table>`;
+        }
+
+        html += section(t("intertwined"));
+        if (!p.intertwined.length) html += `<div class="empty">—</div>`;
+        else p.intertwined.forEach(b => {
+          html += `<div class="event-row" data-goto="pawn" data-id="${b.id}">
+            <span class="date">${L(b.r)}</span><span class="title">${L(b.n)}</span><span class="type"></span></div>`;
+        });
+
+        html += section(t("relEvents"));
+        if (!p.relEvents.length) html += `<div class="empty">${state.lang === "zh" ? "暂无独立关系事件；共现人物见上。" : "No dedicated relation events yet."}</div>`;
+        else p.relEvents.forEach(e => { html += eventLine(L(e.date), L(e.title), L(e.sub)); });
+      }
+
+      const panel = document.getElementById("pawn-panel");
+      panel.innerHTML = html;
+      bindGoto(panel);
+      panel.querySelectorAll("[data-filter-kind]").forEach(el => {
+        el.addEventListener("click", () => { state.timelineFilter = el.getAttribute("data-filter-kind"); renderPawnPanel(); });
+      });
+    }
+
+    function renderWeaponPanel() {
+      const w = weapons[state.weaponId] || weapons["thing-rifle"];
+      const tab = WEAPON_TABS[state.weaponTab];
+      document.getElementById("weapon-name").textContent = L(w.name);
+      document.getElementById("weapon-meta").textContent = w.def;
+      renderTabs("weapon-tabs", WEAPON_TABS, state.weaponTab, i => { state.weaponTab = i; setView("weapon"); });
+
+      let html = "";
+      if (tab === "Overview") {
+        html += `<div class="stats kpi4">
+          <div class="stat-cell"><div class="label">${t("kpiEvents")}</div><div class="value">${w.events.length}</div></div>
+          <div class="stat-cell"><div class="label">${t("kpiKills")}</div><div class="value">${w.kills}</div></div>
+          <div class="stat-cell"><div class="label">${t("holders")}</div><div class="value">${w.holderCount}</div></div>
+          <div class="stat-cell"><div class="label">${t("crafter")}</div><div class="value" style="font-size:14px;margin-top:8px">${w.crafter ? L(w.crafter) : "—"}</div></div>
+        </div>`;
+        html += row(t("type"), w.def);
+        html += row(t("crafter"), w.crafter ? L(w.crafter) : "—");
+        if (w.craftedAt) html += row(t("craftedAt"), L(w.craftedAt));
+        if (w.currentHolder) html += row(t("holder"), L(w.currentHolder));
+        html += section(t("keyEvents"));
+        (w.events.slice(-3)).forEach(e => html += eventLine(L(e.date), L(e.name), L(e.params)));
+        if (!w.events.length) html += `<div class="empty">—</div>`;
+      }
+      if (tab === "Timeline") {
+        if (!w.events.length) html += `<div class="empty">—</div>`;
+        w.events.forEach(e => {
+          html += `<div class="timeline-block">${eventLine(L(e.date), L(e.name), L(e.params))}`;
+          if (e.desc) html += `<div class="desc">${L(e.desc)}</div>`;
+          if (e.chips) html += `<div style="padding:2px 4px">` + e.chips.map(c =>
+            `<span class="chip" data-goto="${c.goto}" data-id="${c.id}">${L(c.label)}</span>`).join("") + `</div>`;
+          html += `</div>`;
+        });
+      }
+      if (tab === "CombatLog") {
+        html += section(t("killRecords"));
+        if (!w.combat.length) html += `<div class="empty">${t("noBattle")}</div>`;
+        else w.combat.forEach(c => html += eventLine(L(c.date), L(c.title), L(c.sub)));
+        html += `<div class="footnote">${t("killsN")}: <b>${w.kills}</b></div>`;
+      }
+      if (tab === "Custody") {
+        html += section(t("custody"));
+        if (!w.custody.length) html += `<div class="empty">—</div>`;
+        else {
+          html += `<table class="stat"><thead><tr>
+            <th>${t("holder")}</th><th>${t("from")}</th><th>${t("to")}</th><th>${t("duration")}</th>
+          </tr></thead><tbody>`;
+          w.custody.forEach(c => {
+            const click = c.id ? `class="clickable" data-goto="pawn" data-id="${c.id}"` : "";
+            html += `<tr ${click}><td>${L(c.who)}</td><td>${L(c.from)}</td><td>${L(c.to)}</td><td>${L(c.dur)}</td></tr>`;
+          });
+          html += `</tbody></table>`;
+        }
+      }
+      const panel = document.getElementById("weapon-panel");
+      panel.innerHTML = html;
+      bindGoto(panel);
+    }
+
+    function renderEvent() {
+      const ev = eventsDb[state.eventId] || eventsDb["ev-death"];
+      document.getElementById("event-meta").textContent = L(ev.meta);
+      document.getElementById("event-desc").textContent = L(ev.desc);
+      const tree = document.getElementById("event-tree");
+      tree.innerHTML = ev.tree.map(line => {
+        const pad = "　".repeat(line.depth);
+        const branch = line.depth > 0 ? "└ " : "";
+        const label = L(line.text);
+        if (line.goto) return `<div class="tree-line"><span class="indent">${pad}${branch}</span><a data-goto="${line.goto}" data-id="${line.id}">${label}</a></div>`;
+        return `<div class="tree-line"><span class="indent">${pad}${branch}</span>${label}</div>`;
+      }).join("");
+      bindGoto(tree);
+    }
+
+    function renderAll() {
+      if (state.view === "pawn") renderPawnPanel();
+      if (state.view === "weapon") renderWeaponPanel();
+      if (state.view === "event") renderEvent();
+    }
+
+    function bindGoto(root) {
+      root.querySelectorAll("[data-goto]").forEach(el => {
+        el.addEventListener("click", e => {
+          e.stopPropagation();
+          goTo(el.getAttribute("data-goto"), el.getAttribute("data-id"));
+        });
+      });
+    }
+    function goTo(kind, id) {
+      if (kind === "pawn") setView("pawn", { pawnId: id });
+      else if (kind === "weapon") setView("weapon", { weaponId: id });
+      else if (kind === "event") setView("event", { eventId: id });
+    }
+
+    document.querySelectorAll(".side-item[data-nav]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (btn.classList.contains("disabled")) return;
+        const nav = btn.getAttribute("data-nav");
+        const filter = btn.getAttribute("data-filter") || null;
+        if (nav === "home") setView("home", { filter: null });
+        else setView("overview", { filter });
+      });
+    });
+    document.querySelectorAll("[data-goto]").forEach(el => {
+      el.addEventListener("click", () => goTo(el.getAttribute("data-goto"), el.getAttribute("data-id")));
+    });
+
+    document.getElementById("btn-home").onclick = () => setView("home");
+    document.getElementById("btn-overview").onclick = () => setView("overview", { filter: null });
+    document.getElementById("btn-pawn").onclick = () => setView("pawn", { pawnId: "pawn-ela", pawnTab: 0 });
+    document.getElementById("btn-dead").onclick = () => setView("pawn", { pawnId: "pawn-tom", pawnTab: 0 });
+    document.getElementById("btn-weapon").onclick = () => setView("weapon", { weaponId: "thing-rifle" });
+    document.getElementById("btn-event").onclick = () => setView("event", { eventId: "ev-death" });
+    document.getElementById("btn-lang").onclick = () => { state.lang = state.lang === "zh" ? "en" : "zh"; applyI18n(); };
+    document.getElementById("btn-annotate").onclick = () => {
+      state.annotate = !state.annotate;
+      document.getElementById("window").classList.toggle("annotate", state.annotate);
+      document.getElementById("btn-annotate").classList.toggle("active", state.annotate);
+    };
+
+    applyI18n();
+    setView("home");
+  </script>
+</body>
+</html>

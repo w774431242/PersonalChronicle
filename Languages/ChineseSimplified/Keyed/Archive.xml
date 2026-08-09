@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PersonalChronicle.Settings.Category>个人编年史</PersonalChronicle.Settings.Category>
+  <PersonalChronicle.Settings.EnableRecording>启用档案记录</PersonalChronicle.Settings.EnableRecording>
+  <PersonalChronicle.Settings.MaxEventsPerPawn>每位人物最大事件数</PersonalChronicle.Settings.MaxEventsPerPawn>
+  <PersonalChronicle.Settings.DebugLiveCount>调试：活读人口明细日志</PersonalChronicle.Settings.DebugLiveCount>
+  <PersonalChronicle.UI.Title>档案馆</PersonalChronicle.UI.Title>
+  <PersonalChronicle.UI.AllRecords>全部档案</PersonalChronicle.UI.AllRecords>
+  <PersonalChronicle.UI.ActiveRecords>在世</PersonalChronicle.UI.ActiveRecords>
+  <PersonalChronicle.UI.ArchivedRecords>已归档</PersonalChronicle.UI.ArchivedRecords>
+  <PersonalChronicle.UI.NoSelection>选择一个人物查看其档案。</PersonalChronicle.UI.NoSelection>
+  <PersonalChronicle.UI.Status>状态</PersonalChronicle.UI.Status>
+  <PersonalChronicle.UI.Alive>在世</PersonalChronicle.UI.Alive>
+  <PersonalChronicle.UI.Dead>已故</PersonalChronicle.UI.Dead>
+  <PersonalChronicle.UI.JoinDate>加入时间</PersonalChronicle.UI.JoinDate>
+  <PersonalChronicle.UI.DeathDate>逝世时间</PersonalChronicle.UI.DeathDate>
+  <PersonalChronicle.UI.DeathCause>死亡原因</PersonalChronicle.UI.DeathCause>
+  <PersonalChronicle.UI.Kind>职业</PersonalChronicle.UI.Kind>
+  <PersonalChronicle.UI.Faction>派系</PersonalChronicle.UI.Faction>
+  <PersonalChronicle.UI.Timeline>时间轴</PersonalChronicle.UI.Timeline>
+  <PersonalChronicle.UI.TotalCount>人物总数</PersonalChronicle.UI.TotalCount>
+  <PersonalChronicle.UI.ActiveCountLabel>在世：{0}</PersonalChronicle.UI.ActiveCountLabel>
+  <PersonalChronicle.UI.ArchivedCountLabel>已归档：{0}</PersonalChronicle.UI.ArchivedCountLabel>
+  <PersonalChronicle.UI.OverviewTitle>档案总览</PersonalChronicle.UI.OverviewTitle>
+  <PersonalChronicle.UI.NoEvents>暂无事件记录。</PersonalChronicle.UI.NoEvents>
+  <PersonalChronicle.UI.NoService>个人编年史数据暂不可用。</PersonalChronicle.UI.NoService>
+  <PersonalChronicle.UI.UnknownDate>未知</PersonalChronicle.UI.UnknownDate>
+  <PersonalChronicle.UI.Back>返回</PersonalChronicle.UI.Back>
+  <PersonalChronicle.UI.Overview>总览</PersonalChronicle.UI.Overview>
+  <PersonalChronicle.UI.Categories>档案分类</PersonalChronicle.UI.Categories>
+  <PersonalChronicle.UI.CategoryCountLabel>{0} ({1})</PersonalChronicle.UI.CategoryCountLabel>
+  <PersonalChronicle.UI.SectionTitleCount>{0} · {1}</PersonalChronicle.UI.SectionTitleCount>
+  <PersonalChronicle.UI.CategoryCountFormat>{0} · {1}</PersonalChronicle.UI.CategoryCountFormat>
+  <PersonalChronicle.UI.RelatedObjects>关联档案</PersonalChronicle.UI.RelatedObjects>
+  <PersonalChronicle.UI.Category.Pawn>人物</PersonalChronicle.UI.Category.Pawn>
+  <PersonalChronicle.UI.Category.Thing>物品</PersonalChronicle.UI.Category.Thing>
+  <PersonalChronicle.UI.Category.Battle>战役</PersonalChronicle.UI.Category.Battle>
+  <PersonalChronicle.UI.Category.Location>地点</PersonalChronicle.UI.Category.Location>
+  <PersonalChronicle.UI.NoCategoryData>此分类暂无档案。</PersonalChronicle.UI.NoCategoryData>
+  <PersonalChronicle.UI.StatOnlyMode>统计模式</PersonalChronicle.UI.StatOnlyMode>
+  <PersonalChronicle.UI.NoRelated>暂无关联档案。</PersonalChronicle.UI.NoRelated>
+  <PersonalChronicle.UI.RecentRecords>最近记录</PersonalChronicle.UI.RecentRecords>
+  <PersonalChronicle.UI.Type>类型</PersonalChronicle.UI.Type>
+  <PersonalChronicle.UI.MapId>地图</PersonalChronicle.UI.MapId>
+  <PersonalChronicle.UI.CellLabel>位置</PersonalChronicle.UI.CellLabel>
+  <PersonalChronicle.Event.Join>加入殖民地</PersonalChronicle.Event.Join>
+  <PersonalChronicle.Event.Join.Desc>这位人物加入了殖民地。</PersonalChronicle.Event.Join.Desc>
+  <PersonalChronicle.Event.Death>死亡</PersonalChronicle.Event.Death>
+  <PersonalChronicle.Event.Death.Desc>这位人物已故。</PersonalChronicle.Event.Death.Desc>
+  <PersonalChronicle.Event.Crafted>制造</PersonalChronicle.Event.Crafted>
+  <PersonalChronicle.Event.Crafted.Desc>此物品由殖民地制造。</PersonalChronicle.Event.Crafted.Desc>
+  <PersonalChronicle.Event.Built>建造</PersonalChronicle.Event.Built>
+  <PersonalChronicle.Event.Built.Desc>此建筑由殖民地建造完成。</PersonalChronicle.Event.Built.Desc>
+  <PersonalChronicle.Event.Battle>战役</PersonalChronicle.Event.Battle>
+  <PersonalChronicle.Event.Battle.Desc>一场重大战役开始了。</PersonalChronicle.Event.Battle.Desc>
+
+  <!-- v0.4: five-view information architecture (home / overview / pawn / weapon / event) -->
+  <PersonalChronicle.UI.ColonyArchive>殖民地档案馆</PersonalChronicle.UI.ColonyArchive>
+  <PersonalChronicle.UI.Home>首页</PersonalChronicle.UI.Home>
+  <PersonalChronicle.UI.Pawns>人物</PersonalChronicle.UI.Pawns>
+  <PersonalChronicle.UI.Weapons>武器</PersonalChronicle.UI.Weapons>
+  <PersonalChronicle.UI.Events>事件</PersonalChronicle.UI.Events>
+  <PersonalChronicle.UI.ArchiveHomeDesc>殖民地档案馆：记录殖民地的历史、人物与事件。</PersonalChronicle.UI.ArchiveHomeDesc>
+  <PersonalChronicle.UI.Navigation>导航</PersonalChronicle.UI.Navigation>
+  <PersonalChronicle.UI.HomeOverview>首页总览</PersonalChronicle.UI.HomeOverview>
+  <PersonalChronicle.UI.AllArchives>全部档案</PersonalChronicle.UI.AllArchives>
+  <PersonalChronicle.UI.Tools>快捷</PersonalChronicle.UI.Tools>
+  <PersonalChronicle.UI.Favorites>收藏</PersonalChronicle.UI.Favorites>
+  <PersonalChronicle.UI.Milestones>里程碑</PersonalChronicle.UI.Milestones>
+  <PersonalChronicle.UI.Search>搜索</PersonalChronicle.UI.Search>
+  <PersonalChronicle.UI.ToolsPlaceholder>待实现。</PersonalChronicle.UI.ToolsPlaceholder>
+  <PersonalChronicle.UI.RecentHistory>最近发生的历史</PersonalChronicle.UI.RecentHistory>
+  <PersonalChronicle.UI.ImportantArchives>重要档案</PersonalChronicle.UI.ImportantArchives>
+  <PersonalChronicle.UI.OverviewDesc>所有已建档对象 · 按类型浏览 · 深度差异化</PersonalChronicle.UI.OverviewDesc>
+  <PersonalChronicle.UI.StatsOnlyNote>仅统计</PersonalChronicle.UI.StatsOnlyNote>
+  <PersonalChronicle.UI.Tab.Overview>总览</PersonalChronicle.UI.Tab.Overview>
+  <PersonalChronicle.UI.Tab.Timeline>时间轴</PersonalChronicle.UI.Tab.Timeline>
+  <PersonalChronicle.UI.Tab.Work>工作</PersonalChronicle.UI.Tab.Work>
+  <PersonalChronicle.UI.Tab.Production>生产</PersonalChronicle.UI.Tab.Production>
+  <PersonalChronicle.UI.Tab.Combat>战斗</PersonalChronicle.UI.Tab.Combat>
+  <PersonalChronicle.UI.Tab.Skills>技能</PersonalChronicle.UI.Tab.Skills>
+  <PersonalChronicle.UI.Tab.Health>健康</PersonalChronicle.UI.Tab.Health>
+  <PersonalChronicle.UI.Tab.Relations>关系</PersonalChronicle.UI.Tab.Relations>
+  <PersonalChronicle.UI.Tab.Items>物品</PersonalChronicle.UI.Tab.Items>
+  <PersonalChronicle.UI.Tab.Places>地点</PersonalChronicle.UI.Tab.Places>
+  <PersonalChronicle.UI.Tab.Stats>统计</PersonalChronicle.UI.Tab.Stats>
+  <PersonalChronicle.UI.Tab.Holders>持有者</PersonalChronicle.UI.Tab.Holders>
+  <PersonalChronicle.UI.Tab.Craft>制造</PersonalChronicle.UI.Tab.Craft>
+  <PersonalChronicle.UI.Stats>统计</PersonalChronicle.UI.Stats>
+  <PersonalChronicle.UI.Skills>技能</PersonalChronicle.UI.Skills>
+  <PersonalChronicle.UI.Relations>关系</PersonalChronicle.UI.Relations>
+  <PersonalChronicle.UI.NoLiveData>已故·无实时数据</PersonalChronicle.UI.NoLiveData>
+  <PersonalChronicle.UI.NoCaptureYet>待数据捕获</PersonalChronicle.UI.NoCaptureYet>
+  <PersonalChronicle.UI.NoCaptureExplanation>该分类的数据捕获尚未实现，未来版本将补充真实记录。</PersonalChronicle.UI.NoCaptureExplanation>
+  <PersonalChronicle.UI.BattleRecords>战斗记录</PersonalChronicle.UI.BattleRecords>
+  <PersonalChronicle.UI.NoBattleRecords>暂无战斗记录。</PersonalChronicle.UI.NoBattleRecords>
+  <PersonalChronicle.UI.BattleParticipants>参战</PersonalChronicle.UI.BattleParticipants>
+  <PersonalChronicle.UI.NoCraftRecord>暂无制造记录。</PersonalChronicle.UI.NoCraftRecord>
+  <PersonalChronicle.UI.NoProduction>暂无制造或建造记录。</PersonalChronicle.UI.NoProduction>
+  <PersonalChronicle.UI.ProductionType>物品类型</PersonalChronicle.UI.ProductionType>
+  <PersonalChronicle.UI.ProductionCount>数量</PersonalChronicle.UI.ProductionCount>
+  <PersonalChronicle.UI.ProductionTypeCount>{0} 种物品</PersonalChronicle.UI.ProductionTypeCount>
+  <PersonalChronicle.UI.ProductionLastTime>最近制造时间</PersonalChronicle.UI.ProductionLastTime>
+  <!-- v2.3: live tabs (LD-2/3/4) -->
+  <PersonalChronicle.UI.WorkPriorities>工作优先级</PersonalChronicle.UI.WorkPriorities>
+  <PersonalChronicle.UI.WorkType>工作类型</PersonalChronicle.UI.WorkType>
+  <PersonalChronicle.UI.WorkPriority>优先级</PersonalChronicle.UI.WorkPriority>
+  <PersonalChronicle.UI.NoWorkData>无工作优先级数据。</PersonalChronicle.UI.NoWorkData>
+  <PersonalChronicle.UI.CurrentJob>当前工作</PersonalChronicle.UI.CurrentJob>
+  <PersonalChronicle.UI.PlacesCurrent>当前位置</PersonalChronicle.UI.PlacesCurrent>
+  <PersonalChronicle.UI.PlacesMap>地图</PersonalChronicle.UI.PlacesMap>
+  <PersonalChronicle.UI.PlacesCaravan>商队</PersonalChronicle.UI.PlacesCaravan>
+  <PersonalChronicle.UI.PlacesWorldTile>世界坐标：{0}</PersonalChronicle.UI.PlacesWorldTile>
+  <PersonalChronicle.UI.UnknownPlace>未知</PersonalChronicle.UI.UnknownPlace>
+  <PersonalChronicle.UI.NoLocationData>无位置数据。</PersonalChronicle.UI.NoLocationData>
+  <PersonalChronicle.UI.NoLocationExplanation>该人物已故或不在世界中。</PersonalChronicle.UI.NoLocationExplanation>
+  <PersonalChronicle.UI.CurrentHolder>当前持有者</PersonalChronicle.UI.CurrentHolder>
+  <PersonalChronicle.UI.NoHolder>当前无持有者。</PersonalChronicle.UI.NoHolder>
+  <PersonalChronicle.UI.Crafter>制造者</PersonalChronicle.UI.Crafter>
+  <PersonalChronicle.UI.CraftedAt>制造时间</PersonalChronicle.UI.CraftedAt>
+  <PersonalChronicle.UI.HeldItems>持有 / 关联物品</PersonalChronicle.UI.HeldItems>
+  <PersonalChronicle.UI.EventCount>事件数</PersonalChronicle.UI.EventCount>
+  <PersonalChronicle.UI.LinkedCount>关联档案</PersonalChronicle.UI.LinkedCount>
+  <PersonalChronicle.UI.FirstEvent>最早事件</PersonalChronicle.UI.FirstEvent>
+  <PersonalChronicle.UI.LastEvent>最近事件</PersonalChronicle.UI.LastEvent>
+  <PersonalChronicle.UI.OverallHealth>整体健康</PersonalChronicle.UI.OverallHealth>
+  <PersonalChronicle.UI.HealthGood>良好</PersonalChronicle.UI.HealthGood>
+  <PersonalChronicle.UI.HealthInjured>受伤</PersonalChronicle.UI.HealthInjured>
+  <PersonalChronicle.UI.HealthCritical>濒危</PersonalChronicle.UI.HealthCritical>
+  <PersonalChronicle.UI.Hediffs>健康状态</PersonalChronicle.UI.Hediffs>
+  <PersonalChronicle.UI.NoHediffs>无健康异常。</PersonalChronicle.UI.NoHediffs>
+  <PersonalChronicle.UI.NoRelations>暂无关系记录。</PersonalChronicle.UI.NoRelations>
+  <PersonalChronicle.UI.Character>人物</PersonalChronicle.UI.Character>
+  <PersonalChronicle.UI.Killer>凶手</PersonalChronicle.UI.Killer>
+  <PersonalChronicle.UI.KillerWithName>凶手：{0}</PersonalChronicle.UI.KillerWithName>
+  <PersonalChronicle.UI.Weapon>武器</PersonalChronicle.UI.Weapon>
+  <PersonalChronicle.UI.Battle>战役</PersonalChronicle.UI.Battle>
+  <PersonalChronicle.UI.Location>地点</PersonalChronicle.UI.Location>
+  <PersonalChronicle.UI.Participants>参与者</PersonalChronicle.UI.Participants>
+  <PersonalChronicle.UI.FollowupEvents>后续事件</PersonalChronicle.UI.FollowupEvents>
+  <PersonalChronicle.UI.RelatedNetwork>关联档案网络</PersonalChronicle.UI.RelatedNetwork>
+  <PersonalChronicle.UI.EventDescription>事件描述</PersonalChronicle.UI.EventDescription>
+  <PersonalChronicle.UI.NoEventSelected>未选择事件。</PersonalChronicle.UI.NoEventSelected>
+  <!-- v2.4: live home stats -->
+  <PersonalChronicle.UI.CurrentColonists>当前殖民者</PersonalChronicle.UI.CurrentColonists>
+  <PersonalChronicle.UI.ArchivePawnRecords>档案记录</PersonalChronicle.UI.ArchivePawnRecords>
+  <!-- v2.5: 人物角色区分（自由殖民者 / 奴隶 / 囚犯） -->
+  <PersonalChronicle.UI.RoleFreeColonist>自由殖民者</PersonalChronicle.UI.RoleFreeColonist>
+  <PersonalChronicle.UI.RoleSlave>奴隶</PersonalChronicle.UI.RoleSlave>
+  <PersonalChronicle.UI.RolePrisoner>囚犯</PersonalChronicle.UI.RolePrisoner>
+  <PersonalChronicle.UI.LiveBreakdown>自由 {0} · 奴隶 {1} · 囚犯 {2}</PersonalChronicle.UI.LiveBreakdown>
+  <PersonalChronicle.UI.OverviewLiveSuffix>（当前 {0}）</PersonalChronicle.UI.OverviewLiveSuffix>
+  <!-- v3.1: biography tabs -->
+  <PersonalChronicle.UI.Tab.Career>生涯</PersonalChronicle.UI.Tab.Career>
+  <PersonalChronicle.UI.Tab.CombatLog>战斗履历</PersonalChronicle.UI.Tab.CombatLog>
+  <PersonalChronicle.UI.Tab.Social>社会关系</PersonalChronicle.UI.Tab.Social>
+  <PersonalChronicle.UI.Tab.Custody>流转</PersonalChronicle.UI.Tab.Custody>
+  <PersonalChronicle.UI.Lifecycle>生命周期</PersonalChronicle.UI.Lifecycle>
+  <PersonalChronicle.UI.Backstory>背景</PersonalChronicle.UI.Backstory>
+  <PersonalChronicle.UI.DaysInColony>在殖天数</PersonalChronicle.UI.DaysInColony>
+  <PersonalChronicle.UI.CareerSummary>生涯摘要</PersonalChronicle.UI.CareerSummary>
+  <PersonalChronicle.UI.PrimaryWork>主业</PersonalChronicle.UI.PrimaryWork>
+  <PersonalChronicle.UI.SecondaryWork>副业</PersonalChronicle.UI.SecondaryWork>
+  <PersonalChronicle.UI.TotalWorkHours>累计工时</PersonalChronicle.UI.TotalWorkHours>
+  <PersonalChronicle.UI.Footprint>足迹</PersonalChronicle.UI.Footprint>
+  <PersonalChronicle.UI.PrimaryPlace>主驻地</PersonalChronicle.UI.PrimaryPlace>
+  <PersonalChronicle.UI.KeyEvents>关键事件</PersonalChronicle.UI.KeyEvents>
+  <PersonalChronicle.UI.KpiBattles>参战</PersonalChronicle.UI.KpiBattles>
+  <PersonalChronicle.UI.KpiKills>击杀</PersonalChronicle.UI.KpiKills>
+  <PersonalChronicle.UI.KpiRelations>关系</PersonalChronicle.UI.KpiRelations>
+  <PersonalChronicle.UI.ArchiveDataNote>以下为可存档履历数据，人物去世后仍可回看。</PersonalChronicle.UI.ArchiveDataNote>
+  <PersonalChronicle.UI.WorkTime>工作累计工时</PersonalChronicle.UI.WorkTime>
+  <PersonalChronicle.UI.WorkTimeFootnote>工时自本版本起约每 2 秒采样累计；死后冻结。不是原版工作优先级。</PersonalChronicle.UI.WorkTimeFootnote>
+  <PersonalChronicle.UI.NoWorkTimeData>暂无工时采样（安装后开始累计）。</PersonalChronicle.UI.NoWorkTimeData>
+  <PersonalChronicle.UI.Intensity.SampleInsufficient>采样中</PersonalChronicle.UI.Intensity.SampleInsufficient>
+  <PersonalChronicle.UI.Intensity.Estimated>预估</PersonalChronicle.UI.Intensity.Estimated>
+  <PersonalChronicle.UI.Intensity.Actual>实际</PersonalChronicle.UI.Intensity.Actual>
+  <PersonalChronicle.UI.Intensity.ObservedWindow>已观测 {0} 天</PersonalChronicle.UI.Intensity.ObservedWindow>
+  <PersonalChronicle.UI.Intensity.Daily>日均工时</PersonalChronicle.UI.Intensity.Daily>
+  <PersonalChronicle.UI.Intensity.Weekly>周度估算</PersonalChronicle.UI.Intensity.Weekly>
+  <PersonalChronicle.UI.Intensity.MonthlyEst>30日估算：{0}</PersonalChronicle.UI.Intensity.MonthlyEst>
+  <PersonalChronicle.UI.Intensity.Relative>相对殖民地负荷：{0} 倍</PersonalChronicle.UI.Intensity.Relative>
+  <PersonalChronicle.UI.Intensity.RelativeUnavailable>暂无法计算殖民地相对负荷</PersonalChronicle.UI.Intensity.RelativeUnavailable>
+  <PersonalChronicle.UI.Intensity.Overload>相对负荷偏高</PersonalChronicle.UI.Intensity.Overload>
+  <PersonalChronicle.UI.Intensity.Slack>相对负荷偏低</PersonalChronicle.UI.Intensity.Slack>
+  <PersonalChronicle.UI.Intensity.Rank>殖民地排名 {0}/{1}</PersonalChronicle.UI.Intensity.Rank>
+  <PersonalChronicle.UI.Intensity.RankUnknown>暂无殖民地排名</PersonalChronicle.UI.Intensity.RankUnknown>
+  <PersonalChronicle.UI.Intensity.WorkShare>个人占比 {0}% · 为最高值的 {1}%</PersonalChronicle.UI.Intensity.WorkShare>
+  <PersonalChronicle.UI.Hours>{0} 小时</PersonalChronicle.UI.Hours>
+  <PersonalChronicle.UI.NotAvailable>—</PersonalChronicle.UI.NotAvailable>
+  <PersonalChronicle.UI.IntensityTier.ReactorMule>核动力驴</PersonalChronicle.UI.IntensityTier.ReactorMule>
+  <PersonalChronicle.UI.IntensityTier.SuperWorkhorse>超级牛马</PersonalChronicle.UI.IntensityTier.SuperWorkhorse>
+  <PersonalChronicle.UI.IntensityTier.RegularWorkhorse>常规牛马</PersonalChronicle.UI.IntensityTier.RegularWorkhorse>
+  <PersonalChronicle.UI.IntensityTier.PoorWorkhorse>劣质牛马</PersonalChronicle.UI.IntensityTier.PoorWorkhorse>
+  <PersonalChronicle.UI.IntensityTier.SocialSlacker>社会懒汉</PersonalChronicle.UI.IntensityTier.SocialSlacker>
+  <PersonalChronicle.UI.IntensityTag.ReactorMule>觉醒即干 · 终日不休</PersonalChronicle.UI.IntensityTag.ReactorMule>
+  <PersonalChronicle.UI.IntensityTag.SuperWorkhorse>远超常人 · 顶梁柱</PersonalChronicle.UI.IntensityTag.SuperWorkhorse>
+  <PersonalChronicle.UI.IntensityTag.RegularWorkhorse>标准勤勉 · 可靠主力</PersonalChronicle.UI.IntensityTag.RegularWorkhorse>
+  <PersonalChronicle.UI.IntensityTag.PoorWorkhorse>干得不情愿 · 低于均值</PersonalChronicle.UI.IntensityTag.PoorWorkhorse>
+  <PersonalChronicle.UI.IntensityTag.SocialSlacker>日均 0–3 小时 · 偏低</PersonalChronicle.UI.IntensityTag.SocialSlacker>
+  <PersonalChronicle.UI.Rank>排名</PersonalChronicle.UI.Rank>
+  <PersonalChronicle.UI.WorkHours>工时</PersonalChronicle.UI.WorkHours>
+  <PersonalChronicle.UI.WorkShare>占比</PersonalChronicle.UI.WorkShare>
+  <PersonalChronicle.UI.LastWorked>最近从事</PersonalChronicle.UI.LastWorked>
+  <PersonalChronicle.UI.SkillArchive>技能档案</PersonalChronicle.UI.SkillArchive>
+  <PersonalChronicle.UI.NoSkillArchive>暂无技能快照。</PersonalChronicle.UI.NoSkillArchive>
+  <PersonalChronicle.UI.SkillName>技能</PersonalChronicle.UI.SkillName>
+  <PersonalChronicle.UI.SkillJoin>入档</PersonalChronicle.UI.SkillJoin>
+  <PersonalChronicle.UI.SkillNow>当前/死亡</PersonalChronicle.UI.SkillNow>
+  <PersonalChronicle.UI.SkillDelta>成长</PersonalChronicle.UI.SkillDelta>
+  <PersonalChronicle.UI.DeathDossier>阵亡档案</PersonalChronicle.UI.DeathDossier>
+  <PersonalChronicle.UI.Intertwined>命运交织</PersonalChronicle.UI.Intertwined>
+  <PersonalChronicle.UI.SharedEvents>事件共现</PersonalChronicle.UI.SharedEvents>
+  <PersonalChronicle.UI.NoSocialData>暂无关联人物。</PersonalChronicle.UI.NoSocialData>
+  <PersonalChronicle.UI.ImportantRelations>重要关系</PersonalChronicle.UI.ImportantRelations>
+  <PersonalChronicle.UI.ImportantRelationsNote>婚姻/仇敌等关系事件采集将在后续版本补充；当前展示事件共现人物。</PersonalChronicle.UI.ImportantRelationsNote>
+  <!-- v3.1 P2 combat -->
+  <PersonalChronicle.UI.KillRecords>击杀记录</PersonalChronicle.UI.KillRecords>
+  <PersonalChronicle.UI.NoKillRecords>暂无击杀记录。</PersonalChronicle.UI.NoKillRecords>
+  <PersonalChronicle.UI.CombatFooter>参战 {0} · 击杀 {1}</PersonalChronicle.UI.CombatFooter>
+  <PersonalChronicle.UI.HolderHistory>持有履历</PersonalChronicle.UI.HolderHistory>
+  <PersonalChronicle.UI.NoHolderHistory>暂无持有履历（制造/使用后开始记录）。</PersonalChronicle.UI.NoHolderHistory>
+  <!-- v3.1 P3 place + social -->
+  <PersonalChronicle.Event.Social>社会关系</PersonalChronicle.Event.Social>
+  <PersonalChronicle.Event.Social.Desc>一段重要的社会关系发生变化。</PersonalChronicle.Event.Social.Desc>
+  <PersonalChronicle.UI.PlaceVisitCount>到访记录</PersonalChronicle.UI.PlaceVisitCount>
+  <PersonalChronicle.UI.NoPlaceHistory>暂无地点履历（安装后开始采样）。</PersonalChronicle.UI.NoPlaceHistory>
+  <PersonalChronicle.UI.PlaceName>地点</PersonalChronicle.UI.PlaceName>
+  <PersonalChronicle.UI.PlaceEnter>进入</PersonalChronicle.UI.PlaceEnter>
+  <PersonalChronicle.UI.PlaceLeave>离开</PersonalChronicle.UI.PlaceLeave>
+  <PersonalChronicle.UI.PlaceStillThere>至今</PersonalChronicle.UI.PlaceStillThere>
+  <PersonalChronicle.UI.NoSignificantRelations>暂无重要关系快照（恋爱/婚姻/亲缘结成后记录）。</PersonalChronicle.UI.NoSignificantRelations>
+  <PersonalChronicle.UI.RelType>关系</PersonalChronicle.UI.RelType>
+  <PersonalChronicle.UI.RelPerson>人物</PersonalChronicle.UI.RelPerson>
+  <PersonalChronicle.UI.RelStatus>状态</PersonalChronicle.UI.RelStatus>
+  <PersonalChronicle.UI.RelSince>起始</PersonalChronicle.UI.RelSince>
+  <PersonalChronicle.UI.RelActive>存续</PersonalChronicle.UI.RelActive>
+  <PersonalChronicle.UI.RelEnded>已结束</PersonalChronicle.UI.RelEnded>
+  <PersonalChronicle.UI.RelationEvents>关系事件</PersonalChronicle.UI.RelationEvents>
+  <PersonalChronicle.UI.NoRelationEvents>暂无关系事件。</PersonalChronicle.UI.NoRelationEvents>
+  <PersonalChronicle.UI.SocialFormedTitle>结成{0} · {1}</PersonalChronicle.UI.SocialFormedTitle>
+  <PersonalChronicle.UI.SocialEndedTitle>结束{0} · {1}</PersonalChronicle.UI.SocialEndedTitle>
+  <PersonalChronicle.UI.RelActionFormed>结成</PersonalChronicle.UI.RelActionFormed>
+  <PersonalChronicle.UI.RelActionEnded>结束</PersonalChronicle.UI.RelActionEnded>
+  <PersonalChronicle.UI.VictimWithName>受害者：{0}</PersonalChronicle.UI.VictimWithName>
+  <PersonalChronicle.UI.RelationNetwork>关系网络</PersonalChronicle.UI.RelationNetwork>
+  <PersonalChronicle.UI.TimelineCareerLayer>生涯</PersonalChronicle.UI.TimelineCareerLayer>
+  <PersonalChronicle.UI.TimelineCombatLayer>战斗</PersonalChronicle.UI.TimelineCombatLayer>
+  <PersonalChronicle.UI.TimelineSocialLayer>社会</PersonalChronicle.UI.TimelineSocialLayer>
+  <PersonalChronicle.UI.TimelineImportance>最低重要度：{0}</PersonalChronicle.UI.TimelineImportance>
+  <PersonalChronicle.UI.ImportanceRoutine>日常</PersonalChronicle.UI.ImportanceRoutine>
+  <PersonalChronicle.UI.ImportanceNormal>普通</PersonalChronicle.UI.ImportanceNormal>
+  <PersonalChronicle.UI.ImportanceImportant>重要</PersonalChronicle.UI.ImportanceImportant>
+  <PersonalChronicle.UI.ImportanceCritical>关键</PersonalChronicle.UI.ImportanceCritical>
+  <PersonalChronicle.UI.NoTimelineMatches>当前图层没有匹配的事件。</PersonalChronicle.UI.NoTimelineMatches>
+  <PersonalChronicle.UI.ProductionValue>累计生产价值</PersonalChronicle.UI.ProductionValue>
+  <PersonalChronicle.UI.ProductionQuantity>数量：{0}</PersonalChronicle.UI.ProductionQuantity>
+  <PersonalChronicle.UI.ProductionCard>{0} 件 · {1}</PersonalChronicle.UI.ProductionCard>
+  <PersonalChronicle.UI.MarketValueFormat>{0} 银</PersonalChronicle.UI.MarketValueFormat>
+</LanguageData>

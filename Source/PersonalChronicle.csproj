@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <RootNamespace>PersonalChronicle</RootNamespace>
+    <AssemblyName>PersonalChronicle</AssemblyName>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- csproj sits at Source/ root: ..\Assemblies\ = <mod>/Assemblies (NOT ..\..\Assemblies\) -->
+    <OutputPath>..\Assemblies\</OutputPath>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Lets `dotnet build` work without Visual Studio installed. -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <RimWorldPath Condition="'$(RimWorldPath)' == ''">E:\SteamLibrary\steamapps\common\RimWorld</RimWorldPath>
+    <HarmonyPath Condition="'$(HarmonyPath)' == ''">E:\SteamLibrary\steamapps\workshop\content\294100\2009463077</HarmonyPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- TextAnchor (UI windows) lives in TextRenderingModule -->
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- 0Harmony: fallback chain 游戏 Managed → Harmony Current → Harmony 1.5 -->
+    <Reference Include="0Harmony" Condition="Exists('$(RimWorldPath)\RimWorldWin64_Data\Managed\0Harmony.dll')">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony" Condition="!Exists('$(RimWorldPath)\RimWorldWin64_Data\Managed\0Harmony.dll') And Exists('$(HarmonyPath)\Current\Assemblies\0Harmony.dll')">
+      <HintPath>$(HarmonyPath)\Current\Assemblies\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony" Condition="!Exists('$(RimWorldPath)\RimWorldWin64_Data\Managed\0Harmony.dll') And !Exists('$(HarmonyPath)\Current\Assemblies\0Harmony.dll') And Exists('$(HarmonyPath)\1.5\Assemblies\0Harmony.dll')">
+      <HintPath>$(HarmonyPath)\1.5\Assemblies\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

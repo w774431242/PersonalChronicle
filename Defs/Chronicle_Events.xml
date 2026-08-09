@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    ChronicleEventDef: data-driven event templates (Level 1 Def).
+    - defName MUST equal the TypeKey written by ArchiveService, because the UI
+      resolves event names via DefDatabase<ChronicleEventDef>.GetNamedSilentFail(ev.TypeKey).
+    - IDENTITY vs TRANSLATION are decoupled (v0.3): defName is the immutable
+      save identity (dot-free); labelKey/descriptionKey are translation entry
+      points (changeable, dot-bearing keys), never used as identity.
+    - Only language-independent keys are stored here; user-visible text lives in
+      Languages/<Lang>/Keyed/Archive.xml (PersonalChronicle.Event.*).
+    - 1.6: element name must be the full namespace (simple name fails to resolve).
+
+    DEAD LABEL NOTE (v0.3): the <label> fields below are DEAD copy. The UI
+    renders exclusively through labelKey / descriptionKey and never reads the
+    Def base-class label. They are KEPT (not deleted) as a conservative measure
+    — Def.label is a base-class field and removing it risks XML load warnings;
+    leaving it harms nothing since it is never displayed. Do not localize them.
+  -->
+  <PersonalChronicle.Domain.ChronicleEventDef>
+    <defName>PersonalChronicleEventJoin</defName>
+    <!-- Dead label (UI reads labelKey only) — kept for Def base-class safety. -->
+    <label>Colonist Joined</label>
+    <labelKey>PersonalChronicle.Event.Join</labelKey>
+    <descriptionKey>PersonalChronicle.Event.Join.Desc</descriptionKey>
+    <kind>Join</kind>
+    <defaultImportance>2</defaultImportance>
+  </PersonalChronicle.Domain.ChronicleEventDef>
+
+  <PersonalChronicle.Domain.ChronicleEventDef>
+    <defName>PersonalChronicleEventDeath</defName>
+    <!-- Dead label (UI reads labelKey only) — kept for Def base-class safety. -->
+    <label>Colonist Died</label>
+    <labelKey>PersonalChronicle.Event.Death</labelKey>
+    <descriptionKey>PersonalChronicle.Event.Death.Desc</descriptionKey>
+    <kind>Death</kind>
+    <defaultImportance>3</defaultImportance>
+  </PersonalChronicle.Domain.ChronicleEventDef>
+
+  <!-- v2.1 Phase 1 capture events. defName MUST stay dot-free (RimWorld
+       constraint) and MUST equal the TypeKey written by ArchiveService. -->
+  <PersonalChronicle.Domain.ChronicleEventDef>
+    <defName>PersonalChronicleEventCrafted</defName>
+    <!-- Dead label (UI reads labelKey only) — kept for Def base-class safety. -->
+    <label>Crafted</label>
+    <labelKey>PersonalChronicle.Event.Crafted</labelKey>
+    <descriptionKey>PersonalChronicle.Event.Crafted.Desc</descriptionKey>
+    <kind>Craft</kind>
+    <defaultImportance>0</defaultImportance>
+  </PersonalChronicle.Domain.ChronicleEventDef>
+
+  <PersonalChronicle.Domain.ChronicleEventDef>
+    <defName>PersonalChronicleEventBuilt</defName>
+    <!-- Dead label (UI reads labelKey only) — kept for Def base-class safety. -->
+    <label>Built</label>
+    <labelKey>PersonalChronicle.Event.Built</labelKey>
+    <descriptionKey>PersonalChronicle.Event.Built.Desc</descriptionKey>
+    <kind>Built</kind>
+    <defaultImportance>0</defaultImportance>
+  </PersonalChronicle.Domain.ChronicleEventDef>
+
+  <PersonalChronicle.Domain.ChronicleEventDef>
+    <defName>PersonalChronicleEventBattle</defName>
+    <!-- Dead label (UI reads labelKey only) — kept for Def base-class safety. -->
+    <label>Battle</label>
+    <labelKey>PersonalChronicle.Event.Battle</labelKey>
+    <descriptionKey>PersonalChronicle.Event.Battle.Desc</descriptionKey>
+    <kind>Battle</kind>
+    <defaultImportance>2</defaultImportance>
+  </PersonalChronicle.Domain.ChronicleEventDef>
+
+  <!-- v3.1 P3: social relation formed/ended (Params carry relation defName + action). -->
+  <PersonalChronicle.Domain.ChronicleEventDef>
+    <defName>PersonalChronicleEventSocial</defName>
+    <label>Social Relation</label>
+    <labelKey>PersonalChronicle.Event.Social</labelKey>
+    <descriptionKey>PersonalChronicle.Event.Social.Desc</descriptionKey>
+    <kind>Social</kind>
+    <defaultImportance>2</defaultImportance>
+  </PersonalChronicle.Domain.ChronicleEventDef>
+</Defs>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Personal Chronicle - Archive</name>
+  <author>Personal Chronicle Team</author>
+  <packageId>PersonalChronicle.Archive</packageId>
+  <modVersion>0.3.0</modVersion>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+  </loadAfter>
+  <description>殖民地档案馆：记录人物、物品、战役与地点档案，支持加入/死亡/制造/建造/战役事件时间轴，活读殖民者统计与关联跳转。需要 Harmony。
+
+Colony archive: tracks pawns, things, battles and locations with join/death/craft/build/battle timelines, live colonist stats, and related-archive navigation. Requires Harmony.</description>
+  <modIconPath>UI/ArchiveIcon</modIconPath>
+</ModMetaData>

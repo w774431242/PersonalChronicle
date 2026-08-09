@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  English override for MainButtonDef labels.
+  Base Def label in Defs/MainButtonDefs.xml is Chinese.
+-->
+<LanguageData>
+  <PersonalChronicleArchive.label>Archive</PersonalChronicleArchive.label>
+</LanguageData>
