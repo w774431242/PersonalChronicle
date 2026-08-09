@@ -62,7 +62,17 @@ namespace PersonalChronicle.Capture
                 IncidentBattleExtension ext = __instance.def.GetModExtension<IncidentBattleExtension>();
                 if (ext == null || !ext.isBattle)
                 {
-                    return;
+                    // Fallback (resilient to the optional IncidentBattleExtension
+                    // XML not being applied): treat threat-category incidents as
+                    // battles. Uses the Def's own category field — no defName
+                    // string comparison, keeps within the P1 anti-hardcoding rule.
+                    IncidentCategoryDef cat = __instance.def.category;
+                    if (cat == null
+                        || (cat != IncidentCategoryDefOf.ThreatBig
+                            && cat != IncidentCategoryDefOf.ThreatSmall))
+                    {
+                        return;
+                    }
                 }
                 IArchiveService service = PersonalChronicleMod.ArchiveService;
                 if (service == null)

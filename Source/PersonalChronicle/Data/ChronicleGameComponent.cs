@@ -26,6 +26,14 @@ namespace PersonalChronicle.Data
         public long NextEventId;
 
         /// <summary>
+        /// v4.0: persisted home overview view preference (Kpi dashboard vs Chronicle
+        /// timeline). Default Kpi; old saves that never wrote this field fall back
+        /// to Kpi safely via the Scribe default value. Mirrored by the main-tab
+        /// window; never a source of archive truth.
+        /// </summary>
+        public int HomeViewMode = 0;
+
+        /// <summary>
         /// Runtime-only monotonic token. It is deliberately not serialized:
         /// save/load rebuilds the indexes and forces every UI read model to
         /// refresh naturally. The token is not archive data.
@@ -99,6 +107,7 @@ namespace PersonalChronicle.Data
             Scribe_Collections.Look(ref Objects, "objects", LookMode.Deep);
             Scribe_Collections.Look(ref Events, "events", LookMode.Deep);
             Scribe_Values.Look(ref NextEventId, "nextEventId", 0L);
+            Scribe_Values.Look(ref HomeViewMode, "homeViewMode", 0);
             if (legacyPawns == null)
             {
                 legacyPawns = new List<PawnRecord>();
@@ -120,6 +129,13 @@ namespace PersonalChronicle.Data
         public override void FinalizeInit()
         {
             base.FinalizeInit();
+
+            // Static capture-side accumulators survive a save/load cycle because they live
+            // on the assembly, not on the Game. Clear them here (FinalizeInit runs for both
+            // "new game" and "load game") so a previous session's pawns can never leak into
+            // this one's assist attribution.
+            Capture.Patch_PawnTakeDamage.Reset();
+
             if (SchemaVersion < 1L)
             {
                 MigrateLegacyData();
@@ -1152,6 +1168,21 @@ namespace PersonalChronicle.Data
                 Subjects = new List<ObjectRef>(),
                 Params = new Dictionary<string, string>()
             });
+        }
+
+        /// <summary>
+        /// v4.0 home overview (E / chronicle-timeline view): returns ALL events for
+        /// timeline rendering. Caller must filter by Importance / sort as needed; this
+        /// is a defensive snapshot of the live Events list, never the list itself.
+        /// Consumed on the throttled home refresh cadence, never per-frame.
+        /// </summary>
+        public IReadOnlyList<ChronicleEvent> GetAllEvents()
+        {
+            if (Events == null || Events.Count == 0)
+            {
+                return new List<ChronicleEvent>();
+            }
+            return new List<ChronicleEvent>(Events);
         }
     }
 }

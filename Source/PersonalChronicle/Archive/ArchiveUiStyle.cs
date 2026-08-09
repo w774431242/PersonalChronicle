@@ -31,6 +31,37 @@ namespace PersonalChronicle.Archive
         internal static readonly Color Info = new Color(0.475f, 0.678f, 0.761f, 1f);
         internal static readonly Color Alive = new Color(0.412f, 0.788f, 0.557f, 1f);
         internal static readonly Color Dead = new Color(0.859f, 0.467f, 0.471f, 1f);
+        internal static readonly Color SecondaryText = new Color(0.72f, 0.72f, 0.72f, 1f);
+        internal static readonly Color TimelineSpine = new Color(0.4f, 0.4f, 0.4f, 1f);
+        internal static readonly Color TimelineJoin = new Color(0.4f, 0.8f, 0.4f, 1f);
+        internal static readonly Color TimelineDeath = new Color(0.85f, 0.35f, 0.35f, 1f);
+        internal static readonly Color TimelineBattle = new Color(0.9f, 0.5f, 0.2f, 1f);
+        internal static readonly Color TimelineSocial = new Color(0.5f, 0.6f, 0.9f, 1f);
+        internal static readonly Color TimelineCraft = new Color(0.7f, 0.6f, 0.3f, 1f);
+        internal static readonly Color TimelineBuilt = new Color(0.5f, 0.5f, 0.55f, 1f);
+        internal static readonly Color TimelineOther = Color.gray;
+
+        // v4.3: faction-codex accent colors (reuse existing semantic constants).
+        internal static readonly Color FactionEnemy = TimelineBattle;   // gold/orange
+        internal static readonly Color FactionMechanoid = Info;         // blue
+        internal static readonly Color FactionAnimal = Alive;           // green
+        internal static readonly Color FactionUnknown = Muted;          // grey
+        internal static readonly Color FactionPlayer = Dead;            // red
+
+        public enum FactionCodexKind { Enemy, Mechanoid, Animal, Unknown, Player }
+
+        /// <summary>Map a faction-codex kind to its accent color (no defName comparison).</summary>
+        internal static Color FactionAccent(FactionCodexKind kind)
+        {
+            switch (kind)
+            {
+                case FactionCodexKind.Enemy: return FactionEnemy;
+                case FactionCodexKind.Mechanoid: return FactionMechanoid;
+                case FactionCodexKind.Animal: return FactionAnimal;
+                case FactionCodexKind.Player: return FactionPlayer;
+                default: return FactionUnknown;
+            }
+        }
 
         internal static void DrawPanel(Rect rect)
         {
@@ -102,6 +133,8 @@ namespace PersonalChronicle.Archive
         internal static void DrawBadge(Rect rect, string label, Color color)
         {
             Color previous = GUI.color;
+            GameFont prevFont = Verse.Text.Font;
+            Verse.Text.Font = GameFont.Tiny;
             GUI.color = new Color(color.r, color.g, color.b, 0.14f);
             Widgets.DrawBoxSolid(rect, GUI.color);
             DrawBorder(rect, color);
@@ -109,6 +142,7 @@ namespace PersonalChronicle.Archive
             Verse.Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(rect, label);
             Verse.Text.Anchor = TextAnchor.UpperLeft;
+            Verse.Text.Font = prevFont;
             GUI.color = previous;
         }
     }

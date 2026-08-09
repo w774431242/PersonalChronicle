@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Personal Chronicle · 档案馆 UI 预览 v4.0（强度评价）</title>
+  <title>Personal Chronicle · 档案馆 UI 预览 v4.3（阵营图鉴）</title>
   <style>
     :root {
       --bg: #1a1a1a; --panel: #242424; --panel-2: #2c2c2c; --panel-3: #333;
@@ -939,13 +939,58 @@
         grid-row: 2;
       }
     }
+
+    /* ===== v4.3 阵营图鉴（战斗履历）=====
+       对应 ArchiveMainTabWindow.DrawFactionCodex / DrawFactionCodexCard。
+       宽屏 2 列、窄屏 1 列，对应代码里的 FactionCodexTwoColumnWidth = 720f。 */
+    .codex-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 12px;
+    }
+    @media (max-width: 720px) { .codex-grid { grid-template-columns: 1fr; } }
+    .codex-card {
+      background: #1c262b; border: 1px solid #3b4850; border-radius: 3px;
+      border-left: 3px solid var(--accent); padding: 10px; cursor: pointer;
+      transition: background .12s ease;
+    }
+    .codex-card:hover { background: #212c32; }
+    .codex-head { display: flex; align-items: center; gap: 6px; height: 26px; }
+    .codex-dot { width: 12px; height: 12px; flex: 0 0 12px; border-radius: 2px; }
+    .codex-names { flex: 1; min-width: 0; }
+    .codex-name {
+      font-size: 13px; color: #f0f1ed; line-height: 18px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .codex-kind { font-size: 10px; color: var(--muted); line-height: 14px; }
+    /* 关系徽章固定宽度，长阵营名不会把它挤掉（代码里 FactionCodexRelationWidth = 62f） */
+    .codex-rel { flex: 0 0 62px; text-align: right; font-size: 10px; font-weight: 600; }
+    .codex-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 8px;
+    }
+    .codex-stat { text-align: center; }
+    .codex-stat .v { font-size: 19px; font-weight: 600; line-height: 28px; }
+    .codex-stat .k { font-size: 10px; color: var(--muted); line-height: 18px; }
+    .codex-bar { display: flex; height: 6px; margin-top: 8px; background: #3b4850; border-radius: 1px; overflow: hidden; }
+    .codex-bar i { display: block; height: 6px; margin-right: 1px; }
+    /* 展开区固定 5 行视口，条数再多卡片也不长高（FactionCodexPreviewRows = 5） */
+    .codex-detail {
+      margin-top: 8px; max-height: 180px; overflow-y: auto;
+      border-top: 1px solid #3b4850; padding-top: 4px;
+    }
+    .codex-row {
+      display: grid; grid-template-columns: 96px 1fr 116px;
+      align-items: center; height: 34px; font-size: 11px;
+    }
+    .codex-row .d { color: var(--muted); }
+    .codex-row .t { color: #f0f1ed; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .codex-row .w { color: var(--accent); text-align: right; }
+    .codex-empty { font-size: 11px; color: var(--dim); padding: 6px 0; }
   </style>
 </head>
 <body>
   <div class="toolbar">
     <div>
-      <h1>Personal Chronicle · 档案馆 UI 预览 <span class="badge-v">v4.0 强度评价</span></h1>
-      <div class="meta">方案：docs/档案馆Tab重构优化方案.md（v3.1）· 落地 v4.0 强度评价 / 生产市场价值 · 5 Tab（去统计）· 概览加厚 · 生涯加深（含强度）· 战斗履历 · 社会关系</div>
+      <h1>Personal Chronicle · 档案馆 UI 预览 <span class="badge-v">v4.3 阵营图鉴</span></h1>
+      <div class="meta">方案：docs/档案馆Tab重构优化方案.md（v3.1）· v4.0 强度评价 / 生产市场价值 · v4.3 战斗履历阵营图鉴（卡片就地展开 · 明细只显示武器）· 5 Tab（去统计）</div>
     </div>
     <div class="toolbar-actions">
       <button type="button" id="btn-lang">文案: 中文</button>
@@ -964,13 +1009,14 @@
     <span><b>武器</b> 概览 · 编年 · 战斗履历 · 流转</span>
     <span>无「统计」Tab · KPI 在概览</span>
     <span>生涯 = 强度评价（五档）+ 同工种卡片 + 生产市场价值</span>
+    <span>战斗履历 = 阵营图鉴（点卡片展开）+ 参战/击杀明细</span>
   </div>
 
   <div class="window" id="window" data-component="DoWindowContents">
     <header class="header" data-component="DrawHeader">
       <div class="title" id="hdr-title">殖民地档案馆</div>
       <div class="breadcrumb" id="breadcrumb">Home</div>
-      <div class="ver">UI Spec v4.0</div>
+      <div class="ver">UI Spec v4.3</div>
     </header>
 
     <div class="body">
@@ -1109,7 +1155,7 @@
       <tr><td>概览</td><td>是谁 · 来去 · 数字头条(含产出市场价值) · 足迹 · 里程碑</td><td>加厚；吸收统计</td></tr>
       <tr><td>编年</td><td>时间线上发生了什么</td><td>保留 + 过滤</td></tr>
       <tr><td>生涯</td><td>靠什么立足、贡献了什么、劳动强度</td><td><b>v4.0 新增强度五档头部 + 同工种卡片</b>；加深主副业/贡献/排名</td></tr>
-      <tr><td>战斗履历</td><td>打过什么、如何倒下</td><td>改名 + 阵亡档案</td></tr>
+      <tr><td>战斗履历</td><td>打过什么、如何倒下</td><td><b>v4.3 阵营图鉴</b>：按派系聚合成卡片，点开就地展开击杀明细（固定 5 行内嵌滚动）；明细只显示<b>所用武器</b>，不再显示击杀者/协助者姓名；阵亡档案保留「凶手」</td></tr>
       <tr><td>社会关系</td><td>和谁绑定命运</td><td>改名；去物品/地点</td></tr>
       <tr><td>~~统计~~</td><td>—</td><td><b>移除</b></td></tr>
     </table>
@@ -1143,6 +1189,11 @@
         skillArchive: "技能档案", skillName: "技能", skillJoin: "入档", skillNow: "当前/死亡", skillDelta: "成长",
         deathDossier: "阵亡档案", battleRecords: "参战记录", killRecords: "击杀记录",
         battlesN: "参战次数", killsN: "击杀数", noBattle: "暂无战斗履历。",
+        factionCodex: "阵营图鉴", noKillRecords: "暂无击杀记录。",
+        statKills: "击杀数", statRaids: "袭击次数", statBattles: "交战战役", statOurLosses: "我方阵亡",
+        kindEnemy: "敌方派系", kindMechanoid: "机械族", kindAnimal: "动物/无派系", kindPlayer: "我方·殖民地", kindUnknown: "未知",
+        relHostile: "敌对", relNeutral: "中立", relAlly: "友方", relUnresolved: "未解析",
+        codexHint: "点击卡片展开该阵营的击杀明细",
         importantRel: "重要关系", intertwined: "命运交织", relEvents: "关系事件",
         relType: "关系", person: "人物", relStatus: "状态",
         type: "类型", crafter: "制造者", craftedAt: "制造时间", holders: "持有人次",
@@ -1187,6 +1238,11 @@
         skillArchive: "Skills archive", skillName: "Skill", skillJoin: "At join", skillNow: "Now/death", skillDelta: "Δ",
         deathDossier: "Death dossier", battleRecords: "Battles", killRecords: "Kills",
         battlesN: "Battles", killsN: "Kills", noBattle: "No combat record.",
+        factionCodex: "Faction Codex", noKillRecords: "No kill records.",
+        statKills: "Kills", statRaids: "Raids", statBattles: "Battles", statOurLosses: "Our losses",
+        kindEnemy: "Enemy faction", kindMechanoid: "Mechanoid", kindAnimal: "Animal/Factionless", kindPlayer: "Our colony", kindUnknown: "Unknown",
+        relHostile: "Hostile", relNeutral: "Neutral", relAlly: "Ally", relUnresolved: "Unresolved",
+        codexHint: "Click a card to expand its kill list",
         importantRel: "Significant ties", intertwined: "Intertwined fates", relEvents: "Relation events",
         relType: "Tie", person: "Person", relStatus: "Status",
         type: "Type", crafter: "Crafter", craftedAt: "Crafted", holders: "Holders",
@@ -1220,6 +1276,15 @@
       { code: "T3", nameKey: "tierT3", tagKey: "tierTagT3", color: "#6BAA84", min: 3 },
       { code: "T4", nameKey: "tierT4", tagKey: "tierTagT4", color: "#6B7A8F", min: 0 }
     ];
+
+    // v4.3 阵营图鉴：kind 决定左侧 accent 色，relation 决定右上徽章色。
+    // 与 ArchiveUiStyle.FactionAccent / RelationColor 对齐。
+    const FACTION_KIND_COLOR = {
+      Enemy: "#C0553B", Mechanoid: "#7C8AA5", Animal: "#6BAA84", Player: "#D8A42E", Unknown: "#6B7A8F"
+    };
+    const RELATION_COLOR = { hostile: "#C0553B", ally: "#6BAA84", neutral: "#9AA3AE", unresolved: "#9AA3AE" };
+    // 成色条分段色（对应 CompositionColor 的取色顺序）
+    const COMPOSITION_COLORS = ["#C0553B", "#BA7517", "#D8A42E", "#6BAA84", "#7C8AA5", "#6B7A8F"];
 
     const pawns = {
       "pawn-ela": {
@@ -1260,6 +1325,17 @@
         ],
         killsList: [
           { date: { zh: "5503 秋 12", en: "5503 Autumn 12" }, title: { zh: "侦察者", en: "Scout" }, sub: { zh: "充电步枪", en: "Charge rifle" }, weaponId: "thing-rifle" }
+        ],
+        factionCodex: [
+          {
+            key: "Mechanoid", name: { zh: "机械族", en: "Mechanoid" },
+            kind: "Mechanoid", relation: "hostile",
+            kills: 1, raids: 1, battles: 1, losses: 1,
+            composition: [{ n: { zh: "侦察者", en: "Scout" }, c: 1 }],
+            lines: [
+              { date: { zh: "5503 秋 12", en: "5503 Au12" }, title: { zh: "侦察者", en: "Scout" }, sub: { zh: "充电步枪", en: "Charge rifle" } }
+            ]
+          }
         ],
         relations: [
           { type: { zh: "恋人", en: "Lover" }, who: { zh: "马可", en: "Marco" }, status: { zh: "存续", en: "Active" }, id: "pawn-marco" }
@@ -1397,6 +1473,35 @@
           { date: { zh: "5503 春 22", en: "5503 Spring 22" }, title: { zh: "海盗", en: "Pirate" }, sub: { zh: "短刀", en: "Knife" }, weaponId: "thing-knife" },
           { date: { zh: "5503 夏 5", en: "5503 Summer 5" }, title: { zh: "巨型甲虫", en: "Megascarab" }, sub: { zh: "打猎", en: "Hunt" } }
         ],
+        // v4.3 阵营图鉴：按受害者所属派系聚合，卡片可点击就地展开明细。
+        factionCodex: [
+          {
+            key: "Pirate", name: { zh: "海盗团", en: "Pirate band" },
+            kind: "Enemy", relation: "hostile",
+            kills: 2, raids: 1, battles: 1, losses: 0,
+            composition: [{ n: { zh: "海盗", en: "Pirate" }, c: 2 }],
+            lines: [
+              { date: { zh: "5503 春 22", en: "5503 Sp22" }, title: { zh: "海盗", en: "Pirate" }, sub: { zh: "短刀", en: "Knife" } },
+              { date: { zh: "5503 春 22", en: "5503 Sp22" }, title: { zh: "海盗", en: "Pirate" }, sub: { zh: "短刀", en: "Knife" } }
+            ]
+          },
+          {
+            key: "__wild__", name: { zh: "野生动物/无派系", en: "Wildlife/Factionless" },
+            kind: "Animal", relation: "neutral",
+            kills: 1, raids: 0, battles: 0, losses: 0,
+            composition: [{ n: { zh: "巨型甲虫", en: "Megascarab" }, c: 1 }],
+            lines: [
+              { date: { zh: "5503 夏 5", en: "5503 Su5" }, title: { zh: "巨型甲虫", en: "Megascarab" }, sub: { zh: "打猎", en: "Hunt" } }
+            ]
+          },
+          {
+            key: "Mechanoid", name: { zh: "机械族", en: "Mechanoid" },
+            kind: "Mechanoid", relation: "hostile",
+            kills: 0, raids: 1, battles: 1, losses: 1,
+            composition: [],
+            lines: []
+          }
+        ],
         relations: [],
         intertwined: [
           { n: { zh: "艾拉", en: "Ella" }, r: { zh: "同场战役 · 曾持其步枪", en: "Same battle · held her rifle" }, id: "pawn-ela" }
@@ -1472,7 +1577,7 @@
           { who: { zh: "汤姆", en: "Tom" }, id: "pawn-tom", from: { zh: "5503 夏 42", en: "5503 Su42" }, to: { zh: "5503 夏 45", en: "5503 Su45" }, dur: { zh: "3 日", en: "3 days" } }
         ],
         combat: [
-          { date: { zh: "5503 秋 12", en: "5503 Au12" }, title: { zh: "击杀：侦察者", en: "Kill: scout" }, sub: { zh: "持有者 艾拉", en: "Held by Ella" } }
+          { date: { zh: "5503 秋 12", en: "5503 Au12" }, title: { zh: "击杀：侦察者", en: "Kill: scout" }, sub: { zh: "充电步枪", en: "Charge rifle" } }
         ],
         events: [
           { kind: "Crafted", date: { zh: "5503 年 夏 41 日", en: "5503 Summer 41" }, name: { zh: "制造", en: "Crafted" }, params: { zh: "艾拉", en: "Ella" }, desc: { zh: "此物品由殖民地制造。", en: "Crafted." }, chips: [{ label: { zh: "人物·艾拉", en: "Pawn·Ella" }, goto: "pawn", id: "pawn-ela" }] }
@@ -1486,7 +1591,7 @@
           { who: { zh: "汤姆", en: "Tom" }, id: "pawn-tom", from: { zh: "5502 夏 1", en: "5502 Su1" }, to: { zh: "5503 秋 12", en: "5503 Au12" }, dur: { zh: "直至阵亡", en: "Until death" } }
         ],
         combat: [
-          { date: { zh: "5503 春 22", en: "5503 Sp22" }, title: { zh: "击杀：海盗 ×2", en: "Kills: pirates ×2" }, sub: { zh: "持有者 汤姆", en: "Tom" } }
+          { date: { zh: "5503 春 22", en: "5503 Sp22" }, title: { zh: "击杀：海盗 ×2", en: "Kills: pirates ×2" }, sub: { zh: "短刀", en: "Knife" } }
         ],
         events: []
       },
@@ -1558,7 +1663,9 @@
       lang: "zh", view: "home", filter: null,
       pawnTab: 0, weaponTab: 0,
       pawnId: "pawn-ela", weaponId: "thing-rifle", eventId: "ev-death",
-      timelineFilter: "All", annotate: false
+      timelineFilter: "All", annotate: false,
+      // v4.3 阵营图鉴：记录哪些卡片处于展开态（对应代码里的 expandedFactions）
+      expandedFactions: {}
     };
 
     function t(k) { return I18N[state.lang][k] ?? k; }
@@ -1633,6 +1740,71 @@
     function section(s) { return `<div class="section-title">${s}</div>`; }
     function eventLine(date, title, type) {
       return `<div class="event-row static"><span class="date">${date}</span><span class="title">${title}</span><span class="type">${type || ""}</span></div>`;
+    }
+
+    // ===== v4.3 阵营图鉴 =====
+    // 对应 ArchiveMainTabWindow.BuildFactionCodex / DrawFactionCodex。
+    const KIND_LABEL_KEY = {
+      Enemy: "kindEnemy", Mechanoid: "kindMechanoid", Animal: "kindAnimal",
+      Player: "kindPlayer", Unknown: "kindUnknown"
+    };
+    const REL_LABEL_KEY = {
+      hostile: "relHostile", neutral: "relNeutral", ally: "relAlly", unresolved: "relUnresolved"
+    };
+
+    function factionCodex(cards) {
+      if (!cards || !cards.length) {
+        return section(t("factionCodex")) + `<div class="empty">${t("noKillRecords")}</div>`;
+      }
+      let html = section(t("factionCodex"));
+      html += `<div class="footnote" style="margin:-4px 0 8px">${t("codexHint")}</div>`;
+      html += `<div class="codex-grid">`;
+      cards.forEach(c => {
+        const accent = FACTION_KIND_COLOR[c.kind] || FACTION_KIND_COLOR.Unknown;
+        const relColor = RELATION_COLOR[c.relation] || RELATION_COLOR.unresolved;
+        const open = !!state.expandedFactions[c.key];
+
+        // 成色条：按受害者类型占比分段；没有击杀时退化成单色底条。
+        let bar = "";
+        if (c.kills > 0 && c.composition && c.composition.length) {
+          bar = c.composition.map((seg, i) =>
+            `<i style="width:${(seg.c / c.kills * 100).toFixed(2)}%;background:${COMPOSITION_COLORS[i % COMPOSITION_COLORS.length]}" title="${L(seg.n)} × ${seg.c}"></i>`
+          ).join("");
+        } else {
+          bar = `<i style="width:100%;background:${accent}"></i>`;
+        }
+
+        let detail = "";
+        if (open) {
+          detail = c.lines && c.lines.length
+            ? c.lines.map(l =>
+                `<div class="codex-row"><span class="d">${L(l.date)}</span><span class="t">${L(l.title)}</span><span class="w">${L(l.sub)}</span></div>`
+              ).join("")
+            : `<div class="codex-empty">${t("noKillRecords")}</div>`;
+          detail = `<div class="codex-detail">${detail}</div>`;
+        }
+
+        html += `<div class="codex-card" data-codex="${c.key}" style="border-left-color:${accent}">
+          <div class="codex-head">
+            <span class="codex-dot" style="background:${accent}"></span>
+            <span class="codex-names">
+              <div class="codex-name">${L(c.name)}</div>
+              <div class="codex-kind">${t(KIND_LABEL_KEY[c.kind] || "kindUnknown")}</div>
+            </span>
+            <span class="codex-rel" style="color:${relColor}">${t(REL_LABEL_KEY[c.relation] || "relUnresolved")}</span>
+          </div>
+          <div class="codex-stats">
+            <div class="codex-stat"><div class="v" style="color:#C0553B">${c.kills}</div><div class="k">${t("statKills")}</div></div>
+            <div class="codex-stat"><div class="v" style="color:#BA7517">${c.raids}</div><div class="k">${t("statRaids")}</div></div>
+            <div class="codex-stat"><div class="v" style="color:#7C8AA5">${c.battles}</div><div class="k">${t("statBattles")}</div></div>
+            <div class="codex-stat"><div class="v" style="color:#9AA3AE">${c.losses}</div><div class="k">${t("statOurLosses")}</div></div>
+          </div>
+          <div class="codex-bar">${bar}</div>
+          ${detail}
+        </div>`;
+      });
+      html += `</div>`;
+      return html;
     }
     function shareBar(ratio) {
       const pct = Math.round(Math.min(1, Math.max(0, ratio)) * 100);
@@ -1828,6 +2000,9 @@
           html += row(t("killer"), L(p.killer));
           if (p.deathBattle) html += row(state.lang === "zh" ? "关联战役" : "Battle", L(p.deathBattle));
         }
+        // v4.3：阵营图鉴排在参战/击杀明细之前，是战斗履历的主视图。
+        html += factionCodex(p.factionCodex);
+
         html += section(t("battleRecords"));
         if (!p.combat.length) html += `<div class="empty">${t("noBattle")}</div>`;
         else p.combat.forEach(c => { html += eventLine(L(c.date), L(c.title), L(c.sub)); });
@@ -1835,10 +2010,12 @@
         html += section(t("killRecords"));
         if (!p.killsList.length) html += `<div class="empty">—</div>`;
         else p.killsList.forEach(k => {
-          const extra = k.weaponId
-            ? ` <span class="chip" data-goto="weapon" data-id="${k.weaponId}">${L(k.sub)}</span>`
-            : "";
-          html += `<div class="event-row static"><span class="date">${L(k.date)}</span><span class="title">${L(k.title)}${extra}</span><span class="type">${L(k.sub)}</span></div>`;
+          // v4.3: 明细行只显示「日期 · 目标 · 所用武器」，不再出现击杀者姓名。
+          // 武器名只渲染一次：可跳转的武器渲染成 chip，其余落在右侧 type 列。
+          const weaponCell = k.weaponId
+            ? `<span class="chip" data-goto="weapon" data-id="${k.weaponId}">${L(k.sub)}</span>`
+            : L(k.sub);
+          html += `<div class="event-row static"><span class="date">${L(k.date)}</span><span class="title">${L(k.title)}</span><span class="type">${weaponCell}</span></div>`;
         });
         html += `<div class="footnote">${t("battlesN")}: <b>${p.combat.length}</b> · ${t("killsN")}: <b>${p.kills}</b></div>`;
       }
@@ -1874,6 +2051,15 @@
       bindGoto(panel);
       panel.querySelectorAll("[data-filter-kind]").forEach(el => {
         el.addEventListener("click", () => { state.timelineFilter = el.getAttribute("data-filter-kind"); renderPawnPanel(); });
+      });
+      // v4.3 阵营图鉴：点卡片就地展开/收起。武器 chip 的跳转优先，不触发展开。
+      panel.querySelectorAll("[data-codex]").forEach(el => {
+        el.addEventListener("click", ev => {
+          if (ev.target.closest("[data-goto]")) return;
+          const key = el.getAttribute("data-codex");
+          state.expandedFactions[key] = !state.expandedFactions[key];
+          renderPawnPanel();
+        });
       });
     }
 

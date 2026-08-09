@@ -61,6 +61,9 @@
   <PersonalChronicle.UI.Weapons>武器</PersonalChronicle.UI.Weapons>
   <PersonalChronicle.UI.Events>事件</PersonalChronicle.UI.Events>
   <PersonalChronicle.UI.ArchiveHomeDesc>殖民地档案馆：记录殖民地的历史、人物与事件。</PersonalChronicle.UI.ArchiveHomeDesc>
+  <PersonalChronicle.UI.HomeKpiView>总览</PersonalChronicle.UI.HomeKpiView>
+  <PersonalChronicle.UI.HomeTimelineView>编年史</PersonalChronicle.UI.HomeTimelineView>
+  <PersonalChronicle.UI.NoTimelineEvents>尚无关键事件记录。</PersonalChronicle.UI.NoTimelineEvents>
   <PersonalChronicle.UI.Navigation>导航</PersonalChronicle.UI.Navigation>
   <PersonalChronicle.UI.HomeOverview>首页总览</PersonalChronicle.UI.HomeOverview>
   <PersonalChronicle.UI.AllArchives>全部档案</PersonalChronicle.UI.AllArchives>
@@ -133,6 +136,9 @@
   <PersonalChronicle.UI.Character>人物</PersonalChronicle.UI.Character>
   <PersonalChronicle.UI.Killer>凶手</PersonalChronicle.UI.Killer>
   <PersonalChronicle.UI.KillerWithName>凶手：{0}</PersonalChronicle.UI.KillerWithName>
+  <PersonalChronicle.UI.UnknownKiller>未知</PersonalChronicle.UI.UnknownKiller>
+  <PersonalChronicle.UI.Assist>协助</PersonalChronicle.UI.Assist>
+  <PersonalChronicle.UI.AssistWithName>协助：{0}</PersonalChronicle.UI.AssistWithName>
   <PersonalChronicle.UI.Weapon>武器</PersonalChronicle.UI.Weapon>
   <PersonalChronicle.UI.Battle>战役</PersonalChronicle.UI.Battle>
   <PersonalChronicle.UI.Location>地点</PersonalChronicle.UI.Location>
@@ -217,6 +223,24 @@
   <!-- v3.1 P2 combat -->
   <PersonalChronicle.UI.KillRecords>击杀记录</PersonalChronicle.UI.KillRecords>
   <PersonalChronicle.UI.NoKillRecords>暂无击杀记录。</PersonalChronicle.UI.NoKillRecords>
+  <!-- v4.3 faction codex -->
+  <PersonalChronicle.UI.FactionCodexTitle>阵营图鉴</PersonalChronicle.UI.FactionCodexTitle>
+  <PersonalChronicle.UI.StatKills>击杀数</PersonalChronicle.UI.StatKills>
+  <PersonalChronicle.UI.StatRaids>袭击次数</PersonalChronicle.UI.StatRaids>
+  <PersonalChronicle.UI.StatBattles>交战战役</PersonalChronicle.UI.StatBattles>
+  <PersonalChronicle.UI.StatOurLosses>我方阵亡</PersonalChronicle.UI.StatOurLosses>
+  <PersonalChronicle.UI.FactionKindEnemy>敌方派系</PersonalChronicle.UI.FactionKindEnemy>
+  <PersonalChronicle.UI.FactionKindMechanoid>机械族</PersonalChronicle.UI.FactionKindMechanoid>
+  <PersonalChronicle.UI.FactionKindAnimal>动物/无派系</PersonalChronicle.UI.FactionKindAnimal>
+  <PersonalChronicle.UI.FactionKindUnknown>未知</PersonalChronicle.UI.FactionKindUnknown>
+  <PersonalChronicle.UI.FactionRelHostile>敌对</PersonalChronicle.UI.FactionRelHostile>
+  <PersonalChronicle.UI.FactionRelNeutral>中立</PersonalChronicle.UI.FactionRelNeutral>
+  <PersonalChronicle.UI.FactionRelAlly>友方</PersonalChronicle.UI.FactionRelAlly>
+  <PersonalChronicle.UI.FactionRelUnresolved>未解析</PersonalChronicle.UI.FactionRelUnresolved>
+  <PersonalChronicle.UI.FactionUnknown>未知/环境</PersonalChronicle.UI.FactionUnknown>
+  <PersonalChronicle.UI.FactionPlayer>我方·殖民地</PersonalChronicle.UI.FactionPlayer>
+  <PersonalChronicle.UI.FactionWild>野生动物/无派系</PersonalChronicle.UI.FactionWild>
+  <PersonalChronicle.UI.FactionFactionless>无派系</PersonalChronicle.UI.FactionFactionless>
   <PersonalChronicle.UI.CombatFooter>参战 {0} · 击杀 {1}</PersonalChronicle.UI.CombatFooter>
   <PersonalChronicle.UI.HolderHistory>持有履历</PersonalChronicle.UI.HolderHistory>
   <PersonalChronicle.UI.NoHolderHistory>暂无持有履历（制造/使用后开始记录）。</PersonalChronicle.UI.NoHolderHistory>
@@ -257,4 +281,13 @@
   <PersonalChronicle.UI.ProductionQuantity>数量：{0}</PersonalChronicle.UI.ProductionQuantity>
   <PersonalChronicle.UI.ProductionCard>{0} 件 · {1}</PersonalChronicle.UI.ProductionCard>
   <PersonalChronicle.UI.MarketValueFormat>{0} 银</PersonalChronicle.UI.MarketValueFormat>
+  <!-- v4.0 首页 KPI 仪表盘 -->
+  <PersonalChronicle.UI.HomeRealtimeGroup>实时指标</PersonalChronicle.UI.HomeRealtimeGroup>
+  <PersonalChronicle.UI.HomeArchiveGroup>历史档案库</PersonalChronicle.UI.HomeArchiveGroup>
+  <PersonalChronicle.UI.HomeLiveColonists>当前殖民者</PersonalChronicle.UI.HomeLiveColonists>
+  <PersonalChronicle.UI.HomeServiceDays>在役天数</PersonalChronicle.UI.HomeServiceDays>
+  <PersonalChronicle.UI.HomeLivePawns>在世殖民者</PersonalChronicle.UI.HomeLivePawns>
+  <PersonalChronicle.UI.HomeColonistBreakdown>自由 {0} · 奴隶 {1} · 囚犯 {2}</PersonalChronicle.UI.HomeColonistBreakdown>
+  <PersonalChronicle.UI.HomeServiceSince>自最早档案记录</PersonalChronicle.UI.HomeServiceSince>
+  <PersonalChronicle.UI.HomeSnapshotBreakdown>在册 {0} · 归档 {1}</PersonalChronicle.UI.HomeSnapshotBreakdown>
 </LanguageData>

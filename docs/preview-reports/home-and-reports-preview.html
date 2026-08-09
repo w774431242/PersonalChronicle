@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首页总览(B+E) 与 报告功能 · 测试预览</title>
+<style>
+  :root{
+    --bg:#15110d; --panel:#241d16; --panel-2:#2e251c; --border:#4a3b2c;
+    --ink:#ece3d4; --muted:#a8977f; --accent:#d9b46a; --accent-2:#c98a3c;
+    --good:#7fae5a; --danger:#c75c4a; --radius:10px;
+    --paper:#e9dcc0; --paper-2:#e1d2b2; --pink:#2a2118; --prule:#9c865f; --pacc:#8a3b2e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.6}
+  a{color:var(--accent);text-decoration:none}
+  .topbar{padding:12px 22px;border-bottom:1px solid var(--border);font-size:13px;background:#1b1611;color:var(--muted)}
+  .wrap{max-width:920px;margin:0 auto;padding:22px}
+  .decisions{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 22px}
+  .decisions span{background:var(--panel);border:1px solid var(--good);border-radius:20px;padding:5px 13px;font-size:12.5px;color:var(--good)}
+  h2{font-size:18px;color:var(--accent);border-left:3px solid var(--accent);padding-left:10px;margin:30px 0 12px}
+  .tabs{display:flex;gap:8px;margin-bottom:14px}
+  .tab{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:7px 16px;font-size:13px;color:var(--muted);cursor:pointer}
+  .tab.on{background:var(--accent);color:#1a140d;font-weight:700;border-color:var(--accent)}
+  .view{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+  .hidden{display:none}
+  /* KPI */
+  .group-h{font-size:12px;color:var(--accent-2);letter-spacing:1px;text-transform:uppercase;margin:4px 0 10px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+  .kpi{background:linear-gradient(160deg,#2c2318,#241d16);border:1px solid var(--border);border-radius:8px;padding:13px 15px}
+  .kpi.live{border-color:var(--good)} .kpi.live .v{color:var(--good)}
+  .kpi .k{font-size:12px;color:var(--muted)} .kpi .v{font-size:28px;font-weight:800;color:var(--accent);line-height:1.1;margin:3px 0}
+  .kpi .s{font-size:11.5px;color:var(--muted)}
+  .mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:9px}
+  .m{background:var(--panel-2);border:1px solid var(--border);border-radius:7px;padding:9px 11px}
+  .m .k{font-size:11px;color:var(--muted)} .m .v{font-size:18px;font-weight:700}
+  .cols{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:16px}
+  @media(max-width:680px){.cols{grid-template-columns:1fr}}
+  .cols h3{margin:0 0 10px;font-size:14px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:7px}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:8px 5px;border-bottom:1px solid #322619;font-size:13px}
+  .row:last-child{border-bottom:none} .row .meta{color:var(--muted);font-size:12px}
+  .tag{font-size:10.5px;padding:1px 7px;border-radius:20px;background:#3a2f22;color:var(--accent-2);margin-left:6px}
+  .card{background:var(--panel-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:7px;padding:10px 12px;margin-bottom:9px}
+  .card .t{font-size:13px;font-weight:600} .card .b{font-size:12px;color:var(--muted);margin-top:2px}
+  /* Timeline */
+  .spine-wrap{position:relative;padding:10px 0}
+  .spine{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),transparent)}
+  .node{position:relative;width:50%;padding:8px 26px}
+  .node.l{left:0;text-align:right} .node.r{left:50%}
+  .dot{position:absolute;top:16px;width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--accent)}
+  .node.l .dot{right:-6.5px} .node.r .dot{left:-6.5px}
+  .dot.kill{background:var(--danger)} .dot.build{background:var(--good)} .dot.flag{background:var(--accent-2)} .dot.birth{background:#6fa8d6}
+  .ncard{display:inline-block;background:var(--panel-2);border:1px solid var(--border);border-radius:7px;padding:9px 12px;max-width:340px;text-align:left}
+  .ncard .date{font-size:11px;color:var(--muted)} .ncard .t{font-size:13.5px;font-weight:600;margin:2px 0} .ncard .b{font-size:12px;color:var(--muted)}
+  .note{margin:6px 0 0;font-size:12px;color:var(--muted)}
+  /* ===== G · 殖民地日报样式 ===== */
+  .paper{max-width:760px;margin:0 auto;background:var(--paper);color:var(--pink);border-radius:4px;padding:22px 26px 30px;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);
+    background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(156,134,95,.06) 29px);
+    font-family:"Songti SC","SimSun",Georgia,serif}
+  .masthead{text-align:center;border-bottom:3px double var(--prule);padding-bottom:9px;margin-bottom:12px}
+  .masthead .cn{font-size:28px;font-weight:800;letter-spacing:6px}
+  .masthead .en{font-size:10.5px;letter-spacing:5px;color:#6e5c3e;margin-top:2px}
+  .masthead .meta{font-size:11px;color:#6e5c3e;margin-top:6px;display:flex;justify-content:space-between;border-top:1px solid var(--prule);padding-top:5px}
+  .headline{font-size:22px;font-weight:800;text-align:center;margin:14px 0 4px;color:var(--pacc)}
+  .subhead{text-align:center;font-size:12.5px;color:#5a4a30;margin-bottom:14px;font-style:italic}
+  .stats{display:flex;justify-content:space-around;border-top:2px solid var(--prule);border-bottom:2px solid var(--prule);
+    margin:14px 0;padding:9px 0;text-align:center}
+  .stats .v{font-size:20px;font-weight:800;color:var(--pacc)} .stats .k{font-size:10.5px;color:#5a4a30}
+  .pcols{column-count:2;column-gap:20px;column-rule:1px solid var(--prule);font-size:12.5px;line-height:1.65}
+  .pcols h3{font-size:13px;margin:0 0 6px;break-after:avoid;color:#3a2c18;border-bottom:1px solid var(--prule);padding-bottom:3px}
+  .pcols p{margin:0 0 9px}
+  .ptag{font-weight:700;color:var(--pacc)}
+  .obit{break-inside:avoid;background:var(--paper-2);border-left:3px solid var(--prule);padding:5px 8px;margin-bottom:8px;font-size:12px}
+  .note2{margin-top:14px;font-size:12px;color:var(--muted);text-align:center}
+  .foot{margin-top:26px;font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="topbar">测试预览 · docs/preview-reports · 首页总览(B+E) 与 报告功能（定稿方案可视化 mockup）</div>
+<div class="wrap">
+
+  <div class="decisions">
+    <span>✓ 报告入口：侧边栏「报告」工具</span>
+    <span>✓ 默认视图：KPI 仪表盘</span>
+    <span>✓ 周 = 7 天</span>
+    <span>✓ 月 = 30 天</span>
+    <span>✓ 季 = 90 天（≈3 个月）</span>
+    <span>✓ 不做年报</span>
+    <span>✓ 报告样式：G · 殖民地日报</span>
+  </div>
+
+  <!-- ===== 首页总览 B+E ===== -->
+  <h2>首页总览（B 底色 + E 可切换）</h2>
+  <div class="block">
+    <div class="tabs">
+      <button class="tab on" data-t="kpi">KPI 仪表盘</button>
+      <button class="tab" data-t="timeline">编年史时间轴</button>
+    </div>
+
+    <div id="kpi" class="view">
+      <div class="group-h">▲ 实时指标</div>
+      <div class="kpis">
+        <div class="kpi live"><div class="k">当前殖民者</div><div class="v">5</div><div class="s">自由 3 · 奴隶 1 · 囚犯 1</div></div>
+        <div class="kpi live"><div class="k">在役天数</div><div class="v">428</div><div class="s">自殖民地成立</div></div>
+        <div class="kpi live"><div class="k">在世殖民者</div><div class="v">5</div><div class="s">档案在世记录</div></div>
+      </div>
+      <div class="group-h">▲ 历史档案库</div>
+      <div class="mini">
+        <div class="m"><div class="k">殖民者档案</div><div class="v">12</div></div>
+        <div class="m"><div class="k">物品档案</div><div class="v">34</div></div>
+        <div class="m"><div class="k">战斗记录</div><div class="v">8</div></div>
+        <div class="m"><div class="k">地点记录</div><div class="v">5</div></div>
+        <div class="m"><div class="k">已归档</div><div class="v">7</div></div>
+      </div>
+      <div class="cols">
+        <div><h3>最近发生的历史</h3>
+          <div class="row"><span>击退机械族袭击<span class="tag">战斗</span></span><span class="meta">第 428 天</span></div>
+          <div class="row"><span>接纳新殖民者<span class="tag">人口</span></span><span class="meta">第 421 天</span></div>
+          <div class="row"><span>建成核反应堆<span class="tag">建造</span></span><span class="meta">第 405 天</span></div>
+          <div class="row"><span>商队到访<span class="tag">外交</span></span><span class="meta">第 388 天</span></div>
+        </div>
+        <div><h3>重要档案</h3>
+          <div class="card"><div class="t">传奇 · 老兵玛拉</div><div class="b">服役 420 天 · 击杀 23</div></div>
+          <div class="card"><div class="t">里程碑 · 首座核反应堆</div><div class="b">第 405 天竣工</div></div>
+          <div class="card"><div class="t">建筑 · 指挥中心</div><div class="b">128 天前竣工</div></div>
+        </div>
+      </div>
+      <p class="note">切换偏好（KPI / 时间轴）将存入存档、跨会话记忆，默认 KPI。</p>
+    </div>
+
+    <div id="timeline" class="view hidden">
+      <div class="spine-wrap">
+        <div class="spine"></div>
+        <div class="node r"><span class="dot kill"></span><div class="ncard"><div class="date">第 428 天</div><div class="t">⚔ 击退机械族袭击</div><div class="b">3 名袭击者被消灭，无人重伤。</div></div></div>
+        <div class="node l"><span class="dot birth"></span><div class="ncard"><div class="date">第 421 天</div><div class="t">＋ 幸存者加入</div><div class="b">1 名流浪者获收留。</div></div></div>
+        <div class="node r"><span class="dot build"></span><div class="ncard"><div class="date">第 405 天</div><div class="t">⚒ 核反应堆竣工</div><div class="b">供电首次转盈。</div></div></div>
+        <div class="node l"><span class="dot flag"></span><div class="ncard"><div class="date">第 330 天</div><div class="t">★ 首杀巨型昆虫</div><div class="b">地下洞穴战果。</div></div></div>
+        <div class="node r"><span class="dot flag"></span><div class="ncard"><div class="date">第 300 天</div><div class="t">▣ 指挥中心落成</div><div class="b">殖民地中枢启用。</div></div></div>
+        <div class="node l"><span class="dot birth"></span><div class="ncard"><div class="date">第 1 天</div><div class="t">⚑ 殖民地建立</div><div class="b">3 名先驱者登陆。</div></div></div>
+      </div>
+      <p class="note">节点筛选：重要性 ≥ Important 的关键生命线；其余折叠，防大存档卡顿。点击节点跳事件详情。</p>
+    </div>
+  </div>
+
+  <!-- ===== 报告功能（G · 殖民地日报） ===== -->
+  <h2>日报 / 周报 / 月报 / 季报（独立功能 · G 殖民地日报样式）</h2>
+  <div class="block">
+    <div class="tabs">
+      <button class="tab on" data-t="day">日</button>
+      <button class="tab" data-t="week">周</button>
+      <button class="tab" data-t="month">月</button>
+      <button class="tab" data-t="quad">季</button>
+    </div>
+
+    <div id="day" class="view">
+      <div class="paper">
+        <div class="masthead"><div class="cn">殖 民 地 日 报</div><div class="en">THE COLONY CHRONICLE</div>
+          <div class="meta"><span>日刊 · 第 428 期</span><span>第 428 天</span><span>定价：一份口粮</span></div></div>
+        <div class="headline">击退机械族袭击！防线巍然不动</div>
+        <div class="subhead">——三名袭击者被消灭，全员平安，指挥官玛拉再立战功</div>
+        <div class="stats"><div><div class="v">5</div><div class="k">当前人口</div></div><div><div class="v">12</div><div class="k">殖民者档案</div></div><div><div class="v">8</div><div class="k">战斗记录</div></div><div><div class="v">428</div><div class="k">在役天数</div></div></div>
+        <div class="pcols">
+          <div><h3>人事 · 动态</h3>
+            <div class="obit"><span class="ptag">平安</span> 今日无加入、无减员，全员安康。</div>
+            <div class="obit"><span class="ptag">制造</span> 工坊完成 1 件装备。</div></div>
+          <div><h3>战地 · 建造快讯</h3>
+            <p><span class="ptag">第 428 天</span> 机械族小队来犯，于外围防线被全歼，我方零伤亡。</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="week" class="view hidden">
+      <div class="paper">
+        <div class="masthead"><div class="cn">殖 民 地 日 报</div><div class="en">THE COLONY CHRONICLE</div>
+          <div class="meta"><span>周刊 · 第 423–428 期</span><span>第 428 天</span><span>近 7 日</span></div></div>
+        <div class="headline">本周殖民地稳如磐石</div>
+        <div class="subhead">——两度击退来犯，新血加入，战力未损分毫</div>
+        <div class="stats"><div><div class="v">5</div><div class="k">当前人口</div></div><div><div class="v">12</div><div class="k">殖民者档案</div></div><div><div class="v">8</div><div class="k">战斗记录</div></div><div><div class="v">428</div><div class="k">在役天数</div></div></div>
+        <div class="pcols">
+          <div><h3>人事 · 动态</h3>
+            <div class="obit"><span class="ptag">加入</span> 第 421 天，1 名流浪幸存者获收留。</div>
+            <div class="obit"><span class="ptag">制造</span> 本周工坊完成 2 件装备。</div></div>
+          <div><h3>战地 · 建造快讯</h3>
+            <p><span class="ptag">第 428 天</span> 击退机械族袭击，零伤亡。</p>
+            <p><span class="ptag">第 421 天</span> 幸存者入役，填补劳力。</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="month" class="view hidden">
+      <div class="paper">
+        <div class="masthead"><div class="cn">殖 民 地 日 报</div><div class="en">THE COLONY CHRONICLE</div>
+          <div class="meta"><span>月报 · 第 399–428 期</span><span>第 428 天</span><span>近 30 日</span></div></div>
+        <div class="headline">核反应堆竣工，供电终转盈</div>
+        <div class="subhead">——末日阴云渐散，殖民地步入扩张期</div>
+        <div class="stats"><div><div class="v">5</div><div class="k">当前人口</div></div><div><div class="v">12</div><div class="k">殖民者档案</div></div><div><div class="v">8</div><div class="k">战斗记录</div></div><div><div class="v">428</div><div class="k">在役天数</div></div></div>
+        <div class="pcols">
+          <div><h3>人事 · 动态</h3>
+            <div class="obit"><span class="ptag">加入</span> 第 421 天，1 名幸存者入役。</div>
+            <div class="obit"><span class="ptag">关系</span> 期内一段情谊成型，士气上扬。</div></div>
+          <div><h3>战地 · 建造快讯</h3>
+            <p><span class="ptag">第 428 天</span> 击退机械族袭击。</p>
+            <p><span class="ptag">第 405 天</span> 首座核反应堆竣工，供电转盈。</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="quad" class="view hidden">
+      <div class="paper">
+        <div class="masthead"><div class="cn">殖 民 地 日 报</div><div class="en">THE COLONY CHRONICLE</div>
+          <div class="meta"><span>季报 · 第 414–428 期</span><span>第 428 天</span><span>近 90 日（≈3 个月）</span></div></div>
+        <div class="headline">供电危机终结的一季</div>
+        <div class="subhead">——从限电到盈余，殖民地翻开新篇</div>
+        <div class="stats"><div><div class="v">5</div><div class="k">当前人口</div></div><div><div class="v">12</div><div class="k">殖民者档案</div></div><div><div class="v">8</div><div class="k">战斗记录</div></div><div><div class="v">428</div><div class="k">在役天数</div></div></div>
+        <div class="pcols">
+          <div><h3>人事 · 动态</h3>
+            <div class="obit"><span class="ptag">加入</span> 第 421 天，1 名幸存者入役。</div>
+            <div class="obit"><span class="ptag">平安</span> 期内无减员。</div></div>
+          <div><h3>战地 · 建造快讯</h3>
+            <p><span class="ptag">第 428 天</span> 击退机械族袭击。</p>
+            <p><span class="ptag">第 405 天</span> 核反应堆竣工，限电终结。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note2">报告功能采用 G · 殖民地日报头版样式：羊皮纸 + 衬线双栏，报头刊名/期号/周期，头条为本期重大事件，中缝统计，双栏分"人事动态"与"战地·建造快讯"。</p>
+  <p class="foot">设计文档：<a href="design-home-overview-and-reports.md">design-home-overview-and-reports.md</a>（同目录，定稿真源）。本报告为 mockup，数据均为示例；实战数据由 `GetReport(period, offset)` 按 `GenDate` 周期窗口从 `ChronicleGameComponent.Events` 聚合得出。
+  <br><b>状态：</b>首页双视图（B 总览默认 + E 编年史切换）<b>已于 2026-08-09 落地运行时代码</b>，视图偏好经 `ChronicleGameComponent.homeViewMode` 持久化（本预览以 localStorage 模拟）；日/周/月/报（阶段 2）尚未实现。</p>
+</div>
+
+<script>
+  document.querySelectorAll('.block').forEach(function(block){
+    var tabs = block.querySelector('.tabs');
+    var views = block.querySelectorAll('.view');
+    tabs.addEventListener('click', function(e){
+      var btn = e.target.closest('.tab'); if(!btn) return;
+      var t = btn.dataset.t;
+      tabs.querySelectorAll('.tab').forEach(function(b){ b.classList.toggle('on', b===btn); });
+      views.forEach(function(v){ v.classList.toggle('hidden', v.id!==t); });
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PersonalChronicle.Api;
 using PersonalChronicle.Domain;
 
 namespace PersonalChronicle.Application
@@ -181,11 +182,16 @@ namespace PersonalChronicle.Application
     /// <summary>
     /// Optional external evaluator. Providers should return a tier Def name
     /// supplied by their own XML and never return localized display text.
+    ///
+    /// Extends the unified <see cref="IArchiveProvider"/> base contract (design
+    /// doc §7.1) so it can live alongside other domain providers in one registry
+    /// and be discovered by capability token. New members ContractVersion /
+    /// Capabilities are required of all providers (v4.1 onward).
     /// </summary>
-    public interface IWorkIntensityProvider
+    public interface IWorkIntensityProvider : IArchiveProvider
     {
-        string ProviderId { get; }
-        int Priority { get; }
+        // ProviderId / Priority / ContractVersion / Capabilities are inherited
+        // from IArchiveProvider (design doc §7.1) — do not re-declare to avoid CS0108.
         bool TryEvaluate(WorkIntensityInput input, out WorkIntensityEvaluation evaluation);
     }
 

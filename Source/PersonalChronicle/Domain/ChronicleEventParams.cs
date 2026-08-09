@@ -35,6 +35,41 @@ namespace PersonalChronicle.Domain
 
         public const string CombatRoleKill = "kill";
 
+        /// <summary>
+        /// StableId bucket for kills whose DamageInfo instigator could not be
+        /// resolved to a chronicle colonist (melee-forwarded / environment kills).
+        /// Kept as a constant so the combat log still records these instead of
+        /// dropping them entirely.
+        /// </summary>
+        public const string UnknownKillerId = "__unknown_killer__";
+
+        /// <summary>
+        /// Display label used when a death event's killer could not be resolved
+        /// (environment / melee-forwarded / unresolvable instigator). Must be a
+        /// translation key reference resolved by the UI, never a hardcoded string.
+        /// </summary>
+        public const string UnknownKillerLabel = "PersonalChronicle.UI.UnknownKiller";
+
+        /// <summary>
+        /// Death-event param: the assist pawn's LabelShort snapshot. The assist is
+        /// the chronicle colonist who dealt the most damage but did NOT land the
+        /// finishing blow (e.g. A chipped 80% HP, B took the kill). Displayed via
+        /// the "PersonalChronicle.UI.Assist" translation key.
+        /// </summary>
+        public const string Assist = "assist";
+
+        // v4.3: victim faction/kind snapshots for faction-codex aggregation.
+        // Victim PawnObjects are NOT archived (external enemies/animals), so the
+        // faction/category must be snapshotted at record time. These are pure
+        // string params; old saves lacking them fall back to the "unknown" bucket.
+        public const string VictimFactionDefName = "victimFactionDef";
+        public const string VictimFactionLabel = "victimFactionLabel";
+        public const string VictimKindDefName = "victimKindDef";
+        public const string VictimCategory = "victimCategory";
+        public const string VictimCategoryHumanlike = "humanlike";
+        public const string VictimCategoryMechanoid = "mechanoid";
+        public const string VictimCategoryAnimal = "animal";
+
         /// <summary>PawnRelationDef.defName for social events.</summary>
         public const string Relation = "relation";
 

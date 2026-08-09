@@ -56,6 +56,37 @@ namespace PersonalChronicle.Archive
         private const float HealthGoodThreshold = 0.6f;
         private const float HealthInjuredThreshold = 0.3f;
 
+        // ---- v4.3 faction codex: synthetic bucket keys ----
+        // These are NOT FactionDef defNames. They are internal aggregation buckets for
+        // kills that cannot be attributed to a real faction. The "__x__" shape is chosen
+        // so it can never collide with a real defName from vanilla or any third-party mod.
+        private const string FactionBucketUnknown = "__unknown__";
+        private const string FactionBucketPlayer = "__player__";
+        private const string FactionBucketWild = "__wild__";
+        private const string FactionBucketFactionless = "__factionless__";
+
+        // ---- v4.3 faction codex: relation keys (drive badge label + colour) ----
+        private const string FactionRelationHostile = "hostile";
+        private const string FactionRelationNeutral = "neutral";
+        private const string FactionRelationAlly = "ally";
+        private const string FactionRelationUnresolved = "unresolved";
+
+        // ---- v4.3 faction codex: layout metrics ----
+        /// <summary>Panel width at/above which the codex switches from 1 to 2 columns.</summary>
+        private const float FactionCodexTwoColumnWidth = 720f;
+        private const float FactionCodexPadding = 10f;
+        private const float FactionCodexHeaderHeight = 26f;
+        private const float FactionCodexStatHeight = 52f;
+        private const float FactionCodexBarHeight = 6f;
+        private const float FactionCodexDateColWidth = 96f;
+        private const float FactionCodexTitleColOffset = 100f;
+        private const float FactionCodexSubColWidth = 116f;
+        private const float FactionCodexScrollbarWidth = 16f;
+        private const float FactionCodexEmptyRowHeight = 22f;
+        private const float FactionCodexDotSize = 12f;
+        /// <summary>Reserved width of the relation badge at the card's top-right.</summary>
+        private const float FactionCodexRelationWidth = 62f;
+
         // ---- Navigation state ----
         private MainView view = MainView.Home;
         private string detailObjectId;
@@ -80,6 +111,7 @@ namespace PersonalChronicle.Archive
         private int cachedLiveFreeCount;
         private int cachedLiveSlaveCount;
         private int cachedLivePrisonerCount;
+        private int cachedServiceDays;
 
         // Detail cache (shared by PawnDetail / WeaponDetail).
         private ArchiveObject cachedDetailObject;
@@ -91,6 +123,12 @@ namespace PersonalChronicle.Archive
         private List<CombatLineView> cachedKillLines = new List<CombatLineView>();
         /// <summary>P2: battle participation rows only.</summary>
         private List<CombatLineView> cachedBattleLines = new List<CombatLineView>();
+        /// <summary>v4.3: faction-codex cards aggregated from cachedKillLines.</summary>
+        private List<FactionCodexView> cachedFactionCodex = new List<FactionCodexView>();
+        /// <summary>v4.3: faction keys whose kill detail is expanded inline.</summary>
+        private HashSet<string> expandedFactions = new HashSet<string>();
+        /// <summary>v4.3: per-faction scroll position inside the expanded kill-detail viewport.</summary>
+        private Dictionary<string, Vector2> expandedScroll = new Dictionary<string, Vector2>();
         private List<ProductionLineView> cachedProductionLines = new List<ProductionLineView>();
         private ProductionSummaryView cachedProductionSummary =
             new ProductionSummaryView(0, 0f, -1L, new List<ProductionTypeView>());
@@ -118,6 +156,21 @@ namespace PersonalChronicle.Archive
         // Normal is the default: Join/Death/Battle/Social remain visible while
         // routine craft/build rows stay collapsed into career aggregates.
         private ChronicleImportance timelineMinimumImportance = ChronicleImportance.Normal;
+
+        // v4.0: home overview view selector (B dashboard vs E chronicle timeline).
+        // Mirrored into the persistent component so the choice survives restarts.
+        private enum HomeViewMode : int
+        {
+            Kpi = 0,
+            Timeline = 1
+        }
+        private HomeViewMode homeViewMode = HomeViewMode.Kpi;
+        private const float HomeViewTabHeight = 38f;
+        private IReadOnlyList<ChronicleEvent> cachedTimelineEvents;
+
+        // P2-6: read-model provider. All section query+sort+null-guard logic is
+        // delegated here; the window only consumes immutable snapshots.
+        private ReadModels.IArchiveUiDataProvider uiDataProvider = new ReadModels.ArchiveUiDataProvider();
 
         // v3.1: five biography tabs (Stats removed; Work/Skills/… merged into Career/Social).
         private static readonly string[] PawnTabKeys =
@@ -174,41 +227,71 @@ namespace PersonalChronicle.Archive
 
         private void RefreshNow(IArchiveService service)
         {
-            RebuildCategoryCache(service);
-            RebuildPawnCounts(service);
-            RebuildRecentLines(service);
-            RebuildImportantCards(service);
-            RebuildDetailCache(service);
+            // v4.0: mirror persisted home view preference from the game component via service.
+            int mode = service.GetHomeViewMode();
+            homeViewMode = mode == (int)HomeViewMode.Timeline ? HomeViewMode.Timeline : HomeViewMode.Kpi;
+            // P2-6/P3: every section's query + sort + null-guard is delegated to the
+            // read-model provider. The window only consumes immutable snapshots and
+            // applies translation/formatting (its own translation context).
+            long revision = service.GetDataRevision();
+            RebuildCategoryCacheViaProvider(service, revision);
+            ReadModels.HomeSnapshot home = uiDataProvider.BuildHome(service, revision);
+            RebuildPawnCounts(home);
+            RebuildRecentLines(home);
+            RebuildImportantCards(home);
+            RebuildDetailCache(service, revision);
             RebuildEventCache(service);
+            // Timeline view reads all events (filtered/sorted at draw time).
+            cachedTimelineEvents = service.GetAllEvents();
         }
 
-        private void RebuildCategoryCache(IArchiveService service)
+        private void RebuildCategoryCacheViaProvider(IArchiveService service, long revision)
         {
             cachedCategoryObjects.Clear();
-            cachedCategoryObjects[ArchiveCategoryKeys.Pawn] = service.GetObjectsOfCategory(ArchiveCategoryKeys.Pawn).ToList();
-            cachedCategoryObjects[ArchiveCategoryKeys.Thing] = service.GetObjectsOfCategory(ArchiveCategoryKeys.Thing).ToList();
-            cachedCategoryObjects[ArchiveCategoryKeys.Battle] = service.GetObjectsOfCategory(ArchiveCategoryKeys.Battle).ToList();
-            cachedCategoryObjects[ArchiveCategoryKeys.Location] = service.GetObjectsOfCategory(ArchiveCategoryKeys.Location).ToList();
+            // One builder call per category; ordering/null-guards live in the
+            // read-model provider, not in the window. (P2-6)
+            AddCategoryFromProvider(service, ArchiveCategoryKeys.Pawn, revision);
+            AddCategoryFromProvider(service, ArchiveCategoryKeys.Thing, revision);
+            AddCategoryFromProvider(service, ArchiveCategoryKeys.Battle, revision);
+            AddCategoryFromProvider(service, ArchiveCategoryKeys.Location, revision);
         }
 
-        private void RebuildPawnCounts(IArchiveService service)
+        private void AddCategoryFromProvider(IArchiveService service, string categoryKey, long revision)
         {
-            // All counts come from service contracts — the window renders only,
-            // no business logic here (P2-6). Active/archived are the archive
+            ReadModels.OverviewSnapshot snap = uiDataProvider.BuildOverview(service, categoryKey, revision);
+            List<ArchiveObject> objects;
+            if (snap.CategoryObjects.TryGetValue(categoryKey, out objects) && objects != null)
+            {
+                cachedCategoryObjects[categoryKey] = objects;
+            }
+            else
+            {
+                cachedCategoryObjects[categoryKey] = new List<ArchiveObject>();
+            }
+        }
+
+        private void RebuildPawnCounts(ReadModels.HomeSnapshot home)
+        {
+            // All counts come from the read-model snapshot — the window renders only,
+            // no business logic here (P2-6/P3). Active/archived are the archive
             // snapshot convention (DeathTick); the live colonist count is the
             // independent live-read path with its own 600-tick cache.
-            cachedActivePawnCount = service.GetActiveSnapshotCount();
-            cachedArchivedPawnCount = service.GetArchivedSnapshotCount();
-            cachedLiveColonistCount = service.GetLiveColonistCount();
-            service.GetLiveColonistCounts(
-                out cachedLiveFreeCount, out cachedLiveSlaveCount, out cachedLivePrisonerCount);
+            cachedActivePawnCount = home.ActivePawnCount;
+            cachedArchivedPawnCount = home.ArchivedPawnCount;
+            cachedLiveColonistCount = home.LiveColonistCount;
+            cachedLiveFreeCount = home.LiveFreeCount;
+            cachedLiveSlaveCount = home.LiveSlaveCount;
+            cachedLivePrisonerCount = home.LivePrisonerCount;
+            cachedServiceDays = home.ServiceDays;
         }
 
-        private void RebuildRecentLines(IArchiveService service)
+        private void RebuildRecentLines(ReadModels.HomeSnapshot home)
         {
             cachedRecentLines = new List<RecentLineView>();
 
-            IReadOnlyList<ChronicleEvent> recent = service.GetRecentEvents(RecentRecordCount);
+            // RecentEvents is already sorted descending by tick and null-guarded by
+            // the read-model provider (P3). The window only formats.
+            IReadOnlyList<ChronicleEvent> recent = home.RecentEvents;
             if (recent == null || recent.Count == 0)
             {
                 return;
@@ -231,25 +314,27 @@ namespace PersonalChronicle.Archive
             }
         }
 
-        private void RebuildImportantCards(IArchiveService service)
+        private void RebuildImportantCards(ReadModels.HomeSnapshot home)
         {
             cachedImportantCards = new List<ImportantCardView>();
 
-            // Honest "important" proxy: the Pawn/Thing objects with the most
-            // events (most active in the archive). Battle/Location have no
+            // ImportantObjects is already sorted by event count descending and
+            // null-guarded by the read-model provider (P3). Battle/Location have no
             // detail view, so they never appear here.
-            List<CandidateObject> candidates = new List<CandidateObject>();
-            CollectCandidates(ArchiveCategoryKeys.Pawn, service, candidates);
-            CollectCandidates(ArchiveCategoryKeys.Thing, service, candidates);
-
-            List<CandidateObject> sorted = candidates
-                .OrderByDescending(c => c.EventCount)
-                .Take(ImportantCardCount)
-                .ToList();
-
-            for (int i = 0; i < sorted.Count; i++)
+            IReadOnlyList<ArchiveObject> important = home.ImportantObjects;
+            if (important == null || important.Count == 0)
             {
-                ArchiveObject obj = sorted[i].Object;
+                return;
+            }
+
+            int take = System.Math.Min(important.Count, ImportantCardCount);
+            for (int i = 0; i < take; i++)
+            {
+                ArchiveObject obj = important[i];
+                if (obj == null)
+                {
+                    continue;
+                }
                 cachedImportantCards.Add(new ImportantCardView
                 {
                     Label = ObjectDisplayLabel(obj),
@@ -261,41 +346,20 @@ namespace PersonalChronicle.Archive
             }
         }
 
-        private static void CollectCandidates(string categoryKey, IArchiveService service, List<CandidateObject> candidates)
-        {
-            // P3-6: single query (the old code called GetObjectsOfCategory twice).
-            IReadOnlyList<ArchiveObject> objects = service.GetObjectsOfCategory(categoryKey);
-            if (objects == null || objects.Count == 0)
-            {
-                return;
-            }
-            for (int i = 0; i < objects.Count; i++)
-            {
-                ArchiveObject obj = objects[i];
-                if (obj == null)
-                {
-                    continue;
-                }
-                int count = 0;
-                IReadOnlyList<ChronicleEvent> events = service.GetEventsFor(obj.StableId);
-                if (events != null)
-                {
-                    count = events.Count;
-                }
-                candidates.Add(new CandidateObject { Object = obj, EventCount = count });
-            }
-        }
-
-        private void RebuildDetailCache(IArchiveService service)
+        private void RebuildDetailCache(IArchiveService service, long revision)
         {
             ClearDetailCache();
-            if ((view != MainView.PawnDetail && view != MainView.WeaponDetail)
+            if (service == null
+                || (view != MainView.PawnDetail && view != MainView.WeaponDetail)
                 || string.IsNullOrEmpty(detailObjectId))
             {
                 return;
             }
 
-            cachedDetailObject = service.GetObject(detailObjectId);
+            // P3: event history + object resolution come from the read-model
+            // provider so the window never issues the raw query/sort itself.
+            ReadModels.DetailSnapshot detail = uiDataProvider.BuildDetail(service, detailObjectId, revision);
+            cachedDetailObject = detail.DetailObject;
             if (cachedDetailObject == null)
             {
                 // Object vanished (data cleaned up): safe fallback to overview.
@@ -304,10 +368,10 @@ namespace PersonalChronicle.Archive
                 return;
             }
 
-            IReadOnlyList<ChronicleEvent> events = service.GetEventsFor(detailObjectId);
+            IReadOnlyList<ChronicleEvent> events = detail.RawEvents;
             if (events != null && events.Count > 0)
             {
-                List<ChronicleEvent> sorted = events.OrderBy(ev => ev.Tick).ToList();
+                List<ChronicleEvent> sorted = events.Where(ev => ev != null).OrderBy(ev => ev.Tick).ToList();
                 cachedDetailRawEvents = sorted;
                 cachedDetailEvents = new List<EventLineView>(sorted.Count);
                 for (int i = 0; i < sorted.Count; i++)
@@ -372,6 +436,9 @@ namespace PersonalChronicle.Archive
             cachedCombatLines = new List<CombatLineView>();
             cachedKillLines = new List<CombatLineView>();
             cachedBattleLines = new List<CombatLineView>();
+            cachedFactionCodex = new List<FactionCodexView>();
+            expandedFactions.Clear();
+            expandedScroll.Clear();
             cachedProductionLines = new List<ProductionLineView>();
             cachedProductionSummary = new ProductionSummaryView(0, 0f, -1L, new List<ProductionTypeView>());
             cachedWorkIntensity = new WorkIntensityView(
@@ -434,6 +501,7 @@ namespace PersonalChronicle.Archive
             cachedCombatLines = new List<CombatLineView>();
             cachedKillLines = new List<CombatLineView>();
             cachedBattleLines = new List<CombatLineView>();
+            cachedFactionCodex = new List<FactionCodexView>();
             if (cachedDetailRawEvents == null)
             {
                 return;
@@ -474,16 +542,18 @@ namespace PersonalChronicle.Archive
                     else if (isWeapon)
                     {
                         // Weapon as Subject on death → kill with this weapon.
+                        // v4.3: combat detail shows only the weapon used (no killer name).
                         string victimLabel = ev.Primary != null
                             ? ResolveRefLabel(ev.Primary, service)
                             : EventName(ev);
+                        string weaponLabel = FindWeaponLabelOnEvent(ev, service);
                         CombatLineView kill = new CombatLineView
                         {
                             DateText = FormatDate(ev.Tick),
                             TitleText = victimLabel,
-                            SubText = string.IsNullOrEmpty(killerText)
+                            SubText = string.IsNullOrEmpty(weaponLabel)
                                 ? "PersonalChronicle.UI.KpiKills".Translate().ToString()
-                                : killerText,
+                                : weaponLabel,
                             Target = ev.Primary != null ? NavTargetOfCategory(ev.Primary.CategoryKey) : NavTarget.None,
                             StableId = ev.Primary != null ? ev.Primary.StableId : null,
                             TargetEvent = ev
@@ -494,6 +564,7 @@ namespace PersonalChronicle.Archive
                     else
                     {
                         // Pawn is killer (Subject edge) or otherwise associated → kill credit.
+                        // v4.3: combat detail shows only the weapon used (no killer name, no assist name).
                         string victimLabel = ev.Primary != null
                             ? ResolveRefLabel(ev.Primary, service)
                             : EventName(ev);
@@ -557,6 +628,191 @@ namespace PersonalChronicle.Archive
                     }
                 }
             }
+
+            BuildFactionCodex(service);
+        }
+
+        /// <summary>
+        /// v4.3: aggregate cachedKillLines into faction-codex cards.
+        /// Faction key derivation (priority): unknown-killer bucket → player-death →
+        /// victimFactionDef → wild (animal, no faction) → factionless (no faction, non-animal).
+        /// Victim faction/category are read from event Params snapshotted at record time
+        /// (external victims are never archived), with graceful fallback for old saves.
+        /// </summary>
+        private void BuildFactionCodex(IArchiveService service)
+        {
+            cachedFactionCodex = new List<FactionCodexView>();
+            if (cachedKillLines == null || cachedKillLines.Count == 0)
+            {
+                return;
+            }
+
+            Dictionary<string, FactionCodexView> byKey =
+                new Dictionary<string, FactionCodexView>();
+            Dictionary<string, HashSet<string>> battleIdsByFaction =
+                new Dictionary<string, HashSet<string>>();
+
+            for (int i = 0; i < cachedKillLines.Count; i++)
+            {
+                CombatLineView kv = cachedKillLines[i];
+                ChronicleEvent ev = kv.TargetEvent;
+                string victimStableId = ev != null && ev.Params.TryGetValue(ChronicleEventParams.VictimStableId, out string vsid) ? vsid : null;
+                bool victimIsArchive = false;
+                if (victimStableId != null && service != null
+                    && service.GetObject(victimStableId) is PawnObject victimPawn)
+                {
+                    victimIsArchive = victimPawn.IsArchived;
+                }
+
+                string factionKey;
+                string displayName;
+                ArchiveUiStyle.FactionCodexKind kind;
+                string relationKey;
+
+                bool unknownKiller = ev != null
+                    && ev.Params.TryGetValue(ChronicleEventParams.Killer, out string killerLabel)
+                    && killerLabel == ChronicleEventParams.UnknownKillerLabel;
+
+                string victimFactionDef = ev != null && ev.Params.TryGetValue(ChronicleEventParams.VictimFactionDefName, out string vfd) ? vfd : null;
+                string victimFactionLabel = ev != null && ev.Params.TryGetValue(ChronicleEventParams.VictimFactionLabel, out string vfl) ? vfl : null;
+                string victimCategory = ev != null && ev.Params.TryGetValue(ChronicleEventParams.VictimCategory, out string vcat) ? vcat : null;
+
+                if (unknownKiller && string.IsNullOrEmpty(victimFactionDef))
+                {
+                    factionKey = FactionBucketUnknown;
+                    displayName = "PersonalChronicle.UI.FactionUnknown".Translate().ToString();
+                    kind = ArchiveUiStyle.FactionCodexKind.Unknown;
+                    relationKey = FactionRelationUnresolved;
+                }
+                else if (victimIsArchive)
+                {
+                    factionKey = FactionBucketPlayer;
+                    displayName = "PersonalChronicle.UI.FactionPlayer".Translate().ToString();
+                    kind = ArchiveUiStyle.FactionCodexKind.Player;
+                    relationKey = FactionRelationAlly;
+                }
+                else if (!string.IsNullOrEmpty(victimFactionDef))
+                {
+                    factionKey = victimFactionDef;
+                    displayName = !string.IsNullOrEmpty(victimFactionLabel)
+                        ? victimFactionLabel
+                        : FactionDefLabel(victimFactionDef);
+                    bool isMechanoid = victimCategory == ChronicleEventParams.VictimCategoryMechanoid;
+                    bool isAnimal = victimCategory == ChronicleEventParams.VictimCategoryAnimal;
+                    if (isMechanoid)
+                    {
+                        kind = ArchiveUiStyle.FactionCodexKind.Mechanoid;
+                    }
+                    else if (isAnimal)
+                    {
+                        kind = ArchiveUiStyle.FactionCodexKind.Animal;
+                    }
+                    else
+                    {
+                        kind = ArchiveUiStyle.FactionCodexKind.Enemy;
+                    }
+                    relationKey = FactionRelationHostile;
+                }
+                else
+                {
+                    // No faction: animal → wild bucket, otherwise generic factionless.
+                    if (victimCategory == ChronicleEventParams.VictimCategoryAnimal)
+                    {
+                        factionKey = FactionBucketWild;
+                        displayName = "PersonalChronicle.UI.FactionWild".Translate().ToString();
+                        kind = ArchiveUiStyle.FactionCodexKind.Animal;
+                    }
+                    else
+                    {
+                        factionKey = FactionBucketFactionless;
+                        displayName = "PersonalChronicle.UI.FactionFactionless".Translate().ToString();
+                        kind = ArchiveUiStyle.FactionCodexKind.Unknown;
+                    }
+                    relationKey = FactionRelationNeutral;
+                }
+
+                if (!byKey.TryGetValue(factionKey, out FactionCodexView card))
+                {
+                    card = new FactionCodexView
+                    {
+                        FactionKey = factionKey,
+                        DisplayName = displayName,
+                        Kind = kind,
+                        RelationKey = relationKey,
+                        KillCount = 0,
+                        RaidCount = 0,
+                        BattleCount = 0,
+                        OurLossCount = 0,
+                        MemberLines = new List<CombatLineView>()
+                    };
+                    byKey[factionKey] = card;
+                    battleIdsByFaction[factionKey] = new HashSet<string>();
+                }
+
+                card.KillCount++;
+                card.MemberLines.Add(kv);
+                if (victimIsArchive)
+                {
+                    // Our losses: a kill event whose victim is one of our archived pawns.
+                    card.OurLossCount++;
+                }
+
+                // Battle participation: collect distinct battle subjects from the event.
+                if (ev != null && ev.Subjects != null
+                    && battleIdsByFaction.TryGetValue(factionKey, out HashSet<string> battleIds))
+                {
+                    for (int s = 0; s < ev.Subjects.Count; s++)
+                    {
+                        ObjectRef sub = ev.Subjects[s];
+                        if (sub != null && sub.CategoryKey == ArchiveCategoryKeys.Battle
+                            && !string.IsNullOrEmpty(sub.StableId))
+                        {
+                            battleIds.Add(sub.StableId);
+                        }
+                    }
+                }
+            }
+
+            cachedFactionCodex = new List<FactionCodexView>(byKey.Values);
+            // Build composition (victim kind breakdown) per card, apply distinct battle counts, then sort.
+            for (int c = 0; c < cachedFactionCodex.Count; c++)
+            {
+                FactionCodexView cv = cachedFactionCodex[c];
+                if (battleIdsByFaction.TryGetValue(cv.FactionKey, out HashSet<string> battleIds))
+                {
+                    cv.BattleCount = battleIds.Count;
+                    cv.RaidCount = battleIds.Count;
+                }
+                Dictionary<string, int> kindCounts = new Dictionary<string, int>();
+                for (int m = 0; m < cv.MemberLines.Count; m++)
+                {
+                    ChronicleEvent mev = cv.MemberLines[m].TargetEvent;
+                    // Composition keys are grouping buckets only (never resolved as a Def).
+                    // Use a synthetic sentinel instead of a translation key so the slot
+                    // keeps a single, honest meaning: "a PawnKindDef name, or unknown".
+                    string kindDef = mev != null && mev.Params.TryGetValue(ChronicleEventParams.VictimKindDefName, out string kd) && !string.IsNullOrEmpty(kd)
+                        ? kd
+                        : FactionBucketUnknown;
+                    if (!kindCounts.TryGetValue(kindDef, out int kc))
+                    {
+                        kindCounts[kindDef] = 0;
+                    }
+                    kindCounts[kindDef]++;
+                }
+                cv.Composition = new List<KeyValuePair<string, int>>(kindCounts);
+                cachedFactionCodex[c] = cv;
+            }
+            // Sort: by KillCount desc, player card pinned to bottom.
+            cachedFactionCodex.Sort((a, b) =>
+            {
+                bool aPlayer = a.FactionKey == FactionBucketPlayer;
+                bool bPlayer = b.FactionKey == FactionBucketPlayer;
+                if (aPlayer != bPlayer)
+                {
+                    return aPlayer ? 1 : -1;
+                }
+                return b.KillCount.CompareTo(a.KillCount);
+            });
         }
 
         private void CollectBattleLinesFromEvent(ChronicleEvent ev, IArchiveService service, HashSet<string> seenBattles)
@@ -695,7 +951,7 @@ namespace PersonalChronicle.Archive
         {
             cachedEventTree = new List<TreeLineView>();
             cachedEventDescription = string.Empty;
-            if (view != MainView.EventDetail || cachedEventDetail == null)
+            if (service == null || view != MainView.EventDetail || cachedEventDetail == null)
             {
                 return;
             }
@@ -759,6 +1015,17 @@ namespace PersonalChronicle.Archive
                 b.HeaderKey = "PersonalChronicle.UI.Killer";
                 b.Leaves = new List<LeafView>();
                 b.Leaves.Add(new LeafView { Label = killer, Target = NavTarget.None, StableId = null });
+                branches.Add(b);
+            }
+
+            if (cachedEventDetail.Params != null
+                && cachedEventDetail.Params.TryGetValue(ChronicleEventParams.Assist, out string assist)
+                && !string.IsNullOrEmpty(assist))
+            {
+                BranchView b = new BranchView();
+                b.HeaderKey = "PersonalChronicle.UI.Assist";
+                b.Leaves = new List<LeafView>();
+                b.Leaves.Add(new LeafView { Label = assist, Target = NavTarget.None, StableId = null });
                 branches.Add(b);
             }
 
@@ -902,26 +1169,38 @@ namespace PersonalChronicle.Archive
 
         private void OpenPawnDetail(IArchiveService service, string stableId)
         {
+            if (service == null || string.IsNullOrEmpty(stableId))
+            {
+                return;
+            }
             detailObjectId = stableId;
             view = MainView.PawnDetail;
             detailTabIndex = 0;
             cachedEventDetail = null;
             detailScroll = Vector2.zero;
-            RebuildDetailCache(service);
+            RebuildDetailCache(service, service.GetDataRevision());
         }
 
         private void OpenWeaponDetail(IArchiveService service, string stableId)
         {
+            if (service == null || string.IsNullOrEmpty(stableId))
+            {
+                return;
+            }
             detailObjectId = stableId;
             view = MainView.WeaponDetail;
             detailTabIndex = 0;
             cachedEventDetail = null;
             detailScroll = Vector2.zero;
-            RebuildDetailCache(service);
+            RebuildDetailCache(service, service.GetDataRevision());
         }
 
         private void OpenEventDetail(IArchiveService service, ChronicleEvent ev)
         {
+            if (service == null || ev == null)
+            {
+                return;
+            }
             cachedEventDetail = ev;
             view = MainView.EventDetail;
             detailObjectId = null;
@@ -962,6 +1241,7 @@ namespace PersonalChronicle.Archive
             Text.Font = GameFont.Medium;
             Widgets.Label(new Rect(rect.x + 2f, rect.y + 9f, 300f, 32f),
                 "PersonalChronicle.UI.ColonyArchive".Translate().ToString());
+            Text.Font = GameFont.Small;
             ArchiveUiStyle.DrawRule(new Rect(rect.x, rect.yMax - 1f, rect.width, 1f), ArchiveUiStyle.Accent);
         }
 
@@ -1110,13 +1390,24 @@ namespace PersonalChronicle.Archive
             y += 30f;
 
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+            GUI.color = ArchiveUiStyle.SecondaryText;
             Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 18f),
                 "PersonalChronicle.UI.ArchiveHomeDesc".Translate().ToString());
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
             y += 26f;
 
-            y = DrawHomeStats(viewRect, y);
+            // v4.0: view selector (B dashboard vs E chronicle timeline).
+            y = DrawHomeViewTabs(viewRect, y, service);
+
+            if (homeViewMode == HomeViewMode.Timeline)
+            {
+                DrawHomeTimeline(viewRect, y, service);
+                Widgets.EndScrollView();
+                return;
+            }
+
+            y = DrawHomeKpi(viewRect, y);
             y += 20f;
 
             float leftWidth = viewRect.width * 0.62f;
@@ -1130,41 +1421,238 @@ namespace PersonalChronicle.Archive
             Widgets.EndScrollView();
         }
 
-        private static float ComputeHomeHeight(float width)
+        private float DrawHomeViewTabs(Rect viewRect, float y, IArchiveService service)
         {
-            // stats strip (2 rows max) + two columns.
-            float statsHeight = 150f;
-            float columnsHeight = 6 * TimelineRowHeight + 40f + 4 * 70f + 60f;
-            return 4f + 30f + 26f + statsHeight + 20f + columnsHeight + 20f;
+            float tabWidth = 150f;
+            float gap = 8f;
+            float x = viewRect.x;
+            string[] labels = new[]
+            {
+                "PersonalChronicle.UI.HomeKpiView".Translate().ToString(),
+                "PersonalChronicle.UI.HomeTimelineView".Translate().ToString()
+            };
+            HomeViewMode[] modes = new[] { HomeViewMode.Kpi, HomeViewMode.Timeline };
+            float startY = y;
+            for (int i = 0; i < labels.Length; i++)
+            {
+                Rect tabRect = new Rect(x, y, tabWidth, HomeViewTabHeight);
+                bool selected = homeViewMode == modes[i];
+                ArchiveUiStyle.DrawSelectedNavigation(tabRect, selected);
+                Text.Font = GameFont.Small;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(tabRect, labels[i]);
+                Text.Anchor = TextAnchor.UpperLeft;
+                if (Widgets.ButtonInvisible(tabRect) && !selected)
+                {
+                    homeViewMode = modes[i];
+                    PersistHomeViewMode(service);
+                }
+                x += tabWidth + gap;
+            }
+            return startY + HomeViewTabHeight + 12f;
         }
 
-        private float DrawHomeStats(Rect viewRect, float y)
+        private void PersistHomeViewMode(IArchiveService service)
         {
-            float statHeight = 64f;
-            float gap = 8f;
-            int perRow = 6;
-            float statWidth = (viewRect.width - (perRow - 1) * gap) / perRow;
+            service.SetHomeViewMode((int)homeViewMode);
+        }
 
-            DrawStatCell(new Rect(viewRect.x, y, statWidth, statHeight),
-                CategoryLabel(ArchiveCategoryKeys.Pawn), cachedCategoryObjects.GetCount(ArchiveCategoryKeys.Pawn));
-            DrawStatCell(new Rect(viewRect.x + (statWidth + gap), y, statWidth, statHeight),
-                CategoryLabel(ArchiveCategoryKeys.Thing), cachedCategoryObjects.GetCount(ArchiveCategoryKeys.Thing));
-            DrawStatCell(new Rect(viewRect.x + 2 * (statWidth + gap), y, statWidth, statHeight),
-                CategoryLabel(ArchiveCategoryKeys.Battle), cachedCategoryObjects.GetCount(ArchiveCategoryKeys.Battle));
-            DrawStatCell(new Rect(viewRect.x + 3 * (statWidth + gap), y, statWidth, statHeight),
-                CategoryLabel(ArchiveCategoryKeys.Location), cachedCategoryObjects.GetCount(ArchiveCategoryKeys.Location));
-            DrawStatCell(new Rect(viewRect.x + 4 * (statWidth + gap), y, statWidth, statHeight),
-                "PersonalChronicle.UI.CurrentColonists".Translate().ToString(), cachedLiveColonistCount,
-                "PersonalChronicle.UI.LiveBreakdown"
+        private void DrawHomeTimeline(Rect viewRect, float y, IArchiveService service)
+        {
+            if (cachedTimelineEvents == null || cachedTimelineEvents.Count == 0)
+            {
+                Text.Font = GameFont.Small;
+                GUI.color = ArchiveUiStyle.SecondaryText;
+                Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 24f),
+                    "PersonalChronicle.UI.NoTimelineEvents".Translate().ToString());
+                GUI.color = Color.white;
+                Text.Font = GameFont.Small;
+                return;
+            }
+            // Sort ascending by Tick for a chronological spine.
+            List<ChronicleEvent> ordered = new List<ChronicleEvent>(cachedTimelineEvents);
+            ordered.Sort((a, b) => a.Tick.CompareTo(b.Tick));
+            float spineX = viewRect.x + 14f;
+            float nodeX = spineX + 18f;
+            float rowH = 54f;
+            float currentY = y;
+            bool left = true;
+            for (int i = 0; i < ordered.Count; i++)
+            {
+                ChronicleEvent ev = ordered[i];
+                if (ev == null)
+                {
+                    continue;
+                }
+                if (ChronicleEventImportance.Resolve(ev) < ChronicleImportance.Important)
+                {
+                    // Timeline shows only key milestones (keeps large saves calm).
+                    continue;
+                }
+                string typeKey = ev.TypeKey;
+                string icon = EventTypeToGlyph(typeKey);
+                Color color = EventTypeToColor(typeKey);
+                string title = EventName(ev);
+                string date = GenDate.DateReadoutStringAt(ev.Tick, Vector2.zero);
+
+                // compute card geometry first (connector needs it).
+                const float cardGap = 16f;
+                const float minCardW = 40f;
+                float availableW = Mathf.Max(0f, viewRect.width - nodeX - viewRect.x - 24f);
+                float cardW = Mathf.Max(minCardW, availableW / 2f - cardGap / 2f);
+                float cardX = left ? nodeX : nodeX + cardW + cardGap;
+                Rect cardRect = new Rect(cardX, currentY + 4f, cardW, rowH - 8f);
+
+                // spine segment
+                GUI.color = ArchiveUiStyle.TimelineSpine;
+                Widgets.DrawLineVertical(spineX, currentY, rowH);
+                // node + horizontal connector
+                GUI.color = color;
+                Rect nodeRect = new Rect(spineX - 5f, currentY + rowH / 2f - 5f, 10f, 10f);
+                GUI.DrawTexture(nodeRect, BaseContent.WhiteTex);
+                float connectorStart = left ? nodeRect.xMax : cardRect.xMax;
+                float connectorEnd = left ? cardRect.x : nodeRect.x;
+                float connectorLen = Mathf.Max(0f, connectorEnd - connectorStart);
+                Widgets.DrawLineHorizontal(connectorStart, currentY + rowH / 2f, connectorLen);
+                GUI.color = Color.white;
+
+                ArchiveUiStyle.DrawPanel(cardRect);
+                Rect cardInner = cardRect.ContractedBy(6f);
+                Text.Font = GameFont.Small;
+                Widgets.Label(new Rect(cardInner.x, cardInner.y, cardInner.width, 20f), icon + " " + title);
+                Text.Font = GameFont.Tiny;
+                GUI.color = ArchiveUiStyle.SecondaryText;
+                Widgets.Label(new Rect(cardInner.x, cardInner.y + 22f, cardInner.width, 16f), date);
+                GUI.color = Color.white;
+                if (Widgets.ButtonInvisible(cardRect))
+                {
+                    OpenEventDetail(service, ev);
+                }
+                left = !left;
+                currentY += rowH;
+            }
+            Text.Font = GameFont.Small;
+        }
+
+        private static float ComputeHomeHeight(float width)
+        {
+            // tabs + KPI groups (2 section titles + 3 large cards + 5 small cards) + two columns.
+            float tabsHeight = HomeViewTabHeight + 12f;
+            float kpiHeight = 86f + 58f + 2 * 22f + 2 * 16f;
+            float columnsHeight = 6 * TimelineRowHeight + 40f + 4 * 70f + 60f;
+            return 4f + 30f + 26f + tabsHeight + kpiHeight + 20f + columnsHeight + 20f;
+        }
+
+        private float DrawHomeKpi(Rect viewRect, float y)
+        {
+            const float groupGap = 16f;
+            const float cardGap = 10f;
+
+            // ---------- Real-time indicators (3 large cards, green accent) ----------
+            DrawSectionTitle(viewRect, ref y, "PersonalChronicle.UI.HomeRealtimeGroup".Translate().ToString());
+            const float liveHeight = 86f;
+            int liveCount = 3;
+            float liveCardW = Mathf.Max(40f, (viewRect.width - (liveCount - 1) * cardGap) / liveCount);
+            DrawHomeMetricCard(
+                new Rect(viewRect.x, y, liveCardW, liveHeight),
+                "PersonalChronicle.UI.HomeLiveColonists".Translate().ToString(),
+                cachedLiveColonistCount.ToString(),
+                "PersonalChronicle.UI.HomeColonistBreakdown"
                     .Translate(cachedLiveFreeCount, cachedLiveSlaveCount, cachedLivePrisonerCount)
-                    .ToString());
-            string pawnRecordsSubLabel =
-                "PersonalChronicle.UI.ActiveRecords".Translate().ToString() + " " + cachedActivePawnCount
-                + " · " + "PersonalChronicle.UI.ArchivedRecords".Translate().ToString() + " " + cachedArchivedPawnCount;
-            DrawStatCell(new Rect(viewRect.x + 5 * (statWidth + gap), y, statWidth, statHeight),
-                "PersonalChronicle.UI.ArchivePawnRecords".Translate().ToString(),
-                cachedActivePawnCount + cachedArchivedPawnCount, pawnRecordsSubLabel);
-            return y + statHeight;
+                    .ToString(),
+                ArchiveUiStyle.Alive,
+                isLarge: true);
+            DrawHomeMetricCard(
+                new Rect(viewRect.x + liveCardW + cardGap, y, liveCardW, liveHeight),
+                "PersonalChronicle.UI.HomeServiceDays".Translate().ToString(),
+                cachedServiceDays.ToString(),
+                "PersonalChronicle.UI.HomeServiceSince".Translate().ToString(),
+                ArchiveUiStyle.Accent,
+                isLarge: true);
+            DrawHomeMetricCard(
+                new Rect(viewRect.x + 2 * (liveCardW + cardGap), y, liveCardW, liveHeight),
+                "PersonalChronicle.UI.HomeLivePawns".Translate().ToString(),
+                cachedActivePawnCount.ToString(),
+                "PersonalChronicle.UI.HomeSnapshotBreakdown"
+                    .Translate(cachedActivePawnCount, cachedArchivedPawnCount)
+                    .ToString(),
+                ArchiveUiStyle.Text,
+                isLarge: true);
+            y += liveHeight;
+
+            y += groupGap;
+
+            // ---------- Archive library (5 small cards) ----------
+            DrawSectionTitle(viewRect, ref y, "PersonalChronicle.UI.HomeArchiveGroup".Translate().ToString());
+            const float archiveHeight = 58f;
+            int archiveCount = 5;
+            float archiveCardW = Mathf.Max(40f, (viewRect.width - (archiveCount - 1) * cardGap) / archiveCount);
+            DrawHomeMetricCard(
+                new Rect(viewRect.x, y, archiveCardW, archiveHeight),
+                "PersonalChronicle.UI.Category.Pawn".Translate().ToString(),
+                cachedCategoryObjects.GetCount(ArchiveCategoryKeys.Pawn).ToString(),
+                null,
+                ArchiveUiStyle.Text,
+                isLarge: false);
+            DrawHomeMetricCard(
+                new Rect(viewRect.x + archiveCardW + cardGap, y, archiveCardW, archiveHeight),
+                "PersonalChronicle.UI.Category.Thing".Translate().ToString(),
+                cachedCategoryObjects.GetCount(ArchiveCategoryKeys.Thing).ToString(),
+                null,
+                ArchiveUiStyle.Text,
+                isLarge: false);
+            DrawHomeMetricCard(
+                new Rect(viewRect.x + 2 * (archiveCardW + cardGap), y, archiveCardW, archiveHeight),
+                "PersonalChronicle.UI.Category.Battle".Translate().ToString(),
+                cachedCategoryObjects.GetCount(ArchiveCategoryKeys.Battle).ToString(),
+                null,
+                ArchiveUiStyle.Text,
+                isLarge: false);
+            DrawHomeMetricCard(
+                new Rect(viewRect.x + 3 * (archiveCardW + cardGap), y, archiveCardW, archiveHeight),
+                "PersonalChronicle.UI.Category.Location".Translate().ToString(),
+                cachedCategoryObjects.GetCount(ArchiveCategoryKeys.Location).ToString(),
+                null,
+                ArchiveUiStyle.Text,
+                isLarge: false);
+            DrawHomeMetricCard(
+                new Rect(viewRect.x + 4 * (archiveCardW + cardGap), y, archiveCardW, archiveHeight),
+                "PersonalChronicle.UI.ArchivedRecords".Translate().ToString(),
+                cachedArchivedPawnCount.ToString(),
+                null,
+                ArchiveUiStyle.Muted,
+                isLarge: false);
+            y += archiveHeight;
+
+            return y;
+        }
+
+        private static void DrawHomeMetricCard(Rect rect, string label, string value, string subLabel, Color accent, bool isLarge)
+        {
+            ArchiveUiStyle.DrawPanel(rect);
+            float pad = isLarge ? 12f : 8f;
+            Rect inner = rect.ContractedBy(pad);
+            Text.Font = isLarge ? GameFont.Small : GameFont.Tiny;
+            GUI.color = ArchiveUiStyle.Muted;
+            Widgets.Label(new Rect(inner.x, inner.y, inner.width, isLarge ? 18f : 16f), label);
+            GUI.color = Color.white;
+            Text.Font = isLarge ? GameFont.Medium : GameFont.Small;
+            float valueY = isLarge ? inner.y + 24f : inner.y + 18f;
+            float valueH = isLarge ? 32f : 22f;
+            GUI.color = accent;
+            Text.Anchor = TextAnchor.MiddleLeft;
+            Widgets.Label(new Rect(inner.x, valueY, inner.width, valueH), value);
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+            if (!string.IsNullOrEmpty(subLabel))
+            {
+                Text.Font = GameFont.Tiny;
+                GUI.color = ArchiveUiStyle.Muted;
+                float subY = isLarge ? inner.y + 56f : inner.y + 38f;
+                Widgets.Label(new Rect(inner.x, subY, inner.width, isLarge ? 18f : 14f), subLabel);
+                GUI.color = Color.white;
+            }
+            Text.Font = GameFont.Small;
         }
 
         private void DrawRecentHistory(Rect rect, IArchiveService service)
@@ -1252,10 +1740,11 @@ namespace PersonalChronicle.Archive
             y += 30f;
 
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+            GUI.color = ArchiveUiStyle.SecondaryText;
             Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 18f),
                 "PersonalChronicle.UI.OverviewDesc".Translate().ToString());
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
             y += 28f;
 
             for (int i = 0; i < CategoryKeys.Length; i++)
@@ -1366,6 +1855,7 @@ namespace PersonalChronicle.Archive
                     }
                 }
             }
+            Text.Font = GameFont.Small;
 
             int rows = (objects.Count - 1) / perRow + 1;
             return y + rows * (cardHeight + gap) + 14f;
@@ -1433,13 +1923,19 @@ namespace PersonalChronicle.Archive
                 int productionRows = (productionTypes + 1) / 2;
                 float productionSummaryHeight = productionTypes > 0 ? 86f : 0f;
                 return Mathf.Max(980f,
-                    280f + intensityRows * 94f + productionSummaryHeight
+                    280f + intensityRows * 120f + productionSummaryHeight
                     + productionRows * 58f + 16 * 26f);
             }
             if (tab == "CombatLog")
             {
-                return 260f + cachedKillLines.Count * (TimelineRowHeight + 2f)
-                    + cachedBattleLines.Count * (TimelineRowHeight + 2f);
+                float h = 260f;
+                for (int i = 0; i < cachedFactionCodex.Count; i++)
+                {
+                    FactionCodexView card = cachedFactionCodex[i];
+                    bool expanded = expandedFactions.Contains(card.FactionKey);
+                    h += FactionCodexCardHeight(card, expanded) + 12f;
+                }
+                return h;
             }
             if (tab == "Social")
             {
@@ -1501,15 +1997,17 @@ namespace PersonalChronicle.Archive
                 DrawMetaLine(rect, y + 30f, ObjectSubLabel(cachedDetailObject));
             }
 
+            Text.Font = GameFont.Small;
             return y + 54f;
         }
 
         private static void DrawMetaLine(Rect rect, float y, string text)
         {
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+            GUI.color = ArchiveUiStyle.SecondaryText;
             Widgets.Label(new Rect(rect.x, y, rect.width, 18f), text);
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
         }
 
         private float DrawTabBar(Rect rect, float y, IArchiveService service)
@@ -1855,16 +2353,25 @@ namespace PersonalChronicle.Archive
         private static void DrawMetricCard(Rect rect, string label, string value, string subLabel)
         {
             ArchiveUiStyle.DrawCard(rect, ArchiveUiStyle.Info);
+            bool large = rect.height >= 80f;
+            float labelH = large ? 18f : 16f;
+            float valueH = large ? 28f : 26f;
+            float subLabelH = large ? 18f : 16f;
+            float labelY = rect.y + 8f;
+            float valueY = labelY + labelH + (large ? 4f : 0f);
+            float subLabelY = valueY + valueH + (large ? 4f : 1f);
+
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 8f, rect.width - 20f, 16f), label);
+            Widgets.Label(new Rect(rect.x + 10f, labelY, rect.width - 20f, labelH), label);
             Text.Font = GameFont.Medium;
             GUI.color = ArchiveUiStyle.Text;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 24f, rect.width - 20f, 26f), value);
+            Widgets.Label(new Rect(rect.x + 10f, valueY, rect.width - 20f, valueH), value);
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 51f, rect.width - 20f, 16f), subLabel);
+            Widgets.Label(new Rect(rect.x + 10f, subLabelY, rect.width - 20f, subLabelH), subLabel);
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
         }
 
         private static string BackstoryLabel(PawnObject pawn)
@@ -1926,38 +2433,293 @@ namespace PersonalChronicle.Archive
                 y += 10f;
             }
 
-            // P2: kills then battles (same source as overview KPI).
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.KillRecords".Translate().ToString());
-            y = DrawCombatLineList(rect, y, service, cachedKillLines, "PersonalChronicle.UI.NoKillRecords");
-            y += 8f;
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.BattleRecords".Translate().ToString());
-            y = DrawCombatLineList(rect, y, service, cachedBattleLines, "PersonalChronicle.UI.NoBattleRecords");
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
-            Widgets.Label(new Rect(rect.x, y + 4f, rect.width, 18f),
-                "PersonalChronicle.UI.CombatFooter".Translate(cachedBattleLines.Count, cachedKillLines.Count).ToString());
-            GUI.color = Color.white;
+            // v4.3: faction-codex cards (kills aggregated by faction).
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.FactionCodexTitle".Translate().ToString());
+            y = DrawFactionCodex(rect, y, service);
         }
 
         private void DrawWeaponCombat(Rect rect, IArchiveService service)
         {
             float y = rect.y;
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.KillRecords".Translate().ToString());
-            y = DrawCombatLineList(rect, y, service, cachedKillLines, "PersonalChronicle.UI.NoKillRecords");
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
-            Widgets.Label(new Rect(rect.x, y + 4f, rect.width, 18f),
-                "PersonalChronicle.UI.CombatFooter".Translate(cachedBattleLines.Count, cachedKillLines.Count).ToString());
-            GUI.color = Color.white;
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.FactionCodexTitle".Translate().ToString());
+            y = DrawFactionCodex(rect, y, service);
+        }
+
+        // ===== v4.3: faction-codex (each card = one faction; click to expand kills inline) =====
+
+        private const float FactionCodexGap = 12f;
+        /// <summary>v4.3: rows visible in the expanded detail viewport (inner scrollbar).</summary>
+        private const int FactionCodexPreviewRows = 5;
+
+        private float DrawFactionCodex(Rect rect, float y, IArchiveService service)
+        {
+            if (cachedFactionCodex == null || cachedFactionCodex.Count == 0)
+            {
+                // Restore font/colour before returning: RimWorld's Text.Font and GUI.color
+                // are global IMGUI state, and leaking them corrupts every widget drawn after us.
+                GameFont prevEmptyFont = Verse.Text.Font;
+                Color prevEmptyColor = GUI.color;
+                Verse.Text.Font = GameFont.Small;
+                GUI.color = ArchiveUiStyle.Text;
+                Widgets.Label(new Rect(rect.x, y, rect.width, FactionCodexEmptyRowHeight),
+                    "PersonalChronicle.UI.NoKillRecords".Translate().ToString());
+                GUI.color = prevEmptyColor;
+                Verse.Text.Font = prevEmptyFont;
+                return y + FactionCodexEmptyRowHeight + 4f;
+            }
+
+            int cols = rect.width >= FactionCodexTwoColumnWidth ? 2 : 1;
+            float cardW = (rect.width - FactionCodexGap * (cols - 1)) / cols;
+            int drawnInRow = 0;
+            float rowStartY = y;
+            float rowMaxH = 0f;
+
+            for (int i = 0; i < cachedFactionCodex.Count; i++)
+            {
+                FactionCodexView card = cachedFactionCodex[i];
+                bool expanded = expandedFactions.Contains(card.FactionKey);
+                float cardH = FactionCodexCardHeight(card, expanded);
+                float cardX = rect.x + drawnInRow * (cardW + FactionCodexGap);
+                Rect cardRect = new Rect(cardX, y, cardW, cardH);
+                DrawFactionCodexCard(cardRect, card, expanded, service);
+                if (Widgets.ButtonInvisible(cardRect))
+                {
+                    if (expandedFactions.Contains(card.FactionKey))
+                    {
+                        expandedFactions.Remove(card.FactionKey);
+                    }
+                    else
+                    {
+                        expandedFactions.Add(card.FactionKey);
+                    }
+                }
+                rowMaxH = Mathf.Max(rowMaxH, cardH);
+                drawnInRow++;
+                if (drawnInRow >= cols)
+                {
+                    y += rowMaxH + FactionCodexGap;
+                    drawnInRow = 0;
+                    rowMaxH = 0f;
+                }
+            }
+            if (drawnInRow > 0)
+            {
+                y += rowMaxH;
+            }
+            return y;
+        }
+
+        /// <summary>
+        /// Row pitch inside the expanded detail viewport (row height + separator).
+        /// </summary>
+        private const float FactionCodexRowPitch = TimelineRowHeight + 2f;
+
+        /// <summary>
+        /// Height of a codex card. MUST stay in sync with the layout in
+        /// <see cref="DrawFactionCodexCard"/> — both derive from the same constants so the
+        /// expanded viewport can never overflow the card background.
+        /// Layout: padding → header → stats → gap → bar → padding [→ gap + viewport].
+        /// </summary>
+        private static float FactionCodexCardHeight(FactionCodexView card, bool expanded)
+        {
+            float h = FactionCodexPadding
+                + FactionCodexHeaderHeight + 8f
+                + FactionCodexStatHeight + 8f
+                + FactionCodexBarHeight
+                + FactionCodexPadding;
+            if (expanded && card.MemberLines != null && card.MemberLines.Count > 0)
+            {
+                // Fixed 5-row viewport: no matter how many kills, the card keeps its
+                // height and the rows scroll inside it.
+                h += 8f + FactionCodexPreviewRows * FactionCodexRowPitch;
+            }
+            return h;
+        }
+
+        private void DrawFactionCodexCard(Rect rect, FactionCodexView card, bool expanded, IArchiveService service)
+        {
+            // Snapshot every piece of global IMGUI state we are about to touch,
+            // and restore all three before returning (see the tail of this method).
+            Color previous = GUI.color;
+            GameFont prevFont = Verse.Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+
+            Color accent = ArchiveUiStyle.FactionAccent(card.Kind);
+            ArchiveUiStyle.DrawCard(rect, accent);
+
+            // Header: dot + name + kind badge + relation badge.
+            float hx = rect.x + FactionCodexPadding;
+            float hy = rect.y + FactionCodexPadding;
+            Widgets.DrawBoxSolid(new Rect(hx, hy, FactionCodexDotSize, FactionCodexDotSize), accent);
+            // Name column stops before the relation badge so long faction names
+            // (or a long third-party mod label) can never overlap it.
+            float nameX = hx + FactionCodexDotSize + 6f;
+            float nameW = Mathf.Max(0f, rect.xMax - FactionCodexPadding - FactionCodexRelationWidth - 6f - nameX);
+            Text.Anchor = TextAnchor.MiddleLeft;
+            Verse.Text.Font = GameFont.Small;
+            GUI.color = ArchiveUiStyle.Text;
+            Widgets.Label(new Rect(nameX, hy - 1f, nameW, 18f), card.DisplayName);
+            Verse.Text.Font = GameFont.Tiny;
+            GUI.color = ArchiveUiStyle.Muted;
+            Widgets.Label(new Rect(nameX, hy + 15f, nameW, 16f), FactionKindLabel(card.Kind));
+            Text.Anchor = TextAnchor.MiddleRight;
+            GUI.color = RelationColor(card.RelationKey);
+            Widgets.Label(new Rect(rect.xMax - FactionCodexPadding - FactionCodexRelationWidth, hy, FactionCodexRelationWidth, 18f),
+                RelationLabel(card.RelationKey));
+            Text.Anchor = TextAnchor.UpperLeft;
+
+            // 4 stat cells. statsY matches FactionCodexCardHeight: padding + header + gap.
+            float statsY = rect.y + FactionCodexPadding + FactionCodexHeaderHeight + 8f;
+            float innerW = rect.width - FactionCodexPadding * 2f;
+            float statW = (innerW - FactionCodexGap * 3) / 4f;
+            float statX = rect.x + FactionCodexPadding;
+            DrawFactionStat(new Rect(statX, statsY, statW, FactionCodexStatHeight), card.KillCount.ToString(), "PersonalChronicle.UI.StatKills".Translate().ToString(), ArchiveUiStyle.Dead);
+            DrawFactionStat(new Rect(statX + statW + FactionCodexGap, statsY, statW, FactionCodexStatHeight), card.RaidCount.ToString(), "PersonalChronicle.UI.StatRaids".Translate().ToString(), ArchiveUiStyle.TimelineBattle);
+            DrawFactionStat(new Rect(statX + (statW + FactionCodexGap) * 2, statsY, statW, FactionCodexStatHeight), card.BattleCount.ToString(), "PersonalChronicle.UI.StatBattles".Translate().ToString(), ArchiveUiStyle.Info);
+            // 4th cell: player card shows real losses; enemy cards cannot attribute
+            // our losses from kill events (victim is the enemy), so show "—" to avoid a misleading 0.
+            string lossText = card.Kind == ArchiveUiStyle.FactionCodexKind.Player
+                ? card.OurLossCount.ToString()
+                : "—";
+            DrawFactionStat(new Rect(statX + (statW + FactionCodexGap) * 3, statsY, statW, FactionCodexStatHeight), lossText, "PersonalChronicle.UI.StatOurLosses".Translate().ToString(), ArchiveUiStyle.TimelineDeath);
+
+            // Composition bar (victim-kind breakdown), segmented by proportion.
+            float barY = statsY + FactionCodexStatHeight + 8f;
+            Rect barRect = new Rect(statX, barY, innerW, FactionCodexBarHeight);
+            Widgets.DrawBoxSolid(barRect, ArchiveUiStyle.BorderSoft);
+            if (card.Composition != null && card.KillCount > 0)
+            {
+                float segX = barRect.x;
+                for (int ci = 0; ci < card.Composition.Count; ci++)
+                {
+                    int cnt = card.Composition[ci].Value;
+                    float segW = barRect.width * ((float)cnt / card.KillCount);
+                    Color segColor = CompositionColor(ci);
+                    Widgets.DrawBoxSolid(new Rect(segX, barY, Mathf.Max(0f, segW - 1f), FactionCodexBarHeight), segColor);
+                    segX += segW;
+                }
+            }
+            else
+            {
+                Widgets.DrawBoxSolid(barRect, accent);
+            }
+
+            // Expanded kill detail: fixed-height viewport with an inner scrollbar
+            // (all rows scrollable inside the card; card height stays constant).
+            if (expanded && card.MemberLines != null && card.MemberLines.Count > 0)
+            {
+                float dy = barY + FactionCodexBarHeight + 8f;
+                float rowH = FactionCodexRowPitch;
+                float viewH = FactionCodexPreviewRows * rowH;
+                float contentH = card.MemberLines.Count * rowH;
+                Rect viewRect = new Rect(statX, dy, innerW, viewH);
+                // Reserve right edge for the scrollbar when content overflows.
+                Rect contentRect = new Rect(0f, 0f, viewRect.width - (contentH > viewH ? FactionCodexScrollbarWidth : 0f), contentH);
+                if (!expandedScroll.TryGetValue(card.FactionKey, out Vector2 scrollPos))
+                {
+                    scrollPos = Vector2.zero;
+                }
+
+                Widgets.BeginScrollView(viewRect, ref scrollPos, contentRect);
+                try
+                {
+                    Verse.Text.Font = GameFont.Tiny;
+                    Text.Anchor = TextAnchor.MiddleLeft;
+                    for (int r = 0; r < card.MemberLines.Count; r++)
+                    {
+                        CombatLineView kv = card.MemberLines[r];
+                        float rowY = r * rowH;
+                        Rect row = new Rect(0f, rowY, contentRect.width, TimelineRowHeight);
+                        // Title column is what remains after the date column and the weapon column.
+                        float titleW = row.width - FactionCodexTitleColOffset - FactionCodexSubColWidth - 4f;
+                        GUI.color = ArchiveUiStyle.Muted;
+                        Widgets.Label(new Rect(row.x, row.y, FactionCodexDateColWidth, TimelineRowHeight), kv.DateText);
+                        GUI.color = ArchiveUiStyle.Text;
+                        Widgets.Label(new Rect(row.x + FactionCodexTitleColOffset, row.y, Mathf.Max(0f, titleW), TimelineRowHeight), kv.TitleText);
+                        GUI.color = ArchiveUiStyle.Accent;
+                        Widgets.Label(new Rect(row.xMax - FactionCodexSubColWidth, row.y, FactionCodexSubColWidth, TimelineRowHeight), kv.SubText);
+                    }
+                }
+                finally
+                {
+                    // EndScrollView must always run: an escaped exception would leave
+                    // Unity's GUI clip stack unbalanced and break every later window.
+                    Widgets.EndScrollView();
+                }
+                expandedScroll[card.FactionKey] = scrollPos;
+            }
+
+            GUI.color = previous;
+            Verse.Text.Font = prevFont;
+            Text.Anchor = prevAnchor;
+        }
+
+        private static void DrawFactionStat(Rect rect, string number, string label, Color numColor)
+        {
+            Color prev = GUI.color;
+            GameFont prevFont = Verse.Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            // Medium font needs >=28f in Chinese; the caption sits below it.
+            Verse.Text.Font = GameFont.Medium;
+            GUI.color = numColor;
+            Widgets.Label(new Rect(rect.x, rect.y, rect.width, 28f), number);
+            Verse.Text.Font = GameFont.Tiny;
+            GUI.color = ArchiveUiStyle.Muted;
+            Widgets.Label(new Rect(rect.x, rect.y + 30f, rect.width, 18f), label);
+            GUI.color = prev;
+            Verse.Text.Font = prevFont;
+            Text.Anchor = prevAnchor;
+        }
+
+        private static string FactionKindLabel(ArchiveUiStyle.FactionCodexKind kind)
+        {
+            switch (kind)
+            {
+                case ArchiveUiStyle.FactionCodexKind.Enemy: return "PersonalChronicle.UI.FactionKindEnemy".Translate().ToString();
+                case ArchiveUiStyle.FactionCodexKind.Mechanoid: return "PersonalChronicle.UI.FactionKindMechanoid".Translate().ToString();
+                case ArchiveUiStyle.FactionCodexKind.Animal: return "PersonalChronicle.UI.FactionKindAnimal".Translate().ToString();
+                default: return "PersonalChronicle.UI.FactionKindUnknown".Translate().ToString();
+            }
+        }
+
+        private static string RelationLabel(string relationKey)
+        {
+            if (relationKey == FactionRelationHostile) return "PersonalChronicle.UI.FactionRelHostile".Translate().ToString();
+            if (relationKey == FactionRelationNeutral) return "PersonalChronicle.UI.FactionRelNeutral".Translate().ToString();
+            if (relationKey == FactionRelationAlly) return "PersonalChronicle.UI.FactionRelAlly".Translate().ToString();
+            return "PersonalChronicle.UI.FactionRelUnresolved".Translate().ToString();
+        }
+
+        private static readonly Color[] CompositionPalette = new Color[]
+        {
+            ArchiveUiStyle.TimelineBattle,
+            ArchiveUiStyle.Info,
+            ArchiveUiStyle.Alive,
+            ArchiveUiStyle.Muted
+        };
+
+        private static Color CompositionColor(int index)
+        {
+            return CompositionPalette[index % CompositionPalette.Length];
+        }
+
+        private static Color RelationColor(string relationKey)
+        {
+            if (relationKey == FactionRelationHostile) return ArchiveUiStyle.Dead;
+            if (relationKey == FactionRelationAlly) return ArchiveUiStyle.Alive;
+            return ArchiveUiStyle.Muted;
         }
 
         private float DrawCombatLineList(Rect rect, float y, IArchiveService service, List<CombatLineView> lines, string emptyKey)
         {
             if (lines == null || lines.Count == 0)
             {
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(rect.x, y, rect.width, 22f), emptyKey.Translate().ToString());
-                return y + 26f;
+                GameFont prevFont = Verse.Text.Font;
+                Verse.Text.Font = GameFont.Small;
+                Widgets.Label(new Rect(rect.x, y, rect.width, FactionCodexEmptyRowHeight), emptyKey.Translate().ToString());
+                Verse.Text.Font = prevFont;
+                return y + FactionCodexEmptyRowHeight + 4f;
             }
             for (int i = 0; i < lines.Count; i++)
             {
@@ -2019,9 +2781,10 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Small;
                 Widgets.Label(new Rect(row.x + 6f, row.y + 4f, row.width - 200f, 22f), link.Label);
                 Text.Font = GameFont.Tiny;
-                GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+                GUI.color = ArchiveUiStyle.SecondaryText;
                 Widgets.Label(new Rect(row.x + row.width - 196f, row.y + 6f, 190f, 18f), link.CategoryLabel);
                 GUI.color = Color.white;
+                Text.Font = GameFont.Small;
                 if (link.Target != NavTarget.None && Widgets.ButtonInvisible(row))
                 {
                     NavigateTarget(service, link.Target, link.StableId, null);
@@ -2384,41 +3147,40 @@ namespace PersonalChronicle.Archive
                 ? statusKey.Translate().ToString()
                 : string.Empty;
             Rect badge = new Rect(hero.x + 8f, hero.y + 8f, 170f, hero.height - 16f);
-            ArchiveUiStyle.DrawBadge(badge,
-                string.IsNullOrEmpty(badgeStatus) ? badgeCode : badgeStatus + " · " + badgeCode,
-                hasTier ? tierColor : ArchiveUiStyle.Muted);
-            Text.Font = GameFont.Small;
+            ArchiveUiStyle.DrawBadge(badge, string.Empty, hasTier ? tierColor : ArchiveUiStyle.Muted);
+            Text.Font = GameFont.Medium;
             Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect(badge.x + 8f, badge.y + 30f, badge.width - 16f, 22f),
+            Widgets.Label(new Rect(badge.x + 8f, badge.y + 14f, badge.width - 16f, 26f),
                 hasTier && !string.IsNullOrEmpty(intensity.LabelKey)
                     ? TranslateIntensityKey(intensity.LabelKey, intensity.DisplayCode)
                     : "PersonalChronicle.UI.Intensity.SampleInsufficient".Translate().ToString());
             Text.Anchor = TextAnchor.UpperLeft;
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(badge.x + 8f, badge.y + 57f, badge.width - 16f, 16f),
-                hasTier && !string.IsNullOrEmpty(intensity.TagKey)
-                    ? TranslateIntensityKey(intensity.TagKey,
-                        "PersonalChronicle.UI.Intensity.ObservedWindow".Translate().ToString())
-                    : "PersonalChronicle.UI.Intensity.ObservedWindow".Translate(
-                        FormatDays(intensity != null ? intensity.ObservedDays : 0d)).ToString());
+            Text.Anchor = TextAnchor.MiddleCenter;
+            string badgeSubtitle = hasTier
+                ? badgeStatus + " · " + badgeCode
+                : "PersonalChronicle.UI.Intensity.ObservedWindow".Translate(
+                    FormatDays(intensity != null ? intensity.ObservedDays : 0d)).ToString();
+            Widgets.Label(new Rect(badge.x + 8f, badge.y + 44f, badge.width - 16f, 20f), badgeSubtitle);
             GUI.color = Color.white;
+            Text.Anchor = TextAnchor.UpperLeft;
 
             float gap = 8f;
             float statsX = badge.xMax + 10f;
             float statsWidth = hero.xMax - statsX - 8f;
             float cellWidth = (statsWidth - gap * 2f) / 3f;
-            DrawMetricCard(new Rect(statsX, hero.y + 8f, cellWidth, 76f),
+            DrawMetricCard(new Rect(statsX, hero.y + 8f, cellWidth, 84f),
                 "PersonalChronicle.UI.TotalWorkHours".Translate().ToString(),
                 FormatHours(intensity != null ? intensity.TotalHours : 0d),
                 "PersonalChronicle.UI.Intensity.ObservedWindow".Translate(
                     FormatDays(intensity != null ? intensity.ObservedDays : 0d)).ToString());
-            DrawMetricCard(new Rect(statsX + cellWidth + gap, hero.y + 8f, cellWidth, 76f),
+            DrawMetricCard(new Rect(statsX + cellWidth + gap, hero.y + 8f, cellWidth, 84f),
                 "PersonalChronicle.UI.Intensity.Daily".Translate().ToString(),
                 FormatHours(intensity != null ? intensity.DailyHours : 0d),
                 "PersonalChronicle.UI.Intensity.MonthlyEst".Translate(
                     FormatHours(intensity != null ? intensity.MonthlyHours : 0d)).ToString());
-            DrawMetricCard(new Rect(statsX + 2f * (cellWidth + gap), hero.y + 8f, cellWidth, 76f),
+            DrawMetricCard(new Rect(statsX + 2f * (cellWidth + gap), hero.y + 8f, cellWidth, 84f),
                 "PersonalChronicle.UI.Intensity.Weekly".Translate().ToString(),
                 FormatHours(intensity != null ? intensity.WeeklyHours : 0d),
                 BuildIntensityRelativeLabel(intensity));
@@ -2452,10 +3214,11 @@ namespace PersonalChronicle.Archive
                 GUI.color = current ? ArchiveUiStyle.Text : ArchiveUiStyle.Muted;
                 Widgets.Label(rung, tier.DisplayCode ?? tier.DefName);
                 GUI.color = Color.white;
-            Text.Anchor = TextAnchor.UpperLeft;
+                Text.Anchor = TextAnchor.UpperLeft;
                 TooltipHandler.TipRegion(rung,
                     TranslateIntensityKey(tier.LabelKey, tier.DisplayCode ?? tier.DefName));
-        }
+            }
+            Text.Font = GameFont.Small;
             y += 36f;
         }
 
@@ -2479,7 +3242,7 @@ namespace PersonalChronicle.Archive
             }
 
             const float cardGap = 8f;
-            const float cardHeight = 86f;
+            const float cardHeight = 112f;
             float cardWidth = (rect.width - cardGap) / 2f;
             for (int i = 0; i < cachedIntensityWorkTypes.Count; i++)
             {
@@ -2494,11 +3257,11 @@ namespace PersonalChronicle.Archive
                 Rect card = new Rect(x, cardY, cardWidth, cardHeight);
                 ArchiveUiStyle.DrawCard(card, accent);
                 Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(card.x + 10f, card.y + 7f, card.width - 100f, 20f),
+                Widgets.Label(new Rect(card.x + 10f, card.y + 10f, card.width - 100f, 22f),
                     WorkTypeLabel(row.WorkTypeDefName));
                 Text.Font = GameFont.Medium;
                 Text.Anchor = TextAnchor.MiddleRight;
-                Widgets.Label(new Rect(card.x + card.width - 92f, card.y + 5f, 80f, 24f),
+                Widgets.Label(new Rect(card.x + card.width - 92f, card.y + 30f, 80f, 28f),
                     FormatWorkHours(row.Ticks));
                 Text.Anchor = TextAnchor.UpperLeft;
                 Text.Font = GameFont.Tiny;
@@ -2506,15 +3269,16 @@ namespace PersonalChronicle.Archive
                 string rank = row.Rank > 0
                     ? "PersonalChronicle.UI.Intensity.Rank".Translate(row.Rank, row.PopulationCount).ToString()
                     : "PersonalChronicle.UI.Intensity.RankUnknown".Translate().ToString();
-                Widgets.Label(new Rect(card.x + 10f, card.y + 31f, card.width - 20f, 16f), rank);
-                Widgets.Label(new Rect(card.x + 10f, card.y + 49f, card.width - 20f, 16f),
+                Widgets.Label(new Rect(card.x + 10f, card.y + 64f, card.width - 20f, 18f), rank);
+                Widgets.Label(new Rect(card.x + 10f, card.y + 84f, card.width - 20f, 18f),
                     "PersonalChronicle.UI.Intensity.WorkShare".Translate(
                         Mathf.RoundToInt(row.Share01 * 100f),
                         Mathf.RoundToInt(row.RelativeToMaximum01 * 100f)).ToString());
                 GUI.color = Color.white;
-                Widgets.FillableBar(new Rect(card.x + 10f, card.y + 70f, card.width - 20f, 6f),
+                Widgets.FillableBar(new Rect(card.x + 10f, card.y + 106f, card.width - 20f, 6f),
                     Mathf.Clamp01(row.Share01));
             }
+            Text.Font = GameFont.Small;
             int rows = (cachedIntensityWorkTypes.Count + 1) / 2;
             y += rows * (cardHeight + cardGap);
         }
@@ -2733,6 +3497,15 @@ namespace PersonalChronicle.Archive
                     nodes[i].Active ? 2f : 1f);
             }
 
+            if (nodes.Count == 0)
+            {
+                Text.Font = GameFont.Small;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(panel, "PersonalChronicle.UI.NoSignificantRelations".Translate().ToString());
+                Text.Anchor = TextAnchor.UpperLeft;
+                return panel.yMax + 8f;
+            }
+
             Rect centerRect = new Rect(center.x - 88f, center.y - 25f, 176f, 50f);
             ArchiveUiStyle.DrawCard(centerRect, ArchiveUiStyle.Accent);
             Text.Font = GameFont.Small;
@@ -2761,13 +3534,7 @@ namespace PersonalChronicle.Archive
                     NavigateTarget(service, NavTarget.Pawn, nodes[i].StableId, null);
                 }
             }
-            if (nodes.Count == 0)
-            {
-                Text.Font = GameFont.Small;
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(panel, "PersonalChronicle.UI.NoSignificantRelations".Translate().ToString());
-                Text.Anchor = TextAnchor.UpperLeft;
-            }
+
             return panel.yMax + 8f;
         }
 
@@ -3243,14 +4010,15 @@ namespace PersonalChronicle.Archive
             GUI.color = new Color(1f, 1f, 1f, 0.04f);
             Widgets.DrawBoxSolid(descBox, Color.white);
             GUI.color = Color.white;
-            DrawBorder(descBox, new Color(0.45f, 0.45f, 0.45f, 1f));
+            DrawBorder(descBox, ArchiveUiStyle.Border);
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.78f, 0.78f, 0.78f, 1f);
+            GUI.color = ArchiveUiStyle.SecondaryText;
             Widgets.Label(new Rect(descBox.x + 12f, descBox.y + 10f, descBox.width - 24f, descBox.height - 20f),
                 string.IsNullOrEmpty(cachedEventDescription)
                     ? "PersonalChronicle.UI.NoEvents".Translate().ToString()
                     : cachedEventDescription);
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
 
             Widgets.EndScrollView();
         }
@@ -3354,6 +4122,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Muted;
             Widgets.Label(new Rect(row.x + row.width - 186f, row.y + 4f, 182f, 18f), typeText);
             GUI.color = previous;
+            Text.Font = GameFont.Small;
 
             ArchiveUiStyle.DrawRule(new Rect(row.x, row.yMax - 1f, row.width, 1f), ArchiveUiStyle.BorderSoft);
         }
@@ -3361,7 +4130,7 @@ namespace PersonalChronicle.Archive
         private static float DrawDetailRow(float x, float y, float width, string label, string value)
         {
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+            GUI.color = ArchiveUiStyle.SecondaryText;
             Widgets.Label(new Rect(x, y, 150f, 20f), label);
             GUI.color = Color.white;
 
@@ -3380,6 +4149,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Text;
             Widgets.Label(new Rect(rect.x + 10f, rect.y + 25f, rect.width - 18f, 26f), value.ToString());
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
         }
 
         /// <summary>
@@ -3398,6 +4168,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Dim;
             Widgets.Label(new Rect(rect.x + 10f, rect.y + 49f, rect.width - 18f, 16f), subLabel);
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
         }
 
         private static readonly Color AlivePill = new Color(0.42f, 0.81f, 0.56f, 1f);
@@ -3406,8 +4177,10 @@ namespace PersonalChronicle.Archive
 
         private static float DrawPill(float x, float y, string label, Color color)
         {
+            GameFont prevFont = Text.Font;
             Text.Font = GameFont.Tiny;
             float width = Text.CalcSize(label).x + 18f;
+            Text.Font = prevFont;
             Rect rect = new Rect(x, y, width, 20f);
             ArchiveUiStyle.DrawBadge(rect, label, color);
             return x + width + 6f;
@@ -3595,6 +4368,68 @@ namespace PersonalChronicle.Archive
             return def.descriptionKey.Translate().ToString();
         }
 
+        /// <summary>
+        /// v4.0 timeline glyph per event kind. Driven by ChronicleEventKind so it stays
+        /// data-coherent with the Def taxonomy; unknown kinds fall back to a neutral dot.
+        /// No magic per-typeKey strings — only the four canonical kinds are branched.
+        /// </summary>
+        private static string EventTypeToGlyph(string typeKey)
+        {
+            ChronicleEventDef def = DefDatabase<ChronicleEventDef>.GetNamedSilentFail(typeKey);
+            if (def == null)
+            {
+                return "•";
+            }
+            switch (def.kind)
+            {
+                case ChronicleEventKind.Join:
+                    return "✚";
+                case ChronicleEventKind.Death:
+                    return "✝";
+                case ChronicleEventKind.Battle:
+                    return "⚔";
+                case ChronicleEventKind.Social:
+                    return "❖";
+                case ChronicleEventKind.Craft:
+                    return "⚒";
+                case ChronicleEventKind.Built:
+                    return "▣";
+                case ChronicleEventKind.Other:
+                default:
+                    return "•";
+            }
+        }
+
+        /// <summary>
+        /// v4.0 timeline node color by kind (mirrors Def taxonomy, no per-typeKey magic).
+        /// </summary>
+        private static Color EventTypeToColor(string typeKey)
+        {
+            ChronicleEventDef def = DefDatabase<ChronicleEventDef>.GetNamedSilentFail(typeKey);
+            if (def == null)
+            {
+                return ArchiveUiStyle.TimelineOther;
+            }
+            switch (def.kind)
+            {
+                case ChronicleEventKind.Join:
+                    return ArchiveUiStyle.TimelineJoin;
+                case ChronicleEventKind.Death:
+                    return ArchiveUiStyle.TimelineDeath;
+                case ChronicleEventKind.Battle:
+                    return ArchiveUiStyle.TimelineBattle;
+                case ChronicleEventKind.Social:
+                    return ArchiveUiStyle.TimelineSocial;
+                case ChronicleEventKind.Craft:
+                    return ArchiveUiStyle.TimelineCraft;
+                case ChronicleEventKind.Built:
+                    return ArchiveUiStyle.TimelineBuilt;
+                case ChronicleEventKind.Other:
+                default:
+                    return ArchiveUiStyle.TimelineOther;
+            }
+        }
+
         private static string KindLabel(PawnRecord record)
         {
             if (record == null || string.IsNullOrEmpty(record.KindDefName))
@@ -3665,6 +4500,20 @@ namespace PersonalChronicle.Archive
             if (def == null)
             {
                 LogMissingDefOnce(defName);
+            }
+            return defName;
+        }
+
+        private static string FactionDefLabel(string defName)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return string.Empty;
+            }
+            FactionDef def = DefDatabase<FactionDef>.GetNamedSilentFail(defName);
+            if (def != null && !string.IsNullOrEmpty(def.label))
+            {
+                return def.label;
             }
             return defName;
         }
@@ -3856,6 +4705,21 @@ namespace PersonalChronicle.Archive
             public ChronicleEvent TargetEvent;
         }
 
+        /// <summary>v4.3: one faction-codex card = one faction, aggregated from kill lines.</summary>
+        private sealed class FactionCodexView
+        {
+            public string FactionKey;          // grouping key
+            public string DisplayName;         // shown in card header
+            public ArchiveUiStyle.FactionCodexKind Kind;
+            public string RelationKey;         // hostile / neutral / ally / unresolved
+            public int KillCount;
+            public int RaidCount;
+            public int BattleCount;
+            public int OurLossCount;           // member lines where this faction killed us (unused for enemy; for __player__ = deaths)
+            public List<CombatLineView> MemberLines;
+            public List<KeyValuePair<string, int>> Composition; // victim-kind label -> count
+        }
+
         private struct ProductionLineView
         {
             public string DefName;
@@ -3897,11 +4761,6 @@ namespace PersonalChronicle.Archive
             public ChronicleEvent TargetEvent;
         }
 
-        private struct CandidateObject
-        {
-            public ArchiveObject Object;
-            public int EventCount;
-        }
     }
 
     internal static class ArchiveCacheExtensions

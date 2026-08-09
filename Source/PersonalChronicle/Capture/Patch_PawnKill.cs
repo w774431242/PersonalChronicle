@@ -34,10 +34,6 @@ namespace PersonalChronicle.Capture
                 {
                     return;
                 }
-                if (__instance.RaceProps == null || !__instance.RaceProps.Humanlike)
-                {
-                    return;
-                }
 
                 IArchiveService service = PersonalChronicleMod.ArchiveService;
                 if (service == null)
@@ -77,10 +73,27 @@ namespace PersonalChronicle.Capture
                     return;
                 }
 
-                // P2: external humanlike killed by a chronicle colonist → kill log only.
+                // P2: external humanlike killed → record the kill for the combat log.
+                // RimWorld 1.6 often passes a null/Projectile Instigator for melee /
+                // forwarded kills, so we must NOT gate the kill on a resolvable pawn.
+                // Attribute to the chronicle colonist when resolvable; otherwise the
+                // kill is still recorded under an "unknown killer" bucket so the
+                // combat log is never empty due to an unresolvable instigator.
+                // Consume the damage ledger for this victim to attribute the kill to
+                // the top damager (A) and record the finishing instigator (B) as assist.
+                List<Pawn> assistLookup = Patch_PawnTakeDamage.ConsumeTopDamagers(__instance);
+
                 if (killerIsChronicle)
                 {
-                    service.OnKillRecorded(instigator, __instance, weapon);
+                    service.OnKillRecorded(instigator, __instance, weapon, assistLookup);
+                }
+                else if (IsExternalVictim(__instance))
+                {
+                    service.OnKillRecorded(instigator, __instance, weapon, assistLookup);
+                }
+                else
+                {
+                    // Neither side is a chronicle concern; ledger already consumed above.
                 }
             }
             catch (Exception ex)
@@ -100,6 +113,24 @@ namespace PersonalChronicle.Capture
                 return false;
             }
             return pawn.Faction.IsPlayer || pawn.IsPrisonerOfColony;
+        }
+
+        /// <summary>
+        /// External target (raider, tribe, mechanoid, animal, quest creature, etc.).
+        /// 绝对宽松：任何非玩家方/非囚犯的死亡都视为可记录战斗履历的外部击杀目标，
+        /// 不再限制种族（Humanlike）。faction 为空（野生动物/任务怪等）也按外部目标处理。
+        /// </summary>
+        private static bool IsExternalVictim(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return false;
+            }
+            if (pawn.Faction != null && (pawn.Faction.IsPlayer || pawn.IsPrisonerOfColony))
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>

@@ -61,6 +61,9 @@
   <PersonalChronicle.UI.Weapons>Weapons</PersonalChronicle.UI.Weapons>
   <PersonalChronicle.UI.Events>Events</PersonalChronicle.UI.Events>
   <PersonalChronicle.UI.ArchiveHomeDesc>Colony archive: recording the colony's history, people and events.</PersonalChronicle.UI.ArchiveHomeDesc>
+  <PersonalChronicle.UI.HomeKpiView>Overview</PersonalChronicle.UI.HomeKpiView>
+  <PersonalChronicle.UI.HomeTimelineView>Timeline</PersonalChronicle.UI.HomeTimelineView>
+  <PersonalChronicle.UI.NoTimelineEvents>No key events recorded yet.</PersonalChronicle.UI.NoTimelineEvents>
   <PersonalChronicle.UI.Navigation>Navigation</PersonalChronicle.UI.Navigation>
   <PersonalChronicle.UI.HomeOverview>Home Overview</PersonalChronicle.UI.HomeOverview>
   <PersonalChronicle.UI.AllArchives>All Archives</PersonalChronicle.UI.AllArchives>
@@ -133,6 +136,9 @@
   <PersonalChronicle.UI.Character>Character</PersonalChronicle.UI.Character>
   <PersonalChronicle.UI.Killer>Killer</PersonalChronicle.UI.Killer>
   <PersonalChronicle.UI.KillerWithName>Killer: {0}</PersonalChronicle.UI.KillerWithName>
+  <PersonalChronicle.UI.UnknownKiller>Unknown</PersonalChronicle.UI.UnknownKiller>
+  <PersonalChronicle.UI.Assist>Assist</PersonalChronicle.UI.Assist>
+  <PersonalChronicle.UI.AssistWithName>Assist: {0}</PersonalChronicle.UI.AssistWithName>
   <PersonalChronicle.UI.Weapon>Weapon</PersonalChronicle.UI.Weapon>
   <PersonalChronicle.UI.Battle>Battle</PersonalChronicle.UI.Battle>
   <PersonalChronicle.UI.Location>Location</PersonalChronicle.UI.Location>
@@ -217,6 +223,24 @@
   <!-- v3.1 P2 combat -->
   <PersonalChronicle.UI.KillRecords>Kill records</PersonalChronicle.UI.KillRecords>
   <PersonalChronicle.UI.NoKillRecords>No kill records.</PersonalChronicle.UI.NoKillRecords>
+  <!-- v4.3 faction codex -->
+  <PersonalChronicle.UI.FactionCodexTitle>Faction Codex</PersonalChronicle.UI.FactionCodexTitle>
+  <PersonalChronicle.UI.StatKills>Kills</PersonalChronicle.UI.StatKills>
+  <PersonalChronicle.UI.StatRaids>Raids</PersonalChronicle.UI.StatRaids>
+  <PersonalChronicle.UI.StatBattles>Battles</PersonalChronicle.UI.StatBattles>
+  <PersonalChronicle.UI.StatOurLosses>Our losses</PersonalChronicle.UI.StatOurLosses>
+  <PersonalChronicle.UI.FactionKindEnemy>Enemy faction</PersonalChronicle.UI.FactionKindEnemy>
+  <PersonalChronicle.UI.FactionKindMechanoid>Mechanoid</PersonalChronicle.UI.FactionKindMechanoid>
+  <PersonalChronicle.UI.FactionKindAnimal>Animal/Factionless</PersonalChronicle.UI.FactionKindAnimal>
+  <PersonalChronicle.UI.FactionKindUnknown>Unknown</PersonalChronicle.UI.FactionKindUnknown>
+  <PersonalChronicle.UI.FactionRelHostile>Hostile</PersonalChronicle.UI.FactionRelHostile>
+  <PersonalChronicle.UI.FactionRelNeutral>Neutral</PersonalChronicle.UI.FactionRelNeutral>
+  <PersonalChronicle.UI.FactionRelAlly>Ally</PersonalChronicle.UI.FactionRelAlly>
+  <PersonalChronicle.UI.FactionRelUnresolved>Unresolved</PersonalChronicle.UI.FactionRelUnresolved>
+  <PersonalChronicle.UI.FactionUnknown>Unknown/Environment</PersonalChronicle.UI.FactionUnknown>
+  <PersonalChronicle.UI.FactionPlayer>Our colony</PersonalChronicle.UI.FactionPlayer>
+  <PersonalChronicle.UI.FactionWild>Wildlife/Factionless</PersonalChronicle.UI.FactionWild>
+  <PersonalChronicle.UI.FactionFactionless>Factionless</PersonalChronicle.UI.FactionFactionless>
   <PersonalChronicle.UI.CombatFooter>Battles {0} · Kills {1}</PersonalChronicle.UI.CombatFooter>
   <PersonalChronicle.UI.HolderHistory>Custody history</PersonalChronicle.UI.HolderHistory>
   <PersonalChronicle.UI.NoHolderHistory>No custody history yet (recorded on craft/use).</PersonalChronicle.UI.NoHolderHistory>
@@ -257,4 +281,13 @@
   <PersonalChronicle.UI.ProductionQuantity>Quantity: {0}</PersonalChronicle.UI.ProductionQuantity>
   <PersonalChronicle.UI.ProductionCard>{0} items · {1}</PersonalChronicle.UI.ProductionCard>
   <PersonalChronicle.UI.MarketValueFormat>{0} silver</PersonalChronicle.UI.MarketValueFormat>
+  <!-- v4.0 home KPI dashboard -->
+  <PersonalChronicle.UI.HomeRealtimeGroup>Live indicators</PersonalChronicle.UI.HomeRealtimeGroup>
+  <PersonalChronicle.UI.HomeArchiveGroup>Archive records</PersonalChronicle.UI.HomeArchiveGroup>
+  <PersonalChronicle.UI.HomeLiveColonists>Current colonists</PersonalChronicle.UI.HomeLiveColonists>
+  <PersonalChronicle.UI.HomeServiceDays>Days in service</PersonalChronicle.UI.HomeServiceDays>
+  <PersonalChronicle.UI.HomeLivePawns>Living colonists</PersonalChronicle.UI.HomeLivePawns>
+  <PersonalChronicle.UI.HomeColonistBreakdown>Free {0} · Slave {1} · Prisoner {2}</PersonalChronicle.UI.HomeColonistBreakdown>
+  <PersonalChronicle.UI.HomeServiceSince>Since first archive record</PersonalChronicle.UI.HomeServiceSince>
+  <PersonalChronicle.UI.HomeSnapshotBreakdown>Active {0} · Archived {1}</PersonalChronicle.UI.HomeSnapshotBreakdown>
 </LanguageData>

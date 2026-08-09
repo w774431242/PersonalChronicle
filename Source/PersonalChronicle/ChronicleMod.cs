@@ -1,5 +1,6 @@
 using System.Reflection;
 using HarmonyLib;
+using PersonalChronicle.Api;
 using PersonalChronicle.Application;
 using PersonalChronicle.Domain;
 using UnityEngine;
@@ -8,8 +9,9 @@ using Verse;
 namespace PersonalChronicle
 {
     /// <summary>
-    /// Mod entry point (composition root): owns the settings instance and the
-    /// archive service singleton consumed by the capture layer.
+    /// Mod entry point (composition root): owns the settings instance, the
+    /// archive service singleton consumed by the capture layer, and the public
+    /// API facade (<see cref="Api"/>) used by integrators.
     /// </summary>
     public sealed class PersonalChronicleMod : Mod
     {
@@ -20,6 +22,13 @@ namespace PersonalChronicle
         public static IWorkTimeCaptureService WorkTimeCaptureService { get; private set; }
         public static IWorkIntensityProviderRegistry WorkIntensityProviders { get; private set; }
 
+        /// <summary>
+        /// v4.1 unified integration facade. Preferred entry point for third-party
+        /// mods — replaces the scattered static service properties. Retained legacy
+        /// statics remain for binary compatibility.
+        /// </summary>
+        public static IPersonalChronicleApi Api { get; private set; }
+
         public PersonalChronicleMod(ModContentPack content) : base(content)
         {
             Instance = this;
@@ -29,6 +38,17 @@ namespace PersonalChronicle
             ArchiveService = service;
             WorkIntensityService = service;
             WorkTimeCaptureService = service;
+
+            // P2: one unified registry owns every domain provider. Built-in providers
+            // register first at priority 0; third-party mods register higher to override.
+            ArchiveProviderRegistry providerRegistry = new ArchiveProviderRegistry();
+            providerRegistry.Register(new PersonalChronicle.Api.DomainProviders.Builtin.BuiltinProductionProvider(service));
+            providerRegistry.Register(new PersonalChronicle.Api.DomainProviders.Builtin.BuiltinBattleProvider(service));
+            providerRegistry.Register(new PersonalChronicle.Api.DomainProviders.Builtin.BuiltinRelationProvider(service));
+            providerRegistry.Register(new PersonalChronicle.Api.DomainProviders.Builtin.BuiltinPlaceProvider(service));
+
+            Api = new PersonalChronicleApiImpl(
+                service, service, service, WorkIntensityService, WorkIntensityProviders, providerRegistry);
         }
 
         /// <summary>
@@ -91,6 +111,43 @@ namespace PersonalChronicle
                     Log.Error("PersonalChronicle: TypeKey/Def drift detected for: " + typeKeys[i] + " (update ChronicleEventType or Defs/Chronicle_Events.xml)");
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Internal implementation of <see cref="IPersonalChronicleApi"/>. Aggregates
+    /// the existing service singletons behind one facade so integrators depend on
+    /// a single, capability-probed entry point. Holds no state of its own.
+    /// </summary>
+    internal sealed class PersonalChronicleApiImpl : IPersonalChronicleApi
+    {
+        public ApiVersion Version { get; } = ApiVersion.Current;
+        public IArchiveQueryService Queries { get; }
+        public IArchiveEventSink Events { get; }
+        public IWorkTimeCaptureService WorkTime { get; }
+        public IWorkIntensityService WorkIntensity { get; }
+        public IArchiveProviderRegistry Providers { get; }
+        public IWorkIntensityProviderRegistry WorkIntensityProviders { get; }
+
+        public PersonalChronicleApiImpl(
+            IArchiveQueryService queries,
+            IArchiveEventSink events,
+            IWorkTimeCaptureService workTime,
+            IWorkIntensityService workIntensity,
+            IWorkIntensityProviderRegistry workIntensityProviders,
+            IArchiveProviderRegistry providers)
+        {
+            Queries = queries;
+            Events = events;
+            WorkTime = workTime;
+            WorkIntensity = workIntensity;
+            WorkIntensityProviders = workIntensityProviders;
+            Providers = providers;
+        }
+
+        public bool Supports(int major, int minMinor)
+        {
+            return Version.Satisfies(major, minMinor);
         }
     }
 }

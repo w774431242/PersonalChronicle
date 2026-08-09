@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PersonalChronicle.Api;
 using PersonalChronicle.Data;
 using PersonalChronicle.Domain;
 using RimWorld;
@@ -17,8 +18,12 @@ namespace PersonalChronicle.Application
     /// v2.1: writes go through the ArchiveObject model (PawnObject + ObjectRef
     /// Primary). The v0.2 PawnStableId legacy field is kept in sync as a shadow
     /// inside ChronicleEvent.ExposeData — the service never writes it directly.
+    ///
+    /// v4.1: also implements <see cref="IArchiveQueryService"/> (inherited by
+    /// IArchiveService) and <see cref="IArchiveEventSink"/> so integrators can
+    /// depend on the narrower read/write contracts via the unified API facade.
     /// </summary>
-    public sealed class ArchiveService : IArchiveService, IWorkIntensityService, IWorkTimeCaptureService
+    public sealed class ArchiveService : IArchiveService, IWorkIntensityService, IWorkTimeCaptureService, IArchiveQueryService, IArchiveEventSink
     {
         // TypeKey constants live in ChronicleEventType (single source of truth,
         // validated against Defs/Chronicle_Events.xml at startup).
@@ -379,6 +384,16 @@ namespace PersonalChronicle.Application
                 return new List<ChronicleEvent>();
             }
             return component.GetRecentEvents(count);
+        }
+
+        public IReadOnlyList<ChronicleEvent> GetAllEvents()
+        {
+            ChronicleGameComponent component = Component;
+            if (component == null)
+            {
+                return new List<ChronicleEvent>();
+            }
+            return component.GetAllEvents();
         }
 
         public ArchiveDepthBehavior GetCategoryBehavior(string categoryKey)
@@ -1612,9 +1627,12 @@ namespace PersonalChronicle.Application
             component.MarkChanged();
         }
 
-        public void OnKillRecorded(Pawn killer, Pawn victim, Thing weapon = null)
+        public void OnKillRecorded(Pawn killer, Pawn victim, Thing weapon = null, List<Pawn> assistLookup = null)
         {
-            if (!IsRecordingEnabled() || killer == null || victim == null)
+            // killer may be null when the DamageInfo instigator is unresolvable
+            // (melee-forwarded / environment kills). We still record the kill so the
+            // combat log is never empty; it attributes to an "unknown killer" bucket.
+            if (!IsRecordingEnabled() || victim == null)
             {
                 return;
             }
@@ -1626,14 +1644,42 @@ namespace PersonalChronicle.Application
                     return;
                 }
                 string victimId = victim.GetUniqueLoadID();
-                string killerId = killer.GetUniqueLoadID();
+                // killer 可能为 null（环境致死 / 近战转发 / 敌方互相残杀且凶手无法解析），
+                // 属于合法的「未知凶手」路径，绝不能因为 TryClassifyCurrent(null) 而 NRE 并 return。
+                string killerId = ChronicleEventParams.UnknownKillerId;
+                if (killer != null)
+                {
+                    killerId = killer.GetUniqueLoadID();
+                    if (!ChronicleColonistScanner.TryClassifyCurrent(killer, out _))
+                    {
+                        // 非本殖民地人口（敌方/野生动物/奴隶等）→ 归入 UnknownKiller 聚合桶
+                        killerId = ChronicleEventParams.UnknownKillerId;
+                    }
+                }
                 if (string.IsNullOrEmpty(victimId) || string.IsNullOrEmpty(killerId))
                 {
                     return;
                 }
-                if (!ChronicleColonistScanner.TryClassifyCurrent(killer, out _))
+                // 跨 bucket 幂等：同一受害者（victimStableId）若已存在任意击杀记录
+                // （无论当时记在哪个 killer 桶），不再重复写入，避免极端场景下
+                // instigator==null 同时命中 OnPawnDied 与 OnKillRecorded 产生双份 Death。
+                if (HasRecordedDeathForVictim(component, victimId))
                 {
                     return;
+                }
+                // 协助者：造成最多伤害、但非补刀者的 chronicle 殖民者（如 A 削 80% 血、B 抢补刀）。
+                Pawn assist = assistLookup != null && assistLookup.Count > 0 ? assistLookup[0] : null;
+                if (assist != null && killer != null && assist.GetUniqueLoadID() == killer.GetUniqueLoadID())
+                {
+                    // 主伤害者就是补刀者 → 取次高伤害者作协助
+                    assist = assistLookup != null && assistLookup.Count > 1 ? assistLookup[1] : null;
+                }
+                if (assist != null && killer == null)
+                {
+                    // 凶手未知时，主伤害者即升格为击杀者，不再单列协助
+                    killerId = assist.GetUniqueLoadID();
+                    killer = assist;
+                    assist = null;
                 }
                 EnsurePawnArchivedForCapture(component, killer);
                 if (HasRecordedExternalKill(component, killerId, victimId))
@@ -1642,10 +1688,35 @@ namespace PersonalChronicle.Application
                 }
                 string victimLabel = victim.LabelShort;
                 ChronicleEvent ev = BuildPawnEvent(victimId, victimLabel, ChronicleEventType.Death);
-                ev.Params[ChronicleEventParams.Killer] = killer.LabelShort;
+                ev.Params[ChronicleEventParams.Killer] = killer != null ? killer.LabelShort : ChronicleEventParams.UnknownKillerLabel;
                 ev.Params[ChronicleEventParams.Victim] = victimLabel;
                 ev.Params[ChronicleEventParams.VictimStableId] = victimId;
                 ev.Params[ChronicleEventParams.CombatRole] = ChronicleEventParams.CombatRoleKill;
+
+                // v4.3: snapshot victim faction/kind/category for faction-codex aggregation.
+                // External victims are never archived, so this is the only point these are available.
+                string victimFactionDef = victim.Faction != null && victim.Faction.def != null
+                    ? victim.Faction.def.defName
+                    : null;
+                ev.Params[ChronicleEventParams.VictimFactionDefName] = victimFactionDef;
+                ev.Params[ChronicleEventParams.VictimFactionLabel] = victim.Faction != null ? victim.Faction.Name : null;
+                ev.Params[ChronicleEventParams.VictimKindDefName] = victim.kindDef != null ? victim.kindDef.defName : null;
+                string victimCategory = ChronicleEventParams.VictimCategoryHumanlike;
+                if (victim.RaceProps != null && victim.RaceProps.IsMechanoid)
+                {
+                    victimCategory = ChronicleEventParams.VictimCategoryMechanoid;
+                }
+                else if (victim.RaceProps != null && victim.RaceProps.Animal)
+                {
+                    victimCategory = ChronicleEventParams.VictimCategoryAnimal;
+                }
+                ev.Params[ChronicleEventParams.VictimCategory] = victimCategory;
+
+                if (assist != null)
+                {
+                    ev.Params[ChronicleEventParams.Assist] = assist.LabelShort;
+                    EnsurePawnArchivedForCapture(component, assist);
+                }
                 AttachCombatSubjects(component, ev, weapon, killer, victim);
                 // Cap against the killer's event budget (their combat log).
                 AddEvent(component, killerId, ev);
@@ -2148,7 +2219,35 @@ namespace PersonalChronicle.Application
             return false;
         }
 
-        // ---- v2.4 live stats ----
+        /// <summary>
+        /// Cross-bucket idempotency: returns true if a death/kill event for the given
+        /// victim already exists under ANY killer bucket. Scans the global event list
+        /// (kills are rare, so an O(N) pass is acceptable) to prevent duplicate Death
+        /// events when the same pawn death is captured by multiple code paths
+        /// (e.g. instigator==null hitting both OnPawnDied and OnKillRecorded).
+        /// </summary>
+        private static bool HasRecordedDeathForVictim(ChronicleGameComponent component, string victimId)
+        {
+            if (component == null || string.IsNullOrEmpty(victimId) || component.Events == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < component.Events.Count; i++)
+            {
+                ChronicleEvent ev = component.Events[i];
+                if (ev == null || ev.TypeKey != ChronicleEventType.Death || ev.Params == null)
+                {
+                    continue;
+                }
+                string recordedVictimId;
+                if (ev.Params.TryGetValue(ChronicleEventParams.VictimStableId, out recordedVictimId)
+                    && recordedVictimId == victimId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         /// Current (live-read) colony population count — free colonists, slaves
@@ -2295,6 +2394,210 @@ namespace PersonalChronicle.Application
                     active++;
                 }
             }
+        }
+
+        /// <summary>
+        /// v4.0 home KPI: days since the earliest recorded event or colonist join.
+        /// Falls back to the current game tick when the archive is empty so that
+        /// freshly-started colonies show 0 rather than a meaningless large number.
+        /// </summary>
+        public int GetServiceDays()
+        {
+            if (Current.Game == null)
+            {
+                return 0;
+            }
+            ChronicleGameComponent component = Component;
+            if (component == null)
+            {
+                return 0;
+            }
+            long firstTick = long.MaxValue;
+            IReadOnlyList<ChronicleEvent> events = component.GetAllEvents();
+            for (int i = 0; i < events.Count; i++)
+            {
+                ChronicleEvent ev = events[i];
+                if (ev != null && ev.Tick < firstTick)
+                {
+                    firstTick = ev.Tick;
+                }
+            }
+            IReadOnlyList<ArchiveObject> pawns = component.GetObjectsOfCategory(ArchiveCategoryKeys.Pawn);
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (pawns[i] is PawnObject pawn && pawn.JoinTick >= 0L && pawn.JoinTick < firstTick)
+                {
+                    firstTick = pawn.JoinTick;
+                }
+            }
+            if (firstTick == long.MaxValue)
+            {
+                return 0;
+            }
+            long currentTick = Find.TickManager.TicksGame;
+            if (currentTick <= firstTick)
+            {
+                return 0;
+            }
+            return (int)GenDate.TicksToDays((int)(currentTick - firstTick));
+        }
+
+        /// <summary>
+        /// v4.0 home view mode persisted in the game component.
+        /// </summary>
+        public int GetHomeViewMode()
+        {
+            if (Current.Game == null)
+            {
+                return 0;
+            }
+            ChronicleGameComponent component = Component;
+            return component?.HomeViewMode ?? 0;
+        }
+
+        /// <summary>
+        /// v4.0 home view mode persisted in the game component.
+        /// </summary>
+        public void SetHomeViewMode(int mode)
+        {
+            if (Current.Game == null)
+            {
+                return;
+            }
+            ChronicleGameComponent component = Component;
+            if (component != null)
+            {
+                component.HomeViewMode = mode;
+            }
+        }
+
+        // ---------------------------------------------------------------------
+        // Legacy ↔ unified event sink bridge (v4.1)
+        // ---------------------------------------------------------------------
+
+        /// <summary>
+        /// v4.1 bridge: routes a fully-formed <see cref="ArchiveEventInput"/> through
+        /// the unified <see cref="IArchiveEventSink.TryRecord"/>. This is the single
+        /// connection point between the rich legacy write methods and the unified
+        /// event contract — subclasses / external callers on the legacy surface use
+        /// this instead of duplicating sink logic. Never throws on bad input.
+        /// </summary>
+        public CaptureResult RecordEvent(ArchiveEventInput input)
+        {
+            return TryRecord(input);
+        }
+
+        // ---------------------------------------------------------------------
+        // IArchiveEventSink (v4.1 unified write entry point)
+        // ---------------------------------------------------------------------
+        // Idempotency cache scoped to the current game session. Not persisted —
+        // it only guards against repeated captures of the same logical event
+        // within one playthrough.
+        private static readonly HashSet<string> SessionDedupKeys = new HashSet<string>();
+        private static Game _dedupGame;
+
+        /// <summary>
+        /// Unified record entry. Converts <see cref="ArchiveEventInput"/> to a
+        /// <see cref="ChronicleEvent"/>, runs idempotency + validity checks, then
+        /// delegates to the existing <see cref="AddEvent"/> pipeline (recording
+        /// toggle, per-pawn cap, deduplication-by-stableId inside Component).
+        /// Never throws on bad input.
+        /// </summary>
+        public CaptureResult TryRecord(ArchiveEventInput input)
+        {
+            if (input == null || !input.IsValid)
+            {
+                return CaptureResult.Rejected;
+            }
+            if (Current.Game == null || Component == null)
+            {
+                return CaptureResult.Unavailable;
+            }
+
+            // Session-scoped idempotency for explicit dedup keys.
+            if (!string.IsNullOrEmpty(input.DeduplicationKey))
+            {
+                EnsureDedupScope();
+                if (SessionDedupKeys.Contains(input.DeduplicationKey))
+                {
+                    return CaptureResult.Duplicate;
+                }
+                SessionDedupKeys.Add(input.DeduplicationKey);
+            }
+
+            if (!IsRecordingEnabled())
+            {
+                return CaptureResult.Rejected;
+            }
+
+            ChronicleEventDef def = DefDatabase<ChronicleEventDef>.GetNamedSilentFail(input.EventTypeDefName);
+            if (def == null)
+            {
+                return CaptureResult.Rejected;
+            }
+
+            ChronicleEvent ev = ToChronicleEvent(input, def);
+            if (ev == null)
+            {
+                return CaptureResult.Rejected;
+            }
+
+            AddEvent(Component, input.Primary.StableId, ev);
+            return CaptureResult.Accepted;
+        }
+
+        /// <summary>
+        /// Resets the session dedup set whenever the active game changes so a new
+        /// playthrough is not polluted by a previous session's dedup keys.
+        /// </summary>
+        private static void EnsureDedupScope()
+        {
+            Game game = Current.Game;
+            if (!ReferenceEquals(game, _dedupGame))
+            {
+                SessionDedupKeys.Clear();
+                _dedupGame = game;
+            }
+        }
+
+        private ChronicleEvent ToChronicleEvent(ArchiveEventInput input, ChronicleEventDef def)
+        {
+            long tick = input.Tick > 0 ? input.Tick : (Current.Game?.tickManager?.TicksGame ?? 0);
+            if (tick <= 0)
+            {
+                return null;
+            }
+
+            int importanceLevel = (int)(input.Importance
+                ?? ChronicleEventImportance.Resolve(def.defName, input.Parameters));
+
+            Dictionary<string, string> parameters = input.Parameters == null
+                ? new Dictionary<string, string>()
+                : input.Parameters.ToDictionary(kv => kv.Key, kv => kv.Value);
+
+            List<ObjectRef> subjects = null;
+            if (input.Subjects != null && input.Subjects.Count > 0)
+            {
+                subjects = new List<ObjectRef>();
+                foreach (ArchiveEntityRef sub in input.Subjects)
+                {
+                    if (sub != null && sub.IsValid)
+                    {
+                        subjects.Add(sub.ToObjectRef());
+                    }
+                }
+            }
+
+            return new ChronicleEvent
+            {
+                SourceId = input.SourceId,
+                TypeKey = input.EventTypeDefName,
+                Tick = tick,
+                ImportanceLevel = importanceLevel,
+                Primary = input.Primary.ToObjectRef(),
+                Subjects = subjects,
+                Params = parameters,
+            };
         }
     }
 }
