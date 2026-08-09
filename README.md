@@ -110,16 +110,6 @@ A：不是。所有玩家可见文本都走翻译键（`PersonalChronicle.UI.*` 
 
 ---
 
-## 链接 · Links
-
-- **仓库主页**：https://github.com/w774431242/PersonalChronicle
-- **设计文档**：[docs/README.md](docs/README.md)
-- **高拓展 / 高接入架构方案**：[docs/高拓展高接入架构方案.md](docs/高拓展高接入架构方案.md)
-- **工时接入契约**：[docs/WorkIntensityIntegration.md](docs/WorkIntensityIntegration.md)
-- **UI 可交互预览**：[docs/ui-preview/完整档案馆UI预览.html](docs/ui-preview/完整档案馆UI预览.html)
-
----
-
 ## 开发者 · Developers
 
 <details>
