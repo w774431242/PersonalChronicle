@@ -33,3 +33,6 @@ project.lock.json
 # Optional local override for machine-specific RimWorld/Harmony paths
 Directory.Build.props.user
 *.local.props
+
+# Agent/AI session memory (not part of the mod)
+.codebuddy/
