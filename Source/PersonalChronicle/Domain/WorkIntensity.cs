@@ -170,7 +170,7 @@ namespace PersonalChronicle.Domain
             bool overloaded = policy.OverloadRatio > 0f && ratio >= policy.OverloadRatio;
             bool idle = policy.SlackRatio > 0f && ratio > 0d && ratio <= policy.SlackRatio;
 
-            if (input.TotalTicks <= 0L || policy.Tiers.Count == 0)
+            if (input.TotalWorkTicks <= 0L || policy.Tiers.Count == 0)
             {
                 return WorkIntensityEvaluation.Undefined(input, "builtin");
             }
