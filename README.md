@@ -81,9 +81,10 @@
 
 ### 方式二：Steam 创意工坊
 
-> 本仓库即为完整的模组包，可直接放入 `Mods` 目录使用。创意工坊订阅链接将在发布后补充。
+> 本仓库即为完整的模组包，可直接放入 `Mods` 目录使用。也可在 Steam 创意工坊一键订阅：
+> [Personal Chronicle - Archive](https://steamcommunity.com/sharedfiles/filedetails/?id=3780570854)
 
-*This repository is a complete, ready-to-use mod package. A Steam Workshop subscription link will be added when published.*
+*Subscribe on the Steam Workshop: [Personal Chronicle - Archive](https://steamcommunity.com/sharedfiles/filedetails/?id=3780570854)*
 
 ---
 
