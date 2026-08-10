@@ -3,7 +3,7 @@
 > 给你的殖民地写一本「纪传体史书」——人物、物品、战役、地点，全部自动归档，随时回溯。
 > A living chronicle for your colony — pawns, things, battles and places, auto-archived and always at your fingertips.
 
-[![Version](https://img.shields.io/badge/version-4.7.0-blue)](https://github.com/w774431242/PersonalChronicle)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue)](https://github.com/w774431242/PersonalChronicle)
 [![RimWorld](https://img.shields.io/badge/RimWorld-1.6-9B1D20)](https://rimworldgame.com/)
 [![Requires](https://img.shields.io/badge/Requires-Harmony-orange)](https://github.com/pardeike/Harmony)
 [![Languages](https://img.shields.io/badge/Languages-中文%20%2F%20English-informational)](https://github.com/w774431242/PersonalChronicle)
@@ -169,4 +169,4 @@ PersonalChronicle/
 
 ---
 
-*Personal Chronicle - Archive · v4.7.0 · 为 RimWorld 1.6 打造*
+*Personal Chronicle - Archive · v1.1.0 · 为 RimWorld 1.6 打造*

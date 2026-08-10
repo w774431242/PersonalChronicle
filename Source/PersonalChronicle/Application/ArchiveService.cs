@@ -7,6 +7,8 @@ using PersonalChronicle.Domain;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
+using Verse.AI;
+using Verse.AI.Group;
 
 namespace PersonalChronicle.Application
 {
@@ -40,6 +42,16 @@ namespace PersonalChronicle.Application
 
         /// <summary>Prefix of Thing.GetUniqueLoadID() = "Thing_" + defName + "_" + thingIDNumber.</summary>
         private const string ThingIdPrefix = "Thing_";
+
+        /// <summary>
+        /// v4.11 P0: raid Lord loadID → active BattleObject.StableId. Built when a
+        /// battle starts (LinkRaidLords) and consumed by the Lord.Notify_PawnLost
+        /// capture patch. Keyed by the Lord's int loadID so the patch needs no field
+        /// reflection on the Lord instance. Rebuilt lazily: entries are removed once
+        /// a battle is finalized; a stale entry for an unloaded Lord is harmless
+        /// (its pawn-left callback simply won't fire again).
+        /// </summary>
+        private static readonly Dictionary<int, string> raidLordToBattle = new Dictionary<int, string>();
 
         /// <summary>
         /// Live-pawn cache keyed by thingIDNumber (int, zero string alloc per
@@ -1981,6 +1993,91 @@ namespace PersonalChronicle.Application
             }
         }
 
+        /// <summary>
+        /// v4.9: records an equipment thing's decommission (退役仪式) — the thing's
+        /// "death record", captured read-only at destroy time. Never prevents the
+        /// destroy; only writes when the thing has an archive object (was ever
+        /// registered) and no prior decommission record (idempotent).
+        /// </summary>
+        public void OnThingDestroyed(Thing thing, Pawn lastHolder = null)
+        {
+            if (!IsRecordingEnabled() || thing == null || thing.def == null)
+            {
+                return;
+            }
+            try
+            {
+                ChronicleGameComponent component = Component;
+                if (component == null)
+                {
+                    return;
+                }
+                string stableId = thing.def.defName + ":" + thing.thingIDNumber;
+                ThingObject thingObj = component.GetObject(stableId) as ThingObject;
+                if (thingObj == null || thingObj.Decommission != null)
+                {
+                    // Not archived (never a chronicle thing) or already retired.
+                    return;
+                }
+                DecommissionRecord rec = new DecommissionRecord
+                {
+                    Tick = Find.TickManager.TicksGame,
+                    LastPlaceLabel = PlaceLabelForDestroyedThing(thing)
+                };
+                if (lastHolder != null)
+                {
+                    rec.LastHolderStableId = lastHolder.GetUniqueLoadID();
+                    rec.LastHolderLabel = lastHolder.LabelShort;
+                }
+                else if (!string.IsNullOrEmpty(thingObj.CurrentHolderId))
+                {
+                    ArchiveObject cur = component.GetObject(thingObj.CurrentHolderId);
+                    if (cur != null)
+                    {
+                        rec.LastHolderStableId = cur.StableId;
+                        rec.LastHolderLabel = !string.IsNullOrEmpty(cur.LabelSnapshot)
+                            ? cur.LabelSnapshot
+                            : cur.StableId;
+                    }
+                }
+                // Service days: derived from the tenure span (first record start →
+                // now) so the number stays consistent with the legacy chain.
+                if (thingObj.HolderRecords != null && thingObj.HolderRecords.Count > 0)
+                {
+                    long start = thingObj.HolderRecords[0].StartTick;
+                    if (start > 0L)
+                    {
+                        rec.ServiceDays = Math.Max(0,
+                            (int)((Find.TickManager.TicksGame - start) / GenDate.TicksPerDay));
+                    }
+                }
+                thingObj.Decommission = rec;
+                component.MarkChanged();
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warning("PersonalChronicle: failed to record decommission for "
+                    + (thing != null && thing.def != null ? thing.def.defName : "null") + ": " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// v4.9: place key for a thing being destroyed — the map biome defName when
+        /// on a map, "—" otherwise. Stored as a language-independent defName (never a
+        /// localized label) so the archived record survives language switches; the
+        /// Read Model resolves the biome label at display time via BiomeLabel.
+        /// </summary>
+        private static string PlaceLabelForDestroyedThing(Thing thing)
+        {
+            if (thing == null) return "—";
+            Map map = thing.Map;
+            if (map != null && map.Biome != null && !string.IsNullOrEmpty(map.Biome.defName))
+            {
+                return map.Biome.defName;
+            }
+            return "—";
+        }
+
         public void OnThingBuilt(ThingDef builtDef, string builtStableId, Pawn worker)
         {
             if (!IsRecordingEnabled() || builtDef == null || string.IsNullOrEmpty(builtStableId))
@@ -2065,6 +2162,12 @@ namespace PersonalChronicle.Application
                     });
                 }
                 BattleObject battle = component.GetObject(stableId) as BattleObject;
+                if (battle != null && battle.StartTick < 0L)
+                {
+                    // Snapshot the trigger time exactly once; a re-firing of the same
+                    // incident in the same tick overwrites nothing (stableId is tick-bound).
+                    battle.StartTick = Find.TickManager.TicksGame;
+                }
                 ChronicleEvent ev = new ChronicleEvent
                 {
                     Tick = Find.TickManager.TicksGame,
@@ -2077,6 +2180,10 @@ namespace PersonalChronicle.Application
                 // so GetEventsFor(pawn) returns this battle for every fighter present.
                 AttachBattleRoster(component, battle, ev);
                 AddEvent(component, stableId, ev);
+                // v4.11 P0: link the raid Lord(s) just spawned by TryExecuteWorker and
+                // snapshot the force size + runtime countdown. TryExecuteWorker ran
+                // synchronously inside IncidentWorker.TryExecute, so the Lords exist now.
+                LinkRaidLords(battle);
             }
             catch (System.Exception ex)
             {
@@ -2151,6 +2258,177 @@ namespace PersonalChronicle.Application
                 }
                 battle.EndTick = now;
             }
+        }
+
+        /// <summary>
+        /// v4.11 P0: links the raid Lord(s) that <c>IncidentWorker_Raid.TryExecuteWorker</c>
+        /// just spawned on the map to the active battle, and snapshots the raid force
+        /// size. The raid is represented in vanilla by one or more <see cref="Lord"/>s
+        /// (e.g. <c>LordJob_AssaultColony</c>) whose <c>ownedPawns</c> are exactly the
+        /// enemy raiders. We scan every loaded map's LordManager for hostile,
+        /// non-player Lords that are not yet linked, and attribute them to this
+        /// battle. This is the precise (no-polling) "force size" capture point: the
+        /// Lords exist because TryExecuteWorker ran synchronously before this call.
+        ///
+        /// Non-Lord threats (infestation, mech cluster, ship part) have no raid Lord,
+        /// so RaidCount stays -1 and the battle relies on <see cref="ClosePreviousBattle"/>
+        /// (next battle start) as the repulse fallback — consistent with the
+        /// archive-only, record-after-process positioning.
+        /// </summary>
+        public void LinkRaidLords(BattleObject battle)
+        {
+            if (battle == null || string.IsNullOrEmpty(battle.StableId))
+            {
+                return;
+            }
+            try
+            {
+                int total = 0;
+                bool linkedAny = false;
+                List<Map> maps = Find.Maps;
+                if (maps != null)
+                {
+                    for (int mi = 0; mi < maps.Count; mi++)
+                    {
+                        Map map = maps[mi];
+                        if (map == null || map.lordManager == null || map.lordManager.lords == null)
+                        {
+                            continue;
+                        }
+                        for (int li = 0; li < map.lordManager.lords.Count; li++)
+                        {
+                            Lord lord = map.lordManager.lords[li];
+                            if (lord == null || lord.faction == null)
+                            {
+                                continue;
+                            }
+                            // Only enemy raid Lords count toward the force size: the
+                            // faction must be hostile to the player. This excludes
+                            // caravans, visitors, animal herds and the player's own
+                            // Lords, which would otherwise inflate RaidCount.
+                            if (!lord.faction.HostileTo(Faction.OfPlayer))
+                            {
+                                continue;
+                            }
+                            // Skip Lords already attributed to a battle.
+                            if (raidLordToBattle.ContainsKey(lord.loadID))
+                            {
+                                continue;
+                            }
+                            if (lord.ownedPawns == null || lord.ownedPawns.Count == 0)
+                            {
+                                continue;
+                            }
+                            raidLordToBattle[lord.loadID] = battle.StableId;
+                            total += lord.ownedPawns.Count;
+                            linkedAny = true;
+                        }
+                    }
+                }
+                if (linkedAny)
+                {
+                    battle.RaidCount = total;
+                    battle.RemainingRaidCount = total;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warning("PersonalChronicle: failed to link raid lords: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// v4.11 P0: a raid pawn left the map for a linked Lord. <paramref name="remainingPawns"/>
+        /// is the Lord's authoritative remaining raider count (ownedPawns.Count after
+        /// the loss). When it reaches zero, every raider of this Lord is gone and the
+        /// battle is finalized (EndTick written). Lords not linked to any battle are
+        /// ignored. We use the authoritative count directly rather than decrementing
+        /// a counter, so a pawn reported lost more than once (different
+        /// PawnLostCondition values) can never over-decrement, and the battle ends
+        /// exactly when the last raider leaves — for both single-Lord and multi-Lord
+        /// raids.
+        /// </summary>
+        public void OnRaidPawnGone(int lordLoadId, int remainingPawns)
+        {
+            string battleStableId;
+            if (!raidLordToBattle.TryGetValue(lordLoadId, out battleStableId)
+                || string.IsNullOrEmpty(battleStableId))
+            {
+                return;
+            }
+            FinalizeBattleIfRepursed(battleStableId, lordLoadId, remainingPawns);
+        }
+
+        /// <summary>
+        /// Writes EndTick when every linked Lord has lost all its pawns. We track the
+        /// battle's runtime RemainingRaidCount as the MINIMUM remaining-raider count
+        /// across the linked Lords (a multi-Lord raid is repulsed only once all its
+        /// Lords are empty). A Lord is removed from the link map when its raiders hit
+        /// zero, so its stale (later non-zero) notifications can never resurrect a
+        /// finalized battle. Battles with RaidCount &lt;= 0 (no linked Lord, e.g.
+        /// non-Lord threats) are never finalized here — ClosePreviousBattle covers them.
+        /// </summary>
+        private void FinalizeBattleIfRepursed(string battleStableId, int lordLoadId, int lordRemaining)
+        {
+            try
+            {
+                ChronicleGameComponent component = Component;
+                if (component == null)
+                {
+                    return;
+                }
+                BattleObject battle = component.GetObject(battleStableId) as BattleObject;
+                if (battle == null || battle.EndTick != -1L)
+                {
+                    return;
+                }
+                if (battle.RaidCount <= 0)
+                {
+                    // No linked Lord force to track; leave to ClosePreviousBattle.
+                    return;
+                }
+                if (lordRemaining <= 0)
+                {
+                    // This Lord's raiders are all gone: stop tracking it and finalize
+                    // if no other linked Lord still has pawns.
+                    raidLordToBattle.Remove(lordLoadId);
+                    bool anyRemaining = false;
+                    foreach (KeyValuePair<int, string> kv in raidLordToBattle)
+                    {
+                        if (kv.Value == battleStableId)
+                        {
+                            anyRemaining = true;
+                            break;
+                        }
+                    }
+                    if (!anyRemaining)
+                    {
+                        battle.EndTick = Find.TickManager.TicksGame;
+                        battle.RemainingRaidCount = 0;
+                        component.MarkChanged();
+                    }
+                    return;
+                }
+                // Keep RemainingRaidCount as the smallest seen non-zero remaining across Lords.
+                if (battle.RemainingRaidCount < 0 || lordRemaining < battle.RemainingRaidCount)
+                {
+                    battle.RemainingRaidCount = lordRemaining;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warning("PersonalChronicle: failed to finalize battle: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// v4.11 P0: clears the static Lord→battle link map. Called from
+        /// ChronicleGameComponent.FinalizeInit on every new game / load so a previous
+        /// session's (loadID-scoped) links can never leak into the next save.
+        /// </summary>
+        public static void ResetRaidLordLinks()
+        {
+            raidLordToBattle.Clear();
         }
 
         private void AddEvent(ChronicleGameComponent component, string stableId, ChronicleEvent ev)
@@ -2267,7 +2545,11 @@ namespace PersonalChronicle.Application
             {
                 return false;
             }
-            return def.IsWeapon || def.IsApparel;
+            // v4.9.1: data-driven equipment archive policy — weapons always in;
+            // apparel only when it carries enough armor to count as combat apparel
+            // (dust jackets / work wear / fashion clothes are excluded). Mirrors
+            // Patch_ThingDestroy so capture and decommission scopes stay aligned.
+            return Domain.ThingArchivePolicy.Captures(def);
         }
 
         private static bool IsRecordingEnabled()

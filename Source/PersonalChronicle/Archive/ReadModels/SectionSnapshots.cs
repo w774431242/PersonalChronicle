@@ -111,7 +111,65 @@ namespace PersonalChronicle.Archive.ReadModels
         /// Read Model; the window renders it without re-aggregation.
         /// </summary>
         public LegacyView Legacy = new LegacyView();
+
+        // --- v4.9 equipment legacy extension (all derived in the Read Model,
+        // the window only renders; every view degrades to an empty state). ---
+
+        /// <summary>溯源 (origin): where the thing came from + maker chain.</summary>
+        public ThingOriginView Origin = new ThingOriginView();
+
+        /// <summary>工坊署名链 (maker chain): crafter's later fate.</summary>
+        public MakerChainView MakerChain = new MakerChainView();
+
+        /// <summary>同袍共用网络 (co-use): parallel sharers of this equipment.</summary>
+        public CoUseView CoUse = new CoUseView();
+
+        /// <summary>退役仪式 (decommission): the thing's death record.</summary>
+        public DecommissionView Decommission = new DecommissionView();
+
+        // --- v4.13 location atlas (Overview › Location): all views derived in
+        // the Read Model, the window renders without re-aggregation. ---
+
+        /// <summary>Location atlas view: identity / ownership / geography / lifecycle / commerce.</summary>
+        public LocationDetailView Location = new LocationDetailView();
     }
+
+    /// <summary>
+    /// v4.13 location atlas detail view (all fields runtime-derived, never saved).
+    /// Data keys + raw values; the window owns translation/formatting (its
+    /// translation context). KindKey is one of "player"/"settle"/"quest"/"unknown".
+    /// HillKey one of "flat"/"hilly"/"mountain"/"impassable".
+    /// </summary>
+    public sealed class LocationDetailView
+    {
+        /// <summary>Identity kind key: "player"/"settle"/"quest"/"unknown".</summary>
+        public string KindKey;
+        /// <summary>Faction defName (null = no man's land).</summary>
+        public string FactionDefName;
+        /// <summary>Biome defName.</summary>
+        public string BiomeDefName;
+        /// <summary>Hill key: "flat"/"hilly"/"mountain"/"impassable".</summary>
+        public string HillKey;
+        /// <summary>Coastal flag.</summary>
+        public bool IsCoastal;
+        /// <summary>Pollution flag (pollution > 0).</summary>
+        public bool IsPolluted;
+        /// <summary>Annual mean temperature °C (NaN = unknown).</summary>
+        public float AvgTempC = float.NaN;
+        /// <summary>Founded tick (from EstablishedTick). -1 = unknown.</summary>
+        public long EstablishedTick = -1L;
+        /// <summary>Lifecycle: true = still active (DeinitTick == -1).</summary>
+        public bool IsActive;
+        /// <summary>Ruined reason text key when closed ("Destroyed"/"Abandoned"), null when active.</summary>
+        public string DeinitReasonKey;
+        /// <summary>Tradable city flag.</summary>
+        public bool CanTrade;
+        /// <summary>Permit defName (null = none).</summary>
+        public string PermitDefName;
+        /// <summary>Main sell-category keys (subset of the 8 canonical keys).</summary>
+        public IReadOnlyList<string> TradeKindKeys = new List<string>();
+    }
+
 
     /// <summary>Health residual / asset depreciation view for one pawn.</summary>
     public sealed class HealthView
@@ -301,6 +359,81 @@ namespace PersonalChronicle.Archive.ReadModels
         public string CreatedByText;  // already localized (usually the same as first owner)
         public string CreatedAtText;  // already localized
         public string RemarkText;     // already localized or null
+    }
+
+    /// <summary>
+    /// v4.9: 溯源 (origin) read model for an equipment detail view — where the
+    /// thing came from (crafted / battle-stripped / traded / salvaged / gifted)
+    /// and the maker-chain double narrative (the maker later died by their own
+    /// creation). Derived by the Read Model from the Craft/Built/Battle event
+    /// stream; the window only renders it. All labels are already localized.
+    /// </summary>
+    public sealed class ThingOriginView
+    {
+        /// <summary>Origin kind key, already localized ("craft"/"battle"/...).</summary>
+        public string KindText;
+        /// <summary>Raw kind key for UI tinting (Craft/Battle/Trade/Salvage/Gift/Unknown).</summary>
+        public string KindKey;
+        /// <summary>Source object label (crafter / stripped corpse), already localized.</summary>
+        public string FromText;
+        /// <summary>Stable id of the source object, for navigation (null when anonymous).</summary>
+        public string FromStableId;
+        /// <summary>Place where it came from, already localized.</summary>
+        public string WhereText;
+        /// <summary>Origin note (from the event description), already localized.</summary>
+        public string NoteText;
+        /// <summary>True when no origin info can be derived.</summary>
+        public bool IsEmpty;
+    }
+
+    /// <summary>
+    /// v4.9: 工坊署名链 (maker chain) — the crafter's later fate tied to the
+    /// equipment. Pure field association: if the crafter later died and the
+    /// killing blow was dealt by this very thing, the UI shows the double
+    /// narrative "this maker died by their own creation". No invented text.
+    /// </summary>
+    public sealed class MakerChainView
+    {
+        public string MakerText;      // already localized
+        public string MakerStableId;  // for navigation
+        public bool MakerDiedByOwn;
+        public bool IsEmpty;
+    }
+
+    /// <summary>One co-use row: a colonist who shared this equipment.</summary>
+    public sealed class CoUseRowView
+    {
+        public string PawnText;       // already localized
+        public string PawnStableId;   // for navigation
+        public int SharedDays;        // overlapping tenure days
+        public int SharePercent;      // 0..100 of the longest sharer
+    }
+
+    /// <summary>
+    /// v4.9: 同袍共用网络 (co-use) — which colonists used this equipment in
+    /// parallel with the current holder (shared tenure overlap). Derived by the
+    /// Read Model from HolderRecords overlap; the window only renders it.
+    /// </summary>
+    public sealed class CoUseView
+    {
+        public IReadOnlyList<CoUseRowView> Rows = new List<CoUseRowView>();
+        public bool IsEmpty;
+    }
+
+    /// <summary>
+    /// v4.9: 退役仪式 (decommission) — a thing's "death record". Captured
+    /// read-only at destroy time (never prevents the destroy); mirrors the
+    /// pawn-side OnPawnDied. All labels are already localized.
+    /// </summary>
+    public sealed class DecommissionView
+    {
+        public bool HasRecord;
+        public string LastHolderText;  // already localized
+        public string LastHolderStableId;
+        public string LastPlaceText;   // already localized
+        public int ServiceDays;
+        public string LastBattleText;  // already localized
+        public string DateText;        // already localized
     }
 
     /// <summary>

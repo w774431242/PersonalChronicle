@@ -41,6 +41,6 @@
     <categoryKey>Location</categoryKey>
     <label>地点</label>
     <depth>4</depth>
-    <behavior>StatOnly</behavior>
+    <behavior>Event</behavior>
   </PersonalChronicle.Domain.ArchiveCategoryDef>
 </Defs>

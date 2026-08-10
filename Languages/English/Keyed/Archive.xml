@@ -104,6 +104,12 @@
   <PersonalChronicle.UI.BattleRecords>Battle Records</PersonalChronicle.UI.BattleRecords>
   <PersonalChronicle.UI.NoBattleRecords>No battle records.</PersonalChronicle.UI.NoBattleRecords>
   <PersonalChronicle.UI.BattleParticipants>Participated</PersonalChronicle.UI.BattleParticipants>
+  <!-- v4.11 P0: battle three-elements (trigger time / raid size / repulse duration) -->
+  <PersonalChronicle.UI.BattleRaidCount>Raid size {0}</PersonalChronicle.UI.BattleRaidCount>
+  <PersonalChronicle.UI.BattleOngoing>Not repulsed</PersonalChronicle.UI.BattleOngoing>
+  <PersonalChronicle.UI.BattleDuration>Lasted {0} days</PersonalChronicle.UI.BattleDuration>
+  <PersonalChronicle.UI.BattleDurationHours>Lasted {0} hours</PersonalChronicle.UI.BattleDurationHours>
+  <PersonalChronicle.UI.BattleDurationMins>Lasted {0} minutes</PersonalChronicle.UI.BattleDurationMins>
   <PersonalChronicle.UI.NoCraftRecord>No craft record.</PersonalChronicle.UI.NoCraftRecord>
   <PersonalChronicle.UI.NoProduction>No crafted or built records yet.</PersonalChronicle.UI.NoProduction>
   <PersonalChronicle.UI.ProductionType>Item Type</PersonalChronicle.UI.ProductionType>
@@ -306,6 +312,29 @@
   <PersonalChronicle.UI.Legacy.VerdictTasted>Tasted battle; its edge is known.</PersonalChronicle.UI.Legacy.VerdictTasted>
   <PersonalChronicle.UI.Legacy.VerdictPassed>Passed hand to hand, yet unblooded, awaiting its master.</PersonalChronicle.UI.Legacy.VerdictPassed>
   <PersonalChronicle.UI.Legacy.VerdictFresh>Still fresh; its line is young.</PersonalChronicle.UI.Legacy.VerdictFresh>
+  <!-- v4.9 equipment legacy extension: origin / maker chain / co-use / decommission -->
+  <PersonalChronicle.UI.Tab.Origin>Origin</PersonalChronicle.UI.Tab.Origin>
+  <PersonalChronicle.UI.Tab.CoUse>Co-use</PersonalChronicle.UI.Tab.CoUse>
+  <PersonalChronicle.UI.Tab.Decommission>Retire</PersonalChronicle.UI.Tab.Decommission>
+  <PersonalChronicle.UI.Origin.Title>Origin trace</PersonalChronicle.UI.Origin.Title>
+  <PersonalChronicle.UI.Origin.Empty>Origin unknown — no craft, build or battle record for this equipment.</PersonalChronicle.UI.Origin.Empty>
+  <PersonalChronicle.UI.Origin.Craft>Colony-crafted</PersonalChronicle.UI.Origin.Craft>
+  <PersonalChronicle.UI.Origin.Battle>Battle-born</PersonalChronicle.UI.Origin.Battle>
+  <PersonalChronicle.UI.Origin.From>Origin</PersonalChronicle.UI.Origin.From>
+  <PersonalChronicle.UI.Origin.Where>Source</PersonalChronicle.UI.Origin.Where>
+  <PersonalChronicle.UI.Origin.MakerChain>Maker chain</PersonalChronicle.UI.Origin.MakerChain>
+  <PersonalChronicle.UI.Origin.MakerDiedByOwn>This maker died by their own creation</PersonalChronicle.UI.Origin.MakerDiedByOwn>
+  <PersonalChronicle.UI.CoUse.Title>Co-use network</PersonalChronicle.UI.CoUse.Title>
+  <PersonalChronicle.UI.CoUse.Hint>Colonists who used this equipment in parallel with the current holder (by shared tenure).</PersonalChronicle.UI.CoUse.Hint>
+  <PersonalChronicle.UI.CoUse.Empty>This equipment had a single holder; no co-use.</PersonalChronicle.UI.CoUse.Empty>
+  <PersonalChronicle.UI.Decommission.Title>Decommission</PersonalChronicle.UI.Decommission.Title>
+  <PersonalChronicle.UI.Decommission.Empty>Still in service — no decommission record yet.</PersonalChronicle.UI.Decommission.Empty>
+  <PersonalChronicle.UI.Decommission.Stamp>Retired</PersonalChronicle.UI.Decommission.Stamp>
+  <PersonalChronicle.UI.Decommission.LastHolder>Last holder</PersonalChronicle.UI.Decommission.LastHolder>
+  <PersonalChronicle.UI.Decommission.Place>Retired at</PersonalChronicle.UI.Decommission.Place>
+  <PersonalChronicle.UI.Decommission.ServiceDays>Service days</PersonalChronicle.UI.Decommission.ServiceDays>
+  <PersonalChronicle.UI.Decommission.LastBattle>Final battle</PersonalChronicle.UI.Decommission.LastBattle>
+  <PersonalChronicle.UI.Decommission.Date>Retired on</PersonalChronicle.UI.Decommission.Date>
   <!-- v3.1 P3 place + social -->
   <PersonalChronicle.Event.Social>Social relation</PersonalChronicle.Event.Social>
   <PersonalChronicle.Event.Social.Desc>A significant social relation changed.</PersonalChronicle.Event.Social.Desc>
@@ -322,6 +351,9 @@
   <PersonalChronicle.UI.RelSince>Since</PersonalChronicle.UI.RelSince>
   <PersonalChronicle.UI.RelActive>Active</PersonalChronicle.UI.RelActive>
   <PersonalChronicle.UI.RelEnded>Ended</PersonalChronicle.UI.RelEnded>
+  <!-- Opinion-derived ties: vanilla has no PawnRelationDef for these. -->
+  <PersonalChronicle.Relation.Friend>Friend</PersonalChronicle.Relation.Friend>
+  <PersonalChronicle.Relation.Rival>Rival</PersonalChronicle.Relation.Rival>
   <PersonalChronicle.UI.RelationEvents>Relation events</PersonalChronicle.UI.RelationEvents>
   <PersonalChronicle.UI.NoRelationEvents>No relation events yet.</PersonalChronicle.UI.NoRelationEvents>
   <PersonalChronicle.UI.SocialFormedTitle>Formed {0} · {1}</PersonalChronicle.UI.SocialFormedTitle>
@@ -417,4 +449,53 @@
   <PersonalChronicle.UI.Cover.DaysUnknown>enlistment date unknown</PersonalChronicle.UI.Cover.DaysUnknown>
   <PersonalChronicle.UI.Cover.PortraitLabel>Portrait</PersonalChronicle.UI.Cover.PortraitLabel>
   <PersonalChronicle.UI.Cover.PortraitLabelSub>PortraitsCache</PersonalChronicle.UI.Cover.PortraitLabelSub>
+  <!-- v4.13 location atlas (Overview › Location): identity / ownership / geography / lifecycle / commerce -->
+  <PersonalChronicle.UI.LocKind.Player>Home</PersonalChronicle.UI.LocKind.Player>
+  <PersonalChronicle.UI.LocKind.Settle>City</PersonalChronicle.UI.LocKind.Settle>
+  <PersonalChronicle.UI.LocKind.Quest>Quest site</PersonalChronicle.UI.LocKind.Quest>
+  <PersonalChronicle.UI.LocKind.Unknown>Unknown land</PersonalChronicle.UI.LocKind.Unknown>
+  <PersonalChronicle.UI.LocFactionPlayer>Our Colony</PersonalChronicle.UI.LocFactionPlayer>
+  <PersonalChronicle.UI.LocFactionNone>No Man's Land</PersonalChronicle.UI.LocFactionNone>
+  <PersonalChronicle.UI.LocFactionOther>Faction Land</PersonalChronicle.UI.LocFactionOther>
+  <PersonalChronicle.UI.LocHillFlat>Flat</PersonalChronicle.UI.LocHillFlat>
+  <PersonalChronicle.UI.LocHillHilly>Hilly</PersonalChronicle.UI.LocHillHilly>
+  <PersonalChronicle.UI.LocHillMountain>Mountainous</PersonalChronicle.UI.LocHillMountain>
+  <PersonalChronicle.UI.LocHillImpassable>Impassable</PersonalChronicle.UI.LocHillImpassable>
+  <PersonalChronicle.UI.LocTagBiome>Biome</PersonalChronicle.UI.LocTagBiome>
+  <PersonalChronicle.UI.LocTagHill>Hill</PersonalChronicle.UI.LocTagHill>
+  <PersonalChronicle.UI.LocTagCoast>Coastal</PersonalChronicle.UI.LocTagCoast>
+  <PersonalChronicle.UI.LocTagPolluted>Polluted</PersonalChronicle.UI.LocTagPolluted>
+  <PersonalChronicle.UI.LocTemp>{0}°C</PersonalChronicle.UI.LocTemp>
+  <PersonalChronicle.UI.LocLifeEstablished>Founded</PersonalChronicle.UI.LocLifeEstablished>
+  <PersonalChronicle.UI.LocLifeStatus>Status</PersonalChronicle.UI.LocLifeStatus>
+  <PersonalChronicle.UI.LocLifeActive>Active</PersonalChronicle.UI.LocLifeActive>
+  <PersonalChronicle.UI.LocLifeRuined>Ruined</PersonalChronicle.UI.LocLifeRuined>
+  <PersonalChronicle.UI.LocLifeDwell>Dwell</PersonalChronicle.UI.LocLifeDwell>
+  <PersonalChronicle.UI.LocDwellYears>{0} y</PersonalChronicle.UI.LocDwellYears>
+  <PersonalChronicle.UI.LocDwellTransit>Transit</PersonalChronicle.UI.LocDwellTransit>
+  <PersonalChronicle.UI.LocExpandDetail>Expand chronicle</PersonalChronicle.UI.LocExpandDetail>
+  <PersonalChronicle.UI.LocCollapseDetail>Collapse</PersonalChronicle.UI.LocCollapseDetail>
+  <PersonalChronicle.UI.LocNoChronicle>No chronicle recorded for this place yet.</PersonalChronicle.UI.LocNoChronicle>
+  <PersonalChronicle.UI.TradeCan>Tradable</PersonalChronicle.UI.TradeCan>
+  <PersonalChronicle.UI.TradeNo>Not tradable</PersonalChronicle.UI.TradeNo>
+  <PersonalChronicle.UI.TradeCat.Res>Resources</PersonalChronicle.UI.TradeCat.Res>
+  <PersonalChronicle.UI.TradeCat.Cloth>Textiles</PersonalChronicle.UI.TradeCat.Cloth>
+  <PersonalChronicle.UI.TradeCat.Food>Food</PersonalChronicle.UI.TradeCat.Food>
+  <PersonalChronicle.UI.TradeCat.Drug>Drugs</PersonalChronicle.UI.TradeCat.Drug>
+  <PersonalChronicle.UI.TradeCat.Weapon>Weapons</PersonalChronicle.UI.TradeCat.Weapon>
+  <PersonalChronicle.UI.TradeCat.Armor>Armor</PersonalChronicle.UI.TradeCat.Armor>
+  <PersonalChronicle.UI.TradeCat.Implant>Implants</PersonalChronicle.UI.TradeCat.Implant>
+  <PersonalChronicle.UI.TradeCat.Tech>Tech</PersonalChronicle.UI.TradeCat.Tech>
+  <PersonalChronicle.UI.TradePermit>Requires {0}</PersonalChronicle.UI.TradePermit>
+  <PersonalChronicle.UI.TradePermitName>trade permit</PersonalChronicle.UI.TradePermitName>
+  <PersonalChronicle.UI.LocKpiTotal>Maps</PersonalChronicle.UI.LocKpiTotal>
+  <PersonalChronicle.UI.LocKpiHome>Home</PersonalChronicle.UI.LocKpiHome>
+  <PersonalChronicle.UI.LocKpiQuest>Quest sites</PersonalChronicle.UI.LocKpiQuest>
+  <PersonalChronicle.UI.LocKpiSettle>Cities</PersonalChronicle.UI.LocKpiSettle>
+  <PersonalChronicle.UI.LocKpiRuined>Ruined</PersonalChronicle.UI.LocKpiRuined>
+  <PersonalChronicle.UI.LocKpiTradable>Tradable</PersonalChronicle.UI.LocKpiTradable>
+  <PersonalChronicle.UI.LocKpiPermit>Permit</PersonalChronicle.UI.LocKpiPermit>
+  <PersonalChronicle.UI.LocKpiFactions>Factions</PersonalChronicle.UI.LocKpiFactions>
+  <PersonalChronicle.UI.LocDeinit.Destroyed>Ruined in battle</PersonalChronicle.UI.LocDeinit.Destroyed>
+  <PersonalChronicle.UI.LocDeinit.Abandoned>Abandoned</PersonalChronicle.UI.LocDeinit.Abandoned>
 </LanguageData>

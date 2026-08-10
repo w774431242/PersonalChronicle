@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <!--
+    社会关系归档政策。
+    决定「个人档案 · 社会关系」区块捕捉哪些关系。
+    所有名单/阈值均可被其他 mod 通过 PatchOperation 调整，无需改 C#。
+
+    directRelationDefNames 留空 = 接受全部直接关系（仅排除 excluded 名单）。
+  -->
+  <PersonalChronicle.Domain.SocialRelationPolicyDef>
+    <defName>PersonalChronicleSocialRelationPolicy</defName>
+    <label>社会关系归档政策</label>
+
+    <!-- 直接关系白名单：血亲 + 伴侣 -->
+    <directRelationDefNames>
+      <li>Lover</li>
+      <li>Fiance</li>
+      <li>Spouse</li>
+      <li>ExLover</li>
+      <li>ExSpouse</li>
+      <li>Parent</li>
+      <li>Child</li>
+      <li>Sibling</li>
+      <li>HalfSibling</li>
+    </directRelationDefNames>
+
+    <!-- 永不归档：动物羁绊不是殖民者之间的社交关系 -->
+    <excludedRelationDefNames>
+      <li>Bond</li>
+    </excludedRelationDefNames>
+
+    <!-- 推导亲属（祖父母/叔侄/表亲等），原版社交页签同款口径 -->
+    <includeImpliedRelations>true</includeImpliedRelations>
+
+    <!-- 好感度衍生的朋友/宿敌关系 -->
+    <includeOpinionRelations>true</includeOpinionRelations>
+    <opinionFriendThreshold>20</opinionFriendThreshold>
+    <opinionRivalThreshold>-20</opinionRivalThreshold>
+    <maxOpinionRelationsPerPawn>8</maxOpinionRelationsPerPawn>
+  </PersonalChronicle.Domain.SocialRelationPolicyDef>
+</Defs>

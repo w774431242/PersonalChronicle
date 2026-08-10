@@ -119,6 +119,18 @@ namespace PersonalChronicle.Archive.ReadModels
                     // v4.7: legacy chain (传承) for equipment — ownership-transfer
                     // generations, creator, verdict, holder table.
                     snap.Legacy = BuildLegacy(service, thing, events);
+                    // v4.9: equipment legacy extension — 溯源 / 工坊署名链 /
+                    // 同袍共用 / 退役仪式. All read-model derived, empty-safe.
+                    snap.Origin = BuildOrigin(service, thing, events);
+                    snap.MakerChain = BuildMakerChain(service, thing, snap.Origin);
+                    snap.CoUse = BuildCoUse(service, thing, events);
+                    snap.Decommission = BuildDecommission(service, thing, events);
+                }
+                else if (snap.DetailObject is LocationObject location)
+                {
+                    // v4.13 location atlas: identity/ownership/geography/lifecycle/
+                    // commerce, all read-model derived (the window only renders).
+                    snap.Location = BuildLocation(location);
                 }
                 snap.KeyEvents = BuildKeyEvents(events);
             }
@@ -305,6 +317,77 @@ namespace PersonalChronicle.Archive.ReadModels
             led.ExpeditionCount = expeditions;
             led.Stays = stays;
             return led;
+        }
+
+        // ---- v4.13 location atlas derivation (Read Model only) ----
+
+        /// <summary>
+        /// Derives the location detail view (identity / ownership / geography /
+        /// lifecycle / commerce) from a LocationObject. Pure data-key derivation —
+        /// the window owns translation/formatting. Empty-safe.
+        /// </summary>
+        private static LocationDetailView BuildLocation(LocationObject loc)
+        {
+            LocationDetailView view = new LocationDetailView();
+            if (loc == null)
+            {
+                return view;
+            }
+            view.EstablishedTick = loc.EstablishedTick;
+            view.IsActive = loc.DeinitTick == -1L;
+            view.DeinitReasonKey = view.IsActive ? null : loc.DeinitReason;
+            view.FactionDefName = loc.FactionDefName;
+            view.BiomeDefName = loc.MapDefName;
+
+            // Kind key: player home / faction settlement / quest site / unknown.
+            if (loc.IsPlayerHome)
+            {
+                view.KindKey = "player";
+            }
+            else if (!string.IsNullOrEmpty(loc.WorldObjectDefName))
+            {
+                if (loc.WorldObjectDefName.IndexOf("Settlement", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    view.KindKey = "settle";
+                }
+                else if (loc.WorldObjectDefName.IndexOf("Quest", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || loc.WorldObjectDefName.IndexOf("Site", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    view.KindKey = "quest";
+                }
+                else
+                {
+                    view.KindKey = "unknown";
+                }
+            }
+            else
+            {
+                view.KindKey = "unknown";
+            }
+
+            // Hill key.
+            if (string.IsNullOrEmpty(loc.Hilliness))
+            {
+                view.HillKey = null;
+            }
+            else if (loc.Hilliness == "Flat") view.HillKey = "flat";
+            else if (loc.Hilliness == "Hilly") view.HillKey = "hilly";
+            else if (loc.Hilliness == "Mountainous") view.HillKey = "mountain";
+            else if (loc.Hilliness == "Impassable") view.HillKey = "impassable";
+            else view.HillKey = null;
+
+            view.IsCoastal = loc.IsCoastal;
+            view.IsPolluted = loc.Pollution > 0.001f;
+            view.AvgTempC = loc.AvgTempC;
+
+            // Commerce.
+            view.CanTrade = loc.CanTrade;
+            view.PermitDefName = loc.PermitRequiredDefName;
+            if (loc.TradeKindKeys != null)
+            {
+                view.TradeKindKeys = loc.TradeKindKeys;
+            }
+            return view;
         }
 
         private static IReadOnlyList<MilestoneView> BuildMilestones(IReadOnlyList<ChronicleEvent> events)
@@ -611,6 +694,18 @@ namespace PersonalChronicle.Archive.ReadModels
             return biome != null ? biome.LabelCap : (v.PlaceKey ?? "—");
         }
 
+        /// <summary>
+        /// Resolves a biome defName to its localized label; when the string is not a
+        /// resolvable defName (e.g. a pre-v4.9.1 save storing a raw label), returns it
+        /// unchanged so both record formats display.
+        /// </summary>
+        private static string ResolveBiomeLabelOrRaw(string value)
+        {
+            if (string.IsNullOrEmpty(value) || value == "—") return "—";
+            var biome = DefDatabase<BiomeDef>.GetNamedSilentFail(value);
+            return biome != null ? biome.LabelCap : value;
+        }
+
         private static string BackstoryText(PawnObject pawn)
         {
             if (pawn == null || string.IsNullOrEmpty(pawn.KindDefName)) return "—";
@@ -864,17 +959,31 @@ namespace PersonalChronicle.Archive.ReadModels
                 }
             }
 
-            // Assign an exclusive end tick per record (the next record's start) so
-            // kill events can be bucketed by tenure. Computed on the local copies.
+            // Assign an exclusive [start, end) window per record so kill events can
+            // be bucketed by tenure without double counting. Computed on the local
+            // copies. Pre-v4.9 legacy records may have StartTick < 0 (no stored time);
+            // give them a derived start (the previous record's end, or 0 for the
+            // first) so a kill is still attributed to exactly one holder instead of
+            // falling into every record and inflating totalKills.
             long now = Find.TickManager.TicksGame;
+            long[] starts = new long[records.Count];
             long[] ends = new long[records.Count];
             for (int i = 0; i < records.Count; i++)
             {
                 HolderRecord rec = records[i];
                 if (rec == null) continue;
-                ends[i] = (i + 1 < records.Count && records[i + 1] != null)
+                long end = (i + 1 < records.Count && records[i + 1] != null)
                     ? records[i + 1].StartTick
                     : now;
+                if (end < 0L) end = now;
+                ends[i] = end;
+                long start = rec.StartTick;
+                if (start < 0L)
+                {
+                    start = (i > 0) ? ends[i - 1] : 0L;
+                    if (start > end) start = end;
+                }
+                starts[i] = start;
             }
 
             List<LegacyHolderView> holders = new List<LegacyHolderView>();
@@ -893,8 +1002,9 @@ namespace PersonalChronicle.Archive.ReadModels
                 HolderRecord rec = records[i];
                 if (rec == null) continue;
                 bool isLoan = rec.Kind == HolderRecord.HolderKindLoan;
+                long startTick = starts[i];
                 long endTick = ends[i];
-                int kills = CountKillsInWindow(killEvents, rec.StartTick, endTick);
+                int kills = CountKillsInWindow(killEvents, startTick, endTick);
                 totalKills += kills;
 
                 HolderRecord firstRec = records[0];
@@ -941,6 +1051,291 @@ namespace PersonalChronicle.Archive.ReadModels
             return view;
         }
 
+        // ---- v4.9 equipment legacy extension (溯源 / 工坊署名链 / 同袍共用 / 退役仪式) ----
+
+        /// <summary>
+        /// 溯源 (origin): derives where the thing came from by scanning the event
+        /// stream. Craft/Built → "craft" (maker = first craft subject); otherwise
+        /// if the thing has battle/death records the origin is at least "battle"
+        /// (field-tested). Every label is localized here; the window never sorts.
+        /// </summary>
+        private static ThingOriginView BuildOrigin(
+            IArchiveService service, ThingObject thing, IReadOnlyList<ChronicleEvent> events)
+        {
+            ThingOriginView view = new ThingOriginView { IsEmpty = true };
+            if (service == null || thing == null || events == null)
+            {
+                return view;
+            }
+            // First relevant event decides the origin kind.
+            for (int i = 0; i < events.Count; i++)
+            {
+                ChronicleEvent ev = events[i];
+                if (ev == null || string.IsNullOrEmpty(ev.TypeKey)) continue;
+                ChronicleEventDef def = DefDatabase<ChronicleEventDef>.GetNamedSilentFail(ev.TypeKey);
+                if (def == null) continue;
+                if (def.kind == ChronicleEventKind.Craft || def.kind == ChronicleEventKind.Built)
+                {
+                    view.KindText = "PersonalChronicle.UI.Origin.Craft".Translate().ToString();
+                    view.KindKey = "craft";
+                    if (ev.Subjects != null)
+                    {
+                        for (int s = 0; s < ev.Subjects.Count; s++)
+                        {
+                            ObjectRef sub = ev.Subjects[s];
+                            if (sub != null && sub.CategoryKey == ArchiveCategoryKeys.Pawn
+                                && !string.IsNullOrEmpty(sub.StableId))
+                            {
+                                view.FromStableId = sub.StableId;
+                                view.FromText = ResolveObjectLabel(service, sub);
+                                break;
+                            }
+                        }
+                    }
+                    if (string.IsNullOrEmpty(view.FromText))
+                    {
+                        view.FromText = "PersonalChronicle.UI.UnknownDate".Translate().ToString();
+                    }
+                    view.IsEmpty = false;
+                    return view;
+                }
+                if (def.kind == ChronicleEventKind.Battle || def.kind == ChronicleEventKind.Death)
+                {
+                    // Field-tested in combat before any craft record → battle origin.
+                    view.KindText = "PersonalChronicle.UI.Origin.Battle".Translate().ToString();
+                    view.KindKey = "battle";
+                    view.IsEmpty = false;
+                    return view;
+                }
+            }
+            return view;
+        }
+
+        /// <summary>
+        /// 工坊署名链 (maker chain): the crafter's later fate. Reads the maker's
+        /// PawnRecord: if the maker later died and the death event lists this thing
+        /// as a subject edge, show the "died by own creation" double narrative.
+        /// </summary>
+        private static MakerChainView BuildMakerChain(
+            IArchiveService service, ThingObject thing, ThingOriginView origin)
+        {
+            MakerChainView view = new MakerChainView { IsEmpty = true };
+            if (service == null || thing == null || origin == null || origin.IsEmpty)
+            {
+                return view;
+            }
+            string makerId = origin.FromStableId;
+            if (string.IsNullOrEmpty(makerId))
+            {
+                return view;
+            }
+            ArchiveObject maker = service.GetObject(makerId);
+            if (maker is PawnObject pawn)
+            {
+                view.MakerStableId = makerId;
+                view.MakerText = string.IsNullOrEmpty(pawn.LabelSnapshot)
+                    ? pawn.StableId
+                    : pawn.LabelSnapshot;
+                view.IsEmpty = false;
+                if (pawn.IsArchived)
+                {
+                    // Died after crafting — check whether this thing dealt the blow.
+                    IReadOnlyList<ChronicleEvent> makerEvents = service.GetEventsFor(makerId);
+                    if (makerEvents != null)
+                    {
+                        for (int i = 0; i < makerEvents.Count; i++)
+                        {
+                            ChronicleEvent ev = makerEvents[i];
+                            if (ev == null || ev.TypeKey != ChronicleEventType.Death) continue;
+                            if (HasSubjectThing(ev, thing.StableId))
+                            {
+                                view.MakerDiedByOwn = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return view;
+        }
+
+        /// <summary>
+        /// 同袍共用网络 (co-use): colonists who used this equipment in parallel
+        /// with the current holder. Computed from HolderRecords tenure overlap —
+        /// two records overlap when the later start < the earlier end. The window
+        /// only renders the derived rows (share % of the longest sharer).
+        /// </summary>
+        private static CoUseView BuildCoUse(
+            IArchiveService service, ThingObject thing, IReadOnlyList<ChronicleEvent> events)
+        {
+            CoUseView view = new CoUseView();
+            if (service == null || thing == null
+                || thing.HolderRecords == null || thing.HolderRecords.Count < 2)
+            {
+                view.IsEmpty = true;
+                return view;
+            }
+            List<HolderRecord> records = new List<HolderRecord>();
+            for (int i = 0; i < thing.HolderRecords.Count; i++)
+            {
+                HolderRecord rec = thing.HolderRecords[i];
+                if (rec == null || string.IsNullOrEmpty(rec.StableId)) continue;
+                records.Add(rec);
+            }
+            if (records.Count < 2)
+            {
+                view.IsEmpty = true;
+                return view;
+            }
+            // Build tenures with exclusive end ticks (same derivation as BuildLegacy).
+            long now = Find.TickManager.TicksGame;
+            List<long> ends = new List<long>(records.Count);
+            for (int i = 0; i < records.Count; i++)
+            {
+                ends.Add(i + 1 < records.Count
+                    ? records[i + 1].StartTick
+                    : now);
+            }
+            string currentHolderId = thing.CurrentHolderId;
+            Dictionary<string, CoUseRowView> byPawn = new Dictionary<string, CoUseRowView>();
+            for (int i = 0; i < records.Count; i++)
+            {
+                HolderRecord rec = records[i];
+                // Exclude the current sole holder: co-use is about parallel sharers.
+                if (!string.IsNullOrEmpty(currentHolderId) && rec.StableId == currentHolderId) continue;
+                for (int j = i + 1; j < records.Count; j++)
+                {
+                    HolderRecord other = records[j];
+                    if (other == null) continue;
+                    long overlapStart = System.Math.Max(rec.StartTick, other.StartTick);
+                    long overlapEnd = System.Math.Min(ends[i], ends[j]);
+                    if (overlapEnd > overlapStart)
+                    {
+                        int days = (int)((overlapEnd - overlapStart) / GenDate.TicksPerDay);
+                        if (days <= 0) continue;
+                        if (!byPawn.TryGetValue(other.StableId, out CoUseRowView row))
+                        {
+                            row = new CoUseRowView
+                            {
+                                PawnStableId = other.StableId,
+                                PawnText = ResolvePawnLabel(service, other),
+                                SharedDays = 0
+                            };
+                            byPawn[other.StableId] = row;
+                        }
+                        row.SharedDays += days;
+                    }
+                }
+            }
+            if (byPawn.Count == 0)
+            {
+                view.IsEmpty = true;
+                return view;
+            }
+            List<CoUseRowView> rows = new List<CoUseRowView>(byPawn.Values);
+            rows.Sort((a, b) => b.SharedDays.CompareTo(a.SharedDays));
+            int maxDays = rows.Count > 0 ? rows[0].SharedDays : 0;
+            for (int r = 0; r < rows.Count; r++)
+            {
+                rows[r].SharePercent = maxDays > 0 ? (int)(rows[r].SharedDays * 100f / maxDays) : 0;
+            }
+            view.Rows = rows;
+            view.IsEmpty = false;
+            return view;
+        }
+
+        /// <summary>
+        /// 退役仪式 (decommission): the thing's death record. Reads the persisted
+        /// DecommissionSnapshot on the domain object; no record → empty state.
+        /// </summary>
+        private static DecommissionView BuildDecommission(
+            IArchiveService service, ThingObject thing, IReadOnlyList<ChronicleEvent> events)
+        {
+            DecommissionView view = new DecommissionView { HasRecord = false };
+            if (thing == null || thing.Decommission == null || thing.Decommission.IsEmpty)
+            {
+                return view;
+            }
+            Domain.DecommissionRecord rec = thing.Decommission;
+            view.HasRecord = true;
+            view.LastHolderStableId = rec.LastHolderStableId;
+            view.LastHolderText = !string.IsNullOrEmpty(rec.LastHolderLabel)
+                ? rec.LastHolderLabel
+                : (!string.IsNullOrEmpty(rec.LastHolderStableId)
+                    ? ResolveObjectLabel(service, rec.LastHolderStableId)
+                    : "—");
+            // LastPlaceLabel stores a language-independent biome defName (older saves
+            // may hold a localized label); resolve to a label, falling back to the raw
+            // string so both old and new records display.
+            view.LastPlaceText = !string.IsNullOrEmpty(rec.LastPlaceLabel)
+                ? ResolveBiomeLabelOrRaw(rec.LastPlaceLabel)
+                : "—";
+            view.ServiceDays = rec.ServiceDays;
+            view.LastBattleText = !string.IsNullOrEmpty(rec.LastBattleLabel)
+                ? rec.LastBattleLabel
+                : "—";
+            view.DateText = rec.Tick > 0L
+                ? GenDate.DateReadoutStringAt(rec.Tick, Vector2.zero)
+                : "PersonalChronicle.UI.UnknownDate".Translate().ToString();
+            return view;
+        }
+
+        private static bool HasSubjectThing(ChronicleEvent ev, string thingStableId)
+        {
+            if (ev == null || string.IsNullOrEmpty(thingStableId) || ev.Subjects == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < ev.Subjects.Count; i++)
+            {
+                ObjectRef sub = ev.Subjects[i];
+                if (sub != null && sub.CategoryKey == ArchiveCategoryKeys.Thing
+                    && sub.StableId == thingStableId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static string ResolveObjectLabel(IArchiveService service, ObjectRef objRef)
+        {
+            if (objRef == null) return "—";
+            return ResolveObjectLabel(service, objRef.StableId);
+        }
+
+        private static string ResolveObjectLabel(IArchiveService service, string stableId)
+        {
+            if (string.IsNullOrEmpty(stableId)) return "—";
+            if (service != null)
+            {
+                ArchiveObject obj = service.GetObject(stableId);
+                if (obj != null)
+                {
+                    if (!string.IsNullOrEmpty(obj.LabelSnapshot)) return obj.LabelSnapshot;
+                    if (obj is ThingObject t) return ThingDefLabelLocal(t.ThingDefName);
+                    if (obj is PawnObject p) return string.IsNullOrEmpty(p.LabelSnapshot) ? p.StableId : p.LabelSnapshot;
+                    return obj.StableId;
+                }
+            }
+            return stableId;
+        }
+
+        private static string ResolvePawnLabel(IArchiveService service, HolderRecord rec)
+        {
+            if (rec == null) return "—";
+            if (!string.IsNullOrEmpty(rec.LabelSnapshot)) return rec.LabelSnapshot;
+            if (service != null && !string.IsNullOrEmpty(rec.StableId))
+            {
+                ArchiveObject obj = service.GetObject(rec.StableId);
+                if (obj is PawnObject pawn)
+                {
+                    return string.IsNullOrEmpty(pawn.LabelSnapshot) ? pawn.StableId : pawn.LabelSnapshot;
+                }
+            }
+            return rec.StableId ?? "—";
+        }
+
         private static int CountKillsInWindow(List<ChronicleEvent> killEvents, long start, long end)
         {
             if (killEvents == null || killEvents.Count == 0) return 0;
@@ -949,8 +1344,13 @@ namespace PersonalChronicle.Archive.ReadModels
             {
                 ChronicleEvent ev = killEvents[i];
                 if (ev == null) continue;
+                // v4.9.1: use half-open [start, end) so the boundary tick where the
+                // next holder takes over (end == next StartTick) is attributed to the
+                // new holder only, not double-counted on both sides. Previously a kill
+                // at the exact transfer tick was tallied twice (totalKills inflated
+                // and the previous holder's KillCount wrongly ticked up).
                 if (start >= 0L && ev.Tick < start) continue;
-                if (end >= 0L && ev.Tick > end) continue;
+                if (end >= 0L && ev.Tick >= end) continue;
                 count++;
             }
             return count;
@@ -1144,14 +1544,70 @@ namespace PersonalChronicle.Archive.ReadModels
                     rows.Add(new RelationView
                     {
                         OtherLabel = !string.IsNullOrEmpty(rel.OtherLabel) ? rel.OtherLabel : rel.OtherStableId,
-                        RelationLabel = RelationLabelFor(def, otherLive),
+                        RelationLabel = RelationLabelFor(def, otherLive, rel.RelationDefName),
                         StatusLabel = status,
                         IsLive = false
                     });
                 }
             }
 
+            // Stable presentation order: partners → blood kin → friends → rivals →
+            // ended ties. Sorting belongs to the Read Model, never to the window.
+            // Labels are resolved once here rather than per comparison, since a
+            // sort evaluates the comparator O(n log n) times.
+            string endedLabel = "PersonalChronicle.UI.RelEnded".Translate().ToString();
+            string friendLabel = FriendLabel();
+            string rivalLabel = RivalLabel();
+            rows.Sort((a, b) =>
+            {
+                int ra = RelationSortRank(a, endedLabel, friendLabel, rivalLabel);
+                int rb = RelationSortRank(b, endedLabel, friendLabel, rivalLabel);
+                if (ra != rb)
+                {
+                    return ra.CompareTo(rb);
+                }
+                return string.Compare(a?.OtherLabel ?? string.Empty,
+                    b?.OtherLabel ?? string.Empty, System.StringComparison.CurrentCulture);
+            });
+
             return rows;
+        }
+
+        /// <summary>
+        /// Presentation rank for the social list. Ended ties always sink to the
+        /// bottom so the current social circle reads first.
+        /// </summary>
+        private static int RelationSortRank(
+            RelationView row, string endedLabel, string friendLabel, string rivalLabel)
+        {
+            if (row == null)
+            {
+                return 99;
+            }
+            if (row.StatusLabel == endedLabel)
+            {
+                return 50;
+            }
+            string label = row.RelationLabel ?? string.Empty;
+            if (label == friendLabel)
+            {
+                return 20;
+            }
+            if (label == rivalLabel)
+            {
+                return 30;
+            }
+            return row.IsLive ? 0 : 10;
+        }
+
+        private static string FriendLabel()
+        {
+            return "PersonalChronicle.Relation.Friend".Translate().ToString();
+        }
+
+        private static string RivalLabel()
+        {
+            return "PersonalChronicle.Relation.Rival".Translate().ToString();
         }
 
         private static string MakeRelationKey(string relationDefName, string otherStableId)
@@ -1161,8 +1617,26 @@ namespace PersonalChronicle.Archive.ReadModels
 
         private static string RelationLabelFor(PawnRelationDef def, Pawn otherPawn)
         {
+            return RelationLabelFor(def, otherPawn, null);
+        }
+
+        /// <summary>
+        /// Resolves a display label. <paramref name="relationDefName"/> lets
+        /// synthesized opinion ties (friend/rival) resolve to a translated label
+        /// even though they have no backing PawnRelationDef.
+        /// </summary>
+        private static string RelationLabelFor(PawnRelationDef def, Pawn otherPawn, string relationDefName)
+        {
             if (def == null)
             {
+                if (relationDefName == SocialRelationFilter.FriendRelationKey)
+                {
+                    return FriendLabel();
+                }
+                if (relationDefName == SocialRelationFilter.RivalRelationKey)
+                {
+                    return RivalLabel();
+                }
                 return string.Empty;
             }
             if (otherPawn != null)

@@ -104,6 +104,12 @@
   <PersonalChronicle.UI.BattleRecords>战斗记录</PersonalChronicle.UI.BattleRecords>
   <PersonalChronicle.UI.NoBattleRecords>暂无战斗记录。</PersonalChronicle.UI.NoBattleRecords>
   <PersonalChronicle.UI.BattleParticipants>参战</PersonalChronicle.UI.BattleParticipants>
+  <!-- v4.11 P0: 战役三要素（触发时间/来袭规模/击退历时） -->
+  <PersonalChronicle.UI.BattleRaidCount>来袭规模 {0} 人</PersonalChronicle.UI.BattleRaidCount>
+  <PersonalChronicle.UI.BattleOngoing>未击退</PersonalChronicle.UI.BattleOngoing>
+  <PersonalChronicle.UI.BattleDuration>历时 {0} 天</PersonalChronicle.UI.BattleDuration>
+  <PersonalChronicle.UI.BattleDurationHours>历时 {0} 小时</PersonalChronicle.UI.BattleDurationHours>
+  <PersonalChronicle.UI.BattleDurationMins>历时 {0} 分钟</PersonalChronicle.UI.BattleDurationMins>
   <PersonalChronicle.UI.NoCraftRecord>暂无制造记录。</PersonalChronicle.UI.NoCraftRecord>
   <PersonalChronicle.UI.NoProduction>暂无制造或建造记录。</PersonalChronicle.UI.NoProduction>
   <PersonalChronicle.UI.ProductionType>物品类型</PersonalChronicle.UI.ProductionType>
@@ -306,6 +312,29 @@
   <PersonalChronicle.UI.Legacy.VerdictTasted>初历战阵，锋芒已现。</PersonalChronicle.UI.Legacy.VerdictTasted>
   <PersonalChronicle.UI.Legacy.VerdictPassed>几经易主，未见血光，静待其主。</PersonalChronicle.UI.Legacy.VerdictPassed>
   <PersonalChronicle.UI.Legacy.VerdictFresh>尚新，传承未远。</PersonalChronicle.UI.Legacy.VerdictFresh>
+  <!-- v4.9 装备传承拓展：溯源 / 工坊署名链 / 同袍共用 / 退役仪式 -->
+  <PersonalChronicle.UI.Tab.Origin>溯源</PersonalChronicle.UI.Tab.Origin>
+  <PersonalChronicle.UI.Tab.CoUse>同袍</PersonalChronicle.UI.Tab.CoUse>
+  <PersonalChronicle.UI.Tab.Decommission>退役</PersonalChronicle.UI.Tab.Decommission>
+  <PersonalChronicle.UI.Origin.Title>战利溯源</PersonalChronicle.UI.Origin.Title>
+  <PersonalChronicle.UI.Origin.Empty>来源未知——此装备无制造、建造或战斗记录可考。</PersonalChronicle.UI.Origin.Empty>
+  <PersonalChronicle.UI.Origin.Craft>殖民地制造</PersonalChronicle.UI.Origin.Craft>
+  <PersonalChronicle.UI.Origin.Battle>战场出身</PersonalChronicle.UI.Origin.Battle>
+  <PersonalChronicle.UI.Origin.From>来源</PersonalChronicle.UI.Origin.From>
+  <PersonalChronicle.UI.Origin.Where>出处</PersonalChronicle.UI.Origin.Where>
+  <PersonalChronicle.UI.Origin.MakerChain>工坊署名链</PersonalChronicle.UI.Origin.MakerChain>
+  <PersonalChronicle.UI.Origin.MakerDiedByOwn>此匠死于自己亲手所造之物</PersonalChronicle.UI.Origin.MakerDiedByOwn>
+  <PersonalChronicle.UI.CoUse.Title>同袍共用网络</PersonalChronicle.UI.CoUse.Title>
+  <PersonalChronicle.UI.CoUse.Hint>与现任持有者并行使用过此装备的殖民者（按共用时长）。</PersonalChronicle.UI.CoUse.Hint>
+  <PersonalChronicle.UI.CoUse.Empty>此装备仅单人持有，无同袍共用。</PersonalChronicle.UI.CoUse.Empty>
+  <PersonalChronicle.UI.Decommission.Title>退役仪式</PersonalChronicle.UI.Decommission.Title>
+  <PersonalChronicle.UI.Decommission.Empty>此装备仍在册，尚无退役记录。</PersonalChronicle.UI.Decommission.Empty>
+  <PersonalChronicle.UI.Decommission.Stamp>已退役</PersonalChronicle.UI.Decommission.Stamp>
+  <PersonalChronicle.UI.Decommission.LastHolder>末任持有</PersonalChronicle.UI.Decommission.LastHolder>
+  <PersonalChronicle.UI.Decommission.Place>退役地点</PersonalChronicle.UI.Decommission.Place>
+  <PersonalChronicle.UI.Decommission.ServiceDays>服役天数</PersonalChronicle.UI.Decommission.ServiceDays>
+  <PersonalChronicle.UI.Decommission.LastBattle>最后一战</PersonalChronicle.UI.Decommission.LastBattle>
+  <PersonalChronicle.UI.Decommission.Date>退役日期</PersonalChronicle.UI.Decommission.Date>
   <!-- v3.1 P3 place + social -->
   <PersonalChronicle.Event.Social>社会关系</PersonalChronicle.Event.Social>
   <PersonalChronicle.Event.Social.Desc>一段重要的社会关系发生变化。</PersonalChronicle.Event.Social.Desc>
@@ -322,6 +351,9 @@
   <PersonalChronicle.UI.RelSince>起始</PersonalChronicle.UI.RelSince>
   <PersonalChronicle.UI.RelActive>存续</PersonalChronicle.UI.RelActive>
   <PersonalChronicle.UI.RelEnded>已结束</PersonalChronicle.UI.RelEnded>
+  <!-- 好感度衍生关系：原版没有对应的 PawnRelationDef -->
+  <PersonalChronicle.Relation.Friend>朋友</PersonalChronicle.Relation.Friend>
+  <PersonalChronicle.Relation.Rival>宿敌</PersonalChronicle.Relation.Rival>
   <PersonalChronicle.UI.RelationEvents>关系事件</PersonalChronicle.UI.RelationEvents>
   <PersonalChronicle.UI.NoRelationEvents>暂无关系事件。</PersonalChronicle.UI.NoRelationEvents>
   <PersonalChronicle.UI.SocialFormedTitle>结成{0} · {1}</PersonalChronicle.UI.SocialFormedTitle>
@@ -420,4 +452,53 @@
   <PersonalChronicle.UI.Cover.DaysUnknown>在册日数未知</PersonalChronicle.UI.Cover.DaysUnknown>
   <PersonalChronicle.UI.Cover.PortraitLabel>人物画像</PersonalChronicle.UI.Cover.PortraitLabel>
   <PersonalChronicle.UI.Cover.PortraitLabelSub>PortraitsCache</PersonalChronicle.UI.Cover.PortraitLabelSub>
+  <!-- v4.13 地图志（Overview › Location）：身份/归属/地理/生命周期/商贸 -->
+  <PersonalChronicle.UI.LocKind.Player>本家</PersonalChronicle.UI.LocKind.Player>
+  <PersonalChronicle.UI.LocKind.Settle>城市</PersonalChronicle.UI.LocKind.Settle>
+  <PersonalChronicle.UI.LocKind.Quest>任务地点</PersonalChronicle.UI.LocKind.Quest>
+  <PersonalChronicle.UI.LocKind.Unknown>无名之地</PersonalChronicle.UI.LocKind.Unknown>
+  <PersonalChronicle.UI.LocFactionPlayer>我方·殖民地</PersonalChronicle.UI.LocFactionPlayer>
+  <PersonalChronicle.UI.LocFactionNone>无主之地</PersonalChronicle.UI.LocFactionNone>
+  <PersonalChronicle.UI.LocFactionOther>派系领地</PersonalChronicle.UI.LocFactionOther>
+  <PersonalChronicle.UI.LocHillFlat>平原</PersonalChronicle.UI.LocHillFlat>
+  <PersonalChronicle.UI.LocHillHilly>丘陵</PersonalChronicle.UI.LocHillHilly>
+  <PersonalChronicle.UI.LocHillMountain>山地</PersonalChronicle.UI.LocHillMountain>
+  <PersonalChronicle.UI.LocHillImpassable>天险</PersonalChronicle.UI.LocHillImpassable>
+  <PersonalChronicle.UI.LocTagBiome>生物群落</PersonalChronicle.UI.LocTagBiome>
+  <PersonalChronicle.UI.LocTagHill>丘陵</PersonalChronicle.UI.LocTagHill>
+  <PersonalChronicle.UI.LocTagCoast>临海</PersonalChronicle.UI.LocTagCoast>
+  <PersonalChronicle.UI.LocTagPolluted>污染</PersonalChronicle.UI.LocTagPolluted>
+  <PersonalChronicle.UI.LocTemp>{0}°C</PersonalChronicle.UI.LocTemp>
+  <PersonalChronicle.UI.LocLifeEstablished>落成</PersonalChronicle.UI.LocLifeEstablished>
+  <PersonalChronicle.UI.LocLifeStatus>状态</PersonalChronicle.UI.LocLifeStatus>
+  <PersonalChronicle.UI.LocLifeActive>活跃</PersonalChronicle.UI.LocLifeActive>
+  <PersonalChronicle.UI.LocLifeRuined>已荒废</PersonalChronicle.UI.LocLifeRuined>
+  <PersonalChronicle.UI.LocLifeDwell>驻留</PersonalChronicle.UI.LocLifeDwell>
+  <PersonalChronicle.UI.LocDwellYears>{0} 年</PersonalChronicle.UI.LocDwellYears>
+  <PersonalChronicle.UI.LocDwellTransit>过境</PersonalChronicle.UI.LocDwellTransit>
+  <PersonalChronicle.UI.LocExpandDetail>展开此地编年史</PersonalChronicle.UI.LocExpandDetail>
+  <PersonalChronicle.UI.LocCollapseDetail>收起</PersonalChronicle.UI.LocCollapseDetail>
+  <PersonalChronicle.UI.LocNoChronicle>此地尚无编年史记录。</PersonalChronicle.UI.LocNoChronicle>
+  <PersonalChronicle.UI.TradeCan>可交易</PersonalChronicle.UI.TradeCan>
+  <PersonalChronicle.UI.TradeNo>不可交易</PersonalChronicle.UI.TradeNo>
+  <PersonalChronicle.UI.TradeCat.Res>资源</PersonalChronicle.UI.TradeCat.Res>
+  <PersonalChronicle.UI.TradeCat.Cloth>布料</PersonalChronicle.UI.TradeCat.Cloth>
+  <PersonalChronicle.UI.TradeCat.Food>食物</PersonalChronicle.UI.TradeCat.Food>
+  <PersonalChronicle.UI.TradeCat.Drug>药品</PersonalChronicle.UI.TradeCat.Drug>
+  <PersonalChronicle.UI.TradeCat.Weapon>武器</PersonalChronicle.UI.TradeCat.Weapon>
+  <PersonalChronicle.UI.TradeCat.Armor>护甲</PersonalChronicle.UI.TradeCat.Armor>
+  <PersonalChronicle.UI.TradeCat.Implant>植入物</PersonalChronicle.UI.TradeCat.Implant>
+  <PersonalChronicle.UI.TradeCat.Tech>科技</PersonalChronicle.UI.TradeCat.Tech>
+  <PersonalChronicle.UI.TradePermit>需{0}</PersonalChronicle.UI.TradePermit>
+  <PersonalChronicle.UI.TradePermitName>贸易许可</PersonalChronicle.UI.TradePermitName>
+  <PersonalChronicle.UI.LocKpiTotal>地图总数</PersonalChronicle.UI.LocKpiTotal>
+  <PersonalChronicle.UI.LocKpiHome>本家定居点</PersonalChronicle.UI.LocKpiHome>
+  <PersonalChronicle.UI.LocKpiQuest>任务地点</PersonalChronicle.UI.LocKpiQuest>
+  <PersonalChronicle.UI.LocKpiSettle>派系城市</PersonalChronicle.UI.LocKpiSettle>
+  <PersonalChronicle.UI.LocKpiRuined>已荒废</PersonalChronicle.UI.LocKpiRuined>
+  <PersonalChronicle.UI.LocKpiTradable>可交易城市</PersonalChronicle.UI.LocKpiTradable>
+  <PersonalChronicle.UI.LocKpiPermit>需许可</PersonalChronicle.UI.LocKpiPermit>
+  <PersonalChronicle.UI.LocKpiFactions>派系数</PersonalChronicle.UI.LocKpiFactions>
+  <PersonalChronicle.UI.LocDeinit.Destroyed>毁于战火</PersonalChronicle.UI.LocDeinit.Destroyed>
+  <PersonalChronicle.UI.LocDeinit.Abandoned>已弃置</PersonalChronicle.UI.LocDeinit.Abandoned>
 </LanguageData>

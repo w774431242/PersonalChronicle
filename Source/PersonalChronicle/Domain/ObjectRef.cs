@@ -39,6 +39,16 @@ namespace PersonalChronicle.Domain
             return new ObjectRef(ArchiveCategoryKeys.Pawn, stableId, labelSnapshot);
         }
 
+        /// <summary>
+        /// v4.13: location edge factory. <paramref name="mapId"/> is the stable
+        /// Map.uniqueID string; <paramref name="cellLabel"/> the identity snapshot.
+        /// Used by event capture to hang "this happened at map X" onto event subjects.
+        /// </summary>
+        public static ObjectRef ForLocation(string mapId, string cellLabel)
+        {
+            return new ObjectRef(ArchiveCategoryKeys.Location, mapId, cellLabel);
+        }
+
         public void ExposeData()
         {
             Scribe_Values.Look(ref CategoryKey, "categoryKey");

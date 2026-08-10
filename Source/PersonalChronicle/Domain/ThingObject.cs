@@ -40,6 +40,12 @@ namespace PersonalChronicle.Domain
         /// </summary>
         public List<HolderRecord> HolderRecords = new List<HolderRecord>();
 
+        /// <summary>
+        /// v4.9: 退役仪式 (decommission) — the thing's death record, captured
+        /// read-only at destroy time. Null for in-service equipment. Persisted.
+        /// </summary>
+        public DecommissionRecord Decommission;
+
         public override string CategoryKey
         {
             get { return ArchiveCategoryKeys.Thing; }
@@ -58,6 +64,7 @@ namespace PersonalChronicle.Domain
             if (HolderHistory == null) HolderHistory = new List<ObjectRef>();
             Scribe_Collections.Look(ref HolderRecords, "holderRecords", LookMode.Deep);
             if (HolderRecords == null) HolderRecords = new List<HolderRecord>();
+            Scribe_Deep.Look(ref Decommission, "decommission");
             // CreatedTick/DestroyedTick/CurrentHolderId deliberately not looked:
             // timeline is derived from eventsByObject to avoid a second source
             // of truth; CurrentHolderId is a live runtime cache only.

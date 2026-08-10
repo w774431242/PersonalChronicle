@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace PersonalChronicle.Domain
@@ -76,14 +77,26 @@ namespace PersonalChronicle.Domain
         }
 
         /// <summary>
-        /// v4.6: snapshot the pawn's existing significant direct relations at join
-        /// time so the Social tab can render initial ties (spouse, parent, friend...)
-        /// even after the pawn has died or left the colony. Relations already
-        /// captured by live change patches are skipped to avoid duplicates.
+        /// Snapshots the pawn's existing significant social ties so the Social tab
+        /// can render them even after the pawn has died or left the colony.
+        ///
+        /// Three sources are merged, because relying on DirectRelations alone
+        /// (the pre-v1.0.1 behavior) missed the majority of real ties:
+        ///   A. DirectRelations       — stored ties (spouse/parent/sibling...).
+        ///   B. Implied relations     — derived kin (grandparent/aunt/cousin...)
+        ///                              that vanilla computes and never stores.
+        ///   C. Opinion-based ties    — friend/rival, which are not PawnRelationDefs
+        ///                              at all and must be synthesized.
+        /// Without B and C a typical scenario start (three unrelated colonists)
+        /// produced a completely empty Social section.
+        ///
+        /// Idempotent: an existing active entry for the same (relation, other)
+        /// pair is never duplicated, so this is safe to call repeatedly as a
+        /// backfill. Ended relations are left untouched and never resurrected.
         /// </summary>
         public static void CaptureInitialRelations(Pawn pawn, PawnObject record)
         {
-            if (pawn?.relations?.DirectRelations == null || record == null)
+            if (pawn == null || record == null || pawn.relations == null)
             {
                 return;
             }
@@ -91,7 +104,43 @@ namespace PersonalChronicle.Domain
             {
                 record.Relations = new List<SignificantRelation>();
             }
+
+            long anchorTick = ResolveRelationAnchorTick(record);
+            SocialRelationPolicyDef policy = SocialRelationFilter.Policy;
+
+            CaptureDirectRelations(pawn, record, anchorTick);
+            if (policy == null || policy.includeImpliedRelations)
+            {
+                CaptureImpliedRelations(pawn, record, anchorTick);
+            }
+            if (policy == null || policy.includeOpinionRelations)
+            {
+                CaptureOpinionRelations(pawn, record, policy, anchorTick);
+            }
+        }
+
+        /// <summary>
+        /// Resolves the tick an initial relation should be anchored to. A brand
+        /// new game anchors at 0 (the ties predate the colony); a mid-save install
+        /// anchors at the pawn's join tick. -1 stays the "unknown" sentinel.
+        /// </summary>
+        private static long ResolveRelationAnchorTick(PawnObject record)
+        {
+            if (record.JoinTick > 0L)
+            {
+                return record.JoinTick;
+            }
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            return now > 0 ? (long)now : 0L;
+        }
+
+        private static void CaptureDirectRelations(Pawn pawn, PawnObject record, long anchorTick)
+        {
             List<DirectPawnRelation> directRelations = pawn.relations.DirectRelations;
+            if (directRelations == null)
+            {
+                return;
+            }
             for (int i = 0; i < directRelations.Count; i++)
             {
                 DirectPawnRelation rel = directRelations[i];
@@ -103,39 +152,238 @@ namespace PersonalChronicle.Domain
                 {
                     continue;
                 }
-                string otherId = rel.otherPawn.GetUniqueLoadID();
-                if (string.IsNullOrEmpty(otherId))
+                AddRelationIfAbsent(record, rel.def.defName, rel.otherPawn, anchorTick);
+            }
+        }
+
+        /// <summary>
+        /// Source B: derived kinship. <c>PotentiallyRelatedPawns</c> is the same
+        /// candidate set vanilla's social tab walks, and <c>GetRelations</c> runs
+        /// the relation workers that produce grandparent/aunt/cousin/kin ties.
+        /// </summary>
+        private static void CaptureImpliedRelations(Pawn pawn, PawnObject record, long anchorTick)
+        {
+            IEnumerable<Pawn> candidates;
+            try
+            {
+                candidates = pawn.relations.PotentiallyRelatedPawns;
+            }
+            catch
+            {
+                // Defensive: a malformed relation graph from another mod must not
+                // abort the whole archive write.
+                return;
+            }
+            if (candidates == null)
+            {
+                return;
+            }
+            foreach (Pawn other in candidates)
+            {
+                if (other == null || other == pawn)
                 {
                     continue;
                 }
-                // Skip if an active snapshot for this pair already exists.
-                bool exists = false;
-                for (int j = 0; j < record.Relations.Count; j++)
+                IEnumerable<PawnRelationDef> defs;
+                try
                 {
-                    SignificantRelation existing = record.Relations[j];
-                    if (existing != null && existing.IsActive
-                        && existing.RelationDefName == rel.def.defName
-                        && existing.OtherStableId == otherId)
+                    defs = pawn.GetRelations(other);
+                }
+                catch
+                {
+                    continue;
+                }
+                if (defs == null)
+                {
+                    continue;
+                }
+                foreach (PawnRelationDef def in defs)
+                {
+                    if (def == null || !SocialRelationFilter.IsSignificant(def))
                     {
-                        exists = true;
-                        break;
+                        continue;
+                    }
+                    AddRelationIfAbsent(record, def.defName, other, anchorTick);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Source C: opinion-derived friend/rival ties, synthesized because
+        /// vanilla stores no Def for them. Only the strongest |opinion| ties are
+        /// kept, capped by the policy, so large colonies stay bounded.
+        /// </summary>
+        private static void CaptureOpinionRelations(
+            Pawn pawn,
+            PawnObject record,
+            SocialRelationPolicyDef policy,
+            long anchorTick)
+        {
+            if (pawn.Map == null && pawn.Faction == null)
+            {
+                return;
+            }
+            int friendThreshold = policy != null ? policy.opinionFriendThreshold : 20;
+            int rivalThreshold = policy != null ? policy.opinionRivalThreshold : -20;
+            int cap = policy != null ? policy.maxOpinionRelationsPerPawn : 8;
+            if (cap <= 0)
+            {
+                return;
+            }
+
+            List<Pawn> peers = CollectSocialPeers(pawn);
+            if (peers.Count == 0)
+            {
+                return;
+            }
+
+            List<KeyValuePair<Pawn, int>> scored = new List<KeyValuePair<Pawn, int>>();
+            for (int i = 0; i < peers.Count; i++)
+            {
+                Pawn other = peers[i];
+                int opinion;
+                try
+                {
+                    opinion = pawn.relations.OpinionOf(other);
+                }
+                catch
+                {
+                    continue;
+                }
+                if (opinion >= friendThreshold || opinion <= rivalThreshold)
+                {
+                    scored.Add(new KeyValuePair<Pawn, int>(other, opinion));
+                }
+            }
+            if (scored.Count == 0)
+            {
+                return;
+            }
+            // Strongest feelings first, so the cap keeps the most meaningful ties.
+            scored.Sort((a, b) => Mathf.Abs(b.Value).CompareTo(Mathf.Abs(a.Value)));
+
+            int taken = 0;
+            for (int i = 0; i < scored.Count && taken < cap; i++)
+            {
+                Pawn other = scored[i].Key;
+                int opinion = scored[i].Value;
+                string key = opinion >= friendThreshold
+                    ? SocialRelationFilter.FriendRelationKey
+                    : SocialRelationFilter.RivalRelationKey;
+                if (AddRelationIfAbsent(record, key, other, anchorTick))
+                {
+                    taken++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Humanlike pawns this pawn could plausibly have an opinion about:
+        /// current map colonists plus same-faction members. Animals and non
+        /// humanlikes are excluded.
+        /// </summary>
+        private static List<Pawn> CollectSocialPeers(Pawn pawn)
+        {
+            List<Pawn> peers = new List<Pawn>();
+            HashSet<Pawn> seen = new HashSet<Pawn>();
+
+            // Single source of truth for "current colony population" (P1: the
+            // definition must not be duplicated). Covers maps + world caravans.
+            List<ColonyMember> members;
+            try
+            {
+                members = ChronicleColonistScanner.EnumerateCurrentPeople();
+            }
+            catch
+            {
+                members = null;
+            }
+            if (members != null)
+            {
+                for (int i = 0; i < members.Count; i++)
+                {
+                    ColonyMember member = members[i];
+                    if (member != null)
+                    {
+                        AddPeer(pawn, member.Pawn, peers, seen);
                     }
                 }
-                if (exists)
-                {
-                    continue;
-                }
-                record.Relations.Add(new SignificantRelation
-                {
-                    RelationDefName = rel.def.defName,
-                    OtherStableId = otherId,
-                    OtherLabel = rel.otherPawn.LabelShort,
-                    // startTicks on DirectPawnRelation is relative to the pawn's age, not
-                    // an absolute game tick; record the join moment as a known anchor.
-                    FormedTick = -1L,
-                    EndedTick = -1L
-                });
             }
+
+            // Also consider co-located humanlikes (visitors, prisoners not yet
+            // counted as population) so pre-colony ties are not missed.
+            Map map = pawn.Map;
+            if (map != null && map.mapPawns != null)
+            {
+                IReadOnlyList<Pawn> spawned = map.mapPawns.AllPawnsSpawned;
+                if (spawned != null)
+                {
+                    for (int i = 0; i < spawned.Count; i++)
+                    {
+                        AddPeer(pawn, spawned[i], peers, seen);
+                    }
+                }
+            }
+            return peers;
+        }
+
+        private static void AddPeer(Pawn self, Pawn candidate, List<Pawn> peers, HashSet<Pawn> seen)
+        {
+            if (candidate == null || candidate == self)
+            {
+                return;
+            }
+            if (candidate.RaceProps == null || !candidate.RaceProps.Humanlike)
+            {
+                return;
+            }
+            if (!seen.Add(candidate))
+            {
+                return;
+            }
+            peers.Add(candidate);
+        }
+
+        /// <summary>
+        /// Adds a relation entry unless an active one already exists for the same
+        /// (relation, other pawn) pair. Returns true when a new entry was added.
+        /// </summary>
+        private static bool AddRelationIfAbsent(
+            PawnObject record,
+            string relationDefName,
+            Pawn other,
+            long anchorTick)
+        {
+            if (string.IsNullOrEmpty(relationDefName) || other == null)
+            {
+                return false;
+            }
+            string otherId = other.GetUniqueLoadID();
+            if (string.IsNullOrEmpty(otherId))
+            {
+                return false;
+            }
+            for (int j = 0; j < record.Relations.Count; j++)
+            {
+                SignificantRelation existing = record.Relations[j];
+                if (existing != null && existing.IsActive
+                    && existing.RelationDefName == relationDefName
+                    && existing.OtherStableId == otherId)
+                {
+                    return false;
+                }
+            }
+            record.Relations.Add(new SignificantRelation
+            {
+                RelationDefName = relationDefName,
+                OtherStableId = otherId,
+                OtherLabel = other.LabelShort,
+                // DirectPawnRelation.startTicks is relative to the pawn's age, not
+                // an absolute game tick, so the archive anchors to a known moment.
+                FormedTick = anchorTick,
+                EndedTick = -1L
+            });
+            return true;
         }
 
         public static void ApplyDeathSnapshots(PawnObject record, Pawn pawn)

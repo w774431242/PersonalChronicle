@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using PersonalChronicle.Application;
 using PersonalChronicle.Domain;
 using RimWorld;
 using RimWorld.Planet;
@@ -42,10 +43,26 @@ namespace PersonalChronicle.Data
 
         /// <summary>
         /// 0 = legacy v0.2 schema, 1 = v3 archive schema, 2 = v4 scope
-        /// migration, 3 = current schema.
+        /// migration, 3 = roster prune, 4 = initial social relation backfill
+        /// (current).
         /// Persisted so the one-time migration never runs twice.
         /// </summary>
         public long SchemaVersion;
+
+        /// <summary>
+        /// Per-pawn count of consecutive relation scans that found nothing new.
+        /// Runtime-only throttle state: rebuilding it after load costs a few
+        /// extra scans, so it is deliberately not persisted.
+        /// </summary>
+        [Unsaved]
+        private Dictionary<string, int> relationScanMissStreak = new Dictionary<string, int>();
+
+        /// <summary>
+        /// Consecutive empty scans after which a pawn's social graph is treated
+        /// as settled. Small enough that a fresh colony still converges within
+        /// the first minute of play.
+        /// </summary>
+        private const int RelationScanSettleThreshold = 3;
 
         /// <summary>
         /// v0.2 compatibility slot. On load: populated from old saves. On save:
@@ -135,6 +152,10 @@ namespace PersonalChronicle.Data
             // "new game" and "load game") so a previous session's pawns can never leak into
             // this one's assist attribution.
             Capture.Patch_PawnTakeDamage.Reset();
+            // v4.11 P0: clear the Lord→battle link map so a prior session's (loadID-scoped)
+            // links cannot pollute the freshly loaded save. Ongoing battles are re-linked
+            // below (after the raid Lords are re-instantiated from the save).
+            Application.ArchiveService.ResetRaidLordLinks();
 
             if (SchemaVersion < 1L)
             {
@@ -170,6 +191,26 @@ namespace PersonalChronicle.Data
                 }
             }
             BackfillExistingColonists();
+            if (SchemaVersion < 4L)
+            {
+                // Initial social relations used to be captured from DirectRelations
+                // only, and only at the instant a pawn was first archived, so most
+                // pre-upgrade saves have an empty social graph. BackfillExistingColonists
+                // above already replayed the (now three-source) capture; only latch
+                // the schema once the result is actually populated, otherwise the
+                // periodic reconcile keeps retrying on later ticks.
+                if (AllArchivedColonistsHaveRelations())
+                {
+                    SchemaVersion = 4L;
+                }
+            }
+            // v4.11 P0: RemainingRaidCount is [Unsaved]; rebuild it from the persisted
+            // RaidCount for any still-ongoing battle so a loaded save can resume the
+            // repulse countdown if its raid Lords are still alive.
+            ResetBattleRaidCounters();
+            // Re-link any still-ongoing battle to its (now re-instantiated) raid Lords
+            // so the repulse countdown can continue after a load.
+            RelinkOngoingBattles();
             MarkChanged();
         }
 
@@ -212,6 +253,15 @@ namespace PersonalChronicle.Data
                 return;
             }
 
+            // v4.13 location atlas: archive newly observed maps / settlements /
+            // quest sites and close deinited ones. Same reconcile cadence as the
+            // colonist pass below — no extra polling, idempotent (AddObject).
+            // Engine APIs verified against 1.6 by reflection (Map.TileInfo /
+            // Map.ParentFaction / WorldGrid[PlanetTile] / Settlement.TraderKind /
+            // StockGenerator_Tag.tradeTag; internal categoryDef/thingDef read via
+            // Harmony Traverse). No Harmony patch — reconcile-driven only.
+            Capture.LocationAtlasCapture.Reconcile(this, tick);
+
             List<ColonyMember> live = ChronicleColonistScanner.EnumerateCurrentPeople();
 
             // Presence set for THIS pass — drives both the confirmation window
@@ -243,6 +293,12 @@ namespace PersonalChronicle.Data
                         existingPawn.Role = member.Role;
                         MarkChanged();
                     }
+                    // Relation catch-up. On a fresh colony the scenario's relation
+                    // workers may not have run yet at FinalizeInit, so the first
+                    // reconcile passes are what actually populate the social graph.
+                    // Additive + de-duplicating, hence safe every pass; it stops
+                    // finding anything new once the graph is settled.
+                    EnsureRelationsBackfilled(pawn);
                     continue;
                 }
                 if (reconcileCandidates.Contains(stableId))
@@ -899,6 +955,59 @@ namespace PersonalChronicle.Data
         }
 
         /// <summary>
+        /// v4.11 P0: <see cref="BattleObject.RemainingRaidCount"/> is [Unsaved], so
+        /// after a save/load it must be rebuilt from the persisted
+        /// <see cref="BattleObject.RaidCount"/>. Only ongoing battles (EndTick still
+        /// -1) with a captured force size get a countdown; battles with no linked
+        /// Lord force (RaidCount &lt;= 0) are left to the ClosePreviousBattle fallback.
+        /// </summary>
+        private void ResetBattleRaidCounters()
+        {
+            if (Objects == null)
+            {
+                return;
+            }
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                BattleObject battle = Objects[i] as BattleObject;
+                if (battle == null || battle.EndTick != -1L)
+                {
+                    continue;
+                }
+                battle.RemainingRaidCount = battle.RaidCount > 0 ? battle.RaidCount : -1;
+            }
+        }
+
+        /// <summary>
+        /// v4.11 P0: after a load, re-associate any still-ongoing battle (EndTick
+        /// still -1, RaidCount &gt; 0) with its raid Lord(s) so the repulse countdown
+        /// resumes. The Lords were re-instantiated from the save; LinkRaidLords only
+        /// links hostile Lords with pawns that are not already linked, so calling it
+        /// here simply re-establishes the link map and refreshes RaidCount/Remaining.
+        /// </summary>
+        private void RelinkOngoingBattles()
+        {
+            if (Objects == null)
+            {
+                return;
+            }
+            IArchiveService service = PersonalChronicleMod.ArchiveService;
+            if (service == null)
+            {
+                return;
+            }
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                BattleObject battle = Objects[i] as BattleObject;
+                if (battle == null || battle.EndTick != -1L || battle.RaidCount <= 0)
+                {
+                    continue;
+                }
+                service.LinkRaidLords(battle);
+            }
+        }
+
+        /// <summary>
         /// Registers an event under every object it references (Primary first,
         /// then each Subject). Also backfills Primary from the legacy field as a
         /// defensive invariant — Primary/Subjects are the only edge source.
@@ -983,8 +1092,160 @@ namespace PersonalChronicle.Data
                 {
                     continue;
                 }
-                AddObject(CreateRecord(member.Pawn, joinTick, member.Role));
+                PawnObject record = CreateRecord(member.Pawn, joinTick, member.Role);
+                if (!AddObject(record))
+                {
+                    // Already archived: AddObject discards the freshly built
+                    // record, so the relation snapshot it carries would be lost.
+                    // Backfill onto the persisted record instead — this is the
+                    // only path by which pre-existing saves ever gain the social
+                    // ties captured since the three-source rewrite. Forced: this
+                    // one-shot load path must not be skipped by the throttle.
+                    EnsureRelationsBackfilled(member.Pawn, true);
+                }
             }
+        }
+
+        /// <summary>
+        /// Re-runs the initial-relation snapshot against an already archived pawn.
+        ///
+        /// Needed because relations are not reliably available at the moment a
+        /// pawn is first archived: on a fresh colony the scenario's relation
+        /// workers can finish after GameComponent.FinalizeInit, and before this
+        /// method existed a pawn archived with an empty relation list never got
+        /// a second chance (AddObject early-returns for known StableIds).
+        ///
+        /// Safe to call repeatedly: the capture is additive and de-duplicates on
+        /// (relation, other pawn), and ended relations are never resurrected.
+        /// </summary>
+        internal bool EnsureRelationsBackfilled(Pawn pawn)
+        {
+            return EnsureRelationsBackfilled(pawn, false);
+        }
+
+        /// <param name="force">
+        /// Bypasses the settle throttle. Used by one-shot paths (load/join) where
+        /// the cost is paid once; the periodic reconcile must not force.
+        /// </param>
+        internal bool EnsureRelationsBackfilled(Pawn pawn, bool force)
+        {
+            if (pawn == null)
+            {
+                return false;
+            }
+            string stableId = pawn.GetUniqueLoadID();
+            if (string.IsNullOrEmpty(stableId))
+            {
+                return false;
+            }
+            ArchiveObject existing;
+            if (!objectsByStableId.TryGetValue(stableId, out existing))
+            {
+                return false;
+            }
+            PawnObject record = existing as PawnObject;
+            if (record == null || record.IsArchived)
+            {
+                return false;
+            }
+            // Throttle: the capture walks the colony to derive kin and opinion
+            // ties, which is O(population) per pawn. Once a pawn's graph has
+            // stopped yielding new ties we stop re-scanning it every reconcile;
+            // live relation changes still arrive through the relation patches.
+            if (!force && IsRelationScanSettled(stableId))
+            {
+                return false;
+            }
+            int before = record.Relations != null ? record.Relations.Count : 0;
+            PawnArchiveSnapshots.CaptureInitialRelations(pawn, record);
+            int after = record.Relations != null ? record.Relations.Count : 0;
+            if (after > before)
+            {
+                relationScanMissStreak.Remove(stableId);
+                MarkChanged();
+                return true;
+            }
+            NoteRelationScanMiss(stableId);
+            return false;
+        }
+
+        /// <summary>
+        /// True once a pawn has produced no new relations for several consecutive
+        /// scans, meaning its social graph has settled and the periodic reconcile
+        /// can skip the expensive re-derivation.
+        /// </summary>
+        private bool IsRelationScanSettled(string stableId)
+        {
+            int misses;
+            return relationScanMissStreak.TryGetValue(stableId, out misses)
+                && misses >= RelationScanSettleThreshold;
+        }
+
+        private void NoteRelationScanMiss(string stableId)
+        {
+            int misses;
+            if (relationScanMissStreak.TryGetValue(stableId, out misses))
+            {
+                if (misses < RelationScanSettleThreshold)
+                {
+                    relationScanMissStreak[stableId] = misses + 1;
+                }
+                return;
+            }
+            relationScanMissStreak[stableId] = 1;
+        }
+
+        /// <summary>
+        /// Reports whether every currently archived colonist already carries at
+        /// least one social tie, used to decide when the schema 4 relation
+        /// backfill may be considered complete.
+        ///
+        /// The actual backfill work is done by <see cref="BackfillExistingColonists"/>
+        /// (and the periodic reconcile); this only inspects the result. Latching
+        /// the schema purely on "the backfill ran" would be wrong, because on load
+        /// the relation workers may not have populated the graph yet — the pass
+        /// would find nothing, mark the save migrated, and never retry.
+        /// </summary>
+        private bool AllArchivedColonistsHaveRelations()
+        {
+            List<ColonyMember> people = ChronicleColonistScanner.EnumerateCurrentPeople();
+            if (people.Count == 0)
+            {
+                // Transient empty population during a load transition: do not
+                // latch the migration, retry later.
+                return false;
+            }
+            for (int i = 0; i < people.Count; i++)
+            {
+                ColonyMember member = people[i];
+                if (member == null || member.Pawn == null)
+                {
+                    continue;
+                }
+                string stableId = member.Pawn.GetUniqueLoadID();
+                if (string.IsNullOrEmpty(stableId))
+                {
+                    continue;
+                }
+                ArchiveObject existing;
+                if (!objectsByStableId.TryGetValue(stableId, out existing))
+                {
+                    continue;
+                }
+                PawnObject record = existing as PawnObject;
+                if (record == null || record.IsArchived)
+                {
+                    continue;
+                }
+                if (record.Relations == null || record.Relations.Count == 0)
+                {
+                    // A genuine hermit is indistinguishable from "not captured
+                    // yet" here, so stay unmigrated and let the reconcile retry.
+                    // Worst case is a few redundant passes, never lost data.
+                    return false;
+                }
+            }
+            return true;
         }
 
         private bool PruneInitialRosterArtifacts()

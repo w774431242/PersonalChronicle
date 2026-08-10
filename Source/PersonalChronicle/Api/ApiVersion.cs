@@ -26,15 +26,17 @@ namespace PersonalChronicle.Api
         }
 
         /// <summary>
-        /// Public API contract version. Bumped in lock-step with the shipped
-        /// modVersion: v4.1 unified the API facade, v4.2 exposed the work-intensity
-        /// provider contract, v4.3 added the faction codex, v4.5 introduced the UI
-        /// Design System, v4.6 added the inspect-tab integration and v4.7 the
-        /// legacy/ownership chain. The Minor level tracks the latest capability so
-        /// <see cref="IPersonalChronicleApi.Supports"/> reports true for every
-        /// capability actually shipped.
+        /// Public API contract version. Shipped in lock-step with the release
+        /// <c>modVersion</c>: v1.1.0 continues the unified 1.x line (v1.0.0 folded
+        /// the previous 4.x development line into a single published version; v1.1.0
+        /// adds the location atlas, battle three-elements capture, social-network
+        /// graph, equipment legacy chain and related fixes on top of it).
+        /// <see cref="IPersonalChronicleApi.Supports"/> now branches on the
+        /// capability flags exposed by the facade instead of raw version numbers,
+        /// so callers should use <c>Supports(major, minMinor)</c> rather than
+        /// comparing against <see cref="Current"/> directly.
         /// </summary>
-        public static ApiVersion Current { get; } = new ApiVersion(4, 7, 0);
+        public static ApiVersion Current { get; } = new ApiVersion(1, 1, 0);
 
         /// <summary>
         /// Returns true when this version satisfies a (major, minMinor) contract,

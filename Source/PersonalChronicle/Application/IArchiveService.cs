@@ -91,11 +91,39 @@ namespace PersonalChronicle.Application
         void OnThingBuilt(ThingDef builtDef, string builtStableId, Pawn worker);
 
         /// <summary>
+        /// v4.9: records an equipment thing's decommission (退役仪式) — a read-only
+        /// "death record" captured at destroy time. Never prevents the destroy.
+        /// <paramref name="lastHolder"/> is optional (may be null when the destroy
+        /// has no clear holder context, e.g. deterioration in storage).
+        /// </summary>
+        void OnThingDestroyed(Thing thing, Pawn lastHolder = null);
+
+        /// <summary>
         /// Records a battle-grade incident start. The caller (capture layer) is
         /// responsible for the data-driven filter (IncidentBattleExtension);
         /// this service only persists the fact.
         /// </summary>
         void OnBattleStarted(IncidentDef incidentDef);
+
+        /// <summary>
+        /// v4.11 P0: links the freshly-spawned raid Lord(s) on the map to an active
+        /// battle and snapshots the raid force size (<see cref="BattleObject.RaidCount"/>)
+        /// plus the runtime <see cref="BattleObject.RemainingRaidCount"/> countdown.
+        /// Called from <see cref="OnBattleStarted"/> once the BattleObject exists and
+        /// the raid workers have already generated their Lords (IncidentWorker.TryExecute
+        /// calls TryExecuteWorker synchronously before its postfix runs).
+        /// </summary>
+        void LinkRaidLords(BattleObject battle);
+
+        /// <summary>
+        /// v4.11 P0: one raid pawn left the map (death / capture / exit / downed) for
+        /// the Lord identified by <paramref name="lordLoadId"/>. <paramref name="remainingPawns"/>
+        /// is the Lord's authoritative <c>ownedPawns.Count</c> after the loss (read in
+        /// the capture patch, since Notify_PawnLost already removed the pawn). When it
+        /// reaches zero the battle is finalized (EndTick written). Called from the
+        /// Lord.Notify_PawnLost capture patch. No-op for Lords not linked to any battle.
+        /// </summary>
+        void OnRaidPawnGone(int lordLoadId, int remainingPawns);
 
         // ---- persisted state (write side) ----
         // Read side of the home view mode (GetHomeViewMode) and all live stats are

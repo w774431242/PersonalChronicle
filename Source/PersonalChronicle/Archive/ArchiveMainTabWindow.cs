@@ -104,10 +104,18 @@ namespace PersonalChronicle.Archive
         private Vector2 overviewScroll;
         private Vector2 detailScroll;
         private Vector2 eventScroll;
+        /// <summary>Scroll-wheel zoom factor for the social network graph (1 = default).</summary>
+        private float socialNetworkZoom = 1f;
+        /// <summary>Whether the user has scrolled the social graph (disables auto-fit).</summary>
+        private bool socialNetworkZoomTouched;
+        /// <summary>Left-drag pan offset for the social network graph.</summary>
+        private Vector2 socialNetworkPan = Vector2.zero;
 
         // ---- Cached read views (rebuilt only in RefreshNow) ----
         private readonly Dictionary<string, List<ArchiveObject>> cachedCategoryObjects =
             new Dictionary<string, List<ArchiveObject>>();
+        /// <summary>v4.13: location atlas cards expanded inline (click toggles).</summary>
+        private readonly HashSet<string> expandedLocations = new HashSet<string>();
         private List<RecentLineView> cachedRecentLines = new List<RecentLineView>();
         private List<ImportantCardView> cachedImportantCards = new List<ImportantCardView>();
         private int cachedActivePawnCount;
@@ -162,6 +170,12 @@ namespace PersonalChronicle.Archive
         private ReadModels.HealthView cachedHealth = new ReadModels.HealthView();
         /// <summary>v4.7: legacy chain (传承) for equipment detail — mirrors DetailSnapshot.Legacy.</summary>
         private ReadModels.LegacyView cachedLegacy = new ReadModels.LegacyView();
+        // v4.9: equipment legacy extension (溯源 / 工坊署名链 / 同袍共用 / 退役仪式) —
+        // mirrors DetailSnapshot; all read-model derived, never recomputed here.
+        private ReadModels.ThingOriginView cachedOrigin = new ReadModels.ThingOriginView();
+        private ReadModels.MakerChainView cachedMakerChain = new ReadModels.MakerChainView();
+        private ReadModels.CoUseView cachedCoUse = new ReadModels.CoUseView();
+        private ReadModels.DecommissionView cachedDecommission = new ReadModels.DecommissionView();
 
         // Event view cache.
         private List<TreeLineView> cachedEventTree = new List<TreeLineView>();
@@ -207,10 +221,13 @@ namespace PersonalChronicle.Archive
         };
 
         // v4.7: item tabs — Custody (流转) renamed to Legacy (传承), the ownership
-        // transfer chain view.
+        // transfer chain view. v4.9: equipment legacy extension — 溯源(Origin) /
+        // 同袍共用(CoUse) / 退役仪式(Decommission) join the tab set; Timeline and
+        // CombatLog are retired for equipment (their content is folded into
+        // Overview / Legacy / the new tabs).
         private static readonly string[] WeaponTabKeys =
         {
-            "Overview", "Timeline", "CombatLog", "Legacy"
+            "Overview", "Origin", "Legacy", "CoUse", "Decommission"
         };
 
         public override Vector2 RequestedTabSize
@@ -419,6 +436,10 @@ namespace PersonalChronicle.Archive
             cachedKeyEvents = detail.KeyEvents ?? new List<ReadModels.KeyEventView>();
             cachedHealth = detail.Health ?? new ReadModels.HealthView();
             cachedLegacy = detail.Legacy ?? new ReadModels.LegacyView();
+            cachedOrigin = detail.Origin ?? new ReadModels.ThingOriginView();
+            cachedMakerChain = detail.MakerChain ?? new ReadModels.MakerChainView();
+            cachedCoUse = detail.CoUse ?? new ReadModels.CoUseView();
+            cachedDecommission = detail.Decommission ?? new ReadModels.DecommissionView();
             if (cachedDetailObject == null)
             {
                 // Object vanished (data cleaned up): safe fallback to overview.
@@ -531,6 +552,10 @@ namespace PersonalChronicle.Archive
             cachedKeyEvents = new List<ReadModels.KeyEventView>();
             cachedHealth = new ReadModels.HealthView();
             cachedLegacy = new ReadModels.LegacyView();
+            cachedOrigin = new ReadModels.ThingOriginView();
+            cachedMakerChain = new ReadModels.MakerChainView();
+            cachedCoUse = new ReadModels.CoUseView();
+            cachedDecommission = new ReadModels.DecommissionView();
             legacyExpanded = false;
         }
 
@@ -1807,6 +1832,443 @@ namespace PersonalChronicle.Archive
 
         // ---- Overview ----------------------------------------------------------
 
+        /// <summary>
+        /// v4.11 P0: Overview › Battle cards. Each card shows the three captured
+        /// elements — trigger date, raid force size and repulse duration — drawn
+        /// through the Design System (UIComponents.Card + UIComponents.Label with
+        /// UITheme tokens; Font/color/anchor pairing is handled inside the
+        /// components, never in the window). Battles are stat-only: not clickable
+        /// into a detail view. Dimensions are the single source shared with
+        /// ComputeOverviewHeight to keep the scroll region height honest.
+        /// </summary>
+        private const float BattleCardWidth = 220f;
+        private const float BattleCardHeight = 104f;
+
+        private float DrawBattleOverviewCards(Rect viewRect, float startY, List<ArchiveObject> objects, float gap)
+        {
+            int perRow = Mathf.Max(1, (int)((viewRect.width + gap) / (BattleCardWidth + gap)));
+
+            for (int i = 0; i < objects.Count; i++)
+            {
+                BattleObject battle = objects[i] as BattleObject;
+                if (battle == null)
+                {
+                    continue;
+                }
+                int col = i % perRow;
+                int row = i / perRow;
+                Rect card = new Rect(
+                    viewRect.x + col * (BattleCardWidth + gap),
+                    startY + row * (BattleCardHeight + gap),
+                    BattleCardWidth, BattleCardHeight);
+
+                ArchiveUiStyle.DrawCard(card, ArchiveCardAccent(battle));
+                float x = card.x + UITheme.CardPadX;
+                float w = card.width - UITheme.CardPadX * 2f;
+                float y = card.y + UITheme.CardPadY;
+
+                // Category caption (Tiny).
+                UIComponents.Label(new Rect(x, y, w, UITheme.FontBodyLineHeight),
+                    "PersonalChronicle.UI.Battle".Translate().ToString(), UITheme.FontLabel, ArchiveUiStyle.Muted);
+                y += UITheme.FontBodyLineHeight;
+
+                // Battle title (Small).
+                UIComponents.Label(new Rect(x, y, w, UITheme.FontBodyLineHeight),
+                    ObjectDisplayLabel(battle), UITheme.FontBody, ArchiveUiStyle.Info);
+                y += UITheme.FontBodyLineHeight;
+
+                // Three-element rows (Tiny, row height ≥18f per rimworld-ui-standards
+                // §4; FontBodyLineHeight=22f is the nearest CJK-safe token).
+                string dateText = battle.StartTick > 0L
+                    ? RimWorld.GenDate.DateReadoutStringAt(battle.StartTick, UnityEngine.Vector2.zero)
+                    : "PersonalChronicle.UI.UnknownDate".Translate().ToString();
+                string raidText = battle.RaidCount > 0
+                    ? "PersonalChronicle.UI.BattleRaidCount".Translate(battle.RaidCount).ToString()
+                    : "—";
+                UIComponents.Label(new Rect(x, y, w, UITheme.FontBodyLineHeight),
+                    dateText, UITheme.FontLabel, ArchiveUiStyle.Muted);
+                y += UITheme.FontBodyLineHeight;
+
+                UIComponents.Label(new Rect(x, y, w, UITheme.FontBodyLineHeight),
+                    raidText + "   " + BattleDurationText(battle), UITheme.FontLabel, ArchiveUiStyle.Muted);
+            }
+
+            int rows = (objects.Count - 1) / perRow + 1;
+            return rows * (BattleCardHeight + gap) + 14f;
+        }
+
+        // ---- v4.13 location atlas overview cards ----
+        private const float LocationCardWidth = 230f;
+        private const float LocationCardHeight = 140f;
+
+        /// <summary>
+        /// v4.13 P1: Overview › Location atlas cards. Each card shows the five
+        /// snapshot layers (identity / ownership / geography / lifecycle /
+        /// commerce) through the Design System (UITheme tokens only, no raw
+        /// colors). Clicking a card toggles the inline chronicle expansion
+        /// (this place's event stream). The window consumes the LocationObject
+        /// snapshot — no live world queries in the draw path.
+        /// </summary>
+        private float DrawLocationOverviewCards(Rect viewRect, float startY, List<ArchiveObject> objects, float gap, IArchiveService service)
+        {
+            int perRow = Mathf.Max(1, (int)((viewRect.width + gap) / (LocationCardWidth + gap)));
+            float yCursor = startY;
+            for (int i = 0; i < objects.Count; i++)
+            {
+                LocationObject loc = objects[i] as LocationObject;
+                if (loc == null)
+                {
+                    continue;
+                }
+                int col = i % perRow;
+                int row = i / perRow;
+                float cardTop = startY + row * (LocationCardHeight + gap);
+                Rect card = new Rect(
+                    viewRect.x + col * (LocationCardWidth + gap),
+                    cardTop,
+                    LocationCardWidth, LocationCardHeight);
+                bool expanded = expandedLocations.Contains(loc.StableId);
+
+                Color accent = LocationCardAccent(loc);
+                ArchiveUiStyle.DrawCard(card, accent);
+                float x = card.x + UITheme.CardPadX;
+                float w = card.width - UITheme.CardPadX * 2f;
+                float y = card.y + UITheme.CardPadY;
+
+                // Identity: kind badge + name.
+                string kindText = LocationKindText(loc);
+                UIComponents.Label(new Rect(x, y, w - 60f, UITheme.FontBodyLineHeight),
+                    kindText, UITheme.FontLabel, ArchiveUiStyle.Muted);
+                UIComponents.Label(new Rect(x + w - 56f, y, 56f, UITheme.FontBodyLineHeight),
+                    loc.IsPlayerHome ? "PersonalChronicle.UI.LocKind.Player".Translate().ToString()
+                        : (loc.DeinitTick != -1L ? "PersonalChronicle.UI.LocLifeRuined".Translate().ToString() : ""),
+                    UITheme.FontLabel, UITheme.Muted);
+                y += UITheme.FontBodyLineHeight;
+
+                UIComponents.Label(new Rect(x, y, w, UITheme.FontBodyLineHeight),
+                    ObjectDisplayLabel(loc), UITheme.FontBody, ArchiveUiStyle.Info);
+                y += UITheme.FontBodyLineHeight;
+
+                // Ownership / geography / commerce / lifecycle — small lines use
+                // 20f rect height (≥18f CJK-safe minimum per rimworld-ui-standards
+                // §4) with a 22f step so long localized strings never clip.
+                UIComponents.Label(new Rect(x, y, w, 20f),
+                    LocationFactionText(loc), UITheme.FontLabel, ArchiveUiStyle.Muted);
+                y += 22f;
+
+                // Geography tags (compact single line; may wrap).
+                string geo = LocationGeoText(loc);
+                if (!string.IsNullOrEmpty(geo))
+                {
+                    UIComponents.Label(new Rect(x, y, w, 20f), geo, UITheme.FontLabel, ArchiveUiStyle.Muted);
+                    y += 22f;
+                }
+
+                // Commerce chip.
+                string trade = LocationTradeText(loc);
+                if (!string.IsNullOrEmpty(trade))
+                {
+                    UIComponents.Label(new Rect(x, y, w, 20f), trade, UITheme.FontLabel,
+                        loc.CanTrade ? UITheme.Accent : ArchiveUiStyle.Muted);
+                    y += 22f;
+                }
+
+                // Lifecycle.
+                UIComponents.Label(new Rect(x, y, w, 20f),
+                    LocationLifeText(loc), UITheme.FontLabel, ArchiveUiStyle.Muted);
+                y += 22f;
+
+                // Click toggles the inline chronicle expansion.
+                if (Widgets.ButtonInvisible(card))
+                {
+                    if (expanded)
+                    {
+                        expandedLocations.Remove(loc.StableId);
+                    }
+                    else
+                    {
+                        expandedLocations.Add(loc.StableId);
+                    }
+                }
+
+                // Inline chronicle expansion (this place's events), drawn below
+                // the card as a full-width panel. Consumes the snapshot's event
+                // stream (read model) — no sorting in the window.
+                if (expanded)
+                {
+                    Rect panel = new Rect(card.x, cardTop + LocationCardHeight + 2f,
+                        LocationCardWidth, 0f);
+                    float ph = DrawLocationChroniclePanel(panel, loc, service);
+                    yCursor = Mathf.Max(yCursor, cardTop + LocationCardHeight + 2f + ph + gap);
+                }
+                else
+                {
+                    yCursor = Mathf.Max(yCursor, cardTop + LocationCardHeight + gap);
+                }
+            }
+            return yCursor - startY + 14f;
+        }
+
+        /// <summary>Chronicle panel: this location's event stream (most recent first, capped).</summary>
+        private float DrawLocationChroniclePanel(Rect rect, LocationObject loc, IArchiveService service)
+        {
+            const float rowH = 20f;
+            const int maxRows = 6;
+            if (service == null)
+            {
+                return 0f;
+            }
+            IReadOnlyList<ChronicleEvent> events = service.GetEventsFor(loc.StableId);
+            List<ChronicleEvent> ordered = (events == null)
+                ? new List<ChronicleEvent>()
+                : events.Where(e => e != null).OrderByDescending(e => e.Tick).ToList();
+            if (ordered.Count == 0)
+            {
+                UIComponents.Label(new Rect(rect.x + UITheme.CardPadX, rect.y + 2f,
+                    rect.width - UITheme.CardPadX * 2f, rowH),
+                    "PersonalChronicle.UI.LocNoChronicle".Translate(), UITheme.FontLabel, ArchiveUiStyle.Muted);
+                return rowH + 4f;
+            }
+            int n = Mathf.Min(ordered.Count, maxRows);
+            float total = n * rowH + 4f;
+            UIComponents.Card(new Rect(rect.x, rect.y, rect.width, total), UITheme.BorderSoft);
+            float yy = rect.y + 2f;
+            for (int i = 0; i < n; i++)
+            {
+                ChronicleEvent ev = ordered[i];
+                string date = ev.Tick > 0L
+                    ? GenDate.DateReadoutStringAt(ev.Tick, UnityEngine.Vector2.zero)
+                    : "—";
+                string title = EventName(ev);
+                UIComponents.Label(new Rect(rect.x + 10f, yy, 86f, 18f), date, UITheme.FontLabel, ArchiveUiStyle.Muted);
+                UIComponents.Label(new Rect(rect.x + 100f, yy, rect.width - 110f, 18f), title, UITheme.FontBody, UITheme.Text);
+                yy += rowH;
+            }
+            return total;
+        }
+
+        /// <summary>Location card accent by lifecycle state (Design System tokens only).</summary>
+        private static Color LocationCardAccent(LocationObject loc)
+        {
+            if (loc == null)
+            {
+                return UITheme.Border;
+            }
+            if (loc.DeinitTick != -1L)
+            {
+                return UITheme.Muted;
+            }
+            if (loc.IsPlayerHome)
+            {
+                return UITheme.Accent;
+            }
+            return UITheme.Info;
+        }
+
+        /// <summary>Kind text (data-driven; never a hardcoded defName string).</summary>
+        private static string LocationKindText(LocationObject loc)
+        {
+            if (loc == null)
+            {
+                return string.Empty;
+            }
+            if (loc.IsPlayerHome)
+            {
+                return "PersonalChronicle.UI.LocKind.Player".Translate().ToString();
+            }
+            string defName = loc.WorldObjectDefName;
+            if (!string.IsNullOrEmpty(defName)
+                && defName.IndexOf("Settlement", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return "PersonalChronicle.UI.LocKind.Settle".Translate().ToString();
+            }
+            if (!string.IsNullOrEmpty(defName)
+                && (defName.IndexOf("Quest", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || defName.IndexOf("Site", System.StringComparison.OrdinalIgnoreCase) >= 0))
+            {
+                return "PersonalChronicle.UI.LocKind.Quest".Translate().ToString();
+            }
+            return "PersonalChronicle.UI.LocKind.Unknown".Translate().ToString();
+        }
+
+        /// <summary>Faction text (我方 / 无主 / 派系领地).</summary>
+        private static string LocationFactionText(LocationObject loc)
+        {
+            if (loc == null)
+            {
+                return string.Empty;
+            }
+            if (loc.IsPlayerHome)
+            {
+                return "PersonalChronicle.UI.LocFactionPlayer".Translate().ToString();
+            }
+            if (string.IsNullOrEmpty(loc.FactionDefName))
+            {
+                return "PersonalChronicle.UI.LocFactionNone".Translate().ToString();
+            }
+            return "PersonalChronicle.UI.LocFactionOther".Translate().ToString();
+        }
+
+        /// <summary>Geography tag line (biome · hill · coast · pollution · temp).</summary>
+        private static string LocationGeoText(LocationObject loc)
+        {
+            if (loc == null)
+            {
+                return string.Empty;
+            }
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if (!string.IsNullOrEmpty(loc.MapDefName))
+            {
+                string biomeLabel = loc.MapDefName;
+                BiomeDef biomeDef = DefDatabase<BiomeDef>.GetNamedSilentFail(loc.MapDefName);
+                if (biomeDef != null)
+                {
+                    biomeLabel = biomeDef.LabelCap;
+                }
+                sb.Append("PersonalChronicle.UI.LocTagBiome".Translate().ToString()).Append(" · ").Append(biomeLabel);
+            }
+            if (!string.IsNullOrEmpty(loc.Hilliness))
+            {
+                if (sb.Length > 0) sb.Append("   ");
+                sb.Append(LocationHillText(loc));
+            }
+            if (loc.IsCoastal)
+            {
+                if (sb.Length > 0) sb.Append("   ");
+                sb.Append("PersonalChronicle.UI.LocTagCoast".Translate().ToString());
+            }
+            if (loc.Pollution > 0.001f)
+            {
+                if (sb.Length > 0) sb.Append("   ");
+                sb.Append("PersonalChronicle.UI.LocTagPolluted".Translate().ToString());
+            }
+            if (!float.IsNaN(loc.AvgTempC))
+            {
+                if (sb.Length > 0) sb.Append("   ");
+                sb.Append("PersonalChronicle.UI.LocTemp".Translate((int)loc.AvgTempC).ToString());
+            }
+            return sb.ToString();
+        }
+
+        private static string LocationHillText(LocationObject loc)
+        {
+            if (loc == null || string.IsNullOrEmpty(loc.Hilliness))
+            {
+                return string.Empty;
+            }
+            switch (loc.Hilliness)
+            {
+                case "Flat": return "PersonalChronicle.UI.LocHillFlat".Translate().ToString();
+                case "Hilly": return "PersonalChronicle.UI.LocHillHilly".Translate().ToString();
+                case "Mountainous": return "PersonalChronicle.UI.LocHillMountain".Translate().ToString();
+                case "Impassable": return "PersonalChronicle.UI.LocHillImpassable".Translate().ToString();
+                default: return loc.Hilliness;
+            }
+        }
+
+        /// <summary>Commerce line (可交易 + sell categories + permit).</summary>
+        private static string LocationTradeText(LocationObject loc)
+        {
+            if (loc == null)
+            {
+                return string.Empty;
+            }
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append(loc.CanTrade
+                ? "PersonalChronicle.UI.TradeCan".Translate().ToString()
+                : "PersonalChronicle.UI.TradeNo".Translate().ToString());
+            if (loc.TradeKindKeys != null && loc.TradeKindKeys.Count > 0)
+            {
+                sb.Append(" · ");
+                for (int i = 0; i < loc.TradeKindKeys.Count && i < 3; i++)
+                {
+                    if (i > 0) sb.Append(" / ");
+                    sb.Append(LocationTradeCategoryText(loc.TradeKindKeys[i]));
+                }
+            }
+            if (!string.IsNullOrEmpty(loc.PermitRequiredDefName))
+            {
+                sb.Append(" · ").Append("PersonalChronicle.UI.TradePermit"
+                    .Translate("PersonalChronicle.UI.TradePermitName".Translate().ToString()).ToString());
+            }
+            return sb.ToString();
+        }
+
+        private static string LocationTradeCategoryText(string key)
+        {
+            switch (key)
+            {
+                case "res": return "PersonalChronicle.UI.TradeCat.Res".Translate().ToString();
+                case "cloth": return "PersonalChronicle.UI.TradeCat.Cloth".Translate().ToString();
+                case "food": return "PersonalChronicle.UI.TradeCat.Food".Translate().ToString();
+                case "drug": return "PersonalChronicle.UI.TradeCat.Drug".Translate().ToString();
+                case "weapon": return "PersonalChronicle.UI.TradeCat.Weapon".Translate().ToString();
+                case "armor": return "PersonalChronicle.UI.TradeCat.Armor".Translate().ToString();
+                case "implant": return "PersonalChronicle.UI.TradeCat.Implant".Translate().ToString();
+                case "tech": return "PersonalChronicle.UI.TradeCat.Tech".Translate().ToString();
+                default: return key;
+            }
+        }
+
+        /// <summary>Lifecycle line (落成 tick · 状态 · 驻留).</summary>
+        private static string LocationLifeText(LocationObject loc)
+        {
+            if (loc == null)
+            {
+                return string.Empty;
+            }
+            string est = loc.EstablishedTick > 0L
+                ? "PersonalChronicle.UI.LocLifeEstablished".Translate().ToString() + " " + GenDate.DateReadoutStringAt(loc.EstablishedTick, UnityEngine.Vector2.zero)
+                : "PersonalChronicle.UI.LocLifeEstablished".Translate().ToString();
+            string status = loc.DeinitTick != -1L
+                ? LocationDeinitText(loc)
+                : "PersonalChronicle.UI.LocLifeActive".Translate().ToString();
+            return est + "   " + status;
+        }
+
+        private static string LocationDeinitText(LocationObject loc)
+        {
+            if (loc == null || loc.DeinitTick == -1L)
+            {
+                return "PersonalChronicle.UI.LocLifeActive".Translate().ToString();
+            }
+            if (loc.DeinitReason == "Destroyed")
+            {
+                return "PersonalChronicle.UI.LocDeinit.Destroyed".Translate().ToString();
+            }
+            if (loc.DeinitReason == "Abandoned")
+            {
+                return "PersonalChronicle.UI.LocDeinit.Abandoned".Translate().ToString();
+            }
+            return "PersonalChronicle.UI.LocLifeRuined".Translate().ToString();
+        }
+
+        /// <summary>Repulse duration text: EndTick - StartTick, or "ongoing" while the raid is not yet repulsed. Sub-day durations fall back to hours so short raids don't show "0 天".</summary>
+        private static string BattleDurationText(BattleObject battle)
+        {
+            if (battle == null || battle.StartTick < 0L)
+            {
+                return "—";
+            }
+            if (battle.EndTick < 0L || battle.EndTick < battle.StartTick)
+            {
+                return "PersonalChronicle.UI.BattleOngoing".Translate().ToString();
+            }
+            long ticks = battle.EndTick - battle.StartTick;
+            long days = ticks / RimWorld.GenDate.TicksPerDay;
+            if (days >= 1L)
+            {
+                return "PersonalChronicle.UI.BattleDuration".Translate(days).ToString();
+            }
+            long hours = ticks / RimWorld.GenDate.TicksPerHour;
+            if (hours >= 1L)
+            {
+                return "PersonalChronicle.UI.BattleDurationHours".Translate(hours).ToString();
+            }
+            long minutes = ticks / 60L;
+            return "PersonalChronicle.UI.BattleDurationMins".Translate(minutes).ToString();
+        }
+
         private void DrawOverviewContent(Rect inner, IArchiveService service)
         {
             float contentHeight = ComputeOverviewHeight(inner.width);
@@ -1849,10 +2311,7 @@ namespace PersonalChronicle.Archive
         private float ComputeOverviewHeight(float width)
         {
             float height = 4f + 28f + 28f;
-            const float cardWidth = 190f;
-            const float cardHeight = 70f;
             const float gap = 12f;
-            int perRow = Mathf.Max(1, (int)((width + gap) / (cardWidth + gap)));
 
             for (int i = 0; i < CategoryKeys.Length; i++)
             {
@@ -1865,6 +2324,13 @@ namespace PersonalChronicle.Archive
                 {
                     continue;
                 }
+                // v4.11 P0: Battle cards are larger (three-element layout) than the
+                // generic 190x70 cards, so size the row math per category. Battle
+                // dimensions reuse the shared constants so the scroll height can
+                // never drift from the drawn card size.
+                float cardWidth = key == ArchiveCategoryKeys.Battle ? BattleCardWidth : 190f;
+                float cardHeight = key == ArchiveCategoryKeys.Battle ? BattleCardHeight : 70f;
+                int perRow = Mathf.Max(1, (int)((width + gap) / (cardWidth + gap)));
                 height += 30f; // section title
                 int rows = (objects.Count - 1) / perRow + 1;
                 height += rows * (cardHeight + gap);
@@ -1889,10 +2355,29 @@ namespace PersonalChronicle.Archive
             Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 22f), title);
             y += 28f;
 
+            // v4.11 P0: the Battle category renders richer, three-element cards
+            // (trigger date / force size / repulse duration) instead of the
+            // generic stat-only card. The data is captured by LinkRaidLords +
+            // the Lord.Notify_PawnLost patch.
+            if (categoryKey == ArchiveCategoryKeys.Battle)
+            {
+                return y + DrawBattleOverviewCards(viewRect, y, objects, 12f);
+            }
+
+            // v4.13 P1: the Location category renders atlas cards (identity /
+            // ownership / geography / lifecycle / commerce) with inline expansion
+            // of the place's chronicle. Data derives from the LocationObject
+            // snapshot + the read model; no live world queries in the window.
+            // Engine APIs verified against 1.6 by reflection — enabled.
+            if (categoryKey == ArchiveCategoryKeys.Location)
+            {
+                return y + DrawLocationOverviewCards(viewRect, y, objects, 12f, service);
+            }
+
             const float cardWidth = 190f;
             const float cardHeight = 70f;
-            const float gap = 12f;
-            int perRow = Mathf.Max(1, (int)((viewRect.width + gap) / (cardWidth + gap)));
+            const float gap2 = 12f;
+            int perRow = Mathf.Max(1, (int)((viewRect.width + gap2) / (cardWidth + gap2)));
 
             // Def-driven clickability: only non-StatOnly categories are
             // navigable (Pawn/Thing drill into detail; Battle/Location are
@@ -1906,8 +2391,8 @@ namespace PersonalChronicle.Archive
                 int col = i % perRow;
                 int row = i / perRow;
                 Rect card = new Rect(
-                    viewRect.x + col * (cardWidth + gap),
-                    y + row * (cardHeight + gap),
+                    viewRect.x + col * (cardWidth + gap2),
+                    y + row * (cardHeight + gap2),
                     cardWidth, cardHeight);
 
                 ArchiveUiStyle.DrawCard(card, ArchiveCardAccent(obj));
@@ -1940,7 +2425,7 @@ namespace PersonalChronicle.Archive
             Text.Font = GameFont.Small;
 
             int rows = (objects.Count - 1) / perRow + 1;
-            return y + rows * (cardHeight + gap) + 14f;
+            return y + rows * (cardHeight + gap2) + 14f;
         }
 
         // ---- Detail ------------------------------------------------------------
@@ -2024,13 +2509,28 @@ namespace PersonalChronicle.Archive
                 int relationCount = cachedDetailObject is PawnObject pawn && pawn.Relations != null
                     ? pawn.Relations.Count : 0;
                 int socialEvents = cachedDetailRawEvents.Count(IsSocialEvent);
-                return 300f + relationCount * 8f + socialEvents * (TimelineRowHeight + 2f)
+                // The network panel grows with zoom and with the grid extent (outer
+                // nodes must stay inside). Estimate the actual panel height using
+                // the same rowSpacing math as DrawSocialNetwork so nothing is cut.
+                float zoom = Mathf.Max(socialNetworkZoom, 0.4f);
+                float baseNodeW = Mathf.Min(160f, Mathf.Max(110f, panel.width * 0.22f));
+                float baseNodeH = 60f;
+                float rowSpacing = baseNodeH * zoom
+                    + Mathf.Max(baseNodeH * zoom * 0.30f, 22f * zoom);
+                int maxAbsRow = relationCount <= 2 ? 1 : 2;
+                float panelH = Mathf.Max(
+                    246f, 246f * zoom,
+                    (maxAbsRow * 2 + 1) * rowSpacing + baseNodeH * zoom + 32f);
+                return panelH + 8f + relationCount * 8f + socialEvents * (TimelineRowHeight + 2f)
                     + cachedLinkedObjects.Count * 24f;
             }
             if (tab == "Legacy")
             {
                 // Epithet + verdict + summary KPI + current-holder + table header +
-                // (rows up to the cap, expanded when toggled) + spacing.
+                // (rows up to the cap, expanded when toggled) + spacing. Per-row
+                // height is measured from the From/To text widths (v4.9.1: CJK date
+                // strings can wrap to 2 lines), matching the adaptive logic in
+                // DrawLegacyTab.
                 ReadModels.LegacyView legacy = cachedLegacy ?? new ReadModels.LegacyView();
                 float h = 26f; // epithet
                 if (!string.IsNullOrEmpty(legacy.TitleText)) h += UITheme.FontBodyLineHeight + 8f;
@@ -2039,11 +2539,82 @@ namespace PersonalChronicle.Archive
                 h += UITheme.SectionTitleHeight + UIComponents.StatCellMinHeight + UITheme.SpaceSm; // summary
                 h += 26f; // current holder row
                 h += UITheme.SectionTitleHeight; // holders title
-                int rows = legacy.Holders != null
+                // Table column widths must mirror DrawLegacyTab to keep the height
+                // estimate aligned with the actual rendering. DrawLegacyTab renders
+                // into viewRect (panel.width minus the 16f scrollbar), so the remark
+                // column here must use the same reduced width or the estimate drifts.
+                float wColGen = 46f;
+                float wColHolder = 100f;
+                float wColFrom = 110f;
+                float wColTo = 110f;
+                float wColDur = 74f;
+                float wColKills = 54f;
+                float wColRemark = (panel.width - 16f)
+                    - (wColGen + wColHolder + wColFrom + wColTo + wColDur + wColKills);
+                if (wColRemark < 80f) wColRemark = 80f;
+                float baseRowH = UITheme.FontBodyLineHeight + 6f;
+                int shownRows = legacy.Holders != null
                     ? Mathf.Min(legacy.Holders.Count, legacyExpanded ? int.MaxValue : 5)
                     : 0;
-                h += rows * (UITheme.FontBodyLineHeight + 6f);
+                for (int i = 0; i < shownRows; i++)
+                {
+                    ReadModels.LegacyHolderView hr = legacy.Holders[i];
+                    if (hr == null) { h += baseRowH; continue; }
+                    // v4.9.1: pin the font to Tiny and measure at the render width
+                    // (col width minus the 4f inner padding) — same as DrawLegacyTab.
+                    GameFont measurePrevFont = Verse.Text.Font;
+                    Verse.Text.Font = GameFont.Tiny;
+                    float fromRenderW = Mathf.Max(1f, wColFrom - 4f);
+                    float toRenderW = Mathf.Max(1f, wColTo - 4f);
+                    float fromH = !string.IsNullOrEmpty(hr.FromText)
+                        ? Verse.Text.CalcHeight(hr.FromText, fromRenderW)
+                        : baseRowH;
+                    float toH = !string.IsNullOrEmpty(hr.ToText)
+                        ? Verse.Text.CalcHeight(hr.ToText, toRenderW)
+                        : baseRowH;
+                    Verse.Text.Font = measurePrevFont;
+                    float rowH = Mathf.Max(baseRowH, Mathf.Max(fromH, toH) + 6f);
+                    if (rowH > baseRowH) rowH += 4f;
+                    h += rowH;
+                }
                 if (legacy.Holders != null && legacy.Holders.Count > 5) h += 30f; // toggle
+                return Mathf.Max(panel.height, h + 12f);
+            }
+            if (tab == "Origin")
+            {
+                ReadModels.ThingOriginView origin = cachedOrigin ?? new ReadModels.ThingOriginView();
+                ReadModels.MakerChainView maker = cachedMakerChain ?? new ReadModels.MakerChainView();
+                if (origin.IsEmpty) return Mathf.Max(panel.height, 120f);
+                float h = UITheme.SectionTitleHeight; // title
+                h += 30f; // kind pill
+                h += UITheme.FontBodyLineHeight + 8f; // from row
+                h += UITheme.FontBodyLineHeight + 8f; // where row
+                if (!string.IsNullOrEmpty(origin.NoteText)) h += UITheme.FontBodyLineHeight * 2f + UITheme.SpaceSm;
+                if (!maker.IsEmpty)
+                {
+                    h += UITheme.SectionTitleHeight + UITheme.FontBodyLineHeight + 8f;
+                }
+                return Mathf.Max(panel.height, h + 12f);
+            }
+            if (tab == "CoUse")
+            {
+                ReadModels.CoUseView coUse = cachedCoUse ?? new ReadModels.CoUseView();
+                if (coUse.IsEmpty) return Mathf.Max(panel.height, 120f);
+                float h = UITheme.SectionTitleHeight + 22f; // title + hint
+                int rows = coUse.Rows != null ? coUse.Rows.Count : 0;
+                h += rows * (UITheme.FontBodyLineHeight + 8f);
+                return Mathf.Max(panel.height, h + 12f);
+            }
+            if (tab == "Decommission")
+            {
+                ReadModels.DecommissionView d = cachedDecommission ?? new ReadModels.DecommissionView();
+                if (!d.HasRecord) return Mathf.Max(panel.height, 120f);
+                float h = UITheme.SectionTitleHeight; // title
+                h += 26f; // stamp
+                // DrawDecommissionTab renders 5 DetailRow rows (holder / place /
+                // days / battle / date); DrawDetailRow advances by 26f each. Use the
+                // real row height and count all 5 so the Date row is never clipped.
+                h += 26f * 5f;
                 return Mathf.Max(panel.height, h + 12f);
             }
             // Overview: cover(83, +20 when a tier medal row is shown) + ledger(98) + output(≥36) + health(~250) + spacing.
@@ -2153,6 +2724,9 @@ namespace PersonalChronicle.Archive
                 {
                     detailTabIndex = i;
                     detailScroll = Vector2.zero;
+                    socialNetworkZoom = 1f;
+                    socialNetworkZoomTouched = false;
+                    socialNetworkPan = Vector2.zero;
                 }
             }
 
@@ -2199,6 +2773,15 @@ namespace PersonalChronicle.Archive
                     break;
                 case "Legacy":
                     DrawLegacyTab(panel, service);
+                    break;
+                case "Origin":
+                    DrawOriginTab(panel, service);
+                    break;
+                case "CoUse":
+                    DrawCoUseTab(panel, service);
+                    break;
+                case "Decommission":
+                    DrawDecommissionTab(panel, service);
                     break;
                 default:
                     DrawCapturePlaceholder(panel);
@@ -4355,19 +4938,33 @@ namespace PersonalChronicle.Archive
 
         private float DrawSocialNetwork(Rect rect, float y, PawnObject pawn, IArchiveService service)
         {
-            const float panelHeight = 246f;
-            Rect panel = new Rect(rect.x, y, rect.width, panelHeight);
+            const float basePanelHeight = 246f;
+            // Max visible relation nodes on the graph. The grid slot pool supports
+            // 26 positions; 24 leaves headroom and keeps the auto-fit readable.
+            const float maxNodeCount = 24f;
+            Rect panel = new Rect(rect.x, y, rect.width, basePanelHeight);
             ArchiveUiStyle.DrawPanel(panel, ArchiveUiStyle.PanelRaised);
 
             List<SocialNodeView> nodes = new List<SocialNodeView>();
             HashSet<string> seen = new HashSet<string>();
             if (pawn != null && pawn.Relations != null)
             {
-                for (int i = pawn.Relations.Count - 1; i >= 0 && nodes.Count < 8; i--)
+                // Rank first, then cap, so closest ties always win a slot.
+                List<SignificantRelation> ranked = new List<SignificantRelation>();
+                for (int i = 0; i < pawn.Relations.Count; i++)
                 {
-                    SignificantRelation relation = pawn.Relations[i];
-                    if (relation == null || string.IsNullOrEmpty(relation.OtherStableId)
-                        || !seen.Add(relation.OtherStableId))
+                    SignificantRelation candidate = pawn.Relations[i];
+                    if (candidate != null && !string.IsNullOrEmpty(candidate.OtherStableId))
+                    {
+                        ranked.Add(candidate);
+                    }
+                }
+                ranked.Sort((a, b) => SocialNodeRank(a).CompareTo(SocialNodeRank(b)));
+
+                for (int i = 0; i < ranked.Count && nodes.Count < maxNodeCount; i++)
+                {
+                    SignificantRelation relation = ranked[i];
+                    if (!seen.Add(relation.OtherStableId))
                     {
                         continue;
                     }
@@ -4377,13 +4974,14 @@ namespace PersonalChronicle.Archive
                         StableId = relation.OtherStableId,
                         Label = other != null ? ObjectDisplayLabel(other) : relation.OtherLabel,
                         RelationLabel = RelationDefLabel(relation.RelationDefName),
+                        RelationDefName = relation.RelationDefName,
                         Active = relation.IsActive
                     });
                 }
             }
             if (nodes.Count == 0)
             {
-                for (int i = 0; i < cachedLinkedObjects.Count && nodes.Count < 8; i++)
+                for (int i = 0; i < cachedLinkedObjects.Count && nodes.Count < maxNodeCount; i++)
                 {
                     LinkedObjectView link = cachedLinkedObjects[i];
                     if (link.CategoryKey != ArchiveCategoryKeys.Pawn || !seen.Add(link.StableId))
@@ -4395,65 +4993,359 @@ namespace PersonalChronicle.Archive
                         StableId = link.StableId,
                         Label = link.Label,
                         RelationLabel = "PersonalChronicle.UI.SharedEvents".Translate().ToString(),
+                        RelationDefName = string.Empty,
                         Active = true
                     });
                 }
             }
 
-            Vector2 center = new Vector2(panel.center.x, panel.y + 123f);
-            float nodeWidth = Mathf.Min(160f, Mathf.Max(110f, panel.width * 0.22f));
-            float radiusX = Mathf.Max(88f, (panel.width - nodeWidth) * 0.38f);
-            float radiusY = 82f;
+            // Scroll-wheel zoom: scale the whole graph around the panel centre so
+            // dense relations separate instead of overlapping. Consume the scroll
+            // event so it does not also scroll the surrounding detail view.
+            if (nodes.Count > 0 && panel.Contains(Event.current.mousePosition))
+            {
+                if (Event.current.type == EventType.ScrollWheel)
+                {
+                    float delta = Event.current.delta.y;
+                    if (delta != 0f)
+                    {
+                        socialNetworkZoomTouched = true;
+                        socialNetworkZoom = Mathf.Clamp(
+                            socialNetworkZoom * (delta < 0f ? 1.1f : 0.9f), 0.6f, 2.4f);
+                        Event.current.Use();
+                    }
+                }
+            }
+
+            // Importance-driven grid slots: spouses occupy the symmetric left/right
+            // anchor (the "extension centre"), parents sit above, children below,
+            // siblings on the sides and friends/rivals/others on the outer ring.
+            // All relation cards share the SAME size — only positions change by
+            // tier — so the layout reads as a calm family tree rather than a
+            // weighted importance chart.
+            (int col, int row)[] slots = GridSlotsFor(nodes);
+            int maxAbsCol = 0;
+            int maxAbsRow = 0;
+            for (int s = 0; s < slots.Length; s++)
+            {
+                if (Mathf.Abs(slots[s].col) > maxAbsCol) maxAbsCol = Mathf.Abs(slots[s].col);
+                if (Mathf.Abs(slots[s].row) > maxAbsRow) maxAbsRow = Mathf.Abs(slots[s].row);
+            }
+
+            // Grid spacing scales with the card size AND zoom so gaps grow together
+            // with the cards: cards never overlap at any zoom level. The gap ratio
+            // (30% of card size) plus a 22f minimum keeps the relation-row text
+            // from spilling into the next card vertically.
+            const float gapRatio = 0.30f;
+            const float minNodeGap = 22f;
+            float baseNodeW = Mathf.Min(160f, Mathf.Max(110f, panel.width * 0.22f));
+            float baseCenterW = 176f;
+            float baseCenterH = 50f;
+            float baseNodeH = 60f;
+
+            // First entry (not yet scrolled): auto-fit the whole graph inside the
+            // panel so every relation is visible without dragging. Only the
+            // horizontal extent is constrained by the panel width — the panel
+            // height already grows to fit the vertical grid (panelHeight below),
+            // so fitY must NOT cap against the fixed 246f base height (which would
+            // shrink dense graphs into unreadable clutter).
+            // The 0.2f floor lets even very narrow panels shrink a dense graph far
+            // enough that no node overflows horizontally; a higher floor would
+            // leave outer columns clipped on small windows. At 0.2f cards are
+            // small but remain readable and never clip outside the panel.
+            float zoom = socialNetworkZoom;
+            if (!socialNetworkZoomTouched && nodes.Count > 0)
+            {
+                float fitW = (maxAbsCol * 2 + 1) * (baseNodeW * (1f + gapRatio) + minNodeGap)
+                    + baseNodeW * 2f;
+                float fitX = (panel.width - 24f) / Mathf.Max(1f, fitW);
+                zoom = Mathf.Clamp(fitX, 0.2f, 1f);
+                socialNetworkZoom = zoom;
+            }
+
+            float nodeWidth = baseNodeW * zoom;
+            float centerCardW = baseCenterW * zoom;
+            float centerCardH = baseCenterH * zoom;
+            float nodeCardH = baseNodeH * zoom;
+
+            // Gap scales with zoom so enlarged cards keep a proportional gap:
+            // spacing = cardSize + gap, gap = cardSize*gapRatio + minNodeGap*zoom.
+            float colSpacing = nodeWidth + Mathf.Max(nodeWidth * gapRatio, minNodeGap * zoom);
+            float rowSpacing = nodeCardH + Mathf.Max(nodeCardH * gapRatio, minNodeGap * zoom);
+
+            // Grow the panel vertically with zoom AND with the grid extent so the
+            // outermost nodes stay inside its frame.
+            float panelHeight = Mathf.Max(
+                basePanelHeight,
+                basePanelHeight * zoom,
+                (maxAbsRow * 2 + 1) * rowSpacing + nodeCardH + 32f);
+            panel = new Rect(panel.x, panel.y, panel.width, panelHeight);
+            ArchiveUiStyle.DrawPanel(panel, ArchiveUiStyle.PanelRaised);
+
+            Vector2 center = new Vector2(panel.center.x, panel.center.y) + socialNetworkPan;
+            Rect centerRect = new Rect(
+                center.x - centerCardW / 2f,
+                center.y - centerCardH / 2f,
+                centerCardW,
+                centerCardH);
+
+            // Pre-compute node positions/rects so we can tell whether the mouse
+            // is over an interactive card before deciding whether to pan.
+            List<Vector2> nodeCenters = new List<Vector2>(nodes.Count);
+            List<Rect> nodeRects = new List<Rect>(nodes.Count);
             for (int i = 0; i < nodes.Count; i++)
             {
-                float angle = -Mathf.PI / 2f + (Mathf.PI * 2f * i / nodes.Count);
+                (int col, int row) slot = slots[i];
                 Vector2 nodeCenter = new Vector2(
-                    center.x + Mathf.Cos(angle) * radiusX,
-                    center.y + Mathf.Sin(angle) * radiusY);
-                Widgets.DrawLine(center, nodeCenter,
-                    nodes[i].Active ? ArchiveUiStyle.Accent : ArchiveUiStyle.Border,
-                    nodes[i].Active ? 2f : 1f);
+                    center.x + slot.col * colSpacing,
+                    center.y + slot.row * rowSpacing);
+                Rect nodeRect = new Rect(
+                    nodeCenter.x - nodeWidth / 2f,
+                    nodeCenter.y - nodeCardH / 2f,
+                    nodeWidth,
+                    nodeCardH);
+                nodeCenters.Add(nodeCenter);
+                nodeRects.Add(nodeRect);
+            }
+
+            // Left-drag pan: move the graph when dragging on empty panel background.
+            // Only pan if the cursor is not over the centre card or a node card; node
+            // clicks are handled by Widgets.ButtonInvisible below.
+            bool mouseOverInteractive = panel.Contains(Event.current.mousePosition)
+                && (centerRect.Contains(Event.current.mousePosition)
+                    || nodeRects.Any(r => r.Contains(Event.current.mousePosition)));
+            if (!mouseOverInteractive && panel.Contains(Event.current.mousePosition)
+                && Event.current.type == EventType.MouseDrag
+                && Event.current.button == 0)
+            {
+                socialNetworkPan += Event.current.delta;
+                Event.current.Use();
+            }
+
+            // Draw orthogonal (horizontal + vertical) links from centre-card edge to
+            // each relation-card edge. All relation cards share the same width/height
+            // so the elbow points stay aligned on the card midline; link thickness is
+            // bumped for active ties to read as smoother, calmer strokes.
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                Vector2 nodeCenter = nodeCenters[i];
+                Color linkColor = nodes[i].Active ? ArchiveUiStyle.Accent : ArchiveUiStyle.Border;
+                float linkThickness = nodes[i].Active ? 2.5f : 1f;
+                DrawOrthogonalLink(center, nodeCenter, linkColor, linkThickness);
             }
 
             if (nodes.Count == 0)
             {
-                Text.Font = GameFont.Small;
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(panel, "PersonalChronicle.UI.NoSignificantRelations".Translate().ToString());
-                Text.Anchor = TextAnchor.UpperLeft;
-                return panel.yMax + 8f;
+                // 空态只画提示文字，不画中心卡（分支在中心卡绘制之前提前返回）。
+                UIComponents.Label(panel, "PersonalChronicle.UI.NoSignificantRelations".Translate().ToString(),
+                    UITheme.FontBody, UITheme.Muted, TextAnchor.MiddleCenter);
+                return panel.yMax + UITheme.SpaceXs;
             }
 
-            Rect centerRect = new Rect(center.x - 88f, center.y - 25f, 176f, 50f);
             ArchiveUiStyle.DrawCard(centerRect, ArchiveUiStyle.Accent);
-            Text.Font = GameFont.Small;
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(centerRect, pawn != null ? ObjectDisplayLabel(pawn) : "—");
-            Text.Anchor = TextAnchor.UpperLeft;
+            UIComponents.Label(centerRect, pawn != null ? ObjectDisplayLabel(pawn) : "—",
+                UITheme.FontBody, UITheme.Text, TextAnchor.MiddleCenter);
 
             for (int i = 0; i < nodes.Count; i++)
             {
-                float angle = -Mathf.PI / 2f + (Mathf.PI * 2f * i / nodes.Count);
-                Vector2 nodeCenter = new Vector2(
-                    center.x + Mathf.Cos(angle) * radiusX,
-                    center.y + Mathf.Sin(angle) * radiusY);
-                Rect nodeRect = new Rect(nodeCenter.x - nodeWidth / 2f, nodeCenter.y - 23f, nodeWidth, 46f);
+                Rect nodeRect = nodeRects[i];
                 ArchiveUiStyle.DrawCard(nodeRect, nodes[i].Active ? ArchiveUiStyle.Info : ArchiveUiStyle.Muted);
-                Text.Font = GameFont.Small;
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(new Rect(nodeRect.x + 6f, nodeRect.y + 4f, nodeRect.width - 12f, 20f), nodes[i].Label);
-                Text.Font = GameFont.Tiny;
-                GUI.color = ArchiveUiStyle.Muted;
-                Widgets.Label(new Rect(nodeRect.x + 6f, nodeRect.y + 24f, nodeRect.width - 12f, 16f), nodes[i].RelationLabel);
-                GUI.color = Color.white;
-                Text.Anchor = TextAnchor.UpperLeft;
+                // 中文行高经验：节点标签（Small）≥22f，关系标签（Tiny）≥18f；
+                // 经 UIComponents.Label 渲染，font/color/anchor 内部配对恢复。
+                UIComponents.Label(new Rect(nodeRect.x + UITheme.CardPadX, nodeRect.y + UITheme.SpaceXxs,
+                    nodeRect.width - UITheme.CardPadX * 2f, UITheme.FontBodyLineHeight * zoom),
+                    nodes[i].Label, UITheme.FontBody, UITheme.Text, TextAnchor.MiddleCenter);
+                UIComponents.Label(new Rect(nodeRect.x + UITheme.CardPadX, nodeRect.y + UITheme.SpaceLg * zoom,
+                    nodeRect.width - UITheme.CardPadX * 2f, 18f * zoom),
+                    nodes[i].RelationLabel, UITheme.FontLabel, UITheme.Muted, TextAnchor.MiddleCenter);
                 if (Widgets.ButtonInvisible(nodeRect))
                 {
                     NavigateTarget(service, NavTarget.Pawn, nodes[i].StableId, null);
                 }
             }
 
-            return panel.yMax + 8f;
+            return panel.yMax + UITheme.SpaceXs;
+        }
+
+        /// <summary>
+        /// Returns the (col, row) grid slots for a given relation count. Slots are
+        /// returned in the order they should be filled (importance-ranked by caller),
+        /// importance-ranked by caller), so position 0 is always the most prominent
+        /// tie. Slots are exact integer offsets — DrawSocialNetwork multiplies them
+        /// by colSpacing / rowSpacing so every node lands on a grid intersection.
+        /// All relation cards share the SAME size — only positions change by tier:
+        /// spouses occupy the symmetric left/right anchor (the "extension centre"),
+        /// parents sit above, children below, siblings on the sides and
+        /// friends/rivals/others on the outer ring.
+        /// </summary>
+        private static (int col, int row)[] GridSlotsFor(List<SocialNodeView> nodes)
+        {
+            if (nodes.Count == 0)
+            {
+                return System.Array.Empty<(int, int)>();
+            }
+
+            // Slot pools, one per relation tier. When a pool is exhausted the
+            // remaining nodes fall back to the outer ring; same size everywhere.
+            var spouseSlots = new (int, int)[]
+            {
+                (-1, 0), ( 1, 0) // 夫妻对称左右
+            };
+            var parentSlots = new (int, int)[]
+            {
+                ( 0, -1), (-1, -1), ( 1, -1), // 父母辈往上
+                (-2, -1), ( 2, -1)
+            };
+            var childSlots = new (int, int)[]
+            {
+                ( 0, 1), (-1, 1), ( 1, 1), // 子女辈往下
+                (-2, 1), ( 2, 1)
+            };
+            var siblingSlots = new (int, int)[]
+            {
+                (-2, 0), ( 2, 0) // 平辈左右
+            };
+            var outerSlots = new (int, int)[]
+            {
+                (-1, -2), ( 1, -2), (-1, 2), ( 1, 2),
+                (-2, -2), ( 2, -2), (-2, 2), ( 2, 2),
+                ( 0, -2), ( 0, 2), (-3, 0), ( 3, 0)
+            };
+
+            var result = new (int col, int row)[nodes.Count];
+            var used = new HashSet<(int, int)>();
+            int[] cursors = new int[5]; // spouse / parent / child / sibling / outer
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                SocialRelationTier tier = SocialRelationTierOf(nodes[i].RelationDefName);
+                (int col, int row) slot;
+                switch (tier)
+                {
+                    case SocialRelationTier.Spouse:
+                        slot = TakeNext(spouseSlots, ref cursors[0], used);
+                        break;
+                    case SocialRelationTier.Parent:
+                        slot = TakeNext(parentSlots, ref cursors[1], used);
+                        break;
+                    case SocialRelationTier.Child:
+                        slot = TakeNext(childSlots, ref cursors[2], used);
+                        break;
+                    case SocialRelationTier.Sibling:
+                        slot = TakeNext(siblingSlots, ref cursors[3], used);
+                        break;
+                    default:
+                        slot = TakeNext(outerSlots, ref cursors[4], used);
+                        break;
+                }
+                result[i] = slot;
+            }
+            return result;
+        }
+
+        private static (int col, int row) TakeNext(
+            (int col, int row)[] pool, ref int cursor, HashSet<(int, int)> used)
+        {
+            // 优先用池内未被占用的槽位；池耗尽则在外圈兜底，保证不重叠。
+            for (int k = cursor; k < pool.Length; k++)
+            {
+                if (used.Add((pool[k].col, pool[k].row)))
+                {
+                    cursor = k + 1;
+                    return pool[k];
+                }
+            }
+            cursor = pool.Length;
+            for (int ring = 1; ring < 8; ring++)
+            {
+                for (int dc = -ring; dc <= ring; dc++)
+                {
+                    for (int dr = -ring; dr <= ring; dr++)
+                    {
+                        if (Mathf.Abs(dc) != ring && Mathf.Abs(dr) != ring)
+                        {
+                            continue;
+                        }
+                        if (used.Add((dc, dr)))
+                        {
+                            return (dc, dr);
+                        }
+                    }
+                }
+            }
+            return (0, 0);
+        }
+
+        private enum SocialRelationTier
+        {
+            Other,
+            Spouse,
+            Parent,
+            Child,
+            Sibling
+        }
+
+        private static SocialRelationTier SocialRelationTierOf(string defName)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return SocialRelationTier.Other;
+            }
+            if (defName.Contains("Spouse") || defName.Contains("Lover") || defName.Contains("Fiance"))
+            {
+                return SocialRelationTier.Spouse;
+            }
+            if (defName.Contains("Parent") || defName.Contains("Mother") || defName.Contains("Father")
+                || defName.Contains("Stepparent") || defName.Contains("InLaw")
+                || defName.Contains("Grandparent") || defName.Contains("Uncle") || defName.Contains("Aunt"))
+            {
+                return SocialRelationTier.Parent;
+            }
+            if (defName.Contains("Child") || defName.Contains("Son") || defName.Contains("Daughter")
+                || defName.Contains("Grandchild") || defName.Contains("Nephew") || defName.Contains("Niece"))
+            {
+                return SocialRelationTier.Child;
+            }
+            if (defName.Contains("Sibling") || defName.Contains("Brother") || defName.Contains("Sister")
+                || defName.Contains("Cousin") || defName.Contains("Half"))
+            {
+                return SocialRelationTier.Sibling;
+            }
+            return SocialRelationTier.Other;
+        }
+
+        /// <summary>
+        /// Draws an orthogonal Z-shaped link between two card centres. The line
+        /// starts at card A's midpoint and ends at card B's midpoint — NOT from
+        /// the card edges. Both vertical axes run along card A's X midpoint
+        /// (center.x) and card B's X midpoint (nodeCenter.x); the two vertical
+        /// segments are joined by one horizontal segment at the mid-height.
+        /// A small 5f chamfer at each 90° turn keeps the corner smooth.
+        /// </summary>
+        private void DrawOrthogonalLink(Vector2 center, Vector2 nodeCenter, Color color, float thickness)
+        {
+            float sx = Mathf.Sign(nodeCenter.x - center.x);
+            float sy = Mathf.Sign(nodeCenter.y - center.y);
+            float midY = (center.y + nodeCenter.y) / 2f;
+            // 拐角圆角过渡随卡片缩放：放大时圆角弧度按比例增大，避免尖刺感。
+            float radius = 10f * Mathf.Max(0.4f, socialNetworkZoom);
+
+            // 垂直段 1：沿卡片 A 的 X 中点（center.x）从 A 中心向下/上到 midY 附近
+            Vector2 v1Start = new Vector2(center.x, center.y);
+            Vector2 v1End = new Vector2(center.x, midY - sy * radius);
+            // 斜角 1：从垂直段平滑转入水平段
+            Vector2 c1End = new Vector2(center.x + sx * radius, midY);
+            // 水平段：从 A 的 X 中点横跨到 B 的 X 中点（midY 高度）
+            Vector2 hEnd = new Vector2(nodeCenter.x - sx * radius, midY);
+            // 斜角 2：从水平段平滑转入垂直段
+            Vector2 c2End = new Vector2(nodeCenter.x, midY + sy * radius);
+            // 垂直段 2：沿卡片 B 的 X 中点（nodeCenter.x）到 B 中心
+            Vector2 v2End = new Vector2(nodeCenter.x, nodeCenter.y);
+
+            Widgets.DrawLine(v1Start, v1End, color, thickness);
+            Widgets.DrawLine(v1End, c1End, color, thickness);
+            Widgets.DrawLine(c1End, hEnd, color, thickness);
+            Widgets.DrawLine(hEnd, c2End, color, thickness);
+            Widgets.DrawLine(c2End, v2End, color, thickness);
         }
 
         private static string RelationDefLabel(string defName)
@@ -4462,12 +5354,50 @@ namespace PersonalChronicle.Archive
             {
                 return "—";
             }
+            // Opinion-derived ties are synthesized by the archive and have no
+            // backing PawnRelationDef; without this the raw key would be shown.
+            if (defName == SocialRelationFilter.FriendRelationKey)
+            {
+                return "PersonalChronicle.Relation.Friend".Translate().ToString();
+            }
+            if (defName == SocialRelationFilter.RivalRelationKey)
+            {
+                return "PersonalChronicle.Relation.Rival".Translate().ToString();
+            }
             PawnRelationDef def = DefDatabase<PawnRelationDef>.GetNamedSilentFail(defName);
             if (def != null && !string.IsNullOrEmpty(def.label))
             {
                 return def.label;
             }
             return defName;
+        }
+
+        /// <summary>
+        /// Display priority for the social network graph: partners and blood kin
+        /// outrank opinion-derived ties, and ended ties sink last. Needed because
+        /// the node list is capped at 8 — without ranking, the capture order
+        /// (direct → implied → opinion) would let acquaintances crowd out family.
+        /// </summary>
+        private static int SocialNodeRank(SignificantRelation relation)
+        {
+            if (relation == null)
+            {
+                return 99;
+            }
+            if (!relation.IsActive)
+            {
+                return 50;
+            }
+            string defName = relation.RelationDefName;
+            if (defName == SocialRelationFilter.FriendRelationKey)
+            {
+                return 20;
+            }
+            if (defName == SocialRelationFilter.RivalRelationKey)
+            {
+                return 30;
+            }
+            return 0;
         }
 
         private string FormatSocialEventTitle(string action, string relationDefName, ChronicleEvent ev, IArchiveService service)
@@ -4605,12 +5535,16 @@ namespace PersonalChronicle.Archive
                 : SubList(legacy.Holders, cap);
 
             // Header row.
+            // v4.9.1: rebalanced widths so 2-line CJK date strings ("5500年 翠象 翠1天")
+            // have room to wrap instead of being clipped. Wider From/To (110f), Dur
+            // (74f), Kills (54f); remark narrows to consume the rest. Floor at 80f so
+            // very narrow layouts still keep a usable remark column.
             float colGen = 46f;
-            float colHolder = 96f;
-            float colFrom = 88f;
-            float colTo = 88f;
-            float colDur = 60f;
-            float colKills = 46f;
+            float colHolder = 100f;
+            float colFrom = 110f;
+            float colTo = 110f;
+            float colDur = 74f;
+            float colKills = 54f;
             float colRemark = w - (colGen + colHolder + colFrom + colTo + colDur + colKills);
             if (colRemark < 80f) colRemark = 80f;
             string[] headerKeys =
@@ -4642,15 +5576,41 @@ namespace PersonalChronicle.Archive
             {
                 ReadModels.LegacyHolderView h = shown[i];
                 if (h == null) continue;
-                float rowH = UITheme.FontBodyLineHeight + 6f;
+                // v4.9.1: row height must accommodate 2-line CJK From/To text. Use the
+                // largest of (single-line baseline, measured From/To height) so short
+                // rows stay compact while long dates get full room without clipping.
+                float singleLineRowH = UITheme.FontBodyLineHeight + 6f;
+                // v4.9.1: CalcHeight is relative to the CURRENT Text.Font, but the
+                // From/To cells render in GameFont.Tiny. Pin the font to Tiny for the
+                // measurement (and restore) so multi-line height matches the actual
+                // glyph box instead of drifting with the caller's font state.
+                GameFont measurePrevFont = Verse.Text.Font;
+                Verse.Text.Font = GameFont.Tiny;
+                // Measure at the ACTUAL render width (col width minus the 4f inner
+                // padding the label rects use), otherwise a wider measurement width
+                // under-reports wrap lines and the row can clip the last line.
+                float fromRenderW = Mathf.Max(1f, colFrom - 4f);
+                float toRenderW = Mathf.Max(1f, colTo - 4f);
+                float fromH = !string.IsNullOrEmpty(h.FromText)
+                    ? Verse.Text.CalcHeight(h.FromText, fromRenderW)
+                    : singleLineRowH;
+                float toH = !string.IsNullOrEmpty(h.ToText)
+                    ? Verse.Text.CalcHeight(h.ToText, toRenderW)
+                    : singleLineRowH;
+                Verse.Text.Font = measurePrevFont;
+                float rowH = Mathf.Max(singleLineRowH, Mathf.Max(fromH, toH) + 6f);
+                // Plus a small bottom inset so two-line rows breathe.
+                if (rowH > singleLineRowH) rowH += 4f;
                 Rect row = new Rect(rect.x, y, w, rowH);
 
                 if (h.IsCurrent)
                 {
-                    Color prev = GUI.color;
-                    GUI.color = UITheme.WithAlpha(UITheme.Alive, 0.12f);
-                    Widgets.DrawBoxSolid(row, Color.white);
-                    GUI.color = prev;
+                    // v4.9.1: Accent (NameColor) at 0.18 alpha — the global AccentSoft
+                    // token sits at 0.15 which fades on dark panels; bumping this row's
+                    // tint slightly keeps the current holder unmistakably highlighted
+                    // without leaving the industrial-terminal palette. Rendered via the
+                    // TintedBox component so the window never hand-edits GUI.color.
+                    UIComponents.TintedBox(row, UITheme.WithAlpha(UITheme.Accent, 0.18f));
                 }
 
                 // Generation cell: loan rows show the loan badge instead of a gen.
@@ -4670,30 +5630,39 @@ namespace PersonalChronicle.Archive
                         GameFont.Small, UITheme.Text);
                 }
 
-                // Holder: label + first badge.
-                UIComponents.Label(new Rect(rect.x + colGen, y, colHolder - 6f, rowH),
+                // Holder: label + first badge. Inner padding 4f gives the badge
+                // breathing room from the holder text (was -6f touching the badge).
+                UIComponents.Label(new Rect(rect.x + colGen + 4f, y, colHolder - 4f, rowH),
                     h.HolderText ?? "—", GameFont.Small, UITheme.Text);
                 if (h.IsFirst)
                 {
                     UIComponents.Badge(
-                        new Rect(rect.x + colGen + colHolder - 58f, y + 2f, 52f, UITheme.FontBodyLineHeight - 2f),
+                        new Rect(rect.x + colGen + colHolder - 62f, y + 2f, 56f, UITheme.FontBodyLineHeight - 2f),
                         "PersonalChronicle.UI.Legacy.First".Translate().ToString(),
                         UITheme.Accent);
                 }
 
-                // From / To / Duration / Kills.
-                UIComponents.Label(new Rect(rect.x + colGen + colHolder, y, colFrom, rowH),
+                // From / To / Duration / Kills. Inner padding 4f so CJK date strings
+                // don't touch the previous column's edge.
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + 4f, y, colFrom - 4f, rowH),
                     h.FromText ?? "—", GameFont.Tiny, UITheme.Muted);
-                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom, y, colTo, rowH),
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + 4f, y, colTo - 4f, rowH),
                     h.ToText ?? "—", GameFont.Tiny, UITheme.Muted);
-                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo, y, colDur, rowH),
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo + 4f, y, colDur - 4f, rowH),
                     h.DurationText ?? "—", GameFont.Tiny, UITheme.Muted);
-                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo + colDur, y, colKills, rowH),
-                    h.KillCount.ToString(), GameFont.Small, UITheme.Text);
+                // Kills cell: non-zero kills rendered in Alive green at Medium size
+                // so the data point stands out; zero stays in Muted Small to avoid
+                // visual noise. Row height must accommodate the Medium line height
+                // (~28f empirical) so the digit isn't clipped.
+                GameFont killFont = h.KillCount > 0 ? GameFont.Medium : GameFont.Small;
+                Color killColor = h.KillCount > 0 ? UITheme.Alive : UITheme.Muted;
+                if (killFont == GameFont.Medium && rowH < 28f + 4f) rowH = 28f + 4f;
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo + colDur + 4f, y, colKills - 4f, rowH),
+                    h.KillCount.ToString(), killFont, killColor);
 
-                // Remark (loan note) — fits in the remaining column.
-                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo + colDur + colKills,
-                    y, colRemark - 4f, rowH),
+                // Remark (loan note) — fits in the remaining column with 4f right padding.
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo + colDur + colKills + 4f,
+                    y, colRemark - 8f, rowH),
                     h.RemarkText ?? "—", GameFont.Tiny, UITheme.Dim);
 
                 // Click to navigate to the holder pawn.
@@ -4721,6 +5690,175 @@ namespace PersonalChronicle.Archive
                 }
                 y += 30f;
             }
+        }
+
+        // ---- v4.9 equipment legacy extension tabs (溯源 / 同袍 / 退役) ----
+
+        /// <summary>
+        /// 溯源 (Origin): where the thing came from + the maker-chain double
+        /// narrative. Consumes only read-model derived views; no raw queries here.
+        /// </summary>
+        private void DrawOriginTab(Rect rect, IArchiveService service)
+        {
+            ReadModels.ThingOriginView origin = cachedOrigin ?? new ReadModels.ThingOriginView();
+            ReadModels.MakerChainView maker = cachedMakerChain ?? new ReadModels.MakerChainView();
+            float y = rect.y;
+            float w = rect.width;
+
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Origin.Title".Translate().ToString());
+            if (origin.IsEmpty)
+            {
+                UIComponents.Label(new Rect(rect.x, y, w, 22f),
+                    "PersonalChronicle.UI.Origin.Empty".Translate().ToString(),
+                    GameFont.Small, UITheme.Muted);
+                return;
+            }
+
+            // Kind pill (来源 chip).
+            UIComponents.Pill(new Rect(rect.x, y, 120f, 22f),
+                origin.KindText ?? "—", UITheme.Accent);
+            y += 30f;
+
+            // From / Where rows.
+            if (!string.IsNullOrEmpty(origin.FromStableId))
+            {
+                Rect row = new Rect(rect.x, y, w, UITheme.FontBodyLineHeight + 4f);
+                DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Origin.From".Translate().ToString(),
+                    origin.FromText ?? "—");
+                if (Widgets.ButtonInvisible(row))
+                {
+                    NavigateTarget(service, NavTarget.Pawn, origin.FromStableId, null);
+                }
+                y += UITheme.FontBodyLineHeight + 8f;
+            }
+            else
+            {
+                y = DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Origin.From".Translate().ToString(),
+                    origin.FromText ?? "—");
+            }
+            if (!string.IsNullOrEmpty(origin.WhereText))
+            {
+                y = DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Origin.Where".Translate().ToString(),
+                    origin.WhereText);
+            }
+            if (!string.IsNullOrEmpty(origin.NoteText))
+            {
+                y += UITheme.SpaceXs;
+                UIComponents.Label(new Rect(rect.x, y, w, UITheme.FontBodyLineHeight * 2f),
+                    origin.NoteText, GameFont.Small, UITheme.Muted);
+                y += UITheme.FontBodyLineHeight * 2f + UITheme.SpaceSm;
+            }
+
+            // 工坊署名链 (maker chain): the crafter's later fate.
+            if (!maker.IsEmpty)
+            {
+                DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Origin.MakerChain".Translate().ToString());
+                Rect row = new Rect(rect.x, y, w, UITheme.FontBodyLineHeight + 4f);
+                string makerText = maker.MakerText ?? "—";
+                UIComponents.Label(new Rect(rect.x, y, w - 130f, UITheme.FontBodyLineHeight),
+                    makerText, GameFont.Small, UITheme.Text);
+                if (maker.MakerDiedByOwn)
+                {
+                    UIComponents.Badge(
+                        new Rect(rect.x + w - 126f, y, 122f, UITheme.FontBodyLineHeight),
+                        "PersonalChronicle.UI.Origin.MakerDiedByOwn".Translate().ToString(),
+                        UITheme.Threat);
+                }
+                if (!string.IsNullOrEmpty(maker.MakerStableId) && Widgets.ButtonInvisible(row))
+                {
+                    NavigateTarget(service, NavTarget.Pawn, maker.MakerStableId, null);
+                }
+                y += UITheme.FontBodyLineHeight + 10f;
+            }
+        }
+
+        /// <summary>
+        /// 同袍共用网络 (CoUse): colonists who used this equipment in parallel with
+        /// the current holder, ranked by shared tenure with a share bar.
+        /// </summary>
+        private void DrawCoUseTab(Rect rect, IArchiveService service)
+        {
+            ReadModels.CoUseView coUse = cachedCoUse ?? new ReadModels.CoUseView();
+            float y = rect.y;
+            float w = rect.width;
+
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.CoUse.Title".Translate().ToString());
+            UIComponents.Label(new Rect(rect.x, y, w, UITheme.FontBodyLineHeight),
+                "PersonalChronicle.UI.CoUse.Hint".Translate().ToString(),
+                GameFont.Tiny, UITheme.Muted);
+            y += UITheme.FontBodyLineHeight + 6f;
+
+            if (coUse.IsEmpty || coUse.Rows == null || coUse.Rows.Count == 0)
+            {
+                UIComponents.Label(new Rect(rect.x, y, w, 22f),
+                    "PersonalChronicle.UI.CoUse.Empty".Translate().ToString(),
+                    GameFont.Small, UITheme.Muted);
+                return;
+            }
+
+            float colName = 140f;
+            float colDays = 60f;
+            float colBar = w - colName - colDays - 16f;
+            for (int i = 0; i < coUse.Rows.Count; i++)
+            {
+                ReadModels.CoUseRowView rowView = coUse.Rows[i];
+                if (rowView == null) continue;
+                float rowH = UITheme.FontBodyLineHeight + 4f;
+                Rect row = new Rect(rect.x, y, w, rowH);
+                UIComponents.Label(new Rect(rect.x, y, colName, rowH),
+                    rowView.PawnText ?? "—", GameFont.Small, UITheme.Text);
+                UIComponents.Label(new Rect(rect.x + colName, y, colDays, rowH),
+                    rowView.SharedDays.ToString(), GameFont.Tiny, UITheme.Muted);
+                Rect bar = new Rect(rect.x + colName + colDays + 8f, y + 4f, colBar, 10f);
+                UIComponents.ProgressBar(bar, Mathf.Clamp01(rowView.SharePercent / 100f), UITheme.Accent);
+                if (!string.IsNullOrEmpty(rowView.PawnStableId) && Widgets.ButtonInvisible(row))
+                {
+                    NavigateTarget(service, NavTarget.Pawn, rowView.PawnStableId, null);
+                }
+                UIComponents.Rule(new Rect(rect.x, row.yMax, w, 1f), UITheme.BorderHair);
+                y += rowH + 4f;
+            }
+        }
+
+        /// <summary>
+        /// 退役仪式 (Decommission): the thing's death record — last holder, last
+        /// place, service days, final battle, retire date.
+        /// </summary>
+        private void DrawDecommissionTab(Rect rect, IArchiveService service)
+        {
+            ReadModels.DecommissionView d = cachedDecommission ?? new ReadModels.DecommissionView();
+            float y = rect.y;
+            float w = rect.width;
+
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Decommission.Title".Translate().ToString());
+            if (!d.HasRecord)
+            {
+                UIComponents.Label(new Rect(rect.x, y, w, 22f),
+                    "PersonalChronicle.UI.Decommission.Empty".Translate().ToString(),
+                    GameFont.Small, UITheme.Muted);
+                return;
+            }
+
+            // Retire stamp.
+            UIComponents.Pill(new Rect(rect.x, y, 120f, 22f),
+                "PersonalChronicle.UI.Decommission.Stamp".Translate().ToString(), UITheme.Dim);
+            y += 30f;
+
+            Rect holderRow = new Rect(rect.x, y, w, UITheme.FontBodyLineHeight + 4f);
+            y = DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Decommission.LastHolder".Translate().ToString(),
+                d.LastHolderText ?? "—");
+            if (!string.IsNullOrEmpty(d.LastHolderStableId) && Widgets.ButtonInvisible(holderRow))
+            {
+                NavigateTarget(service, NavTarget.Pawn, d.LastHolderStableId, null);
+            }
+            y = DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Decommission.Place".Translate().ToString(),
+                d.LastPlaceText ?? "—");
+            y = DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Decommission.ServiceDays".Translate().ToString(),
+                d.ServiceDays.ToString() + " " + "PersonalChronicle.UI.DaysUnit".Translate().ToString());
+            y = DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Decommission.LastBattle".Translate().ToString(),
+                d.LastBattleText ?? "—");
+            y = DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Decommission.Date".Translate().ToString(),
+                d.DateText ?? "—");
         }
 
         private static IReadOnlyList<ReadModels.LegacyHolderView> SubList(
@@ -5406,6 +6544,25 @@ namespace PersonalChronicle.Archive
         }
 
         /// <summary>
+        /// v4.13: localized label for a chronicle event type. Driven by the
+        /// ChronicleEventDef taxonomy (LabelCap), never magic per-typeKey strings;
+        /// unknown defs fall back to the generic EvOther translation.
+        /// </summary>
+        private static string ChronicleEventTypeLabel(string typeKey)
+        {
+            if (string.IsNullOrEmpty(typeKey))
+            {
+                return "PersonalChronicle.UI.EvOther".Translate().ToString();
+            }
+            ChronicleEventDef def = DefDatabase<ChronicleEventDef>.GetNamedSilentFail(typeKey);
+            if (def != null && !string.IsNullOrEmpty(def.LabelCap))
+            {
+                return def.LabelCap;
+            }
+            return "PersonalChronicle.UI.EvOther".Translate().ToString();
+        }
+
+        /// <summary>
         /// v4.0 timeline glyph per event kind. Driven by ChronicleEventKind so it stays
         /// data-coherent with the Def taxonomy; unknown kinds fall back to a neutral dot.
         /// No magic per-typeKey strings — only the four canonical kinds are branched.
@@ -5801,6 +6958,7 @@ namespace PersonalChronicle.Archive
             public string StableId;
             public string Label;
             public string RelationLabel;
+            public string RelationDefName;
             public bool Active;
         }
 

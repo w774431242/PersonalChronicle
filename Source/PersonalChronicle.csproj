@@ -8,7 +8,10 @@
     <!-- csproj sits at Source/ root: ..\Assemblies\ = <mod>/Assemblies (NOT ..\..\Assemblies\) -->
     <OutputPath>..\Assemblies\</OutputPath>
     <Nullable>disable</Nullable>
-    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <!-- net48 + SDK 8 emits duplicate assembly attributes (AssemblyInfo.cs and
+         the auto .NETFramework attributes file); disable auto-gen to avoid CS0579. -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
 
