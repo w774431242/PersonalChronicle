@@ -3690,6 +3690,7 @@ namespace PersonalChronicle.Archive
 
         private void DrawHealth(Rect rect, IArchiveService service)
         {
+            Color prevColor = GUI.color;
             Pawn pawn = service.GetLivePawn(detailObjectId);
             if (pawn == null || pawn.health == null)
             {
@@ -3903,6 +3904,7 @@ namespace PersonalChronicle.Archive
 
         private void DrawNoLiveData(Rect rect)
         {
+            Color prevColor = GUI.color;
             Text.Font = GameFont.Small;
             GUI.color = UITheme.SecondaryText;
             Widgets.Label(new Rect(rect.x, rect.y, rect.width, 24f),
@@ -3966,6 +3968,7 @@ namespace PersonalChronicle.Archive
         /// </summary>
         private void DrawCareerTab(Rect rect, IArchiveService service)
         {
+            Color prevColor = GUI.color;
             float y = rect.y;
             DrawWorkIntensityHeader(rect, ref y, service);
             DrawWorkIntensityCards(rect, ref y);
@@ -4725,6 +4728,7 @@ namespace PersonalChronicle.Archive
 
         private void DrawWorkIntensityCards(Rect rect, ref float y)
         {
+            Color prevColor = GUI.color;
             DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.WorkTime".Translate().ToString());
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.Muted;
@@ -6238,6 +6242,7 @@ namespace PersonalChronicle.Archive
 
         private void DrawTree(float x, float y, float width, IArchiveService service)
         {
+            Color prevColor = GUI.color;
             const float indent = 18f;
             const float stub = 12f;
             const float rowHeight = 22f;
