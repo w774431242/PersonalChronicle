@@ -3,7 +3,7 @@
   <name>Personal Chronicle - Archive</name>
   <author>Personal Chronicle Team</author>
   <packageId>PersonalChronicle.Archive</packageId>
-  <modVersion>0.3.0</modVersion>
+  <modVersion>4.7.0</modVersion>
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
@@ -11,13 +11,61 @@
     <li>
       <packageId>brrainz.harmony</packageId>
       <displayName>Harmony</displayName>
+      <downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</downloadUrl>
+      <steamWorkshopUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</steamWorkshopUrl>
     </li>
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
   </loadAfter>
-  <description>殖民地档案馆：记录人物、物品、战役与地点档案，支持加入/死亡/制造/建造/战役事件时间轴，活读殖民者统计与关联跳转。需要 Harmony。
+  <loadBefore>
+    <li>Ludeon.RimWorld</li>
+  </loadBefore>
+  <description>前置要求
+- 游戏版本：RimWorld 1.6
+- 必需依赖：Harmony（自动加载）
+- 语言：简体中文 / English
 
-Colony archive: tracks pawns, things, battles and locations with join/death/craft/build/battle timelines, live colonist stats, and related-archive navigation. Requires Harmony.</description>
+这是个啥
+给殖民地请个「史官」，自动记录人物、物品、战役、地点，主界面底部「档案馆」按钮随时翻看。
+
+都能干啥
+- 总览：分类统计 + 最新事件流 + KPI 仪表盘，随时掌握殖民地动态。
+- 分类浏览：人物 / 物品 / 战役 / 地点，一个都别想跑。
+- 详情：时间轴 + 关联档案网络，谁摸鱼、谁背锅一目了然。
+- 人物小传：生涯工时分档（核动力驴 / 超级牛马 / 常规牛马 / 劣质牛马 / 社会懒汉）、战斗履历、社会关系、足迹、健康残值。
+- 检视面板：在 pawn 检视页签直接打开专属档案（v4.6）。
+- 阵营图鉴（v4.3）、传承 / 所有权变更链（v4.7）、榨取总账、产出核销。
+
+老板视角
+本模组就是给你这尊「黑心老板」准备的：谁加班最多、谁划水最狠、谁惹了祸还甩锅，全记在小本本上。年终奖发不发另说，至少账算得门儿清。
+
+接入说明
+对外提供统一接入契约（PersonalChronicleApi 门面 + Provider 注册表），第三方模组可无侵入扩展采集与能力，Provider 异常失败隔离。API 契约版本 4.7，与发布版本号保持一致。
+
+Personal Chronicle · 殖民地档案馆 · v4.7.0 · 国人开发
+
+---
+
+Requirements
+- Game version: RimWorld 1.6
+- Required dependency: Harmony (auto-loaded)
+- Languages: Simplified Chinese / English
+
+What is this
+Hire a "court historian" for your colony. It auto-records pawns, things, battles and locations, and the "Archive" button on the main tab bar lets you flip through it anytime.
+
+What it does
+- Overview: category stats + latest event feed + KPI dashboard.
+- Categories: pawns / things / battles / locations — nobody slips through.
+- Detail: timeline + relation network. Who slacked off, who took the blame, all in the book.
+- Pawn profile: career work-hours tier (Reactor Mule / Super Workhorse / Regular Workhorse / Poor Workhorse / Social Slacker), battle record, social relations, footprint, health valuation.
+- Inspect tab: open a pawn's archive directly from its inspect panel (v4.6).
+- Faction codex (v4.3), legacy / ownership chain (v4.7), exploitation ledger, output reconciliation.
+
+Integration
+Ships a unified integration contract (PersonalChronicleApi facade + Provider registry) so third-party mods can extend capture and capabilities non-invasively, with per-provider failure isolation. API contract version 4.7, aligned with the mod version.
+
+Personal Chronicle · Colony Archive · v4.7.0 · made by a Chinese dev</description>
   <modIconPath>UI/ArchiveIcon</modIconPath>
 </ModMetaData>

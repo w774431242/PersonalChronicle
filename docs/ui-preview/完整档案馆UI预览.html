@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Personal Chronicle · 档案馆 UI 预览 v4.3（阵营图鉴）</title>
+  <title>Personal Chronicle · 档案馆 UI 预览 v4.7.0</title>
   <style>
     :root {
       --bg: #1a1a1a; --panel: #242424; --panel-2: #2c2c2c; --panel-3: #333;
@@ -210,6 +210,35 @@
       border: 1px solid var(--border); border-radius: 10px; padding: 2px 8px; margin: 0 4px 6px 0; color: var(--muted);
     }
     .chip.filter.active { border-color: var(--accent); color: #cfe6f7; background: var(--accent-soft); }
+    .chip.ok { color: var(--ok); border: 1px solid var(--ok); border-radius: 2px; padding: 0 4px; }
+    .chip.bad { color: var(--blood); border: 1px solid var(--blood); border-radius: 2px; padding: 0 4px; }
+
+    /* ===== v4.6.1 贡献档案 (DrawCoverHeader / DrawLedger / DrawOutputLedger / DrawHealthValuation) ===== */
+    .cover { display: grid; grid-template-columns: 84px 1fr; gap: 14px; align-items: center; background: var(--panel-2); border: 1px solid var(--border-soft); padding: 12px; margin-bottom: 12px; }
+    .cover .portrait { width: 84px; height: 84px; background: repeating-linear-gradient(45deg, #20242a, #20242a 8px, #1a1d22 8px, #1a1d22 16px); display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 11px; }
+    .cover-info { min-width: 0; }
+    .cover-name { font-size: 17px; font-weight: 600; }
+    .cover-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .cover-days { font-size: 12px; color: var(--dim); margin-top: 6px; }
+
+    .tier-inline { display: flex; align-items: center; gap: 10px; background: var(--panel-2); border: 1px solid var(--border-soft); border-left: 3px solid var(--info); padding: 8px 12px; margin-bottom: 12px; }
+    .tier-inline .medal { width: 22px; height: 22px; border-radius: 50%; color: #0c0c0c; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .tier-inline .tier-title { font-size: 13px; font-weight: 500; }
+    .tier-inline .tier-tag { font-size: 11px; color: var(--muted); }
+    .tier-inline .tier-daily { font-size: 11px; color: var(--dim); margin-left: auto; }
+
+    .prod-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 10px; }
+    .prod-card { background: var(--panel-2); border: 1px solid var(--border-soft); padding: 8px 10px; }
+    .prod-card:hover { background: var(--hover); }
+    .prod-card .pn { font-size: 13px; font-weight: 500; }
+    .prod-card .ps { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .hv-3d { display: grid; gap: 8px; margin-bottom: 10px; }
+    .hv-dim { display: grid; grid-template-columns: 56px 1fr 44px; gap: 10px; align-items: center; }
+    .hv-k { font-size: 12px; color: var(--muted); }
+    .hv-v { font-size: 13px; text-align: right; font-weight: 500; }
+    .bar.hv { height: 10px; background: #16181c; border: 1px solid var(--border-soft); }
+    .bar.hv > i { display: block; height: 100%; }
 
     .timeline-block { border-bottom: 1px solid var(--border-soft); padding: 4px 0 8px; }
     .timeline-block .desc { font-size: 11px; color: var(--muted); padding: 2px 4px 4px; }
@@ -989,8 +1018,8 @@
 <body>
   <div class="toolbar">
     <div>
-      <h1>Personal Chronicle · 档案馆 UI 预览 <span class="badge-v">v4.3 阵营图鉴</span></h1>
-      <div class="meta">方案：docs/档案馆Tab重构优化方案.md（v3.1）· v4.0 强度评价 / 生产市场价值 · v4.3 战斗履历阵营图鉴（卡片就地展开 · 明细只显示武器）· 5 Tab（去统计）</div>
+      <h1>Personal Chronicle · 档案馆 UI 预览 <span class="badge-v">v4.7.0</span></h1>
+      <div class="meta">对应 mod 代码 v4.7.0（About.xml modVersion=4.7.0 / ApiVersion.Current=4.7.0）· 含 v4.0 强度评价 / 生产市场价值 · v4.3 战斗履历阵营图鉴 · v4.6.1 贡献档案（榨取总账 / 产出明细 / 健康残值三维）· v4.6.6 移除 Pawn 详情时间轴 · v4.7 物品传承链（Custody→Legacy）</div>
     </div>
     <div class="toolbar-actions">
       <button type="button" id="btn-lang">文案: 中文</button>
@@ -1016,7 +1045,7 @@
     <header class="header" data-component="DrawHeader">
       <div class="title" id="hdr-title">殖民地档案馆</div>
       <div class="breadcrumb" id="breadcrumb">Home</div>
-      <div class="ver">UI Spec v4.3</div>
+      <div class="ver">UI Spec v4.7.0</div>
     </header>
 
     <div class="body">
@@ -1151,9 +1180,9 @@
     </div>
     方案正文：<code>docs/档案馆Tab重构优化方案.md</code>（v3.1）· 强度设计 <code>docs/工时强度评价设计.md</code>（v4.0 已落地）
     <table>
-      <tr><th>Tab</th><th>解决的人生问题</th><th>相对 v3.0/v3.1</th></tr>
-      <tr><td>概览</td><td>是谁 · 来去 · 数字头条(含产出市场价值) · 足迹 · 里程碑</td><td>加厚；吸收统计</td></tr>
-      <tr><td>编年</td><td>时间线上发生了什么</td><td>保留 + 过滤</td></tr>
+      <tr><th>Tab</th><th>解决的人生问题</th><th>相对早期版本</th></tr>
+      <tr><td>概览</td><td>是谁 · 来去 · <b>贡献档案</b>(封面/榨取总账/产出明细/健康残值三维) · 足迹 · 里程碑</td><td>v4.6.1 改为贡献档案；吸收统计</td></tr>
+      <tr><td><s>编年</s></td><td>时间线上发生了什么</td><td><b>v4.6.6 移除</b>（Pawn 详情时间轴合并进首页编年，避免重复）</td></tr>
       <tr><td>生涯</td><td>靠什么立足、贡献了什么、劳动强度</td><td><b>v4.0 新增强度五档头部 + 同工种卡片</b>；加深主副业/贡献/排名</td></tr>
       <tr><td>战斗履历</td><td>打过什么、如何倒下</td><td><b>v4.3 阵营图鉴</b>：按派系聚合成卡片，点开就地展开击杀明细（固定 5 行内嵌滚动）；明细只显示<b>所用武器</b>，不再显示击杀者/协助者姓名；阵亡档案保留「凶手」</td></tr>
       <tr><td>社会关系</td><td>和谁绑定命运</td><td>改名；去物品/地点</td></tr>
@@ -1174,7 +1203,7 @@
         overviewTitle: "档案总览", overviewDesc: "所有已建档对象 · 按类型浏览 · 深度差异化",
         statsOnlyNote: "仅统计", events: "事件", relatedNetwork: "关联档案网络", eventDescription: "事件描述",
         evJoin: "加入殖民地", evDeath: "死亡", evCrafted: "制造", evBuilt: "建造", evBattle: "战役",
-        tab: { Overview: "概览", Timeline: "编年", Career: "生涯", CombatLog: "战斗履历", Social: "社会关系", Custody: "流转" },
+        tab: { Overview: "概览", Career: "生涯", CombatLog: "战斗履历", Social: "社会关系", Legacy: "传承" },
         status: "状态", kind: "职业", faction: "派系", joinDate: "加入时间", deathDate: "逝世时间",
         deathCause: "死亡原因", killer: "凶手", daysInColony: "在殖天数", backstory: "背景",
         kpiEvents: "事件", kpiWorkHours: "累计工时", kpiProduction: "产出", kpiBattles: "参战",
@@ -1196,8 +1225,16 @@
         codexHint: "点击卡片展开该阵营的击杀明细",
         importantRel: "重要关系", intertwined: "命运交织", relEvents: "关系事件",
         relType: "关系", person: "人物", relStatus: "状态",
-        type: "类型", crafter: "制造者", craftedAt: "制造时间", holders: "持有人次",
-        custody: "持有流转", holder: "持有者", from: "起", to: "止", duration: "时长",
+        type: "类型", crafter: "制造者", craftedAt: "制造时间", holders: "持链人次",
+        legacy: "传承链", holder: "持有者", from: "起", to: "止", duration: "时长",
+        coverStampAlive: "在册", coverStampDead: "已故", coverIncomplete: "档案不全",
+        ledgerOutput: "累计产出价值", ledgerHours: "累计劳动工时", ledgerWeekly: "周均产出",
+        ledgerNet: "净贡献估算", ledgerNote: "产出价值减去累计工时折算的人工成本（仅示意，系数外部可调）。",
+        outputDetail: "产出明细", outputType: "类型", outputQty: "数量", outputShare: "占比",
+        outputValue: "价值",
+        healthValuation: "健康残值三维", hvBody: "肢体", hvMind: "精神", hvAge: "衰老",
+        hvSummary: "综合残值", hvEventLog: "健康事件", hvVerdict: "残值结论", hvNoEvent: "无记录之健康事件",
+        hvFactorPos: "正向", hvFactorNeg: "负向",
         filterAll: "全部", liveJob: "当前任务", liveLoc: "当前位置",
         colonist: "殖民者", factionName: "新希望殖民地",
         samplingNote: "以下为可存档履历数据，人物去世后仍可完整回看。",
@@ -1223,7 +1260,7 @@
         overviewTitle: "Archive Overview", overviewDesc: "All objects · by type · depth differentiated",
         statsOnlyNote: "Stats Only", events: "Events", relatedNetwork: "Related network", eventDescription: "Description",
         evJoin: "Joined", evDeath: "Died", evCrafted: "Crafted", evBuilt: "Built", evBattle: "Battle",
-        tab: { Overview: "Overview", Timeline: "Chronicle", Career: "Career", CombatLog: "Combat record", Social: "Social", Custody: "Custody" },
+        tab: { Overview: "Overview", Career: "Career", CombatLog: "Combat record", Social: "Social", Legacy: "Legacy" },
         status: "Status", kind: "Kind", faction: "Faction", joinDate: "Joined", deathDate: "Died",
         deathCause: "Cause", killer: "Killer", daysInColony: "Days in colony", backstory: "Backstory",
         kpiEvents: "Events", kpiWorkHours: "Work hours", kpiProduction: "Output", kpiBattles: "Battles",
@@ -1246,7 +1283,15 @@
         importantRel: "Significant ties", intertwined: "Intertwined fates", relEvents: "Relation events",
         relType: "Tie", person: "Person", relStatus: "Status",
         type: "Type", crafter: "Crafter", craftedAt: "Crafted", holders: "Holders",
-        custody: "Custody", holder: "Holder", from: "From", to: "To", duration: "Duration",
+        legacy: "Legacy", holder: "Holder", from: "From", to: "To", duration: "Duration",
+        coverStampAlive: "Active", coverStampDead: "Deceased", coverIncomplete: "Incomplete",
+        ledgerOutput: "Cumulative output value", ledgerHours: "Cumulative work hours", ledgerWeekly: "Weekly output",
+        ledgerNet: "Net contribution est.", ledgerNote: "Output value minus work-hour labour cost (illustrative; coefficient external).",
+        outputDetail: "Output detail", outputType: "Type", outputQty: "Qty", outputShare: "Share",
+        outputValue: "Value",
+        healthValuation: "Health valuation (3D)", hvBody: "Body", hvMind: "Mind", hvAge: "Age",
+        hvSummary: "Composite", hvEventLog: "Health events", hvVerdict: "Verdict", hvNoEvent: "No health events recorded",
+        hvFactorPos: "Positive", hvFactorNeg: "Negative",
         filterAll: "All", liveJob: "Current job", liveLoc: "Location",
         colonist: "Colonist", factionName: "New Hope",
         samplingNote: "Archived biography data — fully readable after death.",
@@ -1265,8 +1310,10 @@
       }
     };
 
-    const PAWN_TABS = ["Overview", "Timeline", "Career", "CombatLog", "Social"];
-    const WEAPON_TABS = ["Overview", "Timeline", "CombatLog", "Custody"];
+    // v4.6.6: pawn detail timeline removed (surfaced via Home chronicle).
+    const PAWN_TABS = ["Overview", "Career", "CombatLog", "Social"];
+    // v4.7: item tabs — Custody (流转) renamed to Legacy (传承), the ownership-transfer chain view.
+    const WEAPON_TABS = ["Overview", "Timeline", "CombatLog", "Legacy"];
 
     // v4.0 强度五档（高→低），颜色取 WorkIntensity.xml 真实色值
     const INTENSITY_TIERS = [
@@ -1298,6 +1345,19 @@
         intensity: {
           tier: "T4", totalHours: 278.1, days: 412, daily: 0.7, weekly: 4.6, monthly: 19.6,
           relLabel: { zh: "相对负荷偏低", en: "Low relative load" }
+        },
+        ledger: {
+          outputValue: 1360, weeklyOutput: 32, costRate: 2,
+          note: { zh: "产出价值 1360 sv − 工时 278h×2 = 804 sv 净贡献", en: "1360 sv out − 278h×2 = 804 sv net" }
+        },
+        healthValuation: {
+          body: 92, mind: 88, age: 96,
+          summary: 92,
+          events: [
+            { when: { zh: "5502 秋", en: "5502 Au" }, what: { zh: "轻度烧伤痊愈", en: "Minor burn healed" }, pos: true },
+            { when: { zh: "5503 夏", en: "5503 Su" }, what: { zh: "营养良好", en: "Well-nourished" }, pos: true }
+          ],
+          verdict: { zh: "肢体与精神状态优良，近乎全值。", en: "Body & mind excellent, near full value." }
         },
         contribution: {
           zh: "殖民地主要厨师与步枪工匠：累计劳动 278 小时，交付充电步枪 1、头盔 2。",
@@ -1449,6 +1509,19 @@
           tier: "T4", totalHours: 210.4, days: 390, daily: 0.5, weekly: 3.7, monthly: 15.9,
           relLabel: { zh: "相对负荷偏低", en: "Low relative load" }
         },
+        ledger: {
+          outputValue: 0, weeklyOutput: 0, costRate: 2,
+          note: { zh: "产出价值 0 sv（无制造记录）− 工时 210h×2 = −420 sv", en: "0 sv out − 210h×2 = −420 sv net" }
+        },
+        healthValuation: {
+          body: 24, mind: 55, age: 70,
+          summary: 38,
+          events: [
+            { when: { zh: "5503 秋 12", en: "5503 Au12" }, what: { zh: "枪伤 · 阵亡", en: "Gunshot · KIA" }, pos: false },
+            { when: { zh: "5503 春", en: "5503 Sp" }, what: { zh: "断腿痊愈", en: "Broken leg healed" }, pos: true }
+          ],
+          verdict: { zh: "肢体残值骤降（致命枪伤），精神中等，残值综合低。", en: "Body collapsed (fatal shot); mind fair; composite low." }
+        },
         contribution: {
           zh: "猎人与前锋：打猎 120h，参战 2 次，击杀 3；阵亡于机械族袭击。",
           en: "Hunter & vanguard: 120h hunting, 2 battles, 3 kills; KIA vs mechanoids."
@@ -1572,9 +1645,9 @@
         craftedAt: { zh: "5503 年 夏 41 日", en: "5503 Summer 41" },
         kills: 1, holderCount: 2,
         currentHolder: { zh: "艾拉", en: "Ella" }, currentHolderId: "pawn-ela",
-        custody: [
-          { who: { zh: "艾拉", en: "Ella" }, id: "pawn-ela", from: { zh: "5503 夏 41", en: "5503 Su41" }, to: { zh: "今", en: "now" }, dur: { zh: "主持有", en: "Primary" } },
-          { who: { zh: "汤姆", en: "Tom" }, id: "pawn-tom", from: { zh: "5503 夏 42", en: "5503 Su42" }, to: { zh: "5503 夏 45", en: "5503 Su45" }, dur: { zh: "3 日", en: "3 days" } }
+        legacy: [
+          { holder: { zh: "艾拉", en: "Ella" }, id: "pawn-ela", from: { zh: "5503 夏 41", en: "5503 Su41" }, to: { zh: "今", en: "now" }, dur: { zh: "主持有", en: "Primary" }, remark: { zh: "制造者", en: "Crafter" } },
+          { holder: { zh: "汤姆", en: "Tom" }, id: "pawn-tom", from: { zh: "5503 夏 42", en: "5503 Su42" }, to: { zh: "5503 夏 45", en: "5503 Su45" }, dur: { zh: "3 日", en: "3 days" }, remark: { zh: "借用", en: "Borrowed" } }
         ],
         combat: [
           { date: { zh: "5503 秋 12", en: "5503 Au12" }, title: { zh: "击杀：侦察者", en: "Kill: scout" }, sub: { zh: "充电步枪", en: "Charge rifle" } }
@@ -1587,8 +1660,8 @@
         name: { zh: "短刀", en: "Knife" }, def: "MeleeWeapon_Knife",
         crafter: null, craftedAt: null, kills: 2, holderCount: 1,
         currentHolder: { zh: "仓库", en: "Stockpile" }, currentHolderId: null,
-        custody: [
-          { who: { zh: "汤姆", en: "Tom" }, id: "pawn-tom", from: { zh: "5502 夏 1", en: "5502 Su1" }, to: { zh: "5503 秋 12", en: "5503 Au12" }, dur: { zh: "直至阵亡", en: "Until death" } }
+        legacy: [
+          { holder: { zh: "汤姆", en: "Tom" }, id: "pawn-tom", from: { zh: "5502 夏 1", en: "5502 Su1" }, to: { zh: "5503 秋 12", en: "5503 Au12" }, dur: { zh: "直至阵亡", en: "Until death" }, remark: { zh: "唯一持有者", en: "Sole holder" } }
         ],
         combat: [
           { date: { zh: "5503 春 22", en: "5503 Sp22" }, title: { zh: "击杀：海盗 ×2", en: "Kills: pirates ×2" }, sub: { zh: "短刀", en: "Knife" } }
@@ -1600,7 +1673,7 @@
         crafter: { zh: "马可", en: "Marco" }, crafterId: "pawn-marco",
         craftedAt: { zh: "5503 年 夏 18 日", en: "5503 Summer 18" },
         kills: 0, holderCount: 0, currentHolder: null, currentHolderId: null,
-        custody: [], combat: [],
+        legacy: [], combat: [],
         events: [
           { kind: "Built", date: { zh: "5503 年 夏 18 日", en: "5503 Summer 18" }, name: { zh: "建造", en: "Built" }, params: { zh: "马可", en: "Marco" }, desc: "", chips: [{ label: { zh: "人物·马可", en: "Pawn·Marco" }, goto: "pawn", id: "pawn-marco" }] }
         ]
@@ -1892,48 +1965,85 @@
       const relCount = p.relations.length + p.intertwined.length;
 
       if (tab === "Overview") {
-        html += `<div class="stats kpi6" data-component="DrawHeadlineStats">
-          <div class="stat-cell"><div class="label">${t("kpiEvents")}</div><div class="value">${p.events.length}</div></div>
-          <div class="stat-cell"><div class="label">${t("kpiWorkHours")}</div><div class="value">${p.workHours.toFixed(0)}h</div><div class="sub">${ps.primary}</div></div>
-          <div class="stat-cell"><div class="label">${t("kpiProduction")}</div><div class="value">${prodTotal}</div><div class="sub">${(p.production || []).reduce((s, r) => s + (r.value || 0) * r.n, 0).toLocaleString()} sv</div></div>
-          <div class="stat-cell"><div class="label">${t("kpiBattles")}</div><div class="value">${p.combat.length}</div></div>
-          <div class="stat-cell"><div class="label">${t("kpiKills")}</div><div class="value">${p.kills}</div></div>
-          <div class="stat-cell"><div class="label">${t("kpiRelations")}</div><div class="value">${relCount}</div></div>
+        // ---- 封面头部 (v4.6.2 DrawCoverHeader) ----
+        html += `<div class="cover" data-component="DrawCoverHeader">
+          <div class="portrait">${t("coverStampAlive") === "" ? "" : ""}<span class="portrait-label">${state.lang === "zh" ? "人物画像" : "Portrait"}</span></div>
+          <div class="cover-info">
+            <div class="cover-name">${L(p.name)}</div>
+            <div class="cover-role">${L(p.kind)} · ${L(p.backstory)}</div>
+            <div class="cover-days">${t("daysInColony")} ${p.days}
+              <span class="pill ${p.alive ? "alive" : "dead"}" style="margin-left:6px">${p.alive ? t("coverStampAlive") : t("coverStampDead")}</span>
+            </div>
+          </div>
         </div>`;
-        html += `<p class="section-hint">${t("samplingNote")}</p>`;
-
-        html += section(t("lifecycle"));
-        html += row(t("status"), p.alive ? t("alive") : t("dead"));
-        html += row(t("kind"), L(p.kind));
-        html += row(t("faction"), t("factionName"));
-        html += row(t("backstory"), L(p.backstory));
-        html += row(t("joinDate"), L(p.join));
-        html += row(t("daysInColony"), String(p.days));
-        if (!p.alive) {
-          html += row(t("deathDate"), L(p.death));
-          html += row(t("deathCause"), L(p.cause));
-          html += row(t("killer"), L(p.killer));
+        if (p.intensity && p.intensity.tier) {
+          const tier = INTENSITY_TIERS.find(x => x.code === p.intensity.tier);
+          const tc = tier ? tier.color : "var(--info)";
+          html += `<div class="tier-inline" data-component="DrawTierMedalInline" style="border-left-color:${tc}">
+            <span class="medal" style="background:${tc}">${p.intensity.tier}</span>
+            <span class="tier-title">${tier ? t(tier.nameKey) : p.intensity.tier}</span>
+            <span class="tier-tag">${tier ? t(tier.tagKey) : ""}</span>
+            <span class="tier-daily">${t("intensityDaily")} ${p.intensity.daily.toFixed(1)}h</span>
+          </div>`;
         }
-        if (p.alive && p.liveLoc) html += row(t("liveLoc"), L(p.liveLoc));
 
-        html += section(t("careerBlurb"));
-        html += `<div class="blurb"><div class="k">${t("contribution")}</div>${L(p.contribution)}</div>`;
-        html += row(t("primaryWork"), ps.primary);
-        html += row(t("secondaryWork"), ps.secondary);
-        html += row(t("totalWork"), hours(p.workHours));
+        // ---- 榨取总账 (v4.6.1 DrawLedger) ----
+        const lg = p.ledger || { outputValue: 0, weeklyOutput: 0, costRate: 2, note: { zh: "", en: "" } };
+        html += section(t("ledgerOutput"));
+        html += `<div class="stats kpi4" data-component="DrawLedger">
+          <div class="stat-cell"><div class="label">${t("ledgerOutput")}</div><div class="value">${(lg.outputValue || 0).toLocaleString()}<small> sv</small></div></div>
+          <div class="stat-cell"><div class="label">${t("ledgerHours")}</div><div class="value">${p.workHours.toFixed(0)}<small> h</small></div></div>
+          <div class="stat-cell"><div class="label">${t("ledgerWeekly")}</div><div class="value">${(lg.weeklyOutput || 0).toLocaleString()}<small> sv</small></div></div>
+          <div class="stat-cell"><div class="label">${t("ledgerNet")}</div><div class="value">${(lg.note ? (lg.outputValue || 0) - p.workHours * (lg.costRate || 2) : 0).toLocaleString()}<small> sv</small></div></div>
+        </div>`;
+        if (lg.note && (lg.note.zh || lg.note.en)) html += `<p class="section-hint">${L(lg.note)}</p>`;
 
-        html += section(t("footprint"));
-        html += row(t("primaryPlace"), L(p.footprint.primary));
-        html += row(t("placeCount"), String(p.footprint.count));
-        html += row(state.lang === "zh" ? "驻留时段" : "Period", L(p.footprint.range));
+        // ---- 产出明细 (v4.6.1 DrawOutputLedger) ----
+        if (p.production && p.production.length) {
+          html += section(t("outputDetail"));
+          const totalQty = p.production.reduce((s, r) => s + r.n, 0);
+          const totalVal = p.production.reduce((s, r) => s + (r.value || 0) * r.n, 0);
+          html += `<div class="prod-grid" data-component="DrawOutputLedger">`;
+          p.production.forEach(r => {
+            const click = r.id ? `data-goto="weapon" data-id="${r.id}" style="cursor:pointer"` : "";
+            const val = r.value != null ? `${(r.value * r.n).toLocaleString()} sv` : "—";
+            const share = totalQty ? Math.round((r.n / totalQty) * 100) : 0;
+            html += `<div class="prod-card" ${click}><div class="pn">${L(r.type)}</div>
+              <div class="ps">×${r.n} · ${val}</div>
+              <div class="ps">${t("outputShare")} ${share}%</div></div>`;
+          });
+          html += `</div>`;
+          html += `<p class="section-hint">${t("outputValue")}: ${totalVal.toLocaleString()} sv · ${t("productionQuantity")}: ${totalQty}</p>`;
+        }
 
-        html += section(t("keyMilestones"));
-        p.milestones.forEach(m => {
-          html += `<div class="milestone"><div class="when">${L(m.when)}</div><div class="what">${L(m.what)}</div></div>`;
-        });
-
-        html += section(t("keyEvents"));
-        p.events.slice(-3).forEach(e => { html += eventLine(L(e.date), L(e.name), L(e.params)); });
+        // ---- 健康残值三维 (v4.6.1 DrawHealthValuation) ----
+        const hv = p.healthValuation;
+        if (hv) {
+          html += section(t("healthValuation"));
+          const dims = [
+            { k: t("hvBody"), v: hv.body },
+            { k: t("hvMind"), v: hv.mind },
+            { k: t("hvAge"), v: hv.age }
+          ];
+          html += `<div class="hv-3d" data-component="DrawHealthValuation">`;
+          dims.forEach(d => {
+            const c = d.v >= 70 ? "var(--ok)" : d.v >= 40 ? "var(--warn)" : "var(--blood)";
+            html += `<div class="hv-dim"><div class="hv-k">${d.k}</div>
+              <div class="bar hv"><i style="width:${d.v}%;background:${c}"></i></div>
+              <div class="hv-v" style="color:${c}">${d.v}%</div></div>`;
+          });
+          html += `</div>`;
+          html += `<div class="stats kpi4">
+            <div class="stat-cell"><div class="label">${t("hvSummary")}</div><div class="value" style="color:${hv.summary >= 70 ? "var(--ok)" : hv.summary >= 40 ? "var(--warn)" : "var(--blood)"}">${hv.summary}%</div></div>
+          </div>`;
+          html += section(t("hvEventLog"));
+          if (!hv.events || !hv.events.length) html += `<div class="empty">${t("hvNoEvent")}</div>`;
+          else hv.events.forEach(e => {
+            html += `<div class="milestone"><div class="when">${L(e.when)}</div>
+              <div class="what">${L(e.what)} <span class="chip ${e.pos ? "ok" : "bad"}">${e.pos ? t("hvFactorPos") : t("hvFactorNeg")}</span></div></div>`;
+          });
+          html += `<div class="blurb"><div class="k">${t("hvVerdict")}</div>${L(hv.verdict)}</div>`;
+        }
       }
 
       if (tab === "Timeline") {
@@ -2102,16 +2212,18 @@
         else w.combat.forEach(c => html += eventLine(L(c.date), L(c.title), L(c.sub)));
         html += `<div class="footnote">${t("killsN")}: <b>${w.kills}</b></div>`;
       }
-      if (tab === "Custody") {
-        html += section(t("custody"));
-        if (!w.custody.length) html += `<div class="empty">—</div>`;
+      if (tab === "Legacy") {
+        // v4.7 传承：所有权变更链（HolderRecord）
+        html += section(t("legacy"));
+        if (!w.legacy.length) html += `<div class="empty">—</div>`;
         else {
-          html += `<table class="stat"><thead><tr>
-            <th>${t("holder")}</th><th>${t("from")}</th><th>${t("to")}</th><th>${t("duration")}</th>
+          html += `<table class="stat" data-component="LegacyView"><thead><tr>
+            <th>${t("holder")}</th><th>${t("from")}</th><th>${t("to")}</th><th>${t("duration")}</th><th>${state.lang === "zh" ? "备注" : "Note"}</th>
           </tr></thead><tbody>`;
-          w.custody.forEach(c => {
+          w.legacy.forEach(c => {
             const click = c.id ? `class="clickable" data-goto="pawn" data-id="${c.id}"` : "";
-            html += `<tr ${click}><td>${L(c.who)}</td><td>${L(c.from)}</td><td>${L(c.to)}</td><td>${L(c.dur)}</td></tr>`;
+            const remark = c.remark ? ` <span class="chip">${L(c.remark)}</span>` : "";
+            html += `<tr ${click}><td>${L(c.holder)}</td><td>${L(c.from)}</td><td>${L(c.to)}</td><td>${L(c.dur)}</td><td>${remark || "—"}</td></tr>`;
           });
           html += `</tbody></table>`;
         }

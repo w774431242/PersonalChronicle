@@ -9,6 +9,7 @@ namespace PersonalChronicle.Application
     {
         public readonly bool IsDefined;
         public readonly string TierDefName;
+        public readonly string TierKey;
         public readonly string DisplayCode;
         public readonly string LabelKey;
         public readonly string TagKey;
@@ -34,6 +35,7 @@ namespace PersonalChronicle.Application
         {
             IsDefined = evaluation != null && evaluation.IsDefined;
             TierDefName = evaluation != null ? evaluation.TierDefName : null;
+            TierKey = tier != null ? tier.TierKey : null;
             DisplayCode = tier != null ? tier.DisplayCode : null;
             LabelKey = tier != null ? tier.LabelKey : null;
             TagKey = tier != null ? tier.TagKey : null;

@@ -32,6 +32,14 @@ namespace PersonalChronicle.Domain
         /// <summary>Successive holders over time (optional, reserved for Phase B); persisted.</summary>
         public List<ObjectRef> HolderHistory = new List<ObjectRef>();
 
+        /// <summary>
+        /// Legacy chain (传承): holder records with ownership kind / start tick,
+        /// persisted. Added in v4.7 while <see cref="HolderHistory"/> stays for
+        /// binary/save compatibility (old saves keep both empty until new captures).
+        /// Read Model derives per-holder kill counts from the event index.
+        /// </summary>
+        public List<HolderRecord> HolderRecords = new List<HolderRecord>();
+
         public override string CategoryKey
         {
             get { return ArchiveCategoryKeys.Thing; }
@@ -48,6 +56,8 @@ namespace PersonalChronicle.Domain
             Scribe_Values.Look(ref WeakId, "weakId");
             Scribe_Collections.Look(ref HolderHistory, "holderHistory", LookMode.Deep);
             if (HolderHistory == null) HolderHistory = new List<ObjectRef>();
+            Scribe_Collections.Look(ref HolderRecords, "holderRecords", LookMode.Deep);
+            if (HolderRecords == null) HolderRecords = new List<HolderRecord>();
             // CreatedTick/DestroyedTick/CurrentHolderId deliberately not looked:
             // timeline is derived from eventsByObject to avoid a second source
             // of truth; CurrentHolderId is a live runtime cache only.

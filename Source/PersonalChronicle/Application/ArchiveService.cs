@@ -1092,7 +1092,12 @@ namespace PersonalChronicle.Application
                     rows.Add(new ProductionTypeView(pair.Key, pair.Value, 0f));
                 }
             }
-            rows.Sort((a, b) => b.MarketValue.CompareTo(a.MarketValue));
+            // v4.6.5: aggregate by ThingCategory (e.g. "Weapons") instead of the
+            // concrete item (e.g. "Bow_Wood"). The overview shows extraction by
+            // broad category, not individual item defs.
+            List<ProductionTypeView> categoryRows = AggregateProductionByCategory(rows);
+            categoryRows.Sort((a, b) => b.MarketValue.CompareTo(a.MarketValue));
+            rows = categoryRows;
             int totalQuantity = production.TotalQuantity;
             float totalValue = production.TotalMarketValue;
             if (totalQuantity <= 0 && rows.Count > 0)
@@ -1108,6 +1113,73 @@ namespace PersonalChronicle.Application
                 totalValue,
                 production.LastProductionTick,
                 rows);
+        }
+
+        /// <summary>
+        /// v4.6.5: collapses per-item production rows into per-category rows using
+        /// each item's top-level ThingCategory (e.g. "Bow_Wood" -> "Weapons"). Items
+        /// with no category definition fall back to their own defName.
+        /// </summary>
+        private static List<ProductionTypeView> AggregateProductionByCategory(
+            IReadOnlyList<ProductionTypeView> byDef)
+        {
+            if (byDef == null || byDef.Count == 0)
+            {
+                return new List<ProductionTypeView>();
+            }
+            Dictionary<string, ProductionTypeView> grouped = new Dictionary<string, ProductionTypeView>();
+            for (int i = 0; i < byDef.Count; i++)
+            {
+                ProductionTypeView row = byDef[i];
+                if (row == null)
+                {
+                    continue;
+                }
+                string key = ResolveProductionCategoryDefName(row.DefName);
+                if (string.IsNullOrEmpty(key))
+                {
+                    key = row.DefName;
+                }
+                ProductionTypeView existing;
+                if (grouped.TryGetValue(key, out existing))
+                {
+                    grouped[key] = new ProductionTypeView(
+                        key, existing.Quantity + row.Quantity, existing.MarketValue + row.MarketValue);
+                }
+                else
+                {
+                    grouped[key] = new ProductionTypeView(key, row.Quantity, row.MarketValue);
+                }
+            }
+            return new List<ProductionTypeView>(grouped.Values);
+        }
+
+        /// <summary>
+        /// Returns the top-level ThingCategory defName for an item defName
+        /// (the category whose parent is null), or null when no category applies.
+        /// </summary>
+        private static string ResolveProductionCategoryDefName(string defName)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return null;
+            }
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (def == null || def.thingCategories == null || def.thingCategories.Count == 0)
+            {
+                return null;
+            }
+            // Prefer the top-level category (no parent) so e.g. "Bow_Wood" groups
+            // under "Weapons" rather than a leaf sub-category.
+            for (int i = 0; i < def.thingCategories.Count; i++)
+            {
+                ThingCategoryDef cat = def.thingCategories[i];
+                if (cat != null && cat.parent == null)
+                {
+                    return cat.defName;
+                }
+            }
+            return def.thingCategories[0].defName;
         }
 
         /// <summary>
@@ -1824,6 +1896,10 @@ namespace PersonalChronicle.Application
             {
                 thing.HolderHistory = new List<ObjectRef>();
             }
+            if (thing.HolderRecords == null)
+            {
+                thing.HolderRecords = new List<HolderRecord>();
+            }
             // Append only when holder changed (avoid spam on multi-kill same holder).
             if (thing.HolderHistory.Count > 0)
             {
@@ -1834,6 +1910,19 @@ namespace PersonalChronicle.Application
                 }
             }
             thing.HolderHistory.Add(ObjectRef.ForPawn(holderId, holder.LabelShort));
+            // Legacy chain (传承): ownership transfer record. Capture cannot
+            // reliably distinguish a true ownership transfer from a borrow/lend
+            // (RimWorld pawns carry equipment without a loan flag), so every
+            // observed hold is recorded as "own" — context-rich loans are an
+            // authoring concern of the UI, not of the capture layer. The first
+            // record (craft holder) is marked IsFirst.
+            bool isFirst = thing.HolderRecords.Count == 0;
+            thing.HolderRecords.Add(new HolderRecord(
+                holderId,
+                holder.LabelShort,
+                Find.TickManager.TicksGame,
+                isFirst,
+                HolderRecord.HolderKindOwn));
             component.MarkChanged();
         }
 
@@ -1869,16 +1958,22 @@ namespace PersonalChronicle.Application
                         Find.TickManager.TicksGame);
                 }
                 string stableId = product.def.defName + ":" + product.thingIDNumber;
-                RegisterThingObject(component, product, worker);
-                ChronicleEvent ev = BuildThingEvent(stableId, ChronicleEventType.Crafted);
-                if (workerIsCurrent)
+                // v4.6.5: only equipment (weapons + apparel) enters the archive
+                // object graph and gets a Crafted event; raw materials / food
+                // stay as pure production stats above.
+                if (IsEquipable(product))
                 {
-                    AddPawnSubject(ev, worker);
+                    RegisterThingObject(component, product, worker);
+                    ChronicleEvent ev = BuildThingEvent(stableId, ChronicleEventType.Crafted);
+                    if (workerIsCurrent)
+                    {
+                        AddPawnSubject(ev, worker);
+                    }
+                    string eventOwnerId = workerIsCurrent
+                        ? worker.GetUniqueLoadID()
+                        : stableId;
+                    AddEvent(component, eventOwnerId, ev);
                 }
-                string eventOwnerId = workerIsCurrent
-                    ? worker.GetUniqueLoadID()
-                    : stableId;
-                AddEvent(component, eventOwnerId, ev);
             }
             catch (System.Exception ex)
             {
@@ -1889,6 +1984,12 @@ namespace PersonalChronicle.Application
         public void OnThingBuilt(ThingDef builtDef, string builtStableId, Pawn worker)
         {
             if (!IsRecordingEnabled() || builtDef == null || string.IsNullOrEmpty(builtStableId))
+            {
+                return;
+            }
+            // v4.6.5: buildings are not equipment — excluded from the archive
+            // object graph (the "Thing" category is scoped to weapons + apparel).
+            if (!IsEquipableDef(builtDef))
             {
                 return;
             }
@@ -2124,6 +2225,13 @@ namespace PersonalChronicle.Application
             {
                 return;
             }
+            // v4.6.5: the "Thing" category is scoped to equipment only
+            // (weapons + wearable apparel). Raw materials, food and buildings
+            // are excluded from the archive object graph.
+            if (!IsEquipable(thing))
+            {
+                return;
+            }
             string stableId = thing.def.defName + ":" + thing.thingIDNumber;
             if (component.GetObject(stableId) == null)
             {
@@ -2138,6 +2246,28 @@ namespace PersonalChronicle.Application
             {
                 NoteWeaponHolder(component, stableId, holder);
             }
+        }
+
+        /// <summary>
+        /// v4.6.5: the "Thing" archive category is scoped to equipment — weapons
+        /// and wearable apparel. Buildings, raw materials and food are excluded.
+        /// </summary>
+        private static bool IsEquipable(Thing thing)
+        {
+            if (thing == null || thing.def == null)
+            {
+                return false;
+            }
+            return IsEquipableDef(thing.def);
+        }
+
+        private static bool IsEquipableDef(ThingDef def)
+        {
+            if (def == null)
+            {
+                return false;
+            }
+            return def.IsWeapon || def.IsApparel;
         }
 
         private static bool IsRecordingEnabled()

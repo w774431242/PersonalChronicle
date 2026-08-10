@@ -72,6 +72,70 @@ namespace PersonalChronicle.Domain
             {
                 record.AdulthoodBackstoryDefName = adulthood;
             }
+            CaptureInitialRelations(pawn, record);
+        }
+
+        /// <summary>
+        /// v4.6: snapshot the pawn's existing significant direct relations at join
+        /// time so the Social tab can render initial ties (spouse, parent, friend...)
+        /// even after the pawn has died or left the colony. Relations already
+        /// captured by live change patches are skipped to avoid duplicates.
+        /// </summary>
+        public static void CaptureInitialRelations(Pawn pawn, PawnObject record)
+        {
+            if (pawn?.relations?.DirectRelations == null || record == null)
+            {
+                return;
+            }
+            if (record.Relations == null)
+            {
+                record.Relations = new List<SignificantRelation>();
+            }
+            List<DirectPawnRelation> directRelations = pawn.relations.DirectRelations;
+            for (int i = 0; i < directRelations.Count; i++)
+            {
+                DirectPawnRelation rel = directRelations[i];
+                if (rel?.def == null || rel.otherPawn == null)
+                {
+                    continue;
+                }
+                if (!SocialRelationFilter.IsSignificant(rel.def))
+                {
+                    continue;
+                }
+                string otherId = rel.otherPawn.GetUniqueLoadID();
+                if (string.IsNullOrEmpty(otherId))
+                {
+                    continue;
+                }
+                // Skip if an active snapshot for this pair already exists.
+                bool exists = false;
+                for (int j = 0; j < record.Relations.Count; j++)
+                {
+                    SignificantRelation existing = record.Relations[j];
+                    if (existing != null && existing.IsActive
+                        && existing.RelationDefName == rel.def.defName
+                        && existing.OtherStableId == otherId)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (exists)
+                {
+                    continue;
+                }
+                record.Relations.Add(new SignificantRelation
+                {
+                    RelationDefName = rel.def.defName,
+                    OtherStableId = otherId,
+                    OtherLabel = rel.otherPawn.LabelShort,
+                    // startTicks on DirectPawnRelation is relative to the pawn's age, not
+                    // an absolute game tick; record the join moment as a known anchor.
+                    FormedTick = -1L,
+                    EndedTick = -1L
+                });
+            }
         }
 
         public static void ApplyDeathSnapshots(PawnObject record, Pawn pawn)

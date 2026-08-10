@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>概览页 · 殖民地贡献榨取档案（黑心地主视角 · 引擎可行版）</title>
+<style>
+  /* ---- 设计令牌（对应 UITheme：暗红账房风，颜色取自 Rimaspect 调色，无渐变） ---- */
+  :root{
+    --bg:#1a1413; --col:#241c1a; --col2:#2b211e;
+    --line:#3a2c26; --line2:#4a3830;
+    --ink:#ece2d8; --sub:#a08c7e; --dim:#7a6658;
+    --blood:#c0533f; --blood-bright:#e0775f;
+    --gold:#c9a35a; --silver:#b9c2c9;
+  }
+  body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);margin:0;padding:24px}
+  h1{font-size:18px;margin:0 0 4px;color:var(--blood-bright);letter-spacing:1px}
+  .sub{color:var(--sub);font-size:12px;margin-bottom:14px;line-height:1.6}
+  .panel{max-width:920px;margin:0 auto}
+  .toggle{margin-bottom:16px}
+  .toggle button{background:#2a201d;color:var(--ink);border:1px solid #4a3830;border-radius:0;padding:6px 14px;cursor:pointer;font-size:13px;margin-right:6px}
+  .toggle button.on{background:var(--blood);color:#1a1413;border-color:var(--blood)}
+  .col{background:var(--col);border:1px solid var(--line);border-radius:0;padding:14px;margin-bottom:14px}
+
+  /* ---- 封面头部：左画像 + 右单行信息（紧凑布局，符合 RimWorld 高密度信息风格） ---- */
+  .cover{border-bottom:1px dashed var(--line2);padding-bottom:12px}
+  .cover-top{display:flex;gap:12px;align-items:flex-start}
+  /* 人物画像：对应 PortraitsCache.Get(pawn, size, default, Rot4.South) + GUI.DrawTexture */
+  .portrait{width:60px;height:75px;border:1px solid var(--blood);background:#15100e;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:10px;text-align:center}
+  .covinfo{flex:1;min-width:0}
+  .covinfo .name{font-size:20px;font-weight:700;letter-spacing:1px;line-height:1.2}
+  .covinfo .role{color:var(--sub);font-size:11px;margin-top:2px;line-height:1.5}
+  /* 「在册 X 日」行：右侧紧跟印章 Pill（对应 UIComponents.Pill，与 days 同行） */
+  .days-line{display:flex;align-items:center;gap:6px;margin-top:8px}
+  .days{color:var(--sub);font-size:11px}
+  .stamp{display:inline-block;background:#2a1410;color:var(--blood-bright);border:1px solid var(--blood);padding:2px 8px;font-size:11px;font-weight:700;letter-spacing:1px;white-space:nowrap}
+  .stamp.dead{background:#1a0e0c;color:var(--dim);border-color:var(--dim)}
+  /* 评级勋章：方块 + 字符徽记（对应 UIComponents.TierMedal） */
+  .tier-inline{display:flex;align-items:center;gap:6px;border:1px solid var(--line2);background:var(--col2);padding:2px 8px;white-space:nowrap;margin-top:8px}
+  .tier-inline .medal{width:22px;height:22px;border:1px solid var(--blood);color:var(--blood-bright);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:#241c1a}
+  .tier-inline .tt{font-size:12px;font-weight:600;color:var(--blood-bright)}
+  .tier-inline .td{font-size:10px;color:var(--sub);margin-left:4px}
+  .tier-inline .est{font-size:9px;color:var(--dim);border:1px solid #4a3830;padding:0 4px;margin-left:4px}
+  .incomplete{display:inline-block;background:#2a201d;border:1px dashed var(--blood);color:var(--blood-bright);padding:2px 8px;font-size:10px;white-space:nowrap;margin-top:4px}
+
+  .sec{font-size:13px;color:var(--blood-bright);border-left:3px solid var(--blood);padding-left:8px;margin:18px 0 10px;letter-spacing:1px}
+  .sec:first-of-type{margin-top:6px}
+  .cmp{font-size:10px;color:var(--dim);margin-left:8px;font-weight:400}
+
+  /* ---- 榨取总账（3 格 StatCell） ---- */
+  .ledger{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .lc{border:1px solid var(--line2);background:var(--col2);padding:10px 12px}
+  .lc .v{font-size:20px;color:var(--blood-bright);font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lc .k{font-size:11px;color:var(--sub);margin-top:4px}
+  /* 单位与数值同行动态跟随；过长裁切不压字（对应 StatCell.InlineSubLabel） */
+  .lc .u{font-size:11px;color:var(--dim);font-weight:400;margin-left:4px}
+
+  /* ---- 产出核销（ProgressBar 占比条，纯色无渐变） ---- */
+  .vc{margin:8px 0}
+  .vc .row{display:flex;align-items:center;gap:10px;font-size:12px;margin:7px 0}
+  .vc .lab{width:72px;color:var(--ink)}
+  .vc .bar{flex:1;height:14px;background:var(--col2);border:1px solid var(--line2);position:relative}
+  .vc .fill{height:100%;background:var(--blood-bright)}
+  .vc .val{width:120px;color:var(--sub);font-size:11px;text-align:right}
+  .vc .pct{width:42px;color:var(--dim);font-size:10px;text-align:right}
+
+  /* ---- 健康残值（StatCell 大数 + 三维 ProgressBar + TimelineNode 折旧事件） ---- */
+  .hv{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+  .hv .cell{border:1px solid var(--line2);background:var(--col2);padding:10px 12px}
+  .hv .cell .v{font-size:20px;color:var(--gold);font-weight:700;line-height:1.2}
+  .hv .cell .k{font-size:11px;color:var(--sub);margin-top:4px}
+  .hv .cell .u{font-size:11px;color:var(--dim)}
+  .hv .cell.dead .v{color:var(--dim)}
+  .dims{margin:6px 0 4px}
+  .dims .dr{display:flex;align-items:center;gap:10px;font-size:12px;margin:6px 0}
+  .dims .dl{width:80px;color:var(--ink);font-size:11px}
+  .dims .db{flex:1;height:12px;background:var(--col2);border:1px solid var(--line2);position:relative}
+  .dims .df{height:100%;background:var(--gold)}
+  .dims .df.low{background:var(--blood-bright)}
+  .dims .dp{width:48px;text-align:right;color:var(--sub);font-size:10px}
+  .devents{margin-top:8px;border-left:3px solid var(--blood-bright);padding-left:10px}
+  .devents .de{font-size:11px;color:var(--sub);margin:5px 0}
+  .devents .de .dt{color:var(--dim);margin-right:6px}
+  .devents .de .dg{color:var(--blood-bright);font-size:9px;border:1px solid #4a3830;padding:0 4px;margin-left:6px}
+
+  /* ---- 维度条悬停评价窗（模拟 RimWorld TooltipHandler.TipRegion） ---- */
+  .dims .dr{position:relative}
+  .dims .db{cursor:help}
+  .tip{display:none;position:absolute;left:0;top:100%;z-index:20;margin-top:4px;background:#15100e;border:1px solid var(--blood);padding:8px 10px;font-size:11px;line-height:1.7;white-space:nowrap;box-shadow:2px 2px 0 rgba(0,0,0,0.5)}
+  .dims .dr:hover .tip{display:block}
+  .tip .th{color:var(--blood-bright);font-weight:700;margin-bottom:4px;display:block}
+  .tip .pos{color:#8fbf7f}
+  .tip .neg{color:var(--blood-bright)}
+
+  .note{background:var(--col2);border:1px dashed #5a4038;padding:8px 10px;font-size:11px;color:var(--sub);margin-top:10px;line-height:1.6}
+  .empty{border:1px dashed #5a4038;padding:10px;color:var(--dim);font-size:11px;text-align:center;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="panel">
+  <h1>概览页 · 殖民地贡献榨取档案</h1>
+  <div class="sub">v4.6.8 提案预览（黑心地主视角 · 引擎可行版）：剥离浏览器专属效果（旋转印章、渐变），改为 RimWorld 原生可绘制样式——方括号朱批 + 纯色占比条。每块标注对应原生组件，确保 C# 落地 1:1 对应。令牌化血色 accent，守 UITheme 单一视觉源。封面印章置于「在册 X 日」同行右侧，已移除封面/健康评语朱批（对应最新 C# 移除 BuildCoverVerdict 与 HealthView.VerdictText）。银币展示统一经 FormatSilver 量级缩写（K≥1e3 / M≥1e6 / B≥1e9），覆盖所有银币展示点；下表数据已最大化覆盖各量级分支与边界。</div>
+  <div class="toggle">
+    <button id="b-normal" class="on" onclick="show('normal')">高产牲口</button>
+    <button id="b-mid" onclick="show('mid')">来路不明者</button>
+    <button id="b-dead" onclick="show('dead')">已榨干的牲口</button>
+    <button id="b-big" onclick="show('big')">帝国矿主</button>
+  </div>
+
+  <div id="page"></div>
+</div>
+
+<script>
+/* ============ 数据（模拟 BuildOverview / BuildDetail 产出，地主视角重命名） ============ */
+/* 数据（模拟 BuildOverview / BuildDetail 产出，地主视角重命名）。
+   v4.6.8：银币展示统一经 FormatSilver 量级缩写（<1e3 原值 / ≥1e3 K / ≥1e6 M / ≥1e9 B）。
+   下方数据刻意覆盖各分支与边界：
+     · NORMAL  已核销产出 1.84e6 → "1.84M"（M 分支，保留两位小数）
+     · NORMAL  健康残值 1520 → "1.52K"（K 分支，非整数位）
+     · NORMAL  周息 58 → 原值（<1e3 分支）
+     · NORMAL  武器 860 → 原值（<1e3 分支，验证 K 临界 999.6 不进位）
+     · NORMAL  建筑 1_230_000 → "1.23M"（M 分支）
+     · DEAD    已核销 99_960_000 → "99.96M"（M 分支高位，逼近 B）
+     · DEAD    健康残值 0 → "0"（<1e3 边界）
+     · 额外 B 分支由脚本生成 _BIG 数据覆盖（2.3e9 → "2.3B"）
+*/
+const NORMAL = {
+  name:"阿历克斯", alive:true,
+  role:"工种 · 帝国派系 · 背景：都市技工",
+  days:"在册 412 日（已折算工时）",
+  incomplete:"",
+  ledger:[
+    ["已核销产出","1.84M","银（归我）"],
+    ["劳动总工时","2,400","h"],
+    ["周平均","58","银/周"]
+  ],
+  tier:{mark:"驴", title:"核动力驴 · Reactor Mule", desc:"产出与工时双高，顶格苦力，须看紧别被挖走。", est:false},
+  valueComp:[
+    ["武器",860,0.43],["建筑",1230000,61.5],["服装",300,0.015],["食物",160,0.008],["奢侈品",752400,37.6]
+  ],
+  /* 健康残值：综合健康 → 折算银币（纯派生，不写死阈值） */
+  health:{score:88, value:1520, hv:"健康残值",
+          dims:[
+            ["肢体完好",96,[["✓ 无慢性病",8],["✓ 义肢完好",3],["✗ 断指一处",-4],["✗ 背部旧伤",-2]]],
+            ["精神饱满",84,[["✓ 无精神崩溃",6],["✓ 已成瘾咖啡因",4],["✗ 创伤后应激",-3]]],
+            ["未衰老",12,[["✓ 青壮年",10],["✗ 年近四旬",-4]]]
+          ],
+          events:[["第 300 日","断指一处 · 残值 −40 银","掉价"],["第 360 日","伤风 · 残值 −15 银","掉价"]]}
+};
+
+const MID = {
+  name:"博尔", alive:true,
+  role:"工种 · 工会派系 · 背景：未知",
+  days:"在册日数未知",
+  incomplete:"⚠ 中途加装 · 入册日未知（JoinTick=-1）· 无法估产",
+  ledger:[
+    ["已核销产出","?","银（归我）"],
+    ["劳动总工时","?","h"],
+    ["周平均","?","银/周"]
+  ],
+  tier:{mark:"?", title:"无法估产 · Unrated", desc:"入册日未知，按当前出力暂估，须持续观察。", est:true},
+  valueComp:[],
+  health:{score:null, value:null, hv:"健康残值",
+          dims:[["肢体完好","?",[]],["精神饱满","?",[]],["未衰老","?",[]]],
+          events:[]}
+};
+
+const DEAD = {
+  name:"米拉", alive:false,
+  role:"工种 · 部落派系 · 背景：山林猎手",
+  days:"在册 290 日（至阵亡）",
+  incomplete:"",
+  ledger:[
+    ["已核销产出","99.96M","银（归我）"],
+    ["劳动总工时","1,860","h"],
+    ["周平均","37","银/周"]
+  ],
+  tier:{mark:"马", title:"超级牛马 · Super Workhorse", desc:"劳动投入极高，以命抵工，残值已清算。", est:false},
+  valueComp:[
+    ["武器",640,0.00064],["食物",280,0.00028],["服装",200,0.0002]
+  ],
+  health:{score:0, value:0, hv:"健康残值（已报废）",
+          dims:[["肢体完好",0,[["✗ 阵亡",-100]]],["精神饱满",0,[["✗ 脑死亡",-100]]],["已报废",100,[["✓ 残值归零",0]]]],
+          events:[["第 290 日","虫灾围城 · 阵亡 · 残值清算为 0","报废"]]}
+};
+
+/* v4.6.8 量级边界专项：B 分支（≥1e9）。用于验证 FormatSilver 高位缩写。 */
+const BIG = {
+  name:"玛格努斯", alive:true,
+  role:"工种 · 帝国派系 · 背景：世袭矿主",
+  days:"在册 999 日（已折算工时）",
+  incomplete:"",
+  ledger:[
+    ["已核销产出","2.3B","银（归我）"],
+    ["劳动总工时","7,200","h"],
+    ["周平均","960K","银/周"]
+  ],
+  tier:{mark:"驴", title:"核动力驴 · Reactor Mule", desc:"帝国级产出，矿脉永动机，须供其酒肉勿使其暴毙。", est:false},
+  valueComp:[
+    ["矿石",2300000000,92.0],["贵金属",150000000,6.0],["奢侈品",50000000,2.0]
+  ],
+  health:{score:95, value:2480000000, hv:"健康残值",
+          dims:[
+            ["肢体完好",99,[["✓ 无慢性病",8],["✓ 义肢完好",3],["✗ 断指一处",-4],["✗ 背部旧伤",-2]]],
+            ["精神饱满",90,[["✓ 无精神崩溃",6],["✓ 已成瘾咖啡因",4],["✗ 创伤后应激",-3]]],
+            ["未衰老",18,[["✓ 青壮年",10],["✗ 年近四旬",-4]]]
+          ],
+          events:[["第 500 日","矿脉大爆发 · 残值 +200M 银","增值"],["第 800 日","跌伤 · 残值 −3M 银","掉价"]]}
+};
+
+/* ============ v4.6.8 FormatSilver：与 C# 实现 1:1 对齐 ============
+   <1e3 → 原值（四舍五入取整）
+   ≥1e9 → value/1e9 + "B"
+   ≥1e6 → value/1e6 + "M"
+   ≥1e3 → value/1e3 + "K"
+   保留最多两位小数（0.##）。注意：判断档位用「原值」，故 999.6K 不会进位成 1.0M。 */
+function formatSilver(value){
+  if(value < 1000) return Math.round(value).toString();
+  let scaled, suffix;
+  if(value >= 1e9){ scaled = value/1e9; suffix="B"; }
+  else if(value >= 1e6){ scaled = value/1e6; suffix="M"; }
+  else { scaled = value/1e3; suffix="K"; }
+  return scaled.toFixed(2).replace(/\.?0+$/,'') + suffix;
+}
+
+/* ============ 渲染 ============ */
+function render(d){
+  const statusHtml = d.alive
+    ? `<span class="stamp">[在册·可压榨]</span>`
+    : `<span class="stamp dead">[已报废·核销]</span>`;
+  const incompleteHtml = d.incomplete ? `<span class="incomplete">${d.incomplete}</span>` : '';
+
+  /* 榨取总账：StatCell 同行动态排版——数值与单位按实际宽度动态跟随，单位过长仅裁切不压字 */
+  const ledgerHtml = `<div class="ledger">` + d.ledger.map(c=>`
+    <div class="lc"><div class="v">${c[1]}${c[2]?` <span class="u">${c[2]}</span>`:''}</div><div class="k">${c[0]}</div></div>
+  `).join("") + `</div>`;
+
+  /* 评级勋章单行内联（对应 UIComponents.TierMedal 紧凑模式） */
+  const tierInlineHtml = `
+    <span class="tier-inline">
+      <span class="medal">${d.tier.mark}</span>
+      <span class="tt">${d.tier.title}</span>
+      <span class="td">${d.tier.desc}</span>
+      ${d.tier.est?`<span class="est">暂估</span>`:''}
+    </span>`;
+
+  const vcHtml = d.valueComp.length ? `<div class="vc">` + d.valueComp.map(v=>`
+    <div class="row">
+      <div class="lab">${v[0]}</div>
+      <div class="bar"><div class="fill" style="width:${v[2]}%"></div></div>
+      <div class="val">${formatSilver(v[1])} 银（归我）</div>
+      <div class="pct">${v[2]}%</div>
+    </div>`).join("") + `</div>`
+    : `<div class="empty">暂无可核销产出</div>`;
+
+  /* 健康残值：综合健康 → 折算银币（对应 UIComponents.StatCell + ProgressBar + TimelineNode） */
+  const hvDead = d.health.score===0;
+  const hvHtml = `
+    <div class="hv">
+      <div class="cell${hvDead?' dead':''}"><div class="v">${d.health.value===null?'?':formatSilver(d.health.value)+' 银'}</div><div class="k">${d.health.hv}</div></div>
+      <div class="cell"><div class="v">${d.health.score===null?'?':d.health.score+' / 100'}</div><div class="k">综合健康分</div></div>
+      <div class="cell"><div class="v">${d.health.score===null?'?':formatSilver(d.health.score*15)+' 银/周'}</div><div class="k">预估可榨周息</div></div>
+    </div>
+    <div class="dims">${d.health.dims.map(dim=>{
+      const num = typeof dim[1]==='number' ? dim[1] : null;
+      const low = num!==null && num<30;
+      const factors = (dim[2]||[]).map(f=>`<div class="${f[1]>=0?'pos':'neg'}">${f[1]>=0?'✓':'✗'} ${f[0]} ${f[1]>=0?'+':''}${f[1]}</div>`).join("");
+      return `<div class="dr"><div class="dl">${dim[0]}</div><div class="db"><div class="df${low?' low':''}" style="width:${num===null?'0':num}%"></div></div><div class="dp">${num===null?'?':num+'%'}</div>`+
+        (factors?`<div class="tip"><span class="th">${dim[0]} · 估价因素</span>${factors}</div>`:'')+`</div>`;
+    }).join("")}</div>
+    ${d.health.events.length?`<div class="devents">`+d.health.events.map(e=>`<div class="de"><span class="dt">${e[0]}</span>${e[1]}<span class="dg">${e[2]}</span></div>`).join("")+`</div>`:''}`;
+
+
+  return `
+  <div class="col">
+    <div class="cover">
+      <div class="cover-top">
+        <div class="portrait">人物画像<br>PortraitsCache</div>
+        <div class="covinfo">
+          <div class="name">${d.name}</div>
+          <div class="role">${d.role}</div>
+          ${incompleteHtml}
+          <div class="days-line">
+            <span class="days">${d.days}</span>
+            ${statusHtml}
+          </div>
+          ${tierInlineHtml}
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">榨取总账 <span class="cmp">UIComponents.StatCell ×3</span></div>
+    ${ledgerHtml}
+
+    <div class="sec">产出核销 <span class="cmp">UIComponents.ProgressBar</span></div>
+    ${vcHtml}
+
+    <div class="sec">健康残值 · 资产折旧 <span class="cmp">StatCell + ProgressBar + TimelineNode</span></div>
+    ${hvHtml}
+
+    <div class="note">本页为「庄园主视角的血汗账本」提案（引擎可行版）：旋转印章降级为方括号朱批（RimWorld Widgets 无旋转 Label API），占比条改纯色（无渐变）。维度条悬停评价窗模拟原生 TooltipHandler.TipRegion（✓正因素绿 / ✗负因素红）。健康残值 = 综合健康分折算银币（纯派生，阈值由 Defs 驱动、UI 零硬编码）；令牌统一走 UITheme。逐项对应原生组件，C# 落地 1:1。</div>
+  </div>`;
+}
+
+function show(kind){
+  ['normal','mid','dead','big'].forEach(k=>{
+    const btn = document.getElementById('b-'+k);
+    if(btn) btn.className = k===kind?'on':'';
+  });
+  const data = kind==='normal'?NORMAL : kind==='mid'?MID : kind==='dead'?DEAD : BIG;
+  document.getElementById('page').innerHTML = render(data);
+}
+show('normal');
+</script>
+</body>
+</html>

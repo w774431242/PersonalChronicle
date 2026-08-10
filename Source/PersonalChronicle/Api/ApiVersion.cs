@@ -25,8 +25,16 @@ namespace PersonalChronicle.Api
             Patch = patch;
         }
 
-        /// <summary>v4.1 introduced the unified API facade (this namespace).</summary>
-        public static ApiVersion Current { get; } = new ApiVersion(4, 1, 0);
+        /// <summary>
+        /// Public API contract version. Bumped in lock-step with the shipped
+        /// modVersion: v4.1 unified the API facade, v4.2 exposed the work-intensity
+        /// provider contract, v4.3 added the faction codex, v4.5 introduced the UI
+        /// Design System, v4.6 added the inspect-tab integration and v4.7 the
+        /// legacy/ownership chain. The Minor level tracks the latest capability so
+        /// <see cref="IPersonalChronicleApi.Supports"/> reports true for every
+        /// capability actually shipped.
+        /// </summary>
+        public static ApiVersion Current { get; } = new ApiVersion(4, 7, 0);
 
         /// <summary>
         /// Returns true when this version satisfies a (major, minMinor) contract,

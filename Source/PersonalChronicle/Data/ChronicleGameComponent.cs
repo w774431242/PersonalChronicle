@@ -970,6 +970,11 @@ namespace PersonalChronicle.Data
             // 源 = 地图 + 商队（ChronicleColonistScanner 已移除过宽的
             // Find.WorldPawns.AllPawnsAlive 世界兜底，避免在 8≠3 误统计）。
             // 角色随记录一并写入，UI 据此区分徽标。
+            //
+            // Fresh colony (TicksGame == 0 and no prior objects): founding pawns are
+            // treated as joined at tick 0, not as mid-install backfill (-1).
+            bool freshStart = Find.TickManager.TicksGame <= 0 && Objects.Count == 0;
+            long joinTick = freshStart ? 0L : -1L;
             List<ColonyMember> people = ChronicleColonistScanner.EnumerateCurrentPeople();
             for (int i = 0; i < people.Count; i++)
             {
@@ -978,7 +983,7 @@ namespace PersonalChronicle.Data
                 {
                     continue;
                 }
-                AddObject(CreateRecord(member.Pawn, -1L, member.Role));
+                AddObject(CreateRecord(member.Pawn, joinTick, member.Role));
             }
         }
 

@@ -84,6 +84,9 @@ namespace PersonalChronicle
             Harmony harmony = new Harmony("PersonalChronicle.Archive");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             ValidateEventTypeKeys();
+            // v4.6: add the per-pawn "档案" tab to every humanlike inspect pane.
+            // Runs here because the DefDatabase is fully populated at this point.
+            Archive.ChronicleInspectTabInjector.InjectAll();
         }
 
         /// <summary>

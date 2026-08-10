@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PersonalChronicle.Application;
+using PersonalChronicle.Archive.UI;
 using PersonalChronicle.Domain;
 using RimWorld;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace PersonalChronicle.Archive
     ///
     ///   Shell   — header + left sidebar + main content.
     ///   Home / Overview / Event — unchanged shell behaviour.
-    ///   Pawn detail tabs (5): Overview · Timeline · Career · CombatLog · Social.
+    ///   Pawn detail tabs (4): Overview · Career · CombatLog · Social.
     ///   Weapon detail tabs (4): Overview · Timeline · CombatLog · Custody.
     ///
     /// Archive theme: historical facts and cumulative stats only — not a
@@ -51,6 +52,10 @@ namespace PersonalChronicle.Archive
         private const int ImportantCardCount = 4;
         private const int MaxChipsPerEvent = 3;
         private const long CacheRefreshInterval = 120L;
+        // v4.5.2: left badge (intensity tier) refresh throttle — mapped from the
+        // per-30-game-day cadence the design calls for, expressed in ticks.
+        // Computation/derivation is filtered upstream; this only controls pull cadence.
+        private const long BadgeRefreshIntervalTicks = 30L * GenDate.TicksPerDay;
 
         // P4-1: health summary thresholds (SummaryHealthPercent bands).
         private const float HealthGoodThreshold = 0.6f;
@@ -76,7 +81,7 @@ namespace PersonalChronicle.Archive
         private const float FactionCodexTwoColumnWidth = 720f;
         private const float FactionCodexPadding = 10f;
         private const float FactionCodexHeaderHeight = 26f;
-        private const float FactionCodexStatHeight = 52f;
+        private const float FactionCodexStatHeight = 64f;
         private const float FactionCodexBarHeight = 6f;
         private const float FactionCodexDateColWidth = 96f;
         private const float FactionCodexTitleColOffset = 100f;
@@ -127,26 +132,47 @@ namespace PersonalChronicle.Archive
         private List<FactionCodexView> cachedFactionCodex = new List<FactionCodexView>();
         /// <summary>v4.3: faction keys whose kill detail is expanded inline.</summary>
         private HashSet<string> expandedFactions = new HashSet<string>();
+        /// <summary>v4.7: expand the full legacy holder table (default collapsed past 5 rows).</summary>
+        private bool legacyExpanded;
         /// <summary>v4.3: per-faction scroll position inside the expanded kill-detail viewport.</summary>
         private Dictionary<string, Vector2> expandedScroll = new Dictionary<string, Vector2>();
-        private List<ProductionLineView> cachedProductionLines = new List<ProductionLineView>();
+        private List<ReadModels.ProductionLineView> cachedProductionLines = new List<ReadModels.ProductionLineView>();
         private ProductionSummaryView cachedProductionSummary =
             new ProductionSummaryView(0, 0f, -1L, new List<ProductionTypeView>());
         private WorkIntensityView cachedWorkIntensity =
             new WorkIntensityView(WorkIntensityEvaluation.Undefined(null, "builtin"), null);
         private IReadOnlyList<WorkIntensityWorkTypeView> cachedIntensityWorkTypes =
             new List<WorkIntensityWorkTypeView>();
+        // L1: intensity tier ladder (Def-driven, stable across rebuilds) is pulled
+        // once at the throttled badge cadence instead of every draw frame.
+        private IReadOnlyList<WorkIntensityTierView> cachedTiers =
+            new List<WorkIntensityTierView>();
         private string cachedDeathKiller;
         private string cachedCraftCrafterId;
         private string cachedCraftCrafterLabel;
         private long cachedCraftTick = -1L;
+
+        // v4.4: Pawn Overview derived content (mirrors DetailSnapshot; populated by
+        // RebuildDetailCache from the read-model, never recomputed in the draw path).
+        private IReadOnlyList<ReadModels.LifePhaseView> cachedLifePhases = new List<ReadModels.LifePhaseView>();
+        private IReadOnlyList<ReadModels.CareerBarView> cachedCareerBars = new List<ReadModels.CareerBarView>();
+        private ReadModels.FootprintLedgerView cachedFootprint = new ReadModels.FootprintLedgerView();
+        private IReadOnlyList<ReadModels.MilestoneView> cachedMilestones = new List<ReadModels.MilestoneView>();
+        private IReadOnlyList<ReadModels.KeyEventView> cachedKeyEvents = new List<ReadModels.KeyEventView>();
+        private ReadModels.HealthView cachedHealth = new ReadModels.HealthView();
+        /// <summary>v4.7: legacy chain (传承) for equipment detail — mirrors DetailSnapshot.Legacy.</summary>
+        private ReadModels.LegacyView cachedLegacy = new ReadModels.LegacyView();
 
         // Event view cache.
         private List<TreeLineView> cachedEventTree = new List<TreeLineView>();
         private string cachedEventDescription = string.Empty;
 
         private long nextRefreshTick;
-        private long cachedDataRevision = -1L;
+        // v4.5.2: throttle for the left intensity badge. Only the *pull cadence*
+        // is throttled; derivation/computation lives in the service and is not
+        // re-run here. Mapped to 30 game-days via BadgeRefreshIntervalTicks.
+        private long nextBadgeRefreshTick;
+        private string cachedBadgeObjectId = string.Empty;
 
         // Timeline presentation state. These are read-model filters only; they
         // never change what the capture layer persists.
@@ -172,16 +198,19 @@ namespace PersonalChronicle.Archive
         // delegated here; the window only consumes immutable snapshots.
         private ReadModels.IArchiveUiDataProvider uiDataProvider = new ReadModels.ArchiveUiDataProvider();
 
-        // v3.1: five biography tabs (Stats removed; Work/Skills/… merged into Career/Social).
+        // v3.1: biography tabs (Stats removed; Work/Skills/… merged into Career/Social).
+        // v4.6.6: Timeline tab removed from the Pawn detail view per request
+        // (pawn timeline is surfaced via the Home chronicle timeline instead).
         private static readonly string[] PawnTabKeys =
         {
-            "Overview", "Timeline", "Career", "CombatLog", "Social"
+            "Overview", "Career", "CombatLog", "Social"
         };
 
-        // v3.1: four item tabs (Stats/Craft merged into Overview; Holders → Custody).
+        // v4.7: item tabs — Custody (流转) renamed to Legacy (传承), the ownership
+        // transfer chain view.
         private static readonly string[] WeaponTabKeys =
         {
-            "Overview", "Timeline", "CombatLog", "Custody"
+            "Overview", "Timeline", "CombatLog", "Legacy"
         };
 
         public override Vector2 RequestedTabSize
@@ -215,14 +244,19 @@ namespace PersonalChronicle.Archive
 
         private void RefreshCacheIfNeeded(IArchiveService service)
         {
-            long revision = service.GetDataRevision();
-            if (GenTicks.TicksGame < nextRefreshTick && revision == cachedDataRevision)
+            // v4.5.3: the global DataRevision bumps every WorkSampleIntervalTicks
+            // (2s) via MarkChanged(), so it is NOT a safe gate on its own — comparing
+            // it would force a full rebuild on every window tick, defeating the
+            // CacheRefreshInterval throttle (RimWorld manual: never recompute in the
+            // draw path; throttle expensive rebuilds). The throttle gate (tick-based)
+            // is authoritative; revision is only tracked so RefreshNow can refresh
+            // view-scoped caches when the underlying data actually changed.
+            if (GenTicks.TicksGame < nextRefreshTick)
             {
                 return;
             }
             nextRefreshTick = GenTicks.TicksGame + CacheRefreshInterval;
             RefreshNow(service);
-            cachedDataRevision = revision;
         }
 
         private void RefreshNow(IArchiveService service)
@@ -239,10 +273,27 @@ namespace PersonalChronicle.Archive
             RebuildPawnCounts(home);
             RebuildRecentLines(home);
             RebuildImportantCards(home);
-            RebuildDetailCache(service, revision);
-            RebuildEventCache(service);
-            // Timeline view reads all events (filtered/sorted at draw time).
-            cachedTimelineEvents = service.GetAllEvents();
+            // v4.5.3: view-scoped cache short-circuits. Rebuilding the full detail
+            // graph (BuildDetail + ScanCombatData + production + intensity + links)
+            // on every throttled refresh is wasted work while the user is on Home /
+            // Overview / Event views, which never render it. NavigateTarget already
+            // force-rebuilds the detail cache on tab entry, so the previous snapshot
+            // stays valid until the user returns to a detail tab.
+            bool detailViewActive = view == MainView.PawnDetail || view == MainView.WeaponDetail;
+            if (detailViewActive)
+            {
+                RebuildDetailCache(service, revision);
+            }
+            RebuildEventCache(service, revision);
+            // v4.5.3: only pull the full event stream when the Home timeline is the
+            // active presentation; the KPI dashboard never reads cachedTimelineEvents.
+            if (homeViewMode == HomeViewMode.Timeline)
+            {
+                // Sorted once at cache-rebuild time via the Read Model (never per-frame
+                // in DrawHomeTimeline, and the ordering/null-guard lives in the snapshot
+                // builder, not the window — design doc §7.4).
+                cachedTimelineEvents = uiDataProvider.BuildTimelineEvents(service, revision);
+            }
         }
 
         private void RebuildCategoryCacheViaProvider(IArchiveService service, long revision)
@@ -360,6 +411,14 @@ namespace PersonalChronicle.Archive
             // provider so the window never issues the raw query/sort itself.
             ReadModels.DetailSnapshot detail = uiDataProvider.BuildDetail(service, detailObjectId, revision);
             cachedDetailObject = detail.DetailObject;
+            // v4.4: map derived overview views (read-model is the single source).
+            cachedLifePhases = detail.LifePhases ?? new List<ReadModels.LifePhaseView>();
+            cachedCareerBars = detail.CareerBars ?? new List<ReadModels.CareerBarView>();
+            cachedFootprint = detail.Footprint ?? new ReadModels.FootprintLedgerView();
+            cachedMilestones = detail.Milestones ?? new List<ReadModels.MilestoneView>();
+            cachedKeyEvents = detail.KeyEvents ?? new List<ReadModels.KeyEventView>();
+            cachedHealth = detail.Health ?? new ReadModels.HealthView();
+            cachedLegacy = detail.Legacy ?? new ReadModels.LegacyView();
             if (cachedDetailObject == null)
             {
                 // Object vanished (data cleaned up): safe fallback to overview.
@@ -368,10 +427,12 @@ namespace PersonalChronicle.Archive
                 return;
             }
 
+            // v4.5.4: RawEvents is already sorted ascending + null-free from the
+            // Read Model; the window no longer re-queries or re-orders.
             IReadOnlyList<ChronicleEvent> events = detail.RawEvents;
             if (events != null && events.Count > 0)
             {
-                List<ChronicleEvent> sorted = events.Where(ev => ev != null).OrderBy(ev => ev.Tick).ToList();
+                List<ChronicleEvent> sorted = new List<ChronicleEvent>(events);
                 cachedDetailRawEvents = sorted;
                 cachedDetailEvents = new List<EventLineView>(sorted.Count);
                 for (int i = 0; i < sorted.Count; i++)
@@ -391,14 +452,26 @@ namespace PersonalChronicle.Archive
                 ScanCombatData(service);
             }
 
-            // These read models are independent of event history. A pawn with
-            // sampled work but no captured event must still render Career data.
-            BuildProductionCache();
+            // v4.6.5: production ledger comes from the Read Model (BuildDetail),
+            // no per-rebuild aggregation in the window.
+            cachedProductionLines = new List<ReadModels.ProductionLineView>(
+                detail.ProductionLines ?? (IReadOnlyList<ReadModels.ProductionLineView>)new List<ReadModels.ProductionLineView>());
             cachedProductionSummary = service.GetProductionSummary(detailObjectId);
             IWorkIntensityService intensityService = service as IWorkIntensityService;
             if (intensityService != null && cachedDetailObject is PawnObject)
             {
-                cachedWorkIntensity = intensityService.GetWorkIntensity(detailObjectId);
+                // v4.5.2: left badge refresh throttled to 30 game-days. We only
+                // re-pull from the service at that cadence (or on object switch);
+                // the derivation itself is filtered upstream. The work-type
+                // breakdown stays current with the normal cache cadence.
+                if (detailObjectId != cachedBadgeObjectId
+                    || GenTicks.TicksGame >= nextBadgeRefreshTick)
+                {
+                    cachedWorkIntensity = intensityService.GetWorkIntensity(detailObjectId);
+                    cachedTiers = intensityService.GetIntensityTiers();
+                    nextBadgeRefreshTick = GenTicks.TicksGame + BadgeRefreshIntervalTicks;
+                    cachedBadgeObjectId = detailObjectId;
+                }
                 cachedIntensityWorkTypes = intensityService.GetWorkTypeBreakdown(
                     detailObjectId,
                     includeZeroWorkTypes: false);
@@ -439,15 +512,26 @@ namespace PersonalChronicle.Archive
             cachedFactionCodex = new List<FactionCodexView>();
             expandedFactions.Clear();
             expandedScroll.Clear();
-            cachedProductionLines = new List<ProductionLineView>();
+            cachedProductionLines = new List<ReadModels.ProductionLineView>();
             cachedProductionSummary = new ProductionSummaryView(0, 0f, -1L, new List<ProductionTypeView>());
             cachedWorkIntensity = new WorkIntensityView(
                 WorkIntensityEvaluation.Undefined(null, "builtin"), null);
             cachedIntensityWorkTypes = new List<WorkIntensityWorkTypeView>();
+            cachedTiers = new List<WorkIntensityTierView>();
+            nextBadgeRefreshTick = 0L;
+            cachedBadgeObjectId = string.Empty;
             cachedDeathKiller = null;
             cachedCraftCrafterId = null;
             cachedCraftCrafterLabel = null;
             cachedCraftTick = -1L;
+            cachedLifePhases = new List<ReadModels.LifePhaseView>();
+            cachedCareerBars = new List<ReadModels.CareerBarView>();
+            cachedFootprint = new ReadModels.FootprintLedgerView();
+            cachedMilestones = new List<ReadModels.MilestoneView>();
+            cachedKeyEvents = new List<ReadModels.KeyEventView>();
+            cachedHealth = new ReadModels.HealthView();
+            cachedLegacy = new ReadModels.LegacyView();
+            legacyExpanded = false;
         }
 
         private static List<ChipView> BuildChips(ChronicleEvent ev, IArchiveService service)
@@ -871,64 +955,6 @@ namespace PersonalChronicle.Archive
         }
 
         /// <summary>
-        /// LD-1: aggregates the detail object's Crafted/Built events into a
-        /// per-ThingDef table (item type, count, last tick). Classification is
-        /// Def-driven via IsCraftEvent/IsBuiltEvent — never TypeKey substrings.
-        /// The ThingDefName is parsed from the Primary ObjectRef stable id
-        /// ("&lt;defName&gt;:&lt;thingIDNumber&gt;", the shape ArchiveService writes).
-        /// Runs on the refresh cadence (RebuildDetailCache), never per frame.
-        /// </summary>
-        private void BuildProductionCache()
-        {
-            cachedProductionLines = new List<ProductionLineView>();
-            if (cachedDetailRawEvents == null)
-            {
-                return;
-            }
-            Dictionary<string, ProductionLineView> byDef = new Dictionary<string, ProductionLineView>();
-            for (int i = 0; i < cachedDetailRawEvents.Count; i++)
-            {
-                ChronicleEvent ev = cachedDetailRawEvents[i];
-                if (ev == null || (!IsCraftEvent(ev) && !IsBuiltEvent(ev)))
-                {
-                    continue;
-                }
-                ObjectRef primary = ev.Primary;
-                if (primary == null || string.IsNullOrEmpty(primary.StableId))
-                {
-                    continue;
-                }
-                string defName = ThingDefNameFromStableId(primary.StableId);
-                if (string.IsNullOrEmpty(defName))
-                {
-                    continue;
-                }
-                if (byDef.TryGetValue(defName, out ProductionLineView line))
-                {
-                    line.Count++;
-                    if (ev.Tick > line.LastTick)
-                    {
-                        line.LastTick = ev.Tick;
-                        line.StableId = primary.StableId;
-                    }
-                    byDef[defName] = line;
-                }
-                else
-                {
-                    byDef[defName] = new ProductionLineView
-                    {
-                        DefName = defName,
-                        Label = ThingDefLabel(defName),
-                        Count = 1,
-                        LastTick = ev.Tick,
-                        StableId = primary.StableId
-                    };
-                }
-            }
-            cachedProductionLines = byDef.Values.OrderByDescending(line => line.LastTick).ToList();
-        }
-
-        /// <summary>
         /// Parses the ThingDefName out of a thing stable id. Shape written by
         /// ArchiveService: "&lt;defName&gt;:&lt;thingIDNumber&gt;". Returns the
         /// raw id unchanged when the shape is unexpected (defensive).
@@ -947,7 +973,7 @@ namespace PersonalChronicle.Archive
             return stableId.Substring(0, colon);
         }
 
-        private void RebuildEventCache(IArchiveService service)
+        private void RebuildEventCache(IArchiveService service, long revision)
         {
             cachedEventTree = new List<TreeLineView>();
             cachedEventDescription = string.Empty;
@@ -1055,21 +1081,11 @@ namespace PersonalChronicle.Archive
                 branches.Add(BuildBranch("PersonalChronicle.UI.Participants", participants, NavTarget.Pawn, service));
             }
 
-            // Follow-up events: later events of the primary object (honest
-            // derivation from the event index, capped at 3).
-            List<ChronicleEvent> followups = new List<ChronicleEvent>();
-            if (primary != null && !string.IsNullOrEmpty(primary.StableId))
-            {
-                IReadOnlyList<ChronicleEvent> evs = service.GetEventsFor(primary.StableId);
-                if (evs != null)
-                {
-                    followups = evs
-                        .Where(e => e != null && e.Tick > cachedEventDetail.Tick)
-                        .OrderBy(e => e.Tick)
-                        .Take(3)
-                        .ToList();
-                }
-            }
+            // Follow-up events: later events of the primary object. The Where/OrderBy/
+            // Take derivation now lives in the Read Model (ArchiveUiDataProvider.BuildEvent),
+            // not in the window cache-rebuild path. (P2-7)
+            List<ChronicleEvent> followups = new List<ChronicleEvent>(
+                uiDataProvider.BuildEvent(service, cachedEventDetail, revision).FollowupEvents);
             if (followups.Count > 0)
             {
                 BranchView b = new BranchView();
@@ -1167,6 +1183,26 @@ namespace PersonalChronicle.Archive
             overviewScroll = Vector2.zero;
         }
 
+        /// <summary>
+        /// v4.6: public navigation entry used by the pawn inspect tab
+        /// (<see cref="ITab_Pawn_Chronicle"/>) to deep-link into a pawn's detail
+        /// view. Resolves the service itself so external callers stay decoupled
+        /// from the service singleton.
+        /// </summary>
+        public void RequestPawnDetail(string stableId)
+        {
+            if (string.IsNullOrEmpty(stableId))
+            {
+                return;
+            }
+            IArchiveService service = PersonalChronicleMod.ArchiveService;
+            if (service == null)
+            {
+                return;
+            }
+            OpenPawnDetail(service, stableId);
+        }
+
         private void OpenPawnDetail(IArchiveService service, string stableId)
         {
             if (service == null || string.IsNullOrEmpty(stableId))
@@ -1206,7 +1242,7 @@ namespace PersonalChronicle.Archive
             detailObjectId = null;
             ClearDetailCache();
             eventScroll = Vector2.zero;
-            RebuildEventCache(service);
+            RebuildEventCache(service, service.GetDataRevision());
         }
 
         private void NavigateTarget(IArchiveService service, NavTarget target, string stableId, ChronicleEvent targetEvent)
@@ -1247,6 +1283,9 @@ namespace PersonalChronicle.Archive
 
         private void DrawSidebar(Rect rect, IArchiveService service)
         {
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
             ArchiveUiStyle.DrawPanel(rect);
             Rect inner = rect.ContractedBy(10f);
 
@@ -1298,6 +1337,9 @@ namespace PersonalChronicle.Archive
             y = DrawSidebarTool(inner, y, itemHeight, itemGap, "PersonalChronicle.UI.Favorites");
             y = DrawSidebarTool(inner, y, itemHeight, itemGap, "PersonalChronicle.UI.Milestones");
             DrawSidebarTool(inner, y, itemHeight, itemGap, "PersonalChronicle.UI.Search");
+            GUI.color = prevColor;
+            Text.Font = prevFont;
+            Text.Anchor = prevAnchor;
         }
 
         private float DrawSidebarCategory(Rect inner, float y, float height, float gap, string categoryKey, IArchiveService service)
@@ -1321,18 +1363,24 @@ namespace PersonalChronicle.Archive
 
         private float DrawSidebarTool(Rect inner, float y, float height, float gap, string labelKey)
         {
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
             Rect item = new Rect(inner.x, y, inner.width, height);
             ArchiveUiStyle.DrawSelectedNavigation(item, false);
             GUI.color = ArchiveUiStyle.Dim;
             Text.Font = GameFont.Small;
             Widgets.Label(new Rect(item.x + 13f, item.y + 7f, item.width - 20f, 20f), labelKey.Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
+            Text.Font = prevFont;
             TooltipHandler.TipRegion(item, "PersonalChronicle.UI.ToolsPlaceholder".Translate().ToString());
             return y + height + gap;
         }
 
         private static bool DrawSidebarItem(float x, float y, float width, float height, string label, string countText, bool selected)
         {
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
             Rect rect = new Rect(x, y, width, height);
             ArchiveUiStyle.DrawSelectedNavigation(rect, selected);
             Text.Font = GameFont.Small;
@@ -1345,8 +1393,10 @@ namespace PersonalChronicle.Archive
                 Widgets.Label(new Rect(rect.x + 13f, rect.y + 7f, rect.width - 60f, 20f), label);
                 Text.Anchor = TextAnchor.MiddleRight;
                 Widgets.Label(new Rect(rect.x + rect.width - 48f, rect.y + 7f, 38f, 20f), countText);
-                Text.Anchor = TextAnchor.UpperLeft;
             }
+            Text.Anchor = prevAnchor;
+            Text.Font = prevFont;
+            GUI.color = prevColor;
             return Widgets.ButtonInvisible(rect);
         }
 
@@ -1446,6 +1496,11 @@ namespace PersonalChronicle.Archive
                 {
                     homeViewMode = modes[i];
                     PersistHomeViewMode(service);
+                    // v4.5.3: switching the home presentation immediately pulls the
+                    // view-scoped cache (e.g. the full event stream for Timeline) so
+                    // the new view is never blank until the next throttled refresh.
+                    nextRefreshTick = 0L;
+                    RefreshNow(service);
                 }
                 x += tabWidth + gap;
             }
@@ -1459,19 +1514,22 @@ namespace PersonalChronicle.Archive
 
         private void DrawHomeTimeline(Rect viewRect, float y, IArchiveService service)
         {
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            try
+            {
             if (cachedTimelineEvents == null || cachedTimelineEvents.Count == 0)
             {
                 Text.Font = GameFont.Small;
                 GUI.color = ArchiveUiStyle.SecondaryText;
                 Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 24f),
                     "PersonalChronicle.UI.NoTimelineEvents".Translate().ToString());
-                GUI.color = Color.white;
-                Text.Font = GameFont.Small;
                 return;
             }
-            // Sort ascending by Tick for a chronological spine.
-            List<ChronicleEvent> ordered = new List<ChronicleEvent>(cachedTimelineEvents);
-            ordered.Sort((a, b) => a.Tick.CompareTo(b.Tick));
+            // cachedTimelineEvents is already sorted ascending by Tick at
+            // cache-rebuild time; reuse directly (no per-frame allocation/sort).
+            IReadOnlyList<ChronicleEvent> ordered = cachedTimelineEvents;
             float spineX = viewRect.x + 14f;
             float nodeX = spineX + 18f;
             float rowH = 54f;
@@ -1531,7 +1589,13 @@ namespace PersonalChronicle.Archive
                 left = !left;
                 currentY += rowH;
             }
-            Text.Font = GameFont.Small;
+            }
+            finally
+            {
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+            }
         }
 
         private static float ComputeHomeHeight(float width)
@@ -1629,30 +1693,44 @@ namespace PersonalChronicle.Archive
 
         private static void DrawHomeMetricCard(Rect rect, string label, string value, string subLabel, Color accent, bool isLarge)
         {
-            ArchiveUiStyle.DrawPanel(rect);
-            float pad = isLarge ? 12f : 8f;
-            Rect inner = rect.ContractedBy(pad);
-            Text.Font = isLarge ? GameFont.Small : GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(inner.x, inner.y, inner.width, isLarge ? 18f : 16f), label);
-            GUI.color = Color.white;
-            Text.Font = isLarge ? GameFont.Medium : GameFont.Small;
-            float valueY = isLarge ? inner.y + 24f : inner.y + 18f;
-            float valueH = isLarge ? 32f : 22f;
-            GUI.color = accent;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            Widgets.Label(new Rect(inner.x, valueY, inner.width, valueH), value);
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
-            if (!string.IsNullOrEmpty(subLabel))
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            try
             {
+                ArchiveUiStyle.DrawPanel(rect);
+                float pad = isLarge ? 12f : 8f;
+                Rect inner = rect.ContractedBy(pad);
+
+                // Label — Tiny, CJK line-height >= 18f.
                 Text.Font = GameFont.Tiny;
-                GUI.color = ArchiveUiStyle.Muted;
-                float subY = isLarge ? inner.y + 56f : inner.y + 38f;
-                Widgets.Label(new Rect(inner.x, subY, inner.width, isLarge ? 18f : 14f), subLabel);
-                GUI.color = Color.white;
+                const float labelH = 18f;
+                GUI.color = UITheme.Muted;
+                Widgets.Label(new Rect(inner.x, inner.y, inner.width, labelH), label);
+
+                // Value — Medium, CJK line-height >= 28f (small cards get 28f, large 32f).
+                Text.Font = GameFont.Medium;
+                float valueH = isLarge ? 32f : 28f;
+                float valueY = isLarge ? inner.y + 24f : inner.y + 22f;
+                GUI.color = accent;
+                Text.Anchor = TextAnchor.MiddleLeft;
+                Widgets.Label(new Rect(inner.x, valueY, inner.width, valueH), value);
+                Text.Anchor = TextAnchor.UpperLeft;
+
+                if (!string.IsNullOrEmpty(subLabel))
+                {
+                    Text.Font = GameFont.Tiny;
+                    GUI.color = UITheme.Muted;
+                    float subY = isLarge ? inner.y + 56f : inner.y + 50f;
+                    Widgets.Label(new Rect(inner.x, subY, inner.width, 18f), subLabel);
+                }
             }
-            Text.Font = GameFont.Small;
+            finally
+            {
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+            }
         }
 
         private void DrawRecentHistory(Rect rect, IArchiveService service)
@@ -1694,26 +1772,30 @@ namespace PersonalChronicle.Archive
                 return;
             }
 
-            const float cardHeight = 58f;
-            const float cardGap = 8f;
+            // 64f = CJK-safe three-line card (Tiny 18 + Small 24 + Tiny 18 = 60f + 4f pad).
+            const float cardHeight = 64f;
+            const float cardGap = UITheme.GridGap;
             for (int i = 0; i < cachedImportantCards.Count; i++)
             {
                 ImportantCardView card = cachedImportantCards[i];
                 Rect cardRect = new Rect(rect.x, y, rect.width, cardHeight);
                 ArchiveUiStyle.DrawCard(cardRect, ArchiveUiStyle.Accent);
 
+                Color prevColor = GUI.color;
+                GameFont prevFont = Text.Font;
                 Text.Font = GameFont.Tiny;
                 GUI.color = ArchiveUiStyle.Accent;
-                Widgets.Label(new Rect(cardRect.x + 10f, cardRect.y + 4f, cardRect.width - 20f, 16f), card.TagLabel);
-                GUI.color = Color.white;
+                Widgets.Label(new Rect(cardRect.x + UITheme.CardPadX, cardRect.y + 4f, cardRect.width - UITheme.CardPadX * 2f, 18f), card.TagLabel);
 
                 Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(cardRect.x + 10f, cardRect.y + 20f, cardRect.width - 20f, 20f), card.Label);
+                GUI.color = ArchiveUiStyle.Text;
+                Widgets.Label(new Rect(cardRect.x + UITheme.CardPadX, cardRect.y + 22f, cardRect.width - UITheme.CardPadX * 2f, 24f), card.Label);
 
                 Text.Font = GameFont.Tiny;
                 GUI.color = ArchiveUiStyle.Muted;
-                Widgets.Label(new Rect(cardRect.x + 10f, cardRect.y + 40f, cardRect.width - 20f, 16f), card.SubLabel);
-                GUI.color = Color.white;
+                Widgets.Label(new Rect(cardRect.x + UITheme.CardPadX, cardRect.y + 46f, cardRect.width - UITheme.CardPadX * 2f, 18f), card.SubLabel);
+                GUI.color = prevColor;
+                Text.Font = prevFont;
 
                 if (card.Target != NavTarget.None && Widgets.ButtonInvisible(cardRect))
                 {
@@ -1831,16 +1913,16 @@ namespace PersonalChronicle.Archive
                 ArchiveUiStyle.DrawCard(card, ArchiveCardAccent(obj));
                 Text.Font = GameFont.Tiny;
                 GUI.color = ArchiveUiStyle.Muted;
-                Widgets.Label(new Rect(card.x + 8f, card.y + 4f, card.width - 16f, 16f),
+                Widgets.Label(new Rect(card.x + UITheme.CardPadX, card.y + 4f, card.width - UITheme.CardPadX * 2f, 16f),
                     clickable ? CategoryLabel(categoryKey) : "PersonalChronicle.UI.StatsOnlyNote".Translate().ToString());
                 GUI.color = Color.white;
 
                 Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(card.x + 8f, card.y + 22f, card.width - 16f, 20f), ObjectDisplayLabel(obj));
+                Widgets.Label(new Rect(card.x + UITheme.CardPadX, card.y + 22f, card.width - UITheme.CardPadX * 2f, 20f), ObjectDisplayLabel(obj));
 
                 Text.Font = GameFont.Tiny;
                 GUI.color = ArchiveUiStyle.Muted;
-                Widgets.Label(new Rect(card.x + 8f, card.y + 44f, card.width - 16f, 18f), ObjectSubLabel(obj));
+                Widgets.Label(new Rect(card.x + UITheme.CardPadX, card.y + 44f, card.width - UITheme.CardPadX * 2f, 18f), ObjectSubLabel(obj));
                 GUI.color = Color.white;
 
                 if (clickable && Widgets.ButtonInvisible(card))
@@ -1945,9 +2027,38 @@ namespace PersonalChronicle.Archive
                 return 300f + relationCount * 8f + socialEvents * (TimelineRowHeight + 2f)
                     + cachedLinkedObjects.Count * 24f;
             }
-            // Overview contains live skills/health/relations and may vary by
-            // DLC or mod; leave generous room and keep the child scrollable.
-            return Mathf.Max(panel.height, 920f);
+            if (tab == "Legacy")
+            {
+                // Epithet + verdict + summary KPI + current-holder + table header +
+                // (rows up to the cap, expanded when toggled) + spacing.
+                ReadModels.LegacyView legacy = cachedLegacy ?? new ReadModels.LegacyView();
+                float h = 26f; // epithet
+                if (!string.IsNullOrEmpty(legacy.TitleText)) h += UITheme.FontBodyLineHeight + 8f;
+                if (!string.IsNullOrEmpty(legacy.VerdictText)) h += UITheme.FontBodyLineHeight * 2f + UITheme.SpaceSm;
+                if (legacy.IsEmpty) return h + 26f;
+                h += UITheme.SectionTitleHeight + UIComponents.StatCellMinHeight + UITheme.SpaceSm; // summary
+                h += 26f; // current holder row
+                h += UITheme.SectionTitleHeight; // holders title
+                int rows = legacy.Holders != null
+                    ? Mathf.Min(legacy.Holders.Count, legacyExpanded ? int.MaxValue : 5)
+                    : 0;
+                h += rows * (UITheme.FontBodyLineHeight + 6f);
+                if (legacy.Holders != null && legacy.Holders.Count > 5) h += 30f; // toggle
+                return Mathf.Max(panel.height, h + 12f);
+            }
+            // Overview: cover(83, +20 when a tier medal row is shown) + ledger(98) + output(≥36) + health(~250) + spacing.
+            bool tierShown = cachedWorkIntensity != null && cachedWorkIntensity.IsDefined;
+            float coverH = 83f + (tierShown ? 20f : 0f);
+            float ledgerH = 26f + UIComponents.StatCellMinHeight + 8f;
+            int typeRows = cachedProductionSummary != null && cachedProductionSummary.Types != null
+                ? Mathf.Min(cachedProductionSummary.Types.Count, 5) : 0;
+            if (typeRows == 0) typeRows = 1; // empty placeholder
+            float outputH = 26f + typeRows * 22f + 8f;
+            int evCount = cachedHealth != null && cachedHealth.Events != null
+                ? Mathf.Min(cachedHealth.Events.Count, 6) : 0;
+            float eventsH = evCount > 0 ? (evCount * 22f + 4f) : 18f;
+            float healthH = 26f + 80f + 8f + 56f + 8f + 18f + eventsH + 6f + 22f + 12f;
+            return Mathf.Max(panel.height, coverH + 12f + ledgerH + outputH + healthH);
         }
 
         private static float TimelineLineHeight(EventLineView line, float width)
@@ -2003,11 +2114,13 @@ namespace PersonalChronicle.Archive
 
         private static void DrawMetaLine(Rect rect, float y, string text)
         {
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.SecondaryText;
             Widgets.Label(new Rect(rect.x, y, rect.width, 18f), text);
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
+            GUI.color = prevColor;
+            Text.Font = prevFont;
         }
 
         private float DrawTabBar(Rect rect, float y, IArchiveService service)
@@ -2030,12 +2143,11 @@ namespace PersonalChronicle.Archive
                 bool selected = i == detailTabIndex;
                 ArchiveUiStyle.DrawSelectedNavigation(tab, selected);
                 string label = TabLabel(tabs[i]);
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(tab, label);
-                Text.Anchor = TextAnchor.UpperLeft;
+                UIComponents.Label(tab, label, GameFont.Small,
+                    selected ? UITheme.Text : UITheme.Muted, TextAnchor.MiddleCenter);
                 if (selected)
                 {
-                    ArchiveUiStyle.DrawRule(new Rect(tab.x, tab.yMax - 2f, tab.width, 2f), ArchiveUiStyle.Accent);
+                    UIComponents.Rule(new Rect(tab.x, tab.yMax - 2f, tab.width, 2f), UITheme.Accent);
                 }
                 if (Widgets.ButtonInvisible(tab))
                 {
@@ -2085,8 +2197,8 @@ namespace PersonalChronicle.Archive
                 case "Social":
                     DrawSocialTab(panel, service);
                     break;
-                case "Custody":
-                    DrawHoldersTab(panel, service);
+                case "Legacy":
+                    DrawLegacyTab(panel, service);
                     break;
                 default:
                     DrawCapturePlaceholder(panel);
@@ -2100,6 +2212,11 @@ namespace PersonalChronicle.Archive
         /// v3.1 archive cover: KPI strip + lifecycle + career blurb + footprint + key events.
         /// Stats tab content is absorbed here (no separate Stats button).
         /// </summary>
+        /// <summary>
+        /// v4.4 Pawn Overview (content-reset, layout B two-column on wide screens).
+        /// Consumes only the read-model derived views (cachedLifePhases / cachedCareerBars
+        /// / cachedFootprint / cachedMilestones / cachedKeyEvents). No raw query/sort here.
+        /// </summary>
         private void DrawPawnOverview(Rect rect, IArchiveService service)
         {
             float y = rect.y;
@@ -2108,130 +2225,212 @@ namespace PersonalChronicle.Archive
                 return;
             }
 
-            // ---- Headline KPI (6 cells) ----
-            IReadOnlyList<WorkTimeStatView> workStats = service.GetWorkTimeStats(detailObjectId);
-            long totalWorkTicks = 0L;
-            string primaryWork = "—";
-            if (workStats != null && workStats.Count > 0)
-            {
-                for (int i = 0; i < workStats.Count; i++)
-                {
-                    totalWorkTicks += workStats[i].Ticks;
-                }
-                primaryWork = WorkTypeLabel(workStats[0].WorkTypeDefName);
-            }
-            int productionCount = cachedProductionSummary != null
-                ? cachedProductionSummary.TotalQuantity
-                : 0;
-            int battleCount = 0;
-            int killCount = 0;
-            CountCombatKpis(out battleCount, out killCount);
-            int relationCount = CountSignificantRelations(pawn);
+            // v4.6.1: contribution-archive layout (matches contribution-archive-overview.html).
+            // 0) Cover header: portrait + name + role description + stamp + verdict.
+            // 1) Ledger header: 3-cell榨取总账 (output value / work hours / weekly yield).
+            // 2) Output ledger: ProgressBar rows by production type.
+            // 3) Health residual: 4 StatCells + 3 dim bars + depreciation event log + verdict.
+            y = DrawCoverHeader(rect, y, pawn, service);
+            y = DrawLedger(rect, y + UITheme.BlockGap, pawn);
+            y = DrawOutputLedger(rect, y + UITheme.BlockGap);
+            y = DrawHealthValuation(rect, y + UITheme.BlockGap, cachedHealth);
+        }
 
-            float gap = 8f;
-            int perRow = 6;
-            float cellW = (rect.width - (perRow - 1) * gap) / perRow;
-            float cellH = 64f;
-            DrawStatCell(new Rect(rect.x, y, cellW, cellH),
-                "PersonalChronicle.UI.EventCount".Translate().ToString(), cachedDetailEvents.Count);
-            DrawStatCell(new Rect(rect.x + (cellW + gap), y, cellW, cellH),
-                "PersonalChronicle.UI.TotalWorkHours".Translate().ToString(),
-                (int)(totalWorkTicks / RimWorld.GenDate.TicksPerHour), primaryWork);
-            DrawStatCell(new Rect(rect.x + 2 * (cellW + gap), y, cellW, cellH),
-                "PersonalChronicle.UI.Tab.Production".Translate().ToString(), productionCount,
-                cachedProductionSummary != null
-                    ? FormatMarketValue(cachedProductionSummary.TotalMarketValue)
-                    : "—");
-            DrawStatCell(new Rect(rect.x + 3 * (cellW + gap), y, cellW, cellH),
-                "PersonalChronicle.UI.KpiBattles".Translate().ToString(), battleCount);
-            DrawStatCell(new Rect(rect.x + 4 * (cellW + gap), y, cellW, cellH),
-                "PersonalChronicle.UI.KpiKills".Translate().ToString(), killCount);
-            DrawStatCell(new Rect(rect.x + 5 * (cellW + gap), y, cellW, cellH),
-                "PersonalChronicle.UI.KpiRelations".Translate().ToString(), relationCount);
-            y += cellH + 12f;
+        // ---- v4.4 Overview derived draw helpers ----
 
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
-            Widgets.Label(new Rect(rect.x, y, rect.width, 18f),
-                "PersonalChronicle.UI.ArchiveDataNote".Translate().ToString());
-            GUI.color = Color.white;
-            y += 22f;
+        private const float LifeTimelineNodeSize = 18f;
 
-            // ---- Lifecycle ----
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Lifecycle".Translate().ToString());
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.Status".Translate().ToString(),
-                pawn.IsArchived
-                    ? "PersonalChronicle.UI.Dead".Translate().ToString()
-                    : "PersonalChronicle.UI.Alive".Translate().ToString());
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.Kind".Translate().ToString(), KindLabel(pawn));
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.Faction".Translate().ToString(), FactionLabel(pawn));
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.Backstory".Translate().ToString(), BackstoryLabel(pawn));
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.JoinDate".Translate().ToString(), FormatDate(pawn.JoinTick));
-            if (pawn.JoinTick > 0L && !pawn.IsArchived)
+        private static float DrawLifeTimeline(Rect rect, float y, IReadOnlyList<ReadModels.LifePhaseView> phases)
+        {
+            if (phases == null || phases.Count == 0)
             {
-                int days = Mathf.Max(0, (int)((Find.TickManager.TicksGame - pawn.JoinTick)
-                    / (long)RimWorld.GenDate.TicksPerDay));
-                y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.DaysInColony".Translate().ToString(), days.ToString());
+                return DrawEmptyLine(rect, y, "PersonalChronicle.UI.NoEvents");
             }
-            else if (pawn.JoinTick > 0L && pawn.DeathTick > 0L)
+            float x = rect.x + 6f;
+            float textW = rect.width - 6f - (LifeTimelineNodeSize + 10f);
+            // Pre-compute dynamic node heights with real font line-heights so long
+            // Chinese titles wrap and never overlap (must match UIComponents.TimelineNode).
+            float[] heights = new float[phases.Count];
+            float totalH = 0f;
+            for (int i = 0; i < phases.Count; i++)
             {
-                int days = Mathf.Max(0, (int)((pawn.DeathTick - pawn.JoinTick)
-                    / (long)RimWorld.GenDate.TicksPerDay));
-                y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.DaysInColony".Translate().ToString(), days.ToString());
-            }
-            if (pawn.IsArchived)
-            {
-                y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.DeathDate".Translate().ToString(), FormatDate(pawn.DeathTick));
-                y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.DeathCause".Translate().ToString(), CauseLabel(pawn.DeathCauseKey));
-                if (!string.IsNullOrEmpty(cachedDeathKiller))
-                {
-                    y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.Killer".Translate().ToString(), cachedDeathKiller);
-                }
+                ReadModels.LifePhaseView p = phases[i];
+                float titleH = Text.CalcHeight(p.PhaseKey.Translate().ToString(), textW);
+                float block = titleH;
+                if (!string.IsNullOrEmpty(p.DateText)) block += Text.CalcHeight(p.DateText, textW) + UITheme.SpaceXxs;
+                if (!string.IsNullOrEmpty(p.SubText)) block += Text.CalcHeight(p.SubText, textW) + UITheme.SpaceXxs;
+                float h = Mathf.Max(LifeTimelineNodeSize, block) + UITheme.SpaceXs;
+                heights[i] = h;
+                totalH += h;
             }
 
-            // ---- Career blurb ----
-            y += 6f;
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.CareerSummary".Translate().ToString());
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.PrimaryWork".Translate().ToString(), primaryWork);
-            string secondary = workStats != null && workStats.Count > 1
-                ? WorkTypeLabel(workStats[1].WorkTypeDefName) : "—";
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.SecondaryWork".Translate().ToString(), secondary);
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.TotalWorkHours".Translate().ToString(),
-                FormatWorkHours(totalWorkTicks));
+            // Vertical spine connecting the centers of all nodes.
+            float spineX = x + LifeTimelineNodeSize / 2f;
+            float firstCenterY = y + 2f + LifeTimelineNodeSize / 2f;
+            float lastCenterY = y + totalH - heights[phases.Count - 1] + 2f + LifeTimelineNodeSize / 2f;
+            float spineH = Mathf.Max(0f, lastCenterY - firstCenterY);
+            Color prevColor = GUI.color;
+            GUI.color = UITheme.TimelineSpine;
+            Widgets.DrawLineVertical(spineX, firstCenterY, spineH);
+            GUI.color = prevColor;
 
-            // ---- Footprint (P3: place history ledger) ----
-            y += 6f;
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Footprint".Translate().ToString());
-            string place = !string.IsNullOrEmpty(pawn.PrimaryPlaceDefName)
-                ? BiomeLabel(pawn.PrimaryPlaceDefName)
-                : "PersonalChronicle.UI.UnknownPlace".Translate().ToString();
-            LocationInfo liveLoc = service.GetLiveLocation(detailObjectId);
-            if (liveLoc != null && liveLoc.Kind == LocationKind.Map && !string.IsNullOrEmpty(liveLoc.MapDefName))
+            float ny = y;
+            for (int i = 0; i < phases.Count; i++)
             {
-                place = BiomeLabel(liveLoc.MapDefName);
+                ReadModels.LifePhaseView p = phases[i];
+                Color dot = TimelinePhaseColor(p.Kind);
+                ny = UIComponents.TimelineNode(
+                    new Rect(x, ny, rect.width - 6f, heights[i]), ny,
+                    p.PhaseKey.Translate().ToString(), p.DateText, p.SubText, dot, out _, p.IconKey);
             }
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.PrimaryPlace".Translate().ToString(), place);
-            int placeCount = pawn.PlaceHistory != null ? pawn.PlaceHistory.Count : 0;
-            y = DrawDetailRow(rect.x, y, rect.width, "PersonalChronicle.UI.PlaceVisitCount".Translate().ToString(), placeCount.ToString());
-            y = DrawPlaceHistoryTable(rect, y, pawn, 4);
+            return y + totalH;
+        }
 
-            // ---- Key events (last 3) ----
-            y += 6f;
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.KeyEvents".Translate().ToString());
-            int start = Mathf.Max(0, cachedDetailEvents.Count - 3);
-            for (int i = start; i < cachedDetailEvents.Count; i++)
+        private static Color TimelinePhaseColor(ReadModels.LifePhaseKind kind)
+        {
+            switch (kind)
             {
-                EventLineView line = cachedDetailEvents[i];
+                case ReadModels.LifePhaseKind.Origin:
+                case ReadModels.LifePhaseKind.Join:
+                    return UITheme.TimelineJoin;
+                case ReadModels.LifePhaseKind.Death:
+                    return UITheme.TimelineDeath;
+                case ReadModels.LifePhaseKind.Unknown:
+                    return UITheme.Dead;
+                default:
+                    return UITheme.Info;
+            }
+        }
+
+        private static float DrawCareerBars(Rect rect, float y, IReadOnlyList<ReadModels.CareerBarView> bars)
+        {
+            if (bars == null || bars.Count == 0)
+            {
+                return DrawEmptyLine(rect, y, "PersonalChronicle.UI.NoWorkData");
+            }
+            float rowH = 24f;
+            for (int i = 0; i < bars.Count; i++)
+            {
+                ReadModels.CareerBarView b = bars[i];
+                string tag = b.IsPrimary ? "PersonalChronicle.UI.CareerPrimary".Translate().ToString()
+                    : b.IsSecondary ? "PersonalChronicle.UI.CareerSecondary".Translate().ToString() : "";
+                Color tagColor = b.IsPrimary ? UITheme.Accent : UITheme.SecondaryText;
+                UIComponents.Label(new Rect(rect.x, y, 150f, 18f),
+                    b.WorkTypeLabel + (tag != "" ? " (" + tag + ")" : ""),
+                    GameFont.Tiny, tagColor);
+                // bar track (width driven by share %)
+                float barX = rect.x + 156f;
+                float barW = rect.width - 156f - 96f;
+                UIComponents.ProgressBar(new Rect(barX, y + (rowH - UITheme.ProgressbarH) / 2f, barW, UITheme.ProgressbarH), b.Share01, UITheme.Accent);
+                UIComponents.Label(new Rect(rect.x + rect.width - 92f, y, 90f, 18f),
+                    FormatWorkHours(b.Ticks) + " · " + (int)(b.Share01 * 100) + "%",
+                    GameFont.Tiny, UITheme.Muted);
+                y += rowH;
+            }
+            return y;
+        }
+
+        private static float DrawFootprintLedger(Rect rect, float y, ReadModels.FootprintLedgerView led)
+        {
+            if (led == null || led.PlaceCount == 0)
+            {
+                return DrawEmptyLine(rect, y, "PersonalChronicle.UI.NoPlaceHistory");
+            }
+            // summary row
+            float cardW = (rect.width - UITheme.GridGap * 2f) / 3f;
+            float cardH = UIComponents.StatCellMinHeight;
+            UIComponents.StatCell(new Rect(rect.x, y, cardW, cardH),
+                "PersonalChronicle.UI.FootprintPlaces".Translate().ToString(), led.PlaceCount.ToString());
+            UIComponents.StatCell(new Rect(rect.x + cardW + UITheme.GridGap, y, cardW, cardH),
+                "PersonalChronicle.UI.FootprintHome".Translate().ToString() + " · " + led.HomeDays + "d",
+                led.HomePlaceText != null ? led.HomePlaceText : "—");
+            UIComponents.StatCell(new Rect(rect.x + 2f * (cardW + UITheme.GridGap), y, cardW, cardH),
+                "PersonalChronicle.UI.FootprintExpeditions".Translate().ToString(), led.ExpeditionCount.ToString());
+            y += cardH + UITheme.GridGap;
+            // stays (already sorted longest-first)
+            float rowH = 22f;
+            int maxRows = Mathf.Min(led.Stays.Count, 6);
+            for (int i = 0; i < maxRows; i++)
+            {
+                ReadModels.FootstepView s = led.Stays[i];
+                string icon = s.IsWorldTile ? "🌍" : "🏕️";
+                UIComponents.Label(new Rect(rect.x, y, 20f, 18f), icon, GameFont.Small, UITheme.Text);
+                UIComponents.Label(new Rect(rect.x + 22f, y, rect.width - 110f, 18f),
+                    s.PlaceText + (s.IsHome ? " 〔" + "PersonalChronicle.UI.FootprintHomeTag".Translate().ToString() + "〕" : ""),
+                    GameFont.Small, s.IsHome ? UITheme.Accent : UITheme.Text);
+                UIComponents.Label(new Rect(rect.x + rect.width - 86f, y, 84f, 18f), s.DwellText,
+                    GameFont.Tiny, UITheme.Muted);
+                y += rowH;
+            }
+            return y;
+        }
+
+        private static float DrawMilestoneGrid(Rect rect, float y, IReadOnlyList<ReadModels.MilestoneView> ms)
+        {
+            if (ms == null || ms.Count == 0)
+            {
+                return DrawEmptyLine(rect, y, "PersonalChronicle.UI.NoMilestones");
+            }
+            float cardW = (rect.width - 8f) / 2f;
+            int perRow = 2;
+            // First pass: compute adaptive card height from real line-heights.
+            float maxH = 56f;
+            for (int i = 0; i < ms.Count; i++)
+            {
+                ReadModels.MilestoneView m = ms[i];
+                float titleH = Text.CalcHeight(m.TitleText, cardW - 40f);
+                float subH = Text.CalcHeight(m.DateText + " · " + m.SubText, cardW - 40f);
+                float h = 6f + 20f + 6f + titleH + 2f + subH + 6f;
+                if (h > maxH) maxH = h;
+            }
+            float cardH = maxH;
+            for (int i = 0; i < ms.Count; i++)
+            {
+                ReadModels.MilestoneView m = ms[i];
+                float cx = rect.x + (i % perRow) * (cardW + UITheme.GridGap);
+                float cy = y + (i / perRow) * (cardH + UITheme.GridGap);
+                UIComponents.Card(new Rect(cx, cy, cardW, cardH), UITheme.Border);
+                UIComponents.Label(new Rect(cx + UITheme.CardPadX, cy + 6f, 20f, 20f), m.IconKey, GameFont.Medium, UITheme.Text);
+                float titleH = Text.CalcHeight(m.TitleText, cardW - 40f);
+                UIComponents.Label(new Rect(cx + 32f, cy + 6f, cardW - 40f, titleH), m.TitleText,
+                    GameFont.Small, UITheme.Text);
+                UIComponents.Label(new Rect(cx + 32f, cy + 6f + 20f + 2f, cardW - 40f,
+                        cardH - (6f + 20f + 2f + 6f)),
+                    m.DateText + " · " + m.SubText, GameFont.Tiny, UITheme.Muted);
+            }
+            int rows = (ms.Count + perRow - 1) / perRow;
+            return y + rows * (cardH + UITheme.GridGap);
+        }
+
+        private static float DrawKeyEventStream(Rect rect, float y, IReadOnlyList<ReadModels.KeyEventView> evs)
+        {
+            if (evs == null || evs.Count == 0)
+            {
+                return DrawEmptyLine(rect, y, "PersonalChronicle.UI.NoEvents");
+            }
+            for (int i = 0; i < evs.Count; i++)
+            {
+                ReadModels.KeyEventView e = evs[i];
                 Rect row = new Rect(rect.x, y, rect.width, TimelineRowHeight);
-                DrawEventRow(row, line.DateText, line.NameText, line.ParamsText);
+                UIComponents.Rule(new Rect(row.x, row.y + 1f, 3f, TimelineRowHeight - 2f),
+                    e.IsHighlight ? UITheme.Accent : UITheme.BorderSoft);
+                UIComponents.Label(new Rect(row.x + 10f, row.y + 4f, 120f, 18f), e.DateText,
+                    GameFont.Tiny, UITheme.Dim);
+                UIComponents.Label(new Rect(row.x + 136f, row.y + 4f, row.width - 136f - 70f, 20f),
+                    (e.IsHighlight ? "✦ " : "") + e.TitleText, GameFont.Small, UITheme.Text);
+                UIComponents.Label(new Rect(row.x + row.width - 66f, row.y + 4f, 64f, 18f), e.TypeText,
+                    GameFont.Tiny, UITheme.Muted);
+                UIComponents.Rule(new Rect(row.x, row.yMax - 1f, row.width, 1f), UITheme.BorderSoft);
                 y += TimelineRowHeight;
             }
-            if (cachedDetailEvents.Count == 0)
-            {
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(rect.x, y, rect.width, 22f),
-                    "PersonalChronicle.UI.NoEvents".Translate().ToString());
-            }
+            return y;
+        }
+
+        private static float DrawEmptyLine(Rect rect, float y, string key)
+        {
+            UIComponents.Label(new Rect(rect.x, y, rect.width, 22f), key.Translate().ToString(),
+                GameFont.Small, UITheme.Muted);
+            return y + 26f;
         }
 
         /// <summary>
@@ -2287,14 +2486,14 @@ namespace PersonalChronicle.Archive
             if (pawn == null || pawn.PlaceHistory == null || pawn.PlaceHistory.Count == 0)
             {
                 Text.Font = GameFont.Tiny;
-                GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+                GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(rect.x, y, rect.width, 18f),
                     "PersonalChronicle.UI.NoPlaceHistory".Translate().ToString());
                 GUI.color = Color.white;
                 return y + 22f;
             }
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+            GUI.color = UITheme.SecondaryText;
             Widgets.Label(new Rect(rect.x + 6f, y, rect.width * 0.4f, 16f),
                 "PersonalChronicle.UI.PlaceName".Translate().ToString());
             Widgets.Label(new Rect(rect.x + rect.width * 0.42f, y, rect.width * 0.28f, 16f),
@@ -2347,31 +2546,57 @@ namespace PersonalChronicle.Archive
 
         private static string FormatMarketValue(float value)
         {
-            return "PersonalChronicle.UI.MarketValueFormat".Translate(value.ToString("0.0")).ToString();
+            return "PersonalChronicle.UI.MarketValueFormat".Translate(FormatSilver(value)).ToString();
+        }
+
+        // v4.6.8: abbreviate large silver values with K/M/B magnitude suffixes
+        // (e.g. 1840 → "1.8K", 2_300_000 → "2.3M"). Keeps the unit sub-label intact.
+        private static string FormatSilver(float value)
+        {
+            if (value < 1000f)
+            {
+                return Mathf.RoundToInt(value).ToString();
+            }
+            float scaled;
+            string suffix;
+            if (value >= 1e9f) { scaled = value / 1e9f; suffix = "B"; }
+            else if (value >= 1e6f) { scaled = value / 1e6f; suffix = "M"; }
+            else { scaled = value / 1e3f; suffix = "K"; }
+            return scaled.ToString("0.##") + suffix;
         }
 
         private static void DrawMetricCard(Rect rect, string label, string value, string subLabel)
         {
-            ArchiveUiStyle.DrawCard(rect, ArchiveUiStyle.Info);
-            bool large = rect.height >= 80f;
-            float labelH = large ? 18f : 16f;
-            float valueH = large ? 28f : 26f;
-            float subLabelH = large ? 18f : 16f;
-            float labelY = rect.y + 8f;
-            float valueY = labelY + labelH + (large ? 4f : 0f);
-            float subLabelY = valueY + valueH + (large ? 4f : 1f);
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            try
+            {
+                ArchiveUiStyle.DrawCard(rect, ArchiveUiStyle.Info);
+                bool large = rect.height >= 80f;
+                // CJK-safe line heights: Tiny >= 18f, Medium >= 28f. For a 72f card
+                // the block is 8 + 18 + 28 + 18 = 72f exactly.
+                float labelH = 18f;
+                float valueH = 28f;
+                float subLabelH = 18f;
+                float labelY = rect.y + UITheme.CardPadY;
+                float valueY = labelY + labelH + (large ? 4f : 0f);
+                float subLabelY = valueY + valueH + (large ? 4f : 0f);
 
-            Text.Font = GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(rect.x + 10f, labelY, rect.width - 20f, labelH), label);
-            Text.Font = GameFont.Medium;
-            GUI.color = ArchiveUiStyle.Text;
-            Widgets.Label(new Rect(rect.x + 10f, valueY, rect.width - 20f, valueH), value);
-            Text.Font = GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(rect.x + 10f, subLabelY, rect.width - 20f, subLabelH), subLabel);
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
+                Text.Font = GameFont.Tiny;
+                GUI.color = ArchiveUiStyle.Muted;
+                Widgets.Label(new Rect(rect.x + UITheme.CardPadX, labelY, rect.width - UITheme.CardPadX * 2f, labelH), label);
+                Text.Font = GameFont.Medium;
+                GUI.color = ArchiveUiStyle.Text;
+                Widgets.Label(new Rect(rect.x + UITheme.CardPadX, valueY, rect.width - UITheme.CardPadX * 2f, valueH), value);
+                Text.Font = GameFont.Tiny;
+                GUI.color = ArchiveUiStyle.Muted;
+                Widgets.Label(new Rect(rect.x + UITheme.CardPadX, subLabelY, rect.width - UITheme.CardPadX * 2f, subLabelH), subLabel);
+            }
+            finally
+            {
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+            }
         }
 
         private static string BackstoryLabel(PawnObject pawn)
@@ -2523,8 +2748,8 @@ namespace PersonalChronicle.Archive
         private static float FactionCodexCardHeight(FactionCodexView card, bool expanded)
         {
             float h = FactionCodexPadding
-                + FactionCodexHeaderHeight + 8f
-                + FactionCodexStatHeight + 8f
+                + FactionCodexHeaderHeight + UITheme.GridGap
+                + FactionCodexStatHeight + UITheme.GridGap
                 + FactionCodexBarHeight
                 + FactionCodexPadding;
             if (expanded && card.MemberLines != null && card.MemberLines.Count > 0)
@@ -2569,7 +2794,7 @@ namespace PersonalChronicle.Archive
             Text.Anchor = TextAnchor.UpperLeft;
 
             // 4 stat cells. statsY matches FactionCodexCardHeight: padding + header + gap.
-            float statsY = rect.y + FactionCodexPadding + FactionCodexHeaderHeight + 8f;
+            float statsY = rect.y + FactionCodexPadding + FactionCodexHeaderHeight + UITheme.GridGap;
             float innerW = rect.width - FactionCodexPadding * 2f;
             float statW = (innerW - FactionCodexGap * 3) / 4f;
             float statX = rect.x + FactionCodexPadding;
@@ -2584,7 +2809,7 @@ namespace PersonalChronicle.Archive
             DrawFactionStat(new Rect(statX + (statW + FactionCodexGap) * 3, statsY, statW, FactionCodexStatHeight), lossText, "PersonalChronicle.UI.StatOurLosses".Translate().ToString(), ArchiveUiStyle.TimelineDeath);
 
             // Composition bar (victim-kind breakdown), segmented by proportion.
-            float barY = statsY + FactionCodexStatHeight + 8f;
+            float barY = statsY + FactionCodexStatHeight + UITheme.GridGap;
             Rect barRect = new Rect(statX, barY, innerW, FactionCodexBarHeight);
             Widgets.DrawBoxSolid(barRect, ArchiveUiStyle.BorderSoft);
             if (card.Composition != null && card.KillCount > 0)
@@ -2608,7 +2833,7 @@ namespace PersonalChronicle.Archive
             // (all rows scrollable inside the card; card height stays constant).
             if (expanded && card.MemberLines != null && card.MemberLines.Count > 0)
             {
-                float dy = barY + FactionCodexBarHeight + 8f;
+                float dy = barY + FactionCodexBarHeight + UITheme.GridGap;
                 float rowH = FactionCodexRowPitch;
                 float viewH = FactionCodexPreviewRows * rowH;
                 float contentH = card.MemberLines.Count * rowH;
@@ -2656,20 +2881,9 @@ namespace PersonalChronicle.Archive
 
         private static void DrawFactionStat(Rect rect, string number, string label, Color numColor)
         {
-            Color prev = GUI.color;
-            GameFont prevFont = Verse.Text.Font;
-            TextAnchor prevAnchor = Text.Anchor;
-            Text.Anchor = TextAnchor.MiddleCenter;
-            // Medium font needs >=28f in Chinese; the caption sits below it.
-            Verse.Text.Font = GameFont.Medium;
-            GUI.color = numColor;
-            Widgets.Label(new Rect(rect.x, rect.y, rect.width, 28f), number);
-            Verse.Text.Font = GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(rect.x, rect.y + 30f, rect.width, 18f), label);
-            GUI.color = prev;
-            Verse.Text.Font = prevFont;
-            Text.Anchor = prevAnchor;
+            // v4.5.4: reuse the shared StatCell so every KPI cell shares one
+            // renderer and left-aligned rhythm (was a centred hand-rolled twin).
+            UIComponents.StatCell(rect, label, number, numColor);
         }
 
         private static string FactionKindLabel(ArchiveUiStyle.FactionCodexKind kind)
@@ -2956,7 +3170,7 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Small;
                 Widgets.Label(new Rect(row.x + 4f, row.y + 3f, row.width - 200f, 20f), label);
                 Text.Font = GameFont.Tiny;
-                GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+                GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(row.x + row.width - 196f, row.y + 6f, 192f, 18f), part);
                 GUI.color = Color.white;
                 Widgets.DrawLineHorizontal(row.x, row.yMax, row.width);
@@ -2966,55 +3180,148 @@ namespace PersonalChronicle.Archive
 
         private void DrawRelations(Rect rect, IArchiveService service)
         {
-            Pawn pawn = service.GetLivePawn(detailObjectId);
-            if (pawn == null || pawn.relations == null || pawn.relations.DirectRelations == null)
-            {
-                DrawNoLiveData(rect);
-                return;
-            }
-
             float y = rect.y;
             DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Relations".Translate().ToString());
 
-            List<DirectPawnRelation> relations = pawn.relations.DirectRelations;
-            if (relations.Count == 0)
+            List<RelationRowView> rows = BuildRelationRows(service);
+            if (rows.Count == 0)
             {
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(rect.x, y, rect.width, 22f),
-                    "PersonalChronicle.UI.NoRelations".Translate().ToString());
+                UIComponents.Label(new Rect(rect.x, y, rect.width, 22f),
+                    "PersonalChronicle.UI.NoRelations".Translate(), UITheme.FontBody, UITheme.Text);
                 return;
             }
 
-            for (int i = 0; i < relations.Count; i++)
+            for (int i = 0; i < rows.Count; i++)
             {
-                DirectPawnRelation rel = relations[i];
-                if (rel == null)
-                {
-                    continue;
-                }
-                string otherName = rel.otherPawn != null ? rel.otherPawn.LabelShort : string.Empty;
-                string relLabel = rel.def != null && !string.IsNullOrEmpty(rel.def.label) ? rel.def.label : (rel.def != null ? rel.def.defName : string.Empty);
-                string status = rel.otherPawn != null && rel.otherPawn.Dead
-                    ? "PersonalChronicle.UI.Dead".Translate().ToString()
-                    : "PersonalChronicle.UI.Alive".Translate().ToString();
-
-                Rect row = new Rect(rect.x, y, rect.width, TimelineRowHeight);
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(row.x + 4f, row.y + 3f, row.width - 260f, 20f), otherName);
-                Text.Font = GameFont.Tiny;
-                GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
-                Widgets.Label(new Rect(row.x + row.width - 256f, row.y + 6f, 180f, 18f), relLabel);
-                Widgets.Label(new Rect(row.x + row.width - 72f, row.y + 6f, 68f, 18f), status);
-                GUI.color = Color.white;
-                Widgets.DrawLineHorizontal(row.x, row.yMax, row.width);
+                RelationRowView row = rows[i];
+                Rect rowRect = new Rect(rect.x, y, rect.width, TimelineRowHeight);
+                UIComponents.Label(new Rect(rowRect.x + 4f, rowRect.y + 3f, rowRect.width - 260f, 20f),
+                    row.OtherLabel, UITheme.FontBody, UITheme.Text);
+                UIComponents.Label(new Rect(rowRect.x + rowRect.width - 256f, rowRect.y + 6f, 180f, 18f),
+                    row.RelationLabel, UITheme.FontLabel, UITheme.SecondaryText);
+                UIComponents.Label(new Rect(rowRect.x + rowRect.width - 72f, rowRect.y + 6f, 68f, 18f),
+                    row.StatusLabel, UITheme.FontLabel, UITheme.SecondaryText);
+                Widgets.DrawLineHorizontal(rowRect.x, rowRect.yMax, rowRect.width);
                 y += TimelineRowHeight;
             }
+        }
+
+        private struct RelationRowView
+        {
+            public string OtherLabel;
+            public string RelationLabel;
+            public string StatusLabel;
+        }
+
+        /// <summary>
+        /// v4.6: merge live direct relations with archived snapshots so the Social
+        /// tab shows initial ties (spouse/parent/friend at join time) even for dead
+        /// or departed pawns. Live state wins when both sources describe the same pair.
+        /// </summary>
+        private List<RelationRowView> BuildRelationRows(IArchiveService service)
+        {
+            List<RelationRowView> rows = new List<RelationRowView>();
+            HashSet<string> seen = new HashSet<string>();
+            PawnObject record = service.GetObject(detailObjectId) as PawnObject;
+            Pawn livePawn = service.GetLivePawn(detailObjectId);
+
+            // 1) Live relations (current state).
+            if (livePawn?.relations?.DirectRelations != null)
+            {
+                List<DirectPawnRelation> directRelations = livePawn.relations.DirectRelations;
+                for (int i = 0; i < directRelations.Count; i++)
+                {
+                    DirectPawnRelation rel = directRelations[i];
+                    if (rel?.def == null || rel.otherPawn == null)
+                    {
+                        continue;
+                    }
+                    if (!SocialRelationFilter.IsSignificant(rel.def))
+                    {
+                        continue;
+                    }
+                    string otherId = rel.otherPawn.GetUniqueLoadID();
+                    string key = MakeRelationKey(rel.def.defName, otherId);
+                    if (!seen.Add(key))
+                    {
+                        continue;
+                    }
+                    rows.Add(new RelationRowView
+                    {
+                        OtherLabel = rel.otherPawn.LabelShort,
+                        RelationLabel = RelationLabelFor(rel.def, rel.otherPawn),
+                        StatusLabel = rel.otherPawn.Dead
+                            ? "PersonalChronicle.UI.Dead".Translate().ToString()
+                            : "PersonalChronicle.UI.Alive".Translate().ToString()
+                    });
+                }
+            }
+
+            // 2) Archived relations (historical / initial ties, includes dead/departed pawns).
+            if (record?.Relations != null)
+            {
+                for (int i = 0; i < record.Relations.Count; i++)
+                {
+                    SignificantRelation rel = record.Relations[i];
+                    if (rel == null)
+                    {
+                        continue;
+                    }
+                    string key = MakeRelationKey(rel.RelationDefName, rel.OtherStableId);
+                    if (!seen.Add(key))
+                    {
+                        continue;
+                    }
+                    Pawn otherLive = service.GetLivePawn(rel.OtherStableId);
+                    bool otherDead = otherLive != null && otherLive.Dead;
+                    string status = otherDead
+                        ? "PersonalChronicle.UI.Dead".Translate().ToString()
+                        : (rel.IsActive
+                            ? "PersonalChronicle.UI.Alive".Translate().ToString()
+                            : "PersonalChronicle.UI.RelEnded".Translate().ToString());
+                    PawnRelationDef def = DefDatabase<PawnRelationDef>.GetNamedSilentFail(rel.RelationDefName);
+                    rows.Add(new RelationRowView
+                    {
+                        OtherLabel = !string.IsNullOrEmpty(rel.OtherLabel) ? rel.OtherLabel : rel.OtherStableId,
+                        RelationLabel = RelationLabelFor(def, otherLive),
+                        StatusLabel = status
+                    });
+                }
+            }
+
+            return rows;
+        }
+
+        private static string MakeRelationKey(string relationDefName, string otherStableId)
+        {
+            return (relationDefName ?? string.Empty) + "::" + (otherStableId ?? string.Empty);
+        }
+
+        private static string RelationLabelFor(PawnRelationDef def, Pawn otherPawn)
+        {
+            if (def == null)
+            {
+                return string.Empty;
+            }
+            if (otherPawn != null)
+            {
+                string gendered = def.GetGenderSpecificLabel(otherPawn);
+                if (!string.IsNullOrEmpty(gendered))
+                {
+                    return gendered;
+                }
+            }
+            if (!string.IsNullOrEmpty(def.label))
+            {
+                return def.label;
+            }
+            return def.defName;
         }
 
         private void DrawNoLiveData(Rect rect)
         {
             Text.Font = GameFont.Small;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+            GUI.color = UITheme.SecondaryText;
             Widgets.Label(new Rect(rect.x, rect.y, rect.width, 24f),
                 "PersonalChronicle.UI.NoLiveData".Translate().ToString());
             GUI.color = Color.white;
@@ -3037,7 +3344,7 @@ namespace PersonalChronicle.Archive
 
             // Column headers (all translated; no hardcoded copy).
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+            GUI.color = UITheme.SecondaryText;
             Widgets.Label(new Rect(rect.x + 6f, y, rect.width - 300f, 18f),
                 "PersonalChronicle.UI.ProductionType".Translate().ToString());
             Widgets.Label(new Rect(rect.x + rect.width - 280f, y, 90f, 18f),
@@ -3049,7 +3356,7 @@ namespace PersonalChronicle.Archive
 
             for (int i = 0; i < cachedProductionLines.Count; i++)
             {
-                ProductionLineView line = cachedProductionLines[i];
+                ReadModels.ProductionLineView line = cachedProductionLines[i];
                 Rect row = new Rect(rect.x, y, rect.width, RowHeight - 4f);
 
                 Text.Font = GameFont.Small;
@@ -3110,15 +3417,15 @@ namespace PersonalChronicle.Archive
                 for (int i = 0; i < types.Count; i++)
                 {
                     ProductionTypeView type = types[i];
-                    float width = (rect.width - 8f) / 2f;
-                    float x = rect.x + (i % 2) * (width + 8f);
+                    float width = (rect.width - UITheme.GridGap) / 2f;
+                    float x = rect.x + (i % 2) * (width + UITheme.GridGap);
                     float cardY = y + (i / 2) * 58f;
                     ArchiveUiStyle.DrawCard(new Rect(x, cardY, width, 50f), ArchiveUiStyle.Accent);
                     Text.Font = GameFont.Small;
-                    Widgets.Label(new Rect(x + 10f, cardY + 6f, width - 20f, 20f), ThingDefLabel(type.DefName));
+                    Widgets.Label(new Rect(x + UITheme.CardPadX, cardY + 6f, width - UITheme.CardPadX * 2f, 20f), ProductionDefLabel(type.DefName));
                     Text.Font = GameFont.Tiny;
                     GUI.color = ArchiveUiStyle.Muted;
-                    Widgets.Label(new Rect(x + 10f, cardY + 28f, width - 20f, 16f),
+                    Widgets.Label(new Rect(x + UITheme.CardPadX, cardY + 28f, width - UITheme.CardPadX * 2f, 16f),
                         "PersonalChronicle.UI.ProductionCard".Translate(type.Quantity, FormatMarketValue(type.MarketValue)).ToString());
                     GUI.color = Color.white;
                 }
@@ -3129,11 +3436,68 @@ namespace PersonalChronicle.Archive
         private void DrawWorkIntensityHeader(Rect rect, ref float y, IArchiveService service)
         {
             DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.CareerSummary".Translate().ToString());
+            DrawWorkIntensityHero(rect, y, rect.width, service);
+            y += 92f + 8f;
+
+            WorkIntensityView intensity = cachedWorkIntensity;
+            bool hasTier = intensity != null && intensity.IsDefined;
+            IWorkIntensityService intensityService = service as IWorkIntensityService;
+            if (intensityService == null)
+            {
+                return;
+            }
+            IReadOnlyList<WorkIntensityTierView> tiers = cachedTiers;
+            if (tiers == null || tiers.Count == 0)
+            {
+                return;
+            }
+            float rungWidth = (rect.width - (tiers.Count - 1) * 2f) / tiers.Count;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            Color prevColor = GUI.color;
+            try
+            {
+                for (int i = 0; i < tiers.Count; i++)
+                {
+                    WorkIntensityTierView tier = tiers[i];
+                    Rect rung = new Rect(rect.x + i * (rungWidth + 2f), y, rungWidth, 28f);
+                    Color color = ParseIntensityColor(tier.ColorHex);
+                    bool current = intensity != null && intensity.IsDefined
+                        && intensity.TierDefName == tier.DefName;
+                    Widgets.DrawBoxSolid(rung, current ? color : UITheme.WithAlpha(color, 0.28f));
+                    if (current)
+                    {
+                        ArchiveUiStyle.DrawBorder(rung, ArchiveUiStyle.Text);
+                    }
+                    Text.Font = GameFont.Tiny;
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    GUI.color = current ? ArchiveUiStyle.Text : ArchiveUiStyle.Muted;
+                    Widgets.Label(rung, tier.DisplayCode ?? tier.DefName);
+                    GUI.color = Color.white;
+                    Text.Anchor = TextAnchor.UpperLeft;
+                    TooltipHandler.TipRegion(rung,
+                        TranslateIntensityKey(tier.LabelKey, tier.DisplayCode ?? tier.DefName));
+                }
+            }
+            finally
+            {
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+                GUI.color = prevColor;
+            }
+            y += 36f;
+        }
+
+        /// <summary>
+        /// Shared intensity hero card used by both Overview (v4.5.2) and Career tab.
+        /// </summary>
+        private void DrawWorkIntensityHero(Rect rect, float y, float width, IArchiveService service)
+        {
             WorkIntensityView intensity = cachedWorkIntensity;
             bool hasTier = intensity != null && intensity.IsDefined;
             bool isEstimated = hasTier && intensity.IsEstimated;
             Color tierColor = ParseIntensityColor(intensity != null ? intensity.ColorHex : null);
-            Rect hero = new Rect(rect.x, y, rect.width, 92f);
+            Rect hero = new Rect(rect.x, y, width, 92f);
             ArchiveUiStyle.DrawPanel(hero, ArchiveUiStyle.PanelRaised);
 
             string statusKey = isEstimated
@@ -3148,23 +3512,35 @@ namespace PersonalChronicle.Archive
                 : string.Empty;
             Rect badge = new Rect(hero.x + 8f, hero.y + 8f, 170f, hero.height - 16f);
             ArchiveUiStyle.DrawBadge(badge, string.Empty, hasTier ? tierColor : ArchiveUiStyle.Muted);
-            Text.Font = GameFont.Medium;
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(new Rect(badge.x + 8f, badge.y + 14f, badge.width - 16f, 26f),
-                hasTier && !string.IsNullOrEmpty(intensity.LabelKey)
-                    ? TranslateIntensityKey(intensity.LabelKey, intensity.DisplayCode)
-                    : "PersonalChronicle.UI.Intensity.SampleInsufficient".Translate().ToString());
-            Text.Anchor = TextAnchor.UpperLeft;
-            Text.Font = GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.Muted;
-            Text.Anchor = TextAnchor.MiddleCenter;
-            string badgeSubtitle = hasTier
-                ? badgeStatus + " · " + badgeCode
-                : "PersonalChronicle.UI.Intensity.ObservedWindow".Translate(
-                    FormatDays(intensity != null ? intensity.ObservedDays : 0d)).ToString();
-            Widgets.Label(new Rect(badge.x + 8f, badge.y + 44f, badge.width - 16f, 20f), badgeSubtitle);
-            GUI.color = Color.white;
-            Text.Anchor = TextAnchor.UpperLeft;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            Color prevColor = GUI.color;
+            try
+            {
+                Text.Font = GameFont.Medium;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(new Rect(badge.x + 8f, badge.y + 14f, badge.width - 16f, 26f),
+                    hasTier && !string.IsNullOrEmpty(intensity.LabelKey)
+                        ? TranslateIntensityKey(intensity.LabelKey, intensity.DisplayCode)
+                        : "PersonalChronicle.UI.Intensity.SampleInsufficient".Translate().ToString());
+                Text.Anchor = TextAnchor.UpperLeft;
+                Text.Font = GameFont.Tiny;
+                GUI.color = ArchiveUiStyle.Muted;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                string badgeSubtitle = hasTier
+                    ? badgeStatus + " · " + badgeCode
+                    : "PersonalChronicle.UI.Intensity.ObservedWindow".Translate(
+                        FormatDays(intensity != null ? intensity.ObservedDays : 0d)).ToString();
+                Widgets.Label(new Rect(badge.x + 8f, badge.y + 44f, badge.width - 16f, 20f), badgeSubtitle);
+                GUI.color = Color.white;
+                Text.Anchor = TextAnchor.UpperLeft;
+            }
+            finally
+            {
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+                GUI.color = prevColor;
+            }
 
             float gap = 8f;
             float statsX = badge.xMax + 10f;
@@ -3184,42 +3560,584 @@ namespace PersonalChronicle.Archive
                 "PersonalChronicle.UI.Intensity.Weekly".Translate().ToString(),
                 FormatHours(intensity != null ? intensity.WeeklyHours : 0d),
                 BuildIntensityRelativeLabel(intensity));
-            y += hero.height + 8f;
+        }
 
-            IWorkIntensityService intensityService = service as IWorkIntensityService;
-            if (intensityService == null)
+        // ---- 健康残值 · 资产折旧 (window renders only; derivation in ReadModels) ----
+
+        private float DrawHealthValuation(Rect rect, float y, ReadModels.HealthView h)
+        {
+            // v4.6.1: full HTML-style layout — 4 StatCells + 3 dim bars + event log + verdict.
+            float headH = 26f;
+            float statRowH = 80f;
+            float dimRowH = 16f;
+            float dimBlockH = dimRowH * 3f + 8f;
+            float eventHeaderH = 18f;
+            int evCount = h.Events != null ? Mathf.Min(h.Events.Count, 6) : 0;
+            // v4.6.3: 事件行高 22f 适配中文 GameFont.Tiny。
+            float eventsH = evCount > 0 ? (evCount * 22f + 4f) : 18f;
+            float blockH = headH + statRowH + 8f + dimBlockH + 8f + eventHeaderH + eventsH + 6f;
+            Rect block = new Rect(rect.x, y, rect.width, blockH);
+
+            UIComponents.DrawSubsectionHeader(block.TopPartPixels(headH),
+                "PersonalChronicle.UI.HealthValuation.Title");
+
+            if (!h.IsDefined)
             {
-                return;
+                Rect empty = new Rect(block.x + UITheme.CardPadX, block.y + headH + UITheme.GridGap, block.width - UITheme.CardPadX * 2f, 28f);
+                Color prevColor = GUI.color;
+                GameFont prevFont = Text.Font;
+                TextAnchor prevAnchor = Text.Anchor;
+                GUI.color = UITheme.Dim;
+                Text.Font = GameFont.Small;
+                Text.Anchor = TextAnchor.UpperLeft;
+                Widgets.Label(empty, "PersonalChronicle.UI.HealthValuation.NoData".Translate().ToString());
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+                return block.yMax;
             }
-            IReadOnlyList<WorkIntensityTierView> tiers = intensityService.GetIntensityTiers();
-            if (tiers == null || tiers.Count == 0)
+
+            Color accent = h.IsImpaired ? UITheme.Blood : UITheme.Alive;
+
+            // === Row 1: 4 StatCells (silver value / composite score / body% / weekly yield) ===
+            float statX = block.x + UITheme.CardPadX;
+            float statGap = UITheme.GridGap;
+            float statW = (block.width - UITheme.CardPadX * 2f - statGap * 3f) / 4f;
+            float statY = block.y + headH + 6f;
+            UIComponents.StatCell(new Rect(statX, statY, statW, statRowH),
+                "PersonalChronicle.UI.HealthValuation.SilverValue".Translate().ToString(),
+                FormatSilver(h.SilverValue),
+                h.IsImpaired ? UITheme.Blood : UITheme.PillGold,
+                "PersonalChronicle.UI.HealthValuation.BaseValue".Translate(FormatSilver(h.BaseSilverValue)).ToString());
+            UIComponents.StatCell(new Rect(statX + (statW + statGap), statY, statW, statRowH),
+                "PersonalChronicle.UI.HealthValuation.Score".Translate().ToString(),
+                Mathf.RoundToInt(h.HealthScore).ToString(),
+                accent);
+            UIComponents.StatCell(new Rect(statX + 2f * (statW + statGap), statY, statW, statRowH),
+                "PersonalChronicle.UI.HealthValuation.Body".Translate().ToString(),
+                Mathf.RoundToInt(h.BodyPercent * 100f).ToString() + "%",
+                accent);
+            UIComponents.StatCell(new Rect(statX + 3f * (statW + statGap), statY, statW, statRowH),
+                "PersonalChronicle.UI.HealthValuation.WeeklyYield".Translate().ToString(),
+                FormatSilver(h.WeeklySilverEstimate),
+                UITheme.PillGold,
+                "PersonalChronicle.UI.Ledger.WeeklyUnit".Translate().ToString(),
+                inlineSubLabel: true);
+
+            // === Row 2: 3 dim bars (Body / Spirit / Youth) ===
+            float dimY = statY + statRowH + 8f;
+            DrawHealthDimBar(new Rect(statX, dimY, block.width - UITheme.CardPadX * 2f, dimRowH),
+                "PersonalChronicle.UI.HealthValuation.Dim.Body".Translate().ToString(),
+                h.BodyIntegrityScore, h.BodyFactors, "PersonalChronicle.UI.HealthValuation.Dim.Body");
+            DrawHealthDimBar(new Rect(statX, dimY + dimRowH, block.width - UITheme.CardPadX * 2f, dimRowH),
+                "PersonalChronicle.UI.HealthValuation.Dim.Spirit".Translate().ToString(),
+                h.SpiritScore, h.SpiritFactors, "PersonalChronicle.UI.HealthValuation.Dim.Spirit");
+            DrawHealthDimBar(new Rect(statX, dimY + 2f * dimRowH, block.width - UITheme.CardPadX * 2f, dimRowH),
+                "PersonalChronicle.UI.HealthValuation.Dim.Youth".Translate().ToString(),
+                h.YouthScore, h.YouthFactors, "PersonalChronicle.UI.HealthValuation.Dim.Youth");
+
+            // === Row 3: depreciation event log ===
+            float evY = dimY + dimBlockH + 4f;
+            UIComponents.Label(new Rect(statX, evY, block.width - UITheme.CardPadX * 2f, eventHeaderH),
+                "PersonalChronicle.UI.HealthValuation.TipHeader".Translate().ToString(),
+                GameFont.Tiny, UITheme.SecondaryText);
+            if (evCount == 0)
             {
-                return;
+                UIComponents.Label(new Rect(statX, evY + eventHeaderH, block.width - UITheme.CardPadX * 2f, 18f),
+                    "PersonalChronicle.UI.HealthValuation.NoEvents".Translate().ToString(),
+                    GameFont.Tiny, UITheme.Dim);
             }
-            float rungWidth = (rect.width - (tiers.Count - 1) * 2f) / tiers.Count;
-            for (int i = 0; i < tiers.Count; i++)
+            else
             {
-                WorkIntensityTierView tier = tiers[i];
-                Rect rung = new Rect(rect.x + i * (rungWidth + 2f), y, rungWidth, 28f);
-                Color color = ParseIntensityColor(tier.ColorHex);
-                bool current = intensity != null && intensity.IsDefined
-                    && intensity.TierDefName == tier.DefName;
-                Widgets.DrawBoxSolid(rung, current ? color : new Color(color.r, color.g, color.b, 0.28f));
-                if (current)
+                // 中文 GameFont.Tiny 行高 ≈ 22f，用 22f 避免字体重叠截断。
+                const float lineH = 22f;
+                for (int i = 0; i < evCount; i++)
                 {
-                    ArchiveUiStyle.DrawBorder(rung, ArchiveUiStyle.Text);
+                    ReadModels.HealthEventView e = h.Events[i];
+                    if (e == null) continue;
+                    string impact = e.Impact == 0 ? "" : ("  " + FormatSilver(e.Impact) + " 银");
+                    string tag = string.IsNullOrEmpty(e.TagText) ? "" : ("  [" + e.TagText + "]");
+                    string line = e.DateText + "  " + e.Description + impact + tag;
+                    UIComponents.Label(new Rect(statX, evY + eventHeaderH + i * lineH,
+                        block.width - UITheme.CardPadX * 2f, lineH),
+                        line,
+                        GameFont.Tiny,
+                        e.Impact < 0 ? UITheme.Blood : UITheme.Muted,
+                        TextAnchor.MiddleLeft);
                 }
+            }
+
+            // Per-element hover tips are handled by DrawHealthDimBar (factors) and
+            // the event rows below. Do NOT register a whole-block tooltip here, or
+            // it swallows the per-dimension tooltips.
+            return block.yMax;
+        }
+
+        private static void DrawHealthDimBar(Rect rect, string label, float score01to100,
+            IReadOnlyList<ReadModels.HealthFactorView> factors, string dimKey)
+        {
+            // v4.6.5: fixed-size progress bar matching the output-ledger layout:
+            // label | bar | value area | pct. This prevents the health bar from
+            // stretching across the whole row.
+            float labelW = 80f;
+            float pctW = 50f;
+            float barX = rect.x + labelW;
+            float barW = rect.width - labelW - pctW - UITheme.ProgressbarValueW;
+            UIComponents.Label(new Rect(rect.x, rect.y, labelW, rect.height),
+                label,
+                GameFont.Tiny, UITheme.SecondaryText,
+                TextAnchor.MiddleLeft);
+            float barH = UITheme.ProgressbarH;
+            float share = Mathf.Clamp01(score01to100 / 100f);
+            bool low = share < 0.3f;
+            Color fill = low ? UITheme.Blood : UITheme.PillGold;
+            Rect bar = new Rect(barX, rect.y + (rect.height - barH) / 2f, barW, barH);
+            UIComponents.ProgressBar(bar, share, fill);
+            UIComponents.Label(new Rect(rect.x + rect.width - pctW, rect.y, pctW, rect.height),
+                Mathf.RoundToInt(score01to100) + "%",
+                GameFont.Tiny, low ? UITheme.Blood : UITheme.Text,
+                TextAnchor.MiddleRight);
+
+            // Per-dimension hover tip listing all positive/negative factors.
+            if (factors != null && factors.Count > 0)
+            {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                sb.AppendLine(label);
+                for (int i = 0; i < factors.Count; i++)
+                {
+                    ReadModels.HealthFactorView f = factors[i];
+                    if (f == null) continue;
+                    string tag = f.IsPositive ? "✓" : "✗";
+                    string impact = f.Impact == 0 ? "" : (" (" + (f.Impact > 0 ? "+" : "") + f.Impact + ")");
+                    sb.AppendLine("  " + tag + " " + f.LabelText + impact);
+                }
+                TooltipHandler.TipRegion(rect, sb.ToString().TrimEnd());
+            }
+        }
+
+        // ---- 榨取总账 / 产出核销 (contribution-archive layout, v4.6.1) ----
+
+        /// <summary>
+        /// v4.6.2: Cover header (matches contribution-archive-overview.html .cover block).
+        /// Portrait + name + role description + in-service stamp + one-line verdict.
+        /// All visual goes through UITheme tokens; portrait is drawn via the native
+        /// PortraitsCache (3D colonist render). Falls back to a placeholder box if
+        /// no live pawn is resolvable.
+        /// </summary>
+        private float DrawCoverHeader(Rect rect, float y, PawnObject pawn, IArchiveService service)
+        {
+            float portraitW = 60f;
+            float portraitH = 75f;
+            float portraitPad = 4f;
+            float rowH = portraitH + 8f; // includes vertical breathing room
+
+            // Tier medal inline row (.tier-inline in the design spec) grows the
+            // header when a confirmed/estimated tier exists.
+            WorkIntensityView intensity = cachedWorkIntensity;
+            float tierRowH = (intensity != null && intensity.IsDefined) ? 20f : 0f;
+            rowH += tierRowH;
+
+            Rect portraitRect = new Rect(rect.x, y, portraitW, portraitH);
+            Rect infoRect = new Rect(
+                portraitRect.xMax + portraitPad + 6f,
+                y,
+                rect.width - portraitW - portraitPad - 6f,
+                rowH);
+
+            // ---- Portrait ----
+            Pawn livePawn = service != null ? service.GetLivePawn(pawn.StableId) : null;
+            DrawPortraitOrPlaceholder(portraitRect, livePawn);
+
+            // ---- Tier medal inline (.tier-inline in spec) ----
+            // Drawn at the top of the info column; the name/role/days block shifts down
+            // by tierRowH so they never overlap the medal row.
+            if (tierRowH > 0f)
+            {
+                DrawTierMedalInline(new Rect(infoRect.x, infoRect.y, infoRect.width, tierRowH), intensity);
+            }
+
+            // ---- Name + role description ----
+            float contentY = infoRect.y + tierRowH;
+            UIComponents.Label(new Rect(infoRect.x, contentY + 2f, infoRect.width, 26f),
+                ObjectDisplayLabel(pawn),
+                GameFont.Medium, UITheme.Text,
+                TextAnchor.UpperLeft);
+
+            string roleDesc = BuildCoverRoleDescription(pawn);
+            UIComponents.Label(new Rect(infoRect.x, contentY + 30f, infoRect.width, 18f),
+                roleDesc,
+                GameFont.Tiny, UITheme.SecondaryText,
+                TextAnchor.UpperLeft);
+
+            string daysText = BuildCoverDaysText(pawn);
+            UIComponents.Label(new Rect(infoRect.x, contentY + 50f, infoRect.width, 18f),
+                daysText,
+                GameFont.Tiny, UITheme.Muted,
+                TextAnchor.UpperLeft);
+
+            // ---- In-service days text + stamp on the same row ----
+            // v4.6.5: stamp is placed to the right of "在册 X 日" instead of the
+            // bottom row, preventing overlap with the days line.
+            bool alive = !pawn.IsArchived;
+            string stampKey = alive
+                ? "PersonalChronicle.UI.Cover.StampAlive"
+                : "PersonalChronicle.UI.Cover.StampDead";
+            string stampText = stampKey.Translate().ToString();
+            float stampW = Mathf.Max(60f, Text.CalcSize(stampText).x + 18f);
+            float stampH = 20f;
+
+            float daysY = contentY + 50f;
+            Vector2 daysSize = Text.CalcSize(daysText);
+            Rect daysRect = new Rect(infoRect.x, daysY, daysSize.x + 4f, 18f);
+            UIComponents.Label(daysRect, daysText,
+                GameFont.Tiny, UITheme.Muted,
+                TextAnchor.MiddleLeft);
+
+            Rect stampRect = new Rect(
+                daysRect.xMax + 6f,
+                daysY + (18f - stampH) / 2f,
+                stampW,
+                stampH);
+            UIComponents.Pill(stampRect, stampText, alive ? UITheme.Alive : UITheme.Dead);
+
+            // ---- Incomplete badge (mid-install: JoinTick=-1) ----
+            if (pawn.JoinTick < 0L)
+            {
+                string incomplete = "PersonalChronicle.UI.Cover.Incomplete".Translate().ToString();
+                float badgeW = Mathf.Min(infoRect.width, Text.CalcSize(incomplete).x + 16f);
+                Rect badgeRect = new Rect(infoRect.x, daysY - 22f, badgeW, 18f);
+                DrawIncompleteBadge(badgeRect, incomplete);
+            }
+
+            return y + rowH;
+        }
+
+        private static void DrawPortraitOrPlaceholder(Rect rect, Pawn livePawn)
+        {
+            // Native portrait frame (blood-tinted border, dark fill, dim label when missing).
+            Color prevColor = GUI.color;
+            Color prevFontColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            try
+            {
+                Widgets.DrawBoxSolid(rect, UITheme.Panel);
+                Widgets.DrawBox(rect);
+
+                bool hasPortrait = false;
+                if (livePawn != null)
+                {
+                    // Use the native PortraitsCache (RimWorld 1.6). Catch any null
+                    // return / RenderTexture issue by falling through to placeholder.
+                    RenderTexture portrait = PortraitsCache.Get(
+                        livePawn, new Vector2(rect.width, rect.height), Rot4.South);
+                    if (portrait != null)
+                    {
+                        GUI.DrawTexture(rect, portrait);
+                        hasPortrait = true;
+                    }
+                }
+                // Placeholder caption ("人物画像 / PortraitsCache") shows ONLY when no
+                // live pawn / render is available — never over a real 3D portrait.
+                if (!hasPortrait)
+                {
+                    string label = "PersonalChronicle.UI.Cover.PortraitLabel".Translate().ToString();
+                    string sub = "PersonalChronicle.UI.Cover.PortraitLabelSub".Translate().ToString();
+                    GUI.color = UITheme.Dim;
+                    Text.Font = GameFont.Tiny;
+                    Text.Anchor = TextAnchor.MiddleCenter;
+                    Widgets.Label(rect, label);
+                    Rect subRect = new Rect(rect.x, rect.yMax - 14f, rect.width, 12f);
+                    Widgets.Label(subRect, sub);
+                }
+            }
+            finally
+            {
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+            }
+        }
+
+        private static void DrawIncompleteBadge(Rect rect, string label)
+        {
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            try
+            {
+                GUI.color = UITheme.BadgeIncompleteFill;
+                Widgets.DrawBoxSolid(rect, UITheme.BadgeIncompleteFill);
+                GUI.color = UITheme.Blood;
+                Widgets.DrawBox(rect);
+                GUI.color = UITheme.Blood;
                 Text.Font = GameFont.Tiny;
                 Text.Anchor = TextAnchor.MiddleCenter;
-                GUI.color = current ? ArchiveUiStyle.Text : ArchiveUiStyle.Muted;
-                Widgets.Label(rung, tier.DisplayCode ?? tier.DefName);
-                GUI.color = Color.white;
-                Text.Anchor = TextAnchor.UpperLeft;
-                TooltipHandler.TipRegion(rung,
-                    TranslateIntensityKey(tier.LabelKey, tier.DisplayCode ?? tier.DefName));
+                Widgets.Label(rect, label);
             }
-            Text.Font = GameFont.Small;
-            y += 36f;
+            finally
+            {
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+            }
+        }
+
+        /// <summary>
+        /// v4.6.4: tier medal inline row (.tier-inline in the design spec).
+        /// Renders a square medal (tier display code on tier-coloured fill) beside
+        /// the tier title, an "预估/实际" tag and the projected daily hours. Never
+        /// called when the tier is undefined — the row collapses to zero height.
+        /// </summary>
+        private static void DrawTierMedalInline(Rect rect, WorkIntensityView intensity)
+        {
+            if (intensity == null || !intensity.IsDefined)
+            {
+                return;
+            }
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            try
+            {
+                // ---- Medal square (tier colour fill + display code) ----
+                float medal = Mathf.Min(rect.height, 18f);
+                Rect medalRect = new Rect(rect.x, rect.y + (rect.height - medal) / 2f, medal, medal);
+                Color tierColor = UITheme.Accent;
+                if (!string.IsNullOrEmpty(intensity.ColorHex)
+                    && ColorUtility.TryParseHtmlString(intensity.ColorHex, out Color parsed))
+                {
+                    tierColor = parsed;
+                }
+                GUI.color = tierColor;
+                Widgets.DrawBoxSolid(medalRect, tierColor);
+                GUI.color = UITheme.Window;
+                Text.Font = GameFont.Tiny;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(medalRect, intensity.DisplayCode ?? string.Empty);
+
+                // ---- Title + tag + projected daily ----
+                float textX = medalRect.xMax + 6f;
+                float textW = rect.xMax - textX;
+                string title = string.IsNullOrEmpty(intensity.LabelKey)
+                    ? string.Empty
+                    : intensity.LabelKey.Translate().ToString();
+                string tag = (intensity.IsEstimated
+                    ? "PersonalChronicle.UI.Intensity.Estimated"
+                    : "PersonalChronicle.UI.Intensity.Actual").Translate().ToString();
+                string daily = intensity.DailyHours > 0d
+                    ? string.Format("≈ {0} h/天", intensity.DailyHours.ToString("0.0"))
+                    : string.Empty;
+                string line = string.IsNullOrEmpty(daily)
+                    ? string.Format("{0} · {1}", title, tag)
+                    : string.Format("{0} · {1} · {2}", title, tag, daily);
+
+                GUI.color = UITheme.Text;
+                Text.Font = GameFont.Tiny;
+                Text.Anchor = TextAnchor.MiddleLeft;
+                Widgets.Label(new Rect(textX, rect.y, textW, rect.height), line);
+            }
+            finally
+            {
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+            }
+        }
+
+        private string BuildCoverRoleDescription(PawnObject pawn)
+        {
+            string role = RoleLabel(pawn.Role);
+            string faction = FactionLabel(pawn);
+            string background = BuildCoverBackground(pawn);
+            if (!string.IsNullOrEmpty(faction) && !string.IsNullOrEmpty(background))
+            {
+                return "PersonalChronicle.UI.Cover.RoleFormat".Translate(role, faction, background).ToString();
+            }
+            if (string.IsNullOrEmpty(faction) && !string.IsNullOrEmpty(background))
+            {
+                return "PersonalChronicle.UI.Cover.RoleFormatNoFaction".Translate(role, background).ToString();
+            }
+            if (!string.IsNullOrEmpty(faction) && string.IsNullOrEmpty(background))
+            {
+                return "PersonalChronicle.UI.Cover.RoleFormatNoBackground".Translate(role, faction).ToString();
+            }
+            return "PersonalChronicle.UI.Cover.RoleFormatMinimal".Translate(role).ToString();
+        }
+
+        private string BuildCoverBackground(PawnObject pawn)
+        {
+            string child = ResolveBackstoryLabel(pawn.ChildhoodBackstoryDefName);
+            string adult = ResolveBackstoryLabel(pawn.AdulthoodBackstoryDefName);
+            if (!string.IsNullOrEmpty(child) && !string.IsNullOrEmpty(adult))
+            {
+                return child + " / " + adult;
+            }
+            if (!string.IsNullOrEmpty(child)) return child;
+            if (!string.IsNullOrEmpty(adult)) return adult;
+            return "";
+        }
+
+        private static string ResolveBackstoryLabel(string backstoryDefName)
+        {
+            if (string.IsNullOrEmpty(backstoryDefName)) return "";
+            var def = DefDatabase<BackstoryDef>.GetNamedSilentFail(backstoryDefName);
+            return def != null ? def.title : backstoryDefName;
+        }
+
+        private string BuildCoverDaysText(PawnObject pawn)
+        {
+            if (pawn.JoinTick < 0L)
+            {
+                return "PersonalChronicle.UI.Cover.DaysUnknown".Translate().ToString();
+            }
+            long endTick = pawn.IsArchived && pawn.DeathTick > 0L
+                ? pawn.DeathTick
+                : Find.TickManager.TicksGame;
+            long days = (endTick - pawn.JoinTick) / RimWorld.GenDate.TicksPerDay;
+            if (days <= 0L) days = 0L;
+            string key = pawn.IsArchived
+                ? "PersonalChronicle.UI.Cover.DaysToDeath"
+                : "PersonalChronicle.UI.Cover.DaysKnown";
+            return key.Translate(days.ToString()).ToString();
+        }
+
+        private float DrawLedger(Rect rect, float y, PawnObject pawn)
+        {
+            // Header row + 3 StatCells (already realised output, work hours, weekly average).
+            float headH = 26f;
+            float cellH = UIComponents.StatCellMinHeight;
+            float gap = UITheme.GridGap;
+            float cellW = (rect.width - UITheme.CardPadX * 2f - gap * 2f) / 3f;
+
+            UIComponents.DrawSubsectionHeader(new Rect(rect.x, y, rect.width, headH),
+                "PersonalChronicle.UI.Ledger.Title");
+
+            float rowY = y + headH + UITheme.SpaceXxs;
+            float cellX = rect.x + UITheme.CardPadX;
+
+            bool known = pawn.JoinTick >= 0L;
+            string unknown = "PersonalChronicle.UI.Ledger.UnknownValue".Translate().ToString();
+
+            // Already realised output (silver).
+            string realisedValue = known && cachedProductionSummary != null && cachedProductionSummary.TotalMarketValue > 0f
+                ? FormatSilver(cachedProductionSummary.TotalMarketValue)
+                : (known ? "0" : unknown);
+            string realisedUnit = "PersonalChronicle.UI.Ledger.OutputValueUnit".Translate().ToString();
+            UIComponents.StatCell(new Rect(cellX, rowY, cellW, cellH),
+                "PersonalChronicle.UI.Ledger.OutputValue".Translate().ToString(),
+                realisedValue,
+                realisedUnit,
+                inlineSubLabel: true);
+
+            // Total work hours — value carries the numeric, subLabel carries the unit
+            // (避免 "10.7 h" + subLabel "h" 的单位重复).
+            string workValue = known
+                ? (GetCachedTotalWorkTicks() / (float)RimWorld.GenDate.TicksPerHour).ToString("0.0")
+                : unknown;
+            UIComponents.StatCell(new Rect(cellX + (cellW + gap), rowY, cellW, cellH),
+                "PersonalChronicle.UI.Ledger.TotalWork".Translate().ToString(),
+                workValue,
+                "PersonalChronicle.UI.Ledger.TotalWorkUnit".Translate().ToString(),
+                inlineSubLabel: true);
+
+            // Weekly average yield (estimated silver per week from the health evaluator).
+            string weeklyValue = known && cachedHealth != null && cachedHealth.IsDefined
+                ? FormatSilver(cachedHealth.WeeklySilverEstimate) : unknown;
+            UIComponents.StatCell(new Rect(cellX + 2f * (cellW + gap), rowY, cellW, cellH),
+                "PersonalChronicle.UI.Ledger.Weekly".Translate().ToString(),
+                weeklyValue,
+                "PersonalChronicle.UI.Ledger.WeeklyUnit".Translate().ToString(),
+                inlineSubLabel: true);
+
+            return rowY + cellH;
+        }
+
+        private long GetCachedTotalWorkTicks()
+        {
+            // Use the cachedWorkIntensity view as a proxy; falling back to 0 is fine.
+            if (cachedWorkIntensity == null || !cachedWorkIntensity.IsDefined) return 0L;
+            double hours = cachedWorkIntensity.TotalHours;
+            return (long)(hours * 2500d); // RimWorld 1h ≈ 2500 ticks
+        }
+
+        private float DrawOutputLedger(Rect rect, float y)
+        {
+            // Header + ProgressBar rows by production type. Empty state shows placeholder.
+            float headH = 26f;
+            UIComponents.DrawSubsectionHeader(new Rect(rect.x, y, rect.width, headH),
+                "PersonalChronicle.UI.OutputLedger.Title");
+            float bodyY = y + headH + 4f;
+
+            IReadOnlyList<ProductionTypeView> types = cachedProductionSummary != null
+                ? cachedProductionSummary.Types : null;
+            float totalValue = cachedProductionSummary != null
+                ? cachedProductionSummary.TotalMarketValue : 0f;
+
+            if (types == null || types.Count == 0 || totalValue <= 0f)
+            {
+                UIComponents.Label(new Rect(rect.x + UITheme.CardPadX, bodyY, rect.width - UITheme.CardPadX * 2f, 22f),
+                    "PersonalChronicle.UI.OutputLedger.Empty".Translate().ToString(),
+                    GameFont.Tiny, UITheme.Dim);
+                return bodyY + 24f;
+            }
+
+            // Sort descending by value for the most-extracted types first.
+            List<ProductionTypeView> sorted = new List<ProductionTypeView>(types);
+            sorted.Sort((a, b) => b.MarketValue.CompareTo(a.MarketValue));
+            int take = Mathf.Min(5, sorted.Count);
+            const float rowH = 22f;
+            float rowY = bodyY;
+            for (int i = 0; i < take; i++)
+            {
+                ProductionTypeView t = sorted[i];
+                if (t == null) continue;
+                float share = t.MarketValue / totalValue;
+                string label = ResolveProductionTypeLabel(t.DefName);
+                string valueText = FormatSilver(t.MarketValue)
+                    + " " + "PersonalChronicle.UI.Ledger.OutputValueUnit".Translate().ToString();
+                string pctText = Mathf.RoundToInt(share * 100f) + "%";
+                DrawProductionRow(new Rect(rect.x + UITheme.CardPadX, rowY, rect.width - UITheme.CardPadX * 2f, rowH),
+                    label, valueText, pctText, share);
+                rowY += rowH;
+            }
+            return rowY;
+        }
+
+        private static void DrawProductionRow(Rect rect, string label, string valueText, string pctText, float share)
+        {
+            float labelW = 80f;
+            float pctW = 50f;
+            float barX = rect.x + labelW;
+            float barW = rect.width - labelW - pctW - UITheme.ProgressbarValueW;
+            UIComponents.Label(new Rect(rect.x, rect.y, labelW, rect.height),
+                label,
+                GameFont.Tiny, UITheme.Text,
+                TextAnchor.MiddleLeft);
+            float barH = UITheme.ProgressbarH;
+            Rect bar = new Rect(barX, rect.y + (rect.height - barH) / 2f, barW, barH);
+            UIComponents.ProgressBar(bar, Mathf.Clamp01(share), UITheme.Blood);
+            UIComponents.Label(new Rect(bar.xMax + 4f, rect.y, UITheme.ProgressbarValueW, rect.height),
+                valueText,
+                GameFont.Tiny, UITheme.SecondaryText,
+                TextAnchor.MiddleLeft);
+            UIComponents.Label(new Rect(rect.x + rect.width - pctW, rect.y, pctW, rect.height),
+                pctText,
+                GameFont.Tiny, UITheme.Muted,
+                TextAnchor.MiddleRight);
+        }
+
+        private static string ResolveProductionTypeLabel(string defName)
+        {
+            if (string.IsNullOrEmpty(defName)) return "—";
+            // v4.6.5: production rows are aggregated by ThingCategory. Try the
+            // category def first, then fall back to the item def for uncategorised
+            // (or legacy) entries.
+            var cat = DefDatabase<ThingCategoryDef>.GetNamedSilentFail(defName);
+            if (cat != null) return cat.label != null ? cat.label : defName;
+            var def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (def != null) return def.label != null ? def.label : defName;
+            return defName;
         }
 
         private void DrawWorkIntensityCards(Rect rect, ref float y)
@@ -3269,13 +4187,13 @@ namespace PersonalChronicle.Archive
                 string rank = row.Rank > 0
                     ? "PersonalChronicle.UI.Intensity.Rank".Translate(row.Rank, row.PopulationCount).ToString()
                     : "PersonalChronicle.UI.Intensity.RankUnknown".Translate().ToString();
-                Widgets.Label(new Rect(card.x + 10f, card.y + 64f, card.width - 20f, 18f), rank);
-                Widgets.Label(new Rect(card.x + 10f, card.y + 84f, card.width - 20f, 18f),
+                Widgets.Label(new Rect(card.x + UITheme.CardPadX, card.y + 64f, card.width - UITheme.CardPadX * 2f, 18f), rank);
+                Widgets.Label(new Rect(card.x + UITheme.CardPadX, card.y + 84f, card.width - UITheme.CardPadX * 2f, 18f),
                     "PersonalChronicle.UI.Intensity.WorkShare".Translate(
                         Mathf.RoundToInt(row.Share01 * 100f),
                         Mathf.RoundToInt(row.RelativeToMaximum01 * 100f)).ToString());
                 GUI.color = Color.white;
-                Widgets.FillableBar(new Rect(card.x + 10f, card.y + 106f, card.width - 20f, 6f),
+                Widgets.FillableBar(new Rect(card.x + UITheme.CardPadX, card.y + 106f, card.width - UITheme.CardPadX * 2f, 6f),
                     Mathf.Clamp01(row.Share01));
             }
             Text.Font = GameFont.Small;
@@ -3416,7 +4334,7 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Small;
                 Widgets.Label(new Rect(row.x + 6f, row.y + 4f, row.width - 200f, 22f), link.Label);
                 Text.Font = GameFont.Tiny;
-                GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+                GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(row.x + row.width - 196f, row.y + 6f, 190f, 18f),
                     "PersonalChronicle.UI.SharedEvents".Translate().ToString());
                 GUI.color = Color.white;
@@ -3587,7 +4505,7 @@ namespace PersonalChronicle.Archive
                 Widgets.Label(new Rect(rect.x, y, rect.width, 22f),
                     "PersonalChronicle.UI.NoLocationData".Translate().ToString());
                 Text.Font = GameFont.Tiny;
-                GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+                GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(rect.x, y + 26f, rect.width, 40f),
                     "PersonalChronicle.UI.NoLocationExplanation".Translate().ToString());
                 GUI.color = Color.white;
@@ -3610,83 +4528,208 @@ namespace PersonalChronicle.Archive
             }
         }
 
-        private void DrawHoldersTab(Rect rect, IArchiveService service)
+        // v4.7 Legacy (传承) tab — the ownership-transfer chain for equipment.
+        // Consumes the read-model snapshot (cachedLegacy) only: no queries, no
+        // sorting, no null-guards here. Layout: epithet → verdict → summary KPI →
+        // holder table (collapsible past a small cap). All drawing via UIComponents.
+        private void DrawLegacyTab(Rect rect, IArchiveService service)
         {
-            // v3.1 Custody tab (was Holders): current holder + history when available.
+            ReadModels.LegacyView legacy = cachedLegacy ?? new ReadModels.LegacyView();
             float y = rect.y;
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.CurrentHolder".Translate().ToString());
+            float w = rect.width;
 
-            // Live holder first; degraded to archived snapshot / history tail.
-            Pawn holder = service.GetCurrentHolder(detailObjectId);
-            string holderStableId = null;
-            string holderLabel = null;
-            ThingObject thingObj = service.GetObject(detailObjectId) as ThingObject;
-            if (holder != null)
+            // 传承称号 (epithet).
+            if (!string.IsNullOrEmpty(legacy.TitleText))
             {
-                holderStableId = holder.GetUniqueLoadID();
-                holderLabel = holder.LabelShort;
-            }
-            else if (thingObj != null && !string.IsNullOrEmpty(thingObj.CurrentHolderId))
-            {
-                holderStableId = thingObj.CurrentHolderId;
-                ArchiveObject holderObj = service.GetObject(holderStableId);
-                holderLabel = holderObj != null ? ObjectDisplayLabel(holderObj) : holderStableId;
+                UIComponents.Label(
+                    new Rect(rect.x, y, w, UITheme.FontBodyLineHeight + 4f),
+                    legacy.TitleText, GameFont.Small, UITheme.Accent);
+                y += UITheme.FontBodyLineHeight + 8f;
             }
 
-            if (string.IsNullOrEmpty(holderLabel))
+            // 传承评价 (verdict).
+            if (!string.IsNullOrEmpty(legacy.VerdictText))
             {
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(rect.x, y, rect.width, 22f),
-                    "PersonalChronicle.UI.NoHolder".Translate().ToString());
-                y += 28f;
-            }
-            else
-            {
-                Rect row = new Rect(rect.x, y, rect.width, RowHeight - 4f);
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(row.x + 6f, row.y + 4f, row.width - 12f, 22f), holderLabel);
-                if (!string.IsNullOrEmpty(holderStableId) && Widgets.ButtonInvisible(row))
-                {
-                    NavigateTarget(service, NavTarget.Pawn, holderStableId, null);
-                }
-                Widgets.DrawLineHorizontal(row.x, row.yMax, row.width);
-                y += RowHeight + 4f;
+                UIComponents.Label(
+                    new Rect(rect.x, y, w, UITheme.FontBodyLineHeight * 2f),
+                    legacy.VerdictText, GameFont.Small, UITheme.Text);
+                y += UITheme.FontBodyLineHeight * 2f + UITheme.SpaceSm;
             }
 
-            // P2: persisted holder history (craft/kill capture).
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.HolderHistory".Translate().ToString());
-            if (thingObj == null || thingObj.HolderHistory == null || thingObj.HolderHistory.Count == 0)
+            if (legacy.IsEmpty)
             {
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(rect.x, y, rect.width, 22f),
-                    "PersonalChronicle.UI.NoHolderHistory".Translate().ToString());
+                UIComponents.Label(
+                    new Rect(rect.x, y, w, 22f),
+                    "PersonalChronicle.UI.Legacy.Empty".Translate().ToString(),
+                    GameFont.Small, UITheme.Muted);
                 return;
             }
-            for (int i = thingObj.HolderHistory.Count - 1; i >= 0; i--)
+
+            // 传承概要 (summary KPI).
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Legacy.Summary".Translate().ToString());
+            float cellW = (w - UITheme.SpaceXs * 3f) / 4f;
+            float cellH = UIComponents.StatCellMinHeight;
+            Rect c1 = new Rect(rect.x, y, cellW, cellH);
+            Rect c2 = new Rect(c1.xMax + UITheme.SpaceXs, y, cellW, cellH);
+            Rect c3 = new Rect(c2.xMax + UITheme.SpaceXs, y, cellW, cellH);
+            Rect c4 = new Rect(c3.xMax + UITheme.SpaceXs, y, cellW, cellH);
+            UIComponents.StatCell(c1, "PersonalChronicle.UI.Legacy.CreatedBy".Translate().ToString(),
+                legacy.CreatedByText ?? "—");
+            UIComponents.StatCell(c2, "PersonalChronicle.UI.Legacy.CreatedAt".Translate().ToString(),
+                legacy.CreatedAtText ?? "—");
+            UIComponents.StatCell(c3, "PersonalChronicle.UI.Legacy.Gen".Translate().ToString(),
+                legacy.GenCount.ToString(),
+                "PersonalChronicle.UI.Legacy.GenNote".Translate().ToString());
+            UIComponents.StatCell(c4, "PersonalChronicle.UI.Legacy.TotalKills".Translate().ToString(),
+                legacy.TotalKills.ToString());
+            y += cellH + UITheme.SpaceSm;
+
+            // Current holder line.
+            y = DrawDetailRow(rect.x, y, w, "PersonalChronicle.UI.Legacy.CurrentHolder".Translate().ToString(),
+                legacy.CurrentHolderText ?? "—");
+
+            // 历届持有者 (holder table), collapsible past a cap.
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Legacy.Holders".Translate().ToString());
+            if (legacy.Holders == null || legacy.Holders.Count == 0)
             {
-                ObjectRef href = thingObj.HolderHistory[i];
-                if (href == null || string.IsNullOrEmpty(href.StableId))
-                {
-                    continue;
-                }
-                string label = !string.IsNullOrEmpty(href.LabelSnapshot)
-                    ? href.LabelSnapshot
-                    : href.StableId;
-                ArchiveObject resolved = service.GetObject(href.StableId);
-                if (resolved != null)
-                {
-                    label = ObjectDisplayLabel(resolved);
-                }
-                Rect hrow = new Rect(rect.x, y, rect.width, RowHeight - 4f);
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(hrow.x + 6f, hrow.y + 4f, hrow.width - 12f, 22f), label);
-                if (Widgets.ButtonInvisible(hrow))
-                {
-                    NavigateTarget(service, NavTarget.Pawn, href.StableId, null);
-                }
-                Widgets.DrawLineHorizontal(hrow.x, hrow.yMax, hrow.width);
-                y += RowHeight + 2f;
+                UIComponents.Label(new Rect(rect.x, y, w, 22f),
+                    "PersonalChronicle.UI.Legacy.NoHolders".Translate().ToString(),
+                    GameFont.Small, UITheme.Muted);
+                return;
             }
+
+            const int cap = 5;
+            bool expanded = legacyExpanded;
+            IReadOnlyList<ReadModels.LegacyHolderView> shown = expanded
+                ? legacy.Holders
+                : SubList(legacy.Holders, cap);
+
+            // Header row.
+            float colGen = 46f;
+            float colHolder = 96f;
+            float colFrom = 88f;
+            float colTo = 88f;
+            float colDur = 60f;
+            float colKills = 46f;
+            float colRemark = w - (colGen + colHolder + colFrom + colTo + colDur + colKills);
+            if (colRemark < 80f) colRemark = 80f;
+            string[] headerKeys =
+            {
+                "PersonalChronicle.UI.Legacy.ColGen",
+                "PersonalChronicle.UI.Legacy.ColHolder",
+                "PersonalChronicle.UI.Legacy.ColFrom",
+                "PersonalChronicle.UI.Legacy.ColTo",
+                "PersonalChronicle.UI.Legacy.ColDur",
+                "PersonalChronicle.UI.Legacy.ColKills",
+                "PersonalChronicle.UI.Legacy.ColRemark"
+            };
+            float[] colW = { colGen, colHolder, colFrom, colTo, colDur, colKills, colRemark };
+            float x = rect.x;
+            Color prevColor = GUI.color;
+            GameFont prevFont = Verse.Text.Font;
+            for (int i = 0; i < headerKeys.Length; i++)
+            {
+                UIComponents.Label(new Rect(x, y, colW[i], UITheme.FontBodyLineHeight),
+                    headerKeys[i].Translate().ToString(), GameFont.Tiny, UITheme.Muted);
+                x += colW[i];
+            }
+            y += UITheme.FontBodyLineHeight + 2f;
+            UIComponents.Rule(new Rect(rect.x, y, w, 1f), UITheme.BorderSoft);
+            y += 3f;
+
+            // Data rows.
+            for (int i = 0; i < shown.Count; i++)
+            {
+                ReadModels.LegacyHolderView h = shown[i];
+                if (h == null) continue;
+                float rowH = UITheme.FontBodyLineHeight + 6f;
+                Rect row = new Rect(rect.x, y, w, rowH);
+
+                if (h.IsCurrent)
+                {
+                    Color prev = GUI.color;
+                    GUI.color = UITheme.WithAlpha(UITheme.Alive, 0.12f);
+                    Widgets.DrawBoxSolid(row, Color.white);
+                    GUI.color = prev;
+                }
+
+                // Generation cell: loan rows show the loan badge instead of a gen.
+                if (h.IsLoan)
+                {
+                    UIComponents.Badge(
+                        new Rect(rect.x, y + 2f, 42f, UITheme.FontBodyLineHeight - 2f),
+                        "PersonalChronicle.UI.Legacy.Loan".Translate().ToString(),
+                        UITheme.Dim);
+                }
+                else
+                {
+                    UIComponents.Label(new Rect(rect.x + 2f, y, colGen - 2f, rowH),
+                        h.Generation > 0
+                            ? "PersonalChronicle.UI.Legacy.GenN".Translate(h.Generation).ToString()
+                            : "—",
+                        GameFont.Small, UITheme.Text);
+                }
+
+                // Holder: label + first badge.
+                UIComponents.Label(new Rect(rect.x + colGen, y, colHolder - 6f, rowH),
+                    h.HolderText ?? "—", GameFont.Small, UITheme.Text);
+                if (h.IsFirst)
+                {
+                    UIComponents.Badge(
+                        new Rect(rect.x + colGen + colHolder - 58f, y + 2f, 52f, UITheme.FontBodyLineHeight - 2f),
+                        "PersonalChronicle.UI.Legacy.First".Translate().ToString(),
+                        UITheme.Accent);
+                }
+
+                // From / To / Duration / Kills.
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder, y, colFrom, rowH),
+                    h.FromText ?? "—", GameFont.Tiny, UITheme.Muted);
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom, y, colTo, rowH),
+                    h.ToText ?? "—", GameFont.Tiny, UITheme.Muted);
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo, y, colDur, rowH),
+                    h.DurationText ?? "—", GameFont.Tiny, UITheme.Muted);
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo + colDur, y, colKills, rowH),
+                    h.KillCount.ToString(), GameFont.Small, UITheme.Text);
+
+                // Remark (loan note) — fits in the remaining column.
+                UIComponents.Label(new Rect(rect.x + colGen + colHolder + colFrom + colTo + colDur + colKills,
+                    y, colRemark - 4f, rowH),
+                    h.RemarkText ?? "—", GameFont.Tiny, UITheme.Dim);
+
+                // Click to navigate to the holder pawn.
+                if (!string.IsNullOrEmpty(h.HolderStableId) && Widgets.ButtonInvisible(row))
+                {
+                    NavigateTarget(service, NavTarget.Pawn, h.HolderStableId, null);
+                }
+                UIComponents.Rule(new Rect(rect.x, row.yMax - 1f, w, 1f), UITheme.BorderHair);
+                y += rowH;
+            }
+            GUI.color = prevColor;
+            Verse.Text.Font = prevFont;
+
+            // Collapse / expand toggle.
+            if (legacy.Holders.Count > cap)
+            {
+                y += UITheme.SpaceXxs;
+                string toggle = expanded
+                    ? "PersonalChronicle.UI.Legacy.Collapse".Translate().ToString()
+                    : "PersonalChronicle.UI.Legacy.ExpandAll".Translate(legacy.Holders.Count).ToString();
+                Rect btn = new Rect(rect.x, y, w, 24f);
+                if (Widgets.ButtonText(btn, toggle, true, false, true))
+                {
+                    legacyExpanded = !legacyExpanded;
+                }
+                y += 30f;
+            }
+        }
+
+        private static IReadOnlyList<ReadModels.LegacyHolderView> SubList(
+            IReadOnlyList<ReadModels.LegacyHolderView> list, int cap)
+        {
+            if (list == null || list.Count <= cap) return list;
+            List<ReadModels.LegacyHolderView> sub = new List<ReadModels.LegacyHolderView>(cap);
+            for (int i = 0; i < cap; i++) sub.Add(list[i]);
+            return sub;
         }
 
         private static string WorkTypeLabel(string defName)
@@ -3729,27 +4772,36 @@ namespace PersonalChronicle.Archive
 
         private void DrawCapturePlaceholder(Rect rect)
         {
-            float y = rect.y;
-            string featureName = TabLabel(CurrentTabKey());
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            try
+            {
+                float y = rect.y;
+                string featureName = TabLabel(CurrentTabKey());
 
-            Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(rect.x, y, rect.width, 28f), featureName);
-            y += 36f;
+                Text.Font = GameFont.Medium;
+                Widgets.Label(new Rect(rect.x, y, rect.width, 28f), featureName);
+                y += 36f;
 
-            Rect box = new Rect(rect.x, y, rect.width, 110f);
-            GUI.color = new Color(1f, 1f, 1f, 0.04f);
-            Widgets.DrawBoxSolid(box, Color.white);
-            GUI.color = Color.white;
-            DrawBorder(box, new Color(0.45f, 0.45f, 0.45f, 1f));
+                Rect box = new Rect(rect.x, y, rect.width, 110f);
+                UIComponents.TintedBox(box, UITheme.OverlayWhite04);
+                DrawBorder(box, UITheme.BorderSoft);
 
-            Text.Font = GameFont.Small;
-            Widgets.Label(new Rect(box.x + 14f, box.y + 14f, box.width - 28f, 24f),
-                "PersonalChronicle.UI.NoCaptureYet".Translate().ToString());
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
-            Widgets.Label(new Rect(box.x + 14f, box.y + 46f, box.width - 28f, 48f),
-                "PersonalChronicle.UI.NoCaptureExplanation".Translate().ToString());
-            GUI.color = Color.white;
+                Text.Font = GameFont.Small;
+                Widgets.Label(new Rect(box.x + 14f, box.y + 14f, box.width - 28f, 24f),
+                    "PersonalChronicle.UI.NoCaptureYet".Translate().ToString());
+                Text.Font = GameFont.Tiny;
+                GUI.color = UITheme.SecondaryText;
+                Widgets.Label(new Rect(box.x + 14f, box.y + 46f, box.width - 28f, 48f),
+                    "PersonalChronicle.UI.NoCaptureExplanation".Translate().ToString());
+            }
+            finally
+            {
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+            }
         }
 
         private string CurrentTabKey()
@@ -3793,7 +4845,7 @@ namespace PersonalChronicle.Archive
                 Widgets.Label(new Rect(row.x + 158f, row.y + 3f, row.width - 158f - 190f, 20f), line.NameText);
 
                 Text.Font = GameFont.Tiny;
-                GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+                GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(row.x + row.width - 186f, row.y + 3f, 182f, 18f), line.ParamsText);
                 GUI.color = Color.white;
 
@@ -3801,7 +4853,7 @@ namespace PersonalChronicle.Archive
                 if (descHeight > 0f)
                 {
                     Text.Font = GameFont.Tiny;
-                    GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+                    GUI.color = UITheme.SecondaryText;
                     Widgets.Label(new Rect(row.x + 4f, cy, row.width - 8f, descHeight), line.DescriptionText);
                     GUI.color = Color.white;
                     cy += descHeight;
@@ -3942,8 +4994,8 @@ namespace PersonalChronicle.Archive
                     Widgets.DrawHighlightIfMouseover(chipRect);
                 }
                 GUI.color = chip.Target != NavTarget.None
-                    ? new Color(0.36f, 0.62f, 0.83f, 1f)
-                    : new Color(0.72f, 0.72f, 0.72f, 1f);
+                    ? UITheme.PillBlue
+                    : UITheme.SecondaryText;
                 Widgets.Label(chipRect, chip.Label);
                 GUI.color = Color.white;
                 if (chip.Target != NavTarget.None && Widgets.ButtonInvisible(chipRect))
@@ -3979,7 +5031,7 @@ namespace PersonalChronicle.Archive
             y += 30f;
 
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.72f, 0.72f, 0.72f, 1f);
+            GUI.color = UITheme.SecondaryText;
             string desc = FormatDate(cachedEventDetail.Tick);
             if (cachedEventDetail.Primary != null && !string.IsNullOrEmpty(cachedEventDetail.Primary.LabelSnapshot))
             {
@@ -4007,9 +5059,7 @@ namespace PersonalChronicle.Archive
             y += 28f;
 
             Rect descBox = new Rect(viewRect.x, y, viewRect.width, 90f);
-            GUI.color = new Color(1f, 1f, 1f, 0.04f);
-            Widgets.DrawBoxSolid(descBox, Color.white);
-            GUI.color = Color.white;
+            UIComponents.TintedBox(descBox, UITheme.OverlayWhite04);
             DrawBorder(descBox, ArchiveUiStyle.Border);
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.SecondaryText;
@@ -4025,8 +5075,22 @@ namespace PersonalChronicle.Archive
 
         private float ComputeEventHeight(float width)
         {
-            float treeHeight = 34f + Mathf.Max(1, cachedEventTree.Count) * 22f + 12f;
-            return 4f + 28f + 26f + treeHeight + 18f + 22f + 28f + 90f + 20f;
+            // v4.5.4: named constants mirror DrawEventContent's layout — keep in
+            // sync when the draw path changes.
+            const float topPad = 4f;
+            const float titleH = 28f;
+            const float titleGap = 26f;
+            const float treeHeaderH = 34f;
+            const float treeRowH = 22f;
+            const float treePad = 12f;
+            const float treeGap = 18f;
+            const float descTitleH = 22f;
+            const float descGap = 28f;
+            const float descBoxH = 90f;
+            const float bottomPad = 20f;
+            float treeHeight = treeHeaderH + Mathf.Max(1, cachedEventTree.Count) * treeRowH + treePad;
+            return topPad + titleH + titleGap + treeHeight + treeGap
+                + descTitleH + descGap + descBoxH + bottomPad;
         }
 
         private void DrawTree(float x, float y, float width, IArchiveService service)
@@ -4067,8 +5131,8 @@ namespace PersonalChronicle.Archive
                 float labelX = x + line.Depth * indent + stub + 6f;
                 Rect labelRect = new Rect(labelX, rowY, width - (labelX - x), rowHeight);
                 GUI.color = line.Target != NavTarget.None
-                    ? new Color(0.36f, 0.62f, 0.83f, 1f)
-                    : new Color(0.78f, 0.78f, 0.78f, 1f);
+                    ? UITheme.PillBlue
+                    : UITheme.SecondaryText;
                 Widgets.Label(labelRect, line.Label);
                 GUI.color = Color.white;
 
@@ -4094,21 +5158,17 @@ namespace PersonalChronicle.Archive
 
         private static void DrawSectionTitle(Rect rect, ref float y, string title)
         {
-            Text.Font = GameFont.Small;
-            ArchiveUiStyle.DrawSectionMarker(new Rect(rect.x, y + 4f, 4f, 14f));
-            Widgets.Label(new Rect(rect.x + 10f, y, 210f, 22f), title);
-            ArchiveUiStyle.DrawRule(
-                new Rect(rect.x + 230f, y + 11f, Mathf.Max(0f, rect.width - 230f), 1f),
-                ArchiveUiStyle.Border);
-            y += 30f;
+            UIComponents.SectionTitle(rect, y, title);
+            y += UITheme.SectionTitleHeight;
         }
 
         private static void DrawEventRow(Rect row, string dateText, string titleText, string typeText)
         {
             Color previous = GUI.color;
-            GUI.color = new Color(ArchiveUiStyle.Info.r, ArchiveUiStyle.Info.g, ArchiveUiStyle.Info.b, 0.5f);
-            Widgets.DrawBoxSolid(new Rect(row.x, row.y + 1f, 2f, Mathf.Max(1f, row.height - 2f)), GUI.color);
-            GUI.color = previous;
+            GameFont prevFont = Text.Font;
+            UIComponents.TintedBox(
+                new Rect(row.x, row.y + 1f, 2f, Mathf.Max(1f, row.height - 2f)),
+                UITheme.InfoSoft);
 
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.Dim;
@@ -4122,58 +5182,35 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Muted;
             Widgets.Label(new Rect(row.x + row.width - 186f, row.y + 4f, 182f, 18f), typeText);
             GUI.color = previous;
-            Text.Font = GameFont.Small;
+            Text.Font = prevFont;
 
             ArchiveUiStyle.DrawRule(new Rect(row.x, row.yMax - 1f, row.width, 1f), ArchiveUiStyle.BorderSoft);
         }
 
         private static float DrawDetailRow(float x, float y, float width, string label, string value)
         {
-            Text.Font = GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.SecondaryText;
-            Widgets.Label(new Rect(x, y, 150f, 20f), label);
-            GUI.color = Color.white;
-
-            Text.Font = GameFont.Small;
-            Widgets.Label(new Rect(x + 156f, y, width - 156f, 22f), value);
+            UIComponents.Label(new Rect(x, y, 150f, 20f), label, GameFont.Tiny, UITheme.SecondaryText);
+            UIComponents.Label(new Rect(x + 156f, y, width - 156f, 22f), value, GameFont.Small, UITheme.Text);
             return y + 26f;
         }
 
         private static void DrawStatCell(Rect rect, string label, int value)
         {
-            ArchiveUiStyle.DrawCard(rect, ArchiveUiStyle.Accent);
-            Text.Font = GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 7f, rect.width - 18f, 16f), label);
-            Text.Font = GameFont.Medium;
-            GUI.color = ArchiveUiStyle.Text;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 25f, rect.width - 18f, 26f), value.ToString());
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
+            UIComponents.StatCell(rect, label, value.ToString());
         }
 
         /// <summary>
-        /// Stat cell with a Tiny-font breakdown line under the value (fits the
-        /// existing 64f cell: value ends at y+50, sub-label occupies y+48..y+64).
-        /// Original signature untouched — this is an append-only overload.
+        /// Stat cell with a Tiny-font breakdown line under the value. Forwards to
+        /// the shared UIComponents.StatCell so all KPI cells share one renderer.
         /// </summary>
         private static void DrawStatCell(Rect rect, string label, int value, string subLabel)
         {
-            DrawStatCell(rect, label, value);
-            if (string.IsNullOrEmpty(subLabel))
-            {
-                return;
-            }
-            Text.Font = GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.Dim;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 49f, rect.width - 18f, 16f), subLabel);
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
+            UIComponents.StatCell(rect, label, value.ToString(), subLabel);
         }
 
-        private static readonly Color AlivePill = new Color(0.42f, 0.81f, 0.56f, 1f);
-        private static readonly Color DeadPill = new Color(0.94f, 0.38f, 0.38f, 1f);
-        private static readonly Color BluePill = new Color(0.36f, 0.62f, 0.83f, 1f);
+        private static readonly Color AlivePill = UITheme.PillGreen;
+        private static readonly Color DeadPill = UITheme.Dead;
+        private static readonly Color BluePill = UITheme.PillBlue;
 
         private static float DrawPill(float x, float y, string label, Color color)
         {
@@ -4286,9 +5323,9 @@ namespace PersonalChronicle.Archive
             switch (role)
             {
                 case PawnRole.Slave:
-                    return new Color(0.95f, 0.74f, 0.26f, 1f);
+                    return UITheme.PillGold;
                 case PawnRole.Prisoner:
-                    return new Color(0.86f, 0.46f, 0.46f, 1f);
+                    return UITheme.PillRed;
                 default:
                     return AlivePill;
             }
@@ -4483,6 +5520,35 @@ namespace PersonalChronicle.Archive
             }
             // Missing Def (e.g. third-party mod removed after the object was
             // archived): fall back to the raw defName — never crash, never red-text.
+            return defName;
+        }
+
+        /// <summary>
+        /// Label for a production card. The production summary is aggregated by
+        /// ThingCategory (e.g. "WeaponsRanged") since v4.6.5, so the defName may be
+        /// either a concrete ThingDef or a ThingCategoryDef — resolve both before
+        /// falling back to the raw key. A category key that no longer exists (mod
+        /// removed) degrades to the raw defName without red-text.
+        /// </summary>
+        private static string ProductionDefLabel(string defName)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return string.Empty;
+            }
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (def != null && !string.IsNullOrEmpty(def.label))
+            {
+                return def.label;
+            }
+            ThingCategoryDef cat = DefDatabase<ThingCategoryDef>.GetNamedSilentFail(defName);
+            if (cat != null && !string.IsNullOrEmpty(cat.label))
+            {
+                return cat.label;
+            }
+            // Neither resolved: it is a genuine missing def (third-party mod
+            // uninstalled) — log once and degrade to the raw key.
+            LogMissingDefOnce(defName);
             return defName;
         }
 
@@ -4718,15 +5784,6 @@ namespace PersonalChronicle.Archive
             public int OurLossCount;           // member lines where this faction killed us (unused for enemy; for __player__ = deaths)
             public List<CombatLineView> MemberLines;
             public List<KeyValuePair<string, int>> Composition; // victim-kind label -> count
-        }
-
-        private struct ProductionLineView
-        {
-            public string DefName;
-            public string Label;
-            public int Count;
-            public long LastTick;
-            public string StableId;
         }
 
         private struct TreeLineView

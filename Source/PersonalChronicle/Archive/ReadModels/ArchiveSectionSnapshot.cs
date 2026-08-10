@@ -47,5 +47,10 @@ namespace PersonalChronicle.Archive.ReadModels
 
         /// <summary>Single event detail snapshot (description tree).</summary>
         EventSnapshot BuildEvent(IArchiveService service, ChronicleEvent ev, long revision);
+
+        /// <summary>Full timeline event stream, sorted ascending by <see cref="ChronicleEvent.Tick"/>
+        /// and null-guarded. Centralizes the ordering that the Home timeline needs so the
+        /// draw path never orders <see cref="IArchiveService"/> results itself (design doc §7.4).</summary>
+        IReadOnlyList<ChronicleEvent> BuildTimelineEvents(IArchiveService service, long revision);
     }
 }

@@ -17,8 +17,10 @@
 | 目录 | 内容 |
 |---|---|
 | `ui-preview/` | 各方案可交互 HTML mockup（A–H 方案对比、档案馆 UI 总览） |
+| `ui-preview-equipment/` | 装备「完整继承使用链」独立调试沙盒（copy 自完整预览，聚焦 Custody Tab：每任持有者 + 击杀数 + 第一任标记） |
 | `combat/` | 战斗履历设计文档（`设计文档_战斗履历.md`）+ UI 预览（`preview_combat.html`）+ 击杀图鉴卡片方案（`方案_击杀图鉴卡片.md`，评审中） |
 | `preview-reports/` | 首页总览(B+E) 与 报告功能的设计真源（`design-home-overview-and-reports.md`）+ 可视化 mockup（`home-and-reports-preview.html`） |
+| `overview/` | Pawn 个人档案 Overview 子页：**设计文档**（`设计文档_Pawn概览.md`）+ **布局重构方案**（`方案_概览重构设计.md`，A/B/C）+ **内容机制重构方案**（`方案_概览内容机制重构.md`，M1–M3）+ **五区块内容重置方案**（`方案_概览区块内容重构.md`）+ 沙盒（`preview_pawn_overview.html`）+ **布局示例**（`examples/overview-a-linear.html`/`overview-b-two-column.html`/`overview-c-cards.html`）+ **内容机制示例**（`examples/content-milestones.html`/`content-blurb.html`/`content-keyevents.html`）+ **五区块重置示例**（`examples/rich-1-lifecycle-career-footprint.html`/`rich-2-milestones-keyevents.html`/`rich-3-archive-page.html`） |
 
 ## UI 预览怎么用
 
