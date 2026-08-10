@@ -1322,7 +1322,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Dim;
             Widgets.Label(new Rect(inner.x, y, inner.width, 18f),
                 "PersonalChronicle.UI.Navigation".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             y += 20f;
 
             if (DrawSidebarItem(inner.x, y, inner.width, itemHeight,
@@ -1343,7 +1343,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Dim;
             Widgets.Label(new Rect(inner.x, y, inner.width, 18f),
                 "PersonalChronicle.UI.Categories".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             y += 20f;
 
             y = DrawSidebarCategory(inner, y, itemHeight, itemGap, ArchiveCategoryKeys.Pawn, service);
@@ -1356,7 +1356,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Dim;
             Widgets.Label(new Rect(inner.x, y, inner.width, 18f),
                 "PersonalChronicle.UI.Tools".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             y += 20f;
 
             y = DrawSidebarTool(inner, y, itemHeight, itemGap, "PersonalChronicle.UI.Favorites");
@@ -1468,7 +1468,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.SecondaryText;
             Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 18f),
                 "PersonalChronicle.UI.ArchiveHomeDesc".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             Text.Font = GameFont.Small;
             y += 26f;
 
@@ -1597,7 +1597,7 @@ namespace PersonalChronicle.Archive
                 float connectorEnd = left ? cardRect.x : nodeRect.x;
                 float connectorLen = Mathf.Max(0f, connectorEnd - connectorStart);
                 Widgets.DrawLineHorizontal(connectorStart, currentY + rowH / 2f, connectorLen);
-                GUI.color = Color.white;
+                GUI.color = prevColor;
 
                 ArchiveUiStyle.DrawPanel(cardRect);
                 Rect cardInner = cardRect.ContractedBy(6f);
@@ -1606,7 +1606,7 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Tiny;
                 GUI.color = ArchiveUiStyle.SecondaryText;
                 Widgets.Label(new Rect(cardInner.x, cardInner.y + 22f, cardInner.width, 16f), date);
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 if (Widgets.ButtonInvisible(cardRect))
                 {
                     OpenEventDetail(service, ev);
@@ -2287,7 +2287,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.SecondaryText;
             Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 18f),
                 "PersonalChronicle.UI.OverviewDesc".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             Text.Font = GameFont.Small;
             y += 28f;
 
@@ -2400,7 +2400,7 @@ namespace PersonalChronicle.Archive
                 GUI.color = ArchiveUiStyle.Muted;
                 Widgets.Label(new Rect(card.x + UITheme.CardPadX, card.y + 4f, card.width - UITheme.CardPadX * 2f, 16f),
                     clickable ? CategoryLabel(categoryKey) : "PersonalChronicle.UI.StatsOnlyNote".Translate().ToString());
-                GUI.color = Color.white;
+                GUI.color = prevColor;
 
                 Text.Font = GameFont.Small;
                 Widgets.Label(new Rect(card.x + UITheme.CardPadX, card.y + 22f, card.width - UITheme.CardPadX * 2f, 20f), ObjectDisplayLabel(obj));
@@ -2408,7 +2408,7 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Tiny;
                 GUI.color = ArchiveUiStyle.Muted;
                 Widgets.Label(new Rect(card.x + UITheme.CardPadX, card.y + 44f, card.width - UITheme.CardPadX * 2f, 18f), ObjectSubLabel(obj));
-                GUI.color = Color.white;
+                GUI.color = prevColor;
 
                 if (clickable && Widgets.ButtonInvisible(card))
                 {
@@ -3072,7 +3072,7 @@ namespace PersonalChronicle.Archive
                 GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(rect.x, y, rect.width, 18f),
                     "PersonalChronicle.UI.NoPlaceHistory".Translate().ToString());
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 return y + 22f;
             }
             Text.Font = GameFont.Tiny;
@@ -3083,7 +3083,7 @@ namespace PersonalChronicle.Archive
                 "PersonalChronicle.UI.PlaceEnter".Translate().ToString());
             Widgets.Label(new Rect(rect.x + rect.width * 0.72f, y, rect.width * 0.26f, 16f),
                 "PersonalChronicle.UI.PlaceLeave".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             y += 18f;
             int shown = 0;
             for (int i = pawn.PlaceHistory.Count - 1; i >= 0 && shown < maxRows; i--)
@@ -3580,7 +3580,7 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Tiny;
                 GUI.color = ArchiveUiStyle.SecondaryText;
                 Widgets.Label(new Rect(row.x + row.width - 196f, row.y + 6f, 190f, 18f), link.CategoryLabel);
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 Text.Font = GameFont.Small;
                 if (link.Target != NavTarget.None && Widgets.ButtonInvisible(row))
                 {
@@ -3755,7 +3755,7 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Tiny;
                 GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(row.x + row.width - 196f, row.y + 6f, 192f, 18f), part);
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 Widgets.DrawLineHorizontal(row.x, row.yMax, row.width);
                 y += TimelineRowHeight;
             }
@@ -3907,7 +3907,7 @@ namespace PersonalChronicle.Archive
             GUI.color = UITheme.SecondaryText;
             Widgets.Label(new Rect(rect.x, rect.y, rect.width, 24f),
                 "PersonalChronicle.UI.NoLiveData".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
         }
 
         // ---- Detail: production tab (LD-1) -----------------------------------
@@ -3934,7 +3934,7 @@ namespace PersonalChronicle.Archive
                 "PersonalChronicle.UI.ProductionCount".Translate().ToString());
             Widgets.Label(new Rect(rect.x + rect.width - 190f, y, 180f, 18f),
                 "PersonalChronicle.UI.ProductionLastTime".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             y += 22f;
 
             for (int i = 0; i < cachedProductionLines.Count; i++)
@@ -4010,7 +4010,7 @@ namespace PersonalChronicle.Archive
                     GUI.color = ArchiveUiStyle.Muted;
                     Widgets.Label(new Rect(x + UITheme.CardPadX, cardY + 28f, width - UITheme.CardPadX * 2f, 16f),
                         "PersonalChronicle.UI.ProductionCard".Translate(type.Quantity, FormatMarketValue(type.MarketValue)).ToString());
-                    GUI.color = Color.white;
+                    GUI.color = prevColor;
                 }
                 y += ((types.Count + 1) / 2) * 58f;
             }
@@ -4056,7 +4056,7 @@ namespace PersonalChronicle.Archive
                     Text.Anchor = TextAnchor.MiddleCenter;
                     GUI.color = current ? ArchiveUiStyle.Text : ArchiveUiStyle.Muted;
                     Widgets.Label(rung, tier.DisplayCode ?? tier.DefName);
-                    GUI.color = Color.white;
+                    GUI.color = prevColor;
                     Text.Anchor = TextAnchor.UpperLeft;
                     TooltipHandler.TipRegion(rung,
                         TranslateIntensityKey(tier.LabelKey, tier.DisplayCode ?? tier.DefName));
@@ -4115,7 +4115,7 @@ namespace PersonalChronicle.Archive
                     : "PersonalChronicle.UI.Intensity.ObservedWindow".Translate(
                         FormatDays(intensity != null ? intensity.ObservedDays : 0d)).ToString();
                 Widgets.Label(new Rect(badge.x + 8f, badge.y + 44f, badge.width - 16f, 20f), badgeSubtitle);
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 Text.Anchor = TextAnchor.UpperLeft;
             }
             finally
@@ -4730,7 +4730,7 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Muted;
             Widgets.Label(new Rect(rect.x, y, rect.width, 28f),
                 "PersonalChronicle.UI.WorkTimeFootnote".Translate().ToString());
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             y += 32f;
 
             if (cachedIntensityWorkTypes == null || cachedIntensityWorkTypes.Count == 0)
@@ -4775,7 +4775,7 @@ namespace PersonalChronicle.Archive
                     "PersonalChronicle.UI.Intensity.WorkShare".Translate(
                         Mathf.RoundToInt(row.Share01 * 100f),
                         Mathf.RoundToInt(row.RelativeToMaximum01 * 100f)).ToString());
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 Widgets.FillableBar(new Rect(card.x + UITheme.CardPadX, card.y + 106f, card.width - UITheme.CardPadX * 2f, 6f),
                     Mathf.Clamp01(row.Share01));
             }
@@ -4920,7 +4920,7 @@ namespace PersonalChronicle.Archive
                 GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(row.x + row.width - 196f, row.y + 6f, 190f, 18f),
                     "PersonalChronicle.UI.SharedEvents".Translate().ToString());
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 if (link.Target != NavTarget.None && Widgets.ButtonInvisible(row))
                 {
                     NavigateTarget(service, link.Target, link.StableId, null);
@@ -5425,6 +5425,7 @@ namespace PersonalChronicle.Archive
 
         private void DrawPlacesTab(Rect rect, IArchiveService service)
         {
+            Color prevColor = GUI.color;
             float y = rect.y;
             DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.PlacesCurrent".Translate().ToString());
 
@@ -5438,7 +5439,7 @@ namespace PersonalChronicle.Archive
                 GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(rect.x, y + 26f, rect.width, 40f),
                     "PersonalChronicle.UI.NoLocationExplanation".Translate().ToString());
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 return;
             }
 
@@ -5956,6 +5957,7 @@ namespace PersonalChronicle.Archive
 
         private void DrawDetailTimeline(Rect rect, IArchiveService service)
         {
+            Color prevColor = GUI.color;
             float y = DrawTimelineToolbar(rect, rect.y);
             int visibleCount = 0;
             for (int i = 0; i < cachedDetailEvents.Count; i++)
@@ -5985,7 +5987,7 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Tiny;
                 GUI.color = UITheme.SecondaryText;
                 Widgets.Label(new Rect(row.x + row.width - 186f, row.y + 3f, 182f, 18f), line.ParamsText);
-                GUI.color = Color.white;
+                GUI.color = prevColor;
 
                 float cy = row.y + TimelineRowHeight;
                 if (descHeight > 0f)
@@ -5993,7 +5995,7 @@ namespace PersonalChronicle.Archive
                     Text.Font = GameFont.Tiny;
                     GUI.color = UITheme.SecondaryText;
                     Widgets.Label(new Rect(row.x + 4f, cy, row.width - 8f, descHeight), line.DescriptionText);
-                    GUI.color = Color.white;
+                    GUI.color = prevColor;
                     cy += descHeight;
                 }
                 if (chipsHeight > 0f)
@@ -6045,12 +6047,13 @@ namespace PersonalChronicle.Archive
 
         private static bool DrawTimelineToggle(Rect rect, bool enabled, string label)
         {
+            Color prevColor = GUI.color;
             ArchiveUiStyle.DrawSelectedNavigation(rect, enabled);
             Text.Anchor = TextAnchor.MiddleLeft;
             GUI.color = enabled ? ArchiveUiStyle.Text : ArchiveUiStyle.Muted;
             Widgets.Label(new Rect(rect.x + 8f, rect.y, rect.width - 16f, rect.height), label);
             Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             if (Widgets.ButtonInvisible(rect))
             {
                 enabled = !enabled;
@@ -6116,6 +6119,7 @@ namespace PersonalChronicle.Archive
 
         private void DrawChips(Rect rect, List<ChipView> chips, IArchiveService service)
         {
+            Color prevColor = GUI.color;
             float x = rect.x;
             Text.Font = GameFont.Tiny;
             for (int i = 0; i < chips.Count; i++)
@@ -6135,7 +6139,7 @@ namespace PersonalChronicle.Archive
                     ? UITheme.PillBlue
                     : UITheme.SecondaryText;
                 Widgets.Label(chipRect, chip.Label);
-                GUI.color = Color.white;
+                GUI.color = prevColor;
                 if (chip.Target != NavTarget.None && Widgets.ButtonInvisible(chipRect))
                 {
                     NavigateTarget(service, chip.Target, chip.StableId, null);
@@ -6148,6 +6152,7 @@ namespace PersonalChronicle.Archive
 
         private void DrawEventContent(Rect inner, IArchiveService service)
         {
+            Color prevColor = GUI.color;
             if (cachedEventDetail == null)
             {
                 Text.Font = GameFont.Small;
@@ -6176,7 +6181,7 @@ namespace PersonalChronicle.Archive
                 desc = desc + " · " + cachedEventDetail.Primary.LabelSnapshot;
             }
             Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 18f), desc);
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             y += 26f;
 
             // Association network tree panel.
@@ -6205,7 +6210,7 @@ namespace PersonalChronicle.Archive
                 string.IsNullOrEmpty(cachedEventDescription)
                     ? "PersonalChronicle.UI.NoEvents".Translate().ToString()
                     : cachedEventDescription);
-            GUI.color = Color.white;
+            GUI.color = prevColor;
             Text.Font = GameFont.Small;
 
             Widgets.EndScrollView();
@@ -6272,7 +6277,7 @@ namespace PersonalChronicle.Archive
                     ? UITheme.PillBlue
                     : UITheme.SecondaryText;
                 Widgets.Label(labelRect, line.Label);
-                GUI.color = Color.white;
+                GUI.color = prevColor;
 
                 if (line.Target != NavTarget.None)
                 {

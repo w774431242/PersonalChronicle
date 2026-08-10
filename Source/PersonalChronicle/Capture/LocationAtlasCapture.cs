@@ -545,28 +545,49 @@ namespace PersonalChronicle.Capture
             }
         }
 
+        // Centralized trade-category normalization. Source DefNames come from
+        // vanilla StockGenerator_Category.categoryDef; the mapping below is the
+        // single place that translates them into the 8 display keys used by the
+        // location-atlas UI. New categories are added here, not via scattered
+        // string comparisons across the capture layer.
+        private static readonly Dictionary<string, string> CategoryDefNameToKey =
+            new Dictionary<string, string>(System.StringComparer.Ordinal)
+            {
+                { "ResourcesRaw", "res" },
+                { "Textiles", "cloth" },
+                { "FoodRaw", "food" },
+                { "FoodMeals", "food" },
+                { "Drugs", "drug" },
+                { "MedicalItems", "drug" },
+            };
+
+        // Keyword fragments for DefNames that have no fixed base name (e.g.
+        // weapon/apparel families). Kept next to the explicit table above.
+        private static readonly (string Fragment, string Key)[] CategoryDefNameFragments =
+        {
+            ("Weapon", "weapon"), ("Melee", "weapon"), ("Ranged", "weapon"), ("Gun", "weapon"),
+            ("Armor", "armor"), ("Apparel", "armor"), ("Clothes", "armor"),
+            ("Implant", "implant"),
+            ("Tech", "tech"), ("Neurotrainer", "tech"), ("Artifact", "tech"), ("Book", "tech"),
+        };
+
         private static string CategoryToKey(string defName)
         {
             if (string.IsNullOrEmpty(defName))
             {
                 return null;
             }
-            if (defName == "ResourcesRaw") return "res";
-            if (defName == "Textiles") return "cloth";
-            if (defName == "FoodRaw" || defName == "FoodMeals") return "food";
-            if (defName == "Drugs" || defName == "MedicalItems") return "drug";
-            if (defName.IndexOf("Weapon", StringComparison.Ordinal) >= 0
-                || defName.IndexOf("Melee", StringComparison.Ordinal) >= 0
-                || defName.IndexOf("Ranged", StringComparison.Ordinal) >= 0
-                || defName.IndexOf("Gun", StringComparison.Ordinal) >= 0) return "weapon";
-            if (defName.IndexOf("Armor", StringComparison.Ordinal) >= 0
-                || defName.IndexOf("Apparel", StringComparison.Ordinal) >= 0
-                || defName.IndexOf("Clothes", StringComparison.Ordinal) >= 0) return "armor";
-            if (defName.IndexOf("Implant", StringComparison.Ordinal) >= 0) return "implant";
-            if (defName.IndexOf("Tech", StringComparison.Ordinal) >= 0
-                || defName.IndexOf("Neurotrainer", StringComparison.Ordinal) >= 0
-                || defName.IndexOf("Artifact", StringComparison.Ordinal) >= 0
-                || defName.IndexOf("Book", StringComparison.Ordinal) >= 0) return "tech";
+            if (CategoryDefNameToKey.TryGetValue(defName, out string directKey))
+            {
+                return directKey;
+            }
+            foreach (var (fragment, key) in CategoryDefNameFragments)
+            {
+                if (defName.IndexOf(fragment, StringComparison.Ordinal) >= 0)
+                {
+                    return key;
+                }
+            }
             return null;
         }
 
