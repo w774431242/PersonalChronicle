@@ -36,3 +36,9 @@ Directory.Build.props.user
 
 # Agent/AI session memory (not part of the mod)
 .codebuddy/
+
+# Local debug / probe scratch scripts (not part of the mod; keep off VCS)
+.tmp_check_ui.js
+*.tmp
+docs/ui-preview/_probe*.ps1
+docs/ui-preview/_verify.cjs
