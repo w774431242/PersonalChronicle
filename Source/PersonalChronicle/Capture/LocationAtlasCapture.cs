@@ -56,10 +56,13 @@ namespace PersonalChronicle.Capture
             }
             try
             {
-                // Source 1: live maps (player maps + any generated map).
-                // Also collect the set of tiles that already have a live map, so
-                // Source 2 below does not double-archive a settlement whose map is
-                // currently generated (a settlement can appear in both sources).
+                // v4.14 严格触发重构：地点档案只记录"殖民者亲自到访/建立/参与过"的
+                // 地点，绝不扫描整个世界。
+                //
+                // Source 1: 殖民者当前所在的地图（地图即"到访"铁证——只有玩家
+                //   进入过的地方才会生成 Map 实例）。玩家本家基地 / 任务地图 /
+                //   殖民者在场的商队所抵达的 settlement 地图都会生成 Map，
+                //   Find.Maps 天然就是"玩家到访过的地图集合"。
                 HashSet<int> liveMapTiles = new HashSet<int>();
                 List<Map> maps = Find.Maps;
                 if (maps != null)
@@ -83,34 +86,14 @@ namespace PersonalChronicle.Capture
                     }
                 }
 
-                // Source 2: world objects (settlements / quest sites / other
-                // map parents) that may not have a generated Map yet. Settlements
-                // are faction cities; MapParent covers quest sites & temporary maps.
-                // Skip any world object whose tile already has a live map — that
-                // place was archived via Source 1 (avoids Map_/World_ duplicates).
-                if (Find.World != null && Find.WorldObjects != null)
-                {
-                    List<WorldObject> worldObjects = Find.WorldObjects.AllWorldObjects;
-                    if (worldObjects != null)
-                    {
-                        for (int i = 0; i < worldObjects.Count; i++)
-                        {
-                            WorldObject wo = worldObjects[i];
-                            if (wo == null || wo.Destroyed)
-                            {
-                                continue;
-                            }
-                            if (wo is Settlement || wo is MapParent)
-                            {
-                                if (liveMapTiles.Contains(wo.Tile.tileId))
-                                {
-                                    continue; // already archived via Source 1
-                                }
-                                EnsureWorldObjectArchived(component, wo, gameTick);
-                            }
-                        }
-                    }
-                }
+                // Source 2: 世界上的世界对象（settlement / quest site）——但绝不
+                // 主动扫描 AllWorldObjects。只对"殖民者当前所在位置"的世界对象
+                // 建档：
+                //   - 商队中的殖民者：商队 tile 上若有 Settlement/MapParent（玩家
+                //     已派遣商队抵达该地），才建档；敌对方/未接触 settlement 永远
+                //     不建档。
+                //   - 已生成 Map 的世界对象：由 Source 1 覆盖（liveMapTiles 去重）。
+                ArchiveLocationsByColonists(component, gameTick, liveMapTiles);
 
                 CloseMissingLocations(component, gameTick);
             }
@@ -174,10 +157,121 @@ namespace PersonalChronicle.Capture
         }
 
         /// <summary>
+        /// v4.14 严格触发：只对"殖民者当前所在位置"的世界对象建档。
+        ///
+        /// 遍历当前殖民地全部殖民者（地图 + 商队），对商队中的殖民者：
+        ///   取商队 tile 上的世界对象（Settlement / MapParent / Caravan），
+        ///   若该 tile 尚无 live map（未被 Source 1 覆盖）则建档。
+        /// 地图上的殖民者已由 Source 1（Find.Maps）覆盖，这里不重复。
+        ///
+        /// 关键：绝不无条件扫描 Find.WorldObjects.AllWorldObjects 全量——只
+        /// 在"玩家商队含殖民地人口且停在某 tile"时执行一次按 tile 匹配的遍历，
+        /// 未到访的 settlement 永远不入档（商队抵达前不会有殖民者在那里）。
+        ///
+        /// 风险规避（v4.14）：
+        /// ① 不再用 WorldObjectAt<WorldObject>（同 tile 多对象如 Settlement +
+        ///    Caravan 并存时返回歧义，可能漏建档）——改为先收集商队 tile 集合，
+        ///    再遍历 AllWorldObjects 按 tileId 精确匹配，覆盖同 tile 全部对象。
+        /// ② 商队移动中（pather.MovingNow）不建档——跨 tile 移动只是短暂路过，
+        ///    等到达稳定位置后由下轮 reconcile 建档，避免误录"途经地"。
+        /// </summary>
+        private static void ArchiveLocationsByColonists(
+            ChronicleGameComponent component, long gameTick, HashSet<int> liveMapTiles)
+        {
+            if (component == null || Find.World == null || Find.WorldObjects == null)
+            {
+                return;
+            }
+            List<Caravan> caravans = Find.WorldObjects.Caravans;
+            if (caravans == null || caravans.Count == 0)
+            {
+                return;
+            }
+
+            // 第一步：收集"殖民者所在且已停稳"的商队 tile 集合。
+            HashSet<int> visitedTiles = new HashSet<int>();
+            for (int i = 0; i < caravans.Count; i++)
+            {
+                Caravan caravan = caravans[i];
+                if (caravan == null || caravan.Destroyed || caravan.PawnsListForReading == null)
+                {
+                    continue;
+                }
+                // 只处理玩家派系的商队（殖民地人口在其中的商队）。
+                if (caravan.Faction == null || !caravan.Faction.IsPlayer)
+                {
+                    continue;
+                }
+                // 风险规避②：移动中的商队不建档（pather 可能为 null，防御）。
+                if (caravan.pather != null && caravan.pather.MovingNow)
+                {
+                    continue;
+                }
+                // 商队中有当前殖民地人口吗？有才算"殖民者到访该地"。
+                bool hasColonist = false;
+                List<Pawn> caravanPawns = caravan.PawnsListForReading;
+                for (int p = 0; p < caravanPawns.Count; p++)
+                {
+                    Pawn pawn = caravanPawns[p];
+                    if (pawn != null && ChronicleColonistScanner.TryClassifyCurrent(pawn, out _))
+                    {
+                        hasColonist = true;
+                        break;
+                    }
+                }
+                if (!hasColonist)
+                {
+                    continue;
+                }
+                int tileId = caravan.Tile.tileId;
+                if (tileId < 0 || liveMapTiles.Contains(tileId))
+                {
+                    continue; // 已有 live map（Source 1 覆盖）或非法 tile
+                }
+                visitedTiles.Add(tileId);
+            }
+            if (visitedTiles.Count == 0)
+            {
+                return;
+            }
+
+            // 第二步：按 visitedTiles 匹配世界对象（仅当玩家商队停靠时执行）。
+            // 风险规避①：全量遍历仅作为"按 tile 过滤"的容器，不匹配的 tile
+            // 一律跳过；同 tile 的 Settlement 与 MapParent 全部覆盖，无歧义。
+            List<WorldObject> worldObjects = Find.WorldObjects.AllWorldObjects;
+            if (worldObjects == null)
+            {
+                return;
+            }
+            for (int i = 0; i < worldObjects.Count; i++)
+            {
+                WorldObject wo = worldObjects[i];
+                if (wo == null || wo.Destroyed || wo.def == null)
+                {
+                    continue;
+                }
+                if (!(wo is Settlement || wo is MapParent))
+                {
+                    continue; // 仅 settlement / quest site / 地图父节点
+                }
+                if (!visitedTiles.Contains(wo.Tile.tileId))
+                {
+                    continue; // 玩家商队未停靠的 tile 一律跳过
+                }
+                EnsureWorldObjectArchived(component, wo, gameTick);
+            }
+        }
+
+        /// <summary>
         /// Closes archived locations whose map/world object is no longer alive.
         /// Best effort: DeinitTick = current reconcile tick; DeinitReason =
         /// "Destroyed" when a destroyed world object exists at the tile, else
         /// "Abandoned".
+        ///
+        /// v4.14 修复：额外清理 Source2 旧版误建的"敌对且无任何事件历史"
+        /// settlement —— 这些是 v4.14 之前累积的世界全量 settlement 中
+        /// 玩家实际未到访的部分，标 DeinitReason="Unvisited" 让其自然消亡
+        /// （新逻辑 Source2 不再新建此类记录）。
         /// </summary>
         private static void CloseMissingLocations(ChronicleGameComponent component, long gameTick)
         {
@@ -238,7 +332,28 @@ namespace PersonalChronicle.Capture
                 {
                     loc.DeinitTick = gameTick;
                     loc.DeinitReason = destroyedThisPass.Contains(loc.StableId)
-                        ? "Destroyed" : "Abandoned";
+                        ? PlaceVisitKeys.DeinitReasonDestroyed
+                        : PlaceVisitKeys.DeinitReasonAbandoned;
+                    component.MarkChanged();
+                }
+                else if (loc.StableId != null
+                         && loc.StableId.StartsWith(PlaceVisitKeys.WorldIdPrefix, StringComparison.Ordinal)
+                         && IsUnvisitedStaleLocation(component, loc))
+                {
+                    // v4.14 修复：旧版 Source2 误建的地点记录（玩家未到访的
+                    // 世界 settlement / quest site）持续收敛。保留：玩家本家
+                    // （IsPlayerHome）与有任何事件历史的地点。幂等：已关闭的
+                    // 跳过。此逻辑与 SchemaVersion 迁移互补，保证新档首轮
+                    // reconcile 后也立即收缩（无需等读档迁移）。
+                    //
+                    // 风险规避：只对 World_ 前缀（未到访世界对象）做无事件收敛。
+                    // Map_ 前缀且仍在 alive（当前 live map，Source1 建档）的
+                    // 记录不在此列——玩家可能刚进入任务地图、事件尚未发生，
+                    // 若此刻因"暂无事件"关闭，随后战斗事件写入时 AddObject
+                    // 会拒绝已关闭记录，导致事件引用悬空。live map 是"当前
+                    // 到访"铁证，绝不因暂无事件而关闭。
+                    loc.DeinitTick = gameTick;
+                    loc.DeinitReason = PlaceVisitKeys.DeinitReasonUnvisited;
                     component.MarkChanged();
                 }
             }
@@ -633,7 +748,36 @@ namespace PersonalChronicle.Capture
             {
                 return null;
             }
-            return "World_" + wo.def.defName + "_" + wo.Tile.tileId;
+            return PlaceVisitKeys.WorldIdPrefix + wo.def.defName + "_" + wo.Tile.tileId;
+        }
+
+        /// <summary>
+        /// v4.14 修复：判定一个 LocationObject 是否为"玩家未实际到访的过期地点"。
+        ///
+        /// 保留规则（与设计文档"地点 = 玩家亲自到访/建立/参与过"一致）：
+        ///   - 玩家本家（IsPlayerHome == true）—— 自己的基地永远在册；
+        ///   - 有任何编年史事件历史的地点 —— 玩家参与过（战斗/贸易/事件）。
+        /// 其余一律视为过期（Unvisited）并关闭。
+        ///
+        /// 相比旧 IsUnvisitedEnemySettlement：不再依赖 WorldObjectDefName 含
+        /// "Settlement"、FactionDefName 派系关系等脆弱条件——派系关系会漂移
+        /// （和平条约/招安）、quest site 类名不含 Settlement、Map 类记录的
+        /// WorldObjectDefName 是 map.Parent.def（不含 Settlement），这些都会
+        /// 让旧逻辑漏判，导致 267 只清到 115。新逻辑以"是否玩家接触过"为唯一
+        /// 依据，任何场景都稳健收敛。
+        /// </summary>
+        private static bool IsUnvisitedStaleLocation(
+            ChronicleGameComponent component, LocationObject loc)
+        {
+            if (component == null || loc == null || string.IsNullOrEmpty(loc.StableId))
+            {
+                return false;
+            }
+            if (loc.IsPlayerHome)
+            {
+                return false; // 玩家本家保留
+            }
+            return component.GetEventsFor(loc.StableId).Count == 0;
         }
     }
 }

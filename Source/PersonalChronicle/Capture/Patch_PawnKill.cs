@@ -45,8 +45,6 @@ namespace PersonalChronicle.Capture
                 Thing weapon = GetKillerWeapon(dinfo, instigator);
 
                 bool victimIsArchive = IsArchiveVictim(__instance);
-                bool killerIsChronicle = instigator != null
-                    && ChronicleColonistScanner.TryClassifyCurrent(instigator, out _);
 
                 if (victimIsArchive)
                 {
@@ -82,19 +80,7 @@ namespace PersonalChronicle.Capture
                 // Consume the damage ledger for this victim to attribute the kill to
                 // the top damager (A) and record the finishing instigator (B) as assist.
                 List<Pawn> assistLookup = Patch_PawnTakeDamage.ConsumeTopDamagers(__instance);
-
-                if (killerIsChronicle)
-                {
-                    service.OnKillRecorded(instigator, __instance, weapon, assistLookup);
-                }
-                else if (IsExternalVictim(__instance))
-                {
-                    service.OnKillRecorded(instigator, __instance, weapon, assistLookup);
-                }
-                else
-                {
-                    // Neither side is a chronicle concern; ledger already consumed above.
-                }
+                service.OnKillRecorded(instigator, __instance, weapon, assistLookup);
             }
             catch (Exception ex)
             {

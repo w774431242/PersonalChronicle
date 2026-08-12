@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using RimWorld;
 using Verse;
 
@@ -149,6 +148,29 @@ namespace PersonalChronicle.Domain
     /// </summary>
     public static class HealthValuationEvaluator
     {
+        // Mathf-free clamp helpers so the Domain layer stays clear of the UnityEngine
+        // namespace (keeps UI drawing APIs out of reach per the architecture spec).
+        private static float Clamp01(float v)
+        {
+            return v < 0f ? 0f : (v > 1f ? 1f : v);
+        }
+
+        private static float Clamp(float v, float min, float max)
+        {
+            return v < min ? min : (v > max ? max : v);
+        }
+
+        // Single source of truth for "is this a mental-state hediff". Uses Ordinal
+        // comparison (culture-invariant) so Turkish/other locales don't drift. The
+        // StartsWith("MentalBreak") case is redundant with the IndexOf("Mental") check
+        // and intentionally omitted to keep one rule.
+        private static bool IsMentalHediff(string defName)
+        {
+            return defName != null
+                && (defName.IndexOf("Mental", System.StringComparison.Ordinal) >= 0
+                    || defName.StartsWith("Psychic", System.StringComparison.Ordinal));
+        }
+
         // Default impact (silver coins) for one mild injury/scraped Hediff event.
         // Def-driven via policy.negativeEventImpact / policy.positiveEventImpact
         // would be the data-driven follow-up; for now kept as constants.
@@ -160,7 +182,8 @@ namespace PersonalChronicle.Domain
         {
             if (pawn == null || policy == null)
             {
-                return HealthValuationResult.Undefined(pawn != null ? pawn.ageTracker.AgeBiologicalYears : 0);
+                return HealthValuationResult.Undefined(
+                    pawn?.ageTracker != null ? pawn.ageTracker.AgeBiologicalYears : 0);
             }
 
             float bodyPercent = pawn.health != null && pawn.health.summaryHealth != null
@@ -169,14 +192,14 @@ namespace PersonalChronicle.Domain
             int ageYears = pawn.ageTracker != null ? pawn.ageTracker.AgeBiologicalYears : 0;
 
             // Composite health score: body integrity blended with summary, capped 0..100.
-            float composite = Mathf.Clamp01(bodyPercent) * 100f;
+            float composite = Clamp01(bodyPercent) * 100f;
             bool isPrime = composite >= policy.primeHealthThreshold;
             bool isImpaired = composite < policy.impairedHealthThreshold;
 
             // Age depreciation (linear per year).
-            float ageDepreciation = Mathf.Clamp01(policy.ageDepreciationPerYear * ageYears);
+            float ageDepreciation = Clamp01(policy.ageDepreciationPerYear * ageYears);
             float baseValue = policy.baseSilverValue * (1f - ageDepreciation);
-            float healthScale = Mathf.Clamp01(composite / Mathf.Max(1f, policy.primeHealthThreshold));
+            float healthScale = Clamp01(composite / System.Math.Max(1f, policy.primeHealthThreshold));
             float valued = baseValue * healthScale;
 
             List<HealthFactor> factors = new List<HealthFactor>();
@@ -190,7 +213,7 @@ namespace PersonalChronicle.Domain
             // implants (per HediffOnSetCategory matching). Penalties per active Hediff.
             float bodyScore = composite;
             bodyFactors.Add(new HealthFactor(true,
-                "PersonalChronicle.UI.HealthValuation.Factor.BodyBaseline",
+                HealthValuationKeys.Factor.BodyBaseline,
                 baseValue * 0.05f));
             int activeChronicCount = 0;
             if (policy.penalties != null && pawn.health != null && pawn.health.hediffSet != null)
@@ -203,16 +226,16 @@ namespace PersonalChronicle.Domain
                     if (pawn.health.hediffSet.HasHediff(hd))
                     {
                         activeChronicCount++;
-                        float lost = valued * Mathf.Clamp01(pen.penaltyFraction);
+                        float lost = valued * Clamp01(pen.penaltyFraction);
                         valued -= lost;
                         string fk = pen.labelKey ?? pen.defName;
                         bodyFactors.Add(new HealthFactor(false, fk, -lost));
                         events.Add(new HealthDepreciationEvent(
                             fk,
-                            "PersonalChronicle.UI.HealthValuation.EventTag.Drop",
+                            HealthValuationKeys.EventTag.Drop,
                             hd.defName,
                             -lost,
-                            SafeHediffOnsetTick(pawn, hd)));
+                            -1L)); // RimWorld 1.6 exposes no reliable Hediff onset tick
                     }
                 }
             }
@@ -220,9 +243,9 @@ namespace PersonalChronicle.Domain
             if (activeChronicCount == 0)
             {
                 bodyFactors.Add(new HealthFactor(true,
-                    "PersonalChronicle.UI.HealthValuation.Factor.NoChronic", 0f));
+                    HealthValuationKeys.Factor.NoChronic, 0f));
             }
-            bodyScore = Mathf.Clamp(bodyScore + activeChronicCount * -5f, 0f, 100f);
+            bodyScore = Clamp(bodyScore + activeChronicCount * -5f, 0f, 100f);
 
             // === Dimension 2: Spirit (精神饱满) ===
             // Heuristic: count mental-break HediffDefs by name pattern. RimWorld 1.6
@@ -236,42 +259,42 @@ namespace PersonalChronicle.Domain
                 {
                     if (hd == null || hd.def == null) continue;
                     string dn = hd.def.defName;
-                    if (dn != null && (dn.StartsWith("MentalBreak") || dn.StartsWith("Psychic") || dn.IndexOf("Mental", System.StringComparison.Ordinal) >= 0))
+                    if (IsMentalHediff(dn))
                     {
                         mentalIssues++;
                     }
                 }
-                spiritScore = Mathf.Clamp(100f - mentalIssues * 25f, 0f, 100f);
+                spiritScore = Clamp(100f - mentalIssues * 25f, 0f, 100f);
                 if (mentalIssues == 0)
                 {
                     spiritFactors.Add(new HealthFactor(true,
-                        "PersonalChronicle.UI.HealthValuation.Factor.SpiritStable", 0f));
+                        HealthValuationKeys.Factor.SpiritStable, 0f));
                 }
                 else
                 {
                     spiritFactors.Add(new HealthFactor(false,
-                        "PersonalChronicle.UI.HealthValuation.Factor.SpiritLoss", -mentalIssues * 50f));
+                        HealthValuationKeys.Factor.SpiritLoss, -mentalIssues * 50f));
                 }
             }
             else
             {
                 spiritFactors.Add(new HealthFactor(true,
-                    "PersonalChronicle.UI.HealthValuation.Factor.SpiritStable", 0f));
+                    HealthValuationKeys.Factor.SpiritStable, 0f));
             }
 
             // === Dimension 3: Youth (未衰老) ===
             // Heuristic: age score = 100 - (ageYears × 1.5), floor 0.
-            float youthScore = Mathf.Clamp(100f - ageYears * 1.5f, 0f, 100f);
+            float youthScore = Clamp(100f - ageYears * 1.5f, 0f, 100f);
             if (ageYears < 25)
             {
                 youthFactors.Add(new HealthFactor(true,
-                    "PersonalChronicle.UI.HealthValuation.Factor.YouthPrime",
+                    HealthValuationKeys.Factor.YouthPrime,
                     baseValue * 0.05f));
             }
             else if (ageYears >= 40)
             {
                 youthFactors.Add(new HealthFactor(false,
-                    "PersonalChronicle.UI.HealthValuation.Factor.YouthWorn",
+                    HealthValuationKeys.Factor.YouthWorn,
                     -(policy.baseSilverValue * 0.05f)));
             }
 
@@ -279,18 +302,18 @@ namespace PersonalChronicle.Domain
             if (composite >= policy.primeHealthThreshold)
             {
                 factors.Add(new HealthFactor(true,
-                    "PersonalChronicle.UI.HealthValuation.Factor.PrimeBody", 0f));
+                    HealthValuationKeys.Factor.PrimeBody, 0f));
             }
             else
             {
                 float lost = baseValue - valued;
                 factors.Add(new HealthFactor(false,
-                    "PersonalChronicle.UI.HealthValuation.Factor.HealthLoss", -lost));
+                    HealthValuationKeys.Factor.HealthLoss, -lost));
             }
             if (ageDepreciation > 0.001f)
             {
                 factors.Add(new HealthFactor(false,
-                    "PersonalChronicle.UI.HealthValuation.Factor.AgeWear",
+                    HealthValuationKeys.Factor.AgeWear,
                     -(policy.baseSilverValue * ageDepreciation)));
             }
 
@@ -303,7 +326,7 @@ namespace PersonalChronicle.Domain
                     if (hd == null || hd.def == null) continue;
                     // Skip mental hediffs (handled in spirit dimension).
                     string dn = hd.def.defName;
-                    if (dn != null && (dn.StartsWith("MentalBreak") || dn.StartsWith("Psychic") || dn.IndexOf("Mental", System.StringComparison.Ordinal) >= 0))
+                    if (IsMentalHediff(dn))
                     {
                         continue;
                     }
@@ -332,7 +355,8 @@ namespace PersonalChronicle.Domain
             {
                 events.RemoveRange(8, events.Count - 8);
             }
-            events.Sort((a, b) => a.RawTick.CompareTo(b.RawTick));
+            // NOTE: RawTick is always -1 (RimWorld 1.6 exposes no reliable onset tick),
+            // so no secondary sort is possible — the impact-descending order above is final.
 
             // === Weekly silver estimate: a simple "how much silver this pawn earns
             // per in-game week based on body × base yield". Data-driven via the
@@ -340,9 +364,9 @@ namespace PersonalChronicle.Domain
             float baseWeekly = policy.baseWeeklyYieldPerHealthyPawn > 0f
                 ? policy.baseWeeklyYieldPerHealthyPawn
                 : 30f;
-            float weekly = baseWeekly * healthScale * Mathf.Clamp01(1f - ageDepreciation * 0.5f);
+            float weekly = baseWeekly * healthScale * Clamp01(1f - ageDepreciation * 0.5f);
 
-            float finalValue = Mathf.Max(policy.minSilverValue, valued);
+            float finalValue = System.Math.Max(policy.minSilverValue, valued);
             return new HealthValuationResult(
                 true,
                 composite,
@@ -370,8 +394,8 @@ namespace PersonalChronicle.Domain
         {
             if (hd == null || hd.def == null) return;
             HediffDef def = hd.def;
-            string labelKey = "PersonalChronicle.UI.HealthValuation.Event." + def.defName;
-            string tagKey = "PersonalChronicle.UI.HealthValuation.EventTag.Drop";
+            string labelKey = HealthValuationKeys.EventPrefix + def.defName;
+            string tagKey = HealthValuationKeys.EventTag.Drop;
             float impact;
             if (def.isBad)
             {
@@ -381,12 +405,12 @@ namespace PersonalChronicle.Domain
                 if (def.tendable)
                 {
                     impact = DefaultInjuryImpact;
-                    tagKey = "PersonalChronicle.UI.HealthValuation.EventTag.Recoverable";
+                    tagKey = HealthValuationKeys.EventTag.Recoverable;
                 }
                 else
                 {
                     impact = DefaultScarImpact;
-                    tagKey = "PersonalChronicle.UI.HealthValuation.EventTag.Permanent";
+                    tagKey = HealthValuationKeys.EventTag.Permanent;
                 }
             }
             else
@@ -394,13 +418,6 @@ namespace PersonalChronicle.Domain
                 return; // ignore benign / prosthetic additions for the event log.
             }
             events.Add(new HealthDepreciationEvent(labelKey, tagKey, def.defName, impact, -1L));
-        }
-
-        private static long SafeHediffOnsetTick(Pawn pawn, HediffDef hd)
-        {
-            // RimWorld 1.6: Hediff has no public onsetTick field that is reliably
-            // accessible here; return -1 so the UI shows "未知日期".
-            return -1L;
         }
     }
 }

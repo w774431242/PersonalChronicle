@@ -19,6 +19,15 @@ namespace PersonalChronicle.Domain
         /// <summary>Source Incident defName (data key, never translated).</summary>
         public string IncidentDefName;
 
+        /// <summary>
+        /// v4.14: IncidentDef.category snapshot — "ThreatBig"/"ThreatSmall"/null.
+        /// Data key only; the UI resolves the label and accent via translation +
+        /// UITheme (ThreatBig=Accent / ThreatSmall=Tag). Null when the incident
+        /// carried no threat category (e.g. custom IncidentBattleExtension-only
+        /// battles). Persisted so Def drift never changes history.
+        /// </summary>
+        public string ThreatKey;
+
         /// <summary>Game tick the raid incident fired (persisted). -1 = unknown.</summary>
         public long StartTick = -1L;
 
@@ -53,6 +62,7 @@ namespace PersonalChronicle.Domain
         {
             base.ExposeData();
             Scribe_Values.Look(ref IncidentDefName, "incidentDefName");
+            Scribe_Values.Look(ref ThreatKey, "threatKey");
             Scribe_Collections.Look(ref ParticipantIds, "participantIds", LookMode.Value);
             if (ParticipantIds == null) ParticipantIds = new List<string>();
             Scribe_Values.Look(ref StartTick, "startTick", -1L);

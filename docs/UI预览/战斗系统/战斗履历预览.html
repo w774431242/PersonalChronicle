@@ -26,17 +26,17 @@
     --text:#e9eeee;            /* Text     0.914,0.933,0.929 */
     --muted:#a5b0b4;           /* Muted    0.647,0.690,0.706 */
     --dim:#718086;             /* Dim      0.443,0.502,0.525 */
-    --accent:#d3a45b;          /* Accent   0.827,0.643,0.357 */
-    --accentsoft:rgba(211,164,91,.15);
-    --info:#79adc2;            /* Info     0.475,0.678,0.761 */
-    --alive:#69c98e;           /* Alive    0.412,0.788,0.557 */
-    --dead:#db7778;            /* Dead     0.859,0.467,0.471 */
-    /* 阵营强调色（v4.3 FactionAccent） */
-    --fenemy:var(--accent);    /* Enemy  = TimelineBattle 0.9,0.5,0.2 */
-    --fmech:var(--info);       /* Mechanoid = Info */
-    --fanimal:var(--alive);    /* Animal = Alive */
+    --accent:#d09b61;          /* Accent   0.816,0.608,0.380 */
+    --accentsoft:rgba(208,155,97,.15);
+    --info:#95d0fc;            /* Info     0.584,0.816,0.988 */
+    --alive:#91e6b0;           /* Alive    0.570,0.900,0.690 */
+    --dead:#d95a5a;            /* Dead/FactionHostile 0.850,0.350,0.350 */
+    /* 阵营强调色（v4.3 FactionAccent，严格对齐 UITheme.Faction*） */
+    --fenemy:var(--dead);      /* Enemy  = FactionHostile(红) */
+    --fmech:var(--info);       /* Mechanoid = Info(蓝) */
+    --fanimal:var(--alive);    /* Animal = Alive(绿) */
     --funknown:var(--muted);   /* Unknown = Muted */
-    --fplayer:var(--dead);     /* Player = Dead */
+    --fplayer:var(--accent);   /* Player = FactionPlayer = Accent(金) */
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--window);color:var(--text);
@@ -288,7 +288,7 @@
       <div>捕获条件（v4.0 绝对宽松）：<b>任何 Pawn.Kill 死亡都会记录</b>，不限制种族/类型。阵营卡片归属键取自受害者 faction，faction 为空（野生动物/任务怪）归「无派系」卡，凶手不可解析归「未知/环境」卡。</div>
       <div class="legend">
         <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--dead)"></span>击杀（红）</span>
-        <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--accent)"></span>敌方派系（金）</span>
+        <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--accent)"></span>我方派系（金）</span>
         <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--info)"></span>机械（蓝）</span>
         <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--alive)"></span>动物（绿）</span>
         <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--muted)"></span>未知（灰）</span>

@@ -41,6 +41,16 @@ namespace PersonalChronicle.Api
         LocationInfo GetLiveLocation(string stableId);
         BattleObject GetActiveBattle();
 
+        /// <summary>
+        /// True when the pawn is currently "on the roster": alive AND a member
+        /// of the current colony population (free/slave/prisoner on maps or in
+        /// caravans). Dead/archived pawns, former colonists who left the colony,
+        /// and unknown stable ids all return false. This is the semantic
+        /// opposite of "archived" (DeathTick &gt; 0) — the archive should not
+        /// call a live colony member "archived" just because a snapshot exists.
+        /// </summary>
+        bool IsCurrentlyEnlisted(string stableId);
+
         // ---- career / work-time views ----
         IReadOnlyList<WorkPriorityView> GetWorkPriorities(string stableId);
         IReadOnlyList<WorkTimeStatView> GetWorkTimeStats(string stableId);

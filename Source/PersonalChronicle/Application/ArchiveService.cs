@@ -147,12 +147,30 @@ namespace PersonalChronicle.Application
 
         public IReadOnlyList<PawnRecord> GetActiveRecords()
         {
-            return GetAllRecords().Where(record => !record.IsArchived).ToList();
+            IReadOnlyList<PawnRecord> all = GetAllRecords();
+            List<PawnRecord> result = new List<PawnRecord>(all.Count);
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (!all[i].IsArchived)
+                {
+                    result.Add(all[i]);
+                }
+            }
+            return result;
         }
 
         public IReadOnlyList<PawnRecord> GetArchivedRecords()
         {
-            return GetAllRecords().Where(record => record.IsArchived).ToList();
+            IReadOnlyList<PawnRecord> all = GetAllRecords();
+            List<PawnRecord> result = new List<PawnRecord>(all.Count);
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (all[i].IsArchived)
+                {
+                    result.Add(all[i]);
+                }
+            }
+            return result;
         }
 
         public IReadOnlyList<ChronicleEvent> GetEventsFor(string stableId)
@@ -269,6 +287,27 @@ namespace PersonalChronicle.Application
                 return hit;
             }
             return null;
+        }
+
+        /// <summary>
+        /// v5.x "在册"判定：存活 且 属于当前殖民地人口 = 在册。
+        ///
+        /// 判定不依赖 DeathTick（那是"归档"语义，≠ 在册）。一个存档中已有快照
+        /// 但尚未死亡的殖民者，只要还活在本殖民地就应显示"在册"；死亡归档或已
+        /// 离开殖民地（被放逐/卖掉/转派系）则不在册。
+        ///
+        /// 实现：GetLivePawn 已驱逐 dead/destroyed pawn → 能解析到即存活；
+        /// TryClassifyCurrent 判定"当前殖民地人口"（地图 spawned 成员 + 商队成员）
+        /// → 两条件 AND 即"存活且属于殖民地"。
+        /// </summary>
+        public bool IsCurrentlyEnlisted(string stableId)
+        {
+            if (string.IsNullOrEmpty(stableId) || Current.Game == null)
+            {
+                return false;
+            }
+            Pawn live = GetLivePawn(stableId);
+            return live != null && ChronicleColonistScanner.TryClassifyCurrent(live, out _);
         }
 
         /// <summary>
@@ -554,7 +593,37 @@ namespace PersonalChronicle.Application
                 aggregate != null ? aggregate.AverageDailyHours : 0d);
             WorkIntensityEvaluation evaluation = EvaluateWithProviders(input);
             WorkIntensityTierSpec tier = FindTier(evaluation != null ? evaluation.TierDefName : null);
-            return new WorkIntensityView(evaluation, tier);
+            // v4.15 condense-tab: rank this pawn's accumulated hours among all
+            // current colony members (for the "全殖民地前几" digest cell).
+            int rank = 0;
+            int population = 0;
+            ComputeColonyWorkRank(totalTicks, out rank, out population);
+            return new WorkIntensityView(evaluation, tier, rank, population);
+        }
+
+        /// <summary>
+        /// v4.15: ranks <paramref name="ownTicks"/> against every current colony
+        /// member's accumulated work ticks. <paramref name="rank"/> is 1-based
+        /// (1 = most hours); <paramref name="population"/> is the total member count.
+        /// </summary>
+        private void ComputeColonyWorkRank(long ownTicks, out int rank, out int population)
+        {
+            rank = 0;
+            population = 0;
+            List<ColonyMember> people = ChronicleColonistScanner.EnumerateCurrentPeople();
+            if (people == null) return;
+            population = people.Count;
+            int better = 0;
+            for (int i = 0; i < people.Count; i++)
+            {
+                ColonyMember member = people[i];
+                if (member == null || member.Pawn == null) continue;
+                PawnObject other = GetObject(member.Pawn.GetUniqueLoadID()) as PawnObject;
+                if (other == null || other.WorkTime == null) continue;
+                long otherTicks = GetTotalWorkTicks(other.WorkTime);
+                if (otherTicks > ownTicks) better++;
+            }
+            rank = better + 1;
         }
 
         public IReadOnlyList<WorkIntensityTierView> GetIntensityTiers()
@@ -1628,7 +1697,8 @@ namespace PersonalChronicle.Application
                 return;
             }
             // Lightweight ensure: join-style record so Relations list can attach.
-            // Prefer scanner role; JoinTick unknown.
+            // Prefer scanner role; JoinTick 走统一默认决策（新档=开局0 / 读档=当天起点）
+            // ——绝不可硬编码 -1L，否则开局殖民者被社交事件先建档后永久定格为"中途加入"。
             if (!ChronicleColonistScanner.TryClassifyCurrent(pawn, out PawnRole role))
             {
                 return;
@@ -1640,7 +1710,7 @@ namespace PersonalChronicle.Application
                 LabelShort = pawn.LabelShort,
                 KindDefName = pawn.kindDef != null ? pawn.kindDef.defName : null,
                 FactionDefName = pawn.Faction != null && pawn.Faction.def != null ? pawn.Faction.def.defName : null,
-                JoinTick = -1L,
+                JoinTick = component.ResolveDefaultJoinTick(),
                 DeathTick = -1L,
                 Role = role
             };
@@ -1873,6 +1943,29 @@ namespace PersonalChronicle.Application
             return false;
         }
 
+        /// <summary>
+        /// v4.14: maps an IncidentDef.category to a stable data key for
+        /// <see cref="BattleObject.ThreatKey"/> — "ThreatBig"/"ThreatSmall"/null.
+        /// Data-driven (compares against the IncidentCategoryDefOf constants),
+        /// never defName string matching. Null for non-threat or custom battles.
+        /// </summary>
+        private static string BattleThreatKey(IncidentDef incidentDef)
+        {
+            if (incidentDef == null || incidentDef.category == null)
+            {
+                return null;
+            }
+            if (incidentDef.category == IncidentCategoryDefOf.ThreatBig)
+            {
+                return "ThreatBig";
+            }
+            if (incidentDef.category == IncidentCategoryDefOf.ThreatSmall)
+            {
+                return "ThreatSmall";
+            }
+            return null;
+        }
+
         private static void AddBattleParticipant(BattleObject battle, Pawn pawn)
         {
             if (battle == null || pawn == null)
@@ -2048,7 +2141,7 @@ namespace PersonalChronicle.Application
                     if (start > 0L)
                     {
                         rec.ServiceDays = Math.Max(0,
-                            (int)((Find.TickManager.TicksGame - start) / GenDate.TicksPerDay));
+                            (int)GenDate.TicksToDays((int)(Find.TickManager.TicksGame - start)));
                     }
                 }
                 thingObj.Decommission = rec;
@@ -2158,7 +2251,10 @@ namespace PersonalChronicle.Application
                     component.AddObject(new BattleObject
                     {
                         StableId = stableId,
-                        IncidentDefName = incidentDef.defName
+                        IncidentDefName = incidentDef.defName,
+                        // v4.14: snapshot the threat category (ThreatBig/ThreatSmall)
+                        // so the overview card + KPI can tint without Def drift.
+                        ThreatKey = BattleThreatKey(incidentDef)
                     });
                 }
                 BattleObject battle = component.GetObject(stableId) as BattleObject;
@@ -2592,7 +2688,8 @@ namespace PersonalChronicle.Application
                 LabelShort = pawn.LabelShort,
                 KindDefName = pawn.kindDef != null ? pawn.kindDef.defName : null,
                 FactionDefName = pawn.Faction != null && pawn.Faction.def != null ? pawn.Faction.def.defName : null,
-                JoinTick = -1L,
+                // 统一默认决策：新档=开局(0)，读档=发现当天起点。禁止硬编码 -1L。
+                JoinTick = component.ResolveDefaultJoinTick(),
                 DeathTick = -1L,
                 Role = role
             };

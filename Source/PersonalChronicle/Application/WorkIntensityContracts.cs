@@ -28,10 +28,26 @@ namespace PersonalChronicle.Application
         /// </summary>
         public readonly bool IsEstimated;
         public readonly string ProviderId;
+        /// <summary>
+        /// v4.15 condense-tab: 1-based rank of this pawn's accumulated work hours
+        /// among all current colony members (1 = most hours). 0 when undefined.
+        /// </summary>
+        public readonly int ColonyRank;
+        /// <summary>Total current colony member count used for <see cref="ColonyRank"/>.</summary>
+        public readonly int ColonyPopulation;
 
         public WorkIntensityView(
             WorkIntensityEvaluation evaluation,
             WorkIntensityTierSpec tier)
+            : this(evaluation, tier, 0, 0)
+        {
+        }
+
+        public WorkIntensityView(
+            WorkIntensityEvaluation evaluation,
+            WorkIntensityTierSpec tier,
+            int colonyRank,
+            int colonyPopulation)
         {
             IsDefined = evaluation != null && evaluation.IsDefined;
             TierDefName = evaluation != null ? evaluation.TierDefName : null;
@@ -50,6 +66,8 @@ namespace PersonalChronicle.Application
             IsSignificantlyIdle = evaluation != null && evaluation.IsSignificantlyIdle;
             IsEstimated = evaluation != null && evaluation.IsEstimated;
             ProviderId = evaluation != null ? evaluation.ProviderId : null;
+            ColonyRank = colonyRank;
+            ColonyPopulation = colonyPopulation;
         }
     }
 

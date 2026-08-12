@@ -102,6 +102,8 @@ namespace PersonalChronicle.Archive.UI
         internal const float SectionTitleHeight = 30f;
         internal const float RuleHeight = 1f;
         internal const float BorderThickness = 1f;
+        /// <summary>Standard scrollbar gutter width (matches Verse scroll view).</summary>
+        internal const float ScrollbarThickness = 18f;
 
         // ---- Card layout rhythm (single source for in-card spacing) ----
         // Left/right inner padding of detail cards (StatCell uses 8; cards use 10/12
@@ -135,5 +137,27 @@ namespace PersonalChronicle.Archive.UI
         internal static readonly Color PillGold = new Color(0.95f, 0.74f, 0.26f, 1f);
         internal static readonly Color PillRed = new Color(0.86f, 0.46f, 0.46f, 1f);
         internal static readonly Color PillGreen = new Color(0.42f, 0.81f, 0.56f, 1f);
+
+        // ---- v4.15: single semantic->tone mapping for six digest cells (P3: the
+        // ITab no longer carries if/switch tone logic; all kind->color lives here). ----
+        // kindKey maps 1:1 to DetailSnapshot core KPI cell keys. Unknown keys fall
+        // back to Accent so the digest never renders an un-toned cell.
+        internal static Color TintForEventKind(string kindKey)
+        {
+            switch (kindKey)
+            {
+                case "work": return PillGold;   // 集中工时
+                case "prod": return PillGreen;  // 产出
+                case "kill": return PillRed;    // 击杀
+                case "battle": return PillBlue; // 战役
+                case "foot": return Info;       // 足迹
+                case "rel": return Alive;       // 关系
+                case "career": return PillGold; // 主业（工时同源）
+                case "home": return Info;       // 主驻地（足迹同源）
+                case "legacy": return PillRed;  // 传承击杀（击杀同源）
+                case "health": return Alive;    // 健康残值（在世同源）
+                default: return Accent;
+            }
+        }
     }
 }

@@ -39,6 +39,16 @@ namespace PersonalChronicle.Capture
             new Dictionary<Pawn, Dictionary<Pawn, float>>();
 
         /// <summary>
+        /// Minimum ticks between failure warnings from the TakeDamage prefix. The
+        /// method runs on every bullet/fire tick, so a persistent exception must be
+        /// surfaced once per cooldown rather than flooding Player.log (BASE-009).
+        /// </summary>
+        private const long AssistWarningCooldownTicks = 6000L; // ~100s at 60 ticks/s
+
+        /// <summary>Last tick a failure warning was emitted; long.MinValue = never.</summary>
+        private static long _lastAssistWarningTick = long.MinValue;
+
+        /// <summary>
         /// Drops every accumulated entry. MUST be called when a save is loaded or the
         /// player returns to the main menu: this ledger is static, so without an explicit
         /// reset it would keep Pawn references from the previous session alive and could
@@ -130,12 +140,29 @@ namespace PersonalChronicle.Capture
             {
                 return result;
             }
-            result = ledger
-                .Where(kv => kv.Key != null)
-                .OrderByDescending(kv => kv.Value)
-                .Select(kv => kv.Key)
-                .Take(max)
-                .ToList();
+            // Explicit loop instead of LINQ (matches the rest of the codebase) and a
+            // deterministic tie-breaker (thingIDNumber) so equal-damage assist order —
+            // which is persisted into the kill event — doesn't depend on Dictionary order.
+            List<KeyValuePair<Pawn, float>> entries = new List<KeyValuePair<Pawn, float>>(ledger.Count);
+            foreach (KeyValuePair<Pawn, float> kv in ledger)
+            {
+                if (kv.Key != null)
+                {
+                    entries.Add(kv);
+                }
+            }
+            entries.Sort((a, b) =>
+            {
+                int byDmg = b.Value.CompareTo(a.Value);
+                if (byDmg != 0) return byDmg;
+                int aid = a.Key.thingIDNumber;
+                int bid = b.Key.thingIDNumber;
+                return aid != bid ? aid.CompareTo(bid) : 0;
+            });
+            for (int i = 0; i < entries.Count && i < max; i++)
+            {
+                result.Add(entries[i].Key);
+            }
             return result;
         }
 
@@ -160,13 +187,21 @@ namespace PersonalChronicle.Capture
                 }
                 NoteDamage(__instance, instigator, dinfo.Amount);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Deliberately silent: Pawn.TakeDamage is one of the hottest methods in the
-                // game (every bullet, every fire tick). Logging here could spam thousands of
-                // lines per raid and itself become the performance problem. Assist data is
-                // cosmetic, so dropping one sample is strictly better than breaking the
-                // vanilla damage pipeline or flooding the log.
+                // Pawn.TakeDamage is one of the hottest methods in the game (every bullet,
+                // every fire tick), so log at most once per cooldown. A persistent failure
+                // still surfaces in Player.log for diagnosis (BASE-009 / COMP-009) without
+                // flooding thousands of lines per raid. Assist data is cosmetic; dropping
+                // one sample never touches the vanilla damage pipeline.
+                long now = Find.TickManager != null ? Find.TickManager.TicksGame : long.MinValue;
+                if (_lastAssistWarningTick == long.MinValue
+                    || now == long.MinValue
+                    || now - _lastAssistWarningTick >= AssistWarningCooldownTicks)
+                {
+                    _lastAssistWarningTick = now;
+                    Log.Warning("PersonalChronicle[Capture][Assist]: Pawn.TakeDamage assist capture failed: " + ex.Message);
+                }
             }
         }
     }

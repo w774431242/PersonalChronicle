@@ -3,7 +3,7 @@
   <name>Personal Chronicle - Archive</name>
   <author>Personal Chronicle Team</author>
   <packageId>PersonalChronicle.Archive</packageId>
-  <modVersion>1.1.0</modVersion>
+  <modVersion>1.1.3</modVersion>
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
@@ -18,9 +18,6 @@
   <loadAfter>
     <li>brrainz.harmony</li>
   </loadAfter>
-  <loadBefore>
-    <li>Ludeon.RimWorld</li>
-  </loadBefore>
   <description>前置要求
 - 游戏版本：RimWorld 1.6
 - 必需依赖：Harmony（自动加载）
@@ -43,7 +40,10 @@
 接入说明
 对外提供统一接入契约（PersonalChronicleApi 门面 + Provider 注册表），第三方模组可无侵入扩展采集与能力，Provider 异常失败隔离。API 契约版本 1.0，与发布版本号保持一致。
 
-Personal Chronicle · 殖民地档案馆 · v1.1.0 · 国人开发
+与 Character Editor 共存
+本模组在 Languages/ChineseSimplified 下提供翻译文件的同时，已附带 LanguageInfo.xml 元数据，确保简体中文语言身份被正确识别。若同时启用 Character Editor，其编辑器窗口内的中文依赖游戏当前语言的 FriendlyNameEnglish；本模组不修改任何翻译系统，仅补全自身语言元数据以避免语言聚合时的回退命名冲突。如仍发现 CE 编辑器显示英文，请确认简体中文语言包（含 LanguageInfo.xml）已启用且加载顺序正确。
+
+Personal Chronicle · 殖民地档案馆 · v1.1.3 · 国人开发
 
 ---
 
@@ -66,6 +66,9 @@ What it does
 Integration
 Ships a unified integration contract (PersonalChronicleApi facade + Provider registry) so third-party mods can extend capture and capabilities non-invasively, with per-provider failure isolation. API contract version 1.0, aligned with the mod version.
 
-Personal Chronicle · Colony Archive · v1.1.0 · made by a Chinese dev</description>
+Coexistence with Character Editor
+This mod ships its translation files under Languages/ChineseSimplified together with a LanguageInfo.xml metadata file, so the Simplified Chinese language identity is recognized correctly. When Character Editor is also enabled, the Chinese text inside its editor window depends on the game's current language FriendlyNameEnglish; this mod does not alter any translation system — it only supplies its own language metadata to avoid fallback-naming conflicts during language aggregation. If CE's editor still shows English, make sure the Simplified Chinese language pack (with its own LanguageInfo.xml) is enabled and loaded in the correct order.
+
+Personal Chronicle · Colony Archive · v1.1.3 · made by a Chinese dev</description>
   <modIconPath>UI/ArchiveIcon</modIconPath>
 </ModMetaData>

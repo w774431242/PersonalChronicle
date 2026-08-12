@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta charset="UTF-8" />
+<title>完整档案馆 UI 总览预览 — 全部前端活页镜像（2026-08-11）</title>
+<meta name="viewport" content="width=1100" />
+<style>
+  /* ============================================================
+     本预览为 PersonalChronicle 全部前端的单一活页镜像：
+       - ArchiveMainTabWindow 五视图（主页/总览/人物/武器/事件）
+       - ITab_Pawn_Chronicle 人物档案 Tab
+     所有颜色取自 UITheme 真实 RGB 令牌（无任何散落颜色 / new Color）。
+     每个活页严格对应其 Read Model 快照字段（见底部 @契约 表）。
+     ============================================================ */
+  :root{
+    --window:#11181f; --panel:#172129; --card:#25323b; --card2:#202b33;
+    --border:#45535b; --border-soft:#2d3a42;
+    --text:#e9eee9; --secondary:#999999; --dim:#71808a;
+    --accent:#d09b61; --accent-soft:rgba(208,155,97,.15); --info:#95d0fc;
+    --alive:#91e6b0; --warn:#ff0000;
+    --tl-join:#66cc66; --tl-death:#d95a5a; --tl-battle:#e67f33;
+    --tl-social:#8099e6; --tl-craft:#b3994d; --tl-built:#80828e;
+    --pill-gold:#f2bd43; --pill-green:#6bcf8f; --pill-red:#dc7575;
+    --pill-blue:#5c9ed4; --faction-player:#d09b61; --faction-enemy:#d95a5a;
+    --faction-neutral:#5ae6b0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#0b0f13;color:var(--text);font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;
+       display:flex;justify-content:center;padding:24px 12px 80px;}
+  .window{width:1000px;background:var(--window);border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative;}
+
+  /* Header */
+  .header{display:flex;align-items:center;gap:12px;height:56px;padding:0 16px;background:var(--panel);border-bottom:1px solid var(--border-soft);}
+  .logo{width:34px;height:34px;border:2px solid var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;}
+  .title{font-size:18px;font-weight:700;}
+  .subtitle{font-size:11px;color:var(--secondary);margin-left:auto;}
+
+  /* ---- Topbar: test buttons + component registry ---- */
+  .topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:8px 14px;background:var(--window);border-bottom:1px solid var(--border-soft);}
+  .topbar .group{display:flex;align-items:center;gap:6px;}
+  .topbar .glabel{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em;margin-right:2px;}
+  .tbtn{font-size:12px;color:var(--text);background:var(--card);border:1px solid var(--border-soft);border-radius:3px;padding:5px 10px;cursor:pointer;transition:background .12s,border-color .12s;}
+  .tbtn:hover{background:var(--card2);border-color:var(--accent);}
+  .tbtn.primary{color:var(--accent);border-color:var(--accent);background:var(--accent-soft);}
+
+  /* Light theme variant (mirrors UITheme tokens in light mode) */
+  .window.light{--window:#eef1ee;--panel:#e2e7e3;--card:#f6f8f6;--card2:#e9ede9;
+    --border:#a9b4ad;--border-soft:#c4ccc5;--text:#1c2620;--secondary:#566059;--dim:#7d8a82;
+    --accent:#b5793a;--accent-soft:rgba(181,121,58,.16);--info:#2f7fb0;--alive:#3f9e6a;
+    --warn:#cc0000;--tl-join:#3f9e6a;--tl-death:#c0392b;--tl-battle:#c2631f;--tl-social:#5566b3;
+    --tl-craft:#9a7d2e;--tl-built:#6b6e76;--pill-gold:#c79523;--pill-green:#3f9e6a;--pill-red:#c0392b;
+    --pill-blue:#2f7fb0;--faction-player:#b5793a;--faction-enemy:#c0392b;--faction-neutral:#2aaa80;}
+
+  /* Sidebar */
+  .body{display:flex;min-height:600px;}
+  .sidebar{width:172px;background:var(--panel);border-right:1px solid var(--border-soft);padding:12px 10px;flex-shrink:0;}
+  .navsec{font-size:11px;color:var(--dim);margin:14px 4px 6px;}
+  .navitem{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:3px;font-size:13px;color:var(--secondary);cursor:pointer;margin-bottom:2px;}
+  .navitem.active{background:var(--card);color:var(--text);border-left:3px solid var(--accent);}
+  .navdot{width:8px;height:8px;background:var(--accent);border-radius:50%;}
+  .navitem.search input{width:100%;background:var(--window);border:1px solid var(--border-soft);color:var(--text);padding:4px 6px;border-radius:3px;font-size:12px;}
+
+  /* Content */
+  .content{flex:1;padding:16px 18px;overflow-y:auto;}
+
+  /* Section title */
+  .sectitle{display:flex;align-items:center;gap:8px;margin:6px 0 12px;}
+  .sectitle::before{content:"";width:4px;height:14px;background:var(--accent);border-radius:1px;}
+  .sectitle span{font-size:15px;font-weight:600;}
+  .sectitle .rule{flex:1;height:1px;background:var(--border);margin-left:6px;}
+
+  /* KPI strip (Battle + Location) */
+  .kpi-strip{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .kpi{border:1px solid var(--border-soft);border-radius:4px;padding:8px 12px;min-width:96px;}
+  .kpi.battle .v{color:var(--tl-battle);}
+  .kpi.loc .v{color:var(--info);}
+  .kpi .l{font-size:11px;color:var(--secondary);}
+  .kpi .v{font-size:20px;font-weight:700;}
+
+  /* Home: metric cards */
+  .metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px;}
+  .metric{background:var(--panel);border:1px solid var(--border-soft);border-left:3px solid var(--accent);border-radius:4px;padding:10px;min-height:72px;}
+  .metric .l{font-size:11px;color:var(--secondary);}
+  .metric .v{font-size:22px;font-weight:700;margin-top:4px;}
+
+  /* Two-column home */
+  .home-cols{display:flex;gap:16px;}
+  .home-col{flex:1;}
+  .list-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:3px;background:var(--card2);border:1px solid var(--border-soft);margin-bottom:6px;}
+  .avatar{width:30px;height:30px;border-radius:4px;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:600;flex-shrink:0;}
+  .row-name{font-size:13px;}
+  .row-meta{font-size:11px;color:var(--dim);}
+  .pill{font-size:10px;padding:1px 8px;border-radius:9px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--border);margin-left:auto;}
+
+  /* Timeline (home lifecycle) */
+  .tl{margin-top:8px;border-left:2px solid var(--border-soft);padding-left:16px;}
+  .tl-node{position:relative;padding:6px 0 14px;}
+  .tl-node::before{content:"";position:absolute;left:-21px;top:8px;width:12px;height:12px;background:var(--tl-join);border:2px solid var(--window);}
+  .tl-node.death::before{background:var(--tl-death);}
+  .tl-node.battle::before{background:var(--tl-battle);}
+  .tl-node.social::before{background:var(--tl-social);}
+  .tl-title{font-size:13px;}
+  .tl-sub{font-size:11px;color:var(--dim);margin-top:2px;}
+
+  /* Detail: pawn hero + panels */
+  .hero{display:flex;gap:14px;background:var(--panel);border:1px solid var(--border-soft);border-radius:4px;padding:14px;margin-bottom:14px;}
+  .portrait{width:64px;height:64px;border-radius:4px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:24px;font-weight:700;}
+  .hero-info{flex:1;}
+  .hero-name{font-size:17px;font-weight:700;}
+  .hero-meta{font-size:12px;color:var(--secondary);margin-top:2px;}
+  .medal{display:inline-block;margin-top:6px;padding:2px 10px;border-radius:10px;background:var(--accent-soft);color:var(--accent);font-size:11px;border:1px solid var(--border);}
+
+  .panel{background:var(--panel);border:1px solid var(--border-soft);border-radius:4px;padding:12px 14px;margin-bottom:12px;}
+  .panel h4{font-size:13px;color:var(--text);margin-bottom:8px;display:flex;align-items:center;}
+  .panel h4::before{content:"";width:3px;height:12px;background:var(--accent);margin-right:8px;}
+
+  /* Stat grid */
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .stat{background:var(--card2);border:1px solid var(--border-soft);border-radius:3px;padding:7px 9px;min-height:56px;}
+  .stat .l{font-size:11px;color:var(--secondary);}
+  .stat .v{font-size:16px;font-weight:700;margin-top:3px;}
+  .stat .u{font-size:10px;font-weight:400;color:var(--dim);margin-left:2px;}
+
+  /* ---- PawnView (ArchiveMainTabWindow.PawnView → Overview) ---- */
+  /* Cover header (DrawCoverHeader) */
+  .cover{display:flex;gap:10px;background:var(--panel);border:1px solid var(--border-soft);border-radius:4px;padding:10px;margin-bottom:12px;}
+  .cover-portrait{width:60px;height:75px;flex-shrink:0;background:var(--card);border:1px solid var(--border);border-radius:3px;display:flex;align-items:center;justify-content:center;}
+  .cover-avatar{color:var(--accent);font-size:26px;font-weight:700;}
+  .cover-info{flex:1;min-width:0;}
+  .tier-badge{display:inline-block;font-size:11px;color:var(--pill-red);background:var(--accent-soft);border:1px solid var(--pill-red);border-radius:9px;padding:1px 8px;margin-bottom:4px;}
+  .cover-name{font-size:17px;font-weight:700;line-height:1.3;}
+  .cover-role{font-size:11px;color:var(--secondary);margin-top:2px;}
+  .cover-pills{margin-top:4px;display:flex;gap:6px;}
+  .badge{font-size:10px;padding:1px 7px;border-radius:8px;border:1px solid var(--border);}
+  .badge.alive{color:var(--alive);background:rgba(145,230,176,.15);border-color:var(--alive);}
+  .badge.blue{color:var(--info);background:rgba(149,208,252,.15);border-color:var(--info);}
+  .cover-days{margin-top:4px;display:flex;align-items:center;gap:8px;}
+  .cover-day-text{font-size:11px;color:var(--dim);}
+
+  /* Tab bar (DrawTabBar: PawnTabKeys) */
+  .tabbar{display:flex;gap:2px;margin-bottom:10px;border-bottom:1px solid var(--border-soft);}
+  .tab{flex:1;text-align:center;padding:7px 0;font-size:13px;color:var(--secondary);cursor:pointer;border-bottom:2px solid transparent;}
+  .tab.active{color:var(--text);border-bottom-color:var(--accent);}
+  .pawn-tab-panel{margin-bottom:8px;}
+
+  /* Ledger (DrawLedger): 4 StatCells */
+  .ledger{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+  .ledger .stat{min-height:64px;}
+
+  /* Output ledger empty state (DrawOutputLedger) */
+  .output-empty{font-size:11px;color:var(--dim);padding:6px 4px 12px;}
+
+  /* Health valuation (DrawHealthValuation): 4 StatCells + 3 dim bars */
+  .health{margin-bottom:8px;}
+  .health .stat-grid{margin-bottom:10px;}
+  .dim-bars{display:flex;flex-direction:column;gap:6px;}
+  .dim-row{display:flex;align-items:center;gap:8px;}
+  .dim-label{font-size:11px;color:var(--secondary);width:64px;flex-shrink:0;}
+  .bar{flex:1;height:12px;background:var(--border-soft);border-radius:2px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--pill-gold);}
+  .bar-fill.gold{background:var(--pill-gold);}
+  .bar-fill.red{background:var(--pill-red);}
+  .dim-pct{font-size:11px;color:var(--text);width:42px;text-align:right;flex-shrink:0;}
+  .dim-pct.low{color:var(--pill-red);}
+
+  /* Six-grid KPI (ITab condense) */
+  .sixgrid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+  .kpicell{background:var(--panel);border:1px solid var(--border-soft);border-left:3px solid var(--accent);border-radius:4px;padding:10px 12px;min-height:92px;}
+  .kpicell .l{font-size:12px;color:var(--secondary);}
+  .kpicell .v{font-size:26px;font-weight:700;margin-top:4px;}
+  .kpicell .s{font-size:11px;color:var(--dim);margin-top:2px;}
+  .kpicell.work{border-left-color:var(--pill-gold);} .kpicell.work .v{color:var(--pill-gold);}
+  .kpicell.prod{border-left-color:var(--pill-green);} .kpicell.prod .v{color:var(--pill-green);}
+  .kpicell.kill{border-left-color:var(--pill-red);} .kpicell.kill .v{color:var(--pill-red);}
+  .kpicell.battle{border-left-color:var(--pill-blue);} .kpicell.battle .v{color:var(--pill-blue);}
+  .kpicell.foot{border-left-color:var(--info);} .kpicell.foot .v{color:var(--info);}
+  .kpicell.rel{border-left-color:var(--alive);} .kpicell.rel .v{color:var(--alive);}
+
+  /* Horizontal timeline (milestones) */
+  .htl{background:var(--panel);border:1px solid var(--border-soft);border-top:2px solid var(--accent-soft);border-radius:4px;overflow-x:auto;padding:14px 16px;margin-bottom:14px;}
+  .htl-track{display:flex;gap:14px;align-items:flex-start;min-width:max-content;border-top:2px solid var(--accent);padding-top:10px;}
+  .htl-node{min-width:120px;max-width:160px;}
+  .htl-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--window);margin-bottom:6px;}
+  .htl-node.work .htl-dot{background:var(--pill-gold);}
+  .htl-node.prod .htl-dot{background:var(--pill-green);}
+  .htl-node.kill .htl-dot{background:var(--pill-red);}
+  .htl-node.battle .htl-dot{background:var(--pill-blue);}
+  .htl-node.foot .htl-dot{background:var(--info);}
+  .htl-node.rel .htl-dot{background:var(--alive);}
+  .htl-title{font-size:12px;font-weight:600;}
+  .htl-sub{font-size:11px;color:var(--dim);margin-top:2px;}
+
+  /* Event / relation rows */
+  .erow{display:flex;gap:12px;align-items:baseline;padding:7px 8px;border-radius:3px;font-size:13px;}
+  .erow:nth-child(odd){background:var(--card2);}
+  .erow .date{color:var(--dim);font-size:11px;min-width:92px;flex-shrink:0;}
+  .erow .ttl{flex:1;}
+  .erow .ttl.hl{color:var(--accent);}
+
+  /* Category cards (overview) */
+  .catcards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+  .catcard{background:var(--panel);border:1px solid var(--border-soft);border-left:3px solid var(--info);border-radius:4px;padding:10px 12px;}
+  .catcard .l{font-size:12px;color:var(--secondary);}
+  .catcard .v{font-size:20px;font-weight:700;margin-top:3px;}
+
+  /* Battle cards */
+  .bcard{background:var(--panel);border:1px solid var(--border-soft);border-radius:4px;padding:10px 12px;margin-bottom:10px;}
+  .bcard .bh{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .bcard .bh .threat{font-size:10px;padding:1px 7px;border-radius:8px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--border);}
+  .bcard .bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;}
+  .bcard .bc{font-size:11px;color:var(--secondary);}
+  .bcard .bc b{display:block;font-size:15px;color:var(--text);font-weight:700;margin-top:2px;}
+  .bcard .bc.battle b{color:var(--tl-battle);}
+  .bcard .bc.kill b{color:var(--tl-battle);}
+  .bcard .bc.loss b{color:var(--pill-red);}
+
+  /* Footer button (open full archive) */
+  .btn{display:inline-block;margin-top:6px;padding:8px 16px;background:var(--accent-soft);border:1px solid var(--accent);border-radius:4px;color:var(--accent);font-size:13px;cursor:pointer;}
+
+  /* Live page visibility */
+  .livepage{display:none;}
+  .livepage.active{display:block;}
+
+  /* Footnote */
+  .footnote{font-size:11px;color:var(--dim);line-height:1.7;margin:18px 2px 4px;padding:10px 12px;background:var(--panel);border:1px solid var(--border-soft);border-radius:4px;}
+  .footnote code{color:var(--info);}
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="header">
+    <div class="logo">编</div>
+    <div class="title">殖民地档案馆</div>
+    <div class="subtitle">PersonalChronicle · 全部前端活页镜像 (2026-08-11)</div>
+  </div>
+
+  <!-- 顶栏：测试按钮 -->
+  <div class="topbar">
+    <div class="group">
+      <span class="glabel">测试</span>
+      <button class="tbtn primary" id="btn-refresh">刷新示例数据</button>
+      <button class="tbtn" id="btn-theme">切换明暗主题</button>
+      <button class="tbtn" id="btn-stress">渲染压力测试</button>
+      <button class="tbtn" id="btn-reset">重置</button>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sidebar">
+      <div class="navsec">档案馆主窗</div>
+      <div class="navitem active" data-page="home"><span class="navdot"></span>主页</div>
+      <div class="navitem" data-page="overview"><span class="navdot"></span>总览</div>
+      <div class="navitem" data-page="pawn"><span class="navdot"></span>人物</div>
+      <div class="navitem" data-page="weapon"><span class="navdot"></span>武器</div>
+      <div class="navitem" data-page="event"><span class="navdot"></span>事件</div>
+      <div class="navsec">独立窗口</div>
+      <div class="navitem" data-page="itab"><span class="navdot"></span>人物档案 Tab</div>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ 活页 1：主页 (HomeSnapshot) ============ -->
+      <div class="livepage active" id="page-home">
+        <div class="sectitle"><span>主页 · 殖民地总览</span><div class="rule"></div></div>
+        <div class="metrics">
+          <div class="metric"><div class="l">殖民者</div><div class="v">8</div></div>
+          <div class="metric"><div class="l">自由民</div><div class="v">6</div></div>
+          <div class="metric"><div class="l">奴隶</div><div class="v">1</div></div>
+          <div class="metric"><div class="l">囚犯</div><div class="v">1</div></div>
+          <div class="metric"><div class="l">服务日</div><div class="v">1.1k</div></div>
+          <div class="metric"><div class="l">产出(件)</div><div class="v">3.2k</div></div>
+        </div>
+
+        <div class="kpi-strip">
+          <div class="kpi battle"><div class="l">战役总数</div><div class="v">12</div></div>
+          <div class="kpi battle"><div class="l">重大战局</div><div class="v">9</div></div>
+          <div class="kpi battle"><div class="l">我方歼敌</div><div class="v">107</div></div>
+          <div class="kpi battle"><div class="l">我方损失</div><div class="v">14</div></div>
+          <div class="kpi battle"><div class="l">参战规模</div><div class="v">61</div></div>
+          <div class="kpi loc"><div class="l">地点总数</div><div class="v">5</div></div>
+          <div class="kpi loc"><div class="l">玩家家园</div><div class="v">1</div></div>
+          <div class="kpi loc"><div class="l">任务据点</div><div class="v">1</div></div>
+          <div class="kpi loc"><div class="l">派系城</div><div class="v">2</div></div>
+          <div class="kpi loc"><div class="l">废墟</div><div class="v">1</div></div>
+          <div class="kpi loc"><div class="l">可交易</div><div class="v">3</div></div>
+          <div class="kpi loc"><div class="l">需许可</div><div class="v">0</div></div>
+          <div class="kpi loc"><div class="l">派系数</div><div class="v">4</div></div>
+        </div>
+
+        <div class="home-cols">
+          <div class="home-col">
+            <div class="sectitle"><span>人物档案</span><div class="rule"></div></div>
+            <div class="list-row"><div class="avatar">戈</div><div><div class="row-name">戈治钟</div><div class="row-meta">领袖 · 在世</div></div><span class="pill">档案</span></div>
+            <div class="list-row"><div class="avatar">陈</div><div><div class="row-name">陈思危</div><div class="row-meta">医生 · 在世</div></div><span class="pill">档案</span></div>
+            <div class="list-row"><div class="avatar">林</div><div><div class="row-name">林越</div><div class="row-meta">战士 · 已故</div></div><span class="pill">档案</span></div>
+          </div>
+          <div class="home-col">
+            <div class="sectitle"><span>近期历史</span><div class="rule"></div></div>
+            <div class="tl">
+              <div class="tl-node join"><div class="tl-title">加入殖民地</div><div class="tl-sub">戈治钟 · 5501.1.0</div></div>
+              <div class="tl-node battle"><div class="tl-title">击败袭击</div><div class="tl-sub">部落联军 · 5501.3.2</div></div>
+              <div class="tl-node social"><div class="tl-title">结为配偶</div><div class="tl-sub">戈治钟 ↔ 陈思危 · 5501.5.1</div></div>
+              <div class="tl-node death"><div class="tl-title">阵亡</div><div class="tl-sub">林越 · 5502.1.9</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 活页 2：总览 (OverviewSnapshot) ============ -->
+      <div class="livepage" id="page-overview">
+        <div class="sectitle"><span>总览 · 分类与图集</span><div class="rule"></div></div>
+        <div class="catcards">
+          <div class="catcard"><div class="l">人物</div><div class="v">8</div></div>
+          <div class="catcard"><div class="l">武器</div><div class="v">23</div></div>
+          <div class="catcard"><div class="l">地点</div><div class="v">5</div></div>
+          <div class="catcard"><div class="l">事件</div><div class="v">142</div></div>
+          <div class="catcard"><div class="l">组织</div><div class="v">3</div></div>
+          <div class="catcard"><div class="l">其他</div><div class="v">11</div></div>
+        </div>
+
+        <div class="sectitle"><span>地点图集 KPI</span><div class="rule"></div></div>
+        <div class="kpi-strip">
+          <div class="kpi loc"><div class="l">地点总数</div><div class="v">5</div></div>
+          <div class="kpi loc"><div class="l">玩家家园</div><div class="v">1</div></div>
+          <div class="kpi loc"><div class="l">任务据点</div><div class="v">1</div></div>
+          <div class="kpi loc"><div class="l">派系城</div><div class="v">2</div></div>
+          <div class="kpi loc"><div class="l">废墟</div><div class="v">1</div></div>
+          <div class="kpi loc"><div class="l">可交易</div><div class="v">3</div></div>
+          <div class="kpi loc"><div class="l">需许可</div><div class="v">0</div></div>
+          <div class="kpi loc"><div class="l">派系数</div><div class="v">4</div></div>
+        </div>
+
+        <div class="sectitle"><span>战役 KPI</span><div class="rule"></div></div>
+        <div class="kpi-strip">
+          <div class="kpi battle"><div class="l">战役总数</div><div class="v">12</div></div>
+          <div class="kpi battle"><div class="l">重大战局</div><div class="v">9</div></div>
+          <div class="kpi battle"><div class="l">我方歼敌</div><div class="v">107</div></div>
+          <div class="kpi battle"><div class="l">我方损失</div><div class="v">14</div></div>
+          <div class="kpi battle"><div class="l">参战规模</div><div class="v">61</div></div>
+        </div>
+      </div>
+
+      <!-- ============ 活页 3：人物详情 (ArchiveMainTabWindow.PawnView → Overview) ============ -->
+      <div class="livepage" id="page-pawn">
+        <!-- Hero 头部 (DrawCoverHeader) -->
+        <div class="cover">
+          <div class="cover-portrait">
+            <div class="cover-avatar">车</div>
+          </div>
+          <div class="cover-info">
+            <div class="tier-badge">⑩ 核动力驴骡 · 实际 ≈ 14.0h/天</div>
+            <div class="cover-name">车法山</div>
+            <div class="cover-role">难民 · 新移民 · 加入时间 5500年 · 龄象 童12天</div>
+            <div class="cover-pills">
+              <span class="badge alive">[在世]</span>
+              <span class="badge blue">[自由殖民者]</span>
+            </div>
+            <div class="cover-days">
+              <span class="cover-day-text">在册 20 日</span>
+              <span class="badge alive">[在册·可压榨]</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 子标签栏 (DrawTabBar: PawnTabKeys) -->
+        <div class="tabbar" id="pawn-tabs">
+          <div class="tab active" data-tab="Overview">总览</div>
+          <div class="tab" data-tab="Career">生涯</div>
+          <div class="tab" data-tab="CombatLog">战斗履历</div>
+          <div class="tab" data-tab="Social">社会关系</div>
+        </div>
+
+        <!-- Overview 子标签内容 -->
+        <div class="pawn-tab-panel" id="pawn-panel-overview">
+          <!-- 榨取总账 (DrawLedger) -->
+          <div class="sectitle"><span>榨取总账</span><div class="rule"></div></div>
+          <div class="ledger">
+            <div class="stat"><div class="l">已核销产出</div><div class="v">0 <span class="u">银（归我）</span></div></div>
+            <div class="stat"><div class="l">劳动总工时</div><div class="v">74.0 <span class="u">h</span></div></div>
+            <div class="stat"><div class="l">周平均</div><div class="v">21 <span class="u">银/周</span></div></div>
+            <div class="stat"><div class="l">净收益</div><div class="v" style="color:var(--pill-red)">-148 <span class="u">银（估）</span></div></div>
+          </div>
+
+          <!-- 产出核销 (DrawOutputLedger) -->
+          <div class="sectitle"><span>产出核销</span><div class="rule"></div></div>
+          <div class="output-empty">暂无可核销产出</div>
+
+          <!-- 健康残值·资产折旧 (DrawHealthValuation) -->
+          <div class="sectitle"><span>健康残值 · 资产折旧</span><div class="rule"></div></div>
+          <div class="health">
+            <div class="stat-grid">
+              <div class="stat"><div class="l">折算银值</div><div class="v" style="color:var(--pill-gold)">570 <span class="u">基准估值 1.5k</span></div></div>
+              <div class="stat"><div class="l">综合健康分</div><div class="v" style="color:var(--alive)">100</div></div>
+              <div class="stat"><div class="l">身体完好度</div><div class="v" style="color:var(--alive)">100%</div></div>
+              <div class="stat"><div class="l">预估可榨周息</div><div class="v" style="color:var(--pill-gold)">21 <span class="u">银/周</span></div></div>
+            </div>
+            <div class="dim-bars">
+              <div class="dim-row">
+                <span class="dim-label">肢体完好</span>
+                <div class="bar"><div class="bar-fill gold" style="width:100%"></div></div>
+                <span class="dim-pct">100%</span>
+              </div>
+              <div class="dim-row">
+                <span class="dim-label">精神饱满</span>
+                <div class="bar"><div class="bar-fill gold" style="width:100%"></div></div>
+                <span class="dim-pct">100%</span>
+              </div>
+              <div class="dim-row">
+                <span class="dim-label">未衰老</span>
+                <div class="bar"><div class="bar-fill gold" style="width:54%"></div></div>
+                <span class="dim-pct">54%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 其它子标签占位（数据结构下不展开，仅显示翻译键标题） -->
+        <div class="pawn-tab-panel" id="pawn-panel-career" style="display:none;">
+          <div class="sectitle"><span>生涯</span><div class="rule"></div></div>
+          <div class="output-empty">（生涯视图：职业贡献条 / 工时强度，本预览不展开）</div>
+        </div>
+        <div class="pawn-tab-panel" id="pawn-panel-combatlog" style="display:none;">
+          <div class="sectitle"><span>战斗履历</span><div class="rule"></div></div>
+          <div class="output-empty">（战斗履历视图：参战 / 击杀 / 战损，本预览不展开）</div>
+        </div>
+        <div class="pawn-tab-panel" id="pawn-panel-social" style="display:none;">
+          <div class="sectitle"><span>社会关系</span><div class="rule"></div></div>
+          <div class="output-empty">（社会关系视图：配偶 / 亲属 / 战友网络，本预览不展开）</div>
+        </div>
+      </div>
+
+      <!-- ============ 活页 4：武器详情 (DetailSnapshot) ============ -->
+      <div class="livepage" id="page-weapon">
+        <div class="hero">
+          <div class="portrait">⚔</div>
+          <div class="hero-info">
+            <div class="hero-name">精制长剑 "霜语"</div>
+            <div class="hero-meta">武器 · 传承 3 代 · 估值 480</div>
+            <span class="medal">名匠署名</span>
+          </div>
+        </div>
+
+        <div class="sectitle"><span>溯源 · 署名链</span><div class="rule"></div></div>
+        <div class="panel">
+          <div class="erow"><span class="date">来源</span><span class="ttl">工坊锻造 · 匠人：陈思危</span></div>
+          <div class="erow"><span class="date">署名链</span><span class="ttl">陈思危 → 戈治钟（阵亡后移交）→ 林越</span></div>
+        </div>
+
+        <div class="sectitle"><span>同袍共用</span><div class="rule"></div></div>
+        <div class="panel">
+          <div class="erow"><span class="date">共用者</span><span class="ttl">戈治钟、林越、陈思危</span></div>
+        </div>
+
+        <div class="sectitle"><span>退役仪式</span><div class="rule"></div></div>
+        <div class="panel">
+          <div class="erow"><span class="date">状态</span><span class="ttl">仍在服役</span></div>
+        </div>
+
+        <div class="sectitle"><span>传承链</span><div class="rule"></div></div>
+        <div class="panel">
+          <div class="stat-grid">
+            <div class="stat"><div class="l">传承代数</div><div class="v">3</div></div>
+            <div class="stat"><div class="l">创作者</div><div class="v">陈思危</div></div>
+            <div class="stat"><div class="l">持有者</div><div class="v">林越</div></div>
+            <div class="stat"><div class="l">结论</div><div class="v" style="color:var(--pill-green)">名兵</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 活页 5：事件 (BattleKpisView + BattleCardView) ============ -->
+      <div class="livepage" id="page-event">
+        <div class="sectitle"><span>战役档案</span><div class="rule"></div></div>
+        <div class="kpi-strip">
+          <div class="kpi battle"><div class="l">战役总数</div><div class="v">12</div></div>
+          <div class="kpi battle"><div class="l">重大战局</div><div class="v">9</div></div>
+          <div class="kpi battle"><div class="l">我方歼敌</div><div class="v">107</div></div>
+          <div class="kpi battle"><div class="l">我方损失</div><div class="v">14</div></div>
+          <div class="kpi battle"><div class="l">参战规模</div><div class="v">61</div></div>
+        </div>
+
+        <div class="bcard">
+          <div class="bh">部落联军袭击 <span class="threat">Raid</span></div>
+          <div class="bgrid">
+            <div class="bc battle"><b>18</b>进攻规模</div>
+            <div class="bc kill"><b>16</b>我方歼敌</div>
+            <div class="bc loss"><b>2</b>我方损失</div>
+            <div class="bc"><b>20</b>参战人数</div>
+          </div>
+        </div>
+        <div class="bcard">
+          <div class="bh">机械族围城 <span class="threat">Siege</span></div>
+          <div class="bgrid">
+            <div class="bc battle"><b>12</b>进攻规模</div>
+            <div class="bc kill"><b>11</b>我方歼敌</div>
+            <div class="bc loss"><b>3</b>我方损失</div>
+            <div class="bc"><b>18</b>参战人数</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ 活页 6：人物档案 Tab (ITab_Pawn_Chronicle) ============ -->
+      <div class="livepage" id="page-itab">
+        <div class="hero">
+          <div class="portrait">戈</div>
+          <div class="hero-info">
+            <div class="hero-name">戈治钟</div>
+            <div class="hero-meta">领袖 · 在世 · 在职</div>
+            <span class="medal">殖民地领袖</span>
+          </div>
+        </div>
+
+        <div class="sectitle"><span>核心 KPI（六宫格）</span><div class="rule"></div></div>
+        <div class="sixgrid">
+          <div class="kpicell work"><div class="l">工时</div><div class="v">6.2</div></div>
+          <div class="kpicell prod"><div class="l">产出</div><div class="v">842</div></div>
+          <div class="kpicell kill"><div class="l">击杀</div><div class="v">19</div></div>
+          <div class="kpicell battle"><div class="l">战役</div><div class="v">12</div></div>
+          <div class="kpicell foot"><div class="l">足迹</div><div class="v">7</div></div>
+          <div class="kpicell rel"><div class="l">关系</div><div class="v">9</div></div>
+        </div>
+
+        <div class="sectitle"><span>里程碑（横向时间轴）</span><div class="rule"></div></div>
+        <div class="htl">
+          <div class="htl-track">
+            <div class="htl-node join"><div class="htl-dot"></div><div class="htl-title">加入殖民地</div><div class="htl-sub">5501.1.0</div></div>
+            <div class="htl-node work"><div class="htl-dot"></div><div class="htl-title">晋升领袖</div><div class="htl-sub">5501.2.0</div></div>
+            <div class="htl-node rel"><div class="htl-dot"></div><div class="htl-title">结为配偶</div><div class="htl-sub">5501.5.1</div></div>
+            <div class="htl-node battle"><div class="htl-dot"></div><div class="htl-title">击退袭击</div><div class="htl-sub">5501.3.2</div></div>
+            <div class="htl-node prod"><div class="htl-dot"></div><div class="htl-title">锻造霜语</div><div class="htl-sub">5501.7.4</div></div>
+            <div class="htl-node foot"><div class="htl-dot"></div><div class="htl-title">出访商队</div><div class="htl-sub">5502.0.3</div></div>
+          </div>
+        </div>
+
+        <div class="sectitle"><span>关键事件</span><div class="rule"></div></div>
+        <div class="panel">
+          <div class="erow"><span class="date">5501.3.2</span><span class="ttl hl">击退部落联军袭击</span></div>
+          <div class="erow"><span class="date">5501.5.1</span><span class="ttl">与陈思危结为配偶</span></div>
+          <div class="erow"><span class="date">5501.7.4</span><span class="ttl">锻造名剑「霜语」</span></div>
+        </div>
+
+        <div class="sectitle"><span>社会关系</span><div class="rule"></div></div>
+        <div class="panel">
+          <div class="erow"><span class="date">配偶</span><span class="ttl">陈思危</span></div>
+          <div class="erow"><span class="date">战友</span><span class="ttl">林越（已故）</span></div>
+        </div>
+
+        <div class="btn">打开完整档案 →</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footnote">
+    说明：本预览为本 mod <b>全部前端</b>的单一活页镜像（侧栏切换即活页）。
+    · 左栏「档案馆主窗」对应 <code>ArchiveMainTabWindow</code> 五视图；「独立窗口」对应 <code>ITab_Pawn_Chronicle</code> 人物档案 Tab。<br/>
+    · 主页 6 指标卡 = <code>HomeSnapshot</code>（殖民者/自由民/奴隶/囚犯/服务日/产出）；KPI 条 = <code>BattleKpisView</code>(5格) + <code>LocationKpisView</code>(8格)。<br/>
+    · 总览 = <code>OverviewSnapshot</code>（分类卡 + LocationKpis + BattleKpis）；人物/武器/事件详情 = <code>DetailSnapshot</code> 各视图。<br/>
+    · 战役 KPI 5 格：Total 战役总数 / Decisive 重大战局 / Kills 我方歼敌 / Losses 我方损失 / Roster 参战规模（无"胜负"语义）。<br/>
+    · 人物详情活页 = <code>ArchiveMainTabWindow.PawnView</code> → <code>DrawPawnOverview</code>：封面头(DrawCoverHeader) + Tab 子标签栏(PawnTabKeys: 总览/生涯/战斗履历/社会关系) + 榨取总账(DrawLedger: 4 StatCell) + 产出核销(DrawOutputLedger) + 健康残值·资产折旧(DrawHealthValuation: 4 StatCell + 3 进度条)。<br/>
+    · 六宫格(工时/产出/击杀/战役/足迹/关系)与横向时间轴属于 <code>ITab_Pawn_Chronicle</code> 浓缩版（档案 Tab 活页），与主窗 PawnView 是两个不同布局。<br/>
+    · 全部颜色取自 UITheme 令牌，无散落十六进制 / new Color。
+  </div>
+</div>
+
+<script>
+  (function(){
+    /* ---- 导航：侧栏切换活页 ---- */
+    var items = document.querySelectorAll('.navitem[data-page]');
+
+    function showPage(id){
+      items.forEach(function(n){ n.classList.remove('active'); });
+      var nav = document.querySelector('.navitem[data-page="'+id+'"]');
+      if (nav) nav.classList.add('active');
+      document.querySelectorAll('.livepage').forEach(function(p){ p.classList.remove('active'); });
+      var target = document.getElementById('page-' + id);
+      if (target) target.classList.add('active');
+    }
+    items.forEach(function(it){
+      it.addEventListener('click', function(){ showPage(it.getAttribute('data-page')); });
+    });
+
+    /* ---- PawnView Tab 子标签栏切换 (DrawTabBar: PawnTabKeys) ---- */
+    var pawnTabs = document.querySelectorAll('#pawn-tabs .tab');
+    pawnTabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var key = tab.getAttribute('data-tab');
+        pawnTabs.forEach(function(t){ t.classList.remove('active'); });
+        tab.classList.add('active');
+        document.querySelectorAll('.pawn-tab-panel').forEach(function(p){ p.style.display = 'none'; });
+        var panel = document.getElementById('pawn-panel-' + key.toLowerCase());
+        if (panel) panel.style.display = 'block';
+      });
+    });
+
+    /* ---- 测试按钮 ---- */
+    var win = document.querySelector('.window');
+
+    // 刷新示例数据：随机化部分 KPI 数值
+    document.getElementById('btn-refresh').addEventListener('click', function(){
+      document.querySelectorAll('.kpi .v').forEach(function(v){
+        var base = parseInt(v.textContent.replace(/[^\d]/g,''),10) || 0;
+        if (base > 0){
+          var next = Math.max(0, Math.round(base * (0.7 + Math.random()*0.6)));
+          v.textContent = v.textContent.replace(/\d+/, next);
+        }
+      });
+      document.querySelectorAll('.metric .v').forEach(function(v){
+        var base = parseInt(v.textContent.replace(/[^\d]/g,''),10) || 0;
+        if (base > 0){
+          var next = Math.max(1, Math.round(base * (0.8 + Math.random()*0.4)));
+          v.textContent = v.textContent.replace(/\d+/, next);
+        }
+      });
+    });
+
+    // 切换明暗主题（mirrors UITheme light tokens）
+    var light = false;
+    document.getElementById('btn-theme').addEventListener('click', function(){
+      light = !light;
+      win.classList.toggle('light', light);
+    });
+
+    // 渲染压力测试：在「事件」活页追加 20 张 battle card
+    document.getElementById('btn-stress').addEventListener('click', function(){
+      showPage('event');
+      var container = document.getElementById('page-event');
+      var threats = ['Raid','Siege','Sapper','Drop','Mech'];
+      for (var i=0;i<20;i++){
+        var raid = 8 + Math.floor(Math.random()*20);
+        var kill = Math.floor(raid * (0.6 + Math.random()*0.4));
+        var loss = Math.floor(Math.random()*5);
+        var card = document.createElement('div');
+        card.className = 'bcard';
+        card.innerHTML = '<div class="bh">压力测试战役 #'+(i+1)+' <span class="threat">'+threats[i%threats.length]+'</span></div>'+
+          '<div class="bgrid">'+
+          '<div class="bc battle"><b>'+raid+'</b>进攻规模</div>'+
+          '<div class="bc kill"><b>'+kill+'</b>我方歼敌</div>'+
+          '<div class="bc loss"><b>'+loss+'</b>我方损失</div>'+
+          '<div class="bc"><b>'+(raid+loss)+'</b>参战人数</div>'+
+          '</div>';
+        container.appendChild(card);
+      }
+    });
+
+    // 重置：恢复初始 DOM
+    var initial = win.cloneNode(true);
+    document.getElementById('btn-reset').addEventListener('click', function(){
+      win.parentNode.replaceChild(initial.cloneNode(true), win);
+      win = document.querySelector('.window');
+      // 重新绑定（重置后 DOM 已替换）
+      location.reload();
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using PersonalChronicle.Application;
+using PersonalChronicle.Api;
+using PersonalChronicle.Api.DomainProviders;
 using PersonalChronicle.Domain;
 using RimWorld;
 using Verse;
@@ -52,8 +54,14 @@ namespace PersonalChronicle.Archive.ReadModels
             // Prefetch counts once: every Sort comparison would otherwise issue a
             // GetEventsFor query against the store per object pair.
             Dictionary<string, int> countCache = new Dictionary<string, int>();
-            candidates.Sort((a, b) => EventCount(service, countCache, b.StableId)
-                .CompareTo(EventCount(service, countCache, a.StableId)));
+            candidates.Sort((a, b) =>
+            {
+                int byCount = EventCount(service, countCache, b.StableId)
+                    .CompareTo(EventCount(service, countCache, a.StableId));
+                // Deterministic tie-breaker: identical event counts must not reorder
+                // between sessions (List<T>.Sort is unstable). StableId is a stable key.
+                return byCount != 0 ? byCount : string.CompareOrdinal(a.StableId, b.StableId);
+            });
             snap.ImportantObjects = candidates.Take(6).ToList();
 
             snap.IsEmpty = snap.RecentEvents.Count == 0 && snap.ImportantObjects.Count == 0;
@@ -74,10 +82,308 @@ namespace PersonalChronicle.Archive.ReadModels
                 snap.CategoryObjects[categoryKey] = objects
                     .Where(o => o != null)
                     .OrderByDescending(o => EventCount(service, countCache, o.StableId))
+                    .ThenBy(o => o.StableId, System.StringComparer.Ordinal)
                     .ToList();
+                // v4.14: Location atlas KPI strip + per-location event counts —
+                // aggregated here (Read Model), the window renders only.
+                if (categoryKey == ArchiveCategoryKeys.Location)
+                {
+                    snap.LocationKpis = BuildLocationKpis(snap.CategoryObjects[categoryKey]);
+                    snap.LocationEventCounts = BuildLocationEventCounts(
+                        service, countCache, snap.CategoryObjects[categoryKey]);
+                }
+                // v4.14: Battle KPI strip + per-battle card aggregates — Read Model.
+                else if (categoryKey == ArchiveCategoryKeys.Battle)
+                {
+                    snap.BattleKpis = BuildBattleKpis(service, snap.CategoryObjects[categoryKey]);
+                }
             }
             snap.IsEmpty = snap.CategoryObjects.Count == 0;
             return snap;
+        }
+
+        /// <summary>
+        /// v4.14: aggregates the 5-cell Battle KPI strip + per-battle card views
+        /// from the BattleObject snapshot list. Kills/losses come from the
+        /// battle-scoped Death events (the battle stable id appears in the event
+        /// Subjects). Significance delegates to <see cref="IBattleProvider"/>.
+        /// Pure Read-Model aggregation — the window never re-derives these.
+        /// </summary>
+        private static BattleKpisView BuildBattleKpis(
+            IArchiveService service, List<ArchiveObject> objects)
+        {
+            BattleKpisView kpi = new BattleKpisView();
+            if (service == null || objects == null || objects.Count == 0)
+            {
+                return kpi;
+            }
+            // Kill vs our-loss discrimination: a Death event whose Subject
+            // contains the battle AND whose Params carry the victim category.
+            // Our losses = victim faction is the player's; kills = CombatRole kill
+            // (victim is an enemy). Reuse the same event stream per battle.
+            Dictionary<string, List<ChronicleEvent>> eventsByBattle =
+                new Dictionary<string, List<ChronicleEvent>>(System.StringComparer.Ordinal);
+            for (int i = 0; i < objects.Count; i++)
+            {
+                BattleObject battle = objects[i] as BattleObject;
+                if (battle == null || string.IsNullOrEmpty(battle.StableId))
+                {
+                    continue;
+                }
+                kpi.Total++;
+                BattleCardView card = new BattleCardView
+                {
+                    RaidCount = battle.RaidCount,
+                    Participants = battle.ParticipantIds != null ? battle.ParticipantIds.Count : 0,
+                    ThreatKey = battle.ThreatKey,
+                    IsSignificant = ResolveBattleSignificance(service, battle)
+                };
+                // Battle-scoped Death events (this battle in Subjects).
+                List<ChronicleEvent> evs;
+                if (!eventsByBattle.TryGetValue(battle.StableId, out evs))
+                {
+                    evs = CollectBattleEvents(service, battle.StableId);
+                    eventsByBattle[battle.StableId] = evs;
+                }
+                for (int e = 0; e < evs.Count; e++)
+                {
+                    ChronicleEvent ev = evs[e];
+                    if (ev == null)
+                    {
+                        continue;
+                    }
+                    bool isKill = IsBattleKillEvent(ev);
+                    if (isKill)
+                    {
+                        card.Kills++;
+                    }
+                    else
+                    {
+                        card.Losses++;
+                    }
+                }
+                if (card.IsSignificant)
+                {
+                    kpi.Decisive++;
+                }
+                kpi.Kills += card.Kills;
+                kpi.Losses += card.Losses;
+                kpi.Roster += card.Participants;
+                kpi.Cards[battle.StableId] = card;
+            }
+            return kpi;
+        }
+
+        /// <summary>
+        /// v4.14: collects the events whose Subjects reference this battle stable id.
+        /// </summary>
+        private static List<ChronicleEvent> CollectBattleEvents(
+            IArchiveService service, string battleStableId)
+        {
+            List<ChronicleEvent> result = new List<ChronicleEvent>();
+            if (service == null || string.IsNullOrEmpty(battleStableId))
+            {
+                return result;
+            }
+            IReadOnlyList<ChronicleEvent> all = service.GetAllEvents();
+            if (all == null)
+            {
+                return result;
+            }
+            for (int i = 0; i < all.Count; i++)
+            {
+                ChronicleEvent ev = all[i];
+                if (ev == null || ev.Subjects == null)
+                {
+                    continue;
+                }
+                for (int s = 0; s < ev.Subjects.Count; s++)
+                {
+                    ObjectRef sub = ev.Subjects[s];
+                    if (sub != null
+                        && sub.CategoryKey == ArchiveCategoryKeys.Battle
+                        && sub.StableId == battleStableId)
+                    {
+                        result.Add(ev);
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// v4.14: distinguishes a kill (our colony killed an enemy) from an own
+        /// loss. Only Death-type events are counted (kills and losses are both
+        /// Death events; the kill role is distinguished by the CombatRole param).
+        /// Non-Death events attached to the battle (e.g. the battle start event's
+        /// subject edges) are never counted as casualties.
+        /// </summary>
+        private static bool IsBattleKillEvent(ChronicleEvent ev)
+        {
+            if (ev == null || ev.TypeKey != ChronicleEventType.Death || ev.Params == null)
+            {
+                return false;
+            }
+            if (ev.Params.TryGetValue(ChronicleEventParams.CombatRole, out string role)
+                && role == ChronicleEventParams.CombatRoleKill)
+            {
+                return true;
+            }
+            // No explicit kill role → our side died (a colony pawn Death event
+            // linked to this battle via AttachCombatSubjects).
+            return false;
+        }
+
+        /// <summary>
+        /// v4.14: significance via the battle provider chain (IBattleProvider).
+        /// Falls back to threat-key (ThreatBig = significant) when no provider
+        /// is registered or the provider is undefined.
+        /// </summary>
+        private static bool ResolveBattleSignificance(IArchiveService service, BattleObject battle)
+        {
+            if (service == null || battle == null)
+            {
+                return false;
+            }
+            bool defined = false;
+            bool significant = false;
+            try
+            {
+                PersonalChronicle.Api.IPersonalChronicleApi api;
+                if (PersonalChronicle.Api.PersonalChronicleApi.TryGet(out api)
+                    && api != null && api.Providers != null)
+                {
+                    Dictionary<string, string> dataKeys = new Dictionary<string, string>
+                    {
+                        { "outcome", battle.ThreatKey ?? string.Empty }
+                    };
+                    BattleAppraisalInput input =
+                        new BattleAppraisalInput(battle.StableId, dataKeys);
+                    api.Providers.ForEach<IBattleProvider>(
+                        provider =>
+                        {
+                            if (defined || provider == null)
+                            {
+                                return;
+                            }
+                            BattleAppraisal appraisal;
+                            if (provider.TryAppraise(input, out appraisal))
+                            {
+                                defined = true;
+                                significant = appraisal.IsSignificant;
+                            }
+                        });
+                }
+            }
+            catch (System.Exception)
+            {
+                defined = false;
+            }
+            if (!defined)
+            {
+                return battle.ThreatKey == "ThreatBig";
+            }
+            return significant;
+        }
+
+        /// <summary>
+        /// v4.14: aggregates the 8-cell Location KPI strip from the snapshot list.
+        /// Kind classification reuses <see cref="ResolveLocationKindKey"/> so the
+        /// card and the strip always agree. Pure Read-Model aggregation — the
+        /// window never re-derives these counters.
+        /// </summary>
+        private static LocationKpisView BuildLocationKpis(List<ArchiveObject> objects)
+        {
+            LocationKpisView kpi = new LocationKpisView();
+            if (objects == null || objects.Count == 0)
+            {
+                return kpi;
+            }
+            HashSet<string> factions = new HashSet<string>(System.StringComparer.Ordinal);
+            for (int i = 0; i < objects.Count; i++)
+            {
+                LocationObject loc = objects[i] as LocationObject;
+                if (loc == null)
+                {
+                    continue;
+                }
+                kpi.Total++;
+                string kind = ResolveLocationKindKey(loc);
+                if (kind == "player") kpi.Home++;
+                else if (kind == "quest") kpi.Quest++;
+                else if (kind == "settle") kpi.Settle++;
+                if (loc.DeinitTick != -1L) kpi.Ruined++;
+                if (loc.CanTrade)
+                {
+                    kpi.Tradable++;
+                    if (!string.IsNullOrEmpty(loc.PermitRequiredDefName)) kpi.Permit++;
+                }
+                if (loc.IsPlayerHome)
+                {
+                    factions.Add("player");
+                }
+                else if (!string.IsNullOrEmpty(loc.FactionDefName))
+                {
+                    factions.Add(loc.FactionDefName);
+                }
+            }
+            kpi.Factions = factions.Count;
+            return kpi;
+        }
+
+        /// <summary>
+        /// v4.14: per-location event counts for the atlas card sub-line, reusing
+        /// the same count cache as the overview ordering (no extra store queries).
+        /// </summary>
+        private static Dictionary<string, int> BuildLocationEventCounts(
+            IArchiveService service, Dictionary<string, int> countCache, List<ArchiveObject> objects)
+        {
+            Dictionary<string, int> counts = new Dictionary<string, int>();
+            if (service == null || objects == null || objects.Count == 0)
+            {
+                return counts;
+            }
+            for (int i = 0; i < objects.Count; i++)
+            {
+                LocationObject loc = objects[i] as LocationObject;
+                if (loc == null || string.IsNullOrEmpty(loc.StableId))
+                {
+                    continue;
+                }
+                counts[loc.StableId] = EventCount(service, countCache, loc.StableId);
+            }
+            return counts;
+        }
+
+        /// <summary>
+        /// v4.14: canonical location kind key — "player"/"settle"/"quest"/"unknown".
+        /// Single source of truth for both the card (LocationDetailView) and the
+        /// KPI strip aggregation; never duplicated in the window.
+        /// </summary>
+        private static string ResolveLocationKindKey(LocationObject loc)
+        {
+            if (loc == null)
+            {
+                return "unknown";
+            }
+            if (loc.IsPlayerHome)
+            {
+                return "player";
+            }
+            if (!string.IsNullOrEmpty(loc.WorldObjectDefName))
+            {
+                if (loc.WorldObjectDefName.IndexOf("Settlement", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return "settle";
+                }
+                if (loc.WorldObjectDefName.IndexOf("Quest", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || loc.WorldObjectDefName.IndexOf("Site", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return "quest";
+                }
+            }
+            return "unknown";
         }
 
         public DetailSnapshot BuildDetail(IArchiveService service, string detailObjectId, long revision)
@@ -113,6 +419,9 @@ namespace PersonalChronicle.Archive.ReadModels
                     snap.Milestones = BuildMilestones(events);
                     snap.Health = BuildHealth(service, detailObjectId);
                     snap.Relations = BuildRelations(service, pawn);
+                    // v4.15 condense tab core KPI: aggregate the six digest cells here
+                    // in the Read Model only — the ITab renders, never computes.
+                    BuildDetailCoreKpis(snap, service, detailObjectId, pawn);
                 }
                 else if (snap.DetailObject is ThingObject thing)
                 {
@@ -149,6 +458,105 @@ namespace PersonalChronicle.Archive.ReadModels
                 snap.Relations = new List<RelationView>();
             }
             return snap;
+        }
+
+        // ---- v4.15 condense tab core KPI (Read Model only) ----
+        // Aggregates the six digest cells consumed by ITab_Pawn_Chronicle. Every
+        // counter is computed once here, never in the draw path.
+        private static void BuildDetailCoreKpis(
+            DetailSnapshot snap, IArchiveService service, string stableId, PawnObject pawn)
+        {
+            if (snap == null || pawn == null) return;
+
+            // 工时: reuse the work-intensity evaluator via IWorkIntensityService.
+            if (service != null && !string.IsNullOrEmpty(stableId))
+            {
+                IWorkIntensityService intensityService = service as IWorkIntensityService;
+                if (intensityService != null)
+                {
+                    snap.WorkIntensity = intensityService.GetWorkIntensity(stableId); // null when undefined
+                }
+                ProductionSummaryView prod = service.GetProductionSummary(stableId);
+                snap.ProductionTotal = (prod == null) ? 0 : prod.TotalQuantity;
+                snap.ProductionSilverValue = (prod == null) ? 0f : prod.TotalMarketValue;
+                snap.ProductionCategories = BuildProductionCategories(snap.ProductionLines);
+            }
+
+            // 击杀: Death events where this pawn is the killer (CombatRole == kill).
+            // Counts the total and groups by victim faction/category for the digest.
+            string killerLabel = (pawn.LabelShort ?? string.Empty).Trim();
+            int kills = 0;
+            Dictionary<string, int> byFaction = new Dictionary<string, int>();
+            foreach (ChronicleEvent e in snap.RawEvents)
+            {
+                if (e == null || e.TypeKey != ChronicleEventType.Death) continue;
+                if (!e.Params.TryGetValue(ChronicleEventParams.CombatRole, out string role)
+                    || role != ChronicleEventParams.CombatRoleKill) continue;
+                if (!e.Params.TryGetValue(ChronicleEventParams.Killer, out string killer)
+                    || !string.Equals((killer ?? string.Empty).Trim(), killerLabel, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+                kills++;
+                // Group key: victim faction label when known, else victim category
+                // (humanlike enemies are usually factioned; mechs/animals fall back).
+                string group = null;
+                if (e.Params.TryGetValue(ChronicleEventParams.VictimFactionLabel, out string vfl)
+                    && !string.IsNullOrEmpty(vfl))
+                {
+                    group = vfl;
+                }
+                else if (e.Params.TryGetValue(ChronicleEventParams.VictimCategory, out string vcat)
+                    && !string.IsNullOrEmpty(vcat))
+                {
+                    group = VictimCategoryLabel(vcat);
+                }
+                if (string.IsNullOrEmpty(group)) group = ChronicleEventParams.UnknownKillerLabel.Translate().ToString();
+                int prev;
+                byFaction.TryGetValue(group, out prev);
+                byFaction[group] = prev + 1;
+            }
+            snap.Kills = kills;
+            snap.KillsByFaction = BuildKillsByFaction(byFaction);
+
+            // 战役: colony-level Battle events are not bound to a single pawn, so the
+            // digest shows the colony's battle count as this pawn's era context.
+            int battles = 0;
+            foreach (ChronicleEvent e in snap.RawEvents)
+            {
+                if (e != null && e.TypeKey == ChronicleEventType.Battle) battles++;
+            }
+            snap.BattleCount = battles;
+
+            // 战役 KPI 条（歼敌/损失/参战规模/重大战局）：colony 级，作为该人物的时代背景。
+            // 复用 Overview 的 Battle 分类聚合，窗口只消费。
+            IReadOnlyList<ArchiveObject> battleObjects = (service != null)
+                ? service.GetObjectsOfCategory(ArchiveCategoryKeys.Battle)
+                : null;
+            if (battleObjects != null)
+            {
+                snap.BattleKpis = BuildBattleKpis(service, battleObjects.ToList());
+            }
+
+            // 传承: relations that read as a living descendant (child/offspring).
+            int offspring = 0;
+            foreach (RelationView r in snap.Relations)
+            {
+                if (r == null || !r.IsLive) continue;
+                string label = r.RelationLabel ?? string.Empty;
+                if (label.IndexOf("子", System.StringComparison.Ordinal) >= 0
+                    || label.IndexOf("女", System.StringComparison.Ordinal) >= 0
+                    || label.IndexOf("后代", System.StringComparison.Ordinal) >= 0
+                    || label.IndexOf("嗣", System.StringComparison.Ordinal) >= 0
+                    || label.IndexOf("child", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || label.IndexOf("offspring", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || label.IndexOf("son", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || label.IndexOf("daughter", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    offspring++;
+                }
+            }
+            snap.LegacyOffspring = offspring;
         }
 
         // ---- v4.4 Pawn Overview derivation (Read Model only) ----
@@ -203,9 +611,8 @@ namespace PersonalChronicle.Archive.ReadModels
             string activeDate = null;
             if (pawn.JoinTick >= 0L && activeEnd > pawn.JoinTick)
             {
-                long days = (activeEnd - pawn.JoinTick) / RimWorld.GenDate.TicksPerDay;
                 activeDate = FormatDateLocal(pawn.JoinTick) + " → " + FormatDateLocal(activeEnd)
-                    + " (" + days + " " + "PersonalChronicle.UI.DaysUnit".Translate().ToString() + ")";
+                    + " (" + SpanText.Format(activeEnd - pawn.JoinTick) + ")";
             }
             string activeSub = pawn.IsArchived
                 ? "PersonalChronicle.UI.LifePhase.ActiveSub.Archived".Translate().ToString()
@@ -283,32 +690,26 @@ namespace PersonalChronicle.Archive.ReadModels
             {
                 PlaceVisit v = pawn.PlaceHistory[i];
                 if (v == null) continue;
-                bool isWorld = v.PlaceKind == "Caravan" || (v.PlaceKey != null && v.PlaceKey.StartsWith("tile:"));
+                bool isWorld = v.PlaceKind == PlaceVisitKeys.KindCaravan
+                    || (v.PlaceKey != null && v.PlaceKey.StartsWith(PlaceVisitKeys.TileKeyPrefix, System.StringComparison.Ordinal));
                 if (isWorld) expeditions++;
                 long enter = v.EnterTick > 0L ? v.EnterTick : -1L;
                 long leave = v.IsOpen ? now : (v.LeaveTick > 0L ? v.LeaveTick : -1L);
-                long days = -1L;
-                if (enter > 0L && leave > 0L && leave >= enter)
-                {
-                    days = (leave - enter) / RimWorld.GenDate.TicksPerDay;
-                }
+                long dwellTicks = (enter > 0L && leave > 0L && leave >= enter) ? (leave - enter) : -1L;
+                long days = dwellTicks >= 0L ? (long)RimWorld.GenDate.TicksToDays((int)dwellTicks) : -1L;
                 if (days > homeDays) { homeDays = days; homeIdx = stays.Count; }
                 stays.Add(new FootstepView
                 {
                     PlaceText = PlaceTextLocal(v),
                     IsWorldTile = isWorld,
-                    DwellText = days >= 0 ? (days + " " + "PersonalChronicle.UI.DaysUnit".Translate().ToString()) : "PersonalChronicle.UI.UnknownDate".Translate().ToString(),
+                    DwellText = dwellTicks >= 0L ? SpanText.Format(dwellTicks) : "PersonalChronicle.UI.UnknownDate".Translate().ToString(),
+                    DwellTicks = dwellTicks,
                     IsHome = false
                 });
             }
 
-            // Longest dwell first.
-            stays.Sort((a, b) =>
-            {
-                long da = a.DwellText == "PersonalChronicle.UI.UnknownDate".Translate().ToString() ? -1 : ParseDays(a.DwellText);
-                long db = b.DwellText == "PersonalChronicle.UI.UnknownDate".Translate().ToString() ? -1 : ParseDays(b.DwellText);
-                return db.CompareTo(da);
-            });
+            // Longest dwell first (raw tick span, never string parsing).
+            stays.Sort((a, b) => b.DwellTicks.CompareTo(a.DwellTicks));
             if (homeIdx >= 0 && homeIdx < stays.Count) stays[homeIdx].IsHome = true;
 
             led.PlaceCount = pawn.PlaceHistory.Count;
@@ -340,30 +741,7 @@ namespace PersonalChronicle.Archive.ReadModels
             view.BiomeDefName = loc.MapDefName;
 
             // Kind key: player home / faction settlement / quest site / unknown.
-            if (loc.IsPlayerHome)
-            {
-                view.KindKey = "player";
-            }
-            else if (!string.IsNullOrEmpty(loc.WorldObjectDefName))
-            {
-                if (loc.WorldObjectDefName.IndexOf("Settlement", System.StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    view.KindKey = "settle";
-                }
-                else if (loc.WorldObjectDefName.IndexOf("Quest", System.StringComparison.OrdinalIgnoreCase) >= 0
-                    || loc.WorldObjectDefName.IndexOf("Site", System.StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    view.KindKey = "quest";
-                }
-                else
-                {
-                    view.KindKey = "unknown";
-                }
-            }
-            else
-            {
-                view.KindKey = "unknown";
-            }
+            view.KindKey = ResolveLocationKindKey(loc);
 
             // Hill key.
             if (string.IsNullOrEmpty(loc.Hilliness))
@@ -552,8 +930,30 @@ namespace PersonalChronicle.Archive.ReadModels
                 SpiritFactors = spiritFactors,
                 YouthFactors = youthFactors,
                 Factors = factors,
-                Events = eventViews
+                Events = eventViews,
+                // v4.14: data-driven one-line verdict (健康残值结论). Thresholds
+                // mirror the impaired/prime semantics of the evaluator — no UI
+                // hardcoding, translation keys carry the text.
+                VerdictText = BuildHealthVerdict(r.HealthScore, r.IsPrime, r.IsImpaired)
             };
+        }
+
+        /// <summary>v4.14: health-residual verdict line (data-driven, localized).</summary>
+        private static string BuildHealthVerdict(float score, bool isPrime, bool isImpaired)
+        {
+            if (isImpaired)
+            {
+                return HealthValuationKeys.VerdictImpaired.Translate().ToString();
+            }
+            if (isPrime)
+            {
+                return HealthValuationKeys.VerdictPrime.Translate().ToString();
+            }
+            if (score >= 40f)
+            {
+                return HealthValuationKeys.VerdictFair.Translate().ToString();
+            }
+            return HealthValuationKeys.VerdictDepleted.Translate().ToString();
         }
 
         private static List<HealthFactorView> BuildHealthFactorViews(
@@ -617,7 +1017,7 @@ namespace PersonalChronicle.Archive.ReadModels
             string cleaned = defName;
             string[] prefixes = new[]
             {
-                "PersonalChronicle.UI.HealthValuation.Event.",
+                HealthValuationKeys.EventPrefix,
             };
             for (int i = 0; i < prefixes.Length; i++)
             {
@@ -670,7 +1070,9 @@ namespace PersonalChronicle.Archive.ReadModels
 
         private static string FormatDateLocal(long tick)
         {
-            if (tick <= 0L) return "PersonalChronicle.UI.UnknownDate".Translate().ToString();
+            // tick 0 是新档第 1 天（开局殖民者 JoinTick=0 即此），是合法日期；
+            // 仅 -1（未知哨兵）才显示"未知"。
+            if (tick < 0L) return "PersonalChronicle.UI.UnknownDate".Translate().ToString();
             return RimWorld.GenDate.DateReadoutStringAt(tick, UnityEngine.Vector2.zero);
         }
 
@@ -684,10 +1086,13 @@ namespace PersonalChronicle.Archive.ReadModels
         private static string PlaceTextLocal(PlaceVisit v)
         {
             if (v == null) return "—";
-            if (v.PlaceKind == "Caravan" || (v.PlaceKey != null && v.PlaceKey.StartsWith("tile:")))
+            if (v.PlaceKind == PlaceVisitKeys.KindCaravan
+                || (v.PlaceKey != null && v.PlaceKey.StartsWith(PlaceVisitKeys.TileKeyPrefix, System.StringComparison.Ordinal)))
             {
-                string tile = v.PlaceKey != null && v.PlaceKey.StartsWith("tile:")
-                    ? v.PlaceKey.Substring(5) : v.PlaceKey;
+                string tile = v.PlaceKey != null
+                    && v.PlaceKey.StartsWith(PlaceVisitKeys.TileKeyPrefix, System.StringComparison.Ordinal)
+                    ? v.PlaceKey.Substring(PlaceVisitKeys.TileKeyPrefix.Length)
+                    : v.PlaceKey;
                 return "PersonalChronicle.UI.PlacesWorldTile".Translate(tile).ToString();
             }
             var biome = DefDatabase<BiomeDef>.GetNamedSilentFail(v.PlaceKey);
@@ -769,16 +1174,6 @@ namespace PersonalChronicle.Archive.ReadModels
         private static string KindLabelLocal(ChronicleEventKind kind)
         {
             return ("PersonalChronicle.UI.Ev" + kind.ToString()).Translate().ToString();
-        }
-
-        private static long ParseDays(string dwell)
-        {
-            // dwell format: "<n> <DaysUnit>" or UnknownDate; extract leading number.
-            if (string.IsNullOrEmpty(dwell)) return -1L;
-            int sp = dwell.IndexOf(' ');
-            string num = sp > 0 ? dwell.Substring(0, sp) : dwell;
-            long v;
-            return long.TryParse(num, out v) ? v : -1L;
         }
 
         public EventSnapshot BuildEvent(IArchiveService service, ChronicleEvent ev, long revision)
@@ -887,8 +1282,105 @@ namespace PersonalChronicle.Archive.ReadModels
                 }
             }
             List<ProductionLineView> result = new List<ProductionLineView>(byDef.Values);
+            // v6.6: aggregate per-line market value (Def.MarketValue * Count) so the
+            // 产出 cell can show value-contribution bars (Read Model only).
+            for (int i = 0; i < result.Count; i++)
+            {
+                ProductionLineView line = result[i];
+                ThingDef td = (!string.IsNullOrEmpty(line.DefName)) ? DefDatabase<ThingDef>.GetNamed(line.DefName, false) : null;
+                float unit = (td != null) ? td.BaseMarketValue : 0f;
+                line.Value = unit * line.Count;
+                result[i] = line;
+            }
             result.Sort((a, b) => b.LastTick.CompareTo(a.LastTick));
             return result;
+        }
+
+        /// <summary>
+        /// v4.15 condense-tab: group production lines by their first-level
+        /// <see cref="ThingCategoryDef"/> (official one-level category) and return
+        /// the top categories by aggregated count. The resulting labels are already
+        /// localized (via <see cref="ThingCategoryDef.LabelCap"/>) so the window
+        /// stays free of any category-name hardcoding. Categories in the
+        /// "plants/corpses" exclusion set (per design doc §C) are dropped to keep
+        /// the badge group meaningful.
+        /// </summary>
+        private static IReadOnlyList<ProductionCategoryView> BuildProductionCategories(
+            IReadOnlyList<ProductionLineView> lines)
+        {
+            List<ProductionCategoryView> empty = new List<ProductionCategoryView>();
+            if (lines == null || lines.Count == 0) return empty;
+
+            // First-level category defName → aggregated count.
+            Dictionary<string, int> byCat = new Dictionary<string, int>();
+            foreach (ProductionLineView line in lines)
+            {
+                if (line == null || string.IsNullOrEmpty(line.DefName)) continue;
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(line.DefName);
+                if (def == null) continue;
+                ThingCategoryDef cat = def.FirstThingCategory;
+                if (cat == null) continue;
+                string key = cat.defName;
+                // Skip non-meaningful categories for the digest badge group.
+                if (key == "Plants" || key == "Corpses" || key == "Corpse" || key == "Chunks") continue;
+                int prev;
+                byCat.TryGetValue(key, out prev);
+                byCat[key] = prev + line.Count;
+            }
+            if (byCat.Count == 0) return empty;
+
+            List<ProductionCategoryView> cats = new List<ProductionCategoryView>(byCat.Count);
+            foreach (var kv in byCat)
+            {
+                ThingCategoryDef cat = DefDatabase<ThingCategoryDef>.GetNamedSilentFail(kv.Key);
+                if (cat == null) continue;
+                cats.Add(new ProductionCategoryView
+                {
+                    Label = cat.LabelCap,
+                    Count = kv.Value
+                });
+            }
+            // Largest categories first; cap to the top 4 so the badge group stays compact.
+            cats.Sort((a, b) => b.Count.CompareTo(a.Count));
+            if (cats.Count > 4) cats.RemoveRange(4, cats.Count - 4);
+            return cats;
+        }
+
+        /// <summary>
+        /// v4.15 condense-tab: convert the per-group kill counts (already keyed by
+        /// localized faction/category label) into the digest badge list, largest
+        /// first and capped to the top 4 so the 击杀 cell stays compact.
+        /// </summary>
+        private static IReadOnlyList<KillByFactionView> BuildKillsByFaction(Dictionary<string, int> byFaction)
+        {
+            List<KillByFactionView> empty = new List<KillByFactionView>();
+            if (byFaction == null || byFaction.Count == 0) return empty;
+            List<KillByFactionView> list = new List<KillByFactionView>(byFaction.Count);
+            foreach (var kv in byFaction)
+            {
+                list.Add(new KillByFactionView { Label = kv.Key, Count = kv.Value });
+            }
+            list.Sort((a, b) => b.Count.CompareTo(a.Count));
+            if (list.Count > 4) list.RemoveRange(4, list.Count - 4);
+            return list;
+        }
+
+        /// <summary>
+        /// v4.15 condense-tab: maps the stored victim-category key to a localized
+        /// label for the 击杀 cell badge group. Tokens, not hardcoded display text.
+        /// </summary>
+        private static string VictimCategoryLabel(string victimCategory)
+        {
+            if (victimCategory == ChronicleEventParams.VictimCategoryMechanoid)
+            {
+                return "PersonalChronicle.UI.FactionKindMechanoid".Translate().ToString();
+            }
+            if (victimCategory == ChronicleEventParams.VictimCategoryAnimal)
+            {
+                return "PersonalChronicle.UI.FactionKindAnimal".Translate().ToString();
+            }
+            // Humanlike victims without a known faction fall back to the generic label.
+            return "PersonalChronicle.UI.FactionKindUnknown".Translate().ToString();
         }
 
         private static bool IsProductionEvent(ChronicleEvent ev)
@@ -1096,6 +1588,10 @@ namespace PersonalChronicle.Archive.ReadModels
                     {
                         view.FromText = "PersonalChronicle.UI.UnknownDate".Translate().ToString();
                     }
+                    // v4.14: 来源地点 = the location/battle subject on the craft
+                    // event (workshop / field / expedition). Pure subject-edge
+                    // resolution, no invented text.
+                    view.WhereText = ResolveOriginPlaceLabel(service, ev);
                     view.IsEmpty = false;
                     return view;
                 }
@@ -1109,6 +1605,42 @@ namespace PersonalChronicle.Archive.ReadModels
                 }
             }
             return view;
+        }
+
+        /// <summary>
+        /// v4.14: resolves the place/battle label attached to an event's Subjects
+        /// (the origin "where"). Returns null when the event carries no location
+        /// or battle edge.
+        /// </summary>
+        private static string ResolveOriginPlaceLabel(IArchiveService service, ChronicleEvent ev)
+        {
+            if (ev == null || ev.Subjects == null)
+            {
+                return null;
+            }
+            for (int s = 0; s < ev.Subjects.Count; s++)
+            {
+                ObjectRef sub = ev.Subjects[s];
+                if (sub == null)
+                {
+                    continue;
+                }
+                if (sub.CategoryKey == ArchiveCategoryKeys.Location
+                    || sub.CategoryKey == ArchiveCategoryKeys.Battle)
+                {
+                    if (!string.IsNullOrEmpty(sub.LabelSnapshot))
+                    {
+                        return sub.LabelSnapshot;
+                    }
+                    ArchiveObject obj = service != null ? service.GetObject(sub.StableId) : null;
+                    if (obj != null && !string.IsNullOrEmpty(obj.LabelSnapshot))
+                    {
+                        return obj.LabelSnapshot;
+                    }
+                    return sub.StableId;
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -1211,7 +1743,8 @@ namespace PersonalChronicle.Archive.ReadModels
                     long overlapEnd = System.Math.Min(ends[i], ends[j]);
                     if (overlapEnd > overlapStart)
                     {
-                        int days = (int)((overlapEnd - overlapStart) / GenDate.TicksPerDay);
+                        long overlapTicks = overlapEnd - overlapStart;
+                        int days = (int)GenDate.TicksToDays((int)overlapTicks);
                         if (days <= 0) continue;
                         if (!byPawn.TryGetValue(other.StableId, out CoUseRowView row))
                         {
@@ -1385,8 +1918,7 @@ namespace PersonalChronicle.Archive.ReadModels
             {
                 return "PersonalChronicle.UI.Legacy.Now".Translate().ToString();
             }
-            long days = (end - start) / RimWorld.GenDate.TicksPerDay;
-            return days + " " + "PersonalChronicle.UI.DaysUnit".Translate().ToString();
+            return SpanText.Format(end - start);
         }
 
         /// <summary>Data-driven epithet (传承称号) from the thing def; tokenized so

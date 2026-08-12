@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <RootNamespace>PersonalChronicle.Tests</RootNamespace>
+    <AssemblyName>PersonalChronicle.Tests</AssemblyName>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Reference the freshly-built mod assembly (no engine dlls copied; we only
+         exercise offline-safe pure-logic paths). -->
+    <Reference Include="PersonalChronicle">
+      <HintPath>..\Assemblies\PersonalChronicle.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <RimWorldPath Condition="'$(RimWorldPath)' == ''">E:\SteamLibrary\steamapps\common\RimWorld</RimWorldPath>
+  </PropertyGroup>
+
+  <!-- 测试工程仅引用主 dll 进行测试；DLL 不随 NuGet 复制，这里在 Build 后显式拷入输出目录。 -->
+  <Target Name="CopyModAssembly" AfterTargets="Build">
+    <Copy SourceFiles="..\Assemblies\PersonalChronicle.dll"
+          DestinationFolder="$(OutDir)"
+          SkipUnchangedFiles="true"
+          Condition="Exists('..\Assemblies\PersonalChronicle.dll')" />
+    <!-- 引擎程序集：让 SocialRelationFilter / ChronicleEventImportance 等走引擎路径的用例可离线运行 -->
+    <ItemGroup>
+      <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\Assembly-CSharp.dll" />
+      <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\Assembly-CSharp-firstpass.dll" />
+      <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.dll" />
+      <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll" />
+      <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(EngineDll)"
+          DestinationFolder="$(OutDir)"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(RimWorldPath)\RimWorldWin64_Data\Managed')" />
+  </Target>
+</Project>

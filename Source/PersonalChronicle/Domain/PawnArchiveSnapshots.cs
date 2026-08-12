@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace PersonalChronicle.Domain
@@ -260,7 +259,7 @@ namespace PersonalChronicle.Domain
                 return;
             }
             // Strongest feelings first, so the cap keeps the most meaningful ties.
-            scored.Sort((a, b) => Mathf.Abs(b.Value).CompareTo(Mathf.Abs(a.Value)));
+            scored.Sort((a, b) => System.Math.Abs(b.Value).CompareTo(System.Math.Abs(a.Value)));
 
             int taken = 0;
             for (int i = 0; i < scored.Count && taken < cap; i++)

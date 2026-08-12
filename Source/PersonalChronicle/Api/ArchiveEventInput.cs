@@ -49,16 +49,53 @@ namespace PersonalChronicle.Api
         /// </summary>
         public string DeduplicationKey;
 
-        /// <summary>True when the required identity fields are present.</summary>
+        /// <summary>Max parameter entries accepted per event write (DATA-008 capacity guard).</summary>
+        public const int MaxParameters = 32;
+
+        /// <summary>Max length of a single parameter key (DATA-008).</summary>
+        public const int MaxParameterKeyLength = 64;
+
+        /// <summary>Max length of a single parameter value (DATA-008).</summary>
+        public const int MaxParameterValueLength = 256;
+
+        /// <summary>True when the required identity fields are present and parameters within limits.</summary>
         public bool IsValid
         {
             get
             {
-                return !string.IsNullOrEmpty(SourceId)
-                    && !string.IsNullOrEmpty(EventTypeDefName)
-                    && Primary != null
-                    && Primary.IsValid;
+                if (string.IsNullOrEmpty(SourceId)
+                    || string.IsNullOrEmpty(EventTypeDefName)
+                    || Primary == null
+                    || !Primary.IsValid)
+                {
+                    return false;
+                }
+                return ParametersWithinLimits();
             }
+        }
+
+        private bool ParametersWithinLimits()
+        {
+            if (Parameters == null)
+            {
+                return true;
+            }
+            if (Parameters.Count > MaxParameters)
+            {
+                return false;
+            }
+            foreach (KeyValuePair<string, string> kv in Parameters)
+            {
+                if (kv.Key == null || kv.Key.Length > MaxParameterKeyLength)
+                {
+                    return false;
+                }
+                if (kv.Value != null && kv.Value.Length > MaxParameterValueLength)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

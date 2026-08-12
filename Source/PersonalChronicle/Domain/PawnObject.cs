@@ -39,11 +39,8 @@ namespace PersonalChronicle.Domain
         /// <summary>v3.1 P3: significant social ties (active + ended).</summary>
         public List<SignificantRelation> Relations = new List<SignificantRelation>();
 
-        public override string CategoryKey
-        {
-            get { return ArchiveCategoryKeys.Pawn; }
-        }
-
+        // CategoryKey 继承自 PawnRecord（均返回 ArchiveCategoryKeys.Pawn），
+        // 无需在此重复 override —— 移除冗余分流逻辑，避免两处维护。
         public PawnObject()
         {
         }

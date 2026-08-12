@@ -58,6 +58,17 @@ namespace PersonalChronicle.Data
         private Dictionary<string, int> relationScanMissStreak = new Dictionary<string, int>();
 
         /// <summary>
+        /// v5.x 修复：新档开局误判为"中途加入"的根因诊断。
+        /// TicksGame<=0 不可靠（新建殖民地场景初始化会推进 tick，FinalizeInit 时
+        /// TicksGame 常 > 0）。改用"是否读档加载"作为权威信号：读档时 ExposeData 会
+        /// 以 PostLoadInit 模式执行，新档不会。该标记 [Unsaved]，仅在 FinalizeInit
+        /// 当帧使用一次——读档当次现存人口才是"中途补录"(JoinTick=-1)，新档现存人口
+        /// 一律按开局(JoinTick=0)处理。
+        /// </summary>
+        [Unsaved]
+        private bool cameFromLoad;
+
+        /// <summary>
         /// Consecutive empty scans after which a pawn's social graph is treated
         /// as settled. Small enough that a fresh colony still converges within
         /// the first minute of play.
@@ -83,6 +94,37 @@ namespace PersonalChronicle.Data
         /// cache cadence from the approved 统计活读化修复方案.
         /// </summary>
         private const long ReconcileIntervalTicks = 600L;
+
+        /// <summary>
+        /// 默认加入时刻的单一权威入口（v5.x 简化）。
+        ///
+        /// 根因：AddObject 对已存在 StableId 直接拒绝（不更新 JoinTick），谁先建档
+        /// 谁决定 JoinTick，而建档入口有多个（Backfill / reconcile / 社交补录 /
+        /// 捕获补录 / 死亡兜底）。统一在此裁决，避免各入口各自为政导致"新档开局
+        /// 殖民者被 -1 定格"。
+        ///
+        /// 判定只用"加入/发现当天"粒度，不做任何时间窗口推断：
+        ///   - 读档会话（cameFromLoad）→ 存档缺失、后来发现的存活人口，归到
+        ///     发现/加入当天的起点（不再用 -1 显示"中途加入"）。
+        ///   - 新档会话 → 开局殖民者，加入日即第 1 天（tick 0）。
+        /// 显式加入（OnColonistJoined）仍走真实 TicksGame，不经过这里。
+        /// </summary>
+        internal long ResolveDefaultJoinTick()
+        {
+            if (cameFromLoad)
+            {
+                int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                if (now > 0)
+                {
+                    // 当天起点用游戏日数系统：DayTick = 当天内已过 tick，减去即当天
+                    // 零点。避免手工 TicksPerDay 取模。
+                    long dayStart = now - (long)RimWorld.GenDate.DayTick(now, 0f);
+                    return dayStart;
+                }
+                return 0L;
+            }
+            return 0L;
+        }
 
         /// <summary>
         /// v3.1 career work-time sampling interval (~2s at 60 tps). Independent of
@@ -140,6 +182,8 @@ namespace PersonalChronicle.Data
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 DataRevision = 0L;
+                // 读档加载信号：仅当次 FinalizeInit 用于区分"中途补录"与"开局殖民者"。
+                cameFromLoad = true;
             }
         }
 
@@ -202,6 +246,21 @@ namespace PersonalChronicle.Data
                 if (AllArchivedColonistsHaveRelations())
                 {
                     SchemaVersion = 4L;
+                }
+            }
+            if (SchemaVersion < 5L)
+            {
+                // v4.14 地点档案修复：旧版 Source2 把整个世界的 settlement + quest
+                // site 全量建档（新档即 267 个），违反设计文档"地点 = 玩家亲自
+                // 到访/建立/参与过"。一次性收敛：保留（a）玩家本家（IsPlayerHome）
+                // 与（b）有任何事件历史的地点；其余全部关闭（DeinitReason="Unvisited"）。
+                // 这与派系关系漂移、quest site 类名无关，是幂等的稳健清理。
+                int closed = CloseStaleLocations();
+                SchemaVersion = 5L;
+                if (closed > 0)
+                {
+                    Log.Message("PersonalChronicle: v4.14 地点收敛，关闭 " + closed
+                        + " 个未到访地点记录。");
                 }
             }
             // v4.11 P0: RemainingRaidCount is [Unsaved]; rebuild it from the persisted
@@ -303,10 +362,11 @@ namespace PersonalChronicle.Data
                 }
                 if (reconcileCandidates.Contains(stableId))
                 {
-                    // Second consecutive presence → confirmed colonist: archive
-                    // with unknown join time (-1L), same semantics as backfill.
+                    // Second consecutive presence → confirmed colonist: archive.
+                    // JoinTick 走统一默认决策：新档=开局当天(0)，读档=发现当天起点。
+                    // 不可再硬编码 -1L —— 否则开局殖民者会被永久定格为"中途加入"。
                     reconcileCandidates.Remove(stableId);
-                    PawnObject record = CreateRecord(pawn, -1L, member.Role);
+                    PawnObject record = CreateRecord(pawn, ResolveDefaultJoinTick(), member.Role);
                     if (AddObject(record))
                     {
                         AddDetectedJoinEvent(record);
@@ -441,7 +501,7 @@ namespace PersonalChronicle.Data
             if (open != null && open.PlaceKey == key)
             {
                 // Still here — keep primary in sync.
-                if (kind == "Map")
+                if (kind == PlaceVisitKeys.KindMap)
                 {
                     if (record.PrimaryPlaceDefName != key)
                     {
@@ -462,7 +522,7 @@ namespace PersonalChronicle.Data
             {
                 record.PlaceHistory.RemoveAt(0);
             }
-            if (kind == "Map")
+            if (kind == PlaceVisitKeys.KindMap)
             {
                 record.PrimaryPlaceDefName = key;
             }
@@ -478,7 +538,7 @@ namespace PersonalChronicle.Data
             }
             if (pawn.Map != null && pawn.Map.Biome != null)
             {
-                placeKind = "Map";
+                placeKind = PlaceVisitKeys.KindMap;
                 return pawn.Map.Biome.defName;
             }
             // Off-map caravan tile (same scan sources as live location).
@@ -494,9 +554,9 @@ namespace PersonalChronicle.Data
                     }
                     if (c.PawnsListForReading.Contains(pawn))
                     {
-                        placeKind = "Caravan";
+                        placeKind = PlaceVisitKeys.KindCaravan;
                         // 1.6: Caravan.Tile is PlanetTile — persist tileId only.
-                        return "tile:" + c.Tile.tileId;
+                        return PlaceVisitKeys.TileKeyPrefix + c.Tile.tileId;
                     }
                 }
             }
@@ -511,7 +571,7 @@ namespace PersonalChronicle.Data
             }
             string kind;
             string key = ResolvePlaceKey(pawn, out kind);
-            if (!string.IsNullOrEmpty(key) && kind == "Map")
+            if (!string.IsNullOrEmpty(key) && kind == PlaceVisitKeys.KindMap)
             {
                 record.PrimaryPlaceDefName = key;
             }
@@ -766,7 +826,9 @@ namespace PersonalChronicle.Data
                 PawnObject pawnObject = new PawnObject
                 {
                     StableId = stableId,
-                    JoinTick = -1L,
+                    // 死亡兜底建档也走统一默认决策（新档=开局0 / 读档=当天起点），
+                    // 保证 UI 不出现"中途加入"未知态。
+                    JoinTick = ResolveDefaultJoinTick(),
                     DeathTick = -1L
                 };
                 // 首次建档（如从未被回填的囚犯）：按生前角色归类
@@ -878,6 +940,60 @@ namespace PersonalChronicle.Data
                     ev.Primary = new ObjectRef(ArchiveCategoryKeys.Pawn, ev.PawnStableId, null);
                 }
             }
+        }
+
+        /// <summary>
+        /// v4.14 地点档案收敛：关闭所有"玩家未实际到访"的地点记录。
+        /// 保留规则（与设计文档"地点 = 玩家亲自到访/建立/参与过"一致）：
+        ///   (a) 玩家本家（IsPlayerHome == true）—— 自己的基地永远在册；
+        ///   (b) 有任何编年史事件历史的地点 —— 玩家参与过（战斗/贸易/事件）。
+        /// 其余（敌对方/友好/中立 settlement、未到访的 quest site、无事件世界物体）
+        /// 一律关闭（DeinitReason="Unvisited"）。幂等：已关闭的（DeinitTick!=-1）跳过。
+        /// 与派系关系漂移、quest site 类名无关，是稳健的一次性清理。
+        /// </summary>
+        private int CloseStaleLocations()
+        {
+            IReadOnlyList<ArchiveObject> locations = GetObjectsOfCategory(ArchiveCategoryKeys.Location);
+            if (locations == null || locations.Count == 0)
+            {
+                return 0;
+            }
+            int closed = 0;
+            for (int i = 0; i < locations.Count; i++)
+            {
+                LocationObject loc = locations[i] as LocationObject;
+                if (loc == null || loc.DeinitTick != -1L)
+                {
+                    continue; // 已关闭 / 非地点
+                }
+                if (loc.StableId == null
+                    || !loc.StableId.StartsWith(PlaceVisitKeys.WorldIdPrefix, System.StringComparison.Ordinal))
+                {
+                    // 风险规避（与 IsUnvisitedStaleLocation 口径一致）：只收敛
+                    // World_ 前缀的"未到访世界对象"（旧版 Source2 误建的世界
+                    // settlement / quest site）。Map_ 前缀 = 玩家生成过地图的
+                    // 地点（Source1 建档），即使暂无事件也是"玩家到访过"的
+                    // 铁证，绝不因迁移关闭——否则后续事件引用会悬空。
+                    continue;
+                }
+                if (loc.IsPlayerHome)
+                {
+                    continue; // 玩家本家保留
+                }
+                if (GetEventsFor(loc.StableId).Count > 0)
+                {
+                    continue; // 有事件历史 = 玩家参与过，保留
+                }
+                // 关闭未到访地点（仅需标记，索引无需立即重建——下次 RebuildIndexes 会处理）
+                loc.DeinitTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0L;
+                loc.DeinitReason = PlaceVisitKeys.DeinitReasonUnvisited;
+                closed++;
+            }
+            if (closed > 0)
+            {
+                MarkChanged();
+            }
+            return closed;
         }
 
         private static PawnObject ConvertLegacyPawn(PawnRecord legacy)
@@ -1080,10 +1196,10 @@ namespace PersonalChronicle.Data
             // Find.WorldPawns.AllPawnsAlive 世界兜底，避免在 8≠3 误统计）。
             // 角色随记录一并写入，UI 据此区分徽标。
             //
-            // Fresh colony (TicksGame == 0 and no prior objects): founding pawns are
-            // treated as joined at tick 0, not as mid-install backfill (-1).
-            bool freshStart = Find.TickManager.TicksGame <= 0 && Objects.Count == 0;
-            long joinTick = freshStart ? 0L : -1L;
+            // JoinTick 走统一默认决策（ResolveDefaultJoinTick）：新档现存人口一律为
+            // 开局殖民者(JoinTick=0)；读档时存档缺失、后来发现的存活人口归到发现当天
+            // 起点。不再依赖 TicksGame<=0，也不再用 -1 制造"中途加入"态。
+            long joinTick = ResolveDefaultJoinTick();
             List<ColonyMember> people = ChronicleColonistScanner.EnumerateCurrentPeople();
             for (int i = 0; i < people.Count; i++)
             {
@@ -1428,7 +1544,9 @@ namespace PersonalChronicle.Data
             }
             AddEvent(new ChronicleEvent
             {
-                Tick = Find.TickManager.TicksGame,
+                // 统一决策保证 JoinTick >= 0（新档开局=0 / 读档=当天起点），Join
+                // 事件 tick 直接对齐加入日，与生涯 Join 阶段一致。
+                Tick = record.JoinTick,
                 TypeKey = ChronicleEventType.Join,
                 Primary = ObjectRef.ForPawn(record.StableId, record.LabelSnapshot),
                 Subjects = new List<ObjectRef>(),

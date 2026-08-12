@@ -1,33 +1,71 @@
-# docs — 设计与落地文档索引
+# docs — 设计与落地文档索引（中文标准化结构）
 
 本目录存放设计方案、UI 预览与执行清单，**不是运行时资源**（游戏不会加载）。
 
-| 文档 | 状态 | 说明 |
-|---|---|---|
-| **[档案馆Tab重构优化方案.md](./档案馆Tab重构优化方案.md)** | 📋 **v3.1** 待确认后开工 | 覆盖评估 · 5 Tab · 概览加厚 · 生涯加深 · 去统计 |
-| **[ui-preview/archive-ui-preview.html](./ui-preview/archive-ui-preview.html)** | ✅ **v3.1 可交互方案示例** | 概览/编年/生涯/战斗履历/社会关系；武器 4 Tab |
-| [档案馆UI落地清单.md](./档案馆UI落地清单.md) | ✅ 历史落地 | v2.1 任务史；其中部分活读 Tab 方向被 v3.0 废止 |
-| [统计活读化修复方案.md](./统计活读化修复方案.md) | ✅ A1–A4 + B1 已落地 | 首页双轨统计（与详情 Tab 解耦，仍有效） |
-| [工时强度评价设计.md](./工时强度评价设计.md) | ✅ **v4.0 已落地** | 强度五档 / 同工种站位 / 技能能力附属 |
-| [高拓展高接入架构方案.md](./高拓展高接入架构方案.md) | ✅ **v4.3 当前架构** | Provider 注册表 / Read Model 隔离 / 公共接入契约 |
-| [WorkIntensityIntegration.md](./WorkIntensityIntegration.md) | ✅ | 工时 Provider 与采样示例（英文） |
+## 目录结构
 
-## 子目录
+```
+docs/
+├── README.md                          本索引
+├── 设计文档/                          按主题归类的设计/落地文档
+│   ├── 架构/
+│   │   ├── 高拓展高接入架构方案.md          长期开放平台架构方案
+│   │   ├── 性能技术检测报告.md              性能静态核查（原 performance-audit）
+│   │   ├── CHANGELOG_SPEC.md               Changelog 编写规范 v1.0
+│   │   ├── 01-基础层规范.md                 标准化规范拆分：基础层（BAS-xxx）
+│   │   ├── 02-架构层-核心架构规范.md        标准化规范拆分：核心架构（ARC-CORE-xxx）
+│   │   ├── 03-架构层-数据与扩展规范.md      标准化规范拆分：数据与扩展（ARC-DATA-xxx）
+│   │   ├── 04-架构层-兼容与接入规范.md      标准化规范拆分：兼容与接入（ARC-COMP-xxx）
+│   │   ├── 05-表现层规范.md                标准化规范拆分：表现层（PRE-xxx）
+│   │   ├── RimWorld_1.6_Mod_标准化开发与兼容性规范_v1.0.md  标准化开发与兼容性规范总纲（docx 转换版）
+│   │   └── 全项目综合检查BUG清单_不修复.md   全项目静态综合检查 BUG 清单（2026-08-12 已全部修复）
+│   ├── 功能模块/
+│   │   ├── 档案馆Tab/
+│   │   │   └── 档案Tab预览验收清单.md      人物视窗「档案」Tab 验收清单
+│   │   ├── 战斗履历/
+│   │   │   ├── 战斗履历设计文档.md          战斗履历设计（原 combat/设计文档_战斗履历）
+│   │   │   └── 击杀图鉴卡片方案.md          击杀阵营图鉴卡片方案
+│   │   ├── 装备传承/
+│   │   │   ├── 装备传承模块完整设计.md      完整设计（原 完美模块/）
+│   │   │   ├── 装备传承v49落地记录.md        v4.9 C# 落地记录
+│   │   │   ├── 装备传承拓展方案.md          拓展开发文档
+│   │   │   └── 装备捕捉范围优化策略.md      数据驱动捕捉范围（原 thing-archive-policy）
+│   │   ├── 地点地图志/
+│   │   │   ├── 地点地图志开发文档.md        地点地图志开发（原 ui-preview/）
+│   │   │   └── 地点地图志验收清单.md        验收清单
+│   │   ├── 战役档案/
+│   │   │   └── 战役档案开发文档.md          战役档案开发（原 ui-preview/）
+│   │   ├── 工时强度/
+│   │   │   ├── 工时强度评价设计.md          五档评价设计
+│   │   │   └── 工时强度集成契约.md          工时 Provider 集成（英文原 WorkIntensityIntegration）
+│   │   └── 社会关系/
+│   │       └── Royalty头衔与身份映射.md     Royalty 头衔清单与身份维度映射
+│   └── 发布与工坊/
+│       ├── Steam工坊更新说明.md             工坊更新说明（中文优先）
+│       ├── Steam工坊更新说明晚间版.md       晚间累积版 v1.0.0→v1.1.1
+│       └── Steam工坊前置依赖说明.md         前置依赖与重要说明
+├── UI预览/                            可交互 HTML mockup + 预览（按界面域大类分层）
+│   ├── 档案馆主界面/                      大类A：独立全屏 MainTab 窗口（点顶部「档案馆」）
+│   │   └── 完整档案馆UI总览预览.html        完整档案馆 UI 总览（活跃设计基准 v4.7）
+│   ├── 人物档案视窗/                      大类B：选中 pawn 的 ITab 内嵌（档案 Tab）
+│   │   ├── 档案Tab预览.html                人物视窗「档案」Tab 浓缩预览（v5 当前基准）
+│   │   └── 贡献档案总览预览.html            殖民地贡献榨取档案（人物维度探索稿）
+│   └── 战斗系统/                          大类C：战斗履历子系统面板
+│       └── 战斗履历预览.html               战斗履历预览
+├── 临时脚本/                          调试/探测临时文件（非交付物，保留不删）
+│   ├── _probe_api.ps1
+│   ├── _probe2.ps1 ~ _probe5.ps1
+│   └── _verify.cjs
+└── 参考清单/                          留空，用于后续归类验收/检查清单
+```
 
-| 目录 | 内容 |
-|---|---|
-| `ui-preview/` | 各方案可交互 HTML mockup（A–H 方案对比、档案馆 UI 总览） |
-| `ui-preview-equipment/` | 装备「完整继承使用链」独立调试沙盒（copy 自完整预览，聚焦 Custody Tab：每任持有者 + 击杀数 + 第一任标记） |
-| `combat/` | 战斗履历设计文档（`设计文档_战斗履历.md`）+ UI 预览（`preview_combat.html`）+ 击杀图鉴卡片方案（`方案_击杀图鉴卡片.md`，评审中） |
-| `preview-reports/` | 首页总览(B+E) 与 报告功能的设计真源（`design-home-overview-and-reports.md`）+ 可视化 mockup（`home-and-reports-preview.html`） |
-| `overview/` | Pawn 个人档案 Overview 子页：**设计文档**（`设计文档_Pawn概览.md`）+ **布局重构方案**（`方案_概览重构设计.md`，A/B/C）+ **内容机制重构方案**（`方案_概览内容机制重构.md`，M1–M3）+ **五区块内容重置方案**（`方案_概览区块内容重构.md`）+ 沙盒（`preview_pawn_overview.html`）+ **布局示例**（`examples/overview-a-linear.html`/`overview-b-two-column.html`/`overview-c-cards.html`）+ **内容机制示例**（`examples/content-milestones.html`/`content-blurb.html`/`content-keyevents.html`）+ **五区块重置示例**（`examples/rich-1-lifecycle-career-footprint.html`/`rich-2-milestones-keyevents.html`/`rich-3-archive-page.html`） |
+## 命名规范
 
-## UI 预览怎么用
-
-1. 用浏览器打开 `docs/ui-preview/archive-ui-preview.html`（双击即可）。
-2. 顶部可切换：首页 / 全部档案 / 人物 / 武器 / 事件；支持中英文案。
-3. 「标注组件」会叠加 C# 绘制方法名（`DrawHomeStats`、`DrawTabBar` 等），方便对照改 `ArchiveMainTabWindow.cs`。
-4. Tab 色点：绿=快照 Real · 蓝=活读 Live · 橙=Partial · 灰=Placeholder。
+1. **中文优先**：目录与文件一律中文，英文专有名词（UI / Steam / Royalty / Tab / HTML 等）保留。
+2. **主题归类**：设计文档按「架构 / 功能模块 / 发布与工坊」三级归类；功能模块下再按子系统分目录。
+3. **日期后缀去除**：落地/验收类文档去掉 `-2026-08-10` 等日期后缀，改用语义化文件名；仅在发布类保留版本语境。
+4. **UI 预览独立**：所有 `*.html` mockup 归入 `UI预览/`，与 `设计文档/` 分离。
+5. **临时文件隔离**：探测/调试脚本统一进 `临时脚本/`，不混入交付文档。
 
 ## 仍打开的工作项
 
