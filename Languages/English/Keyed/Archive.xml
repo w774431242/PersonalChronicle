@@ -327,6 +327,7 @@
   <PersonalChronicle.UI.Legacy.ColKills>Kills</PersonalChronicle.UI.Legacy.ColKills>
   <PersonalChronicle.UI.Legacy.ColRemark>Note</PersonalChronicle.UI.Legacy.ColRemark>
   <PersonalChronicle.UI.Legacy.GenN>Gen {0}</PersonalChronicle.UI.Legacy.GenN>
+  <PersonalChronicle.UI.Legacy.ChainRank>No. {0}</PersonalChronicle.UI.Legacy.ChainRank>
   <PersonalChronicle.UI.Legacy.First>First</PersonalChronicle.UI.Legacy.First>
   <PersonalChronicle.UI.Legacy.Loan>Loan</PersonalChronicle.UI.Legacy.Loan>
   <PersonalChronicle.UI.Legacy.LoanRemark>Borrowed/lent, not an ownership transfer</PersonalChronicle.UI.Legacy.LoanRemark>
@@ -537,10 +538,14 @@
   <PersonalChronicle.UI.LocSubLine>Est. {0} · {1} events</PersonalChronicle.UI.LocSubLine>
   <!-- v4.15 pawn inspect "Chronicle" tab · six-cell core KPI -->
   <PersonalChronicle.UI.Kpi.Work>Work Hours</PersonalChronicle.UI.Kpi.Work>
+  <PersonalChronicle.UI.Kpi.WorkTitle>Cumulative Hours · Rank</PersonalChronicle.UI.Kpi.WorkTitle>
   <PersonalChronicle.UI.Kpi.Prod>Output</PersonalChronicle.UI.Kpi.Prod>
+  <PersonalChronicle.UI.Kpi.ProdTitle>Output · Total Qty</PersonalChronicle.UI.Kpi.ProdTitle>
   <PersonalChronicle.UI.Kpi.Kill>Kills</PersonalChronicle.UI.Kpi.Kill>
   <PersonalChronicle.UI.Kpi.Battle>Battles</PersonalChronicle.UI.Kpi.Battle>
+  <PersonalChronicle.UI.Kpi.BattleTitle>Battles · Cumulative</PersonalChronicle.UI.Kpi.BattleTitle>
   <PersonalChronicle.UI.Kpi.Foot>Footprint</PersonalChronicle.UI.Kpi.Foot>
+  <PersonalChronicle.UI.Kpi.FootTitle>Footprint · Home Base</PersonalChronicle.UI.Kpi.FootTitle>
   <PersonalChronicle.UI.Kpi.Rel>Relations</PersonalChronicle.UI.Kpi.Rel>
   <PersonalChronicle.UI.Kpi.NoRecord>No record</PersonalChronicle.UI.Kpi.NoRecord>
   <PersonalChronicle.UI.Kpi.Unit.Pieces>items</PersonalChronicle.UI.Kpi.Unit.Pieces>
@@ -558,15 +563,21 @@
   <PersonalChronicle.UI.Kpi.Legacy>Divine Artifact</PersonalChronicle.UI.Kpi.Legacy>
   <PersonalChronicle.UI.Kpi.WeekHours.S>Weekly hrs</PersonalChronicle.UI.Kpi.WeekHours.S>
   <PersonalChronicle.UI.Kpi.DayHours.S>Daily</PersonalChronicle.UI.Kpi.DayHours.S>
-  <PersonalChronicle.UI.Kpi.UnitValue>Avg/unit</PersonalChronicle.UI.Kpi.UnitValue>
-  <PersonalChronicle.UI.Kpi.CatCount>Categories</PersonalChronicle.UI.Kpi.CatCount>
   <PersonalChronicle.UI.Kpi.Cat>cat</PersonalChronicle.UI.Kpi.Cat>
   <PersonalChronicle.UI.Kpi.PreyKinds>Prey kinds</PersonalChronicle.UI.Kpi.PreyKinds>
   <PersonalChronicle.UI.Kpi.Kind>kind</PersonalChronicle.UI.Kpi.Kind>
-  <PersonalChronicle.UI.Kpi.Divine>Decisive</PersonalChronicle.UI.Kpi.Divine>
+  <PersonalChronicle.UI.Kpi.BattlesFought>Battles fought</PersonalChronicle.UI.Kpi.BattlesFought>
+  <PersonalChronicle.UI.Kpi.DamageDealt>Damage dealt</PersonalChronicle.UI.Kpi.DamageDealt>
+  <PersonalChronicle.UI.Kpi.CombatStyle>Combat style</PersonalChronicle.UI.Kpi.CombatStyle>
+  <PersonalChronicle.UI.Kpi.Melee>Melee</PersonalChronicle.UI.Kpi.Melee>
+  <PersonalChronicle.UI.Kpi.Ranged>Ranged</PersonalChronicle.UI.Kpi.Ranged>
   <PersonalChronicle.UI.Kpi.Kills>Kills dealt</PersonalChronicle.UI.Kpi.Kills>
   <PersonalChronicle.UI.Kpi.Losses>Losses</PersonalChronicle.UI.Kpi.Losses>
   <PersonalChronicle.UI.Kpi.Roster>Roster size</PersonalChronicle.UI.Kpi.Roster>
+  <PersonalChronicle.UI.Kpi.BattleParticipate>Participated</PersonalChronicle.UI.Kpi.BattleParticipate>
+  <PersonalChronicle.UI.Kpi.BattleScale>Roster total</PersonalChronicle.UI.Kpi.BattleScale>
+  <PersonalChronicle.UI.Kpi.BattleKills>Kills dealt</PersonalChronicle.UI.Kpi.BattleKills>
+  <PersonalChronicle.UI.Kpi.Contribution>Personal contribution</PersonalChronicle.UI.Kpi.Contribution>
   <PersonalChronicle.UI.Kpi.LongestStay>Longest stay</PersonalChronicle.UI.Kpi.LongestStay>
   <PersonalChronicle.UI.Legacy.ForgedBy>Forged by</PersonalChronicle.UI.Legacy.ForgedBy>
   <PersonalChronicle.UI.Legacy.GenUnit>gen</PersonalChronicle.UI.Legacy.GenUnit>

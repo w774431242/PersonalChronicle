@@ -39,7 +39,7 @@ namespace PersonalChronicle.Capture
     ///   Settlement.TraderKind (TraderKindDef) — direct, plus .CanTradeNow
     ///   FactionDef.baseTraderKinds / caravanTraderKinds / visitorTraderKinds / orbitalTraderKinds
     ///   TraderKindDef.stockGenerators / .permitRequiredForTrading (RoyalTitlePermitDef)
-    ///   StockGenerator_Category.categoryDef / StockGenerator_Tag.tradeTag / StockGenerator_SingleDef.thingDef
+    ///   StockGenerator_ChronicleLog.Category.categoryDef / StockGenerator_Tag.tradeTag / StockGenerator_SingleDef.thingDef
     /// </summary>
     public static class LocationAtlasCapture
     {
@@ -99,7 +99,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: location atlas reconcile failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "location atlas reconcile failed: " + ex.Message);
             }
         }
 
@@ -419,7 +419,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: location atlas map snapshot failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "location atlas map snapshot failed: " + ex.Message);
                 return null;
             }
         }
@@ -475,7 +475,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: location atlas world-object snapshot failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "location atlas world-object snapshot failed: " + ex.Message);
                 return null;
             }
         }
@@ -511,7 +511,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: tile snapshot failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "tile snapshot failed: " + ex.Message);
             }
         }
 
@@ -598,7 +598,7 @@ namespace PersonalChronicle.Capture
                     return key;
                 }
             }
-            // StockGenerator_Category.categoryDef and StockGenerator_SingleDef.thingDef
+            // StockGenerator_ChronicleLog.Category.categoryDef and StockGenerator_SingleDef.thingDef
             // are internal in 1.6 — read via Harmony Traverse (reflection), which
             // keeps the compile contract clean and degrades gracefully on drift.
             if (generator is StockGenerator_Category)
@@ -661,7 +661,7 @@ namespace PersonalChronicle.Capture
         }
 
         // Centralized trade-category normalization. Source DefNames come from
-        // vanilla StockGenerator_Category.categoryDef; the mapping below is the
+        // vanilla StockGenerator_ChronicleLog.Category.categoryDef; the mapping below is the
         // single place that translates them into the 8 display keys used by the
         // location-atlas UI. New categories are added here, not via scattered
         // string comparisons across the capture layer.

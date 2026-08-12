@@ -801,7 +801,7 @@ namespace PersonalChronicle.Application
                 {
                     if (warnedIntensityProviders.Add(provider.ProviderId))
                     {
-                        Log.Warning("PersonalChronicle: work-intensity provider failed once, fallback to next provider: "
+                        ChronicleLog.Warning(ChronicleLog.Category.Provider, "work-intensity provider failed once, fallback to next provider: "
                             + provider.ProviderId + " / " + ex.Message);
                     }
                 }
@@ -1534,7 +1534,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to record colonist join for " + (pawn != null ? pawn.LabelShort : "null") + ": " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record colonist join for " + (pawn != null ? pawn.LabelShort : "null") + ": " + ex.Message);
             }
         }
 
@@ -1598,7 +1598,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to record pawn death for " + (pawn != null ? pawn.LabelShort : "null") + ": " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record pawn death for " + (pawn != null ? pawn.LabelShort : "null") + ": " + ex.Message);
             }
         }
 
@@ -1681,7 +1681,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to record relation change: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record relation change: " + ex.Message);
             }
         }
 
@@ -1877,7 +1877,61 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to record kill by " + (killer != null ? killer.LabelShort : "null") + ": " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record kill by " + (killer != null ? killer.LabelShort : "null") + ": " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// v6.8 重载：在基础击杀记录之上，累加个人战斗维度到凶手 PawnObject。
+        /// 仅当 killer 可解析且为本殖民地人口（落入 UnknownKiller 桶的路径不累加）。
+        /// 伤害累加采用补刀 DamageInfo.Amount 近似（Pawn.TakeDamage 账本已在基础路径消费，
+        /// 此处补刀伤害作为该次击杀的生涯伤害增量，足够支撑"生涯伤害"展示维度）。
+        /// </summary>
+        public void OnKillRecorded(Pawn killer, Pawn victim, Thing weapon, List<Pawn> assistLookup, float finishingDamage, bool isMelee)
+        {
+            // 先走基础击杀记录（内部已做幂等 / 凶手解析 / 未知凶手桶判断）。
+            OnKillRecorded(killer, victim, weapon, assistLookup);
+            if (killer == null)
+            {
+                return;
+            }
+            if (!ChronicleColonistScanner.TryClassifyCurrent(killer, out _))
+            {
+                return;
+            }
+            try
+            {
+                ChronicleGameComponent component = Component;
+                if (component == null)
+                {
+                    return;
+                }
+                string killerId = killer.GetUniqueLoadID();
+                if (string.IsNullOrEmpty(killerId))
+                {
+                    return;
+                }
+                PawnObject record = component.GetObject(killerId) as PawnObject;
+                if (record == null)
+                {
+                    return;
+                }
+                if (finishingDamage > 0f)
+                {
+                    record.DamageDealtTotal += finishingDamage;
+                }
+                if (isMelee)
+                {
+                    record.MeleeKills++;
+                }
+                else
+                {
+                    record.RangedKills++;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to accumulate combat dims for " + killer.LabelShort + ": " + ex.Message);
             }
         }
 
@@ -2082,7 +2136,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to record crafted thing " + (product != null && product.def != null ? product.def.defName : "null") + ": " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record crafted thing " + (product != null && product.def != null ? product.def.defName : "null") + ": " + ex.Message);
             }
         }
 
@@ -2149,7 +2203,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to record decommission for "
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record decommission for "
                     + (thing != null && thing.def != null ? thing.def.defName : "null") + ": " + ex.Message);
             }
         }
@@ -2223,7 +2277,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to record built thing " + (builtDef != null ? builtDef.defName : "null") + ": " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record built thing " + (builtDef != null ? builtDef.defName : "null") + ": " + ex.Message);
             }
         }
 
@@ -2283,7 +2337,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to record battle start " + (incidentDef != null ? incidentDef.defName : "null") + ": " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record battle start " + (incidentDef != null ? incidentDef.defName : "null") + ": " + ex.Message);
             }
         }
 
@@ -2314,6 +2368,12 @@ namespace PersonalChronicle.Application
                 if (battle != null)
                 {
                     AddBattleParticipant(battle, p);
+                }
+                // v6.8: 该殖民者参与本次战役，累加个人参战次数（幂等由 ParticipantIds 去重保证）。
+                PawnObject po = component.GetObject(id) as PawnObject;
+                if (po != null)
+                {
+                    po.ParticipatedBattles++;
                 }
                 if (!SubjectContains(ev, id))
                 {
@@ -2429,7 +2489,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to link raid lords: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to link raid lords: " + ex.Message);
             }
         }
 
@@ -2513,7 +2573,7 @@ namespace PersonalChronicle.Application
             }
             catch (System.Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to finalize battle: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to finalize battle: " + ex.Message);
             }
         }
 

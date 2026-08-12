@@ -38,7 +38,7 @@ namespace PersonalChronicle.Data
                     }
                     else
                     {
-                        Log.Warning("PersonalChronicle: WorkIntensityPolicyDef references missing tier " + defName);
+                        ChronicleLog.Warning(ChronicleLog.Category.Archive, "WorkIntensityPolicyDef references missing tier " + defName);
                     }
                 }
             }

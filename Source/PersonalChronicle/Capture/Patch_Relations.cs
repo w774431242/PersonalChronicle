@@ -45,7 +45,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: AddDirectRelation patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "AddDirectRelation patch failed: " + ex.Message);
             }
         }
 
@@ -88,7 +88,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: RemoveDirectRelation patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "RemoveDirectRelation patch failed: " + ex.Message);
             }
         }
     }

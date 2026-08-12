@@ -259,7 +259,7 @@ namespace PersonalChronicle.Data
                 SchemaVersion = 5L;
                 if (closed > 0)
                 {
-                    Log.Message("PersonalChronicle: v4.14 地点收敛，关闭 " + closed
+                    ChronicleLog.Save("v4.14 地点收敛，关闭 " + closed
                         + " 个未到访地点记录。");
                 }
             }
@@ -1408,7 +1408,7 @@ namespace PersonalChronicle.Data
             if (removed > 0)
             {
                 MarkChanged();
-                Log.Message("PersonalChronicle: removed " + removed
+                ChronicleLog.Save("removed " + removed
                     + " empty scenario-roster archive artifacts during v4 migration.");
             }
             return true;
@@ -1474,7 +1474,7 @@ namespace PersonalChronicle.Data
             if (removedIds.Count > 0 || removedEvents > 0)
             {
                 MarkChanged();
-                Log.Message("PersonalChronicle: removed " + removedIds.Count
+                ChronicleLog.Save("removed " + removedIds.Count
                     + " unconfirmed scenario-roster archive artifacts and "
                     + removedEvents + " orphaned events during v4.0.1 migration.");
             }

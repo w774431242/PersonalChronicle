@@ -80,11 +80,14 @@ namespace PersonalChronicle.Capture
                 // Consume the damage ledger for this victim to attribute the kill to
                 // the top damager (A) and record the finishing instigator (B) as assist.
                 List<Pawn> assistLookup = Patch_PawnTakeDamage.ConsumeTopDamagers(__instance);
-                service.OnKillRecorded(instigator, __instance, weapon, assistLookup);
+                // v6.8: 推断战斗风格（近战/远程）与补刀伤害，供个人战斗维度累加。
+                float finishingDamage = dinfo.HasValue ? dinfo.Value.Amount : 0f;
+                bool isMelee = IsMeleeWeapon(weapon);
+                service.OnKillRecorded(instigator, __instance, weapon, assistLookup, finishingDamage, isMelee);
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: Pawn.Kill patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "Pawn.Kill patch failed: " + ex.Message);
             }
         }
 
@@ -163,6 +166,26 @@ namespace PersonalChronicle.Capture
                 return instigator.equipment.Primary;
             }
             return dinfo.Value.Instigator as ThingWithComps;
+        }
+
+        /// <summary>
+        /// v6.8: 推断击杀武器是否为近战（供个人战斗风格维度）。优先取武器主 Verb 的
+        /// <see cref="Verb.IsMeleeAttack"/>（已反射核验存在于 RimWorld 1.6 Assembly-CSharp）；
+        /// 无武器（环境致死/徒手）按远程处理（不计入近战风格）。
+        /// </summary>
+        private static bool IsMeleeWeapon(Thing weapon)
+        {
+            ThingWithComps twc = weapon as ThingWithComps;
+            if (twc == null)
+            {
+                return false;
+            }
+            CompEquippable eq = twc.TryGetComp<CompEquippable>();
+            if (eq != null && eq.PrimaryVerb != null)
+            {
+                return eq.PrimaryVerb.IsMeleeAttack;
+            }
+            return false;
         }
     }
 }

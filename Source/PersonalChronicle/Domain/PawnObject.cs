@@ -39,6 +39,18 @@ namespace PersonalChronicle.Domain
         /// <summary>v3.1 P3: significant social ties (active + ended).</summary>
         public List<SignificantRelation> Relations = new List<SignificantRelation>();
 
+        /// <summary>v6.8 个人战斗维度（击杀宫格）：生涯累计造成伤害总值（来自每次击杀时补刀 DamageInfo.Amount 近似累加）。</summary>
+        public float DamageDealtTotal;
+
+        /// <summary>v6.8 个人战斗维度：累计参与的战役次数（每次战役开局 AttachBattleRoster 对该殖民者 +1）。</summary>
+        public int ParticipatedBattles;
+
+        /// <summary>v6.8 个人战斗维度：近战击杀数（武器 PrimaryVerb.IsMelee 判定）。</summary>
+        public int MeleeKills;
+
+        /// <summary>v6.8 个人战斗维度：远程击杀数（非近战武器判定）。</summary>
+        public int RangedKills;
+
         // CategoryKey 继承自 PawnRecord（均返回 ArchiveCategoryKeys.Pawn），
         // 无需在此重复 override —— 移除冗余分流逻辑，避免两处维护。
         public PawnObject()
@@ -58,6 +70,10 @@ namespace PersonalChronicle.Domain
             Scribe_Values.Look(ref PrimaryPlaceDefName, "primaryPlaceDefName");
             Scribe_Collections.Look(ref PlaceHistory, "placeHistory", LookMode.Deep);
             Scribe_Collections.Look(ref Relations, "relations", LookMode.Deep);
+            Scribe_Values.Look(ref DamageDealtTotal, "damageDealtTotal", 0f);
+            Scribe_Values.Look(ref ParticipatedBattles, "participatedBattles", 0);
+            Scribe_Values.Look(ref MeleeKills, "meleeKills", 0);
+            Scribe_Values.Look(ref RangedKills, "rangedKills", 0);
             if (WorkSnapshot == null) WorkSnapshot = new List<WorkPrioritySnapshot>();
             if (SkillSnapshot == null) SkillSnapshot = new Dictionary<string, int>();
             if (SkillSnapshotOnDeath == null) SkillSnapshotOnDeath = new Dictionary<string, int>();

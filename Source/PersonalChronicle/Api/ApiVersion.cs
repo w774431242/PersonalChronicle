@@ -41,13 +41,18 @@ namespace PersonalChronicle.Api
         /// v1.1.3 fixes coexistence bugs with Character Editor — supplies a proper
         /// LanguageInfo.xml so Simplified Chinese is recognized (CE editor no longer
         /// falls back to English), removes a stray loadBefore that placed this mod
-        /// before the RimWorld core, and drops a duplicate Keyed key.
+        /// before the RimWorld core, and drops a duplicate Keyed key;
+        /// v1.1.4 lands the HTML-preview parity for the pawn-inspect "档案" tab —
+        /// battle KPI becomes the personal-view contract (累计参与/累计规模/累计歼敌
+        /// + 个人贡献占比, removing Decisive/Losses blocks) and the kill KPI gains
+        /// persistent personal combat dimensions (ParticipatedBattles,
+        /// DamageDealtTotal, melee/ranged combat-style ratio).
         /// <see cref="IPersonalChronicleApi.Supports"/> now branches on the
         /// capability flags exposed by the facade instead of raw version numbers,
         /// so callers should use <c>Supports(major, minMinor)</c> rather than
         /// comparing against <see cref="Current"/> directly.
         /// </summary>
-        public static ApiVersion Current { get; } = new ApiVersion(1, 1, 3);
+        public static ApiVersion Current { get; } = new ApiVersion(1, 1, 4);
 
         /// <summary>
         /// Returns true when this version satisfies a (major, minMinor) contract,

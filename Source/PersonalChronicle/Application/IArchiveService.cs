@@ -70,6 +70,14 @@ namespace PersonalChronicle.Application
         void OnKillRecorded(Pawn killer, Pawn victim, Thing weapon = null, List<Pawn> assistLookup = null);
 
         /// <summary>
+        /// v6.8 重载：在击杀记录的同时累加个人战斗维度（生涯伤害 / 战斗风格近战·远程）。
+        /// <paramref name="finishingDamage"/> 为补刀时的 DamageInfo.Amount（作为生涯伤害近似累加）；
+        /// <paramref name="isMelee"/> 由击杀武器 PrimaryVerb.IsMelee 推断（true=近战击杀 / false=远程击杀）。
+        /// 非 chronicle 殖民者击杀（killer 为 null 或未知凶手桶）不累加，与基础 OnKillRecorded 幂等路径一致。
+        /// </summary>
+        void OnKillRecorded(Pawn killer, Pawn victim, Thing weapon, List<Pawn> assistLookup, float finishingDamage, bool isMelee);
+
+        /// <summary>
         /// v3.1 P3: significant social relation formed or ended (lover/spouse/family).
         /// Writes a Social ChronicleEvent + updates PawnObject.Relations snapshots
         /// for both parties when they are chronicle-relevant.

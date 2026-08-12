@@ -51,7 +51,7 @@ namespace PersonalChronicle.Capture
         {
             if (AccessTools.Method(type, methodName, argumentTypes) == null)
             {
-                Log.Error("PersonalChronicle: capture target missing: " + label);
+                ChronicleLog.Error(ChronicleLog.Category.Capture, "capture target missing: " + label);
             }
         }
     }

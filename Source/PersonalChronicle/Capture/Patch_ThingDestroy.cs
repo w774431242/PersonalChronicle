@@ -41,7 +41,7 @@ namespace PersonalChronicle.Capture
                 new Type[] { typeof(DestroyMode) }) != null;
             if (!found)
             {
-                Log.Error("PersonalChronicle: Thing.Destroy(DestroyMode) target signature changed; decommission capture silently disabled - update Patch_ThingDestroy");
+                ChronicleLog.Error(ChronicleLog.Category.Capture, "Thing.Destroy(DestroyMode) target signature changed; decommission capture silently disabled - update Patch_ThingDestroy");
             }
             return found;
         }
@@ -74,7 +74,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: Thing.Destroy patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "Thing.Destroy patch failed: " + ex.Message);
             }
         }
     }

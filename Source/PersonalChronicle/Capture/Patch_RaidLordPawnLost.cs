@@ -60,7 +60,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: Lord.Notify_PawnLost patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "Lord.Notify_PawnLost patch failed: " + ex.Message);
             }
         }
     }

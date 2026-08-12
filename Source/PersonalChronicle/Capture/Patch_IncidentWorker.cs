@@ -83,7 +83,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: IncidentWorker.TryExecute patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "IncidentWorker.TryExecute patch failed: " + ex.Message);
             }
         }
     }

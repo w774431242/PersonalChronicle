@@ -87,7 +87,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: SetFaction patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "SetFaction patch failed: " + ex.Message);
             }
         }
     }

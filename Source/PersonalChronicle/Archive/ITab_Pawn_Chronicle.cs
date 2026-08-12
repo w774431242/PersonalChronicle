@@ -30,7 +30,7 @@ namespace PersonalChronicle.Archive
         // v6.7: wider/taller container so the 3×2 enriched grid is readable in the
         // inspect pane. The SixGrid component parameters (KpiCardH/KpiGap) are untouched.
         private const float TabWidth = 560f;
-        private const float TabHeight = 580f;
+        private const float TabHeight = 660f;
         private const float Pad = UITheme.PanelPadding;
         private const float HeaderH = 52f;
         private const float ButtonH = 30f;
@@ -257,7 +257,7 @@ namespace PersonalChronicle.Archive
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: failed to open archive from inspect tab: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Ui, "failed to open archive from inspect tab: " + ex.Message);
             }
         }
 
@@ -298,9 +298,10 @@ namespace PersonalChronicle.Archive
                     if (b == null) continue;
                     string tag = b.IsPrimary ? "PersonalChronicle.UI.Kpi.Career".Translate().ToString()
                         : (b.IsSecondary ? "PersonalChronicle.UI.SecondaryWork".Translate().ToString() : string.Empty);
+                    float hours = (float)b.Ticks / 2500f;
                     bars.Add(new UIComponents.KpiBar
                     {
-                        Caption = b.WorkTypeLabel + " · " + Mathf.RoundToInt((float)b.Ticks / 2500f).ToString() + "h",
+                        Caption = b.WorkTypeLabel + " · " + Mathf.RoundToInt(hours).ToString() + "h · " + (int)(b.Share01 * 100f) + "%",
                         Share01 = b.Share01,
                         Tag = tag
                     });
@@ -308,52 +309,83 @@ namespace PersonalChronicle.Archive
                 workBars = bars.Count > 0 ? bars.ToArray() : null;
             }
 
-            // ===== ② 产出：累计价值(大值+同行产量) + KPI条(单产均值/分类数) + 产值贡献前3 =====
+            // ===== ② 产出：累计产值(大值) + 大值旁 inline(产量·种类) + 产值贡献前3(真实数据源) =====
             bool prodOk = snap.ProductionTotal > 0 || snap.ProductionSilverValue > 0f;
             string prodVal = prodOk ? Mathf.RoundToInt(snap.ProductionSilverValue).ToString() : "--";
-            string prodQty = (prodOk && snap.ProductionTotal > 0) ? snap.ProductionTotal + " " + pieces : string.Empty;
-            UIComponents.KpiRow[] prodRows = prodOk
-                ? new UIComponents.KpiRow[]
-                {
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.UnitValue".Translate().ToString(), Value = (snap.ProductionTotal > 0 ? Mathf.RoundToInt(snap.ProductionSilverValue / (float)snap.ProductionTotal).ToString() : "0") + " " + silver + "/" + pieces },
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.CatCount".Translate().ToString(), Value = (snap.ProductionCategories != null ? snap.ProductionCategories.Count : 0).ToString() + " " + "PersonalChronicle.UI.Kpi.Cat".Translate().ToString() },
-                }
-                : null;
+            // inline 指标：维持产量(件) + 新增种类数(类)，均来自真实累加器累计。
+            string prodKinds = (snap.ProductionTypeViews != null && snap.ProductionTypeViews.Count > 0)
+                ? snap.ProductionTypeViews.Count.ToString() + " " + "PersonalChronicle.UI.Kpi.Cat".Translate().ToString()
+                : "0 " + "PersonalChronicle.UI.Kpi.Cat".Translate().ToString();
+            string prodInline = (prodOk && snap.ProductionTotal > 0)
+                ? snap.ProductionTotal + " " + pieces + " · " + prodKinds
+                : prodKinds;
             UIComponents.KpiBar[] prodBars = null;
-            if (prodOk && snap.ProductionLines != null && snap.ProductionLines.Count > 0)
+            // 真实数据源：ProductionTypeViews 已按产值降序（来自 ProductionAccumulator 持久化累计）。
+            // 不再重扫事件流；caption 形如「武器 · 1200 银 · 35%」，与工时 bars 对齐。
+            if (prodOk && snap.ProductionTypeViews != null && snap.ProductionTypeViews.Count > 0)
             {
                 float totalVal = 0f;
-                for (int i = 0; i < snap.ProductionLines.Count; i++) totalVal += snap.ProductionLines[i].Value;
-                List<ProductionLineView> top = new List<ProductionLineView>(snap.ProductionLines);
-                top.Sort((a, b) => b.Value.CompareTo(a.Value));
+                for (int i = 0; i < snap.ProductionTypeViews.Count; i++) totalVal += snap.ProductionTypeViews[i].MarketValue;
                 List<UIComponents.KpiBar> bars = new List<UIComponents.KpiBar>();
-                int n = Mathf.Min(3, top.Count);
+                int n = Mathf.Min(3, snap.ProductionTypeViews.Count);
                 for (int i = 0; i < n; i++)
                 {
-                    ProductionLineView l = top[i];
+                    ProductionTypeView t = snap.ProductionTypeViews[i];
+                    string catLabel = string.IsNullOrEmpty(t.DefName)
+                        ? "—"
+                        : (DefDatabase<ThingCategoryDef>.GetNamedSilentFail(t.DefName)?.LabelCap ?? t.DefName);
                     bars.Add(new UIComponents.KpiBar
                     {
-                        Caption = l.Label + " · " + Mathf.RoundToInt(l.Value).ToString() + " " + silver,
-                        Share01 = totalVal > 0f ? l.Value / totalVal : 0f
+                        Caption = catLabel + " · " + Mathf.RoundToInt(t.MarketValue).ToString() + " " + silver
+                            + " · " + (totalVal > 0f ? Mathf.RoundToInt(t.MarketValue / totalVal * 100f) : 0) + "%",
+                        Share01 = totalVal > 0f ? t.MarketValue / totalVal : 0f
                     });
                 }
                 prodBars = bars.ToArray();
             }
 
-            // ===== ③ 击杀：总数(大值) + KPI条(猎物种类) + 击杀构成前3种族 =====
+            // ===== ③ 击杀：总数(大值) + KPI条(猎物种类/参战战役/生涯伤害) + 击杀构成前3种族 =====
+            // v6.8 个人战斗维度：参战战役=ParticipatedBattles（持久化累加）、生涯伤害=DamageDealtTotal（持久化近似）、
+            // 战斗风格=MeleeKillRatio（近战/远程比，无击杀时 0.5 中性占位，经 hasMeleeData 判断是否显示）。
             bool killOk = snap.Kills > 0;
             string killVal = killOk ? snap.Kills.ToString() : "--";
             int raceKinds = (snap.KillsByFaction != null) ? snap.KillsByFaction.Count : 0;
+            string battleParticipated = snap.ParticipatedBattles > 0 ? snap.ParticipatedBattles.ToString() : "0";
+            string damageDealt = snap.DamageDealtTotal > 0f ? Mathf.RoundToInt(snap.DamageDealtTotal).ToString() : "0";
+            // 战斗风格：并入 KPI 条第 4 行（近战 X% · 远程 Y%），避免占用底部 Sub 槽位与进度条重叠。
+            // hasMeleeData：持久化存在击杀风格记录才显示，避免无数据时"近战 50% · 远程 50%"误导。
+            string combatStyleRow = null;
+            if (snap.MeleeKills + snap.RangedKills > 0)
+            {
+                int meleePct = Mathf.RoundToInt(snap.MeleeKillRatio * 100f);
+                int rangedPct = 100 - meleePct;
+                combatStyleRow = "PersonalChronicle.UI.Kpi.Melee".Translate().ToString() + " " + meleePct + "%"
+                    + " · " + "PersonalChronicle.UI.Kpi.Ranged".Translate().ToString() + " " + rangedPct + "%";
+            }
             UIComponents.KpiRow[] killRows = killOk
-                ? new UIComponents.KpiRow[] { new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.PreyKinds".Translate().ToString(), Value = raceKinds.ToString() + " " + "PersonalChronicle.UI.Kpi.Kind".Translate().ToString() } }
+                ? (combatStyleRow != null
+                    ? new UIComponents.KpiRow[]
+                    {
+                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.PreyKinds".Translate().ToString(), Value = raceKinds.ToString() + " " + "PersonalChronicle.UI.Kpi.Kind".Translate().ToString() },
+                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattlesFought".Translate().ToString(), Value = battleParticipated },
+                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.DamageDealt".Translate().ToString(), Value = damageDealt },
+                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.CombatStyle".Translate().ToString(), Value = combatStyleRow },
+                    }
+                    : new UIComponents.KpiRow[]
+                    {
+                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.PreyKinds".Translate().ToString(), Value = raceKinds.ToString() + " " + "PersonalChronicle.UI.Kpi.Kind".Translate().ToString() },
+                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattlesFought".Translate().ToString(), Value = battleParticipated },
+                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.DamageDealt".Translate().ToString(), Value = damageDealt },
+                    })
                 : null;
             UIComponents.KpiBar[] killBars = null;
             if (killOk && snap.KillsByFaction != null && snap.KillsByFaction.Count > 0)
             {
                 List<KillByFactionView> top = new List<KillByFactionView>(snap.KillsByFaction);
                 top.Sort((a, b) => b.Count.CompareTo(a.Count));
+                // v6.8: 击杀宫格取前 2 种族进度条，为底部 Sub（战斗风格）预留空间，避免与进度条重叠。
                 List<UIComponents.KpiBar> bars = new List<UIComponents.KpiBar>();
-                int n = Mathf.Min(3, top.Count);
+                int n = Mathf.Min(2, top.Count);
                 for (int i = 0; i < n; i++)
                 {
                     KillByFactionView f = top[i];
@@ -366,28 +398,35 @@ namespace PersonalChronicle.Archive
                 killBars = bars.ToArray();
             }
 
-            // ===== ④ 战役：总数(大值+同行重大) + KPI条(歼敌/损失/参战) + 战损构成 =====
+            // ===== ④ 战役（个人视角）：大值=该pawn时代战役数 =====
+            // KPI条：累计参与(战役数) / 累计规模(殖民地参战人次) / 累计歼敌(殖民地歼敌)
+            // 进度条：个人贡献占比 = 个人击杀 / 殖民地累计歼敌（cap 100%）
+            // 契约见 MEMORY：Battle 数据本身 colony 级，但本宫格按个人视角解读，
+            // 仅贡献比分母采用殖民地累计歼敌，分子为个人击杀。
             bool battleOk = snap.BattleCount > 0;
             string battleVal = battleOk ? snap.BattleCount.ToString() : "--";
-            string battleDecisive = (battleOk && snap.BattleKpis != null && snap.BattleKpis.Decisive > 0)
-                ? snap.BattleKpis.Decisive + " " + "PersonalChronicle.UI.Kpi.Divine".Translate().ToString()
-                : string.Empty;
-            UIComponents.KpiRow[] battleRows = (battleOk && snap.BattleKpis != null)
+            UIComponents.KpiRow[] battleRows = battleOk
                 ? new UIComponents.KpiRow[]
                 {
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.Kills".Translate().ToString(), Value = snap.BattleKpis.Kills.ToString() },
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.Losses".Translate().ToString(), Value = snap.BattleKpis.Losses.ToString() },
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.Roster".Translate().ToString(), Value = snap.BattleKpis.Roster.ToString() },
+                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattleParticipate".Translate().ToString(), Value = snap.BattleCount.ToString() },
+                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattleScale".Translate().ToString(), Value = (snap.BattleKpis != null ? snap.BattleKpis.Roster : 0).ToString() },
+                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattleKills".Translate().ToString(), Value = (snap.BattleKpis != null ? snap.BattleKpis.Kills : 0).ToString() },
                 }
                 : null;
             UIComponents.KpiBar[] battleBars = null;
-            if (battleOk && snap.BattleKpis != null && (snap.BattleKpis.Kills + snap.BattleKpis.Losses) > 0)
+            if (battleOk && snap.BattleKpis != null && snap.BattleKpis.Kills > 0)
             {
-                int tot = snap.BattleKpis.Kills + snap.BattleKpis.Losses;
+                int colonyKills = snap.BattleKpis.Kills;
+                int myKills = snap.Kills;
+                float share = Mathf.Clamp01((float)myKills / (float)colonyKills);
                 battleBars = new UIComponents.KpiBar[]
                 {
-                    new UIComponents.KpiBar { Caption = "PersonalChronicle.UI.Kpi.Kills".Translate().ToString() + " · " + snap.BattleKpis.Kills, Share01 = (float)snap.BattleKpis.Kills / (float)tot },
-                    new UIComponents.KpiBar { Caption = "PersonalChronicle.UI.Kpi.Losses".Translate().ToString() + " · " + snap.BattleKpis.Losses, Share01 = (float)snap.BattleKpis.Losses / (float)tot },
+                    new UIComponents.KpiBar
+                    {
+                        Caption = "PersonalChronicle.UI.Kpi.Contribution".Translate().ToString()
+                            + " · " + myKills + " / " + colonyKills + " · " + Mathf.RoundToInt(share * 100f) + "%",
+                        Share01 = share
+                    },
                 };
             }
 
@@ -438,15 +477,21 @@ namespace PersonalChronicle.Archive
             UIComponents.KpiChain[] legacyChain = null;
             if (legacyOk && snap.Legacy.Holders != null && snap.Legacy.Holders.Count > 0)
             {
+                // 传承链：按各代击杀数降序取前 3（最高击杀优先），排名前缀显式标注名次。
+                List<LegacyHolderView> ranked = new List<LegacyHolderView>(snap.Legacy.Holders);
+                ranked.Sort((a, b) => (b != null ? b.KillCount : 0) - (a != null ? a.KillCount : 0));
+                int topN = Mathf.Min(3, ranked.Count);
                 List<UIComponents.KpiChain> chain = new List<UIComponents.KpiChain>();
-                foreach (LegacyHolderView h in snap.Legacy.Holders)
+                for (int i = 0; i < topN; i++)
                 {
+                    LegacyHolderView h = ranked[i];
                     if (h == null) continue;
                     string gen = h.IsCurrent ? "PersonalChronicle.UI.Legacy.Current".Translate().ToString()
                         : (h.IsFirst ? "PersonalChronicle.UI.Legacy.First".Translate().ToString() : "PersonalChronicle.UI.Legacy.Next".Translate().ToString());
+                    string rank = "PersonalChronicle.UI.Legacy.ChainRank".Translate(i + 1).ToString();
                     chain.Add(new UIComponents.KpiChain
                     {
-                        Label = (h.HolderText ?? noRec) + " · " + gen,
+                        Label = rank + " · " + (h.HolderText ?? noRec) + " · " + gen,
                         Value = h.KillCount + " " + "PersonalChronicle.UI.Kpi.Unit.Kills".Translate().ToString()
                     });
                 }
@@ -455,11 +500,11 @@ namespace PersonalChronicle.Archive
 
             return new UIComponents.KpiCell[]
             {
-                new UIComponents.KpiCell { KindKey = "work",   TitleKey = "PersonalChronicle.UI.Kpi.Work",   Value = workVal, Unit = workOk ? totalHoursUnit : null, InlineMetric = workRank, Rows = workRows, Bars = workBars },
-                new UIComponents.KpiCell { KindKey = "prod",   TitleKey = "PersonalChronicle.UI.Kpi.Prod",   Value = prodVal, Unit = prodOk ? silver : null, InlineMetric = prodQty, Rows = prodRows, Bars = prodBars },
+                new UIComponents.KpiCell { KindKey = "work",   TitleKey = "PersonalChronicle.UI.Kpi.WorkTitle",   Value = workVal, Unit = workOk ? totalHoursUnit : null, InlineMetric = workRank, Rows = workRows, Bars = workBars },
+                new UIComponents.KpiCell { KindKey = "prod",   TitleKey = "PersonalChronicle.UI.Kpi.ProdTitle",   Value = prodVal, Unit = prodOk ? silver : null, InlineMetric = prodInline, Rows = null, Bars = prodBars },
                 new UIComponents.KpiCell { KindKey = "kill",   TitleKey = "PersonalChronicle.UI.Kpi.Kill",   Value = killVal, Unit = killOk ? "PersonalChronicle.UI.Kpi.Unit.Kills".Translate().ToString() : null, Rows = killRows, Bars = killBars },
-                new UIComponents.KpiCell { KindKey = "battle", TitleKey = "PersonalChronicle.UI.Kpi.Battle", Value = battleVal, Unit = battleOk ? "PersonalChronicle.UI.Kpi.Unit.Battles".Translate().ToString() : null, InlineMetric = battleDecisive, Rows = battleRows, Bars = battleBars },
-                new UIComponents.KpiCell { KindKey = "foot",   TitleKey = "PersonalChronicle.UI.Kpi.Foot",   Value = footVal, Unit = footOk ? "PersonalChronicle.UI.InspectTab.Places".Translate().ToString() : null, InlineMetric = footDays, Rows = footStays ?? footRows },
+                new UIComponents.KpiCell { KindKey = "battle", TitleKey = "PersonalChronicle.UI.Kpi.BattleTitle", Value = battleVal, Unit = battleOk ? "PersonalChronicle.UI.Kpi.Unit.Battles".Translate().ToString() : null, Rows = battleRows, Bars = battleBars },
+                new UIComponents.KpiCell { KindKey = "foot",   TitleKey = "PersonalChronicle.UI.Kpi.FootTitle",   Value = footVal, Unit = footOk ? "PersonalChronicle.UI.InspectTab.Places".Translate().ToString() : null, InlineMetric = footDays, Rows = footStays ?? footRows },
                 new UIComponents.KpiCell { KindKey = "legacy", TitleKey = "PersonalChronicle.UI.Kpi.Legacy", Value = legacyVal, InlineMetric = legacyTotal, Rows = legacyRows, Chain = legacyChain },
             };
         }

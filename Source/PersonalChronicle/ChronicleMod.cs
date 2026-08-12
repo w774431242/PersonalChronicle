@@ -111,7 +111,7 @@ namespace PersonalChronicle
             {
                 if (DefDatabase<ChronicleEventDef>.GetNamedSilentFail(typeKeys[i]) == null)
                 {
-                    Log.Error("PersonalChronicle: TypeKey/Def drift detected for: " + typeKeys[i] + " (update ChronicleEventType or Defs/Chronicle_Events.xml)");
+                    ChronicleLog.Error(ChronicleLog.Category.Mod, "TypeKey/Def drift detected for: " + typeKeys[i] + " (update ChronicleEventType or Defs/Chronicle_Events.xml)");
                 }
             }
         }

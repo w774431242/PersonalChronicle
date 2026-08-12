@@ -72,14 +72,14 @@ namespace PersonalChronicle.Archive
                 }
                 catch (Exception ex)
                 {
-                    Log.Warning("PersonalChronicle: failed to inject chronicle tab into '"
+                    ChronicleLog.Warning(ChronicleLog.Category.Ui, "failed to inject chronicle tab into '"
                         + (def != null ? def.defName : "<null>") + "': " + ex.Message);
                 }
             }
 
             if (Prefs.DevMode)
             {
-                Log.Message("PersonalChronicle: chronicle inspect tab injected into " + count + " humanlike def(s).");
+                ChronicleLog.Info(ChronicleLog.Category.Ui, "chronicle inspect tab injected into " + count + " humanlike def(s).");
             }
         }
     }

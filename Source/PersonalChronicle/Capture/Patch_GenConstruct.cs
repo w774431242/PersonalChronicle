@@ -72,7 +72,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: Frame.CompleteConstruction patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "Frame.CompleteConstruction patch failed: " + ex.Message);
             }
         }
     }

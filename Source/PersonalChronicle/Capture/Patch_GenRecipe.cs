@@ -81,7 +81,7 @@ namespace PersonalChronicle.Capture
                 }) != null;
             if (!found)
             {
-                Log.Error("PersonalChronicle: GenRecipe.PostProcessProduct target signature changed; Crafted capture silently disabled - update Patch_GenRecipe");
+                ChronicleLog.Error(ChronicleLog.Category.Capture, "GenRecipe.PostProcessProduct target signature changed; Crafted capture silently disabled - update Patch_GenRecipe");
             }
             return found;
         }
@@ -108,7 +108,7 @@ namespace PersonalChronicle.Capture
             }
             catch (Exception ex)
             {
-                Log.Warning("PersonalChronicle: GenRecipe.PostProcessProduct patch failed: " + ex.Message);
+                ChronicleLog.Warning(ChronicleLog.Category.Capture, "GenRecipe.PostProcessProduct patch failed: " + ex.Message);
             }
         }
     }

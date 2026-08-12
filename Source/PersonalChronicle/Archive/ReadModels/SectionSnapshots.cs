@@ -229,10 +229,33 @@ namespace PersonalChronicle.Archive.ReadModels
         /// <summary>累计产出折算银币总额（ProductionSummaryView.TotalMarketValue）。</summary>
         public float ProductionSilverValue;
 
+        /// <summary>v4.15 产出宫格真实数据源：来自 <see cref="ProductionAccumulator"/>
+        /// 持久化累计（每次 Craft/Built 捕获时累加 Def.MarketValue*quantity），已按
+        /// 类目聚合、按产值降序。宫格 bars 与种类数均消费此快照，不再重扫事件流。</summary>
+        public IReadOnlyList<ProductionTypeView> ProductionTypeViews = new List<ProductionTypeView>();
+
         /// <summary>v4.15 condense-tab: kills grouped by victim faction/category
         /// (e.g. 帝国/部落/机械族/动物). Aggregated in the Read Model from Death
         /// events where this pawn is the killer; the window only renders labels.</summary>
         public IReadOnlyList<KillByFactionView> KillsByFaction = new List<KillByFactionView>();
+
+        /// <summary>v6.8 个人战斗维度：该人物累计参战的战役数（持久化累加，非事件流推导）。</summary>
+        public int ParticipatedBattles;
+
+        /// <summary>v6.8 个人战斗维度：生涯累计造成伤害总值（持久化累加，近似）。</summary>
+        public float DamageDealtTotal;
+
+        /// <summary>
+        /// v6.8 个人战斗维度：近战击杀占比（0-1）。由持久化 MeleeKills/(MeleeKills+RangedKills) 推导；
+        /// 无任何击杀时取 0.5（中性占位，UI 侧显示"暂无战斗记录"由 hasMeleeData 控制）。
+        /// </summary>
+        public float MeleeKillRatio;
+
+        /// <summary>v6.8 个人战斗维度：近战击杀数（持久化）。</summary>
+        public int MeleeKills;
+
+        /// <summary>v6.8 个人战斗维度：远程击杀数（持久化）。</summary>
+        public int RangedKills;
 
         /// <summary>
         /// "健康残值 · 资产折旧" view — composite health score, depreciated silver

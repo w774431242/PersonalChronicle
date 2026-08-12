@@ -200,7 +200,7 @@ namespace PersonalChronicle.Capture
                     || now - _lastAssistWarningTick >= AssistWarningCooldownTicks)
                 {
                     _lastAssistWarningTick = now;
-                    Log.Warning("PersonalChronicle[Capture][Assist]: Pawn.TakeDamage assist capture failed: " + ex.Message);
+                    ChronicleLog.Warning(ChronicleLog.Category.Capture, "[Assist] Pawn.TakeDamage assist capture failed: " + ex.Message);
                 }
             }
         }

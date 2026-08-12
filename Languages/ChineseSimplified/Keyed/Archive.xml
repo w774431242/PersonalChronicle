@@ -327,6 +327,7 @@
   <PersonalChronicle.UI.Legacy.ColKills>击杀</PersonalChronicle.UI.Legacy.ColKills>
   <PersonalChronicle.UI.Legacy.ColRemark>备注</PersonalChronicle.UI.Legacy.ColRemark>
   <PersonalChronicle.UI.Legacy.GenN>第 {0} 任</PersonalChronicle.UI.Legacy.GenN>
+  <PersonalChronicle.UI.Legacy.ChainRank>第 {0}</PersonalChronicle.UI.Legacy.ChainRank>
   <PersonalChronicle.UI.Legacy.First>第一任</PersonalChronicle.UI.Legacy.First>
   <PersonalChronicle.UI.Legacy.Loan>借用</PersonalChronicle.UI.Legacy.Loan>
   <PersonalChronicle.UI.Legacy.LoanRemark>借用/转借，非所有权变更</PersonalChronicle.UI.Legacy.LoanRemark>
@@ -540,10 +541,14 @@
   <PersonalChronicle.UI.LocSubLine>落成 {0} · {1} 事件</PersonalChronicle.UI.LocSubLine>
   <!-- v4.15 人物视窗「档案」页签 · 六宫格核心 KPI -->
   <PersonalChronicle.UI.Kpi.Work>集中工时</PersonalChronicle.UI.Kpi.Work>
+  <PersonalChronicle.UI.Kpi.WorkTitle>累计工时 · 工时排名</PersonalChronicle.UI.Kpi.WorkTitle>
   <PersonalChronicle.UI.Kpi.Prod>产出</PersonalChronicle.UI.Kpi.Prod>
+  <PersonalChronicle.UI.Kpi.ProdTitle>产出 · 累计产量</PersonalChronicle.UI.Kpi.ProdTitle>
   <PersonalChronicle.UI.Kpi.Kill>击杀</PersonalChronicle.UI.Kpi.Kill>
   <PersonalChronicle.UI.Kpi.Battle>战役</PersonalChronicle.UI.Kpi.Battle>
+  <PersonalChronicle.UI.Kpi.BattleTitle>战役 · 累计</PersonalChronicle.UI.Kpi.BattleTitle>
   <PersonalChronicle.UI.Kpi.Foot>足迹</PersonalChronicle.UI.Kpi.Foot>
+  <PersonalChronicle.UI.Kpi.FootTitle>足迹 · 主驻地</PersonalChronicle.UI.Kpi.FootTitle>
   <PersonalChronicle.UI.Kpi.Rel>关系</PersonalChronicle.UI.Kpi.Rel>
   <PersonalChronicle.UI.Kpi.NoRecord>暂无记录</PersonalChronicle.UI.Kpi.NoRecord>
   <PersonalChronicle.UI.Kpi.Unit.Pieces>件</PersonalChronicle.UI.Kpi.Unit.Pieces>
@@ -561,15 +566,21 @@
   <PersonalChronicle.UI.Kpi.Legacy>神器传承</PersonalChronicle.UI.Kpi.Legacy>
   <PersonalChronicle.UI.Kpi.WeekHours.S>周工时</PersonalChronicle.UI.Kpi.WeekHours.S>
   <PersonalChronicle.UI.Kpi.DayHours.S>日均</PersonalChronicle.UI.Kpi.DayHours.S>
-  <PersonalChronicle.UI.Kpi.UnitValue>单产均值</PersonalChronicle.UI.Kpi.UnitValue>
-  <PersonalChronicle.UI.Kpi.CatCount>分类数</PersonalChronicle.UI.Kpi.CatCount>
   <PersonalChronicle.UI.Kpi.Cat>类</PersonalChronicle.UI.Kpi.Cat>
   <PersonalChronicle.UI.Kpi.PreyKinds>猎物种类</PersonalChronicle.UI.Kpi.PreyKinds>
   <PersonalChronicle.UI.Kpi.Kind>种</PersonalChronicle.UI.Kpi.Kind>
-  <PersonalChronicle.UI.Kpi.Divine>重大</PersonalChronicle.UI.Kpi.Divine>
+  <PersonalChronicle.UI.Kpi.BattlesFought>参战战役</PersonalChronicle.UI.Kpi.BattlesFought>
+  <PersonalChronicle.UI.Kpi.DamageDealt>生涯伤害</PersonalChronicle.UI.Kpi.DamageDealt>
+  <PersonalChronicle.UI.Kpi.CombatStyle>战斗风格</PersonalChronicle.UI.Kpi.CombatStyle>
+  <PersonalChronicle.UI.Kpi.Melee>近战</PersonalChronicle.UI.Kpi.Melee>
+  <PersonalChronicle.UI.Kpi.Ranged>远程</PersonalChronicle.UI.Kpi.Ranged>
   <PersonalChronicle.UI.Kpi.Kills>歼敌</PersonalChronicle.UI.Kpi.Kills>
   <PersonalChronicle.UI.Kpi.Losses>损失</PersonalChronicle.UI.Kpi.Losses>
   <PersonalChronicle.UI.Kpi.Roster>参战规模</PersonalChronicle.UI.Kpi.Roster>
+  <PersonalChronicle.UI.Kpi.BattleParticipate>累计参与</PersonalChronicle.UI.Kpi.BattleParticipate>
+  <PersonalChronicle.UI.Kpi.BattleScale>累计规模</PersonalChronicle.UI.Kpi.BattleScale>
+  <PersonalChronicle.UI.Kpi.BattleKills>累计歼敌</PersonalChronicle.UI.Kpi.BattleKills>
+  <PersonalChronicle.UI.Kpi.Contribution>个人贡献占比</PersonalChronicle.UI.Kpi.Contribution>
   <PersonalChronicle.UI.Kpi.LongestStay>最长停留</PersonalChronicle.UI.Kpi.LongestStay>
   <PersonalChronicle.UI.Legacy.ForgedBy>锻造者</PersonalChronicle.UI.Legacy.ForgedBy>
   <PersonalChronicle.UI.Legacy.GenUnit>代</PersonalChronicle.UI.Legacy.GenUnit>

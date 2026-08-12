@@ -469,7 +469,7 @@ namespace PersonalChronicle.Archive.UI
             public string Value;     // kill count text (e.g. "18 杀")
         }
 
-        internal static readonly float KpiCardH = 200f;
+        internal static readonly float KpiCardH = 220f;
         internal static readonly float KpiGap = 10f;
         // Badge group metrics (preview E1): height 16, padding 6, wrap with 4f line gap.
         internal static readonly float KpiBadgeH = 16f;
@@ -540,16 +540,35 @@ namespace PersonalChronicle.Archive.UI
                         Label(metricR, c.InlineMetric, GameFont.Tiny, valueEmpty ? UITheme.Dim : UITheme.Muted, TextAnchor.MiddleRight);
                         valueTextR = new Rect(valR.x, valR.y, valR.width - mW - 4f, valR.height);
                     }
+                    // Adaptive font: long weapon names (e.g. >4 Chinese characters) can
+                    // exceed the Medium width and wrap to a second line. Shrink to Small,
+                    // then Tiny if necessary, and truncate as last resort.
+                    string valText = c.Value ?? "";
+                    GameFont valueFont = GameFont.Medium;
+                    Verse.Text.Font = valueFont;
+                    if (Text.CalcSize(valText).x > valueTextR.width)
+                    {
+                        valueFont = GameFont.Small;
+                        Verse.Text.Font = valueFont;
+                        if (Text.CalcSize(valText).x > valueTextR.width)
+                        {
+                            valueFont = GameFont.Tiny;
+                            Verse.Text.Font = valueFont;
+                        }
+                    }
+                    Verse.Text.Font = prevFont;
+                    string fittedValue = TruncateToWidth(valText, valueTextR.width, valueFont);
+
                     if (string.IsNullOrEmpty(c.Unit))
                     {
-                        Label(valueTextR, c.Value, GameFont.Medium, valueColor);
+                        Label(valueTextR, fittedValue, valueFont, valueColor);
                     }
                     else
                     {
-                        Verse.Text.Font = GameFont.Medium;
-                        Vector2 valSize = Text.CalcSize(c.Value);
+                        Label(valueTextR, fittedValue, valueFont, valueColor);
+                        Verse.Text.Font = valueFont;
+                        Vector2 valSize = Text.CalcSize(fittedValue);
                         Verse.Text.Font = prevFont;
-                        Label(valueTextR, c.Value, GameFont.Medium, valueColor);
                         Rect unitR = new Rect(valueTextR.x + Mathf.Min(valSize.x, valueTextR.width) + 4f,
                             valueTextR.y + (valueTextR.height - 18f) * 0.5f, valueTextR.width, 18f);
                         Label(unitR, c.Unit, GameFont.Tiny, UITheme.Muted, TextAnchor.MiddleLeft);
@@ -559,7 +578,10 @@ namespace PersonalChronicle.Archive.UI
                     float cy = 72f; // below the big value row
                     float contentW = card.width - pad * 2;
 
-                    // KPI strip rows (label left / value right).
+                    // KPI strip rows (label left / value right). When empty, show a
+                    // "--" placeholder row so the card layout stays identical between
+                    // populated and unpopulated states (easier screenshot diffing).
+                    string noRec = "PersonalChronicle.UI.Kpi.NoRecord".Translate().ToString();
                     if (c.Rows != null)
                     {
                         foreach (KpiRow kr in c.Rows)
@@ -571,6 +593,13 @@ namespace PersonalChronicle.Archive.UI
                             cy += 18f;
                         }
                     }
+                    else
+                    {
+                        Rect rR = new Rect(pad, cy, contentW, 18f);
+                        Label(new Rect(rR.x, rR.y, rR.width * 0.55f, rR.height), noRec, GameFont.Tiny, UITheme.Dim);
+                        Label(new Rect(rR.x + rR.width * 0.55f, rR.y, rR.width * 0.45f, rR.height), "--", GameFont.Tiny, UITheme.Muted, TextAnchor.UpperRight);
+                        cy += 18f;
+                    }
 
                     // Section divider before bars / chain.
                     bool hasBars = c.Bars != null && c.Bars.Length > 0;
@@ -579,7 +608,7 @@ namespace PersonalChronicle.Archive.UI
                     {
                         cy += 2f;
                         Widgets.DrawLineHorizontal(pad, cy, contentW, UITheme.BorderSoft);
-                        cy += 4f;
+                        cy += 8f;
                     }
 
                     // Progress bars (结构 / 贡献 / 战损 / 传承链 share).
@@ -587,7 +616,7 @@ namespace PersonalChronicle.Archive.UI
                     {
                         foreach (KpiBar kb in c.Bars)
                         {
-                            if (cy + 30f > card.height - 4f) break;
+                            if (cy + 36f > card.height - 6f) break;
 
                             // Caption row above the bar so long text never overlaps the fill.
                             string tag = kb.Tag ?? "";
@@ -600,18 +629,18 @@ namespace PersonalChronicle.Archive.UI
                                 tagW = Mathf.Clamp(tagSize.x + 6f, 0f, contentW * 0.45f);
                             }
                             float capW = contentW - tagW - (tagW > 0f ? 4f : 0f);
-                            Rect capR = new Rect(pad, cy, capW, 14f);
+                            Rect capR = new Rect(pad, cy, capW, 17f);
                             ShadowLabel(capR, kb.Caption ?? "", GameFont.Tiny, UITheme.Text, TextAnchor.MiddleLeft);
                             if (tagW > 0f)
                             {
                                 string tagClipped = TruncateToWidth(tag, tagW - 4f, GameFont.Tiny);
-                                Rect tagR = new Rect(pad + contentW - tagW, cy, tagW, 14f);
+                                Rect tagR = new Rect(pad + contentW - tagW, cy, tagW, 17f);
                                 ShadowLabel(tagR, tagClipped, GameFont.Tiny, UITheme.SecondaryText, TextAnchor.MiddleRight);
                             }
-                            cy += 14f;
+                            cy += 17f;
 
                             // Bar: dark track + soft border + tone fill (inset by 1px).
-                            Rect barR = new Rect(pad, cy, contentW, 12f);
+                            Rect barR = new Rect(pad, cy + 3f, contentW, 12f);
                             Widgets.DrawBoxSolid(barR, UITheme.BorderHair);
                             Border(barR, UITheme.BorderSoft);
                             float fillW = Mathf.Max(2f, Mathf.Clamp01(kb.Share01) * (barR.width - 2f));
@@ -623,7 +652,7 @@ namespace PersonalChronicle.Archive.UI
                                     fill = new Color(fill.r * 0.85f, fill.g * 0.85f, fill.b * 0.85f, fill.a);
                                 Widgets.DrawBoxSolid(new Rect(barR.x + 1f, barR.y + 1f, fillW, barR.height - 2f), fill);
                             }
-                            cy += 16f;
+                            cy += 19f;
                         }
                     }
 
@@ -632,12 +661,25 @@ namespace PersonalChronicle.Archive.UI
                     {
                         foreach (KpiChain ch in c.Chain)
                         {
-                            if (cy + 18f > card.height - 4f) break;
+                            if (cy + 18f > card.height - 6f) break;
                             Rect rR = new Rect(pad, cy, contentW, 18f);
                             Label(new Rect(rR.x, rR.y, rR.width * 0.6f, rR.height), ch.Label ?? "", GameFont.Tiny, UITheme.Dim);
                             Label(new Rect(rR.x + rR.width * 0.6f, rR.y, rR.width * 0.4f, rR.height), ch.Value ?? "", GameFont.Tiny, UITheme.Text, TextAnchor.UpperRight);
                             cy += 18f;
                         }
+                    }
+
+                    // No bars and no chain: keep the sub-content block visible with a
+                    // "--" placeholder so populated/unpopulated cards render identically.
+                    if (!hasBars && !hasChain)
+                    {
+                        cy += 2f;
+                        Widgets.DrawLineHorizontal(pad, cy, contentW, UITheme.BorderSoft);
+                        cy += 8f;
+                        Rect rR = new Rect(pad, cy, contentW, 18f);
+                        Label(new Rect(rR.x, rR.y, rR.width * 0.55f, rR.height), noRec, GameFont.Tiny, UITheme.Dim);
+                        Label(new Rect(rR.x + rR.width * 0.55f, rR.y, rR.width * 0.45f, rR.height), "--", GameFont.Tiny, UITheme.Muted, TextAnchor.UpperRight);
+                        cy += 18f;
                     }
 
                     // One-line sub at the very bottom (legacy fallback / weapon epithet).

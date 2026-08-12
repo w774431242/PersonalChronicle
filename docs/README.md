@@ -69,7 +69,7 @@ docs/
 
 ## 仍打开的工作项
 
-1. **LE-1**：`ArchiveMainTabWindow` god class 拆分（架构级，独立排期）
+1. ~~**LE-1**：`ArchiveMainTabWindow` god class 拆分（架构级，独立排期）~~ **✅ 已修复 2026-08-12**：C# partial class 物理拆分为 主文件(4011) + 5 个 partial 区块文件(Home/Overview/PawnDetail/WeaponDetail/EventDetail)，编译 0 错 0 警，行为一致。
 2. **C1/C2 登记项**（见统计方案）：不新增出生类 Harmony；`LeftTick` 离开字段 defer
 
 ## 代码分层速查

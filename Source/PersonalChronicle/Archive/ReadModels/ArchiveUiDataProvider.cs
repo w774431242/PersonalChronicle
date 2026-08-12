@@ -479,6 +479,11 @@ namespace PersonalChronicle.Archive.ReadModels
                 ProductionSummaryView prod = service.GetProductionSummary(stableId);
                 snap.ProductionTotal = (prod == null) ? 0 : prod.TotalQuantity;
                 snap.ProductionSilverValue = (prod == null) ? 0f : prod.TotalMarketValue;
+                // v4.15: 产出宫格真实数据源 —— 直接消费累加器累计（按类目聚合、按产值降序），
+                // 不再用 BuildProductionLines 重扫事件流估算。bars 与种类数均据此快照。
+                snap.ProductionTypeViews = (prod == null || prod.Types == null)
+                    ? (IReadOnlyList<ProductionTypeView>)new List<ProductionTypeView>()
+                    : prod.Types;
                 snap.ProductionCategories = BuildProductionCategories(snap.ProductionLines);
             }
 
@@ -519,6 +524,17 @@ namespace PersonalChronicle.Archive.ReadModels
             snap.Kills = kills;
             snap.KillsByFaction = BuildKillsByFaction(byFaction);
 
+            // v6.8 个人战斗维度（击杀宫格）：直接消费 PawnObject 持久化字段（Capture 层累加）。
+            // 老存档缺字段默认 0；MeleeKillRatio 无击杀时取 0.5 中性占位（UI 用 hasMeleeData 判断）。
+            snap.ParticipatedBattles = pawn.ParticipatedBattles;
+            snap.DamageDealtTotal = pawn.DamageDealtTotal;
+            int meleeKills = pawn.MeleeKills;
+            int rangedKills = pawn.RangedKills;
+            int combatTotal = meleeKills + rangedKills;
+            snap.MeleeKills = meleeKills;
+            snap.RangedKills = rangedKills;
+            snap.MeleeKillRatio = combatTotal > 0 ? (float)meleeKills / (float)combatTotal : 0.5f;
+
             // 战役: colony-level Battle events are not bound to a single pawn, so the
             // digest shows the colony's battle count as this pawn's era context.
             int battles = 0;
@@ -557,6 +573,45 @@ namespace PersonalChronicle.Archive.ReadModels
                 }
             }
             snap.LegacyOffspring = offspring;
+
+            // 神器传承：以人物**当前持有的武器**为锚点展示传承信息（需求：人物档案第六格
+            // 显示其武器传承链）。复用武器档案同款 BuildLegacy 聚合——找到该人物为持有者
+            // （HolderRecords.StableId == 人物stableId，优先当前持有）的 ThingObject，
+            // 对其事件流做传承聚合。窗口只消费 snap.Legacy，不在窗口内重算。
+            if (service != null && !string.IsNullOrEmpty(stableId))
+            {
+                IReadOnlyList<ArchiveObject> things = service.GetObjectsOfCategory(ArchiveCategoryKeys.Thing);
+                if (things != null)
+                {
+                    ThingObject anchorThing = null;
+                    foreach (ArchiveObject o in things)
+                    {
+                        ThingObject t = o as ThingObject;
+                        if (t == null || t.HolderRecords == null || t.HolderRecords.Count == 0) continue;
+                        bool isCurrentHolder = !string.IsNullOrEmpty(t.CurrentHolderId) && t.CurrentHolderId == stableId;
+                        bool wasHolder = false;
+                        for (int r = 0; r < t.HolderRecords.Count; r++)
+                        {
+                            HolderRecord hr = t.HolderRecords[r];
+                            if (hr != null && hr.StableId == stableId) { wasHolder = true; break; }
+                        }
+                        if (isCurrentHolder)
+                        {
+                            anchorThing = t;
+                            break; // 当前持有优先
+                        }
+                        if (wasHolder && anchorThing == null)
+                        {
+                            anchorThing = t; // 兜底：曾持有过的第一把武器
+                        }
+                    }
+                    if (anchorThing != null)
+                    {
+                        IReadOnlyList<ChronicleEvent> thingEvents = service.GetEventsFor(anchorThing.StableId);
+                        snap.Legacy = BuildLegacy(service, anchorThing, thingEvents);
+                    }
+                }
+            }
         }
 
         // ---- v4.4 Pawn Overview derivation (Read Model only) ----
