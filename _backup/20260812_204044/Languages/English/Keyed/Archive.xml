@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PersonalChronicle.Settings.Category>Personal Chronicle</PersonalChronicle.Settings.Category>
+  <PersonalChronicle.Settings.EnableRecording>Enable archive recording</PersonalChronicle.Settings.EnableRecording>
+  <PersonalChronicle.Settings.MaxEventsPerPawn>Max events per colonist</PersonalChronicle.Settings.MaxEventsPerPawn>
+  <PersonalChronicle.Settings.DebugLiveCount>Debug: live population dump log</PersonalChronicle.Settings.DebugLiveCount>
+  <PersonalChronicle.UI.Title>Archive</PersonalChronicle.UI.Title>
+  <PersonalChronicle.UI.AllRecords>All Records</PersonalChronicle.UI.AllRecords>
+  <PersonalChronicle.UI.ActiveRecords>Active</PersonalChronicle.UI.ActiveRecords>
+  <PersonalChronicle.UI.ArchivedRecords>Archived</PersonalChronicle.UI.ArchivedRecords>
+  <PersonalChronicle.UI.NoSelection>Select a colonist to view their archive.</PersonalChronicle.UI.NoSelection>
+  <PersonalChronicle.UI.Status>Status</PersonalChronicle.UI.Status>
+  <PersonalChronicle.UI.Alive>Alive</PersonalChronicle.UI.Alive>
+  <PersonalChronicle.UI.Dead>Deceased</PersonalChronicle.UI.Dead>
+  <PersonalChronicle.UI.JoinDate>Join Date</PersonalChronicle.UI.JoinDate>
+  <PersonalChronicle.UI.DeathDate>Death Date</PersonalChronicle.UI.DeathDate>
+  <PersonalChronicle.UI.DeathCause>Cause of Death</PersonalChronicle.UI.DeathCause>
+  <PersonalChronicle.UI.DeathBattle>Battle</PersonalChronicle.UI.DeathBattle>
+  <PersonalChronicle.UI.Kind>Kind</PersonalChronicle.UI.Kind>
+  <PersonalChronicle.UI.Faction>Faction</PersonalChronicle.UI.Faction>
+  <PersonalChronicle.UI.Timeline>Timeline</PersonalChronicle.UI.Timeline>
+  <PersonalChronicle.UI.TotalCount>Total Colonists</PersonalChronicle.UI.TotalCount>
+  <PersonalChronicle.UI.ActiveCountLabel>Alive: {0}</PersonalChronicle.UI.ActiveCountLabel>
+  <PersonalChronicle.UI.ArchivedCountLabel>Archived: {0}</PersonalChronicle.UI.ArchivedCountLabel>
+  <PersonalChronicle.UI.OverviewTitle>Archive Overview</PersonalChronicle.UI.OverviewTitle>
+  <PersonalChronicle.UI.NoEvents>No events recorded.</PersonalChronicle.UI.NoEvents>
+  <PersonalChronicle.UI.NoService>Personal Chronicle data is not available yet.</PersonalChronicle.UI.NoService>
+  <PersonalChronicle.UI.UnknownDate>Unknown</PersonalChronicle.UI.UnknownDate>
+
+  <!-- v4.6 pawn inspect tab "Archive" -->
+  <PersonalChronicle.UI.InspectTab>Archive</PersonalChronicle.UI.InspectTab>
+  <PersonalChronicle.UI.InspectTab.Events>Events</PersonalChronicle.UI.InspectTab.Events>
+  <PersonalChronicle.UI.InspectTab.Places>Places</PersonalChronicle.UI.InspectTab.Places>
+  <PersonalChronicle.UI.InspectTab.OpenFull>Open full archive</PersonalChronicle.UI.InspectTab.OpenFull>
+  <PersonalChronicle.UI.Back>Back</PersonalChronicle.UI.Back>
+  <PersonalChronicle.UI.Overview>Overview</PersonalChronicle.UI.Overview>
+  <PersonalChronicle.UI.Categories>Archive Categories</PersonalChronicle.UI.Categories>
+  <PersonalChronicle.UI.CategoryCountLabel>{0} ({1})</PersonalChronicle.UI.CategoryCountLabel>
+  <PersonalChronicle.UI.SectionTitleCount>{0} · {1}</PersonalChronicle.UI.SectionTitleCount>
+  <PersonalChronicle.UI.CategoryCountFormat>{0} · {1}</PersonalChronicle.UI.CategoryCountFormat>
+  <PersonalChronicle.UI.RelatedObjects>Related Archives</PersonalChronicle.UI.RelatedObjects>
+  <PersonalChronicle.UI.Category.Pawn>Pawns</PersonalChronicle.UI.Category.Pawn>
+  <PersonalChronicle.UI.Category.Thing>Equipment</PersonalChronicle.UI.Category.Thing>
+  <PersonalChronicle.UI.Category.Battle>Battles</PersonalChronicle.UI.Category.Battle>
+  <PersonalChronicle.UI.Category.Location>Locations</PersonalChronicle.UI.Category.Location>
+  <PersonalChronicle.UI.NoCategoryData>No archives in this category yet.</PersonalChronicle.UI.NoCategoryData>
+  <PersonalChronicle.UI.StatOnlyMode>Stats Only</PersonalChronicle.UI.StatOnlyMode>
+  <PersonalChronicle.UI.NoRelated>No related archives.</PersonalChronicle.UI.NoRelated>
+  <PersonalChronicle.UI.RecentRecords>Recent Records</PersonalChronicle.UI.RecentRecords>
+  <PersonalChronicle.UI.Type>Type</PersonalChronicle.UI.Type>
+  <PersonalChronicle.UI.MapId>Map</PersonalChronicle.UI.MapId>
+  <PersonalChronicle.UI.CellLabel>Cell</PersonalChronicle.UI.CellLabel>
+  <PersonalChronicle.Event.Join>Joined the colony</PersonalChronicle.Event.Join>
+  <PersonalChronicle.Event.Join.Desc>This colonist joined the colony.</PersonalChronicle.Event.Join.Desc>
+  <PersonalChronicle.Event.Death>Died</PersonalChronicle.Event.Death>
+  <PersonalChronicle.Event.Death.Desc>This colonist died.</PersonalChronicle.Event.Death.Desc>
+  <PersonalChronicle.Event.Crafted>Crafted</PersonalChronicle.Event.Crafted>
+  <PersonalChronicle.Event.Crafted.Desc>This item was crafted by the colony.</PersonalChronicle.Event.Crafted.Desc>
+  <PersonalChronicle.Event.Built>Built</PersonalChronicle.Event.Built>
+  <PersonalChronicle.Event.Built.Desc>This building was constructed by the colony.</PersonalChronicle.Event.Built.Desc>
+  <PersonalChronicle.Event.Battle>Battle</PersonalChronicle.Event.Battle>
+  <PersonalChronicle.Event.Battle.Desc>A major battle began.</PersonalChronicle.Event.Battle.Desc>
+
+  <!-- v0.4: five-view information architecture (home / overview / pawn / weapon / event) -->
+  <PersonalChronicle.UI.ColonyArchive>Colony Archive</PersonalChronicle.UI.ColonyArchive>
+  <PersonalChronicle.UI.Home>Home</PersonalChronicle.UI.Home>
+  <PersonalChronicle.UI.Pawns>Pawns</PersonalChronicle.UI.Pawns>
+  <PersonalChronicle.UI.Weapons>Weapons</PersonalChronicle.UI.Weapons>
+  <PersonalChronicle.UI.Events>Events</PersonalChronicle.UI.Events>
+  <PersonalChronicle.UI.ArchiveHomeDesc>Colony archive: recording the colony's history, people and events.</PersonalChronicle.UI.ArchiveHomeDesc>
+  <PersonalChronicle.UI.HomeKpiView>Overview</PersonalChronicle.UI.HomeKpiView>
+  <PersonalChronicle.UI.HomeTimelineView>Timeline</PersonalChronicle.UI.HomeTimelineView>
+  <PersonalChronicle.UI.NoTimelineEvents>No key events recorded yet.</PersonalChronicle.UI.NoTimelineEvents>
+  <PersonalChronicle.UI.Navigation>Navigation</PersonalChronicle.UI.Navigation>
+  <PersonalChronicle.UI.HomeOverview>Home Overview</PersonalChronicle.UI.HomeOverview>
+  <PersonalChronicle.UI.AllArchives>All Archives</PersonalChronicle.UI.AllArchives>
+  <PersonalChronicle.UI.Tools>Tools</PersonalChronicle.UI.Tools>
+  <PersonalChronicle.UI.Favorites>Favorites</PersonalChronicle.UI.Favorites>
+  <PersonalChronicle.UI.Milestones>Milestones</PersonalChronicle.UI.Milestones>
+  <PersonalChronicle.UI.Search>Search</PersonalChronicle.UI.Search>
+  <PersonalChronicle.UI.ToolsPlaceholder>Not yet available.</PersonalChronicle.UI.ToolsPlaceholder>
+  <PersonalChronicle.UI.RecentHistory>Recent History</PersonalChronicle.UI.RecentHistory>
+  <PersonalChronicle.UI.ImportantArchives>Important Archives</PersonalChronicle.UI.ImportantArchives>
+  <PersonalChronicle.UI.OverviewDesc>All archived objects · browse by type · depth differentiated</PersonalChronicle.UI.OverviewDesc>
+  <PersonalChronicle.UI.StatsOnlyNote>Stats Only</PersonalChronicle.UI.StatsOnlyNote>
+  <PersonalChronicle.UI.Tab.Overview>Overview</PersonalChronicle.UI.Tab.Overview>
+  <PersonalChronicle.UI.Tab.Timeline>Timeline</PersonalChronicle.UI.Tab.Timeline>
+  <PersonalChronicle.UI.Tab.Work>Work</PersonalChronicle.UI.Tab.Work>
+  <PersonalChronicle.UI.Tab.Production>Production</PersonalChronicle.UI.Tab.Production>
+  <PersonalChronicle.UI.Tab.Combat>Combat</PersonalChronicle.UI.Tab.Combat>
+  <PersonalChronicle.UI.Tab.Skills>Skills</PersonalChronicle.UI.Tab.Skills>
+  <PersonalChronicle.UI.Tab.Health>Health</PersonalChronicle.UI.Tab.Health>
+  <PersonalChronicle.UI.Tab.Relations>Relations</PersonalChronicle.UI.Tab.Relations>
+  <PersonalChronicle.UI.Tab.Items>Items</PersonalChronicle.UI.Tab.Items>
+  <PersonalChronicle.UI.Tab.Places>Places</PersonalChronicle.UI.Tab.Places>
+  <PersonalChronicle.UI.Tab.Stats>Stats</PersonalChronicle.UI.Tab.Stats>
+  <PersonalChronicle.UI.Tab.Holders>Holders</PersonalChronicle.UI.Tab.Holders>
+  <PersonalChronicle.UI.Tab.Craft>Crafting</PersonalChronicle.UI.Tab.Craft>
+  <PersonalChronicle.UI.Stats>Stats</PersonalChronicle.UI.Stats>
+  <PersonalChronicle.UI.Skills>Skills</PersonalChronicle.UI.Skills>
+  <PersonalChronicle.UI.Relations>Relations</PersonalChronicle.UI.Relations>
+  <PersonalChronicle.UI.NoLiveData>Deceased — no live data</PersonalChronicle.UI.NoLiveData>
+  <PersonalChronicle.UI.NoCaptureYet>Awaiting data capture</PersonalChronicle.UI.NoCaptureYet>
+  <PersonalChronicle.UI.NoCaptureExplanation>Data capture for this category is not implemented yet; real records will be added in a future version.</PersonalChronicle.UI.NoCaptureExplanation>
+  <PersonalChronicle.UI.BattleRecords>Battle Records</PersonalChronicle.UI.BattleRecords>
+  <PersonalChronicle.UI.NoBattleRecords>No battle records.</PersonalChronicle.UI.NoBattleRecords>
+  <PersonalChronicle.UI.BattleParticipants>Participated</PersonalChronicle.UI.BattleParticipants>
+  <!-- v4.11 P0: battle three-elements (trigger time / raid size / repulse duration) -->
+  <PersonalChronicle.UI.BattleRaidCount>Raid size {0}</PersonalChronicle.UI.BattleRaidCount>
+  <PersonalChronicle.UI.BattleOngoing>Not repulsed</PersonalChronicle.UI.BattleOngoing>
+  <PersonalChronicle.UI.BattleDuration>Lasted {0} days</PersonalChronicle.UI.BattleDuration>
+  <PersonalChronicle.UI.BattleDurationHours>Lasted {0} hours</PersonalChronicle.UI.BattleDurationHours>
+  <PersonalChronicle.UI.BattleDurationMins>Lasted {0} minutes</PersonalChronicle.UI.BattleDurationMins>
+  <!-- v4.14: battle KPI strip + battle cards (significance/threat tag/metric cells/roster/casualties) -->
+  <PersonalChronicle.UI.BattleKpiTotal>Battles</PersonalChronicle.UI.BattleKpiTotal>
+  <PersonalChronicle.UI.BattleKpiDecisive>Decisive</PersonalChronicle.UI.BattleKpiDecisive>
+  <PersonalChronicle.UI.BattleKpiKills>Our kills</PersonalChronicle.UI.BattleKpiKills>
+  <PersonalChronicle.UI.BattleKpiLosses>Our losses</PersonalChronicle.UI.BattleKpiLosses>
+  <PersonalChronicle.UI.BattleKpiRoster>Participants</PersonalChronicle.UI.BattleKpiRoster>
+  <PersonalChronicle.UI.BattleCardDecisive>Decisive</PersonalChronicle.UI.BattleCardDecisive>
+  <PersonalChronicle.UI.BattleCardSkirmish>Skirmish</PersonalChronicle.UI.BattleCardSkirmish>
+  <PersonalChronicle.UI.BattleTagBig>Major threat</PersonalChronicle.UI.BattleTagBig>
+  <PersonalChronicle.UI.BattleTagSmall>Minor threat</PersonalChronicle.UI.BattleTagSmall>
+  <PersonalChronicle.UI.BattleParticipantsN>{0} fought</PersonalChronicle.UI.BattleParticipantsN>
+  <PersonalChronicle.UI.BattleMetricRaid>Raid size</PersonalChronicle.UI.BattleMetricRaid>
+  <PersonalChronicle.UI.BattleMetricKills>Kills</PersonalChronicle.UI.BattleMetricKills>
+  <PersonalChronicle.UI.BattleMetricLosses>Losses</PersonalChronicle.UI.BattleMetricLosses>
+  <PersonalChronicle.UI.BattleRosterMore>{0} fought</PersonalChronicle.UI.BattleRosterMore>
+  <PersonalChronicle.UI.BattleNoCasualties>No casualties</PersonalChronicle.UI.BattleNoCasualties>
+  <PersonalChronicle.UI.BattleLineKill>Killed</PersonalChronicle.UI.BattleLineKill>
+  <PersonalChronicle.UI.BattleLineLoss>Lost</PersonalChronicle.UI.BattleLineLoss>
+  <PersonalChronicle.UI.NoCraftRecord>No craft record.</PersonalChronicle.UI.NoCraftRecord>
+  <PersonalChronicle.UI.NoProduction>No crafted or built records yet.</PersonalChronicle.UI.NoProduction>
+  <PersonalChronicle.UI.ProductionType>Item Type</PersonalChronicle.UI.ProductionType>
+  <PersonalChronicle.UI.ProductionCount>Count</PersonalChronicle.UI.ProductionCount>
+  <PersonalChronicle.UI.ProductionTypeCount>{0} item types</PersonalChronicle.UI.ProductionTypeCount>
+  <PersonalChronicle.UI.ProductionLastTime>Last Crafted</PersonalChronicle.UI.ProductionLastTime>
+  <!-- v2.3: live tabs (LD-2/3/4) -->
+  <PersonalChronicle.UI.WorkPriorities>Work Priorities</PersonalChronicle.UI.WorkPriorities>
+  <PersonalChronicle.UI.WorkType>Work Type</PersonalChronicle.UI.WorkType>
+  <PersonalChronicle.UI.WorkPriority>Priority</PersonalChronicle.UI.WorkPriority>
+  <PersonalChronicle.UI.NoWorkData>No work priorities recorded.</PersonalChronicle.UI.NoWorkData>
+  <PersonalChronicle.UI.CurrentJob>Current Job</PersonalChronicle.UI.CurrentJob>
+  <PersonalChronicle.UI.PlacesCurrent>Current Location</PersonalChronicle.UI.PlacesCurrent>
+  <PersonalChronicle.UI.PlacesMap>Map</PersonalChronicle.UI.PlacesMap>
+  <PersonalChronicle.UI.PlacesCaravan>Caravan</PersonalChronicle.UI.PlacesCaravan>
+  <PersonalChronicle.UI.PlacesWorldTile>World Tile: {0}</PersonalChronicle.UI.PlacesWorldTile>
+  <PersonalChronicle.UI.UnknownPlace>Unknown</PersonalChronicle.UI.UnknownPlace>
+  <PersonalChronicle.UI.NoLocationData>No location data.</PersonalChronicle.UI.NoLocationData>
+  <PersonalChronicle.UI.NoLocationExplanation>Deceased or not on the world map.</PersonalChronicle.UI.NoLocationExplanation>
+  <PersonalChronicle.UI.CurrentHolder>Current Holder</PersonalChronicle.UI.CurrentHolder>
+  <PersonalChronicle.UI.NoHolder>Currently unheld.</PersonalChronicle.UI.NoHolder>
+  <PersonalChronicle.UI.Crafter>Crafter</PersonalChronicle.UI.Crafter>
+  <PersonalChronicle.UI.CraftedAt>Crafted At</PersonalChronicle.UI.CraftedAt>
+  <PersonalChronicle.UI.HeldItems>Held / Related Items</PersonalChronicle.UI.HeldItems>
+  <PersonalChronicle.UI.EventCount>Events</PersonalChronicle.UI.EventCount>
+  <PersonalChronicle.UI.LinkedCount>Linked Archives</PersonalChronicle.UI.LinkedCount>
+  <PersonalChronicle.UI.FirstEvent>First Event</PersonalChronicle.UI.FirstEvent>
+  <PersonalChronicle.UI.LastEvent>Last Event</PersonalChronicle.UI.LastEvent>
+  <PersonalChronicle.UI.OverallHealth>Overall Health</PersonalChronicle.UI.OverallHealth>
+  <PersonalChronicle.UI.HealthGood>Good</PersonalChronicle.UI.HealthGood>
+  <PersonalChronicle.UI.HealthInjured>Injured</PersonalChronicle.UI.HealthInjured>
+  <PersonalChronicle.UI.HealthCritical>Critical</PersonalChronicle.UI.HealthCritical>
+  <PersonalChronicle.UI.Hediffs>Health Conditions</PersonalChronicle.UI.Hediffs>
+  <PersonalChronicle.UI.NoHediffs>No health conditions.</PersonalChronicle.UI.NoHediffs>
+  <PersonalChronicle.UI.NoRelations>No recorded relations.</PersonalChronicle.UI.NoRelations>
+  <PersonalChronicle.UI.Character>Character</PersonalChronicle.UI.Character>
+  <PersonalChronicle.UI.Killer>Killer</PersonalChronicle.UI.Killer>
+  <PersonalChronicle.UI.KillerWithName>Killer: {0}</PersonalChronicle.UI.KillerWithName>
+  <PersonalChronicle.UI.UnknownKiller>Unknown</PersonalChronicle.UI.UnknownKiller>
+  <PersonalChronicle.UI.Assist>Assist</PersonalChronicle.UI.Assist>
+  <PersonalChronicle.UI.AssistWithName>Assist: {0}</PersonalChronicle.UI.AssistWithName>
+  <PersonalChronicle.UI.Weapon>Weapon</PersonalChronicle.UI.Weapon>
+  <PersonalChronicle.UI.Battle>Battle</PersonalChronicle.UI.Battle>
+  <PersonalChronicle.UI.Location>Location</PersonalChronicle.UI.Location>
+  <PersonalChronicle.UI.Participants>Participants</PersonalChronicle.UI.Participants>
+  <PersonalChronicle.UI.FollowupEvents>Follow-up Events</PersonalChronicle.UI.FollowupEvents>
+  <PersonalChronicle.UI.RelatedNetwork>Related Archives Network</PersonalChronicle.UI.RelatedNetwork>
+  <PersonalChronicle.UI.EventDescription>Event Description</PersonalChronicle.UI.EventDescription>
+  <PersonalChronicle.UI.NoEventSelected>No event selected.</PersonalChronicle.UI.NoEventSelected>
+  <!-- v2.4: live home stats -->
+  <PersonalChronicle.UI.CurrentColonists>Current colonists</PersonalChronicle.UI.CurrentColonists>
+  <PersonalChronicle.UI.ArchivePawnRecords>Pawn records</PersonalChronicle.UI.ArchivePawnRecords>
+  <!-- v2.5: pawn role distinction (free colonist / slave / prisoner) -->
+  <PersonalChronicle.UI.RoleFreeColonist>Free colonist</PersonalChronicle.UI.RoleFreeColonist>
+  <PersonalChronicle.UI.RoleSlave>Slave</PersonalChronicle.UI.RoleSlave>
+  <PersonalChronicle.UI.RolePrisoner>Prisoner</PersonalChronicle.UI.RolePrisoner>
+  <PersonalChronicle.UI.LiveBreakdown>Free {0} · Slave {1} · Prisoner {2}</PersonalChronicle.UI.LiveBreakdown>
+  <PersonalChronicle.UI.OverviewLiveSuffix> (current {0})</PersonalChronicle.UI.OverviewLiveSuffix>
+  <!-- v3.1: biography tabs -->
+  <PersonalChronicle.UI.Tab.Career>Career</PersonalChronicle.UI.Tab.Career>
+  <PersonalChronicle.UI.Tab.CombatLog>Combat record</PersonalChronicle.UI.Tab.CombatLog>
+  <PersonalChronicle.UI.Tab.Social>Social</PersonalChronicle.UI.Tab.Social>
+  <PersonalChronicle.UI.Tab.Legacy>Legacy</PersonalChronicle.UI.Tab.Legacy>
+  <PersonalChronicle.UI.Lifecycle>Lifecycle</PersonalChronicle.UI.Lifecycle>
+  <PersonalChronicle.UI.Backstory>Backstory</PersonalChronicle.UI.Backstory>
+  <PersonalChronicle.UI.DaysInColony>Days in colony</PersonalChronicle.UI.DaysInColony>
+  <PersonalChronicle.UI.CareerSummary>Career summary</PersonalChronicle.UI.CareerSummary>
+  <PersonalChronicle.UI.PrimaryWork>Primary work</PersonalChronicle.UI.PrimaryWork>
+  <PersonalChronicle.UI.SecondaryWork>Secondary work</PersonalChronicle.UI.SecondaryWork>
+  <PersonalChronicle.UI.TotalWorkHours>Total work hours</PersonalChronicle.UI.TotalWorkHours>
+  <PersonalChronicle.UI.Footprint>Footprint</PersonalChronicle.UI.Footprint>
+  <PersonalChronicle.UI.PrimaryPlace>Home place</PersonalChronicle.UI.PrimaryPlace>
+  <PersonalChronicle.UI.KeyEvents>Key events</PersonalChronicle.UI.KeyEvents>
+  <PersonalChronicle.UI.NoMilestones>No deeds worthy of the chronicle yet</PersonalChronicle.UI.NoMilestones>
+  <PersonalChronicle.UI.DaysUnit>d</PersonalChronicle.UI.DaysUnit>
+  <PersonalChronicle.UI.SpanYear>{0} y</PersonalChronicle.UI.SpanYear>
+  <PersonalChronicle.UI.SpanQuadrum>{0} q</PersonalChronicle.UI.SpanQuadrum>
+  <PersonalChronicle.UI.SpanDay>{0} d</PersonalChronicle.UI.SpanDay>
+  <PersonalChronicle.UI.SpanHour>{0} h</PersonalChronicle.UI.SpanHour>
+  <PersonalChronicle.UI.SpanMinute>{0} min</PersonalChronicle.UI.SpanMinute>
+  <PersonalChronicle.UI.CareerPrimary>Primary</PersonalChronicle.UI.CareerPrimary>
+  <PersonalChronicle.UI.CareerSecondary>Secondary</PersonalChronicle.UI.CareerSecondary>
+  <PersonalChronicle.UI.FootprintPlaces>Places visited</PersonalChronicle.UI.FootprintPlaces>
+  <PersonalChronicle.UI.FootprintHome>Home base</PersonalChronicle.UI.FootprintHome>
+  <PersonalChronicle.UI.FootprintExpeditions>Expeditions</PersonalChronicle.UI.FootprintExpeditions>
+  <PersonalChronicle.UI.FootprintHomeTag>Home</PersonalChronicle.UI.FootprintHomeTag>
+  <PersonalChronicle.UI.LifePhase.Origin>Origin</PersonalChronicle.UI.LifePhase.Origin>
+  <PersonalChronicle.UI.LifePhase.Join>Joined colony</PersonalChronicle.UI.LifePhase.Join>
+  <PersonalChronicle.UI.LifePhase.JoinUnknown>Enlisted</PersonalChronicle.UI.LifePhase.JoinUnknown>
+  <PersonalChronicle.UI.LifePhase.JoinUnknownSub>Mid-install: no join event</PersonalChronicle.UI.LifePhase.JoinUnknownSub>
+  <PersonalChronicle.UI.LifePhase.Active>Active</PersonalChronicle.UI.LifePhase.Active>
+  <PersonalChronicle.UI.LifePhase.ActiveSub.Alive>In service</PersonalChronicle.UI.LifePhase.ActiveSub.Alive>
+  <PersonalChronicle.UI.LifePhase.ActiveSub.Archived>From service to fall</PersonalChronicle.UI.LifePhase.ActiveSub.Archived>
+  <PersonalChronicle.UI.LifePhase.Death>Fallen</PersonalChronicle.UI.LifePhase.Death>
+  <PersonalChronicle.UI.EvDeath>Death</PersonalChronicle.UI.EvDeath>
+  <PersonalChronicle.UI.EvJoin>Join</PersonalChronicle.UI.EvJoin>
+  <PersonalChronicle.UI.EvBattle>Battle</PersonalChronicle.UI.EvBattle>
+  <PersonalChronicle.UI.EvCraft>Craft</PersonalChronicle.UI.EvCraft>
+  <PersonalChronicle.UI.EvBuilt>Built</PersonalChronicle.UI.EvBuilt>
+  <PersonalChronicle.UI.EvSocial>Relation</PersonalChronicle.UI.EvSocial>
+  <PersonalChronicle.UI.EvOther>Other</PersonalChronicle.UI.EvOther>
+  <PersonalChronicle.UI.KpiBattles>Battles</PersonalChronicle.UI.KpiBattles>
+  <PersonalChronicle.UI.KpiKills>Kills</PersonalChronicle.UI.KpiKills>
+  <PersonalChronicle.UI.KpiHolders>Holders</PersonalChronicle.UI.KpiHolders>
+  <PersonalChronicle.UI.KpiCrafter>Crafter</PersonalChronicle.UI.KpiCrafter>
+  <PersonalChronicle.UI.KpiEvents>Events</PersonalChronicle.UI.KpiEvents>
+  <PersonalChronicle.UI.KpiRelations>Relations</PersonalChronicle.UI.KpiRelations>
+  <PersonalChronicle.UI.ArchiveDataNote>Archived biography data — readable after death.</PersonalChronicle.UI.ArchiveDataNote>
+  <PersonalChronicle.UI.WorkTime>Work time by type</PersonalChronicle.UI.WorkTime>
+  <PersonalChronicle.UI.WorkTimeFootnote>Sampled about every 2 seconds since this version; frozen on death. Not vanilla work priorities.</PersonalChronicle.UI.WorkTimeFootnote>
+  <PersonalChronicle.UI.NoWorkTimeData>No work-time samples yet (accumulates after install).</PersonalChronicle.UI.NoWorkTimeData>
+  <PersonalChronicle.UI.Intensity.SampleInsufficient>Sampling</PersonalChronicle.UI.Intensity.SampleInsufficient>
+  <PersonalChronicle.UI.Intensity.Estimated>Estimated</PersonalChronicle.UI.Intensity.Estimated>
+  <PersonalChronicle.UI.Intensity.Actual>Actual</PersonalChronicle.UI.Intensity.Actual>
+  <PersonalChronicle.UI.Intensity.ObservedWindow>Observed {0} days</PersonalChronicle.UI.Intensity.ObservedWindow>
+  <PersonalChronicle.UI.Intensity.Daily>Daily average</PersonalChronicle.UI.Intensity.Daily>
+  <PersonalChronicle.UI.Intensity.Weekly>Weekly projection</PersonalChronicle.UI.Intensity.Weekly>
+  <PersonalChronicle.UI.Intensity.MonthlyEst>30-day projection: {0}</PersonalChronicle.UI.Intensity.MonthlyEst>
+  <PersonalChronicle.UI.Intensity.Relative>Colony relative load: {0}x</PersonalChronicle.UI.Intensity.Relative>
+  <PersonalChronicle.UI.Intensity.RelativeUnavailable>Colony relative load unavailable</PersonalChronicle.UI.Intensity.RelativeUnavailable>
+  <PersonalChronicle.UI.Intensity.Overload>High relative load</PersonalChronicle.UI.Intensity.Overload>
+  <PersonalChronicle.UI.Intensity.Slack>Low relative load</PersonalChronicle.UI.Intensity.Slack>
+  <PersonalChronicle.UI.Intensity.Rank>Colony rank {0}/{1}</PersonalChronicle.UI.Intensity.Rank>
+  <PersonalChronicle.UI.Intensity.RankUnknown>Colony rank unavailable</PersonalChronicle.UI.Intensity.RankUnknown>
+  <PersonalChronicle.UI.Intensity.WorkShare>Personal share {0}% · {1}% of top</PersonalChronicle.UI.Intensity.WorkShare>
+  <PersonalChronicle.UI.Hours>{0} h</PersonalChronicle.UI.Hours>
+  <PersonalChronicle.UI.NotAvailable>—</PersonalChronicle.UI.NotAvailable>
+  <PersonalChronicle.UI.IntensityTier.ReactorMule>Reactor mule</PersonalChronicle.UI.IntensityTier.ReactorMule>
+  <PersonalChronicle.UI.IntensityTier.SuperWorkhorse>Super workhorse</PersonalChronicle.UI.IntensityTier.SuperWorkhorse>
+  <PersonalChronicle.UI.IntensityTier.RegularWorkhorse>Regular workhorse</PersonalChronicle.UI.IntensityTier.RegularWorkhorse>
+  <PersonalChronicle.UI.IntensityTier.PoorWorkhorse>Poor workhorse</PersonalChronicle.UI.IntensityTier.PoorWorkhorse>
+  <PersonalChronicle.UI.IntensityTier.SocialSlacker>Social slacker</PersonalChronicle.UI.IntensityTier.SocialSlacker>
+  <PersonalChronicle.UI.IntensityTag.ReactorMule>12+ h/day · extreme</PersonalChronicle.UI.IntensityTag.ReactorMule>
+  <PersonalChronicle.UI.IntensityTag.SuperWorkhorse>9–12 h/day · heavy</PersonalChronicle.UI.IntensityTag.SuperWorkhorse>
+  <PersonalChronicle.UI.IntensityTag.RegularWorkhorse>6–9 h/day · steady</PersonalChronicle.UI.IntensityTag.RegularWorkhorse>
+  <PersonalChronicle.UI.IntensityTag.PoorWorkhorse>3–6 h/day · light</PersonalChronicle.UI.IntensityTag.PoorWorkhorse>
+  <PersonalChronicle.UI.IntensityTag.SocialSlacker>0–3 h/day · low</PersonalChronicle.UI.IntensityTag.SocialSlacker>
+  <PersonalChronicle.UI.Rank>Rank</PersonalChronicle.UI.Rank>
+  <PersonalChronicle.UI.WorkHours>Hours</PersonalChronicle.UI.WorkHours>
+  <PersonalChronicle.UI.WorkShare>Share</PersonalChronicle.UI.WorkShare>
+  <PersonalChronicle.UI.LastWorked>Last worked</PersonalChronicle.UI.LastWorked>
+  <PersonalChronicle.UI.SkillArchive>Skill archive</PersonalChronicle.UI.SkillArchive>
+  <PersonalChronicle.UI.NoSkillArchive>No skill snapshots yet.</PersonalChronicle.UI.NoSkillArchive>
+  <PersonalChronicle.UI.SkillName>Skill</PersonalChronicle.UI.SkillName>
+  <PersonalChronicle.UI.SkillJoin>At join</PersonalChronicle.UI.SkillJoin>
+  <PersonalChronicle.UI.SkillNow>Now/death</PersonalChronicle.UI.SkillNow>
+  <PersonalChronicle.UI.SkillDelta>Δ</PersonalChronicle.UI.SkillDelta>
+  <PersonalChronicle.UI.DeathDossier>Death dossier</PersonalChronicle.UI.DeathDossier>
+  <PersonalChronicle.UI.Intertwined>Intertwined fates</PersonalChronicle.UI.Intertwined>
+  <PersonalChronicle.UI.SharedEvents>Shared events</PersonalChronicle.UI.SharedEvents>
+  <PersonalChronicle.UI.SharedEventsN>{0} shared events</PersonalChronicle.UI.SharedEventsN>
+  <PersonalChronicle.UI.NoRelationData>No significant ties recorded yet.</PersonalChronicle.UI.NoRelationData>
+  <PersonalChronicle.UI.NoSocialData>No linked people yet.</PersonalChronicle.UI.NoSocialData>
+  <PersonalChronicle.UI.ImportantRelations>Significant ties</PersonalChronicle.UI.ImportantRelations>
+  <PersonalChronicle.UI.ImportantRelationsNote>Marriage/rival events will be added later; for now only event co-occurrence is listed.</PersonalChronicle.UI.ImportantRelationsNote>
+  <!-- v3.1 P2 combat -->
+  <PersonalChronicle.UI.KillRecords>Kill records</PersonalChronicle.UI.KillRecords>
+  <PersonalChronicle.UI.NoKillRecords>No kill records.</PersonalChronicle.UI.NoKillRecords>
+  <!-- v4.3 faction codex -->
+  <PersonalChronicle.UI.FactionCodexTitle>Faction Codex</PersonalChronicle.UI.FactionCodexTitle>
+  <PersonalChronicle.UI.StatKills>Kills</PersonalChronicle.UI.StatKills>
+  <PersonalChronicle.UI.StatRaids>Raids</PersonalChronicle.UI.StatRaids>
+  <PersonalChronicle.UI.StatBattles>Battles</PersonalChronicle.UI.StatBattles>
+  <PersonalChronicle.UI.StatOurLosses>Our losses</PersonalChronicle.UI.StatOurLosses>
+  <PersonalChronicle.UI.FactionKindEnemy>Enemy faction</PersonalChronicle.UI.FactionKindEnemy>
+  <PersonalChronicle.UI.FactionKindMechanoid>Mechanoid</PersonalChronicle.UI.FactionKindMechanoid>
+  <PersonalChronicle.UI.FactionKindAnimal>Animal/Factionless</PersonalChronicle.UI.FactionKindAnimal>
+  <PersonalChronicle.UI.FactionKindUnknown>Unknown</PersonalChronicle.UI.FactionKindUnknown>
+  <PersonalChronicle.UI.FactionRelHostile>Hostile</PersonalChronicle.UI.FactionRelHostile>
+  <PersonalChronicle.UI.FactionRelNeutral>Neutral</PersonalChronicle.UI.FactionRelNeutral>
+  <PersonalChronicle.UI.FactionRelAlly>Ally</PersonalChronicle.UI.FactionRelAlly>
+  <PersonalChronicle.UI.FactionRelUnresolved>Unresolved</PersonalChronicle.UI.FactionRelUnresolved>
+  <PersonalChronicle.UI.FactionUnknown>Unknown/Environment</PersonalChronicle.UI.FactionUnknown>
+  <PersonalChronicle.UI.FactionPlayer>Our colony</PersonalChronicle.UI.FactionPlayer>
+  <PersonalChronicle.UI.FactionWild>Wildlife/Factionless</PersonalChronicle.UI.FactionWild>
+  <PersonalChronicle.UI.FactionFactionless>Factionless</PersonalChronicle.UI.FactionFactionless>
+  <PersonalChronicle.UI.CombatFooter>Battles {0} · Kills {1}</PersonalChronicle.UI.CombatFooter>
+  <PersonalChronicle.UI.HolderHistory>Custody history</PersonalChronicle.UI.HolderHistory>
+  <PersonalChronicle.UI.NoHolderHistory>No custody history yet (recorded on craft/use).</PersonalChronicle.UI.NoHolderHistory>
+  <!-- v4.7 Legacy (ownership-transfer chain) -->
+  <PersonalChronicle.UI.Legacy.Empty>This equipment has no legacy record yet.</PersonalChronicle.UI.Legacy.Empty>
+  <PersonalChronicle.UI.Legacy.Summary>Legacy Summary</PersonalChronicle.UI.Legacy.Summary>
+  <PersonalChronicle.UI.Legacy.CreatedBy>Created by</PersonalChronicle.UI.Legacy.CreatedBy>
+  <PersonalChronicle.UI.Legacy.CreatedAt>Created at</PersonalChronicle.UI.Legacy.CreatedAt>
+  <PersonalChronicle.UI.Legacy.Gen>Generations</PersonalChronicle.UI.Legacy.Gen>
+  <PersonalChronicle.UI.Legacy.GenNote>Ownership transfers only</PersonalChronicle.UI.Legacy.GenNote>
+  <PersonalChronicle.UI.Legacy.TotalKills>Total kills</PersonalChronicle.UI.Legacy.TotalKills>
+  <PersonalChronicle.UI.Legacy.CurrentHolder>Current holder</PersonalChronicle.UI.Legacy.CurrentHolder>
+  <PersonalChronicle.UI.Legacy.Holders>Holders Through Ages</PersonalChronicle.UI.Legacy.Holders>
+  <PersonalChronicle.UI.Legacy.NoHolders>No holder records.</PersonalChronicle.UI.Legacy.NoHolders>
+  <PersonalChronicle.UI.Legacy.ColGen>Gen</PersonalChronicle.UI.Legacy.ColGen>
+  <PersonalChronicle.UI.Legacy.ColHolder>Holder</PersonalChronicle.UI.Legacy.ColHolder>
+  <PersonalChronicle.UI.Legacy.ColFrom>From</PersonalChronicle.UI.Legacy.ColFrom>
+  <PersonalChronicle.UI.Legacy.ColTo>To</PersonalChronicle.UI.Legacy.ColTo>
+  <PersonalChronicle.UI.Legacy.ColDur>Duration</PersonalChronicle.UI.Legacy.ColDur>
+  <PersonalChronicle.UI.Legacy.ColKills>Kills</PersonalChronicle.UI.Legacy.ColKills>
+  <PersonalChronicle.UI.Legacy.ColRemark>Note</PersonalChronicle.UI.Legacy.ColRemark>
+  <PersonalChronicle.UI.Legacy.GenN>Gen {0}</PersonalChronicle.UI.Legacy.GenN>
+  <PersonalChronicle.UI.Legacy.First>First</PersonalChronicle.UI.Legacy.First>
+  <PersonalChronicle.UI.Legacy.Loan>Loan</PersonalChronicle.UI.Legacy.Loan>
+  <PersonalChronicle.UI.Legacy.LoanRemark>Borrowed/lent, not an ownership transfer</PersonalChronicle.UI.Legacy.LoanRemark>
+  <PersonalChronicle.UI.Legacy.Now>Now</PersonalChronicle.UI.Legacy.Now>
+  <PersonalChronicle.UI.Legacy.ExpandAll>{0} holders · Expand all</PersonalChronicle.UI.Legacy.ExpandAll>
+  <PersonalChronicle.UI.Legacy.Collapse>Collapse</PersonalChronicle.UI.Legacy.Collapse>
+  <PersonalChronicle.UI.Legacy.EpithetWeapons>Blade of the Battlefield</PersonalChronicle.UI.Legacy.EpithetWeapons>
+  <PersonalChronicle.UI.Legacy.EpithetApparel>Garments of Yore</PersonalChronicle.UI.Legacy.EpithetApparel>
+  <PersonalChronicle.UI.Legacy.VerdictNoGen>Never changed hands; silent service.</PersonalChronicle.UI.Legacy.VerdictNoGen>
+  <PersonalChronicle.UI.Legacy.VerdictBlooded>Blooded and storied; many fell before it.</PersonalChronicle.UI.Legacy.VerdictBlooded>
+  <PersonalChronicle.UI.Legacy.VerdictTasted>Tasted battle; its edge is known.</PersonalChronicle.UI.Legacy.VerdictTasted>
+  <PersonalChronicle.UI.Legacy.VerdictPassed>Passed hand to hand, yet unblooded, awaiting its master.</PersonalChronicle.UI.Legacy.VerdictPassed>
+  <PersonalChronicle.UI.Legacy.VerdictFresh>Still fresh; its line is young.</PersonalChronicle.UI.Legacy.VerdictFresh>
+  <!-- v4.9 equipment legacy extension: origin / maker chain / co-use / decommission -->
+  <PersonalChronicle.UI.Tab.Origin>Origin</PersonalChronicle.UI.Tab.Origin>
+  <PersonalChronicle.UI.Tab.CoUse>Co-use</PersonalChronicle.UI.Tab.CoUse>
+  <PersonalChronicle.UI.Tab.Decommission>Retire</PersonalChronicle.UI.Tab.Decommission>
+  <PersonalChronicle.UI.Origin.Title>Origin trace</PersonalChronicle.UI.Origin.Title>
+  <PersonalChronicle.UI.Origin.Empty>Origin unknown — no craft, build or battle record for this equipment.</PersonalChronicle.UI.Origin.Empty>
+  <PersonalChronicle.UI.Origin.Craft>Colony-crafted</PersonalChronicle.UI.Origin.Craft>
+  <PersonalChronicle.UI.Origin.Battle>Battle-born</PersonalChronicle.UI.Origin.Battle>
+  <PersonalChronicle.UI.Origin.From>Origin</PersonalChronicle.UI.Origin.From>
+  <PersonalChronicle.UI.Origin.Where>Source</PersonalChronicle.UI.Origin.Where>
+  <PersonalChronicle.UI.Origin.MakerChain>Maker chain</PersonalChronicle.UI.Origin.MakerChain>
+  <PersonalChronicle.UI.Origin.MakerDiedByOwn>This maker died by their own creation</PersonalChronicle.UI.Origin.MakerDiedByOwn>
+  <PersonalChronicle.UI.CoUse.Title>Co-use network</PersonalChronicle.UI.CoUse.Title>
+  <PersonalChronicle.UI.CoUse.Hint>Colonists who used this equipment in parallel with the current holder (by shared tenure).</PersonalChronicle.UI.CoUse.Hint>
+  <PersonalChronicle.UI.CoUse.Empty>This equipment had a single holder; no co-use.</PersonalChronicle.UI.CoUse.Empty>
+  <PersonalChronicle.UI.Decommission.Title>Decommission</PersonalChronicle.UI.Decommission.Title>
+  <PersonalChronicle.UI.Decommission.Empty>Still in service — no decommission record yet.</PersonalChronicle.UI.Decommission.Empty>
+  <PersonalChronicle.UI.Decommission.Stamp>Retired</PersonalChronicle.UI.Decommission.Stamp>
+  <PersonalChronicle.UI.Decommission.LastHolder>Last holder</PersonalChronicle.UI.Decommission.LastHolder>
+  <PersonalChronicle.UI.Decommission.Place>Retired at</PersonalChronicle.UI.Decommission.Place>
+  <PersonalChronicle.UI.Decommission.ServiceDays>Service days</PersonalChronicle.UI.Decommission.ServiceDays>
+  <PersonalChronicle.UI.Decommission.LastBattle>Final battle</PersonalChronicle.UI.Decommission.LastBattle>
+  <PersonalChronicle.UI.Decommission.Date>Retired on</PersonalChronicle.UI.Decommission.Date>
+  <!-- v3.1 P3 place + social -->
+  <PersonalChronicle.Event.Social>Social relation</PersonalChronicle.Event.Social>
+  <PersonalChronicle.Event.Social.Desc>A significant social relation changed.</PersonalChronicle.Event.Social.Desc>
+  <PersonalChronicle.UI.PlaceVisitCount>Place visits</PersonalChronicle.UI.PlaceVisitCount>
+  <PersonalChronicle.UI.NoPlaceHistory>No place history yet (sampled after install).</PersonalChronicle.UI.NoPlaceHistory>
+  <PersonalChronicle.UI.PlaceName>Place</PersonalChronicle.UI.PlaceName>
+  <PersonalChronicle.UI.PlaceEnter>Entered</PersonalChronicle.UI.PlaceEnter>
+  <PersonalChronicle.UI.PlaceLeave>Left</PersonalChronicle.UI.PlaceLeave>
+  <PersonalChronicle.UI.PlaceStillThere>Still there</PersonalChronicle.UI.PlaceStillThere>
+  <PersonalChronicle.UI.NoSignificantRelations>No significant ties yet (recorded when lover/spouse/family forms).</PersonalChronicle.UI.NoSignificantRelations>
+  <PersonalChronicle.UI.RelType>Tie</PersonalChronicle.UI.RelType>
+  <PersonalChronicle.UI.RelPerson>Person</PersonalChronicle.UI.RelPerson>
+  <PersonalChronicle.UI.RelStatus>Status</PersonalChronicle.UI.RelStatus>
+  <PersonalChronicle.UI.RelSince>Since</PersonalChronicle.UI.RelSince>
+  <PersonalChronicle.UI.RelActive>Active</PersonalChronicle.UI.RelActive>
+  <PersonalChronicle.UI.RelEnded>Ended</PersonalChronicle.UI.RelEnded>
+  <!-- Opinion-derived ties: vanilla has no PawnRelationDef for these. -->
+  <PersonalChronicle.Relation.Friend>Friend</PersonalChronicle.Relation.Friend>
+  <PersonalChronicle.Relation.Rival>Rival</PersonalChronicle.Relation.Rival>
+  <PersonalChronicle.UI.RelationEvents>Relation events</PersonalChronicle.UI.RelationEvents>
+  <PersonalChronicle.UI.NoRelationEvents>No relation events yet.</PersonalChronicle.UI.NoRelationEvents>
+  <PersonalChronicle.UI.SocialFormedTitle>Formed {0} · {1}</PersonalChronicle.UI.SocialFormedTitle>
+  <PersonalChronicle.UI.SocialEndedTitle>Ended {0} · {1}</PersonalChronicle.UI.SocialEndedTitle>
+  <PersonalChronicle.UI.RelActionFormed>Formed</PersonalChronicle.UI.RelActionFormed>
+  <PersonalChronicle.UI.RelActionEnded>Ended</PersonalChronicle.UI.RelActionEnded>
+  <PersonalChronicle.UI.VictimWithName>Victim: {0}</PersonalChronicle.UI.VictimWithName>
+  <PersonalChronicle.UI.RelationNetwork>Relationship network</PersonalChronicle.UI.RelationNetwork>
+  <PersonalChronicle.UI.TimelineCareerLayer>Career</PersonalChronicle.UI.TimelineCareerLayer>
+  <PersonalChronicle.UI.TimelineCombatLayer>Combat</PersonalChronicle.UI.TimelineCombatLayer>
+  <PersonalChronicle.UI.TimelineSocialLayer>Social</PersonalChronicle.UI.TimelineSocialLayer>
+  <PersonalChronicle.UI.TimelineImportance>Minimum importance: {0}</PersonalChronicle.UI.TimelineImportance>
+  <PersonalChronicle.UI.ImportanceRoutine>Routine</PersonalChronicle.UI.ImportanceRoutine>
+  <PersonalChronicle.UI.ImportanceNormal>Normal</PersonalChronicle.UI.ImportanceNormal>
+  <PersonalChronicle.UI.ImportanceImportant>Important</PersonalChronicle.UI.ImportanceImportant>
+  <PersonalChronicle.UI.ImportanceCritical>Critical</PersonalChronicle.UI.ImportanceCritical>
+  <PersonalChronicle.UI.NoTimelineMatches>No events match the current layers.</PersonalChronicle.UI.NoTimelineMatches>
+  <PersonalChronicle.UI.ProductionValue>Produced value</PersonalChronicle.UI.ProductionValue>
+  <PersonalChronicle.UI.ProductionQuantity>Quantity: {0}</PersonalChronicle.UI.ProductionQuantity>
+  <PersonalChronicle.UI.ProductionCard>{0} items · {1}</PersonalChronicle.UI.ProductionCard>
+  <PersonalChronicle.UI.MarketValueFormat>{0} silver</PersonalChronicle.UI.MarketValueFormat>
+  <!-- v4.0 home KPI dashboard -->
+  <PersonalChronicle.UI.HomeRealtimeGroup>Live indicators</PersonalChronicle.UI.HomeRealtimeGroup>
+  <PersonalChronicle.UI.HomeArchiveGroup>Archive records</PersonalChronicle.UI.HomeArchiveGroup>
+  <PersonalChronicle.UI.HomeLiveColonists>Current colonists</PersonalChronicle.UI.HomeLiveColonists>
+  <PersonalChronicle.UI.HomeServiceDays>Days in service</PersonalChronicle.UI.HomeServiceDays>
+  <PersonalChronicle.UI.HomeLivePawns>Living colonists</PersonalChronicle.UI.HomeLivePawns>
+  <PersonalChronicle.UI.HomeColonistBreakdown>Free {0} · Slave {1} · Prisoner {2}</PersonalChronicle.UI.HomeColonistBreakdown>
+  <PersonalChronicle.UI.HomeServiceSince>Since first archive record</PersonalChronicle.UI.HomeServiceSince>
+  <PersonalChronicle.UI.HomeSnapshotBreakdown>Active {0} · Archived {1}</PersonalChronicle.UI.HomeSnapshotBreakdown>
+  <!-- Health residual · asset depreciation -->
+  <PersonalChronicle.UI.HealthValuation.Title>Health Residual · Asset Depreciation</PersonalChronicle.UI.HealthValuation.Title>
+  <PersonalChronicle.UI.HealthValuation.NoData>No health valuation data for this colonist.</PersonalChronicle.UI.HealthValuation.NoData>
+  <PersonalChronicle.UI.HealthValuation.Score>Composite health</PersonalChronicle.UI.HealthValuation.Score>
+  <PersonalChronicle.UI.HealthValuation.Body>Body integrity</PersonalChronicle.UI.HealthValuation.Body>
+  <PersonalChronicle.UI.HealthValuation.Age>Bio age</PersonalChronicle.UI.HealthValuation.Age>
+  <PersonalChronicle.UI.HealthValuation.SilverValue>Silver value</PersonalChronicle.UI.HealthValuation.SilverValue>
+  <PersonalChronicle.UI.HealthValuation.BaseValue>Base value {0}</PersonalChronicle.UI.HealthValuation.BaseValue>
+  <PersonalChronicle.UI.HealthValuation.Depreciation>Residual depreciation</PersonalChronicle.UI.HealthValuation.Depreciation>
+  <PersonalChronicle.UI.HealthValuation.Factor.PrimeBody>Body intact, no depreciation factor</PersonalChronicle.UI.HealthValuation.Factor.PrimeBody>
+  <PersonalChronicle.UI.HealthValuation.Factor.HealthLoss>Health-deficit depreciation</PersonalChronicle.UI.HealthValuation.Factor.HealthLoss>
+  <PersonalChronicle.UI.HealthValuation.Factor.AgeWear>Age-wear depreciation</PersonalChronicle.UI.HealthValuation.Factor.AgeWear>
+  <PersonalChronicle.UI.HealthValuation.Penalty.Asthma>Asthma</PersonalChronicle.UI.HealthValuation.Penalty.Asthma>
+  <PersonalChronicle.UI.HealthValuation.Penalty.BadBack>Bad back</PersonalChronicle.UI.HealthValuation.Penalty.BadBack>
+  <PersonalChronicle.UI.HealthValuation.Penalty.Cataract>Cataract</PersonalChronicle.UI.HealthValuation.Penalty.Cataract>
+  <PersonalChronicle.UI.HealthValuation.Penalty.Frail>Frail</PersonalChronicle.UI.HealthValuation.Penalty.Frail>
+  <PersonalChronicle.UI.HealthValuation.Penalty.Diabetes>Diabetes</PersonalChronicle.UI.HealthValuation.Penalty.Diabetes>
+  <PersonalChronicle.UI.HealthValuation.Penalty.Alcoholism>Alcoholism</PersonalChronicle.UI.HealthValuation.Penalty.Alcoholism>
+  <PersonalChronicle.UI.HealthValuation.Penalty.ChemicalDamage>Chemical burn</PersonalChronicle.UI.HealthValuation.Penalty.ChemicalDamage>
+  <PersonalChronicle.UI.HealthValuation.TipHeader>Valuation factors (pos/neg):</PersonalChronicle.UI.HealthValuation.TipHeader>
+  <PersonalChronicle.UI.HealthValuation.TipEmpty>No detailed valuation factors.</PersonalChronicle.UI.HealthValuation.TipEmpty>
+  <PersonalChronicle.UI.HealthValuation.TipTotal>Final value: {0} silver</PersonalChronicle.UI.HealthValuation.TipTotal>
+  <PersonalChronicle.UI.HealthValuation.WeeklyYield>Weekly yield estimate</PersonalChronicle.UI.HealthValuation.WeeklyYield>
+  <PersonalChronicle.UI.HealthValuation.Dim.Body>Body integrity</PersonalChronicle.UI.HealthValuation.Dim.Body>
+  <PersonalChronicle.UI.HealthValuation.Dim.Spirit>Spirit</PersonalChronicle.UI.HealthValuation.Dim.Spirit>
+  <PersonalChronicle.UI.HealthValuation.Dim.Youth>Youth</PersonalChronicle.UI.HealthValuation.Dim.Youth>
+  <PersonalChronicle.UI.HealthValuation.Factor.BodyBaseline>Body baseline solid</PersonalChronicle.UI.HealthValuation.Factor.BodyBaseline>
+  <PersonalChronicle.UI.HealthValuation.Factor.NoChronic>No chronic conditions</PersonalChronicle.UI.HealthValuation.Factor.NoChronic>
+  <PersonalChronicle.UI.HealthValuation.Factor.SpiritStable>Spirit stable</PersonalChronicle.UI.HealthValuation.Factor.SpiritStable>
+  <PersonalChronicle.UI.HealthValuation.Factor.SpiritLoss>Spiritual trauma</PersonalChronicle.UI.HealthValuation.Factor.SpiritLoss>
+  <PersonalChronicle.UI.HealthValuation.Factor.YouthPrime>In prime, low depreciation</PersonalChronicle.UI.HealthValuation.Factor.YouthPrime>
+  <PersonalChronicle.UI.HealthValuation.Factor.YouthWorn>Aging, heavier depreciation</PersonalChronicle.UI.HealthValuation.Factor.YouthWorn>
+  <PersonalChronicle.UI.HealthValuation.EventTag.Drop>Drop</PersonalChronicle.UI.HealthValuation.EventTag.Drop>
+  <PersonalChronicle.UI.HealthValuation.EventTag.Recoverable>Recoverable</PersonalChronicle.UI.HealthValuation.EventTag.Recoverable>
+  <PersonalChronicle.UI.HealthValuation.EventTag.Permanent>Permanent scar</PersonalChronicle.UI.HealthValuation.EventTag.Permanent>
+  <!-- Health depreciation events (HediffDef.defName -> readable event) -->
+  <PersonalChronicle.UI.HealthValuation.Event.Scratch>scratch</PersonalChronicle.UI.HealthValuation.Event.Scratch>
+  <PersonalChronicle.UI.HealthValuation.Event.Bite>bite</PersonalChronicle.UI.HealthValuation.Event.Bite>
+  <PersonalChronicle.UI.HealthValuation.Event.BadBack>bad back</PersonalChronicle.UI.HealthValuation.Event.BadBack>
+  <PersonalChronicle.UI.HealthValuation.Event.Frail>frail</PersonalChronicle.UI.HealthValuation.Event.Frail>
+  <PersonalChronicle.UI.HealthValuation.Event.Cataract>cataract</PersonalChronicle.UI.HealthValuation.Event.Cataract>
+  <PersonalChronicle.UI.HealthValuation.Event.HearingLoss>hearing loss</PersonalChronicle.UI.HealthValuation.Event.HearingLoss>
+  <PersonalChronicle.UI.HealthValuation.NoEvents>No injury record.</PersonalChronicle.UI.HealthValuation.NoEvents>
+  <PersonalChronicle.UI.HealthValuation.Verdict>Verdict:</PersonalChronicle.UI.HealthValuation.Verdict>
+  <PersonalChronicle.UI.HealthValuation.VerdictPrime>Prime — full output expected.</PersonalChronicle.UI.HealthValuation.VerdictPrime>
+  <PersonalChronicle.UI.HealthValuation.VerdictFair>Fair — watch depreciation.</PersonalChronicle.UI.HealthValuation.VerdictFair>
+  <PersonalChronicle.UI.HealthValuation.VerdictImpaired>Impaired — maintenance cost rising.</PersonalChronicle.UI.HealthValuation.VerdictImpaired>
+  <PersonalChronicle.UI.HealthValuation.VerdictDepleted>Depleted — little value left.</PersonalChronicle.UI.HealthValuation.VerdictDepleted>
+  <PersonalChronicle.UI.Ledger.Title>Extraction Ledger</PersonalChronicle.UI.Ledger.Title>
+  <PersonalChronicle.UI.Ledger.OutputValue>Realized output</PersonalChronicle.UI.Ledger.OutputValue>
+  <PersonalChronicle.UI.Ledger.OutputValueUnit>silver (collected)</PersonalChronicle.UI.Ledger.OutputValueUnit>
+  <PersonalChronicle.UI.Ledger.TotalWork>Total work hours</PersonalChronicle.UI.Ledger.TotalWork>
+  <PersonalChronicle.UI.Ledger.TotalWorkUnit>h</PersonalChronicle.UI.Ledger.TotalWorkUnit>
+  <PersonalChronicle.UI.Ledger.Weekly>Weekly average</PersonalChronicle.UI.Ledger.Weekly>
+  <PersonalChronicle.UI.Ledger.WeeklyUnit>silver/week</PersonalChronicle.UI.Ledger.WeeklyUnit>
+  <PersonalChronicle.UI.Ledger.Net>Net yield</PersonalChronicle.UI.Ledger.Net>
+  <PersonalChronicle.UI.Ledger.NetUnit>silver (est.)</PersonalChronicle.UI.Ledger.NetUnit>
+  <PersonalChronicle.UI.Ledger.UnknownValue>?</PersonalChronicle.UI.Ledger.UnknownValue>
+  <PersonalChronicle.UI.OutputLedger.Title>Output ledger</PersonalChronicle.UI.OutputLedger.Title>
+  <PersonalChronicle.UI.OutputLedger.Empty>No realised output yet.</PersonalChronicle.UI.OutputLedger.Empty>
+  <PersonalChronicle.UI.Cover.StampAlive>[Active · extractable]</PersonalChronicle.UI.Cover.StampAlive>
+  <PersonalChronicle.UI.Cover.StampDead>[Retired · settled]</PersonalChronicle.UI.Cover.StampDead>
+  <PersonalChronicle.UI.Cover.Incomplete>⚠ Mid-install · join date unknown · cannot estimate</PersonalChronicle.UI.Cover.Incomplete>
+  <PersonalChronicle.UI.Cover.RoleFormat>{0} · {1} · background: {2}</PersonalChronicle.UI.Cover.RoleFormat>
+  <PersonalChronicle.UI.Cover.RoleFormatNoFaction>{0} · background: {1}</PersonalChronicle.UI.Cover.RoleFormatNoFaction>
+  <PersonalChronicle.UI.Cover.RoleFormatNoBackground>{0} · {1}</PersonalChronicle.UI.Cover.RoleFormatNoBackground>
+  <PersonalChronicle.UI.Cover.RoleFormatMinimal>{0}</PersonalChronicle.UI.Cover.RoleFormatMinimal>
+  <PersonalChronicle.UI.Cover.Identity>Role·{0}</PersonalChronicle.UI.Cover.Identity>
+  <PersonalChronicle.UI.Cover.DaysKnown>enlisted {0} days</PersonalChronicle.UI.Cover.DaysKnown>
+  <PersonalChronicle.UI.Cover.DaysToDeath>enlisted {0} days (until death)</PersonalChronicle.UI.Cover.DaysToDeath>
+  <PersonalChronicle.UI.Cover.DaysUnknown>enlistment date unknown</PersonalChronicle.UI.Cover.DaysUnknown>
+  <PersonalChronicle.UI.Cover.PortraitLabel>Portrait</PersonalChronicle.UI.Cover.PortraitLabel>
+  <PersonalChronicle.UI.Cover.PortraitLabelSub>PortraitsCache</PersonalChronicle.UI.Cover.PortraitLabelSub>
+  <!-- v4.13 location atlas (Overview › Location): identity / ownership / geography / lifecycle / commerce -->
+  <PersonalChronicle.UI.LocKind.Player>Home</PersonalChronicle.UI.LocKind.Player>
+  <PersonalChronicle.UI.LocKind.Settle>City</PersonalChronicle.UI.LocKind.Settle>
+  <PersonalChronicle.UI.LocKind.Quest>Quest site</PersonalChronicle.UI.LocKind.Quest>
+  <PersonalChronicle.UI.LocKind.Unknown>Unknown land</PersonalChronicle.UI.LocKind.Unknown>
+  <PersonalChronicle.UI.LocFactionPlayer>Our Colony</PersonalChronicle.UI.LocFactionPlayer>
+  <PersonalChronicle.UI.LocFactionNone>No Man's Land</PersonalChronicle.UI.LocFactionNone>
+  <PersonalChronicle.UI.LocFactionOther>Faction Land</PersonalChronicle.UI.LocFactionOther>
+  <PersonalChronicle.UI.LocHillFlat>Flat</PersonalChronicle.UI.LocHillFlat>
+  <PersonalChronicle.UI.LocHillHilly>Hilly</PersonalChronicle.UI.LocHillHilly>
+  <PersonalChronicle.UI.LocHillMountain>Mountainous</PersonalChronicle.UI.LocHillMountain>
+  <PersonalChronicle.UI.LocHillImpassable>Impassable</PersonalChronicle.UI.LocHillImpassable>
+  <PersonalChronicle.UI.LocTagBiome>Biome</PersonalChronicle.UI.LocTagBiome>
+  <PersonalChronicle.UI.LocTagHill>Hill</PersonalChronicle.UI.LocTagHill>
+  <PersonalChronicle.UI.LocTagCoast>Coastal</PersonalChronicle.UI.LocTagCoast>
+  <PersonalChronicle.UI.LocTagPolluted>Polluted</PersonalChronicle.UI.LocTagPolluted>
+  <PersonalChronicle.UI.LocTemp>{0}°C</PersonalChronicle.UI.LocTemp>
+  <PersonalChronicle.UI.LocLifeEstablished>Founded</PersonalChronicle.UI.LocLifeEstablished>
+  <PersonalChronicle.UI.LocLifeStatus>Status</PersonalChronicle.UI.LocLifeStatus>
+  <PersonalChronicle.UI.LocLifeActive>Active</PersonalChronicle.UI.LocLifeActive>
+  <PersonalChronicle.UI.LocLifeRuined>Ruined</PersonalChronicle.UI.LocLifeRuined>
+  <PersonalChronicle.UI.LocLifeDwell>Dwell</PersonalChronicle.UI.LocLifeDwell>
+  <PersonalChronicle.UI.LocDwellYears>{0} y</PersonalChronicle.UI.LocDwellYears>
+  <PersonalChronicle.UI.LocDwellTransit>Transit</PersonalChronicle.UI.LocDwellTransit>
+  <PersonalChronicle.UI.LocExpandDetail>Expand chronicle</PersonalChronicle.UI.LocExpandDetail>
+  <PersonalChronicle.UI.LocCollapseDetail>Collapse</PersonalChronicle.UI.LocCollapseDetail>
+  <PersonalChronicle.UI.LocNoChronicle>No chronicle recorded for this place yet.</PersonalChronicle.UI.LocNoChronicle>
+  <PersonalChronicle.UI.TradeCan>Tradable</PersonalChronicle.UI.TradeCan>
+  <PersonalChronicle.UI.TradeNo>Not tradable</PersonalChronicle.UI.TradeNo>
+  <PersonalChronicle.UI.TradeCat.Res>Resources</PersonalChronicle.UI.TradeCat.Res>
+  <PersonalChronicle.UI.TradeCat.Cloth>Textiles</PersonalChronicle.UI.TradeCat.Cloth>
+  <PersonalChronicle.UI.TradeCat.Food>Food</PersonalChronicle.UI.TradeCat.Food>
+  <PersonalChronicle.UI.TradeCat.Drug>Drugs</PersonalChronicle.UI.TradeCat.Drug>
+  <PersonalChronicle.UI.TradeCat.Weapon>Weapons</PersonalChronicle.UI.TradeCat.Weapon>
+  <PersonalChronicle.UI.TradeCat.Armor>Armor</PersonalChronicle.UI.TradeCat.Armor>
+  <PersonalChronicle.UI.TradeCat.Implant>Implants</PersonalChronicle.UI.TradeCat.Implant>
+  <PersonalChronicle.UI.TradeCat.Tech>Tech</PersonalChronicle.UI.TradeCat.Tech>
+  <PersonalChronicle.UI.TradePermit>Requires {0}</PersonalChronicle.UI.TradePermit>
+  <PersonalChronicle.UI.TradePermitName>trade permit</PersonalChronicle.UI.TradePermitName>
+  <PersonalChronicle.UI.LocKpiTotal>Maps</PersonalChronicle.UI.LocKpiTotal>
+  <PersonalChronicle.UI.LocKpiHome>Home</PersonalChronicle.UI.LocKpiHome>
+  <PersonalChronicle.UI.LocKpiQuest>Quest sites</PersonalChronicle.UI.LocKpiQuest>
+  <PersonalChronicle.UI.LocKpiSettle>Cities</PersonalChronicle.UI.LocKpiSettle>
+  <PersonalChronicle.UI.LocKpiRuined>Ruined</PersonalChronicle.UI.LocKpiRuined>
+  <PersonalChronicle.UI.LocKpiTradable>Tradable</PersonalChronicle.UI.LocKpiTradable>
+  <PersonalChronicle.UI.LocKpiPermit>Permit</PersonalChronicle.UI.LocKpiPermit>
+  <PersonalChronicle.UI.LocKpiFactions>Factions</PersonalChronicle.UI.LocKpiFactions>
+  <PersonalChronicle.UI.LocDeinit.Destroyed>Ruined in battle</PersonalChronicle.UI.LocDeinit.Destroyed>
+  <PersonalChronicle.UI.LocDeinit.Abandoned>Abandoned</PersonalChronicle.UI.LocDeinit.Abandoned>
+  <PersonalChronicle.UI.LocSubLine>Est. {0} · {1} events</PersonalChronicle.UI.LocSubLine>
+  <!-- v4.15 pawn inspect "Chronicle" tab · six-cell core KPI -->
+  <PersonalChronicle.UI.Kpi.Work>Work Hours</PersonalChronicle.UI.Kpi.Work>
+  <PersonalChronicle.UI.Kpi.Prod>Output</PersonalChronicle.UI.Kpi.Prod>
+  <PersonalChronicle.UI.Kpi.Kill>Kills</PersonalChronicle.UI.Kpi.Kill>
+  <PersonalChronicle.UI.Kpi.Battle>Battles</PersonalChronicle.UI.Kpi.Battle>
+  <PersonalChronicle.UI.Kpi.Foot>Footprint</PersonalChronicle.UI.Kpi.Foot>
+  <PersonalChronicle.UI.Kpi.Rel>Relations</PersonalChronicle.UI.Kpi.Rel>
+  <PersonalChronicle.UI.Kpi.NoRecord>No record</PersonalChronicle.UI.Kpi.NoRecord>
+  <PersonalChronicle.UI.Kpi.Unit.Pieces>items</PersonalChronicle.UI.Kpi.Unit.Pieces>
+  <PersonalChronicle.UI.Kpi.Unit.Kills>kills</PersonalChronicle.UI.Kpi.Unit.Kills>
+  <PersonalChronicle.UI.Kpi.Unit.Battles>battles</PersonalChronicle.UI.Kpi.Unit.Battles>
+  <PersonalChronicle.UI.Kpi.Unit.PerDay>h/day</PersonalChronicle.UI.Kpi.Unit.PerDay>
+  <PersonalChronicle.UI.Kpi.Unit.Silver>silver</PersonalChronicle.UI.Kpi.Unit.Silver>
+  <PersonalChronicle.UI.Kpi.Unit.Days>days</PersonalChronicle.UI.Kpi.Unit.Days>
+  <PersonalChronicle.UI.Kpi.Unit.TotalHours>h</PersonalChronicle.UI.Kpi.Unit.TotalHours>
+  <PersonalChronicle.UI.Kpi.Rank>colony rank {0}/{1}</PersonalChronicle.UI.Kpi.Rank>
+  <PersonalChronicle.UI.Kpi.WeekHours>wk {0}h</PersonalChronicle.UI.Kpi.WeekHours>
+  <PersonalChronicle.UI.Kpi.CatMore>+{0} more</PersonalChronicle.UI.Kpi.CatMore>
+  <PersonalChronicle.UI.Kpi.Career>Main Work</PersonalChronicle.UI.Kpi.Career>
+  <PersonalChronicle.UI.Kpi.Home>Home Base</PersonalChronicle.UI.Kpi.Home>
+  <PersonalChronicle.UI.Kpi.Legacy>Divine Artifact</PersonalChronicle.UI.Kpi.Legacy>
+  <PersonalChronicle.UI.Kpi.WeekHours.S>Weekly hrs</PersonalChronicle.UI.Kpi.WeekHours.S>
+  <PersonalChronicle.UI.Kpi.DayHours.S>Daily</PersonalChronicle.UI.Kpi.DayHours.S>
+  <PersonalChronicle.UI.Kpi.UnitValue>Avg/unit</PersonalChronicle.UI.Kpi.UnitValue>
+  <PersonalChronicle.UI.Kpi.CatCount>Categories</PersonalChronicle.UI.Kpi.CatCount>
+  <PersonalChronicle.UI.Kpi.Cat>cat</PersonalChronicle.UI.Kpi.Cat>
+  <PersonalChronicle.UI.Kpi.PreyKinds>Prey kinds</PersonalChronicle.UI.Kpi.PreyKinds>
+  <PersonalChronicle.UI.Kpi.Kind>kind</PersonalChronicle.UI.Kpi.Kind>
+  <PersonalChronicle.UI.Kpi.Divine>Decisive</PersonalChronicle.UI.Kpi.Divine>
+  <PersonalChronicle.UI.Kpi.Kills>Kills dealt</PersonalChronicle.UI.Kpi.Kills>
+  <PersonalChronicle.UI.Kpi.Losses>Losses</PersonalChronicle.UI.Kpi.Losses>
+  <PersonalChronicle.UI.Kpi.Roster>Roster size</PersonalChronicle.UI.Kpi.Roster>
+  <PersonalChronicle.UI.Kpi.LongestStay>Longest stay</PersonalChronicle.UI.Kpi.LongestStay>
+  <PersonalChronicle.UI.Legacy.ForgedBy>Forged by</PersonalChronicle.UI.Legacy.ForgedBy>
+  <PersonalChronicle.UI.Legacy.GenUnit>gen</PersonalChronicle.UI.Legacy.GenUnit>
+  <PersonalChronicle.UI.Legacy.CurrentKills>Current kills</PersonalChronicle.UI.Legacy.CurrentKills>
+  <PersonalChronicle.UI.Legacy.Current>Current</PersonalChronicle.UI.Legacy.Current>
+  <PersonalChronicle.UI.Legacy.Next>Next gen</PersonalChronicle.UI.Legacy.Next>
+  <PersonalChronicle.UI.Kpi.Health>Health Value</PersonalChronicle.UI.Kpi.Health>
+  <PersonalChronicle.UI.InspectTab.ViewTimeline>View full timeline →</PersonalChronicle.UI.InspectTab.ViewTimeline>
+  <PersonalChronicle.UI.InspectTab.Milestones>Milestones</PersonalChronicle.UI.InspectTab.Milestones>
+  <PersonalChronicle.UI.InspectTab.MoreMilestones>{0} entries · scroll</PersonalChronicle.UI.InspectTab.MoreMilestones>
+</LanguageData>

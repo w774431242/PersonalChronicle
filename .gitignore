@@ -42,6 +42,3 @@ Directory.Build.props.user
 *.tmp
 docs/ui-preview/_probe*.ps1
 docs/ui-preview/_verify.cjs
-
-# Local full-project snapshot backups (dated safety copies; never version-controlled)
-_backup/
