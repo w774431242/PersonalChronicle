@@ -1,158 +1,113 @@
+// Phase 1 partial split (08-架构层-代码轻量化方案.md §3.4): Detail + sub-views (pawn/workplace/medal/legacy/...).
 using System.Collections.Generic;
 using PersonalChronicle.Application;
 using PersonalChronicle.Domain;
+using Verse;
 
 namespace PersonalChronicle.Archive.ReadModels
 {
     /// <summary>
-    /// Home dashboard read model (P2-6). Holds only raw, pre-sorted, null-guarded
-    /// data from <see cref="IArchiveService"/>. The window translates these into its
-    /// own display <c>RecentLineView</c> / <c>ImportantCardView</c> structs, keeping
-    /// the snapshot free of any window-private type. All ordering and null-guards
-    /// happen here, not in the draw path.
+    /// v1.1.4 劳模住所/工坊检测：工作场所展示视图。只承载已解析的展示文本
+    /// （BuildingDefName 稳定键 → LabelCap 实时解析 + 所在房间角色 label），
+    /// 窗口只消费，不重新解析 DefDatabase。
     /// </summary>
-    public sealed class HomeSnapshot : ArchiveSectionSnapshot
+    public sealed class WorkplaceView
     {
-        public int ActivePawnCount;
-        public int ArchivedPawnCount;
-        public int LiveColonistCount;
-        public int LiveFreeCount;
-        public int LiveSlaveCount;
-        public int LivePrisonerCount;
-        public int ServiceDays;
-
-        /// <summary>Most-recent events, pre-sorted descending by tick, nulls removed.</summary>
-        public IReadOnlyList<ChronicleEvent> RecentEvents = new List<ChronicleEvent>();
-
-        /// <summary>Top-N important objects (most events), pre-sorted descending.</summary>
-        public IReadOnlyList<ArchiveObject> ImportantObjects = new List<ArchiveObject>();
+        /// <summary>工坊建筑 ThingDef.defName（稳定键，供 Debug/tooltip 用）。</summary>
+        public string BuildingDefName;
+        /// <summary>v1.1.4 工坊实例稳定键（defName:thingIDNumber），供 UI 写全局别名表。</summary>
+        public string BuildingStableId;
+        /// <summary>工坊显示名：优先 <see cref="CustomName"/>（建筑别名），否则 ThingDef.LabelCap 实时解析名。</summary>
+        public string BuildingLabel;
+        /// <summary>v1.1.4 建筑别名（玩家自定义名；null/空 = 未改名）。</summary>
+        public string CustomName;
+        /// <summary>工坊所在房间角色 label（如「工坊」/「厨房」；null = 未知/户外）。</summary>
+        public string RoomRoleLabel;
+        /// <summary>累计使用（制造完成迭代）次数。</summary>
+        public int UseCount;
+        /// <summary>最近一次使用的 game tick（-1 = 从未使用）。</summary>
+        public long LastUsedTick = -1L;
+        /// <summary>工坊所在地图索引（-1 = 未记录）。</summary>
+        public int MapIndex = -1;
+        /// <summary>工坊位置坐标（无效 = 未记录）。</summary>
+        public IntVec3 Cell;
+        /// <summary>是否为空（从未捕获到工作场所）。</summary>
+        public bool IsEmpty;
     }
 
     /// <summary>
-    /// Category overview read model (P2-6). Objects per category, fetched once each
-    /// and sorted by event count descending with nulls removed.
+    /// v1.1.4 劳模住所/工坊检测：住所展示视图。展示层优先级：
+    ///   1. RoomNameOverrides[pawnId:role]  整间房昵称 → RoomRoleLabel
+    ///   2. RoomTypeOverrides[pawnId:role]  类型名替换 → RoomTypeName
+    ///   3. RoomRoleAliases[role]           类型级全局
+    ///   4. RoomRoleDef.LabelCap            原版兜底
     /// </summary>
-    public sealed class OverviewSnapshot : ArchiveSectionSnapshot
+    public sealed class ResidenceView
     {
-        public Dictionary<string, List<ArchiveObject>> CategoryObjects =
-            new Dictionary<string, List<ArchiveObject>>();
-
-        /// <summary>
-        /// v4.14: Location atlas KPI strip (8 cells). Aggregated in the Read Model —
-        /// the window renders the strip only, never re-derives the counters.
-        /// </summary>
-        public LocationKpisView LocationKpis = new LocationKpisView();
-
-        /// <summary>
-        /// v4.14: per-location event counts (stableId → count) for the atlas card
-        /// sub-line ("est · N 事件"). Aggregated in the Read Model so the window
-        /// never queries the event store in the draw path.
-        /// </summary>
-        public Dictionary<string, int> LocationEventCounts = new Dictionary<string, int>();
-
-        /// <summary>
-        /// v4.14: Battle KPI strip (5 cells) + per-battle kill/loss/decisive data.
-        /// Aggregated in the Read Model — the window renders only.
-        /// </summary>
-        public BattleKpisView BattleKpis = new BattleKpisView();
+        /// <summary>住所房间角色 RoomRoleDef.defName（稳定键）。</summary>
+        public string RoomRoleDefName;
+        /// <summary>住所显示名（最高优先级，房间级整间房昵称；null = 回落类型名）。</summary>
+        public string RoomRoleLabel;
+        /// <summary>类型名替换（房间级，如「工作间」→「工坊类型」；null = 回落全局/原版）。</summary>
+        public string RoomTypeName;
+        /// <summary>最近一次采样确认在住所的 game tick（-1 = 从未确认）。</summary>
+        public long LastSeenTick = -1L;
+        /// <summary>住所所在地图索引（-1 = 未记录）。</summary>
+        public int MapIndex = -1;
+        /// <summary>住所中心坐标（无效 = 未记录）。</summary>
+        public IntVec3 Cell;
+        /// <summary>是否为空（暂无/无归属房间）。</summary>
+        public bool IsEmpty;
     }
 
     /// <summary>
-    /// v4.14: Battle KPI strip counters, aggregated once per rebuild from the
-    /// BattleObject snapshot list + the battle-scoped event stream. Total /
-    /// decisive (via IBattleProvider) / our kills / our losses / participant count.
+    /// v1.1.4 勋章体系：单枚勋章展示视图。Read Model 派生（<see cref="ArchiveUiDataProvider.BuildMedals"/>）：
+    /// Label/Desc/BuffText 在此解析翻译键，窗口只消费。§6.9 等级规则：
+    /// 同 <see cref="SeriesKey"/>（称号）只显示最高已达档位，由 <see cref="IsHighestTier"/> 标记。
     /// </summary>
-    public sealed class BattleKpisView
+    public sealed class MedalView
     {
-        public int Total;
-        public int Decisive;
-        public int Kills;
-        public int Losses;
-        public int Roster;
-        /// <summary>Per-battle aggregates (battle stableId → derived view).</summary>
-        public Dictionary<string, BattleCardView> Cards = new Dictionary<string, BattleCardView>();
-    }
-
-    /// <summary>
-    /// v4.14: per-battle card aggregate — force size, our kills, our losses,
-    /// participant count, significance and threat key. Derived in the Read Model
-    /// from the BattleObject snapshot + battle-scoped Death events (Subjects
-    /// carry the battle edge); the window renders only.
-    /// </summary>
-    public sealed class BattleCardView
-    {
-        public int RaidCount;
-        public int Kills;
-        public int Losses;
-        public int Participants;
-        public bool IsSignificant;
-        public string ThreatKey;
-    }
-
-    /// <summary>
-    /// v4.14: Location atlas KPI strip counters, aggregated once per rebuild from
-    /// the LocationObject snapshot list (identity/ownership/lifecycle/commerce).
-    /// Total / player home / quest sites / faction cities / ruined + tradable /
-    /// permit-required / distinct factions.
-    /// </summary>
-    public sealed class LocationKpisView
-    {
-        public int Total;
-        public int Home;
-        public int Quest;
-        public int Settle;
-        public int Ruined;
-        public int Tradable;
-        public int Permit;
-        public int Factions;
-    }
-
-    /// <summary>
-    /// Pawn / weapon detail read model (P2-6). Raw, sorted event list so the window
-    /// draws from one immutable source instead of re-querying per tab.
-    /// </summary>
-    /// <summary>
-    /// One production line (defName + count + last-tick + stable id), derived in
-    /// the Read Model from the detail object's craft/built events. Lives here so
-    /// the window never re-aggregates the event stream (v4.6.5 boundary fix).
-    /// </summary>
-    public sealed class ProductionLineView
-    {
+        /// <summary>MedalDef.defName（稳定键，含 tier 后缀，如 Medal_Labor_Model_Bronze）。</summary>
         public string DefName;
-        public string Label;
-        public int Count;
-        public long LastTick;
-        public string StableId;
-        /// <summary>Total market value of all units (Def.MarketValue * Count), aggregated in the Read Model.</summary>
-        public float Value;
-    }
 
-    /// <summary>
-    /// v4.15 condense-tab production category badge: a first-level
-    /// <see cref="ThingCategoryDef"/> (e.g. 食物/制成品/武器) with its aggregated
-    /// item count. Derived in the Read Model from <see cref="ProductionLines"/>
-    /// via <c>ThingDef.FirstThingCategory</c>; the window only renders the label.
-    /// </summary>
-    public sealed class ProductionCategoryView
-    {
-        /// <summary>Localized first-level category label (e.g. "制成品").</summary>
+        /// <summary>勋章称号（已翻译 UI.Medal.&lt;defName&gt;.Label，如「劳动模范·铜质」）。</summary>
         public string Label;
-        /// <summary>Aggregated item count across this category.</summary>
-        public int Count;
-    }
 
-    /// <summary>
-    /// v4.15 condense-tab kill breakdown: a victim group (faction label, or a
-    /// category fallback such as 机械族/动物) with its aggregated kill count for
-    /// this pawn. Derived in the Read Model from Death events; the window only
-    /// renders the label + count (no re-derivation, no hardcoding).
-    /// </summary>
-    public sealed class KillByFactionView
-    {
-        /// <summary>Localized group label (e.g. "帝国", "机械族").</summary>
-        public string Label;
-        /// <summary>Aggregated kill count for this group.</summary>
-        public int Count;
+        /// <summary>勋章描述（已翻译 UI.Medal.&lt;defName&gt;.Desc，tooltip）。</summary>
+        public string Desc;
+
+        /// <summary>材质档位（Bronze/Silver/Gold）。</summary>
+        public MedalTier Tier;
+
+        /// <summary>称号分组键（defName 去掉 tier 后缀，如 Medal_Labor_Model），用于「只显示当前档」归并。</summary>
+        public string SeriesKey;
+
+        /// <summary>是否可判定（metricKey 已被当前阶段支持）。</summary>
+        public bool IsApplicable;
+
+        /// <summary>已授予（GrantedMedals 含此 defName，append-only 历史）。</summary>
+        public bool IsGranted;
+
+        /// <summary>当前累计值达标（可能尚未写入授予记录）。</summary>
+        public bool IsMet;
+
+        /// <summary>达标且未授予（任务 4 授勋/「新」标记依据；判定引擎 IsNewAward 原样透传）。</summary>
+        public bool IsNewAward;
+
+        /// <summary>同 SeriesKey 下最高已达档位（已授予或当前达标即视为已达；UI 只画该枚）。</summary>
+        public bool IsHighestTier;
+
+        /// <summary>通道 B 展示增益文案（MedalBuffDef.displayBonus 已翻译，如「+3% 工作速度」；null=无）。</summary>
+        public string BuffText;
+
+        /// <summary>当前累计值（ReadModel 从 PawnObject 映射）。</summary>
+        public double CurrentValue;
+
+        /// <summary>达标阈值（MedalDef.threshold）。</summary>
+        public double Threshold;
+
+        /// <summary>进度 0-1（CurrentValue/Threshold，已 clamp）。</summary>
+        public float Progress;
     }
 
     public sealed class DetailSnapshot : ArchiveSectionSnapshot
@@ -229,10 +184,34 @@ namespace PersonalChronicle.Archive.ReadModels
         /// <summary>累计产出折算银币总额（ProductionSummaryView.TotalMarketValue）。</summary>
         public float ProductionSilverValue;
 
+        /// <summary>
+        /// 近 7 天产出折算银币（周产出）。从 ChronicleEvent 流扫描近 7 日的 Craft/Built
+        /// 事件，按 ThingDef.BaseMarketValue 估算。老存档无事件时取 0。
+        /// </summary>
+        public float WeeklyProductionSilver;
+
+        /// <summary>
+        /// 近 30 天产出折算银币（净值）。同周产出算法但窗口扩到 30 天，作为较长周期的
+        /// 滚动参考；与周产出互补，避免与累计值重复。
+        /// </summary>
+        public float MonthlyProductionSilver;
+
         /// <summary>v4.15 产出宫格真实数据源：来自 <see cref="ProductionAccumulator"/>
         /// 持久化累计（每次 Craft/Built 捕获时累加 Def.MarketValue*quantity），已按
         /// 类目聚合、按产值降序。宫格 bars 与种类数均消费此快照，不再重扫事件流。</summary>
         public IReadOnlyList<ProductionTypeView> ProductionTypeViews = new List<ProductionTypeView>();
+
+        /// <summary>v1.1.4 损耗宫格：累计消耗品银币（ConsumptionAccumulator.TotalSilver）。</summary>
+        public float ConsumptionTotalSilver;
+
+        /// <summary>v1.1.4 损耗宫格：近 7 天消耗银币（ConsumptionAccumulator.SilverByDay 求和）。</summary>
+        public float WeeklyConsumptionSilver;
+
+        /// <summary>v1.1.4 损耗宫格：近 30 天日均消耗银币（月累计 / 30）。</summary>
+        public float DailyConsumptionSilver;
+
+        /// <summary>v1.1.4 损耗宫格：类目构成（ThingCategoryDef.defName → 累计银币），已按银币降序。</summary>
+        public IReadOnlyList<ConsumptionTypeView> ConsumptionTypeViews = new List<ConsumptionTypeView>();
 
         /// <summary>v4.15 condense-tab: kills grouped by victim faction/category
         /// (e.g. 帝国/部落/机械族/动物). Aggregated in the Read Model from Death
@@ -258,8 +237,27 @@ namespace PersonalChronicle.Archive.ReadModels
         public int RangedKills;
 
         /// <summary>
+        /// v1.1.4 劳模住所/工坊检测：工作场所视图（方案 A 捕获 Bill_Production → 工坊 defName）。
+        /// 只消费已解析展示文本；窗口不重新解析 DefDatabase。
+        /// </summary>
+        public WorkplaceView Workplace = new WorkplaceView();
+
+        /// <summary>
+        /// v1.1.4 劳模住所/工坊检测：住所视图（方案 B 定期采样 OwnedRoom.Role）。
+        /// 只消费已解析展示文本；窗口不重新解析 DefDatabase。
+        /// </summary>
+        public ResidenceView Residence = new ResidenceView();
+
+        /// <summary>
+        /// v1.1.4 勋章体系：勋章墙视图（阈值类，§6.1~6.4）。Read Model 派生
+        /// （<see cref="ArchiveUiDataProvider.BuildMedals"/>）；窗口只消费，不重判定。
+        /// 未授予但可判定的勋章也包含（灰态 + 进度），由 IsHighestTier 标记当前档。
+        /// </summary>
+        public IReadOnlyList<MedalView> Medals = new List<MedalView>();
+
+        /// <summary>
         /// "健康残值 · 资产折旧" view — composite health score, depreciated silver
-        /// value, and the positive/negative factors behind it. All derivation lives
+        /// value, and the positive/negative factors behind it. All derivation lies
         /// in <see cref="ArchiveUiDataProvider"/>; the window only renders this.
         /// </summary>
         public HealthView Health = new HealthView();
@@ -291,6 +289,27 @@ namespace PersonalChronicle.Archive.ReadModels
 
         /// <summary>Location atlas view: identity / ownership / geography / lifecycle / commerce.</summary>
         public LocationDetailView Location = new LocationDetailView();
+
+        /// <summary>
+        /// 职业档案 · 工作经历（简历式）：按工坊就职时段分段的成果汇总。
+        /// 由 <see cref="ArchiveUiDataProvider.BuildWorkExperiences"/> 从
+        /// <c>PawnObject.CareerData.Events</c> + <c>WorkplaceSnapshot</c> 派生；
+        /// 窗口（ITab_Pawn_Career）只消费。空列表 = 暂无工作经历（不造假）。
+        /// </summary>
+        public IReadOnlyList<WorkExperienceView> WorkExperiences = new List<WorkExperienceView>();
+
+        /// <summary>
+        /// 职业档案 · 总览视图（职业身份/资格状态/预检/下一职称）。
+        /// 由 <see cref="ArchiveUiDataProvider.BuildCareerOverview"/> 从 CareerData 派生；
+        /// 窗口只消费。HasData=false = 无职业数据（空态，不造假）。
+        /// </summary>
+        public CareerOverviewView CareerOverview = new CareerOverviewView();
+
+        /// <summary>
+        /// 职业档案 · 职称链（5 档，对齐 Defs/QualificationDefs.xml）。
+        /// 由 <see cref="ArchiveUiDataProvider.BuildTitleTiers"/> 从 DefDatabase + 授予历史派生。
+        /// </summary>
+        public IReadOnlyList<CareerTitleTierView> TitleTiers = new List<CareerTitleTierView>();
     }
 
     /// <summary>
@@ -328,7 +347,6 @@ namespace PersonalChronicle.Archive.ReadModels
         /// <summary>Main sell-category keys (subset of the 8 canonical keys).</summary>
         public IReadOnlyList<string> TradeKindKeys = new List<string>();
     }
-
 
     /// <summary>Health residual / asset depreciation view for one pawn.</summary>
     public sealed class HealthView
@@ -466,6 +484,8 @@ namespace PersonalChronicle.Archive.ReadModels
     {
         public string OtherLabel;
         public string RelationLabel;
+        /// <summary>关系稳定键（PawnRelationDef.defName；逻辑判断只用此键，禁止用显示文本）。</summary>
+        public string RelationDefName;
         public string StatusLabel;
         public bool IsLive;
     }
@@ -601,19 +621,36 @@ namespace PersonalChronicle.Archive.ReadModels
     }
 
     /// <summary>
-    /// Single-event detail read model (P2-6). The window renders the human-readable
-    /// description from <see cref="ChronicleEvent.TypeKey"/> + <see cref="ChronicleEvent.Params"/>
-    /// via the event Def template, so the snapshot only carries the raw event.
+    /// 职业档案 · 工作经历（简历式）：一段 = 某工坊的就职时段 + 该期间成果。
+    /// 对应现实简历「工作经历」写法（公司/岗位/在职时间/产出）。
+    /// 由 <see cref="ArchiveUiDataProvider.BuildWorkExperiences"/> 从
+    /// <c>PawnObject.CareerData.Events</c> + <c>WorkplaceSnapshot</c> 派生。
+    /// 字段均为运行时派生，绝不持久化（append-only 契约不污染）。
     /// </summary>
-    public sealed class EventSnapshot : ArchiveSectionSnapshot
+    public sealed class WorkExperienceView
     {
-        public ChronicleEvent Event;
+        /// <summary>工坊显示名（DefDatabase.LabelCap 实时解析 + 全局/自定义别名优先）。</summary>
+        public string WorkplaceLabel;
 
-        /// <summary>
-        /// Later events of the same primary object (Tick &gt; this event), capped at
-        /// 3 and sorted ascending. Derived in the Read Model; the window renders it
-        /// without re-querying / re-sorting (v4.6.5 boundary fix).
-        /// </summary>
-        public IReadOnlyList<ChronicleEvent> FollowupEvents = new List<ChronicleEvent>();
+        /// <summary>工坊所在房间角色 label（RoomRoleDef.LabelCap + 别名优先；null = 未知/户外）。</summary>
+        public string RoomRoleLabel;
+
+        /// <summary>就职时段起止（游戏年，已本地化文本，如 "5504 – 5505"）；无数据时为 null。</summary>
+        public string PeriodText;
+
+        /// <summary>该期间成果条目（已本地化文本，如 "制造产出 320 件基础构件"）。</summary>
+        public IReadOnlyList<string> Achievements = new List<string>();
+
+        /// <summary>该期间制造总件数（ItemProduced 计数；无则为 0）。</summary>
+        public int ProducedCount;
+
+        /// <summary>该期间优秀+传奇品质件数（用于成果文案）。</summary>
+        public int FineCount;
+
+        /// <summary>该工坊累计使用次数（来自 WorkplaceSnapshot.UseCount）。</summary>
+        public int UseCount;
+
+        /// <summary>是否为空段（无时段/无成果）；UI 据此显示占位而非造假。</summary>
+        public bool IsEmpty;
     }
 }

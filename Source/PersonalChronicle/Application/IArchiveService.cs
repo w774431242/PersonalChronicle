@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using PersonalChronicle.Api;
+using PersonalChronicle.Data;
 using PersonalChronicle.Domain;
+using PersonalChronicle.Domain.Qualification;
 using RimWorld;
 using Verse;
 
@@ -92,6 +94,78 @@ namespace PersonalChronicle.Application
         void OnThingCrafted(Thing product, Pawn worker);
 
         /// <summary>
+        /// P1 CAREER-001 BE-005：记录一次"制造产出物品"职业事实（ItemProduced）。
+        /// 仅捕获事实（人物/时间/物品Def/品质/相关技能），不含任何评价字段。
+        /// <paramref name="product"/> 为成品 Thing；<paramref name="recipe"/> 为配方
+        /// （可为 null，此时技能留空）；<paramref name="worker"/> 为制造者。
+        /// 调用方须保证 <paramref name="worker"/> 为玩家派系 chronicle 相关 humanlike，
+        /// 否则本方法直接返回（不重复记录、不污染）。
+        /// </summary>
+        void RecordCareerProduced(Thing product, RecipeDef recipe, Pawn worker);
+
+        /// <summary>
+        /// v1.1.4 损耗宫格：记录该人物消耗了一份可摄入物（进食/饮用/用药/成瘾品），
+        /// 按 <c>ThingDef.BaseMarketValue</c> 计价累加到 <see cref="ConsumptionAccumulator"/>。
+        /// 来自 <c>Thing.Ingested</c> 捕获（高频，不写事件流）。<paramref name="eater"/> 需为
+        /// 玩家派系、chronicle 相关的 humanlike 殖民者。
+        /// </summary>
+        void OnThingConsumed(Pawn eater, Thing food);
+
+        /// <summary>
+        /// v1.1.4 劳模住所/工坊检测（方案 A）：记录该殖民者在一台工作台完成了一次制造迭代。
+        /// 来源 <c>Bill_Production.Notify_IterationCompleted</c> 捕获（低频，不写事件流），
+        /// 在数据层聚合 <see cref="WorkplaceSnapshot"/>（Building_WorkTable.def.defName 稳定键
+        /// + 工坊所在房间角色 RoomRoleDef.defName + UseCount/LastUsedTick）。
+        /// 只存 defName 稳定键 —— 玩家手动改名后 UI 实时解析 <c>DefDatabase.LabelCap</c> 正确显示新名。
+        /// </summary>
+        void OnWorkplaceUsed(Pawn worker, Building_WorkTable workbench);
+
+        /// <summary>
+        /// v1.1.4 建筑别名（旧 per-pawn 兼容）：为指定殖民者的工作场所设置自定义别名
+        /// （<see cref="WorkplaceSnapshot.CustomName"/>）。新语义已由
+        /// <see cref="SetBuildingAlias"/>（工坊实例全局共享）取代；本方法保留兼容。
+        /// </summary>
+        void SetWorkplaceCustomName(string pawnStableId, string customName);
+
+        /// <summary>
+        /// v1.1.4 工坊实例全局别名：key = <c>defName:thingIDNumber</c>（BuildingStableId）。
+        /// 设置/清除某台工坊的自定义名，任何使用该工坊的劳模档案共享显示此名。
+        /// <paramref name="customName"/> 为 null/空时清除别名、回落默认名（LabelCap 实时解析）。
+        /// </summary>
+        void SetBuildingAlias(string buildingStableId, string customName);
+
+        /// <summary>
+        /// v1.1.4 房间类型别名：key = RoomRoleDef.defName（如 Bedroom）。
+        /// 设置/清除某房间类型的自定义显示名（如「员工宿舍」），mod 内部展示层覆盖，
+        /// 不改原版 Def。<paramref name="customName"/> 为 null/空时清除别名、回落 RoomRoleDef.LabelCap。
+        /// </summary>
+        void SetRoomRoleAlias(string roomRoleDefName, string customName);
+
+        /// <summary>
+        /// v1.1.4 房间级改名（集中于 ITab，无需家具）：key = <c>pawnStableId:RoomRoleDefName</c>。
+        /// 设置「某殖民者的某类型房间」的自定义显示名（如「Dweeb 的卧室」→「员工宿舍」），
+        /// 粒度到个人+类型，互不干扰。原版显示由 <c>Patch_RoomRoleLabel</c> 按房间拥有者查表覆盖。
+        /// </summary>
+        void SetRoomName(string pawnStableId, string roomRoleDefName, string customName);
+
+        /// <summary>
+        /// v1.1.4 房间级自定义名读取（null = 未改名）。
+        /// </summary>
+        string GetRoomName(string pawnStableId, string roomRoleDefName);
+
+        /// <summary>
+        /// v1.1.4 房间级类型名替换（底层 Role 不变）：key = <c>pawnStableId:RoomRoleDefName</c>。
+        /// 设置「某殖民者的某类型房间」的类型显示名（如「工作间」→「工坊类型」），
+        /// 粒度到个人+类型，互不干扰。仅 UI 替换，游戏逻辑不受影响。
+        /// </summary>
+        void SetRoomTypeName(string pawnStableId, string roomRoleDefName, string customName);
+
+        /// <summary>
+        /// v1.1.4 房间级类型名替换读取（null = 未替换）。
+        /// </summary>
+        string GetRoomTypeName(string pawnStableId, string roomRoleDefName);
+
+        /// <summary>
         /// Records a finished construction. <paramref name="builtDef"/> is the
         /// completed building's ThingDef; <paramref name="builtStableId"/> is the
         /// caller-supplied stable identity (defName:thingIDNumber of the frame).
@@ -155,5 +229,12 @@ namespace PersonalChronicle.Application
         /// bad input; returns a <see cref="CaptureResult"/>.
         /// </summary>
         PersonalChronicle.Api.CaptureResult RecordEvent(PersonalChronicle.Api.ArchiveEventInput input);
+
+        /// <summary>
+        /// P5~P7 职业资格自动授予：判定 Qualified → 自动授予职称 → 回写 CareerEvent(TitleGranted)。
+        /// 与勋章授勋同节流（reconcile 调用），内部自行做 recording gate、活读扫描、
+        /// 去重写入 CareerData.GrantedTitles 与 MarkChanged。返回本次新授予职称的 (Pawn, TitleDef)。
+        /// </summary>
+        List<KeyValuePair<Pawn, PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>> RunQualification(ChronicleGameComponent component);
     }
 }

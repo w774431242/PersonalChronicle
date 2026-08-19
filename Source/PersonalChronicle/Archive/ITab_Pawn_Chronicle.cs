@@ -27,13 +27,12 @@ namespace PersonalChronicle.Archive
     public class ITab_Pawn_Chronicle : ITab
     {
         // ---- Layout metrics (CJK-safe; see UI standards §4) ----
-        // v6.7: wider/taller container so the 3×2 enriched grid is readable in the
-        // inspect pane. The SixGrid component parameters (KpiCardH/KpiGap) are untouched.
+        // v1.1.4 UI 优化：移除角色信息头（DrawHeader），顶部改 3 卡布局（房间/工坊/类型），
+        // 每卡主区点击改名、位置副行点击镜头跳转。TabHeight 720 保证六宫格 + footer 完整可见。
         private const float TabWidth = 560f;
-        private const float TabHeight = 660f;
+        private const float TabHeight = 720f;
         private const float Pad = UITheme.PanelPadding;
-        private const float HeaderH = 52f;
-        private const float ButtonH = 30f;
+        private const float ButtonH = 34f;
         // SixGridH is computed in FillTab from the available body height; do not hard-code.
 
 
@@ -133,15 +132,29 @@ namespace PersonalChronicle.Archive
                 return;
             }
 
-            float y = outer.y;
-            y = DrawHeader(outer, y, pawn, snap);
-            y += UITheme.SpaceXs;
+            // v1.1.4 UI 重构：移除角色信息头，顶部改为 3 卡布局（房间/工坊/类型）。
+            // 每卡主区点击改名，右侧 ▶ 点击镜头跳转。
+            // 3 卡在 outer 顶部下移 4px 留出视觉间隔；SixGrid 紧跟 3 卡下沿。
+            float residenceBarH = ResidenceBarH;
+            float residenceBarY = outer.y + 4f;
+            try
+            {
+                DrawResidenceBar(outer, residenceBarY, pawn, snap);
+            }
+            catch (Exception ex)
+            {
+                Log.WarningOnce("PersonalChronicle: DrawResidenceBar failed: " + ex.Message, 0x5C11B0);
+            }
+            float y = residenceBarY + residenceBarH + UITheme.SpaceXs;
 
-            // Footer button is pinned to the bottom; the six-cell grid scrolls internally.
+            // v1.1.4 布局修复：footer 固定贴底（outer.yMax - ButtonH），六宫格高度 =
+            // 实际可用空间（footerY - y - gap）。SixGrid 内部 BeginScrollView 自动滚动，
+            // 空间不足时滚动查看，空间充足时完整显示——任何分辨率都不再遮挡/悬空。
             float footerY = outer.yMax - ButtonH;
+            float gridTop = y;
             float gridH = Mathf.Max(0f, footerY - y - UITheme.SpaceXs);
             UIComponents.KpiCell[] cells = BuildCells(snap);
-            UIComponents.SixGrid(new Rect(outer.x, y, outer.width, gridH), cells, ref sixScroll);
+            UIComponents.SixGrid(new Rect(outer.x, gridTop, outer.width, gridH), cells, ref sixScroll);
 
             DrawFooter(new Rect(outer.x, footerY, outer.width, ButtonH), pawn);
         }
@@ -179,54 +192,147 @@ namespace PersonalChronicle.Archive
             }
         }
 
-        // ---- Header ------------------------------------------------------------
+        // ---- v1.1.4 劳模住所/工坊检测：顶部 3 卡布局（房间 / 工坊 / 类型） ----
+        // 只消费 DetailSnapshot 已解析的展示文本（WorkplaceView/ResidenceView）。
+        // 每卡：主区点击改名，右侧 ▶ 箭头点击镜头跳转（CameraJumper.TryJump）。
+        // 坐标本身不显示给玩家（隐藏 v1.1.4 用户要求），▶ 暗示可点击跳转。
+        // 左色条语义：房间=Alive 绿、工坊=PillGold、类型=Accent。
+        // 卡间距与下方 SixGrid 的 KpiGap 一致（10f），保证 3 卡与六宫格列线对齐。
+        private static readonly float ResidenceBarH = 44f;
 
-        private float DrawHeader(Rect outer, float y, Pawn pawn, DetailSnapshot snap)
+        private float DrawResidenceBar(Rect outer, float y, Pawn pawn, DetailSnapshot snap)
         {
-            Rect header = new Rect(outer.x, y, outer.width, HeaderH);
-            bool archived = IsArchived(snap);
-            UIComponents.Card(header, archived ? UITheme.Dead : UITheme.Alive);
+            string noRec = "--";
+            IArchiveService service = PersonalChronicleMod.ArchiveService;
 
-            float textX = header.x + UITheme.CardPadX;
-            float textW = header.width - UITheme.CardPadX * 2f - 76f;
-            UIComponents.Label(new Rect(textX, header.y + 6f, textW, 24f),
-                pawn.LabelShortCap, UITheme.FontBody, UITheme.Text);
+            bool homeOk = snap != null && snap.Residence != null && !snap.Residence.IsEmpty
+                && !string.IsNullOrEmpty(snap.Residence.RoomRoleLabel);
+            bool workOk = snap != null && snap.Workplace != null && !snap.Workplace.IsEmpty;
+            bool typeOk = snap != null && snap.Residence != null && !snap.Residence.IsEmpty
+                && !string.IsNullOrEmpty(snap.Residence.RoomTypeName);
 
-            string sub = BuildHeaderSubtitle(pawn, snap);
-            UIComponents.Label(new Rect(textX, header.y + 28f, textW, 18f),
-                sub, UITheme.FontLabel, UITheme.Muted);
+            string homeLabel = homeOk ? snap.Residence.RoomRoleLabel : noRec;
+            string workLabel = (workOk && !string.IsNullOrEmpty(snap.Workplace.BuildingLabel))
+                ? snap.Workplace.BuildingLabel
+                : noRec;
+            string typeLabel = typeOk ? snap.Residence.RoomTypeName : noRec;
 
-            Rect pill = new Rect(header.xMax - 72f, header.y + 12f, 60f, 22f);
-            UIComponents.Pill(pill,
-                archived ? "PersonalChronicle.UI.Dead".Translate() : "PersonalChronicle.UI.Alive".Translate(),
-                archived ? UITheme.Dead : UITheme.Alive);
+            // 位置副行文案：有坐标显示 "x,y"（可点击跳转），无坐标显示 "--"（不可点击）。
+            string homeSub = PositionText(snap, true);
+            bool homeSubClick = homeOk && CanJump(snap.Residence.MapIndex, snap.Residence.Cell);
+            string workSub = PositionText(snap, false);
+            bool workSubClick = workOk && CanJump(snap.Workplace.MapIndex, snap.Workplace.Cell);
 
-            return header.yMax;
+            // v1.1.4 对齐六宫格：3 卡宽度 = SixGrid 内每张卡宽 = (outer.width - Scrollbar - 2*KpiGap)/3，
+            // 3 卡与下方 2 行六宫格的列线垂直对齐。
+            float sixInnerW = outer.width - UITheme.ScrollbarThickness;
+            float cardW = (sixInnerW - UIComponents.KpiGap * 2f) / 3f;
+            float gap = UIComponents.KpiGap;
+            Rect homeRect = new Rect(outer.x, y, cardW, ResidenceBarH);
+            Rect workRect = new Rect(outer.x + cardW + gap, y, cardW, ResidenceBarH);
+            Rect typeRect = new Rect(outer.x + (cardW + gap) * 2f, y, cardW, ResidenceBarH);
+
+            string pawnId = pawn != null ? pawn.GetUniqueLoadID() : null;
+
+            // 房间卡：点击改名（RoomNameOverrides），位置副行点击跳转住所。
+            if (UIComponents.ClickableCard(homeRect,
+                "PersonalChronicle.UI.Residence.Label".Translate().ToString(),
+                homeLabel, homeSub, UITheme.Alive, homeSubClick, out bool homeJump))
+            {
+                if (homeOk && service != null && pawnId != null
+                    && !string.IsNullOrEmpty(snap.Residence.RoomRoleDefName))
+                {
+                    cachedRevision = -1L;
+                    Find.WindowStack.Add(new Dialog_RenameWorkplace(
+                        "PersonalChronicle.UI.RenameRoomName.Title",
+                        "PersonalChronicle.UI.RenameRoomName.Hint",
+                        homeLabel,
+                        name => service.SetRoomName(pawnId, snap.Residence.RoomRoleDefName, name)));
+                }
+            }
+            if (homeJump)
+            {
+                JumpTo(snap.Residence.MapIndex, snap.Residence.Cell);
+            }
+
+            // 工坊卡：点击改名（BuildingAliases），位置副行点击跳转工坊。
+            if (UIComponents.ClickableCard(workRect,
+                "PersonalChronicle.UI.Workplace.Label".Translate().ToString(),
+                workLabel, workSub, UITheme.PillGold, workSubClick, out bool workJump))
+            {
+                if (workOk && service != null && !string.IsNullOrEmpty(snap.Workplace.BuildingStableId))
+                {
+                    cachedRevision = -1L;
+                    Find.WindowStack.Add(new Dialog_RenameWorkplace(
+                        "PersonalChronicle.UI.RenameWorkplace.Title",
+                        "PersonalChronicle.UI.RenameWorkplace.Hint",
+                        workLabel,
+                        name => service.SetBuildingAlias(snap.Workplace.BuildingStableId, name)));
+                }
+            }
+            if (workJump)
+            {
+                JumpTo(snap.Workplace.MapIndex, snap.Workplace.Cell);
+            }
+
+            // 类型卡：点击改类型名（RoomTypeOverrides），位置副行点击跳转住所（同房间）。
+            if (UIComponents.ClickableCard(typeRect,
+                "PersonalChronicle.UI.RoomType.Label".Translate().ToString(),
+                typeLabel, homeSub, UITheme.Accent, homeSubClick, out bool typeJump))
+            {
+                if (typeOk && service != null && pawnId != null
+                    && !string.IsNullOrEmpty(snap.Residence.RoomRoleDefName))
+                {
+                    cachedRevision = -1L;
+                    Find.WindowStack.Add(new Dialog_RenameWorkplace(
+                        "PersonalChronicle.UI.RenameRoomType.Title",
+                        "PersonalChronicle.UI.RenameRoomType.Hint",
+                        typeLabel,
+                        name => service.SetRoomTypeName(pawnId, snap.Residence.RoomRoleDefName, name)));
+                }
+            }
+            if (typeJump)
+            {
+                JumpTo(snap.Residence.MapIndex, snap.Residence.Cell);
+            }
+
+            return y + ResidenceBarH;
         }
 
-        private static bool IsArchived(DetailSnapshot snap)
+        /// <summary>位置副行文案：住所=房间中心坐标，工坊=工坊坐标；无效显示 "--"。</summary>
+        private static string PositionText(DetailSnapshot snap, bool isHome)
         {
-            PawnObject pawnObject = snap.DetailObject as PawnObject;
-            return pawnObject != null && pawnObject.IsArchived;
+            int mapIndex = isHome ? snap.Residence.MapIndex : snap.Workplace.MapIndex;
+            IntVec3 cell = isHome ? snap.Residence.Cell : snap.Workplace.Cell;
+            if (mapIndex >= 0 && cell.IsValid)
+            {
+                return cell.x + "," + cell.z;
+            }
+            return "--";
         }
 
-        /// <summary>
-        /// Subtitle line: the pawn's current role/title. Falls back to the archived
-        /// display name when the live story tracker is unavailable (e.g. corpses of
-        /// pawns whose story data was stripped).
-        /// </summary>
-        private static string BuildHeaderSubtitle(Pawn pawn, DetailSnapshot snap)
+        /// <summary>坐标是否可跳转：mapIndex 有效、格子有效、地图存在。</summary>
+        private static bool CanJump(int mapIndex, IntVec3 cell)
         {
-            if (pawn.story != null && !string.IsNullOrEmpty(pawn.story.TitleShortCap))
+            if (mapIndex < 0 || !cell.IsValid) return false;
+            foreach (Map m in Find.Maps)
             {
-                return pawn.story.TitleShortCap;
+                if (m != null && m.Index == mapIndex) return true;
             }
-            ArchiveObject archived = snap.DetailObject;
-            if (archived != null && !string.IsNullOrEmpty(archived.LabelSnapshot))
+            return false;
+        }
+
+        /// <summary>镜头跳转到指定地图坐标（CameraJumper.TryJump，失败静默）。</summary>
+        private static void JumpTo(int mapIndex, IntVec3 cell)
+        {
+            if (mapIndex < 0 || !cell.IsValid) return;
+            Map map = null;
+            foreach (Map m in Find.Maps)
             {
-                return archived.LabelSnapshot;
+                if (m != null && m.Index == mapIndex) { map = m; break; }
             }
-            return "PersonalChronicle.UI.UnknownDate".Translate().ToString();
+            if (map == null || !cell.InBounds(map)) return;
+            CameraJumper.TryJump(cell, map);
         }
 
         // ---- Content -----------------------------------------------------------
@@ -237,45 +343,15 @@ namespace PersonalChronicle.Archive
 
         private void DrawFooter(Rect rect, Pawn pawn)
         {
-            // v1.1.4: 开发者测试按钮仅在开发者模式开启时显示（DevTestButtons 内部门控）。
-            // 开启时 Footer 左侧为测试按钮、右侧为「打开完整档案馆」；
-            // 关闭时「打开完整档案馆」占满全宽。
-            float gap = UITheme.SpaceXs;
-            bool showTest = Prefs.DevMode && pawn != null;
-            float testW = showTest ? Mathf.Min(rect.width * 0.45f, 150f) : 0f;
-            Rect openRect = new Rect(
-                rect.x + testW + (showTest ? gap : 0f),
-                rect.y,
-                rect.width - testW - (showTest ? gap : 0f),
-                rect.height);
-
-            if (showTest)
+            // v1.1.4 布局调整：移除「打开完整档案馆」按钮，为后续功能预留空白空间。
+            // 仅在开发者模式下保留测试按钮（DevTestButtons 内部门控）。
+            // Footer 矩形仍占用 ButtonH 高度，但不再画「打开完整档案馆」入口——用户可
+            // 通过主菜单「档案馆」按钮直达。
+            if (Prefs.DevMode && pawn != null)
             {
+                float testW = Mathf.Min(rect.width * 0.32f, 130f);
                 Rect testRect = new Rect(rect.x, rect.y, testW, rect.height);
                 DevTestButtons.DrawButton(testRect, pawn);
-            }
-
-            if (!Widgets.ButtonText(openRect, "PersonalChronicle.UI.InspectTab.OpenFull".Translate()))
-            {
-                return;
-            }
-            try
-            {
-                MainButtonDef def = DefDatabase<MainButtonDef>.GetNamedSilentFail("PersonalChronicleArchive");
-                if (def == null || def.TabWindow == null)
-                {
-                    return;
-                }
-                ArchiveMainTabWindow window = def.TabWindow as ArchiveMainTabWindow;
-                if (window != null)
-                {
-                    window.RequestPawnDetail(pawn.GetUniqueLoadID());
-                }
-                Find.MainTabsRoot.SetCurrentTab(def);
-            }
-            catch (Exception ex)
-            {
-                ChronicleLog.Warning(ChronicleLog.Category.Ui, "failed to open archive from inspect tab: " + ex.Message);
             }
         }
 
@@ -307,27 +383,35 @@ namespace PersonalChronicle.Archive
                 }
                 : null;
             UIComponents.KpiBar[] workBars = null;
-            if (snap.CareerBars != null)
+            // 固定 3 个进度条：不足 3 职业时用 "--"/0 占位；无数据（未定义/老存档）也保持 3 个空槽，布局稳定。
             {
                 List<UIComponents.KpiBar> bars = new List<UIComponents.KpiBar>();
-                for (int i = 0; i < snap.CareerBars.Count && bars.Count < 3; i++)
+                if (snap.CareerBars != null)
                 {
-                    CareerBarView b = snap.CareerBars[i];
-                    if (b == null) continue;
-                    string tag = b.IsPrimary ? "PersonalChronicle.UI.Kpi.Career".Translate().ToString()
-                        : (b.IsSecondary ? "PersonalChronicle.UI.SecondaryWork".Translate().ToString() : string.Empty);
-                    float hours = (float)b.Ticks / 2500f;
-                    bars.Add(new UIComponents.KpiBar
+                    for (int i = 0; i < snap.CareerBars.Count && bars.Count < 3; i++)
                     {
-                        Caption = b.WorkTypeLabel + " · " + Mathf.RoundToInt(hours).ToString() + "h · " + (int)(b.Share01 * 100f) + "%",
-                        Share01 = b.Share01,
-                        Tag = tag
-                    });
+                        CareerBarView b = snap.CareerBars[i];
+                        if (b == null) continue;
+                        string tag = b.IsPrimary ? "PersonalChronicle.UI.Kpi.Career".Translate().ToString()
+                            : (b.IsSecondary ? "PersonalChronicle.UI.SecondaryWork".Translate().ToString() : string.Empty);
+                        float hours = (float)b.Ticks / 2500f;
+                        bars.Add(new UIComponents.KpiBar
+                        {
+                            Caption = b.WorkTypeLabel + " · " + Mathf.RoundToInt(hours).ToString() + "h · " + (int)(b.Share01 * 100f) + "%",
+                            Share01 = b.Share01,
+                            Tag = tag
+                        });
+                    }
                 }
-                workBars = bars.Count > 0 ? bars.ToArray() : null;
+                while (bars.Count < 3)
+                {
+                    bars.Add(new UIComponents.KpiBar { Caption = "--", Share01 = 0f });
+                }
+                workBars = bars.ToArray();
             }
 
-            // ===== ② 产出：累计产值(大值) + 大值旁 inline(产量·种类) + 产值贡献前3(真实数据源) =====
+            // ===== ② 产出：累计产值(大值) + 大值旁 inline(产量·种类) + KPI行(周产出/净值) + 产值贡献前3 =====
+            // 统一基准为工时宫格：大字 + inline + 2 行 KPI + caption + 3 progress bars。
             bool prodOk = snap.ProductionTotal > 0 || snap.ProductionSilverValue > 0f;
             string prodVal = prodOk ? Mathf.RoundToInt(snap.ProductionSilverValue).ToString() : "--";
             // inline 指标：维持产量(件) + 新增种类数(类)，均来自真实累加器累计。
@@ -337,118 +421,136 @@ namespace PersonalChronicle.Archive
             string prodInline = (prodOk && snap.ProductionTotal > 0)
                 ? snap.ProductionTotal + " " + pieces + " · " + prodKinds
                 : prodKinds;
+            // 周产出/净值：近 7 / 30 天滚动窗口的折算银币。无数据时显示 0 银。
+            string weekVal = Mathf.RoundToInt(snap.WeeklyProductionSilver).ToString() + " " + silver;
+            string monthVal = Mathf.RoundToInt(snap.MonthlyProductionSilver).ToString() + " " + silver;
+            UIComponents.KpiRow[] prodRows = new UIComponents.KpiRow[]
+            {
+                new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.WeekOutput".Translate().ToString(), Value = weekVal },
+                new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.NetValue".Translate().ToString(), Value = monthVal },
+            };
             UIComponents.KpiBar[] prodBars = null;
             // 真实数据源：ProductionTypeViews 已按产值降序（来自 ProductionAccumulator 持久化累计）。
             // 不再重扫事件流；caption 形如「武器 · 1200 银 · 35%」，与工时 bars 对齐。
-            if (prodOk && snap.ProductionTypeViews != null && snap.ProductionTypeViews.Count > 0)
+            // 固定 3 个进度条：不足 3 类时用 "--"/0 占位，保持布局稳定（与击杀宫格一致）。
             {
-                float totalVal = 0f;
-                for (int i = 0; i < snap.ProductionTypeViews.Count; i++) totalVal += snap.ProductionTypeViews[i].MarketValue;
                 List<UIComponents.KpiBar> bars = new List<UIComponents.KpiBar>();
-                int n = Mathf.Min(3, snap.ProductionTypeViews.Count);
-                for (int i = 0; i < n; i++)
+                if (prodOk && snap.ProductionTypeViews != null && snap.ProductionTypeViews.Count > 0)
                 {
-                    ProductionTypeView t = snap.ProductionTypeViews[i];
-                    string catLabel = string.IsNullOrEmpty(t.DefName)
-                        ? "—"
-                        : (DefDatabase<ThingCategoryDef>.GetNamedSilentFail(t.DefName)?.LabelCap ?? t.DefName);
-                    bars.Add(new UIComponents.KpiBar
+                    float totalVal = 0f;
+                    for (int i = 0; i < snap.ProductionTypeViews.Count; i++) totalVal += snap.ProductionTypeViews[i].MarketValue;
+                    int n = Mathf.Min(3, snap.ProductionTypeViews.Count);
+                    for (int i = 0; i < n; i++)
                     {
-                        Caption = catLabel + " · " + Mathf.RoundToInt(t.MarketValue).ToString() + " " + silver
-                            + " · " + (totalVal > 0f ? Mathf.RoundToInt(t.MarketValue / totalVal * 100f) : 0) + "%",
-                        Share01 = totalVal > 0f ? t.MarketValue / totalVal : 0f
-                    });
+                        ProductionTypeView t = snap.ProductionTypeViews[i];
+                        string catLabel = string.IsNullOrEmpty(t.DefName)
+                            ? "—"
+                            : (DefDatabase<ThingCategoryDef>.GetNamedSilentFail(t.DefName)?.LabelCap ?? t.DefName);
+                        bars.Add(new UIComponents.KpiBar
+                        {
+                            Caption = catLabel + " · " + Mathf.RoundToInt(t.MarketValue).ToString() + " " + silver
+                                + " · " + (totalVal > 0f ? Mathf.RoundToInt(t.MarketValue / totalVal * 100f) : 0) + "%",
+                            Share01 = totalVal > 0f ? t.MarketValue / totalVal : 0f
+                        });
+                    }
+                }
+                while (bars.Count < 3)
+                {
+                    bars.Add(new UIComponents.KpiBar { Caption = "--", Share01 = 0f });
                 }
                 prodBars = bars.ToArray();
             }
 
-            // ===== ③ 击杀：总数(大值) + KPI条(猎物种类/参战战役/生涯伤害) + 击杀构成前3种族 =====
-            // v6.8 个人战斗维度：参战战役=ParticipatedBattles（持久化累加）、生涯伤害=DamageDealtTotal（持久化近似）、
-            // 战斗风格=MeleeKillRatio（近战/远程比，无击杀时 0.5 中性占位，经 hasMeleeData 判断是否显示）。
+            // ===== ③ 击杀：总数(大值, 同行=猎物种类) + KPI条(参战战役/生涯伤害) + 击杀构成前3种族 =====
+            // v1.1.4 统一基准：猎物种类并入大字同行 inline（与产出"件·类"一致），KPI 行收敛为 2 行；
+            // 战斗风格已移除（MeleeKillRatio 等持久化字段保留，仅 UI 不再展示）。
             bool killOk = snap.Kills > 0;
             string killVal = killOk ? snap.Kills.ToString() : "--";
             int raceKinds = (snap.KillsByFaction != null) ? snap.KillsByFaction.Count : 0;
+            // inline：猎物种类（同行右对齐），与产出宫格"产量·种类"同一视觉位。
+            string killInline = raceKinds.ToString() + " " + "PersonalChronicle.UI.Kpi.Kind".Translate().ToString();
             string battleParticipated = snap.ParticipatedBattles > 0 ? snap.ParticipatedBattles.ToString() : "0";
             string damageDealt = snap.DamageDealtTotal > 0f ? Mathf.RoundToInt(snap.DamageDealtTotal).ToString() : "0";
-            // 战斗风格：并入 KPI 条第 4 行（近战 X% · 远程 Y%），避免占用底部 Sub 槽位与进度条重叠。
-            // hasMeleeData：持久化存在击杀风格记录才显示，避免无数据时"近战 50% · 远程 50%"误导。
-            string combatStyleRow = null;
-            if (snap.MeleeKills + snap.RangedKills > 0)
-            {
-                int meleePct = Mathf.RoundToInt(snap.MeleeKillRatio * 100f);
-                int rangedPct = 100 - meleePct;
-                combatStyleRow = "PersonalChronicle.UI.Kpi.Melee".Translate().ToString() + " " + meleePct + "%"
-                    + " · " + "PersonalChronicle.UI.Kpi.Ranged".Translate().ToString() + " " + rangedPct + "%";
-            }
             UIComponents.KpiRow[] killRows = killOk
-                ? (combatStyleRow != null
-                    ? new UIComponents.KpiRow[]
-                    {
-                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.PreyKinds".Translate().ToString(), Value = raceKinds.ToString() + " " + "PersonalChronicle.UI.Kpi.Kind".Translate().ToString() },
-                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattlesFought".Translate().ToString(), Value = battleParticipated },
-                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.DamageDealt".Translate().ToString(), Value = damageDealt },
-                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.CombatStyle".Translate().ToString(), Value = combatStyleRow },
-                    }
-                    : new UIComponents.KpiRow[]
-                    {
-                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.PreyKinds".Translate().ToString(), Value = raceKinds.ToString() + " " + "PersonalChronicle.UI.Kpi.Kind".Translate().ToString() },
-                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattlesFought".Translate().ToString(), Value = battleParticipated },
-                        new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.DamageDealt".Translate().ToString(), Value = damageDealt },
-                    })
+                ? new UIComponents.KpiRow[]
+                {
+                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattlesFought".Translate().ToString(), Value = battleParticipated },
+                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.DamageDealt".Translate().ToString(), Value = damageDealt },
+                }
                 : null;
             UIComponents.KpiBar[] killBars = null;
-            if (killOk && snap.KillsByFaction != null && snap.KillsByFaction.Count > 0)
+            // 固定 3 个进度条：不足 3 种族时用 "--"/0 占位（与产出宫格一致），布局稳定，
+            // 无数据时仍展示 3 个空槽，与有数据时布局一致。
             {
-                List<KillByFactionView> top = new List<KillByFactionView>(snap.KillsByFaction);
-                top.Sort((a, b) => b.Count.CompareTo(a.Count));
-                // v6.8: 击杀宫格取前 2 种族进度条，为底部 Sub（战斗风格）预留空间，避免与进度条重叠。
                 List<UIComponents.KpiBar> bars = new List<UIComponents.KpiBar>();
-                int n = Mathf.Min(2, top.Count);
-                for (int i = 0; i < n; i++)
+                if (killOk && snap.KillsByFaction != null && snap.KillsByFaction.Count > 0)
                 {
-                    KillByFactionView f = top[i];
-                    bars.Add(new UIComponents.KpiBar
+                    List<KillByFactionView> top = new List<KillByFactionView>(snap.KillsByFaction);
+                    top.Sort((a, b) => b.Count.CompareTo(a.Count));
+                    int n = Mathf.Min(3, top.Count);
+                    for (int i = 0; i < n; i++)
                     {
-                        Caption = f.Label + " · " + f.Count,
-                        Share01 = snap.Kills > 0 ? (float)f.Count / (float)snap.Kills : 0f
-                    });
+                        KillByFactionView f = top[i];
+                        bars.Add(new UIComponents.KpiBar
+                        {
+                            Caption = f.Label + " · " + f.Count,
+                            Share01 = snap.Kills > 0 ? (float)f.Count / (float)snap.Kills : 0f
+                        });
+                    }
+                }
+                while (bars.Count < 3)
+                {
+                    bars.Add(new UIComponents.KpiBar { Caption = "--", Share01 = 0f });
                 }
                 killBars = bars.ToArray();
             }
 
-            // ===== ④ 战役（个人视角）：大值=该pawn时代战役数 =====
-            // KPI条：累计参与(战役数) / 累计规模(殖民地参战人次) / 累计歼敌(殖民地歼敌)
-            // 进度条：个人贡献占比 = 个人击杀 / 殖民地累计歼敌（cap 100%）
-            // 契约见 MEMORY：Battle 数据本身 colony 级，但本宫格按个人视角解读，
-            // 仅贡献比分母采用殖民地累计歼敌，分子为个人击杀。
-            bool battleOk = snap.BattleCount > 0;
-            string battleVal = battleOk ? snap.BattleCount.ToString() : "--";
-            UIComponents.KpiRow[] battleRows = battleOk
+            // ===== ④ 损耗：大值=累计消耗(银) + 同行=日均损耗 + KPI行(周损耗/日均损耗) + 构成前3类目 =====
+            // v1.1.4 替换战役宫格：人物每日消耗品（食物/药品/成瘾品等）按 Def.BaseMarketValue 计价。
+            // 数据源 ConsumptionAccumulator（持久化，Thing.Ingested 捕获，不写事件流）。
+            // colony 级战役数据保留，完整档案馆「战役」分类仍可查看。
+            bool consOk = snap.ConsumptionTotalSilver > 0f;
+            string consVal = consOk ? Mathf.RoundToInt(snap.ConsumptionTotalSilver).ToString() : "--";
+            string consDaily = Mathf.RoundToInt(snap.DailyConsumptionSilver).ToString() + " " + silver;
+            string consDailyInline = "PersonalChronicle.UI.Kpi.DailyAverage".Translate().ToString() + " " + consDaily;
+            UIComponents.KpiRow[] consRows = consOk
                 ? new UIComponents.KpiRow[]
                 {
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattleParticipate".Translate().ToString(), Value = snap.BattleCount.ToString() },
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattleScale".Translate().ToString(), Value = (snap.BattleKpis != null ? snap.BattleKpis.Roster : 0).ToString() },
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.BattleKills".Translate().ToString(), Value = (snap.BattleKpis != null ? snap.BattleKpis.Kills : 0).ToString() },
+                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.WeekConsume".Translate().ToString(), Value = Mathf.RoundToInt(snap.WeeklyConsumptionSilver).ToString() + " " + silver },
+                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.DailyConsume".Translate().ToString(), Value = consDaily },
                 }
                 : null;
-            UIComponents.KpiBar[] battleBars = null;
-            if (battleOk && snap.BattleKpis != null && snap.BattleKpis.Kills > 0)
+            UIComponents.KpiBar[] consBars = null;
+            // 损耗构成前 3 类目（SilverByCategory 已按银币降序）；固定 3 条，不足用 "--"/0 占位。
             {
-                int colonyKills = snap.BattleKpis.Kills;
-                int myKills = snap.Kills;
-                float share = Mathf.Clamp01((float)myKills / (float)colonyKills);
-                battleBars = new UIComponents.KpiBar[]
+                List<UIComponents.KpiBar> bars = new List<UIComponents.KpiBar>();
+                float totalVal = snap.ConsumptionTotalSilver;
+                if (consOk && snap.ConsumptionTypeViews != null && snap.ConsumptionTypeViews.Count > 0)
                 {
-                    new UIComponents.KpiBar
+                    int n = Mathf.Min(3, snap.ConsumptionTypeViews.Count);
+                    for (int i = 0; i < n; i++)
                     {
-                        Caption = "PersonalChronicle.UI.Kpi.Contribution".Translate().ToString()
-                            + " · " + myKills + " / " + colonyKills + " · " + Mathf.RoundToInt(share * 100f) + "%",
-                        Share01 = share
-                    },
-                };
+                        ConsumptionTypeView t = snap.ConsumptionTypeViews[i];
+                        string catLabel = string.IsNullOrEmpty(t.CategoryDefName)
+                            ? "—"
+                            : (DefDatabase<ThingCategoryDef>.GetNamedSilentFail(t.CategoryDefName)?.LabelCap ?? t.CategoryDefName);
+                        bars.Add(new UIComponents.KpiBar
+                        {
+                            Caption = catLabel + " · " + Mathf.RoundToInt(t.Silver).ToString() + " " + silver
+                                + " · " + (totalVal > 0f ? Mathf.RoundToInt(t.Silver / totalVal * 100f) : 0) + "%",
+                            Share01 = totalVal > 0f ? t.Silver / totalVal : 0f
+                        });
+                    }
+                }
+                while (bars.Count < 3)
+                {
+                    bars.Add(new UIComponents.KpiBar { Caption = "--", Share01 = 0f });
+                }
+                consBars = bars.ToArray();
             }
 
-            // ===== ⑤ 足迹：地点数(大值+同行主驻地天数) + KPI条(主驻地/远征/最长停留) + 停留Top2 =====
+            // ===== ⑤ 足迹：地点数(大值+同行主驻地天数) + KPI行(主驻地/远征) + 停留时长前3进度条 =====
+            // v1.1.4 统一基准：KPI 行收敛为 2 行（主驻地/远征），停留 Top2 行式改为进度条。
             bool footOk = snap.Footprint != null && snap.Footprint.PlaceCount > 0;
             string footVal = footOk ? snap.Footprint.PlaceCount.ToString() : "--";
             string footDays = (footOk && snap.Footprint.HomeDays > 0)
@@ -459,71 +561,107 @@ namespace PersonalChronicle.Archive
                 {
                     new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.Home".Translate().ToString(), Value = snap.Footprint.HomePlaceText ?? noRec },
                     new UIComponents.KpiRow { Label = "PersonalChronicle.UI.FootprintExpeditions".Translate().ToString(), Value = snap.Footprint.ExpeditionCount.ToString() },
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.LongestStay".Translate().ToString(), Value = (snap.Footprint.HomeDays > 0 ? snap.Footprint.HomeDays.ToString() : "0") + " " + "PersonalChronicle.UI.Kpi.Unit.Days".Translate().ToString() },
                 }
                 : null;
-            UIComponents.KpiRow[] footStays = null;
-            if (footOk && snap.Footprint.Stays != null && snap.Footprint.Stays.Count > 0)
+            UIComponents.KpiBar[] footBars = null;
+            // 停留时长前 3 地点（Stays 已按 DwellTicks 降序）；固定 3 条，不足用 "--"/0 占位。
             {
-                int n = Mathf.Min(2, snap.Footprint.Stays.Count);
-                UIComponents.KpiRow[] stays = new UIComponents.KpiRow[n];
-                for (int i = 0; i < n; i++)
+                List<UIComponents.KpiBar> bars = new List<UIComponents.KpiBar>();
+                float totalDwell = 0f;
+                if (footOk && snap.Footprint.Stays != null && snap.Footprint.Stays.Count > 0)
                 {
-                    FootstepView s = snap.Footprint.Stays[i];
-                    stays[i] = new UIComponents.KpiRow { Label = s.PlaceText ?? noRec, Value = s.DwellText ?? string.Empty };
+                    for (int i = 0; i < snap.Footprint.Stays.Count; i++)
+                    {
+                        if (snap.Footprint.Stays[i] != null && snap.Footprint.Stays[i].DwellTicks > 0L)
+                        {
+                            totalDwell += snap.Footprint.Stays[i].DwellTicks;
+                        }
+                    }
+                    int n = Mathf.Min(3, snap.Footprint.Stays.Count);
+                    for (int i = 0; i < n; i++)
+                    {
+                        FootstepView s = snap.Footprint.Stays[i];
+                        if (s == null) continue;
+                        float share = (totalDwell > 0f && s.DwellTicks > 0L) ? (float)s.DwellTicks / totalDwell : 0f;
+                        bars.Add(new UIComponents.KpiBar
+                        {
+                            Caption = s.PlaceText + " · " + s.DwellText + " · " + Mathf.RoundToInt(share * 100f) + "%",
+                            Share01 = share
+                        });
+                    }
                 }
-                // Merge KPI strip + Top2 stays into one row block (card height budget).
-                List<UIComponents.KpiRow> merged = new List<UIComponents.KpiRow>(footRows);
-                merged.AddRange(stays);
-                footStays = merged.ToArray();
+                while (bars.Count < 3)
+                {
+                    bars.Add(new UIComponents.KpiBar { Caption = "--", Share01 = 0f });
+                }
+                footBars = bars.ToArray();
             }
 
-            // ===== ⑥ 神器传承：武器名(大值+同行历代击杀) + KPI条(锻造者/代数/当代击杀) + 传承链 =====
+            // ===== ⑥ 神器传承：武器名(大值+同行历代击杀) + 标题右侧锻造者 + KPI行(代数/当代击杀) + 传承链进度条 =====
+            // v1.1.4：锻造者从 KPI 行移到「神器传承」标题右侧（TitleSide）；传承链由行式改为进度条（击杀占比）。
             bool legacyOk = snap.Legacy != null && !snap.Legacy.IsEmpty;
             string legacyVal = (legacyOk && !string.IsNullOrEmpty(snap.Legacy.TitleText)) ? snap.Legacy.TitleText : "--";
             string legacyTotal = (legacyOk && snap.Legacy.TotalKills > 0)
                 ? snap.Legacy.TotalKills + " " + "PersonalChronicle.UI.Kpi.Unit.Kills".Translate().ToString()
                 : string.Empty;
+            string legacyForger = (legacyOk && !string.IsNullOrEmpty(snap.Legacy.CreatedByText))
+                ? snap.Legacy.CreatedByText
+                : string.Empty;
             UIComponents.KpiRow[] legacyRows = legacyOk
                 ? new UIComponents.KpiRow[]
                 {
-                    new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Legacy.ForgedBy".Translate().ToString(), Value = snap.Legacy.CreatedByText ?? noRec },
                     new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Legacy.Gen".Translate().ToString(), Value = snap.Legacy.GenCount.ToString() + " " + "PersonalChronicle.UI.Legacy.GenUnit".Translate().ToString() },
                     new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Legacy.CurrentKills".Translate().ToString(), Value = LegacyCurrentKills(snap.Legacy).ToString() + " " + "PersonalChronicle.UI.Kpi.Unit.Kills".Translate().ToString() },
                 }
                 : null;
-            UIComponents.KpiChain[] legacyChain = null;
-            if (legacyOk && snap.Legacy.Holders != null && snap.Legacy.Holders.Count > 0)
+            UIComponents.KpiBar[] legacyBars = null;
+            // 传承链进度条：各代击杀占比（Share01 = 该代击杀 / 总击杀），Tag 右侧显示击杀数。
+            // 固定 3 条：不足 3 代用 "--"/0 占位；无传承（IsEmpty）时也保持 3 条空槽，布局稳定。
             {
-                // 传承链：按各代击杀数降序取前 3（最高击杀优先），排名前缀显式标注名次。
-                List<LegacyHolderView> ranked = new List<LegacyHolderView>(snap.Legacy.Holders);
-                ranked.Sort((a, b) => (b != null ? b.KillCount : 0) - (a != null ? a.KillCount : 0));
-                int topN = Mathf.Min(3, ranked.Count);
-                List<UIComponents.KpiChain> chain = new List<UIComponents.KpiChain>();
-                for (int i = 0; i < topN; i++)
+                List<UIComponents.KpiBar> bars = new List<UIComponents.KpiBar>();
+                if (legacyOk && snap.Legacy.Holders != null && snap.Legacy.Holders.Count > 0)
                 {
-                    LegacyHolderView h = ranked[i];
-                    if (h == null) continue;
-                    string gen = h.IsCurrent ? "PersonalChronicle.UI.Legacy.Current".Translate().ToString()
-                        : (h.IsFirst ? "PersonalChronicle.UI.Legacy.First".Translate().ToString() : "PersonalChronicle.UI.Legacy.Next".Translate().ToString());
-                    string rank = "PersonalChronicle.UI.Legacy.ChainRank".Translate(i + 1).ToString();
-                    chain.Add(new UIComponents.KpiChain
+                    // 传承链：按各代击杀数降序取前 3（最高击杀优先），排名前缀显式标注名次。
+                    List<LegacyHolderView> ranked = new List<LegacyHolderView>(snap.Legacy.Holders);
+                    ranked.Sort((a, b) => (b != null ? b.KillCount : 0) - (a != null ? a.KillCount : 0));
+                    int totalKills = snap.Legacy.TotalKills;
+                    if (totalKills <= 0)
                     {
-                        Label = rank + " · " + (h.HolderText ?? noRec) + " · " + gen,
-                        Value = h.KillCount + " " + "PersonalChronicle.UI.Kpi.Unit.Kills".Translate().ToString()
-                    });
+                        for (int i = 0; i < ranked.Count; i++)
+                            if (ranked[i] != null) totalKills += ranked[i].KillCount;
+                    }
+                    int topN = Mathf.Min(3, ranked.Count);
+                    for (int i = 0; i < topN; i++)
+                    {
+                        LegacyHolderView h = ranked[i];
+                        if (h == null) continue;
+                        string gen = h.IsCurrent ? "PersonalChronicle.UI.Legacy.Current".Translate().ToString()
+                            : (h.IsFirst ? "PersonalChronicle.UI.Legacy.First".Translate().ToString() : "PersonalChronicle.UI.Legacy.Next".Translate().ToString());
+                        string rank = "PersonalChronicle.UI.Legacy.ChainRank".Translate(i + 1).ToString();
+                        float share = (totalKills > 0) ? (float)h.KillCount / (float)totalKills : 0f;
+                        bars.Add(new UIComponents.KpiBar
+                        {
+                            Caption = rank + " · " + (h.HolderText ?? noRec) + " · " + gen + " · " + Mathf.RoundToInt(share * 100f) + "%",
+                            Share01 = share,
+                            Tag = h.KillCount + " " + "PersonalChronicle.UI.Kpi.Unit.Kills".Translate().ToString()
+                        });
+                    }
                 }
-                legacyChain = chain.Count > 0 ? chain.ToArray() : null;
+                while (bars.Count < 3)
+                {
+                    bars.Add(new UIComponents.KpiBar { Caption = "--", Share01 = 0f });
+                }
+                legacyBars = bars.ToArray();
             }
 
             return new UIComponents.KpiCell[]
             {
                 new UIComponents.KpiCell { KindKey = "work",   TitleKey = "PersonalChronicle.UI.Kpi.WorkTitle",   Value = workVal, Unit = workOk ? totalHoursUnit : null, InlineMetric = workRank, Rows = workRows, Bars = workBars },
-                new UIComponents.KpiCell { KindKey = "prod",   TitleKey = "PersonalChronicle.UI.Kpi.ProdTitle",   Value = prodVal, Unit = prodOk ? silver : null, InlineMetric = prodInline, Rows = null, Bars = prodBars },
-                new UIComponents.KpiCell { KindKey = "kill",   TitleKey = "PersonalChronicle.UI.Kpi.Kill",   Value = killVal, Unit = killOk ? "PersonalChronicle.UI.Kpi.Unit.Kills".Translate().ToString() : null, Rows = killRows, Bars = killBars },
-                new UIComponents.KpiCell { KindKey = "battle", TitleKey = "PersonalChronicle.UI.Kpi.BattleTitle", Value = battleVal, Unit = battleOk ? "PersonalChronicle.UI.Kpi.Unit.Battles".Translate().ToString() : null, Rows = battleRows, Bars = battleBars },
-                new UIComponents.KpiCell { KindKey = "foot",   TitleKey = "PersonalChronicle.UI.Kpi.FootTitle",   Value = footVal, Unit = footOk ? "PersonalChronicle.UI.InspectTab.Places".Translate().ToString() : null, InlineMetric = footDays, Rows = footStays ?? footRows },
-                new UIComponents.KpiCell { KindKey = "legacy", TitleKey = "PersonalChronicle.UI.Kpi.Legacy", Value = legacyVal, InlineMetric = legacyTotal, Rows = legacyRows, Chain = legacyChain },
+                new UIComponents.KpiCell { KindKey = "prod",   TitleKey = "PersonalChronicle.UI.Kpi.ProdTitle",   Value = prodVal, Unit = prodOk ? silver : null, InlineMetric = prodInline, Rows = prodRows, Bars = prodBars },
+                new UIComponents.KpiCell { KindKey = "kill",   TitleKey = "PersonalChronicle.UI.Kpi.Kill",   Value = killVal, Unit = killOk ? "PersonalChronicle.UI.Kpi.Unit.Kills".Translate().ToString() : null, InlineMetric = killOk ? killInline : null, Rows = killRows, Bars = killBars },
+                new UIComponents.KpiCell { KindKey = "consume", TitleKey = "PersonalChronicle.UI.Kpi.ConsumeTitle", Value = consVal, Unit = consOk ? silver : null, InlineMetric = consOk ? consDailyInline : null, Rows = consRows, Bars = consBars },
+                new UIComponents.KpiCell { KindKey = "foot",   TitleKey = "PersonalChronicle.UI.Kpi.FootTitle",   Value = footVal, Unit = footOk ? "PersonalChronicle.UI.InspectTab.Places".Translate().ToString() : null, InlineMetric = footDays, Rows = footRows, Bars = footBars },
+                new UIComponents.KpiCell { KindKey = "legacy", TitleKey = "PersonalChronicle.UI.Kpi.Legacy", TitleSide = legacyForger, Value = legacyVal, InlineMetric = legacyTotal, Rows = legacyRows, Bars = legacyBars },
             };
         }
 

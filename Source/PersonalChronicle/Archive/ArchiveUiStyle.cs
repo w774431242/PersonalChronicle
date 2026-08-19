@@ -17,6 +17,11 @@ namespace PersonalChronicle.Archive
     /// behavioural change, while new code targets <c>UITheme</c>/<c>UIComponents</c>
     /// directly. Archive-specific concerns (faction codex kinds, selection
     /// navigation, card accent) remain here because they are not generic tokens.
+    ///
+    /// Since v1.1.4 the forwarded colour fields are <b>non-readonly</b>: they are
+    /// re-synced from <see cref="UITheme"/> whenever a theme is applied
+    /// (<see cref="RefreshFromTheme"/>). Spacing/metrics constants are theme-neutral
+    /// and stay const.
     /// </summary>
     internal static class ArchiveUiStyle
     {
@@ -27,43 +32,79 @@ namespace PersonalChronicle.Archive
         internal const float PanelPadding = UITheme.PanelPadding;
         internal const float CardGap = UITheme.CardGap;
 
-        internal static readonly Color Window = UITheme.Window;
-        internal static readonly Color Panel = UITheme.Panel;
-        internal static readonly Color PanelRaised = UITheme.PanelRaised;
-        internal static readonly Color Card = UITheme.Card;
-        internal static readonly Color CardHover = UITheme.CardHover;
-        internal static readonly Color Border = UITheme.Border;
-        internal static readonly Color BorderSoft = UITheme.BorderSoft;
-        internal static readonly Color Text = UITheme.Text;
-        internal static readonly Color Muted = UITheme.Muted;
-        internal static readonly Color Dim = UITheme.Dim;
-        internal static readonly Color Accent = UITheme.Accent;
-        internal static readonly Color AccentSoft = UITheme.AccentSoft;
-        internal static readonly Color Info = UITheme.Info;
-        internal static readonly Color Alive = UITheme.Alive;
-        internal static readonly Color Dead = UITheme.Dead;
-        internal static readonly Color SecondaryText = UITheme.SecondaryText;
-        internal static readonly Color Warn = UITheme.Warn;
-        internal static readonly Color Threat = UITheme.Threat;
-        internal static readonly Color FactionAlly = UITheme.FactionAlly;
-        internal static readonly Color FactionHostile = UITheme.FactionHostile;
-        internal static readonly Color FactionNeutral = UITheme.FactionNeutral;
-        internal static readonly Color TimelineSpine = UITheme.TimelineSpine;
-        internal static readonly Color TimelineJoin = UITheme.TimelineJoin;
-        internal static readonly Color TimelineDeath = UITheme.TimelineDeath;
-        internal static readonly Color TimelineBattle = UITheme.TimelineBattle;
-        internal static readonly Color TimelineSocial = UITheme.TimelineSocial;
-        internal static readonly Color TimelineCraft = UITheme.TimelineCraft;
-        internal static readonly Color TimelineBuilt = UITheme.TimelineBuilt;
-        internal static readonly Color TimelineOther = UITheme.TimelineOther;
+        internal static Color Window;
+        internal static Color Panel;
+        internal static Color PanelRaised;
+        internal static Color Card;
+        internal static Color CardHover;
+        internal static Color Border;
+        internal static Color BorderSoft;
+        internal static Color Text;
+        internal static Color Muted;
+        internal static Color Dim;
+        internal static Color Accent;
+        internal static Color AccentSoft;
+        internal static Color Info;
+        internal static Color Alive;
+        internal static Color Dead;
+        internal static Color SecondaryText;
+        internal static Color Warn;
+        internal static Color Threat;
+        internal static Color FactionAlly;
+        internal static Color FactionHostile;
+        internal static Color FactionNeutral;
+        internal static Color TimelineSpine;
+        internal static Color TimelineJoin;
+        internal static Color TimelineDeath;
+        internal static Color TimelineBattle;
+        internal static Color TimelineSocial;
+        internal static Color TimelineCraft;
+        internal static Color TimelineBuilt;
+        internal static Color TimelineOther;
+
+        /// <summary>
+        /// Re-sync every forwarded colour from the active <see cref="UITheme"/>
+        /// palette. Called by <c>UITheme.Apply</c>; do not call directly.
+        /// </summary>
+        internal static void RefreshFromTheme()
+        {
+            Window = UITheme.Window;
+            Panel = UITheme.Panel;
+            PanelRaised = UITheme.PanelRaised;
+            Card = UITheme.Card;
+            CardHover = UITheme.CardHover;
+            Border = UITheme.Border;
+            BorderSoft = UITheme.BorderSoft;
+            Text = UITheme.Text;
+            Muted = UITheme.Muted;
+            Dim = UITheme.Dim;
+            Accent = UITheme.Accent;
+            AccentSoft = UITheme.AccentSoft;
+            Info = UITheme.Info;
+            Alive = UITheme.Alive;
+            Dead = UITheme.Dead;
+            SecondaryText = UITheme.SecondaryText;
+            Warn = UITheme.Warn;
+            Threat = UITheme.Threat;
+            FactionAlly = UITheme.FactionAlly;
+            FactionHostile = UITheme.FactionHostile;
+            FactionNeutral = UITheme.FactionNeutral;
+            TimelineSpine = UITheme.TimelineSpine;
+            TimelineJoin = UITheme.TimelineJoin;
+            TimelineDeath = UITheme.TimelineDeath;
+            TimelineBattle = UITheme.TimelineBattle;
+            TimelineSocial = UITheme.TimelineSocial;
+            TimelineCraft = UITheme.TimelineCraft;
+            TimelineBuilt = UITheme.TimelineBuilt;
+            TimelineOther = UITheme.TimelineOther;
+        }
 
         // ---- Faction-codex specific (not generic tokens) ----
-        // Mapped to native ColoredText faction relations (v4.5.3 calibration).
-        internal static readonly Color FactionEnemy = UITheme.FactionHostile;
-        internal static readonly Color FactionMechanoid = UITheme.Info;
-        internal static readonly Color FactionAnimal = UITheme.Alive;
-        internal static readonly Color FactionUnknown = UITheme.Muted;
-        internal static readonly Color FactionPlayer = UITheme.Accent;
+        internal static Color FactionEnemy => FactionHostile;
+        internal static Color FactionMechanoid => Info;
+        internal static Color FactionAnimal => Alive;
+        internal static Color FactionUnknown => Muted;
+        internal static Color FactionPlayer => Accent;
 
         public enum FactionCodexKind { Enemy, Mechanoid, Animal, Unknown, Player }
 

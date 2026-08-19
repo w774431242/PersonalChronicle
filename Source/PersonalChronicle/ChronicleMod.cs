@@ -2,6 +2,7 @@ using System.Reflection;
 using HarmonyLib;
 using PersonalChronicle.Api;
 using PersonalChronicle.Application;
+using PersonalChronicle.Archive.UI;
 using PersonalChronicle.Domain;
 using UnityEngine;
 using Verse;
@@ -33,6 +34,9 @@ namespace PersonalChronicle
         {
             Instance = this;
             Settings = GetSettings<ChronicleSettings>();
+            // v1.1.4: restore the persisted UI theme as soon as settings exist, so the
+            // whole window (and its ArchiveUiStyle forwards) renders in the saved skin.
+            UITheme.Apply(Settings.ThemeId);
             WorkIntensityProviders = new WorkIntensityProviderRegistry();
             ArchiveService service = new ArchiveService(WorkIntensityProviders);
             ArchiveService = service;

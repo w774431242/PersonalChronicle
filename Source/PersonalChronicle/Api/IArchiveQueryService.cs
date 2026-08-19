@@ -57,6 +57,12 @@ namespace PersonalChronicle.Api
         IReadOnlyList<SkillArchiveView> GetSkillArchive(string stableId);
         ProductionSummaryView GetProductionSummary(string stableId);
 
+        /// <summary>
+        /// v1.1.4 损耗宫格：返回该人物消耗品计价累计（累计银币 / 近 7 天 / 近 30 天日均 /
+        /// 类目构成）。来源 <see cref="ConsumptionAccumulator"/>（持久化，不扫事件流）。
+        /// </summary>
+        ConsumptionSummaryView GetConsumptionSummary(string stableId);
+
         // ---- live stats (home-page counts) ----
         int GetLiveColonistCount();
         void GetLiveColonistCounts(out int free, out int slave, out int prisoner);
@@ -66,5 +72,19 @@ namespace PersonalChronicle.Api
 
         // ---- persisted home view mode (read side) ----
         int GetHomeViewMode();
+
+        // ---- v1.1.4 建筑/房间类型别名（读侧） ----
+
+        /// <summary>
+        /// 工坊实例全局别名读取（null = 未改名，展示回落默认名）。
+        /// key = <c>defName:thingIDNumber</c>（WorkplaceSnapshot.BuildingStableId）。
+        /// </summary>
+        string GetBuildingAlias(string buildingStableId);
+
+        /// <summary>
+        /// 房间类型别名读取（null = 未改名，展示回落 RoomRoleDef.LabelCap）。
+        /// key = RoomRoleDef.defName（如 Bedroom）。
+        /// </summary>
+        string GetRoomRoleAlias(string roomRoleDefName);
     }
 }

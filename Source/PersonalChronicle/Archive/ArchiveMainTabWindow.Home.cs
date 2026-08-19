@@ -170,8 +170,15 @@ namespace PersonalChronicle.Archive
                 GUI.color = prevColor;
 
                 ArchiveUiStyle.DrawPanel(cardRect);
+                // v1.1.5: event-kind accent stripe on the card's left edge
+                // (mirrors the HTML preview's ::before left border).
+                Color prevAccent = GUI.color;
+                GUI.color = color;
+                Widgets.DrawLineVertical(cardRect.x, cardRect.y + 2f, cardRect.height - 4f);
+                GUI.color = prevAccent;
                 Rect cardInner = cardRect.ContractedBy(6f);
                 Text.Font = GameFont.Small;
+                GUI.color = ArchiveUiStyle.Text;
                 Widgets.Label(new Rect(cardInner.x, cardInner.y, cardInner.width, 20f), icon + " " + title);
                 Text.Font = GameFont.Tiny;
                 GUI.color = ArchiveUiStyle.SecondaryText;

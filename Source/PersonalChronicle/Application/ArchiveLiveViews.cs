@@ -128,4 +128,38 @@ namespace PersonalChronicle.Application
             MarketValue = marketValue;
         }
     }
+
+    /// <summary>v1.1.4 损耗宫格：该人物消耗品计价只读视图。</summary>
+    public sealed class ConsumptionSummaryView
+    {
+        public readonly float TotalSilver;   // 累计损耗（银）
+        public readonly float WeeklySilver;  // 近 7 天（银）
+        public readonly float DailySilver;   // 近 30 天日均（银/天）
+        public readonly IReadOnlyList<ConsumptionTypeView> Types; // 类目构成，按银币降序
+
+        public ConsumptionSummaryView(
+            float totalSilver,
+            float weeklySilver,
+            float dailySilver,
+            IReadOnlyList<ConsumptionTypeView> types)
+        {
+            TotalSilver = totalSilver;
+            WeeklySilver = weeklySilver;
+            DailySilver = dailySilver;
+            Types = types ?? new List<ConsumptionTypeView>();
+        }
+    }
+
+    /// <summary>v1.1.4 损耗构成：一个消耗品类目（ThingCategoryDef.defName → 累计银币）。</summary>
+    public sealed class ConsumptionTypeView
+    {
+        public readonly string CategoryDefName;
+        public readonly float Silver;
+
+        public ConsumptionTypeView(string categoryDefName, float silver)
+        {
+            CategoryDefName = categoryDefName;
+            Silver = silver;
+        }
+    }
 }

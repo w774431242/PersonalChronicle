@@ -51,6 +51,52 @@ namespace PersonalChronicle.Domain
         /// <summary>v6.8 个人战斗维度：远程击杀数（非近战武器判定）。</summary>
         public int RangedKills;
 
+        /// <summary>v1.1.4 损耗宫格：人物每日消耗品（食物/药品/成瘾品等）计价累计。</summary>
+        public ConsumptionAccumulator Consumption = new ConsumptionAccumulator();
+
+        /// <summary>
+        /// v1.1.4 劳模住所/工坊检测：工作场所快照（方案 A 捕获 Bill_Production
+        /// Notify_IterationCompleted → billGiver 工坊名 defName + 使用次数）。
+        /// 只存稳定键，UI 实时解析 label；append-only（旧存档 null-safe）。
+        /// </summary>
+        public WorkplaceSnapshot Workplace;
+
+        /// <summary>
+        /// v1.1.4 劳模住所/工坊检测：住所快照（方案 B 定期采样 pawn.ownership.OwnedRoom.Role）。
+        /// 只存 RoomRoleDef.defName 稳定键；append-only（旧存档 null-safe）。
+        /// </summary>
+        public ResidenceSnapshot Residence;
+
+        /// <summary>
+        /// v1.1.4 勋章体系：已授予勋章 defName 记录（append-only，按授勋顺序追加）。
+        /// 阈值类勋章由 <see cref="MedalAwardEvaluator"/> 判定新达标后追加；
+        /// 「同一称号只显示当前档」由 UI/ReadModel 取最高档处理，本字段保留完整授勋历史。
+        /// </summary>
+        public List<string> GrantedMedals = new List<string>();
+
+        /// <summary>
+        /// P1 CAREER-001 职业事实层容器（概念上即 CompCareer）。仅承载职业事实 ledger
+        /// 与事实聚合计数；不含职称/勋章/UI 状态。append-only（不 bump Schema Version）。
+        /// </summary>
+        public PersonalChronicle.Domain.Career.CareerData CareerData = new PersonalChronicle.Domain.Career.CareerData();
+
+        /// <summary>追加一枚已授予勋章 defName（去重）。</summary>
+        public void AddGrantedMedal(string defName)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return;
+            }
+            if (GrantedMedals == null)
+            {
+                GrantedMedals = new List<string>();
+            }
+            if (!GrantedMedals.Contains(defName))
+            {
+                GrantedMedals.Add(defName);
+            }
+        }
+
         // CategoryKey 继承自 PawnRecord（均返回 ArchiveCategoryKeys.Pawn），
         // 无需在此重复 override —— 移除冗余分流逻辑，避免两处维护。
         public PawnObject()
@@ -74,13 +120,21 @@ namespace PersonalChronicle.Domain
             Scribe_Values.Look(ref ParticipatedBattles, "participatedBattles", 0);
             Scribe_Values.Look(ref MeleeKills, "meleeKills", 0);
             Scribe_Values.Look(ref RangedKills, "rangedKills", 0);
+            Scribe_Deep.Look(ref Consumption, "consumption");
+            Scribe_Deep.Look(ref Workplace, "workplace");
+            Scribe_Deep.Look(ref Residence, "residence");
+            Scribe_Collections.Look(ref GrantedMedals, "grantedMedals", LookMode.Value);
+            Scribe_Deep.Look(ref CareerData, "careerData");
             if (WorkSnapshot == null) WorkSnapshot = new List<WorkPrioritySnapshot>();
             if (SkillSnapshot == null) SkillSnapshot = new Dictionary<string, int>();
             if (SkillSnapshotOnDeath == null) SkillSnapshotOnDeath = new Dictionary<string, int>();
             if (WorkTime == null) WorkTime = new WorkTimeAccumulator();
             if (Production == null) Production = new ProductionAccumulator();
+            if (Consumption == null) Consumption = new ConsumptionAccumulator();
             if (PlaceHistory == null) PlaceHistory = new List<PlaceVisit>();
             if (Relations == null) Relations = new List<SignificantRelation>();
+            if (GrantedMedals == null) GrantedMedals = new List<string>();
+            if (CareerData == null) CareerData = new PersonalChronicle.Domain.Career.CareerData();
         }
     }
 }
