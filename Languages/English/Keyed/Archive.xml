@@ -722,6 +722,15 @@
   <PersonalChronicle.UI.Career.Sub.Career>Resume</PersonalChronicle.UI.Career.Sub.Career>
   <PersonalChronicle.UI.Career.Sub.Title>Title</PersonalChronicle.UI.Career.Sub.Title>
   <PersonalChronicle.UI.Career.Sub.Honor>Honor</PersonalChronicle.UI.Career.Sub.Honor>
+  <PersonalChronicle.UI.Career.Sub.Qualification>Qualification</PersonalChronicle.UI.Career.Sub.Qualification>
+  <PersonalChronicle.UI.Career.Qual.Empty>No career data yet; qualification flow unavailable.</PersonalChronicle.UI.Career.Qual.Empty>
+  <PersonalChronicle.UI.Career.Qual.Ladder>Title Ladder</PersonalChronicle.UI.Career.Qual.Ladder>
+  <PersonalChronicle.UI.Career.Qual.Capped>Highest title "{0}" reached.</PersonalChronicle.UI.Career.Qual.Capped>
+  <PersonalChronicle.UI.Career.Qual.NoDef>Qualification def not found.</PersonalChronicle.UI.Career.Qual.NoDef>
+  <PersonalChronicle.UI.Career.Qual.Conditions>Requirements for "{0}"</PersonalChronicle.UI.Career.Qual.Conditions>
+  <PersonalChronicle.UI.Career.Qual.Actions>Flow actions (Practical → Theory → Thesis → Defense → Review)</PersonalChronicle.UI.Career.Qual.Actions>
+  <PersonalChronicle.UI.Career.Qual.Gate>Blocked: {0}</PersonalChronicle.UI.Career.Qual.Gate>
+  <PersonalChronicle.UI.Career.Qual.SubmitResult>Result: {0}</PersonalChronicle.UI.Career.Qual.SubmitResult>
   <PersonalChronicle.UI.Career.Overview.Title>Career Overview</PersonalChronicle.UI.Career.Overview.Title>
   <PersonalChronicle.UI.Career.Overview.Empty>No career overview data to display yet.</PersonalChronicle.UI.Career.Overview.Empty>
   <PersonalChronicle.UI.Career.Resume.Title>Work Experience</PersonalChronicle.UI.Career.Resume.Title>

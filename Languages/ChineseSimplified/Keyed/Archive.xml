@@ -725,6 +725,15 @@
   <PersonalChronicle.UI.Career.Sub.Career>履历</PersonalChronicle.UI.Career.Sub.Career>
   <PersonalChronicle.UI.Career.Sub.Title>职称</PersonalChronicle.UI.Career.Sub.Title>
   <PersonalChronicle.UI.Career.Sub.Honor>勋章</PersonalChronicle.UI.Career.Sub.Honor>
+  <PersonalChronicle.UI.Career.Sub.Qualification>资格</PersonalChronicle.UI.Career.Sub.Qualification>
+  <PersonalChronicle.UI.Career.Qual.Empty>暂无职业档案数据，无法查看资格流程。</PersonalChronicle.UI.Career.Qual.Empty>
+  <PersonalChronicle.UI.Career.Qual.Ladder>职称阶梯</PersonalChronicle.UI.Career.Qual.Ladder>
+  <PersonalChronicle.UI.Career.Qual.Capped>已获最高职称「{0}」封顶。</PersonalChronicle.UI.Career.Qual.Capped>
+  <PersonalChronicle.UI.Career.Qual.NoDef>未找到资格定义。</PersonalChronicle.UI.Career.Qual.NoDef>
+  <PersonalChronicle.UI.Career.Qual.Conditions>「{0}」申报条件</PersonalChronicle.UI.Career.Qual.Conditions>
+  <PersonalChronicle.UI.Career.Qual.Actions>流程操作（实践考试 → 理论考试 → 论文 → 答辩 → 评级评审）</PersonalChronicle.UI.Career.Qual.Actions>
+  <PersonalChronicle.UI.Career.Qual.Gate>无法进行：{0}</PersonalChronicle.UI.Career.Qual.Gate>
+  <PersonalChronicle.UI.Career.Qual.SubmitResult>操作结果：{0}</PersonalChronicle.UI.Career.Qual.SubmitResult>
   <PersonalChronicle.UI.Career.Overview.Title>职业总览</PersonalChronicle.UI.Career.Overview.Title>
   <PersonalChronicle.UI.Career.Overview.Empty>职业总览暂无可展示数据。</PersonalChronicle.UI.Career.Overview.Empty>
   <PersonalChronicle.UI.Career.Resume.Title>工作经历</PersonalChronicle.UI.Career.Resume.Title>

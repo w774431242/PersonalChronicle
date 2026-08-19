@@ -41,13 +41,14 @@ namespace PersonalChronicle.Archive
         private const float MedIconW = 46f;
         private const float MedIconH = 56f;
 
-        // 3 子页（对齐 HTML：总览/履历/勋章）。
-        private static readonly string[] SubTabs = { "Overview", "Career", "Honor" };
+        // 4 子页（对齐 HTML：总览/履历/勋章/资格；资格页承载 P9 考试/论文/答辩/评级评审流程）。
+        private static readonly string[] SubTabs = { "Overview", "Career", "Honor", "Qualification" };
         private static readonly string[] SubTabKeys =
         {
             "PersonalChronicle.UI.Career.Sub.Overview",
             "PersonalChronicle.UI.Career.Sub.Career",
-            "PersonalChronicle.UI.Career.Sub.Honor"
+            "PersonalChronicle.UI.Career.Sub.Honor",
+            "PersonalChronicle.UI.Career.Sub.Qualification"
         };
 
         // 12 原版技能稳定键（ProfessionalFitAnalyzer 输入键 = SkillDef.defName）。
@@ -183,6 +184,7 @@ namespace PersonalChronicle.Archive
                 case "Overview": DrawOverviewTab(body, pawn, snap); break;
                 case "Career": DrawCareerResumeTab(body, snap); break;
                 case "Honor": DrawHonorTab(body, pawn, snap); break;
+                case "Qualification": DrawQualificationTab(body, pawn, snap); break;
             }
         }
 
