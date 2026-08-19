@@ -403,6 +403,39 @@ namespace PersonalChronicle.Tests
             Assert.AreEqual(30f, rec.Score, 0.01f); // 100 × 0.5 × 0.6（浮点链容差放宽到业务精度）
         }
 
+        [Test]
+        public void RecordExamProduced_ReachMaxUnqualified_FailsAndEnds()
+        {
+            // 2026-08-19 流程修补：制造上限 = MaxProduced（0=2×RequiredCount=6），
+            // 达到上限仍未达标 → 失败结束（考试件数有界，避免无限制造）
+            PawnObject p = MakePawnWithPracticalExam("Excellent", 100L, 100000L);
+            for (int i = 0; i < 6; i++)
+            {
+                ArchiveService.RecordExamProduced(p, "Make_A", "Normal", 200L + i * 1000L);
+            }
+            PracticalExamRecord rec = p.CareerData.Exams.Practical[0];
+            Assert.IsTrue(rec.Finished, "达到制造上限应结束考试");
+            Assert.IsFalse(rec.Passed, "品质硬门槛未满足不得通过");
+            // 上限后再制造：考试已结束，不再累计
+            ArchiveService.RecordExamProduced(p, "Make_A", "Excellent", 9000L);
+            Assert.AreEqual(6, rec.ProducedCount);
+        }
+
+        [Test]
+        public void RecordExamProduced_CustomMaxProduced_Respected()
+        {
+            // 显式 MaxProduced=4：第 4 件仍未达标 → 结束失败
+            PawnObject p = MakePawnWithPracticalExam("Excellent", 100L, 100000L);
+            p.CareerData.Exams.Practical[0].MaxProduced = 4;
+            for (int i = 0; i < 4; i++)
+            {
+                ArchiveService.RecordExamProduced(p, "Make_A", "Normal", 200L + i * 1000L);
+            }
+            PracticalExamRecord rec = p.CareerData.Exams.Practical[0];
+            Assert.IsTrue(rec.Finished);
+            Assert.IsFalse(rec.Passed);
+        }
+
         // ───────────────────────── 2026-08-19 验收 P1-4 回归：答辩匹配 ─────────────────────────
 
         private static QualificationDef MakeFullQual(string defName, string skill, bool reqThesis, bool reqDefense)

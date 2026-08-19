@@ -24,6 +24,12 @@ namespace PersonalChronicle.Domain.Qualification
         /// <summary>最低品质（QualityCategory name，如 "Excellent"）。</summary>
         public string MinQuality;
 
+        /// <summary>
+        /// 制造数量上限（2026-08-19 流程修补：一次报名最多制造该件数，超限未达标即失败结束）。
+        /// 0 = 默认（RequiredCount × 2）。旧存档缺失 = 0 → 默认上限，兼容。
+        /// </summary>
+        public int MaxProduced;
+
         /// <summary>时限（tick）。</summary>
         public long TimeLimitTicks;
 
@@ -47,6 +53,7 @@ namespace PersonalChronicle.Domain.Qualification
             Scribe_Collections.Look(ref TargetRecipeDefNames, "targetRecipeDefNames", LookMode.Value);
             Scribe_Values.Look(ref RequiredCount, "requiredCount", 0);
             Scribe_Values.Look(ref MinQuality, "minQuality");
+            Scribe_Values.Look(ref MaxProduced, "maxProduced", 0);
             Scribe_Values.Look(ref TimeLimitTicks, "timeLimitTicks", 0L);
             Scribe_Values.Look(ref StartedTick, "startedTick", 0L);
             Scribe_Values.Look(ref ProducedCount, "producedCount", 0);

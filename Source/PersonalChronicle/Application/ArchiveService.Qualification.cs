@@ -104,8 +104,20 @@ namespace PersonalChronicle.Application
                     {
                         rec.Passed = rec.Score > 0f;
                         rec.Finished = true;
+                        continue;
                     }
                     // 数量已够但品质未达标：考试继续，等待更高品质产出（不结束）。
+                }
+                // 制造上限（2026-08-19 流程修补）：一次报名最多制造 MaxProduced（0=2×RequiredCount）
+                // 件，超限未达标即失败结束——考试件数有界，避免无限制造。
+                int maxN = rec.MaxProduced > 0 ? rec.MaxProduced : rec.RequiredCount * 2;
+                if (rec.ProducedCount >= maxN)
+                {
+                    rec.Score = ExamScoring.ScorePractical(
+                        rec.RequiredCount, rec.ProducedCount, rec.ProducedQualities,
+                        rec.MinQuality, rec.StartedTick, rec.TimeLimitTicks, tick);
+                    rec.Passed = false;
+                    rec.Finished = true;
                 }
             }
         }

@@ -28,12 +28,10 @@
   .tab.active{color:var(--text);border-bottom-color:var(--accent)}
   .pane{display:none;padding:14px}
   .pane.active{display:block}
-  h3{font-size:12px;color:var(--muted);letter-spacing:.08em;margin-bottom:10px;border-bottom:1px solid var(--line-soft);padding-bottom:6px}
   .card{background:var(--panel);border:1px solid var(--line-soft);border-radius:6px;padding:12px 14px;margin-bottom:10px}
   .card .cap{font-size:11px;color:var(--dim);margin-bottom:8px}
   .desc{font-size:12px;color:var(--muted);line-height:19px;margin-bottom:8px}
   .desc b{color:var(--text)}
-  /* 资格阶梯 */
   .ladder{display:flex;gap:8px;flex-wrap:wrap}
   .step{flex:1 1 150px;border:1px solid var(--line-soft);border-radius:6px;padding:10px;background:var(--panel);position:relative}
   .step .lv{font-size:10px;color:var(--dim)}
@@ -44,18 +42,15 @@
   .st.active{color:var(--accent);background:#261f12;border:1px solid #57471f}
   .st.done{color:var(--ok);background:#14200f;border:1px solid #2d4523}
   .step.current{border-color:var(--accent);box-shadow:0 0 0 1px rgba(217,179,108,.25)}
-  /* 状态机 */
   .fsm{display:flex;gap:3px;flex-wrap:wrap;margin-top:8px}
   .fsm span{font-size:9px;padding:2px 6px;border-radius:3px;border:1px solid var(--line-soft);color:var(--dim);white-space:nowrap}
   .fsm span.on{color:#111;background:var(--accent);border-color:var(--accent);font-weight:600}
-  /* 条件检查 */
   .req{display:flex;align-items:center;gap:8px;padding:6px 8px;border-bottom:1px solid var(--line-soft);font-size:12px}
   .req:last-child{border-bottom:none}
   .req .n{width:90px;color:var(--muted);flex:0 0 auto}
   .req .d{flex:1;color:var(--dim);font-size:11px}
   .req .s{font-size:11px;min-width:52px;text-align:right}
   .ok{color:var(--ok)} .wait{color:var(--warn)} .bad{color:var(--bad)}
-  /* 考试任务 */
   .exam-task{border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-top:8px;background:var(--panel-low)}
   .exam-task .row{display:flex;gap:16px;font-size:11px;color:var(--muted);margin:4px 0;flex-wrap:wrap}
   .exam-task .row b{color:var(--text)}
@@ -72,25 +67,21 @@
   .verdict{font-size:12px;margin-top:6px;padding:6px 10px;border-radius:4px}
   .verdict.pass{background:#14200f;color:var(--ok);border:1px solid #2d4523}
   .verdict.fail{background:#241312;color:var(--bad);border:1px solid #4a2620}
-  /* 答辩委员 */
   .cm{display:flex;align-items:center;gap:10px;padding:8px;border:1px solid var(--line-soft);border-radius:4px;margin-bottom:6px;background:var(--panel-low)}
   .cm .av{width:30px;height:30px;border-radius:50%;background:var(--panel-hi);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);flex:0 0 auto}
   .cm .nm{flex:1}
   .cm .nm small{display:block;color:var(--dim);font-size:10px}
   .cm .sc{font-family:ui-monospace,Consolas,monospace;color:var(--accent);font-size:14px}
-  /* 职称时间线 */
   .tl-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:12px}
   .tl-row .dot{width:8px;height:8px;border-radius:50%;background:var(--line);flex:0 0 auto}
   .tl-row.got .dot{background:var(--ok)}
   .tl-row .when{color:var(--dim);font-size:11px;margin-left:auto}
   .timeline-empty{color:var(--dim);font-size:12px;padding:20px 10px;text-align:center}
-  /* 职称授予横幅 */
   .grant-banner{position:absolute;top:56px;left:50%;transform:translateX(-50%);z-index:50;background:#1d2114;border:1px solid var(--accent);border-radius:8px;padding:14px 28px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.6);animation:grantIn .35s ease-out}
   .grant-banner .gb-t{font-size:16px;font-weight:700;color:var(--accent);letter-spacing:.1em}
   .grant-banner .gb-s{font-size:11px;color:var(--muted);margin-top:4px}
   .grant-banner .gb-x{position:absolute;top:4px;right:8px;cursor:pointer;color:var(--dim);font-size:13px}
   @keyframes grantIn{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-  /* 开发者折叠区 */
   details.dev{border:1px dashed var(--line);border-radius:6px;margin-top:10px;background:var(--panel-low)}
   details.dev summary{cursor:pointer;font-size:11px;color:var(--dim);padding:7px 12px;user-select:none}
   details.dev .dev-body{padding:8px 12px 12px;border-top:1px dashed var(--line-soft)}
@@ -110,7 +101,7 @@
     <div class="portrait">🧑‍🔧</div>
     <div>
       <div class="name">林舟</div>
-      <div class="sub">精密制造 · 制造类 · 当前申报：精密制造高级技工</div>
+      <div class="sub">精密制造 · 制造类 · 当前申报：精密制造初级技工</div>
     </div>
     <div class="status">
       <div class="status-main" id="psMain">原版殖民者（未评级）</div>
@@ -126,25 +117,23 @@
     <div class="tab" data-tab="record">职称记录</div>
   </div>
 
-  <!-- ================= 资格进度 ================= -->
   <div class="pane active" id="pane-qual">
     <div class="card">
       <div class="cap">职称阶梯</div>
       <div class="ladder" id="ladder"></div>
     </div>
     <div class="card">
-      <div class="cap">我的资格进度</div>
+      <div class="cap">我的资格进度（当前申报档流程：实践考试 → 理论考试 → 论文 → 答辩 → 授予）</div>
       <div class="fsm" id="fsm"></div>
       <div style="height:8px"></div>
       <div id="reqs"></div>
     </div>
   </div>
 
-  <!-- ================= 实践考试 ================= -->
   <div class="pane" id="pane-exam">
     <div class="card">
       <div class="cap">实践考试</div>
-      <p class="desc">报名后需要<b>亲手完成一批指定物品</b>：数量、最低品质与时限见考试任务。只有真正达标（件数与品质都满足）才算通过。</p>
+      <p class="desc">报名后需要<b>亲手完成一批指定物品</b>：数量、最低品质与时限见考试任务。一次报名最多制造 <b>上限件数</b>，达标（件数与品质都满足）即通过；超限或超时未达标即失败，可重新报名（每档职称需<b>重新</b>考试）。</p>
       <div class="btnrow">
         <button class="btn primary" id="btnExamApply">📋 报名实践考试</button>
         <button class="btn" id="btnExamProduce" disabled>🔨 完成一次制造</button>
@@ -154,11 +143,10 @@
     </div>
   </div>
 
-  <!-- ================= 理论考试 ================= -->
   <div class="pane" id="pane-theory">
     <div class="card">
       <div class="cap">理论考试</div>
-      <p class="desc">通过<b>阅读书籍、完成研究、技能成长与理论学习活动</b>积累考试依据，四方面齐备后即可提交。</p>
+      <p class="desc">通过<b>阅读书籍、完成研究、技能成长与理论学习活动</b>积累考试依据，四方面齐备后提交。<b>每档职称需重新提交一次</b>。</p>
       <div id="theoryEvid" class="evid"></div>
       <div class="btnrow">
         <button class="btn" id="btnReadBook">📖 阅读书籍</button>
@@ -171,11 +159,10 @@
     </div>
   </div>
 
-  <!-- ================= 论文 ================= -->
   <div class="pane" id="pane-thesis">
     <div class="card">
       <div class="cap">论文</div>
-      <p class="desc">选定课题后<b>引用已读书籍与研究成果</b>撰写论文，论文质量由依据的深度决定。</p>
+      <p class="desc">选定课题后<b>引用已读书籍与研究成果</b>撰写论文。<b>高级档（Lv3+）每档需独立完成论文与答辩</b>。</p>
       <div class="btnrow">
         <button class="btn primary" id="btnThesisStart">📝 论文选题</button>
         <button class="btn" id="btnThesisCiteBook" disabled>📚 引用书籍</button>
@@ -186,7 +173,6 @@
     </div>
   </div>
 
-  <!-- ================= 答辩 ================= -->
   <div class="pane" id="pane-defense">
     <div class="card">
       <div class="cap">答辩</div>
@@ -199,7 +185,6 @@
     </div>
   </div>
 
-  <!-- ================= 职称记录 ================= -->
   <div class="pane" id="pane-record">
     <div class="card">
       <div class="cap">职称记录</div>
@@ -207,7 +192,6 @@
     </div>
   </div>
 
-  <!-- ================= 开发者调试（面向玩家隐藏，测试保留） ================= -->
   <details class="dev">
     <summary>⚙ 开发者调试（仅测试用）</summary>
     <div class="dev-body">
@@ -224,19 +208,18 @@
           <option value="all:Legendary">固定：传奇</option>
         </select>
         <span>测试链路：</span>
-        <button class="btn" id="btnQuickFlow">⚡ 一键完成申报流程（自动走完考试/论文/答辩）</button>
+        <button class="btn" id="btnQuickFlow">⚡ 一键完成申报流程（逐档：考试→理论→[论文→答辩]→授予）</button>
       </div>
       <div class="log" id="logBox"></div>
     </div>
   </details>
 
-  <!-- ================= 数据契约（面向开发者） ================= -->
   <details class="dev">
     <summary>📋 数据契约（开发者）</summary>
     <div class="dev-body">
       <div class="data-map">
-        <b>数据契约</b>：资格阶梯/状态机 → <code>QualificationState / QualificationProgress</code>（CareerData.Qualification）；条件检查 → <code>QualificationEvaluator.EvaluateOne</code>（门槛链 + 综合评分 0.25/0.20/0.20/0.15/0.20）；实践考试 → <code>PracticalExamRecord / ExamScoring.ScorePractical + CountAtLeast</code>（品质硬门槛 + 超时结束）；理论 → <code>TheoryExamRecord / ScoreTheory</code>（0.4/0.3/0.2/0.1）；论文 → <code>ThesisEvidence / ScoreThesis</code>；答辩 → <code>DefenseRecord（QualificationDefName）/ ScoreDefense</code>；授予 → <code>GrantedTitle + CareerEvent(TitleGranted)</code> + 自动授予 D-T1。<br>
-        <b>2026-08-19 修复记录</b>：答辩通过后未触发职称授予（授予逻辑原藏于渲染函数且答辩回调未触发）——已抽为业务函数 <code>evaluateAndGrant()</code>，所有状态变更统一触发；P1-5 裁决：Senior+ 门槛临时关闭（本预览按 P9 落地后完整流程演示，落地时随门槛恢复同步启用）。
+        <b>数据契约</b>：资格阶梯/状态机 → <code>QualificationState / QualificationProgress</code>；条件检查 → <code>QualificationEvaluator.EvaluateOne</code>（门槛链 + 综合评分 0.25/0.20/0.20/0.15/0.20）；实践考试 → <code>PracticalExamRecord / ExamScoring.ScorePractical + CountAtLeast</code>（品质硬门槛 + 超时/上限结束）；理论 → <code>TheoryExamRecord / ScoreTheory</code>；论文 → <code>ThesisEvidence / ScoreThesis</code>；答辩 → <code>DefenseRecord（QualificationDefName）/ ScoreDefense</code>；授予 → <code>GrantedTitle + CareerEvent(TitleGranted)</code> + D-T1。<br>
+        <b>2026-08-19 修复记录</b>：① 答辩通过后未授予 → 抽取 <code>evaluateAndGrant()</code> 业务函数；② 符合资格未走考试/论文/答辩即授予 → 全档位考试必经 + Senior+ 论文答辩门槛恢复（Defs 同步）；③ <b>流程状态按档隔离 + 实践考试制造上限</b>：考试/理论/论文/答辩均按申报档独立记录（旧档结果不延续，对齐 C# QualificationDefName 匹配语义）；实践考试一次报名制造上限 = 2×要求件数（超限/超时未达标即失败，可重报）。
       </div>
     </div>
   </details>
@@ -245,14 +228,12 @@
 <script>
 (function(){
   'use strict';
-  // ───────── 状态（mock 数据，公式与游戏内一致） ─────────
+  // ───────── 状态：流程状态按申报档隔离（2026-08-19 修补：旧档结果不延续） ─────────
   var S = {
     level: 0, hours: 0, legendary: 0,
     granted: [],
-    exam: null,
-    theory: { books:0, research:0, skill:0, activity:0, submitted:false, score:0 },
-    thesis: { started:false, books:0, research:0, score:0, done:false },
-    defense: { started:false, committee:[], score:0, done:false },
+    tiers: {},        // 档位 key → { exam, theorySubmitted, theoryScore, thesis, defense }
+    theory: { books:0, research:0, skill:0, activity:0 },   // 全局证据（书籍/研究等真实积累）
     qualityMode: 'random',
   };
 
@@ -263,11 +244,11 @@
     { key:'specialist', lv:4, name:'精密制造技师',   level:38, hours:480, score:70, exam:true,  thesis:true },
     { key:'master',  lv:5, name:'精密制造高级技师', level:45, hours:720, score:80, exam:true,  thesis:true },
   ];
-  // 2026-08-19 流程修补：全部档位必经考试（实践+理论）；Lv3+ 另需论文/答辩（P1-5 临时关闭已恢复）
   var FSM_STEPS = ['Locked','Eligible','Preparing','PracticalExam','TheoryExam','Thesis','Defense','Qualified','Granted'];
   var CM_NAMES = ['岳明','周工','孙师傅','郑总工','吴技工','冯老师'];
   var QS = ['Poor','Normal','Good','Excellent','Masterwork','Legendary'];
   var QW = [0.05, 0.40, 0.30, 0.20, 0.04, 0.01];
+  var EXAM_MAX_MULT = 2;   // 实践考试制造上限 = 要求件数 × 2
 
   function $(id){ return document.getElementById(id); }
   function fmt(v){ return Math.round(v*100)/100; }
@@ -284,21 +265,34 @@
     return idx;
   }
   function nextTier(){ var i = grantedIdx()+1; return i<TIERS.length ? TIERS[i] : null; }
+  function tierState(key){
+    if (!S.tiers[key]) S.tiers[key] = {
+      exam: null,
+      theorySubmitted: false, theoryScore: 0,
+      thesis: { started:false, books:0, research:0, score:0, done:false },
+      defense: { started:false, committee:[], score:0, done:false },
+    };
+    return S.tiers[key];
+  }
+  function curTier(){ return nextTier(); }
+  function curState(){ var n = nextTier(); return n ? tierState(n.key) : null; }
   function compositeScore(next){
-    var examOk = !next.exam || (S.exam && S.exam.passed);
-    var thesisOk = !next.thesis || (S.thesis.done && S.defense.done);
+    var cs = tierState(next.key);
+    var examOk = !next.exam || (cs.exam && cs.exam.passed);
+    var thesisOk = !next.thesis || (cs.thesis.done && cs.defense.done);
     return 0.25*(examOk?90:0) + 0.2*(examOk?85:0) + 0.2*(thesisOk?88:0)
       + 0.15*(thesisOk?90:0) + 0.2*(S.level/50*100);
   }
 
-  // ───────── 业务层：资格判定 + 自动授予（与渲染分离；2026-08-19 修复：答辩通过后未授予的根因） ─────────
+  // ───────── 业务层：资格判定 + 自动授予（与渲染分离；按当前申报档评估） ─────────
   function evaluateAndGrant(){
     var next = nextTier();
     if (!next) return false;
+    var cs = tierState(next.key);
     var lvOk = S.level>=next.level, hrOk = S.hours>=next.hours;
-    var examOk = !next.exam || (S.exam && S.exam.passed);
-    var theoryOk = !next.exam || S.theory.submitted;
-    var thesisOk = !next.thesis || (S.thesis.done && S.defense.done);
+    var examOk = !next.exam || (cs.exam && cs.exam.passed);
+    var theoryOk = !next.exam || cs.theorySubmitted;
+    var thesisOk = !next.thesis || (cs.thesis.done && cs.defense.done);
     var scoreOk = compositeScore(next) >= next.score;
     if (lvOk && hrOk && scoreOk && examOk && theoryOk && thesisOk && S.granted.indexOf(next.key)<0){
       S.granted.push(next.key);
@@ -323,20 +317,21 @@
     setTimeout(function(){ if (b.parentNode) b.remove(); }, 6000);
   }
 
-  // ───────── 资格阶梯状态（渲染用，不产生副作用） ─────────
   function qualState(tier){
     var next = nextTier();
     if (S.granted.indexOf(tier.key)>=0) return { st:'done', label:'已授予' };
     if (!next) return { st:'locked', label:'封顶' };
     if (tier!==next) return { st:'locked', label:'未解锁' };
+    var cs = tierState(tier.key);
     var lvOk = S.level>=tier.level, hrOk = S.hours>=tier.hours;
-    var examOk = !tier.exam || (S.exam && S.exam.passed);
-    var thesisOk = !tier.thesis || (S.thesis.done && S.defense.done);
-    if (lvOk && hrOk && examOk && thesisOk && S.theory.submitted) return { st:'eligible', label:'可授予' };
+    var examOk = !tier.exam || (cs.exam && cs.exam.passed);
+    var theoryOk = !tier.exam || cs.theorySubmitted;
+    var thesisOk = !tier.thesis || (cs.thesis.done && cs.defense.done);
+    if (lvOk && hrOk && examOk && theoryOk && thesisOk) return { st:'eligible', label:'可授予' };
     return { st:'active', label:'申报中' };
   }
 
-  // ───────── 实践考试评分（对齐游戏内 ExamScoring） ─────────
+  // ───────── 实践考试评分（对齐游戏内 ExamScoring + 制造上限） ─────────
   function qualityRank(q){
     var map = { Poor:1, Normal:2, Good:3, Excellent:4, Masterwork:5, Legendary:6 };
     return map[q] || -1;
@@ -352,10 +347,11 @@
     var inTime = now <= started+limit;
     return 100*q*(0.5+0.5*qd)*(inTime?1:0.6);
   }
-  function tryGradeExam(){
-    var e = S.exam; if (!e || e.finished) return;
+  function tryGradeExam(e){
+    if (!e || e.finished) return;
     var now = e.produced.length * 1000 + e.started;
     var inTime = now <= e.started + e.limit;
+    // 达标判定：数量足够 + 品质硬门槛 + 未超时
     if (e.produced.length >= e.reqCount && inTime){
       var met = countAtLeast(e.produced, e.minQ);
       if (met >= e.reqCount){
@@ -364,10 +360,18 @@
         return;
       }
     }
+    // 超时结束（P1-3 语义）
     if (!inTime){
       e.score = scorePractical(e.reqCount, e.produced, e.minQ, e.started, e.limit, now);
       var met2 = countAtLeast(e.produced, e.minQ);
       e.passed = e.score>0 && met2 >= e.reqCount;
+      e.finished = true;
+      return;
+    }
+    // 制造上限结束（2026-08-19 修补：一次报名最多制造 reqCount×2 件，超限未达标即失败）
+    if (e.produced.length >= e.reqCount * EXAM_MAX_MULT){
+      e.score = scorePractical(e.reqCount, e.produced, e.minQ, e.started, e.limit, now);
+      e.passed = false;
       e.finished = true;
     }
   }
@@ -377,7 +381,7 @@
     return randPick(QS, QW);
   }
 
-  // ───────── 渲染（先执行业务判定，再渲染；所有状态变更统一走 renderAll） ─────────
+  // ───────── 渲染（先业务判定，再渲染；状态变更统一走 renderAll） ─────────
   function renderAll(){
     evaluateAndGrant();
     renderLadder(); renderFsm(); renderReqs(); renderExam(); renderTheory(); renderThesis(); renderDefense(); renderRecord(); renderStatus();
@@ -396,16 +400,18 @@
   }
   function renderFsm(){
     var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
     var state = 'Locked';
     if (!next) state = 'Granted';
     else if (S.granted.indexOf(next.key)>=0) state = 'Granted';
     else if (next && S.level>=next.level && S.hours>=next.hours){
-      if (next.thesis && S.thesis.done && S.defense.done) state = 'Qualified';
-      else if (next.thesis && S.thesis.done) state = 'Defense';
-      else if (next.thesis && S.thesis.started) state = 'Thesis';
-      else if (next.exam && S.exam && S.exam.passed) state = 'TheoryExam';
-      else if (next.exam && S.exam && S.exam.finished && !S.exam.passed) state = 'Preparing';
-      else if (next.exam && S.exam) state = 'PracticalExam';
+      if (next.thesis && cs.thesis.done && cs.defense.done) state = 'Qualified';
+      else if (next.thesis && cs.thesis.done) state = 'Defense';
+      else if (next.thesis && cs.thesis.started) state = 'Thesis';
+      else if (next.exam && cs.exam && cs.exam.passed && cs.theorySubmitted) state = 'Qualified';
+      else if (next.exam && cs.exam && cs.exam.passed) state = 'TheoryExam';
+      else if (next.exam && cs.exam && cs.exam.finished && !cs.exam.passed) state = 'Preparing';
+      else if (next.exam && cs.exam) state = 'PracticalExam';
       else state = 'Eligible';
     }
     var i = FSM_STEPS.indexOf(state);
@@ -420,18 +426,19 @@
     if (!next){
       $('reqs').innerHTML = '<div class="timeline-empty">已获最高职称封顶。</div>'; return;
     }
+    var cs = tierState(next.key);
     var lvOk = S.level>=next.level, hrOk = S.hours>=next.hours;
-    var examOk = !next.exam || (S.exam && S.exam.passed);
-    var theoryOk = !next.exam || S.theory.submitted;
-    var thesisOk = !next.thesis || (S.thesis.done && S.defense.done);
+    var examOk = !next.exam || (cs.exam && cs.exam.passed);
+    var theoryOk = !next.exam || cs.theorySubmitted;
+    var thesisOk = !next.thesis || (cs.thesis.done && cs.defense.done);
     var composite = compositeScore(next);
     var rows = [
       ['专业等级', '精密制造 ≥ '+next.level, lvOk, lvOk?'满足':'未满足'],
       ['职业资历', '相关工作 ≥ '+(next.hours*2400).toLocaleString()+' tick', hrOk, hrOk?'满足':'未满足'],
       ['综合评分', '资格评定 ≥ '+next.score+'（当前 '+fmt(composite)+'）', composite>=next.score, composite>=next.score?'满足':'未满足'],
-      ['实践考试', next.exam?(S.exam?(S.exam.passed?'通过（'+fmt(S.exam.score)+'分）':(S.exam.finished?'未通过（'+fmt(S.exam.score)+'分）':'进行中')):'未报名'):'不要求', examOk, examOk?'通过':'待进行'],
-      ['理论考试', next.exam?(S.theory.submitted?'通过（'+fmt(S.theory.score)+'分）':'待进行'):'不要求', theoryOk, theoryOk?'通过':'待进行'],
-      ['论文 / 答辩', next.thesis?(S.defense.done?'通过（论文'+fmt(S.thesis.score)+' · 答辩'+fmt(S.defense.score)+'）':(S.thesis.done?'答辩待进行':'待进行')):'不要求', thesisOk, thesisOk?'通过':'待进行'],
+      ['实践考试', next.exam?(cs.exam?(cs.exam.passed?'通过（'+fmt(cs.exam.score)+'分）':(cs.exam.finished?'未通过（'+fmt(cs.exam.score)+'分）':'进行中')):'未报名'):'不要求', examOk, examOk?'通过':'待进行'],
+      ['理论考试', next.exam?(cs.theorySubmitted?'通过（'+fmt(cs.theoryScore)+'分）':'待提交'):'不要求', theoryOk, theoryOk?'通过':'待进行'],
+      ['论文 / 答辩', next.thesis?(cs.defense.done?'通过（论文'+fmt(cs.thesis.score)+' · 答辩'+fmt(cs.defense.score)+'）':(cs.thesis.done?'答辩待进行':'待进行')):'不要求', thesisOk, thesisOk?'通过':'待进行'],
     ];
     $('reqs').innerHTML = rows.map(function(r){
       return '<div class="req"><span class="n">'+r[0]+'</span><span class="d">'+r[1]+'</span>'
@@ -440,25 +447,31 @@
   }
   function renderExam(){
     var area = $('examArea');
-    if (!S.exam){
-      area.innerHTML = '<div class="timeline-empty">尚未报名。报名后将生成考试任务。</div>';
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    var e = cs ? cs.exam : null;
+    if (!next){ area.innerHTML = '<div class="timeline-empty">已获最高职称封顶。</div>'; return; }
+    if (!e){
+      area.innerHTML = '<div class="timeline-empty">尚未报名「'+next.name+'」的实践考试（每档职称需重新报名考试）。</div>';
       return;
     }
-    var e = S.exam;
+    var maxN = e.reqCount * EXAM_MAX_MULT;
     var html = '<div class="exam-task">'
       + '<div class="row">任务：<b>'+e.qualName+'</b> · 指定配方 <b>工业组件 / 太空组件</b></div>'
-      + '<div class="row">要求：<b>'+e.reqCount+'</b> 件 · 最低品质 <b>'+e.minQ+'</b> · 时限 <b>'+Math.round(e.limit/2400)+'</b> 小时</div>'
-      + '<div class="row">已产出：<b>'+e.produced.length+'/'+e.reqCount+'</b> 件 · 达标（≥'+e.minQ+'）：<b>'+countAtLeast(e.produced, e.minQ)+'</b> 件</div>';
+      + '<div class="row">要求：<b>'+e.reqCount+'</b> 件 · 最低品质 <b>'+e.minQ+'</b> · 制造上限 <b>'+maxN+'</b> 件 · 时限 <b>'+Math.round(e.limit/2400)+'</b> 小时</div>'
+      + '<div class="row">已产出：<b>'+e.produced.length+'/'+maxN+'</b> 件 · 达标（≥'+e.minQ+'）：<b>'+countAtLeast(e.produced, e.minQ)+'</b> 件</div>';
     if (e.finished){
       html += '<div style="margin-top:8px"><span class="score">'+fmt(e.score)+'<span class="of"> / 100</span></span></div>'
-        + '<div class="verdict '+(e.passed?'pass':'fail')+'">'+(e.passed?'✅ 实践考试通过，继续后续申报流程':'✗ 未通过'+(e.overtime?'（已超时）':'（品质或数量未达标）')+'，可重新报名')+'</div>';
+        + '<div class="verdict '+(e.passed?'pass':'fail')+'">'+(e.passed?'✅ 实践考试通过，继续后续申报流程':'✗ 未通过'+(e.overtime?'（已超时）':'（制造已达上限或品质/数量未达标）')+'，可重新报名本档考试')+'</div>';
     } else {
-      html += '<div class="verdict" style="background:#1a1c1e;color:var(--muted);border:1px dashed var(--line-soft)">考试进行中：继续制造直至达标（超时自动结束评分）</div>';
+      html += '<div class="verdict" style="background:#1a1c1e;color:var(--muted);border:1px dashed var(--line-soft)">考试进行中：继续制造直至达标；达上限或超时自动结束评分</div>';
     }
     html += '</div>';
     area.innerHTML = html;
   }
   function renderTheory(){
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
     var t = S.theory;
     var parts = [
       ['书籍依据', t.books, 0.4], ['研究依据', t.research, 0.3],
@@ -468,27 +481,35 @@
       return '<span class="'+(p[1]>=1?'got':'')+'">'+p[0]+' ×'+p[1]+'</span>';
     }).join('');
     var done = t.books>=1 && t.research>=1 && t.skill>=1 && t.activity>=1;
-    $('btnTheorySubmit').disabled = !done || t.submitted;
-    if (t.submitted){
-      $('theoryResult').innerHTML = '<div style="margin-top:10px"><span class="score">'+fmt(t.score)+'<span class="of"> / 100</span></span>'
-        + '<div class="verdict pass">✅ 理论考试通过</div></div>';
+    var submitted = cs ? cs.theorySubmitted : false;
+    $('btnTheorySubmit').disabled = !done || submitted;
+    if (submitted){
+      $('theoryResult').innerHTML = '<div style="margin-top:10px"><span class="score">'+fmt(cs.theoryScore)+'<span class="of"> / 100</span></span>'
+        + '<div class="verdict pass">✅ 理论考试已提交（本档）</div></div>';
     } else {
-      $('theoryResult').innerHTML = '';
+      $('theoryResult').innerHTML = '<div class="timeline-empty" style="padding:8px 0">尚未提交（本档职称需重新提交一次理论考试）。</div>';
     }
   }
   function renderThesis(){
     var area = $('thesisArea');
-    if (!S.thesis.started){
-      area.innerHTML = '<div class="timeline-empty">尚未选题。</div>';
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!next || !next.thesis){
+      area.innerHTML = '<div class="timeline-empty">本档职称不要求论文。</div>';
       return;
     }
-    var th = S.thesis;
+    var th = cs.thesis;
+    $('btnThesisStart').disabled = th.done;
     $('btnThesisCiteBook').disabled = th.done;
     $('btnThesisCiteResearch').disabled = th.done;
     $('btnThesisFinish').disabled = th.done || th.books<2 || th.research<2;
+    if (!th.started){
+      area.innerHTML = '<div class="timeline-empty">尚未选题（本档职称需独立完成论文）。</div>';
+      return;
+    }
     if (th.done){
       area.innerHTML = '<div style="margin-top:8px"><span class="score">'+fmt(th.score)+'<span class="of"> / 100</span></span>'
-        + '<div class="verdict pass">✅ 论文完成：《精密制造工艺研究》</div></div>';
+        + '<div class="verdict pass">✅ 论文完成：《精密制造工艺研究》（本档）</div></div>';
     } else {
       area.innerHTML = '<div class="exam-task"><div class="row">课题：<b>《精密制造工艺研究》</b></div>'
         + '<div class="row">已引用书籍 <b>'+th.books+'</b>/2 · 研究 <b>'+th.research+'</b>/2</div></div>';
@@ -496,14 +517,20 @@
   }
   function renderDefense(){
     var area = $('defenseArea');
-    if (!S.defense.started){
-      area.innerHTML = '<div class="timeline-empty">尚未召开。需先完成论文。</div>';
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!next || !next.thesis){
+      area.innerHTML = '<div class="timeline-empty">本档职称不要求答辩。</div>';
       return;
     }
-    var d = S.defense;
+    var d = cs.defense;
+    if (!d.started){
+      area.innerHTML = '<div class="timeline-empty">尚未召开。需先完成本档论文。</div>';
+      return;
+    }
     if (d.done){
       area.innerHTML = '<div style="margin-top:8px"><span class="score">'+fmt(d.score)+'<span class="of"> / 100</span></span>'
-        + '<div class="verdict pass">✅ 答辩通过</div></div>';
+        + '<div class="verdict pass">✅ 答辩通过（本档）</div></div>';
     } else {
       area.innerHTML = '<div style="margin-top:6px">'+d.committee.map(function(c){
         return '<div class="cm"><div class="av">'+c.name[0]+'</div><div class="nm">'+c.name
@@ -514,12 +541,12 @@
   function renderRecord(){
     var el = $('titleTimeline');
     if (!S.granted.length){
-      el.innerHTML = '<div class="timeline-empty">暂无职称记录。满足申报条件后自动授予。</div>';
+      el.innerHTML = '<div class="timeline-empty">暂无职称记录。每档完整走完考试/论文/答辩流程后自动授予。</div>';
       return;
     }
     el.innerHTML = S.granted.map(function(k){
       var t = TIERS.filter(function(x){return x.key===k;})[0];
-      return '<div class="tl-row got"><span class="dot"></span><span>'+t.name+'</span><span style="color:var(--dim)">Lv'+t.lv+'</span><span class="when">授予于模拟第 '+(S.granted.indexOf(k)+1)+' 档申报完成</span></div>';
+      return '<div class="tl-row got"><span class="dot"></span><span>'+t.name+'</span><span style="color:var(--dim)">Lv'+t.lv+'</span><span class="when">本档流程完整结算后授予</span></div>';
     }).join('');
   }
   function renderStatus(){
@@ -546,7 +573,7 @@
     });
   });
   $('btnReset').addEventListener('click', function(){
-    S = { level:0, hours:0, legendary:0, granted:[], exam:null, theory:{books:0,research:0,skill:0,activity:0,submitted:false,score:0}, thesis:{started:false,books:0,research:0,score:0,done:false}, defense:{started:false,committee:[],score:0,done:false}, qualityMode:S.qualityMode };
+    S = { level:0, hours:0, legendary:0, granted:[], tiers:{}, theory:{books:0,research:0,skill:0,activity:0}, qualityMode:S.qualityMode };
     renderAll();
     log('🔄 重置为空白殖民者', 'warn');
   });
@@ -556,137 +583,166 @@
     renderAll();
   });
   $('devQuality').addEventListener('change', function(){ S.qualityMode = this.value; });
-  // 一键完成申报流程（调试）：逐档走完整流程（2026-08-19 流程修补：全档必经考试）
-  function runTierExamFlow(){
-    $('btnExamApply').click();
-    if (!S.exam) return false;
-    for (var i=0;i<3;i++){ S.exam.produced.push('Excellent'); tryGradeExam(); }
-    renderAll();
-    S.theory.books=1; S.theory.research=1; S.theory.skill=1; S.theory.activity=1;
-    renderTheory(); $('btnTheorySubmit').click();
-    return S.exam && S.exam.passed && S.theory.submitted;
-  }
-  $('btnQuickFlow').addEventListener('click', function(){
-    S.level = 27; S.hours = 260;
-    renderAll();
-    runTierExamFlow();  // Lv1：考试→理论→授予
-    runTierExamFlow();  // Lv2：考试→理论→授予
-    runTierExamFlow();  // Lv3：考试→理论
-    $('btnThesisStart').click();
-    S.thesis.books=2; S.thesis.research=2;
-    renderThesis(); $('btnThesisFinish').click();
-    $('btnDefenseStart').click();
-    S.defense.committee = [{name:'甲',lv:15,score:85},{name:'乙',lv:14,score:80},{name:'丙',lv:16,score:90}];
-    $('btnDefenseVote').click();
-    log('⚡ 一键流程完成：职称链 '+S.granted.join(' → '), 'ok');
-  });
-  // 实践考试
+
+  // 实践考试（按当前申报档创建/操作；一次报名制造上限 = 要求×2）
   $('btnExamApply').addEventListener('click', function(){
     var next = nextTier();
-    // 2026-08-19 流程修补：全部档位必经考试（不再跳过任何档的考试流程）
     if (!next){ log('已获最高职称封顶', 'warn'); return; }
-    S.exam = { qualName:next.name, reqCount:3, minQ:'Excellent', limit:100000, started:S.hours*2400, produced:[], score:0, passed:false, finished:false, overtime:false };
+    var cs = tierState(next.key);
+    if (cs.exam && !cs.exam.finished){ log('本档已有进行中的考试，先完成或放弃', 'warn'); return; }
+    cs.exam = { qualName:next.name, reqCount:3, minQ:'Excellent', limit:100000, started:S.hours*2400, produced:[], score:0, passed:false, finished:false, overtime:false };
     $('btnExamProduce').disabled = false; $('btnExamReset').disabled = false;
-    log('📋 报名实践考试：'+next.name);
+    log('📋 报名实践考试（'+next.name+'）：'+cs.exam.reqCount+' 件 · 最低 '+cs.exam.minQ+' · 上限 '+(cs.exam.reqCount*EXAM_MAX_MULT)+' 件');
     renderAll();
   });
   $('btnExamProduce').addEventListener('click', function(){
-    if (!S.exam || S.exam.finished) return;
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    var e = cs ? cs.exam : null;
+    if (!e || e.finished) return;
     var q = pickQuality();
-    S.exam.produced.push(q);
+    e.produced.push(q);
     if (q==='Legendary') S.legendary++;
-    var now = S.exam.started + S.exam.produced.length*1000;
-    if (now > S.exam.started + S.exam.limit) S.exam.overtime = true;
-    tryGradeExam();
-    log('🔨 产出 '+q+'（'+(S.exam.produced.length)+'/3）');
-    if (S.exam.finished){
+    var now = e.started + e.produced.length*1000;
+    if (now > e.started + e.limit) e.overtime = true;
+    tryGradeExam(e);
+    log('🔨 产出 '+q+'（'+e.produced.length+'/'+(e.reqCount*EXAM_MAX_MULT)+'）');
+    if (e.finished){
       $('btnExamProduce').disabled = true;
-      log(S.exam.passed ? '✅ 实践考试通过：'+fmt(S.exam.score)+' 分' : '✗ 实践考试结束未通过：'+fmt(S.exam.score)+' 分', S.exam.passed?'ok':'bad');
+      log(e.passed ? '✅ 实践考试通过：'+fmt(e.score)+' 分' : '✗ 本档考试未通过：'+fmt(e.score)+' 分（可重新报名）', e.passed?'ok':'bad');
     }
     renderAll();
   });
   $('btnExamReset').addEventListener('click', function(){
-    if (S.exam && !S.exam.finished) S.exam.finished = true;
-    S.exam.score = 0; S.exam.passed = false;
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (cs && cs.exam && !cs.exam.finished) cs.exam.finished = true;
+    if (cs && cs.exam){ cs.exam.score = 0; cs.exam.passed = false; }
     $('btnExamProduce').disabled = true; $('btnExamReset').disabled = true;
-    log('↩ 放弃考试（进度保留，可重新报名）', 'warn');
+    log('↩ 放弃本档考试（进度保留，可重新报名）', 'warn');
     renderAll();
   });
-  // 理论考试
+  // 理论考试（按当前档提交）
   [['btnReadBook','books'],['btnDoResearch','research'],['btnSkillUp','skill'],['btnActivity','activity']].forEach(function(pair){
     $(pair[0]).addEventListener('click', function(){
-      if (S.theory.submitted) return;
       S.theory[pair[1]]++;
       log('理论依据 +1：'+pair[1]);
       renderAll();
     });
   });
   $('btnTheorySubmit').addEventListener('click', function(){
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!cs || cs.theorySubmitted) return;
     var t = S.theory;
     function ms(n){ return n>=1 ? 85+Math.min(15,n*2) : 0; }
-    t.score = 0.4*ms(t.books) + 0.3*ms(t.research) + 0.2*ms(t.skill) + 0.1*ms(t.activity);
-    t.submitted = true;
-    log('🧾 理论考试提交：'+fmt(t.score)+' 分', t.score>=60?'ok':'bad');
+    cs.theoryScore = 0.4*ms(t.books) + 0.3*ms(t.research) + 0.2*ms(t.skill) + 0.1*ms(t.activity);
+    cs.theorySubmitted = true;
+    log('🧾 理论考试提交（'+next.name+'）：'+fmt(cs.theoryScore)+' 分', cs.theoryScore>=60?'ok':'bad');
     renderAll();
   });
-  // 论文
+  // 论文（按当前档）
   $('btnThesisStart').addEventListener('click', function(){
-    S.thesis.started = true;
-    log('📝 论文选题：《精密制造工艺研究》');
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!cs || !next.thesis) { log('本档不要求论文', 'warn'); return; }
+    cs.thesis.started = true;
+    log('📝 论文选题（'+next.name+'）：《精密制造工艺研究》');
     renderAll();
   });
-  $('btnThesisCiteBook').addEventListener('click', function(){ S.thesis.books++; log('📚 引用书籍 ×'+S.thesis.books); renderAll(); });
-  $('btnThesisCiteResearch').addEventListener('click', function(){ S.thesis.research++; log('🔬 引用研究 ×'+S.thesis.research); renderAll(); });
+  $('btnThesisCiteBook').addEventListener('click', function(){
+    var cs = curState(); if (!cs) return;
+    cs.thesis.books++; log('📚 引用书籍 ×'+cs.thesis.books); renderAll();
+  });
+  $('btnThesisCiteResearch').addEventListener('click', function(){
+    var cs = curState(); if (!cs) return;
+    cs.thesis.research++; log('🔬 引用研究 ×'+cs.thesis.research); renderAll();
+  });
   $('btnThesisFinish').addEventListener('click', function(){
-    var th = S.thesis;
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!cs || cs.thesis.done) return;
+    var th = cs.thesis;
     th.score = 0.4*(85+Math.min(15,th.books*2)) + 0.3*(80+Math.min(15,th.research*2)) + 0.3*(S.level/50*100);
     th.done = true;
-    log('✅ 论文完成：'+fmt(th.score)+' 分');
+    log('✅ 论文完成（'+next.name+'）：'+fmt(th.score)+' 分');
     renderAll();
   });
-  // 答辩（2026-08-19 修复：通过后统一走 renderAll → evaluateAndGrant，授予立即触发）
+  // 答辩（按当前档；通过后统一 renderAll → evaluateAndGrant 结算授予）
   $('btnDefenseStart').addEventListener('click', function(){
-    if (!S.thesis.done){ log('需先完成论文才能答辩', 'warn'); return; }
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!cs || !next.thesis){ log('本档不要求答辩', 'warn'); return; }
+    if (!cs.thesis.done){ log('需先完成本档论文才能答辩', 'warn'); return; }
     var names = CM_NAMES.slice().sort(function(){return Math.random()-0.5;}).slice(0,3);
-    S.defense.committee = names.map(function(n){ return { name:n, lv:10+Math.floor(Math.random()*9), score:75+Math.floor(Math.random()*21) }; });
-    S.defense.started = true;
+    cs.defense.committee = names.map(function(n){ return { name:n, lv:10+Math.floor(Math.random()*9), score:75+Math.floor(Math.random()*21) }; });
+    cs.defense.started = true;
     $('btnDefenseVote').disabled = false;
-    log('🎤 召开答辩：3 名委员已就位');
+    log('🎤 召开答辩（'+next.name+'）：3 名委员已就位');
     renderAll();
   });
   $('btnDefenseVote').addEventListener('click', function(){
-    var d = S.defense;
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!cs || cs.defense.done) return;
+    var d = cs.defense;
     var avg = d.committee.reduce(function(a,c){return a+c.score;},0)/d.committee.length;
-    d.score = S.thesis.score*0.5 + avg*0.5;
+    d.score = cs.thesis.score*0.5 + avg*0.5;
     d.done = true;
     $('btnDefenseVote').disabled = true;
-    log('🗳 答辩评分 '+avg.toFixed(1)+' → 答辩 '+fmt(d.score)+' 分');
-    renderAll(); // 触发资格判定与职称授予（修复点）
+    log('🗳 答辩评分 '+avg.toFixed(1)+' → 答辩 '+fmt(d.score)+' 分（本档）');
+    renderAll(); // 结算：evaluateAndGrant → 授予
   });
 
-  // ───────── 自动化回归（?p9test=1：全档位必经考试/论文/答辩的完整流程） ─────────
+  // ───────── 调试：一键流程（逐档完整链路） ─────────
+  function runTierExamFlow(){
+    var next = nextTier();
+    if (!next) return false;
+    $('btnExamApply').click();
+    var cs = tierState(next.key);
+    if (!cs.exam) return false;
+    for (var i=0;i<cs.exam.reqCount;i++){ cs.exam.produced.push('Excellent'); tryGradeExam(cs.exam); }
+    renderAll();
+    S.theory.books=1; S.theory.research=1; S.theory.skill=1; S.theory.activity=1;
+    renderTheory(); $('btnTheorySubmit').click();
+    return cs.exam.passed && cs.theorySubmitted;
+  }
+  $('btnQuickFlow').addEventListener('click', function(){
+    S.level = 27; S.hours = 260;
+    renderAll();
+    var f1 = runTierExamFlow();   // Lv1
+    var f2 = runTierExamFlow();   // Lv2
+    var f3 = runTierExamFlow();   // Lv3 考试+理论
+    var cs3 = tierState('senior');
+    $('btnThesisStart').click();
+    cs3.thesis.books=2; cs3.thesis.research=2;
+    renderThesis(); $('btnThesisFinish').click();
+    $('btnDefenseStart').click();
+    cs3.defense.committee = [{name:'甲',lv:15,score:85},{name:'乙',lv:14,score:80},{name:'丙',lv:16,score:90}];
+    $('btnDefenseVote').click();
+    log('⚡ 一键流程完成：'+[f1,f2,f3].join('/')+' · 职称链 '+S.granted.join(' → '), 'ok');
+  });
+
+  // ───────── 自动化回归（?p9test=1） ─────────
   if (location.search && location.search.indexOf('p9test=1') >= 0) {
     setTimeout(function () {
       try {
         S.level = 27; S.hours = 260;
         renderAll();
-        // Lv1/Lv2：考试（实践+理论）→ 授予
         var f1 = runTierExamFlow();
         var f2 = runTierExamFlow();
-        // Lv3：考试 + 论文 + 答辩 → 授予（答辩 click 后 handler 内 renderAll → evaluateAndGrant，无需额外调用）
         var f3 = runTierExamFlow();
+        var cs3 = tierState('senior');
         $('btnThesisStart').click();
-        S.thesis.books = 2; S.thesis.research = 2;
+        cs3.thesis.books = 2; cs3.thesis.research = 2;
         renderThesis();
         $('btnThesisFinish').click();
         $('btnDefenseStart').click();
-        S.defense.committee = [{ name: '甲', lv: 15, score: 85 }, { name: '乙', lv: 14, score: 80 }, { name: '丙', lv: 16, score: 90 }];
+        cs3.defense.committee = [{ name: '甲', lv: 15, score: 85 }, { name: '乙', lv: 14, score: 80 }, { name: '丙', lv: 16, score: 90 }];
         $('btnDefenseVote').click();
         var out = 'flow:' + [f1, f2, f3].join('/')
           + ' | grantedAfterFullFlow:' + (S.granted.join(',') || 'NONE')
-          + ' | examsPassed:' + (S.exam ? S.exam.passed : false)
-          + ' | thesis:' + fmt(S.thesis.score)
-          + ' | defense:' + fmt(S.defense.score);
+          + ' | seniorExamIndependent:' + (tierState('assistant').exam && tierState('assistant').exam.passed ? 'Y' : 'N');
         document.title = 'P9TEST ' + out;
         document.body.setAttribute('data-p9test', out);
       } catch (e) {
