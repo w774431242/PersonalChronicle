@@ -60,7 +60,7 @@
 | P1-2 | 实践考试"最低品质"未落地为硬门槛（Score>0 即通过） | ✅ **FIXED** | `ArchiveService.Qualification.cs` RecordExamProduced：`CountAtLeast(qualities, MinQuality) >= RequiredCount` 为通过前置条件；数量够但品质不足时考试继续；回归用例 `RecordExamProduced_QualityBelowMinimum_NotPassedAndContinues` |
 | P1-3 | 实践考试超时路径卡死（超时后永不评分） | ✅ **FIXED** | `ExamData.cs` PracticalExamRecord 新增 `Finished` 字段（append-only，默认 false）；超时即按当前证据评分（×0.6）并置 Finished；回归用例 `RecordExamProduced_Overtime_*` 两条 |
 | P1-4 | 答辩判定字段错配（ThesisId == defName） | ✅ **FIXED** | `ThesisData.cs` DefenseRecord 新增 `QualificationDefName` 字段（append-only）；`QualificationEvaluator` DefensePassed/DefenseScore 优先按 QualificationDefName 精确匹配，旧记录（字段空）回退 ThesisId 兼容早期 DevTest 数据；`DevTestButtons.cs` 同步补字段；回归用例 2 条 |
-| P1-5 | P6 论文/答辩正式入口缺失（Senior+ 职称正式游戏不可授予） | ⏳ **待 PM 裁决** | 未修（产品决策）：选项 A 临时关闭 QualificationDefs.xml 中 Senior/Specialist/Master 的 requiredThesis/requiredDefense，选项 B 接受 P9 前不可达并登记。P1-4 修复已消除字段错配隐患 |
+| P1-5 | P6 论文/答辩正式入口缺失（Senior+ 职称正式游戏不可授予） | ✅ **FIXED（方案 A 裁决）** | 2026-08-19 PM 批准方案 A：`QualificationDefs.xml` Senior/Specialist/Master 的 `requiredThesis/requiredDefense` 临时置 false（注释登记，P9 入口落地后恢复）；模拟器 qualification-gap 场景同步改为考试缺口对比 |
 
 ### P2 级
 
@@ -78,7 +78,7 @@
 | # | 问题 | 状态 | 修复证据 |
 |---|---|---|---|
 | P3-1 | StatPart 空白名单 = 全 RecipeDef 注入风险 | ✅ **FIXED（防御性）** | `ProfessionalEffectRegistry.InjectWorkSpeedStatParts` 对空白名单技能输出 ChronicleLog.Warning 告警 |
-| P3-2 | Def reload 后 StatPart 不重注入 | ⏳ **已知限制** | 不修代码：reload 仅 DevMode 场景；发布环境无影响 |
+| P3-2 | Def reload 后 StatPart 不重注入 | ✅ **FIXED** | `ProfessionalEffectRegistry` 重构：`CollectTargetStats` 抽离 + `EnsureInjected()` 幂等重注入（按 parts 实例检测，reload 后补注入）；`ChronicleGameComponent.Sampling` reconcile 节流挂接（600 tick） |
 | P3-3 | ProfessionalEffectDef 用基类 description 存翻译键 | ✅ **FIXED** | 新增 `labelKey` 字段；XML 两个效果 Def 的 `<description>` 迁移为 `<labelKey>` |
 | P3-4 | XP 品质系数多 Good=1.2 档未同步文档 | ✅ **FIXED** | `制造类职业领域设计.md` §5 品质系数表补"良好 1.2" |
 | P3-5 | 08-16 遗留 T2：Api 契约倒挂 | ⏳ **遗留** | 独立迭代经 REL-008 流程 |
@@ -169,9 +169,21 @@
 剩余事项（按优先级）：
 
 ```text
-1. PM 裁决 P1-5（临时关 Senior+ 门槛 或 接受 P9 前不可达并登记）
-2. 在 .NET SDK / RimWorld 环境复跑编译 + 全量单测（新增 8+2+5 用例 + 同步 4 用例）
-3. 按 00-需求与SDD规范 补职业生涯体系 Change Intent + 追踪矩阵（REQ-Career-*，或登记存量豁免）
-4. git 提交全部工作区成果（含本记录、修复代码、测试、文档、模拟工具）
-5. 可选后续：P3-2 reload 重注入、P3-5 T2 Api 契约倒挂（REL-008 流程）
+1. ✅ PM 裁决 P1-5（2026-08-19 批准方案 A：临时关闭 Senior+ 论文/答辩门槛，P9 恢复）
+2. ⏳ .NET SDK / RimWorld 环境复跑编译 + 全量单测（SDK 安装中；通过后重建 DLL 并提交）
+3. ✅ 职业生涯体系 Change Intent + 追踪矩阵已补（docs/设计文档/功能模块/职业档案/职业生涯体系-需求追踪矩阵.md，REQ-Career-001~011）
+4. ✅ git 已提交（5 个逻辑提交，2026-08-19；DLL 待重建后补充提交）
+5. 可选后续：P3-5 T2 已确认无倒挂（IArchiveQueryService 定义于 Api 命名空间）；P9 UI（REQ-Career-011）
 ```
+
+## 7. 全部落地记录（2026-08-19 PM 批准"全部落地 + 按推荐方案修复缺口"）
+
+| 项 | 执行 |
+|---|---|
+| P1-5 裁决 | ✅ 方案 A（关闭 Senior+ thesis/defense 门槛，Defs 注释登记） |
+| P3-2 | ✅ reload 幂等重注入（EnsureInjected + reconcile 挂接） |
+| P3-5 T2 | ✅ 复核：接口已定义于 `PersonalChronicle.Api` 命名空间，无倒挂（08-16 遗留已随 T1 治理解决） |
+| 追踪矩阵 | ✅ `职业生涯体系-需求追踪矩阵.md`（REQ-Career-001~011 存量补登记） |
+| 文件丢失 | ✅ EXC-2026-001 / Gate-Record 08-16 / 08-19 恢复；08-15 占位（内容未留存） |
+| git 提交 | ✅ 5 个逻辑提交（规范体系 / 职业体系实现 / 档案工作区 / 工具与预览 / 杂项文档）；DLL 待重建 |
+| SDK 复验 | ⏳ dotnet-install 后台安装中，装完编译+单测+重建 DLL |
