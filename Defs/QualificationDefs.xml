@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    P5 职业资格定义（V2.0 §14）。数据驱动；绑定 ProfessionalSkillDef（精密制造）。
+    资格不直接等于等级，须过 QualificationEvaluator；考试/论文/答辩证据由真实游戏行为形成。
+    翻译键约定：Professional.Qualification.<defName>.Label / .Desc 经 Def 派生。
+
+    P7-A 职称体系扩展（2026-08-16 PM 批准，docs/设计文档/功能模块/职业档案/全部专业职称称呼体系.md）：
+      5 档（国内现实职称体系）：Junior(员级) → Assistant(助理级) → Senior(中级) → Specialist(副高级) → Master(正高级)。
+      制造类走技能人才通道命名（初级技工/中级技工/高级技工/技师/高级技师）。
+      现有 Title_Precision_Senior/Master defName 保持不变（存档稳定键），label 重命名。
+  -->
+
+  <!-- ===================== Lv1 员级：精密制造初级技工 ===================== -->
+  <PersonalChronicle.Domain.Qualification.QualificationDef>
+    <defName>Q_Precision_Junior</defName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <titleDefName>Title_Precision_Junior</titleDefName>
+    <requiredMinLevel>5</requiredMinLevel>
+    <requiredCareerTimeTicks>60000</requiredCareerTimeTicks>
+    <requiredExam>false</requiredExam>
+    <requiredThesis>false</requiredThesis>
+    <requiredDefense>false</requiredDefense>
+    <minimumScore>0</minimumScore>
+    <order>0</order>
+  </PersonalChronicle.Domain.Qualification.QualificationDef>
+
+  <!-- ===================== Lv2 助理级：精密制造中级技工 ===================== -->
+  <PersonalChronicle.Domain.Qualification.QualificationDef>
+    <defName>Q_Precision_Assistant</defName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <titleDefName>Title_Precision_Assistant</titleDefName>
+    <requiredMinLevel>15</requiredMinLevel>
+    <requiredCareerTimeTicks>200000</requiredCareerTimeTicks>
+    <requiredPreviousTitle>Q_Precision_Junior</requiredPreviousTitle>
+    <requiredExam>false</requiredExam>
+    <requiredThesis>false</requiredThesis>
+    <requiredDefense>false</requiredDefense>
+    <minimumScore>0</minimumScore>
+    <order>1</order>
+  </PersonalChronicle.Domain.Qualification.QualificationDef>
+
+  <!-- ===================== Lv3 中级：精密制造高级技工（沿用现有 Senior） =====================
+       P1-5 裁决（2026-08-19 PM 批准，方案 A）：P9 论文/答辩正式入口未落地前，
+       requiredThesis/requiredDefense 临时置 false，保证职称链正式游戏可授予；
+       P9 入口落地后按《制造类职业资格与荣誉体系设计》原设计恢复 true。 -->
+  <PersonalChronicle.Domain.Qualification.QualificationDef>
+    <defName>Q_Precision_Senior</defName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <titleDefName>Title_Precision_Senior</titleDefName>
+    <requiredMinLevel>25</requiredMinLevel>
+    <requiredCareerTimeTicks>600000</requiredCareerTimeTicks>
+    <requiredPreviousTitle>Q_Precision_Assistant</requiredPreviousTitle>
+    <requiredExam>true</requiredExam>
+    <requiredThesis>false</requiredThesis>
+    <requiredDefense>false</requiredDefense>
+    <minimumScore>60</minimumScore>
+    <order>2</order>
+  </PersonalChronicle.Domain.Qualification.QualificationDef>
+
+  <!-- ===================== Lv4 副高级：精密制造技师 ===================== -->
+  <PersonalChronicle.Domain.Qualification.QualificationDef>
+    <defName>Q_Precision_Specialist</defName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <titleDefName>Title_Precision_Specialist</titleDefName>
+    <requiredMinLevel>38</requiredMinLevel>
+    <requiredCareerTimeTicks>1200000</requiredCareerTimeTicks>
+    <requiredPreviousTitle>Q_Precision_Senior</requiredPreviousTitle>
+    <requiredExam>true</requiredExam>
+    <requiredThesis>false</requiredThesis>
+    <requiredDefense>false</requiredDefense>
+    <minimumScore>70</minimumScore>
+    <order>3</order>
+  </PersonalChronicle.Domain.Qualification.QualificationDef>
+
+  <!-- ===================== Lv5 正高级：精密制造高级技师（沿用现有 Master） ===================== -->
+  <PersonalChronicle.Domain.Qualification.QualificationDef>
+    <defName>Q_Precision_Master</defName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <titleDefName>Title_Precision_Master</titleDefName>
+    <requiredMinLevel>45</requiredMinLevel>
+    <requiredCareerTimeTicks>1800000</requiredCareerTimeTicks>
+    <requiredPreviousTitle>Q_Precision_Specialist</requiredPreviousTitle>
+    <requiredExam>true</requiredExam>
+    <requiredThesis>false</requiredThesis>
+    <requiredDefense>false</requiredDefense>
+    <!-- 大师级要求传奇制造成就（P8 产出键） -->
+    <requiredAchievements>
+      <li>
+        <achievementKey>LegendaryMade</achievementKey>
+        <minValue>1</minValue>
+      </li>
+    </requiredAchievements>
+    <minimumScore>80</minimumScore>
+    <order>4</order>
+  </PersonalChronicle.Domain.Qualification.QualificationDef>
+
+  <!-- ===================== P7 职称定义（数据驱动，默认自动授予 D-T1） ===================== -->
+  <PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+    <defName>Title_Precision_Junior</defName>
+    <qualificationDefName>Q_Precision_Junior</qualificationDefName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <order>0</order>
+    <autoGrant>true</autoGrant>
+  </PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+  <PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+    <defName>Title_Precision_Assistant</defName>
+    <qualificationDefName>Q_Precision_Assistant</qualificationDefName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <order>1</order>
+    <autoGrant>true</autoGrant>
+  </PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+  <PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+    <defName>Title_Precision_Senior</defName>
+    <qualificationDefName>Q_Precision_Senior</qualificationDefName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <order>2</order>
+    <autoGrant>true</autoGrant>
+  </PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+  <PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+    <defName>Title_Precision_Specialist</defName>
+    <qualificationDefName>Q_Precision_Specialist</qualificationDefName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <order>3</order>
+    <autoGrant>true</autoGrant>
+  </PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+  <PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+    <defName>Title_Precision_Master</defName>
+    <qualificationDefName>Q_Precision_Master</qualificationDefName>
+    <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
+    <order>4</order>
+    <autoGrant>true</autoGrant>
+  </PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>
+</Defs>

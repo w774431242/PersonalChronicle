@@ -4,6 +4,14 @@
   <PersonalChronicle.Settings.EnableRecording>启用档案记录</PersonalChronicle.Settings.EnableRecording>
   <PersonalChronicle.Settings.MaxEventsPerPawn>每位人物最大事件数</PersonalChronicle.Settings.MaxEventsPerPawn>
   <PersonalChronicle.Settings.DebugLiveCount>调试：活读人口明细日志</PersonalChronicle.Settings.DebugLiveCount>
+  <!-- v1.1.4 UI 主题预设（主流 RPG 风格） -->
+  <PersonalChronicle.Settings.Theme>界面主题</PersonalChronicle.Settings.Theme>
+  <PersonalChronicle.UI.Theme.Button>主题</PersonalChronicle.UI.Theme.Button>
+  <PersonalChronicle.UI.Theme.ButtonTip>当前主题：{0} · 点击切换至：{1}</PersonalChronicle.UI.Theme.ButtonTip>
+  <PersonalChronicle.UI.Theme.Epic>史诗奇幻</PersonalChronicle.UI.Theme.Epic>
+  <PersonalChronicle.UI.Theme.Gothic>暗黑哥特</PersonalChronicle.UI.Theme.Gothic>
+  <PersonalChronicle.UI.Theme.Wuxia>东方水墨</PersonalChronicle.UI.Theme.Wuxia>
+  <PersonalChronicle.UI.Theme.Steampunk>蒸汽朋克</PersonalChronicle.UI.Theme.Steampunk>
   <PersonalChronicle.UI.Title>档案馆</PersonalChronicle.UI.Title>
   <PersonalChronicle.UI.AllRecords>全部档案</PersonalChronicle.UI.AllRecords>
   <PersonalChronicle.UI.ActiveRecords>在世</PersonalChronicle.UI.ActiveRecords>
@@ -32,6 +40,21 @@
   <PersonalChronicle.UI.InspectTab.Events>事件</PersonalChronicle.UI.InspectTab.Events>
   <PersonalChronicle.UI.InspectTab.Places>足迹</PersonalChronicle.UI.InspectTab.Places>
   <PersonalChronicle.UI.InspectTab.OpenFull>打开完整档案</PersonalChronicle.UI.InspectTab.OpenFull>
+  <!-- v1.1.4 劳模住所/工坊检测：右上角信息条 -->
+  <PersonalChronicle.UI.Residence.Label>住所</PersonalChronicle.UI.Residence.Label>
+  <PersonalChronicle.UI.Workplace.Label>工作场所</PersonalChronicle.UI.Workplace.Label>
+  <PersonalChronicle.UI.RoomType.Label>类型</PersonalChronicle.UI.RoomType.Label>
+  <!-- v1.1.4 建筑别名：工坊/房间类型改名对话框 -->
+  <PersonalChronicle.UI.RenameWorkplace.Title>修改工作场所名称</PersonalChronicle.UI.RenameWorkplace.Title>
+  <PersonalChronicle.UI.RenameWorkplace.Hint>为这台工坊起一个专属名称；留空则恢复默认名称。</PersonalChronicle.UI.RenameWorkplace.Hint>
+  <PersonalChronicle.UI.RenameRoomRole.Title>修改房间类型名称</PersonalChronicle.UI.RenameRoomRole.Title>
+  <PersonalChronicle.UI.RenameRoomRole.Hint>为该房间类型起一个专属名称（如「员工宿舍」）；留空则恢复默认类型名。</PersonalChronicle.UI.RenameRoomRole.Hint>
+  <PersonalChronicle.UI.RenameRoomName.Title>修改房间昵称</PersonalChronicle.UI.RenameRoomName.Title>
+  <PersonalChronicle.UI.RenameRoomName.Hint>为这间房起一个专属昵称（仅展示，如「员工宿舍」）；留空恢复。</PersonalChronicle.UI.RenameRoomName.Hint>
+  <PersonalChronicle.UI.RenameRoomType.Title>修改类型显示名</PersonalChronicle.UI.RenameRoomType.Title>
+  <PersonalChronicle.UI.RenameRoomType.Hint>替换这间房的类型标签（仅展示，底层 Room.Role 不变）。例如「工作间」→「工坊类型」。</PersonalChronicle.UI.RenameRoomType.Hint>
+  <PersonalChronicle.UI.RenameWorkplace.OK>确定</PersonalChronicle.UI.RenameWorkplace.OK>
+  <PersonalChronicle.UI.RenameWorkplace.Cancel>取消</PersonalChronicle.UI.RenameWorkplace.Cancel>
   <PersonalChronicle.UI.Back>返回</PersonalChronicle.UI.Back>
   <PersonalChronicle.UI.Overview>总览</PersonalChronicle.UI.Overview>
   <PersonalChronicle.UI.Categories>档案分类</PersonalChronicle.UI.Categories>
@@ -566,6 +589,12 @@
   <PersonalChronicle.UI.Kpi.Legacy>神器传承</PersonalChronicle.UI.Kpi.Legacy>
   <PersonalChronicle.UI.Kpi.WeekHours.S>周工时</PersonalChronicle.UI.Kpi.WeekHours.S>
   <PersonalChronicle.UI.Kpi.DayHours.S>日均</PersonalChronicle.UI.Kpi.DayHours.S>
+  <PersonalChronicle.UI.Kpi.WeekOutput>周产出</PersonalChronicle.UI.Kpi.WeekOutput>
+  <PersonalChronicle.UI.Kpi.NetValue>净值</PersonalChronicle.UI.Kpi.NetValue>
+  <PersonalChronicle.UI.Kpi.ConsumeTitle>损耗 · 累计消耗</PersonalChronicle.UI.Kpi.ConsumeTitle>
+  <PersonalChronicle.UI.Kpi.WeekConsume>周损耗</PersonalChronicle.UI.Kpi.WeekConsume>
+  <PersonalChronicle.UI.Kpi.DailyConsume>日均损耗</PersonalChronicle.UI.Kpi.DailyConsume>
+  <PersonalChronicle.UI.Kpi.DailyAverage>日均</PersonalChronicle.UI.Kpi.DailyAverage>
   <PersonalChronicle.UI.Kpi.Cat>类</PersonalChronicle.UI.Kpi.Cat>
   <PersonalChronicle.UI.Kpi.PreyKinds>猎物种类</PersonalChronicle.UI.Kpi.PreyKinds>
   <PersonalChronicle.UI.Kpi.Kind>种</PersonalChronicle.UI.Kpi.Kind>
@@ -591,4 +620,341 @@
   <PersonalChronicle.UI.InspectTab.ViewTimeline>查看全部时间轴 →</PersonalChronicle.UI.InspectTab.ViewTimeline>
   <PersonalChronicle.UI.InspectTab.Milestones>里程碑摘要</PersonalChronicle.UI.InspectTab.Milestones>
   <PersonalChronicle.UI.InspectTab.MoreMilestones>{0} 项 · 纵向滚动</PersonalChronicle.UI.InspectTab.MoreMilestones>
+  <!-- v1.1.4 勋章体系（阶段一：6.1~6.4 阈值类 27 枚 · 通道 B 展示增益 + 金质公告） -->
+  <PersonalChronicle.UI.Medal.Tier.Bronze>铜质</PersonalChronicle.UI.Medal.Tier.Bronze>
+  <PersonalChronicle.UI.Medal.Tier.Silver>银质</PersonalChronicle.UI.Medal.Tier.Silver>
+  <PersonalChronicle.UI.Medal.Tier.Gold>金质</PersonalChronicle.UI.Medal.Tier.Gold>
+  <PersonalChronicle.UI.Medal.Wall.Title>勋章墙</PersonalChronicle.UI.Medal.Wall.Title>
+  <PersonalChronicle.UI.Medal.Wall.Empty>暂无勋章记录</PersonalChronicle.UI.Medal.Wall.Empty>
+  <!-- v1.1.4 手动授勋（ManualAward） -->
+  <PersonalChronicle.UI.Medal.ManualAward.Button>手动授勋</PersonalChronicle.UI.Medal.ManualAward.Button>
+  <PersonalChronicle.UI.Medal.ManualAward.Title>手动授勋</PersonalChronicle.UI.Medal.ManualAward.Title>
+  <PersonalChronicle.UI.Medal.ManualAward.Empty>当前暂无可授予的勋章（已全部授予或未达标）</PersonalChronicle.UI.Medal.ManualAward.Empty>
+  <PersonalChronicle.UI.Medal.ManualAward.Done>已授予：{0}</PersonalChronicle.UI.Medal.ManualAward.Done>
+  <PersonalChronicle.UI.Medal.ManualAward.Blocked>该勋章已授予或未达标，无法重复授予：{0}</PersonalChronicle.UI.Medal.ManualAward.Blocked>
+  <PersonalChronicle.UI.Medal.Buff.WorkSpeed3>+3% 工作速度</PersonalChronicle.UI.Medal.Buff.WorkSpeed3>
+  <PersonalChronicle.UI.Medal.Buff.WorkSpeed5>+5% 工作速度</PersonalChronicle.UI.Medal.Buff.WorkSpeed5>
+  <PersonalChronicle.UI.Medal.Buff.WorkSpeed10>+10% 工作速度</PersonalChronicle.UI.Medal.Buff.WorkSpeed10>
+  <PersonalChronicle.UI.Medal.Buff.Combat3>+3% 近战/远程伤害</PersonalChronicle.UI.Medal.Buff.Combat3>
+  <PersonalChronicle.UI.Medal.Buff.Combat5>+5% 近战/远程伤害</PersonalChronicle.UI.Medal.Buff.Combat5>
+  <PersonalChronicle.UI.Medal.Buff.Combat10>+10% 近战/远程伤害</PersonalChronicle.UI.Medal.Buff.Combat10>
+  <PersonalChronicle.UI.Medal.Gold.Letter>殖民地授予 {0} 金质{1}，以彰其功。</PersonalChronicle.UI.Medal.Gold.Letter>
+  <PersonalChronicle.UI.Medal.Labor_Model.Name>劳动模范</PersonalChronicle.UI.Medal.Labor_Model.Name>
+  <PersonalChronicle.UI.Medal.Labor_Worker.Name>先进工作者</PersonalChronicle.UI.Medal.Labor_Worker.Name>
+  <PersonalChronicle.UI.Medal.Labor_TechAce.Name>生产技术能手</PersonalChronicle.UI.Medal.Labor_TechAce.Name>
+  <PersonalChronicle.UI.Medal.Combat_Hero.Name>战斗英雄</PersonalChronicle.UI.Medal.Combat_Hero.Name>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass.Name>一等功</PersonalChronicle.UI.Medal.Combat_FirstClass.Name>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee.Name>入伍表彰</PersonalChronicle.UI.Medal.Combat_Enlistee.Name>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster.Name>模范供应员</PersonalChronicle.UI.Medal.Support_Quartermaster.Name>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom.Name>传承功勋</PersonalChronicle.UI.Medal.Legacy_Heirloom.Name>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade.Name>镇库之锋</PersonalChronicle.UI.Medal.Legacy_KillerBlade.Name>
+  <PersonalChronicle.UI.Medal.Craft_Legend.Name>传奇匠人</PersonalChronicle.UI.Medal.Craft_Legend.Name>
+  <PersonalChronicle.UI.Medal.Craft_MajorProject.Name>重大制造项目</PersonalChronicle.UI.Medal.Craft_MajorProject.Name>
+  <!-- 6.1 劳动系 -->
+  <PersonalChronicle.UI.Medal.Labor_Model_Bronze.Label>劳动模范·铜质</PersonalChronicle.UI.Medal.Labor_Model_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Labor_Model_Bronze.Desc>累计工作时长达到 80 天。</PersonalChronicle.UI.Medal.Labor_Model_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Model_Silver.Label>劳动模范·银质</PersonalChronicle.UI.Medal.Labor_Model_Silver.Label>
+  <PersonalChronicle.UI.Medal.Labor_Model_Silver.Desc>累计工作时长达到 200 天。</PersonalChronicle.UI.Medal.Labor_Model_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Model_Gold.Label>劳动模范·金质</PersonalChronicle.UI.Medal.Labor_Model_Gold.Label>
+  <PersonalChronicle.UI.Medal.Labor_Model_Gold.Desc>累计工作时长达到 500 天，功勋卓著，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Labor_Model_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Bronze.Label>先进工作者·铜质</PersonalChronicle.UI.Medal.Labor_Worker_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Bronze.Desc>累计产出物品达到 300 件。</PersonalChronicle.UI.Medal.Labor_Worker_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Silver.Label>先进工作者·银质</PersonalChronicle.UI.Medal.Labor_Worker_Silver.Label>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Silver.Desc>累计产出物品达到 1,000 件。</PersonalChronicle.UI.Medal.Labor_Worker_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Gold.Label>先进工作者·金质</PersonalChronicle.UI.Medal.Labor_Worker_Gold.Label>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Gold.Desc>累计产出物品达到 3,000 件，功勋卓著，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Labor_Worker_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Bronze.Label>生产技术能手·铜质</PersonalChronicle.UI.Medal.Labor_TechAce_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Bronze.Desc>累计产出市场价值达到 30,000 银。</PersonalChronicle.UI.Medal.Labor_TechAce_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Silver.Label>生产技术能手·银质</PersonalChronicle.UI.Medal.Labor_TechAce_Silver.Label>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Silver.Desc>累计产出市场价值达到 100,000 银。</PersonalChronicle.UI.Medal.Labor_TechAce_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Gold.Label>生产技术能手·金质</PersonalChronicle.UI.Medal.Labor_TechAce_Gold.Label>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Gold.Desc>累计产出市场价值达到 300,000 银，功勋卓著，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Labor_TechAce_Gold.Desc>
+  <!-- 6.2 战斗系 -->
+  <PersonalChronicle.UI.Medal.Combat_Hero_Bronze.Label>战斗英雄·铜质</PersonalChronicle.UI.Medal.Combat_Hero_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Bronze.Desc>累计击杀敌人达到 20 名。</PersonalChronicle.UI.Medal.Combat_Hero_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Silver.Label>战斗英雄·银质</PersonalChronicle.UI.Medal.Combat_Hero_Silver.Label>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Silver.Desc>累计击杀敌人达到 50 名。</PersonalChronicle.UI.Medal.Combat_Hero_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Gold.Label>战斗英雄·金质</PersonalChronicle.UI.Medal.Combat_Hero_Gold.Label>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Gold.Desc>累计击杀敌人达到 120 名，功勋卓著，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Combat_Hero_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Bronze.Label>一等功·铜质</PersonalChronicle.UI.Medal.Combat_FirstClass_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Bronze.Desc>累计对敌造成伤害达到 2,000。</PersonalChronicle.UI.Medal.Combat_FirstClass_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Silver.Label>一等功·银质</PersonalChronicle.UI.Medal.Combat_FirstClass_Silver.Label>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Silver.Desc>累计对敌造成伤害达到 5,000。</PersonalChronicle.UI.Medal.Combat_FirstClass_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Gold.Label>一等功·金质</PersonalChronicle.UI.Medal.Combat_FirstClass_Gold.Label>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Gold.Desc>累计对敌造成伤害达到 12,000，功勋卓著，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Combat_FirstClass_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Bronze.Label>入伍表彰·铜质</PersonalChronicle.UI.Medal.Combat_Enlistee_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Bronze.Desc>参与战役达到 3 场。</PersonalChronicle.UI.Medal.Combat_Enlistee_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Silver.Label>入伍表彰·银质</PersonalChronicle.UI.Medal.Combat_Enlistee_Silver.Label>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Silver.Desc>参与战役达到 8 场。</PersonalChronicle.UI.Medal.Combat_Enlistee_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Gold.Label>入伍表彰·金质</PersonalChronicle.UI.Medal.Combat_Enlistee_Gold.Label>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Gold.Desc>参与战役达到 20 场，功勋卓著，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Combat_Enlistee_Gold.Desc>
+  <!-- 6.3 生产/损耗系 -->
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Bronze.Label>模范供应员·铜质</PersonalChronicle.UI.Medal.Support_Quartermaster_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Bronze.Desc>累计消耗资源价值达到 8,000 银。</PersonalChronicle.UI.Medal.Support_Quartermaster_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Silver.Label>模范供应员·银质</PersonalChronicle.UI.Medal.Support_Quartermaster_Silver.Label>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Silver.Desc>累计消耗资源价值达到 20,000 银。</PersonalChronicle.UI.Medal.Support_Quartermaster_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Gold.Label>模范供应员·金质</PersonalChronicle.UI.Medal.Support_Quartermaster_Gold.Label>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Gold.Desc>累计消耗资源价值达到 50,000 银，功勋卓著，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Support_Quartermaster_Gold.Desc>
+  <!-- 6.4 传承/装备系 -->
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Bronze.Label>传承功勋·铜质</PersonalChronicle.UI.Medal.Legacy_Heirloom_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Bronze.Desc>传承至第 2 任持有者。</PersonalChronicle.UI.Medal.Legacy_Heirloom_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Silver.Label>传承功勋·银质</PersonalChronicle.UI.Medal.Legacy_Heirloom_Silver.Label>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Silver.Desc>传承至第 3 任持有者。</PersonalChronicle.UI.Medal.Legacy_Heirloom_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Gold.Label>传承功勋·金质</PersonalChronicle.UI.Medal.Legacy_Heirloom_Gold.Label>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Gold.Desc>传承至第 5 任持有者，传承有序，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Legacy_Heirloom_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Bronze.Label>镇库之锋·铜质</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Bronze.Desc>历代持有者累计击杀达到 30 名。</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Silver.Label>镇库之锋·银质</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Silver.Label>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Silver.Desc>历代持有者累计击杀达到 100 名。</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Gold.Label>镇库之锋·金质</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Gold.Label>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Gold.Desc>历代持有者累计击杀达到 250 名，威名赫赫，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Gold.Desc>
+  <!-- 6.5 职业成就系 -->
+  <PersonalChronicle.UI.Medal.Craft_Legend_Bronze.Label>传奇匠人·铜质</PersonalChronicle.UI.Medal.Craft_Legend_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Bronze.Desc>制造 1 件传奇品质物品。</PersonalChronicle.UI.Medal.Craft_Legend_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Silver.Label>传奇匠人·银质</PersonalChronicle.UI.Medal.Craft_Legend_Silver.Label>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Silver.Desc>制造 5 件传奇品质物品。</PersonalChronicle.UI.Medal.Craft_Legend_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Gold.Label>传奇匠人·金质</PersonalChronicle.UI.Medal.Craft_Legend_Gold.Label>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Gold.Desc>制造 15 件传奇品质物品，匠心独运，全殖民地公告表彰。</PersonalChronicle.UI.Medal.Craft_Legend_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Craft_MajorProject_Gold.Label>重大制造项目·金质</PersonalChronicle.UI.Medal.Craft_MajorProject_Gold.Label>
+  <PersonalChronicle.UI.Medal.Craft_MajorProject_Gold.Desc>完成 3 个大型制造项目。</PersonalChronicle.UI.Medal.Craft_MajorProject_Gold.Desc>
+
+  <!-- 职业档案 ITab（独立 Pawn inspect 页，4 子页：总览/履历/职称/勋章） -->
+  <PersonalChronicle.UI.CareerTab>职业档案</PersonalChronicle.UI.CareerTab>
+  <PersonalChronicle.UI.Career.HeaderSub>职业档案 · 按工坊就职时段记录成果</PersonalChronicle.UI.Career.HeaderSub>
+  <PersonalChronicle.UI.Career.Sub.Overview>总览</PersonalChronicle.UI.Career.Sub.Overview>
+  <PersonalChronicle.UI.Career.Sub.Career>履历</PersonalChronicle.UI.Career.Sub.Career>
+  <PersonalChronicle.UI.Career.Sub.Title>职称</PersonalChronicle.UI.Career.Sub.Title>
+  <PersonalChronicle.UI.Career.Sub.Honor>勋章</PersonalChronicle.UI.Career.Sub.Honor>
+  <PersonalChronicle.UI.Career.Overview.Title>职业总览</PersonalChronicle.UI.Career.Overview.Title>
+  <PersonalChronicle.UI.Career.Overview.Empty>职业总览暂无可展示数据。</PersonalChronicle.UI.Career.Overview.Empty>
+  <PersonalChronicle.UI.Career.Resume.Title>工作经历</PersonalChronicle.UI.Career.Resume.Title>
+  <PersonalChronicle.UI.Career.Resume.Empty>暂无工作经历记录（需工坊制造行为产生职业事件）。</PersonalChronicle.UI.Career.Resume.Empty>
+  <PersonalChronicle.UI.Career.Title.Title>职称晋升</PersonalChronicle.UI.Career.Title.Title>
+  <PersonalChronicle.UI.Career.Title.Empty>职称体系尚未接入（规划中，待 P4 阶段）。</PersonalChronicle.UI.Career.Title.Empty>
+  <PersonalChronicle.UI.Career.Honor.Title>授勋档案</PersonalChronicle.UI.Career.Honor.Title>
+  <PersonalChronicle.UI.Career.Honor.Empty>暂无勋章数据（需达成勋章阈值后授予）。</PersonalChronicle.UI.Career.Honor.Empty>
+  <PersonalChronicle.UI.Career.PlaceholderNote>职业档案：总览/履历/职称/勋章四页均已接入真实数据（CareerData 派生），无数据时显示空态说明。</PersonalChronicle.UI.Career.PlaceholderNote>
+
+  <!-- v4.16: 档案馆主界面 · 职业档案总览入口 -->
+  <PersonalChronicle.UI.CareerOverview>职业档案</PersonalChronicle.UI.CareerOverview>
+  <PersonalChronicle.UI.CareerOverviewDesc>殖民地级职业生涯总览：列出每位殖民者的职业身份、主技能与下一职称进度；点击任意行进入其职业档案。</PersonalChronicle.UI.CareerOverviewDesc>
+  <PersonalChronicle.UI.CareerEmpty>暂无殖民者档案（确保殖民地中有存活殖民者）。</PersonalChronicle.UI.CareerEmpty>
+  <PersonalChronicle.UI.ColPawn>姓名</PersonalChronicle.UI.ColPawn>
+  <PersonalChronicle.UI.ColRole>职业身份 / 方向</PersonalChronicle.UI.ColRole>
+  <PersonalChronicle.UI.ColSkill>主技能 / 工时</PersonalChronicle.UI.ColSkill>
+  <PersonalChronicle.UI.ColNextTitle>下一职称 / 准备度</PersonalChronicle.UI.ColNextTitle>
+  <PersonalChronicle.UI.NoTitle>未评定</PersonalChronicle.UI.NoTitle>
+  <PersonalChronicle.UI.TitleMaxed>已封顶</PersonalChronicle.UI.TitleMaxed>
+  <PersonalChronicle.UI.NoCareerData>暂无职业数据</PersonalChronicle.UI.NoCareerData>
+  <PersonalChronicle.UI.PromotionReadiness>晋升准备度</PersonalChronicle.UI.PromotionReadiness>
+
+  <!-- 职业档案 · 总览（身份/资格/预检/下一职称） -->
+  <PersonalChronicle.UI.Career.Ov.Identity>职业身份</PersonalChronicle.UI.Career.Ov.Identity>
+  <PersonalChronicle.UI.Career.Ov.Undefined>未评定</PersonalChronicle.UI.Career.Ov.Undefined>
+  <PersonalChronicle.UI.Career.Ov.Skill>专业技能</PersonalChronicle.UI.Career.Ov.Skill>
+  <PersonalChronicle.UI.Career.Ov.Hours>相关工时</PersonalChronicle.UI.Career.Ov.Hours>
+  <PersonalChronicle.UI.Career.Ov.Results>重大成果</PersonalChronicle.UI.Career.Ov.Results>
+  <PersonalChronicle.UI.Career.Ov.Books>专业著作</PersonalChronicle.UI.Career.Ov.Books>
+  <PersonalChronicle.UI.Career.Ov.QualState>当前资格状态</PersonalChronicle.UI.Career.Ov.QualState>
+  <PersonalChronicle.UI.Career.Ov.PreCheck>资格预检</PersonalChronicle.UI.Career.Ov.PreCheck>
+  <PersonalChronicle.UI.Career.Ov.NextTitle>下一职称</PersonalChronicle.UI.Career.Ov.NextTitle>
+  <PersonalChronicle.UI.Career.Ov.TopTitle>已获最高职称（封顶）</PersonalChronicle.UI.Career.Ov.TopTitle>
+  <PersonalChronicle.UI.Career.Ov.Progress>晋升准备度</PersonalChronicle.UI.Career.Ov.Progress>
+  <PersonalChronicle.UI.Career.Ov.Gaps>当前缺口</PersonalChronicle.UI.Career.Ov.Gaps>
+  <PersonalChronicle.UI.Career.Ov.NoGap>无缺口（已满足全部条件）</PersonalChronicle.UI.Career.Ov.NoGap>
+  <PersonalChronicle.UI.Career.Ov.NoData>暂无职业数据（需制造行为产生职业事件后派生）。</PersonalChronicle.UI.Career.Ov.NoData>
+  <PersonalChronicle.UI.Career.Ov.NoQual>暂无资格数据（尚未申请任何职称资格）。</PersonalChronicle.UI.Career.Ov.NoQual>
+  <PersonalChronicle.UI.Career.Qual.Level>专业等级</PersonalChronicle.UI.Career.Qual.Level>
+  <PersonalChronicle.UI.Career.Qual.Level.Req>专业等级 ≥ {0}</PersonalChronicle.UI.Career.Qual.Level.Req>
+  <PersonalChronicle.UI.Career.Qual.Time>职业资历</PersonalChronicle.UI.Career.Qual.Time>
+  <PersonalChronicle.UI.Career.Qual.Time.Req>职业时长 ≥ {0} tick</PersonalChronicle.UI.Career.Qual.Time.Req>
+  <PersonalChronicle.UI.Career.Qual.Score>综合评分</PersonalChronicle.UI.Career.Qual.Score>
+  <PersonalChronicle.UI.Career.Qual.Score.Req>资格评定 ≥ {0}</PersonalChronicle.UI.Career.Qual.Score.Req>
+  <PersonalChronicle.UI.Career.Qual.Practical>实践考试</PersonalChronicle.UI.Career.Qual.Practical>
+  <PersonalChronicle.UI.Career.Qual.Practical.Req>优秀品质成果 × 2（真实制造）</PersonalChronicle.UI.Career.Qual.Practical.Req>
+  <PersonalChronicle.UI.Career.Qual.Theory>理论考试</PersonalChronicle.UI.Career.Qual.Theory>
+  <PersonalChronicle.UI.Career.Qual.Theory.Req>专业著作 ≥ 良好</PersonalChronicle.UI.Career.Qual.Theory.Req>
+  <PersonalChronicle.UI.Career.Qual.Defense>论文 / 答辩</PersonalChronicle.UI.Career.Qual.Defense>
+  <PersonalChronicle.UI.Career.Qual.Defense.Req>论文及答辩通过</PersonalChronicle.UI.Career.Qual.Defense.Req>
+  <PersonalChronicle.UI.Career.Qual.Met>满足</PersonalChronicle.UI.Career.Qual.Met>
+  <PersonalChronicle.UI.Career.Qual.Unmet>未满足</PersonalChronicle.UI.Career.Qual.Unmet>
+  <PersonalChronicle.UI.Career.Pre.Skill>核心技能</PersonalChronicle.UI.Career.Pre.Skill>
+  <PersonalChronicle.UI.Career.Pre.Resume>职业履历</PersonalChronicle.UI.Career.Pre.Resume>
+  <PersonalChronicle.UI.Career.Pre.Achieve>成果记录</PersonalChronicle.UI.Career.Pre.Achieve>
+  <PersonalChronicle.UI.Career.Pre.Practical>实践考试</PersonalChronicle.UI.Career.Pre.Practical>
+  <PersonalChronicle.UI.Career.Pre.Theory>理论考试</PersonalChronicle.UI.Career.Pre.Theory>
+  <PersonalChronicle.UI.Career.Pre.Defense>论文 / 答辩</PersonalChronicle.UI.Career.Pre.Defense>
+  <PersonalChronicle.UI.Career.Pre.Ready>已满足</PersonalChronicle.UI.Career.Pre.Ready>
+  <PersonalChronicle.UI.Career.Pre.Preparing>准备中</PersonalChronicle.UI.Career.Pre.Preparing>
+  <PersonalChronicle.UI.Career.Pre.NotStarted>未开始</PersonalChronicle.UI.Career.Pre.NotStarted>
+  <PersonalChronicle.UI.Career.Title.State.Granted>已获</PersonalChronicle.UI.Career.Title.State.Granted>
+  <PersonalChronicle.UI.Career.Title.State.Current>当前</PersonalChronicle.UI.Career.Title.State.Current>
+  <PersonalChronicle.UI.Career.Title.State.Next>下一阶</PersonalChronicle.UI.Career.Title.State.Next>
+  <PersonalChronicle.UI.Career.Title.State.Locked>未开始</PersonalChronicle.UI.Career.Title.State.Locked>
+  <PersonalChronicle.UI.Career.Title.Requires>等级 ≥ {0}</PersonalChronicle.UI.Career.Title.Requires>
+  <PersonalChronicle.UI.Career.Honor.Granted>已授予</PersonalChronicle.UI.Career.Honor.Granted>
+  <PersonalChronicle.UI.Career.Honor.Eligible>可授予</PersonalChronicle.UI.Career.Honor.Eligible>
+  <PersonalChronicle.UI.Career.Honor.NotGranted>未授予</PersonalChronicle.UI.Career.Honor.NotGranted>
+
+  <!-- 职业系统 P2：方向 / 技能 / 效果（Defs/ProfessionalSkills.xml 引用） -->
+  <Professional.Direction.Manufacturing_Precision.Label>精密</Professional.Direction.Manufacturing_Precision.Label>
+  <Professional.Direction.Manufacturing_Precision.Desc>以精密制造为特色的制造方向。</Professional.Direction.Manufacturing_Precision.Desc>
+  <Professional.Skill.ProfessionalSkill_PrecisionManufacturing.Label>精密制造</Professional.Skill.ProfessionalSkill_PrecisionManufacturing.Label>
+  <Professional.Skill.ProfessionalSkill_PrecisionManufacturing.Desc>制造精密组件等产品的专业技能。</Professional.Skill.ProfessionalSkill_PrecisionManufacturing.Desc>
+  <Professional.Skill.PrecisionManufacturing.EffectWorkSpeed>提升制造工作速度</Professional.Skill.PrecisionManufacturing.EffectWorkSpeed>
+  <Professional.Skill.PrecisionManufacturing.EffectQualityBias>提升产出品质</Professional.Skill.PrecisionManufacturing.EffectQualityBias>
+  <PersonalChronicle.ProfessionalEffect.WorkSpeed.StatPart>职业：制造速度 +{0}%</PersonalChronicle.ProfessionalEffect.WorkSpeed.StatPart>
+  <Professional.Rating.Proficient.Label>熟练制造师</Professional.Rating.Proficient.Label>
+  <Professional.Rating.Specialist.Label>专业制造师</Professional.Rating.Specialist.Label>
+  <Professional.Rating.Senior.Label>高级制造师</Professional.Rating.Senior.Label>
+  <Professional.Rating.Master.Label>制造大师</Professional.Rating.Master.Label>
+  <Profession.Direction.Manufacturing_Precision.Label>精密制造</Profession.Direction.Manufacturing_Precision.Label>
+  <Profession.Direction.Manufacturing_Weaponry.Label>武器制造</Profession.Direction.Manufacturing_Weaponry.Label>
+  <Profession.Direction.Manufacturing_Equipment.Label>装备制造</Profession.Direction.Manufacturing_Equipment.Label>
+  <Profession.Direction.Manufacturing_Industrial.Label>工业制造</Profession.Direction.Manufacturing_Industrial.Label>
+  <Profession.Direction.Manufacturing_Precision.Specialization>特化「品质」：品质偏置与质控权重突出，慢工出细活</Profession.Direction.Manufacturing_Precision.Specialization>
+  <Profession.Direction.Manufacturing_Weaponry.Specialization>特化「产量」：制造速度加成最高，追求快速产出</Profession.Direction.Manufacturing_Weaponry.Specialization>
+  <Profession.Direction.Manufacturing_Equipment.Specialization>特化「材料」：材料应用与质控并重，用料精省、成品稳固（材料效率机制预留）</Profession.Direction.Manufacturing_Equipment.Specialization>
+  <Profession.Direction.Manufacturing_Industrial.Specialization>特化「批量」：工艺理解与批量产出并重（配方解锁机制预留）</Profession.Direction.Manufacturing_Industrial.Specialization>
+
+  <!-- P2 主方向选择（Dialog_SetPrimaryDirection，V2.0 §9 推荐≠强制） -->
+  <PersonalChronicle.UI.Career.SetDirection.Title>设定主修方向</PersonalChronicle.UI.Career.SetDirection.Title>
+  <PersonalChronicle.UI.Career.SetDirection.Hint>规划区给出的是系统推荐；此处为你的「最终选择」，将覆盖推荐并写入选定方向。</PersonalChronicle.UI.Career.SetDirection.Hint>
+  <PersonalChronicle.UI.Career.SetDirection.Button>设定主方向</PersonalChronicle.UI.Career.SetDirection.Button>
+  <PersonalChronicle.UI.Career.SetDirection.ButtonCurrent>主方向：{0}</PersonalChronicle.UI.Career.SetDirection.ButtonCurrent>
+  <PersonalChronicle.UI.Career.SetDirection.Empty>暂无可用职业方向。</PersonalChronicle.UI.Career.SetDirection.Empty>
+  <PersonalChronicle.UI.Career.SetDirection.NoProfession>未归类</PersonalChronicle.UI.Career.SetDirection.NoProfession>
+  <PersonalChronicle.UI.Career.SetDirection.NoCareer>该殖民者尚无职业数据，无法设定方向。</PersonalChronicle.UI.Career.SetDirection.NoCareer>
+  <PersonalChronicle.UI.Career.SetDirection.Done>已设定主方向：{0}</PersonalChronicle.UI.Career.SetDirection.Done>
+  <PersonalChronicle.UI.Career.SetDirection.Cleared>已清除主方向（回落系统推荐）。</PersonalChronicle.UI.Career.SetDirection.Cleared>
+  <PersonalChronicle.UI.Career.SetDirection.Clear>清除选择（回落推荐）</PersonalChronicle.UI.Career.SetDirection.Clear>
+  <PersonalChronicle.UI.Career.Plan.Chosen>选</PersonalChronicle.UI.Career.Plan.Chosen>
+
+  <!-- P5 职业资格（5 档，P7-A 职称体系 2026-08-16：国内现实职称体系 员级→助理→中级→副高→正高） -->
+  <Professional.Qualification.Q_Precision_Junior.Label>精密制造初级技工资格</Professional.Qualification.Q_Precision_Junior.Label>
+  <Professional.Qualification.Q_Precision_Junior.Desc>需专业等级 5、职业时长 60000 tick。员级入门资格。</Professional.Qualification.Q_Precision_Junior.Desc>
+  <Professional.Qualification.Q_Precision_Assistant.Label>精密制造中级技工资格</Professional.Qualification.Q_Precision_Assistant.Label>
+  <Professional.Qualification.Q_Precision_Assistant.Desc>需专业等级 15、职业时长 200000 tick、前置初级技工资格。助理级资格。</Professional.Qualification.Q_Precision_Assistant.Desc>
+  <Professional.Qualification.Q_Precision_Senior.Label>精密制造高级技工资格</Professional.Qualification.Q_Precision_Senior.Label>
+  <Professional.Qualification.Q_Precision_Senior.Desc>需专业等级 25、职业时长 600000 tick、前置中级技工资格、实践与理论考试、论文及答辩通过。</Professional.Qualification.Q_Precision_Senior.Desc>
+  <Professional.Qualification.Q_Precision_Specialist.Label>精密制造技师资格</Professional.Qualification.Q_Precision_Specialist.Label>
+  <Professional.Qualification.Q_Precision_Specialist.Desc>需专业等级 38、职业时长 1200000 tick、前置高级技工资格、实践与理论考试、论文及答辩通过。</Professional.Qualification.Q_Precision_Specialist.Desc>
+  <Professional.Qualification.Q_Precision_Master.Label>精密制造高级技师资格</Professional.Qualification.Q_Precision_Master.Label>
+  <Professional.Qualification.Q_Precision_Master.Desc>需专业等级 45、职业时长 1800000 tick、前置技师资格、传奇制造成就、论文及答辩通过。</Professional.Qualification.Q_Precision_Master.Desc>
+
+  <!-- P7 职称（5 档） -->
+  <Professional.Title.Title_Precision_Junior.Label>精密制造初级技工</Professional.Title.Title_Precision_Junior.Label>
+  <Professional.Title.Title_Precision_Assistant.Label>精密制造中级技工</Professional.Title.Title_Precision_Assistant.Label>
+  <Professional.Title.Title_Precision_Senior.Label>精密制造高级技工</Professional.Title.Title_Precision_Senior.Label>
+  <Professional.Title.Title_Precision_Specialist.Label>精密制造技师</Professional.Title.Title_Precision_Specialist.Label>
+  <Professional.Title.Title_Precision_Master.Label>精密制造高级技师</Professional.Title.Title_Precision_Master.Label>
+  <PersonalChronicle.UI.Career.DevRandomize>随机职业数据（开发者）</PersonalChronicle.UI.Career.DevRandomize>
+  <PersonalChronicle.UI.Dev.Generate>PC: 生成测试数据</PersonalChronicle.UI.Dev.Generate>
+  <PersonalChronicle.UI.Dev.GenerateFailed>PC: 测试数据生成失败，详见日志</PersonalChronicle.UI.Dev.GenerateFailed>
+  <PersonalChronicle.UI.Dev.Regenerated>PC: 已为 {0} 重新生成测试数据（随机量级）→ 接受 {1}，拒绝 {2}</PersonalChronicle.UI.Dev.Regenerated>
+  <PersonalChronicle.UI.Dev.NoCareer>PC Career: 无职业数据</PersonalChronicle.UI.Dev.NoCareer>
+  <PersonalChronicle.UI.Dev.PawnNotArchived>PC Career: pawn 未归档</PersonalChronicle.UI.Dev.PawnNotArchived>
+  <PersonalChronicle.UI.Dev.EventAdded>PC Career: 已添加测试事件</PersonalChronicle.UI.Dev.EventAdded>
+  <PersonalChronicle.UI.Dev.Cleared>PC Career: 已清空</PersonalChronicle.UI.Dev.Cleared>
+  <PersonalChronicle.UI.Dev.Printed>PC Career: 已打印 {0} 条事件到日志</PersonalChronicle.UI.Dev.Printed>
+  <PersonalChronicle.UI.Dev.Randomized>PC Career: 已随机化职业数据 (档 {0} Lv{1}, 传奇{2}, 重大{3}, 勋章{4})</PersonalChronicle.UI.Dev.Randomized>
+
+  <!-- P8 成就勋章 -->
+  <UI.Medal.Medal_Craft_Legend_Bronze.Label>传奇匠人·青铜</UI.Medal.Medal_Craft_Legend_Bronze.Label>
+  <UI.Medal.Medal_Craft_Legend_Silver.Label>传奇匠人·白银</UI.Medal.Medal_Craft_Legend_Silver.Label>
+  <UI.Medal.Medal_Craft_Legend_Gold.Label>传奇匠人·黄金</UI.Medal.Medal_Craft_Legend_Gold.Label>
+  <UI.Medal.Medal_Craft_MajorProject_Gold.Label>重大制造项目·黄金</UI.Medal.Medal_Craft_MajorProject_Gold.Label>
+  <!-- 职业档案 ITab v1.1.4+：高度还原职业档案Tab预览.html（身份卡/职业规划/履历/勋章墙） -->
+  <PersonalChronicle.UI.Career.Header.Plan>职业规划</PersonalChronicle.UI.Career.Header.Plan>
+  <PersonalChronicle.UI.Career.Header.Badge>职</PersonalChronicle.UI.Career.Header.Badge>
+  <PersonalChronicle.UI.Career.Honor.Event.Year>{0} 年</PersonalChronicle.UI.Career.Honor.Event.Year>
+  <PersonalChronicle.UI.Career.Resume.Achieve.Produced>制造产出 {0} 件</PersonalChronicle.UI.Career.Resume.Achieve.Produced>
+  <PersonalChronicle.UI.Career.Resume.Achieve.Fine>，其中优秀及以上 {0} 件</PersonalChronicle.UI.Career.Resume.Achieve.Fine>
+  <PersonalChronicle.UI.SilverUnit>银</PersonalChronicle.UI.SilverUnit>
+  <PersonalChronicle.UI.HoursPerDay>≈ {0} h/天</PersonalChronicle.UI.HoursPerDay>
+  <PersonalChronicle.UI.Career.Header.PlanSelected>职业规划：{0}</PersonalChronicle.UI.Career.Header.PlanSelected>
+  <PersonalChronicle.UI.Career.Header.NoCareer>暂无职业数据</PersonalChronicle.UI.Career.Header.NoCareer>
+  <PersonalChronicle.UI.Career.Header.Stage>累计工时 {1} h · 职业跨度 {0} 天</PersonalChronicle.UI.Career.Header.Stage>
+  <PersonalChronicle.UI.Career.Plan.Title>职业规划</PersonalChronicle.UI.Career.Plan.Title>
+  <PersonalChronicle.UI.Career.Plan.Empty>暂无适配分析数据。</PersonalChronicle.UI.Career.Plan.Empty>
+  <PersonalChronicle.UI.Career.Plan.Rec>荐</PersonalChronicle.UI.Career.Plan.Rec>
+  <PersonalChronicle.UI.Career.Plan.Match.High>高度匹配</PersonalChronicle.UI.Career.Plan.Match.High>
+  <PersonalChronicle.UI.Career.Plan.Match.Mid>一般匹配</PersonalChronicle.UI.Career.Plan.Match.Mid>
+  <PersonalChronicle.UI.Career.Plan.Match.Low>偏弱</PersonalChronicle.UI.Career.Plan.Match.Low>
+  <PersonalChronicle.UI.Career.Plan.Dim.Skill>基础能力</PersonalChronicle.UI.Career.Plan.Dim.Skill>
+  <PersonalChronicle.UI.Career.Plan.Dim.Practice>实践经验</PersonalChronicle.UI.Career.Plan.Dim.Practice>
+  <PersonalChronicle.UI.Career.Plan.Dim.Passion>兴趣倾向</PersonalChronicle.UI.Career.Plan.Dim.Passion>
+  <PersonalChronicle.UI.Career.Plan.Dim.Achieve>成果表现</PersonalChronicle.UI.Career.Plan.Dim.Achieve>
+  <PersonalChronicle.UI.Career.Plan.Dim.Growth>成长潜力</PersonalChronicle.UI.Career.Plan.Dim.Growth>
+  <PersonalChronicle.UI.Career.Plan.Basis>主要依据：</PersonalChronicle.UI.Career.Plan.Basis>
+  <PersonalChronicle.UI.Career.Plan.NoPros>暂无显著优势</PersonalChronicle.UI.Career.Plan.NoPros>
+  <PersonalChronicle.UI.Career.Plan.Dir>推荐方向：</PersonalChronicle.UI.Career.Plan.Dir>
+  <PersonalChronicle.UI.Career.Ov.NextLine>下一职称：{0}</PersonalChronicle.UI.Career.Ov.NextLine>
+  <PersonalChronicle.UI.Career.Ov.Metric.Made>制造产出</PersonalChronicle.UI.Career.Ov.Metric.Made>
+  <PersonalChronicle.UI.Career.Ov.Metric.Built>建造</PersonalChronicle.UI.Career.Ov.Metric.Built>
+  <PersonalChronicle.UI.Career.Ov.Metric.Research>研究</PersonalChronicle.UI.Career.Ov.Metric.Research>
+  <PersonalChronicle.UI.Career.Ov.DepChain>资格依赖：拆解等级 → 职业事件 → 成果阈值 → 已完成资格</PersonalChronicle.UI.Career.Ov.DepChain>
+  <PersonalChronicle.UI.Career.Resume.Summary>工坊汇总</PersonalChronicle.UI.Career.Resume.Summary>
+  <PersonalChronicle.UI.Career.Resume.Current>当前就职</PersonalChronicle.UI.Career.Resume.Current>
+  <PersonalChronicle.UI.Career.Resume.Room>房间：{0}</PersonalChronicle.UI.Career.Resume.Room>
+  <PersonalChronicle.UI.Career.Resume.Uses>累计使用 {0} 次</PersonalChronicle.UI.Career.Resume.Uses>
+  <PersonalChronicle.UI.Career.Resume.Summary.Workshops>就职工坊数</PersonalChronicle.UI.Career.Resume.Summary.Workshops>
+  <PersonalChronicle.UI.Career.Resume.Summary.Made>制造总件数</PersonalChronicle.UI.Career.Resume.Summary.Made>
+  <PersonalChronicle.UI.Career.Resume.Summary.Built>建造总数</PersonalChronicle.UI.Career.Resume.Summary.Built>
+  <PersonalChronicle.UI.Career.Resume.Summary.Research>研究总数</PersonalChronicle.UI.Career.Resume.Summary.Research>
+  <PersonalChronicle.UI.Career.Resume.Summary.Books>著书总数</PersonalChronicle.UI.Career.Resume.Summary.Books>
+  <PersonalChronicle.UI.Career.Resume.Current.Workshop>工坊</PersonalChronicle.UI.Career.Resume.Current.Workshop>
+  <PersonalChronicle.UI.Career.Resume.Current.Room>房间</PersonalChronicle.UI.Career.Resume.Current.Room>
+  <PersonalChronicle.UI.Career.Resume.Current.Uses>累计使用</PersonalChronicle.UI.Career.Resume.Current.Uses>
+  <PersonalChronicle.UI.Career.Resume.Current.LastUsed>最近使用</PersonalChronicle.UI.Career.Resume.Current.LastUsed>
+  <PersonalChronicle.UI.Career.Honor.AddTip>打开授勋界面</PersonalChronicle.UI.Career.Honor.AddTip>
+  <PersonalChronicle.UI.Career.Honor.Contrib>荣誉贡献结构</PersonalChronicle.UI.Career.Honor.Contrib>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Made>制造贡献</PersonalChronicle.UI.Career.Honor.Contrib.Made>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Research>技术贡献</PersonalChronicle.UI.Career.Honor.Contrib.Research>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Built>建造贡献</PersonalChronicle.UI.Career.Honor.Contrib.Built>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Books>著作贡献</PersonalChronicle.UI.Career.Honor.Contrib.Books>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Medal>荣誉贡献</PersonalChronicle.UI.Career.Honor.Contrib.Medal>
+  <PersonalChronicle.UI.Career.Honor.Events>最近荣誉事件</PersonalChronicle.UI.Career.Honor.Events>
+  <PersonalChronicle.UI.Career.Honor.Events.Empty>暂无荣誉事件。</PersonalChronicle.UI.Career.Honor.Events.Empty>
+  <PersonalChronicle.UI.Career.Honor.Event.Medal>获得勋章：{0}</PersonalChronicle.UI.Career.Honor.Event.Medal>
+  <PersonalChronicle.UI.Career.Honor.Event.Title>获得职称：{0}</PersonalChronicle.UI.Career.Honor.Event.Title>
+  <PersonalChronicle.UI.Career.Honor.Tier.Bronze>青铜</PersonalChronicle.UI.Career.Honor.Tier.Bronze>
+  <PersonalChronicle.UI.Career.Honor.Tier.Silver>白银</PersonalChronicle.UI.Career.Honor.Tier.Silver>
+  <PersonalChronicle.UI.Career.Honor.Tier.Gold>黄金</PersonalChronicle.UI.Career.Honor.Tier.Gold>
+  <PersonalChronicle.UI.Career.Honor.Detail.Owner>归属</PersonalChronicle.UI.Career.Honor.Detail.Owner>
+  <PersonalChronicle.UI.Career.Honor.Detail.OwnerPawn>殖民者（Pawn）</PersonalChronicle.UI.Career.Honor.Detail.OwnerPawn>
+  <PersonalChronicle.UI.Career.Honor.Detail.Current>当前值</PersonalChronicle.UI.Career.Honor.Detail.Current>
+  <PersonalChronicle.UI.Career.Honor.Detail.Threshold>阈值</PersonalChronicle.UI.Career.Honor.Detail.Threshold>
+  <PersonalChronicle.UI.Career.Honor.Detail.Progress>进度</PersonalChronicle.UI.Career.Honor.Detail.Progress>
+  <PersonalChronicle.UI.Career.Honor.Detail.Reached>已达标</PersonalChronicle.UI.Career.Honor.Detail.Reached>
+  <PersonalChronicle.UI.Career.Honor.Detail.NotReached>未达标</PersonalChronicle.UI.Career.Honor.Detail.NotReached>
+  <PersonalChronicle.UI.Career.Honor.Detail.Require>所需职称</PersonalChronicle.UI.Career.Honor.Detail.Require>
+  <PersonalChronicle.UI.Career.Honor.Detail.NoRequire>无（不限评级）</PersonalChronicle.UI.Career.Honor.Detail.NoRequire>
+  <PersonalChronicle.UI.Career.Honor.Detail.Metric>指标</PersonalChronicle.UI.Career.Honor.Detail.Metric>
+  <PersonalChronicle.UI.Career.Honor.Detail.Buff>增益</PersonalChronicle.UI.Career.Honor.Detail.Buff>
+  <PersonalChronicle.UI.Career.Honor.Detail.NoBuff>无增益</PersonalChronicle.UI.Career.Honor.Detail.NoBuff>
+  <PersonalChronicle.UI.Career.Major.Engineering>工程类</PersonalChronicle.UI.Career.Major.Engineering>
+  <PersonalChronicle.UI.Career.Major.Manufacturing>制造类</PersonalChronicle.UI.Career.Major.Manufacturing>
+  <PersonalChronicle.UI.Career.Major.Agriculture>农业类</PersonalChronicle.UI.Career.Major.Agriculture>
+  <PersonalChronicle.UI.Career.Major.Forestry>林业类</PersonalChronicle.UI.Career.Major.Forestry>
+  <PersonalChronicle.UI.Career.Major.AnimalHusbandry>畜牧类</PersonalChronicle.UI.Career.Major.AnimalHusbandry>
+  <PersonalChronicle.UI.Career.Major.Medicine>医学类</PersonalChronicle.UI.Career.Major.Medicine>
+  <PersonalChronicle.UI.Career.Major.Weapons>武器类</PersonalChronicle.UI.Career.Major.Weapons>
+  <PersonalChronicle.UI.Career.Major.Mining>矿业类</PersonalChronicle.UI.Career.Major.Mining>
+  <PersonalChronicle.UI.Career.Major.Research>科研类</PersonalChronicle.UI.Career.Major.Research>
+  <PersonalChronicle.UI.Career.Major.Cooking>烹饪类</PersonalChronicle.UI.Career.Major.Cooking>
+  <PersonalChronicle.UI.Career.Major.Art>艺术类</PersonalChronicle.UI.Career.Major.Art>
+  <PersonalChronicle.UI.Career.Major.Management>管理类</PersonalChronicle.UI.Career.Major.Management>
+  <PersonalChronicle.UI.Career.MajorDir.Engineering>建筑工程 / 机械工程</PersonalChronicle.UI.Career.MajorDir.Engineering>
+  <PersonalChronicle.UI.Career.MajorDir.Manufacturing>精密制造 / 武器制造</PersonalChronicle.UI.Career.MajorDir.Manufacturing>
+  <PersonalChronicle.UI.Career.MajorDir.Agriculture>作物种植 / 农业生产</PersonalChronicle.UI.Career.MajorDir.Agriculture>
+  <PersonalChronicle.UI.Career.MajorDir.Forestry>林木种植 / 木材生产</PersonalChronicle.UI.Career.MajorDir.Forestry>
+  <PersonalChronicle.UI.Career.MajorDir.AnimalHusbandry>驯养 / 牧业管理</PersonalChronicle.UI.Career.MajorDir.AnimalHusbandry>
+  <PersonalChronicle.UI.Career.MajorDir.Medicine>临床医疗 / 医学研究</PersonalChronicle.UI.Career.MajorDir.Medicine>
+  <PersonalChronicle.UI.Career.MajorDir.Weapons>战斗方向 / 武器制造</PersonalChronicle.UI.Career.MajorDir.Weapons>
+  <PersonalChronicle.UI.Career.MajorDir.Mining>矿产开采 / 采矿工程</PersonalChronicle.UI.Career.MajorDir.Mining>
+  <PersonalChronicle.UI.Career.MajorDir.Research>科学研究 / 技术研发</PersonalChronicle.UI.Career.MajorDir.Research>
+  <PersonalChronicle.UI.Career.MajorDir.Cooking>烹饪 / 食品加工</PersonalChronicle.UI.Career.MajorDir.Cooking>
+  <PersonalChronicle.UI.Career.MajorDir.Art>艺术创作 / 雕塑</PersonalChronicle.UI.Career.MajorDir.Art>
+  <PersonalChronicle.UI.Career.MajorDir.Management>人员管理 / 行政管理</PersonalChronicle.UI.Career.MajorDir.Management>
 </LanguageData>

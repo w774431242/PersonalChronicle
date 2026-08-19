@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    P2 垂直切片：制造类 → 精密制造 → 加工/质控能力 → XP → 等级（V2.0 §23 第一条验收闭环）。
+    基线：P2-A 领域设计（docs/设计文档/功能模块/职业档案/制造类职业领域设计.md）。
+    Q2/Q3/Q4 决策：首技能=精密制造；maxLevel=50 / xpPerPracticeBase=10；精密相关 2~3 Recipe。
+
+    原版 RecipeDef 核验（RimWorld 1.6，Recipes_Production.xml）：
+      Make_ComponentIndustrial  = 工业组件（Crafting 8, workAmount 5000）
+      Make_ComponentSpacer      = 太空组件（Crafting 8, workAmount 10000）
+    旧版 Make_Component/Make_AdvancedComponent 在 1.6 已不存在，勿用。
+
+    翻译键约定：Professional.Skill.<defName>.Label / .Desc 经 Def 派生；
+    Def 内不写硬编码 label，由 Languages/Archive.xml 提供。
+  -->
+
+  <!-- ===================== 二级方向：制造类 4 方向（2026-08-19 差异化特化点） =====================
+       每个方向携带特化点语义（specializationKey）与说明（specializationDescKey），
+       方向间差异由 特化定位 + 技能级效果覆盖（effectOverrides）+ 能力权重 + 成长曲线 共同拉开。
+       数据蓝图见 docs/设计文档/功能模块/职业档案/制造类职业领域设计.md §9 差异化特化点。
+       方向 label 走动态翻译键 Profession.Direction.<defName>.Label（Languages/Archive.xml）。
+  -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Manufacturing_Precision</defName>
+    <profession>Manufacturing</profession>
+    <skillDefNames>
+      <li>ProfessionalSkill_PrecisionManufacturing</li>
+    </skillDefNames>
+    <colorHex>#e0c77a</colorHex>
+    <labelKey>Profession.Direction.Manufacturing_Precision.Label</labelKey>
+    <specializationKey>Quality</specializationKey>
+    <specializationDescKey>Profession.Direction.Manufacturing_Precision.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 武器制造：特化 产量/速度（Throughput）——速度加成最高、无品质偏置；配方/技能随方向垂直切片落地（V2.0 §22） -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Manufacturing_Weaponry</defName>
+    <profession>Manufacturing</profession>
+    <colorHex>#c9a0a0</colorHex>
+    <labelKey>Profession.Direction.Manufacturing_Weaponry.Label</labelKey>
+    <specializationKey>Throughput</specializationKey>
+    <specializationDescKey>Profession.Direction.Manufacturing_Weaponry.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 装备制造：特化 材料/耐用（Material）——材料应用与质控权重高；MaterialEfficiency 效果为预留扩展位（V2.0 §12 P2 批） -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Manufacturing_Equipment</defName>
+    <profession>Manufacturing</profession>
+    <colorHex>#7aa0c0</colorHex>
+    <labelKey>Profession.Direction.Manufacturing_Equipment.Label</labelKey>
+    <specializationKey>Material</specializationKey>
+    <specializationDescKey>Profession.Direction.Manufacturing_Equipment.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 工业制造：特化 批量/配方（Volume）——工艺理解权重高；RecipeUnlock 效果为预留扩展位（V2.0 §12 P2 批） -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Manufacturing_Industrial</defName>
+    <profession>Manufacturing</profession>
+    <colorHex>#a0b078</colorHex>
+    <labelKey>Profession.Direction.Manufacturing_Industrial.Label</labelKey>
+    <specializationKey>Volume</specializationKey>
+    <specializationDescKey>Profession.Direction.Manufacturing_Industrial.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- ===================== 专业技能：精密制造（首个完整闭环） ===================== -->
+  <PersonalChronicle.Domain.Profession.ProfessionalSkillDef>
+    <defName>ProfessionalSkill_PrecisionManufacturing</defName>
+    <profession>Manufacturing</profession>
+    <direction>Manufacturing_Precision</direction>
+    <sourceSkills>
+      <li>Crafting</li>
+      <li>Intellectual</li>
+    </sourceSkills>
+    <practiceRecipeDefNames>
+      <li>Make_ComponentIndustrial</li>
+      <li>Make_ComponentSpacer</li>
+    </practiceRecipeDefNames>
+    <xpPerPracticeBase>10</xpPerPracticeBase>
+    <xpDifficulty>1</xpDifficulty>
+    <xpCap>5000</xpCap>
+    <maxLevel>50</maxLevel>
+    <abilityKeys>
+      <li>machining</li>
+      <li>precisionControl</li>
+      <li>processKnowledge</li>
+      <li>qualityControl</li>
+    </abilityKeys>
+    <effectDefNames>
+      <li>ProfessionalEffect_ManufacturingWorkSpeed</li>
+      <li>ProfessionalEffect_QualityBias</li>
+    </effectDefNames>
+    <qualificationTags>
+      <li>ManufacturingPrecision</li>
+    </qualificationTags>
+  </PersonalChronicle.Domain.Profession.ProfessionalSkillDef>
+
+  <!-- ===================== 专业效果（P3 实现 Resolver/Adapter，V2.0 §12 P1 批） =====================
+       PM 裁决（Q3/Q4）：
+         ManufacturingWorkSpeed  value=0.03  → +3% 制造速度（乘算修正量，D5 示例值可调）
+         QualityBias            value=1      → +1 品质档（整档偏移，非百分比倾向）
+       WorkSpeed 的 statDefName 留空：注入按配方上下文解析（recipe.workSpeedStat），
+       不依赖该字段（字段保留供未来"指定全局 stat"场景）。
+  -->
+  <PersonalChronicle.Domain.Profession.ProfessionalEffectDef>
+    <defName>ProfessionalEffect_ManufacturingWorkSpeed</defName>
+    <kind>WorkSpeed</kind>
+    <value>0.03</value>
+    <labelKey>Professional.Skill.PrecisionManufacturing.EffectWorkSpeed</labelKey>
+  </PersonalChronicle.Domain.Profession.ProfessionalEffectDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalEffectDef>
+    <defName>ProfessionalEffect_QualityBias</defName>
+    <kind>QualityBias</kind>
+    <value>1</value>
+    <labelKey>Professional.Skill.PrecisionManufacturing.EffectQualityBias</labelKey>
+  </PersonalChronicle.Domain.Profession.ProfessionalEffectDef>
+
+  <!-- ===================== 行为→能力映射矩阵：精密组件 ===================== -->
+  <PersonalChronicle.Domain.Profession.AbilityMappingDef>
+    <defName>Mapping_PrecisionComponents</defName>
+    <recipeDefNames>
+      <li>Make_ComponentIndustrial</li>
+      <li>Make_ComponentSpacer</li>
+    </recipeDefNames>
+    <workTypeDefName>Smithing</workTypeDefName>
+    <mappingKey>PrecisionComponents</mappingKey>
+    <weights>
+      <li>
+        <abilityKey>precisionControl</abilityKey>
+        <weight>50</weight>
+      </li>
+      <li>
+        <abilityKey>processKnowledge</abilityKey>
+        <weight>30</weight>
+      </li>
+      <li>
+        <abilityKey>machining</abilityKey>
+        <weight>15</weight>
+      </li>
+      <li>
+        <abilityKey>qualityControl</abilityKey>
+        <weight>5</weight>
+      </li>
+    </weights>
+  </PersonalChronicle.Domain.Profession.AbilityMappingDef>
+
+  <!-- ===================== XP 品质系数策略（P3 治理：数据驱动替代硬编码 switch） =====================
+       对应 ProfessionalXpPolicyDef；C# Evaluator 优先查表，无匹配回退内建表（V2.0 §7）。
+       V2.0 §7 示例：优秀×1.5 / 大师×3 / 传奇×5。
+  -->
+  <PersonalChronicle.Domain.Profession.ProfessionalXpPolicyDef>
+    <defName>ProfessionalXpPolicy_Manufacturing</defName>
+    <qualityMultipliers>
+      <li>
+        <qualityName>Legendary</qualityName>
+        <multiplier>5</multiplier>
+      </li>
+      <li>
+        <qualityName>Masterwork</qualityName>
+        <multiplier>3</multiplier>
+      </li>
+      <li>
+        <qualityName>Excellent</qualityName>
+        <multiplier>1.5</multiplier>
+      </li>
+      <li>
+        <qualityName>Good</qualityName>
+        <multiplier>1.2</multiplier>
+      </li>
+    </qualityMultipliers>
+  </PersonalChronicle.Domain.Profession.ProfessionalXpPolicyDef>
+
+  <!-- ===================== 专业评级档位（P4，V2.0 §13 软上限/递减） =====================
+       评级由专业能力 Level 经档位派生（无考试门槛；考试/资格留 P5）。
+       workSpeedWeight / qualityBiasWeight 为「叠加」权重（最终 = P3.value × (1 + weight)）。
+       阈值基于 maxLevel=50 的四等分偏后分布；大师封顶（Level 再高不再增）。
+  -->
+  <PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
+    <defName>ProfessionalRating_Proficient</defName>
+    <labelKey>Professional.Rating.Proficient.Label</labelKey>
+    <minLevel>10</minLevel>
+    <workSpeedWeight>0.03</workSpeedWeight>
+    <qualityBiasWeight>0.00</qualityBiasWeight>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
+    <defName>ProfessionalRating_Specialist</defName>
+    <labelKey>Professional.Rating.Specialist.Label</labelKey>
+    <minLevel>25</minLevel>
+    <workSpeedWeight>0.05</workSpeedWeight>
+    <qualityBiasWeight>0.02</qualityBiasWeight>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
+    <defName>ProfessionalRating_Senior</defName>
+    <labelKey>Professional.Rating.Senior.Label</labelKey>
+    <minLevel>38</minLevel>
+    <workSpeedWeight>0.08</workSpeedWeight>
+    <qualityBiasWeight>0.04</qualityBiasWeight>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
+    <defName>ProfessionalRating_Master</defName>
+    <labelKey>Professional.Rating.Master.Label</labelKey>
+    <minLevel>45</minLevel>
+    <workSpeedWeight>0.10</workSpeedWeight>
+    <qualityBiasWeight>0.06</qualityBiasWeight>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
+</Defs>

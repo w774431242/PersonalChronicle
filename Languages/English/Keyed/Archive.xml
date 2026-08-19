@@ -4,6 +4,14 @@
   <PersonalChronicle.Settings.EnableRecording>Enable archive recording</PersonalChronicle.Settings.EnableRecording>
   <PersonalChronicle.Settings.MaxEventsPerPawn>Max events per colonist</PersonalChronicle.Settings.MaxEventsPerPawn>
   <PersonalChronicle.Settings.DebugLiveCount>Debug: live population dump log</PersonalChronicle.Settings.DebugLiveCount>
+  <!-- v1.1.4 UI theme presets (mainstream RPG style) -->
+  <PersonalChronicle.Settings.Theme>UI theme</PersonalChronicle.Settings.Theme>
+  <PersonalChronicle.UI.Theme.Button>Theme</PersonalChronicle.UI.Theme.Button>
+  <PersonalChronicle.UI.Theme.ButtonTip>Current theme: {0} · Click to switch to: {1}</PersonalChronicle.UI.Theme.ButtonTip>
+  <PersonalChronicle.UI.Theme.Epic>Epic</PersonalChronicle.UI.Theme.Epic>
+  <PersonalChronicle.UI.Theme.Gothic>Gothic</PersonalChronicle.UI.Theme.Gothic>
+  <PersonalChronicle.UI.Theme.Wuxia>Wuxia Ink</PersonalChronicle.UI.Theme.Wuxia>
+  <PersonalChronicle.UI.Theme.Steampunk>Steampunk</PersonalChronicle.UI.Theme.Steampunk>
   <PersonalChronicle.UI.Title>Archive</PersonalChronicle.UI.Title>
   <PersonalChronicle.UI.AllRecords>All Records</PersonalChronicle.UI.AllRecords>
   <PersonalChronicle.UI.ActiveRecords>Active</PersonalChronicle.UI.ActiveRecords>
@@ -32,6 +40,21 @@
   <PersonalChronicle.UI.InspectTab.Events>Events</PersonalChronicle.UI.InspectTab.Events>
   <PersonalChronicle.UI.InspectTab.Places>Places</PersonalChronicle.UI.InspectTab.Places>
   <PersonalChronicle.UI.InspectTab.OpenFull>Open full archive</PersonalChronicle.UI.InspectTab.OpenFull>
+  <!-- v1.1.4 劳模住所/工坊检测：右上角信息条 -->
+  <PersonalChronicle.UI.Residence.Label>Residence</PersonalChronicle.UI.Residence.Label>
+  <PersonalChronicle.UI.Workplace.Label>Workplace</PersonalChronicle.UI.Workplace.Label>
+  <PersonalChronicle.UI.RoomType.Label>Type</PersonalChronicle.UI.RoomType.Label>
+  <!-- v1.1.4 建筑别名：工坊/房间类型改名对话框 -->
+  <PersonalChronicle.UI.RenameWorkplace.Title>Rename workplace</PersonalChronicle.UI.RenameWorkplace.Title>
+  <PersonalChronicle.UI.RenameWorkplace.Hint>Give this workbench a unique name; leave blank to restore the default name.</PersonalChronicle.UI.RenameWorkplace.Hint>
+  <PersonalChronicle.UI.RenameRoomRole.Title>Rename room type</PersonalChronicle.UI.RenameRoomRole.Title>
+  <PersonalChronicle.UI.RenameRoomRole.Hint>Give this room type a unique name (e.g. "Staff dormitory"); leave blank to restore the default type name.</PersonalChronicle.UI.RenameRoomRole.Hint>
+  <PersonalChronicle.UI.RenameRoomName.Title>Rename room</PersonalChronicle.UI.RenameRoomName.Title>
+  <PersonalChronicle.UI.RenameRoomName.Hint>Give this room a unique nickname (display only, e.g. "Staff dormitory"). Leave blank to restore.</PersonalChronicle.UI.RenameRoomName.Hint>
+  <PersonalChronicle.UI.RenameRoomType.Title>Rename type label</PersonalChronicle.UI.RenameRoomType.Title>
+  <PersonalChronicle.UI.RenameRoomType.Hint>Replace this room's type label (display only; underlying Room.Role unchanged). E.g. "Workshop" → "Forge type".</PersonalChronicle.UI.RenameRoomType.Hint>
+  <PersonalChronicle.UI.RenameWorkplace.OK>OK</PersonalChronicle.UI.RenameWorkplace.OK>
+  <PersonalChronicle.UI.RenameWorkplace.Cancel>Cancel</PersonalChronicle.UI.RenameWorkplace.Cancel>
   <PersonalChronicle.UI.Back>Back</PersonalChronicle.UI.Back>
   <PersonalChronicle.UI.Overview>Overview</PersonalChronicle.UI.Overview>
   <PersonalChronicle.UI.Categories>Archive Categories</PersonalChronicle.UI.Categories>
@@ -563,6 +586,12 @@
   <PersonalChronicle.UI.Kpi.Legacy>Divine Artifact</PersonalChronicle.UI.Kpi.Legacy>
   <PersonalChronicle.UI.Kpi.WeekHours.S>Weekly hrs</PersonalChronicle.UI.Kpi.WeekHours.S>
   <PersonalChronicle.UI.Kpi.DayHours.S>Daily</PersonalChronicle.UI.Kpi.DayHours.S>
+  <PersonalChronicle.UI.Kpi.WeekOutput>Week output</PersonalChronicle.UI.Kpi.WeekOutput>
+  <PersonalChronicle.UI.Kpi.NetValue>Net value</PersonalChronicle.UI.Kpi.NetValue>
+  <PersonalChronicle.UI.Kpi.ConsumeTitle>Consumption · Total</PersonalChronicle.UI.Kpi.ConsumeTitle>
+  <PersonalChronicle.UI.Kpi.WeekConsume>Weekly</PersonalChronicle.UI.Kpi.WeekConsume>
+  <PersonalChronicle.UI.Kpi.DailyConsume>Daily avg</PersonalChronicle.UI.Kpi.DailyConsume>
+  <PersonalChronicle.UI.Kpi.DailyAverage>Daily avg</PersonalChronicle.UI.Kpi.DailyAverage>
   <PersonalChronicle.UI.Kpi.Cat>cat</PersonalChronicle.UI.Kpi.Cat>
   <PersonalChronicle.UI.Kpi.PreyKinds>Prey kinds</PersonalChronicle.UI.Kpi.PreyKinds>
   <PersonalChronicle.UI.Kpi.Kind>kind</PersonalChronicle.UI.Kpi.Kind>
@@ -588,4 +617,341 @@
   <PersonalChronicle.UI.InspectTab.ViewTimeline>View full timeline →</PersonalChronicle.UI.InspectTab.ViewTimeline>
   <PersonalChronicle.UI.InspectTab.Milestones>Milestones</PersonalChronicle.UI.InspectTab.Milestones>
   <PersonalChronicle.UI.InspectTab.MoreMilestones>{0} entries · scroll</PersonalChronicle.UI.InspectTab.MoreMilestones>
+  <!-- v1.1.4 Medal system (phase 1: 6.1~6.4 threshold medals ×27 · channel B display bonus + gold announcement) -->
+  <PersonalChronicle.UI.Medal.Tier.Bronze>Bronze</PersonalChronicle.UI.Medal.Tier.Bronze>
+  <PersonalChronicle.UI.Medal.Tier.Silver>Silver</PersonalChronicle.UI.Medal.Tier.Silver>
+  <PersonalChronicle.UI.Medal.Tier.Gold>Gold</PersonalChronicle.UI.Medal.Tier.Gold>
+  <PersonalChronicle.UI.Medal.Wall.Title>Medal Wall</PersonalChronicle.UI.Medal.Wall.Title>
+  <PersonalChronicle.UI.Medal.Wall.Empty>No medals on record</PersonalChronicle.UI.Medal.Wall.Empty>
+  <!-- v1.1.4 Manual award (ManualAward) -->
+  <PersonalChronicle.UI.Medal.ManualAward.Button>Manual Award</PersonalChronicle.UI.Medal.ManualAward.Button>
+  <PersonalChronicle.UI.Medal.ManualAward.Title>Manual Award</PersonalChronicle.UI.Medal.ManualAward.Title>
+  <PersonalChronicle.UI.Medal.ManualAward.Empty>No medals available to award (all granted or not yet met)</PersonalChronicle.UI.Medal.ManualAward.Empty>
+  <PersonalChronicle.UI.Medal.ManualAward.Done>Awarded: {0}</PersonalChronicle.UI.Medal.ManualAward.Done>
+  <PersonalChronicle.UI.Medal.ManualAward.Blocked>Already awarded or not met, cannot re-award: {0}</PersonalChronicle.UI.Medal.ManualAward.Blocked>
+  <PersonalChronicle.UI.Medal.Buff.WorkSpeed3>+3% work speed</PersonalChronicle.UI.Medal.Buff.WorkSpeed3>
+  <PersonalChronicle.UI.Medal.Buff.WorkSpeed5>+5% work speed</PersonalChronicle.UI.Medal.Buff.WorkSpeed5>
+  <PersonalChronicle.UI.Medal.Buff.WorkSpeed10>+10% work speed</PersonalChronicle.UI.Medal.Buff.WorkSpeed10>
+  <PersonalChronicle.UI.Medal.Buff.Combat3>+3% melee/ranged damage</PersonalChronicle.UI.Medal.Buff.Combat3>
+  <PersonalChronicle.UI.Medal.Buff.Combat5>+5% melee/ranged damage</PersonalChronicle.UI.Medal.Buff.Combat5>
+  <PersonalChronicle.UI.Medal.Buff.Combat10>+10% melee/ranged damage</PersonalChronicle.UI.Medal.Buff.Combat10>
+  <PersonalChronicle.UI.Medal.Gold.Letter>The colony awards {0} the gold {1} in recognition of their deeds.</PersonalChronicle.UI.Medal.Gold.Letter>
+  <PersonalChronicle.UI.Medal.Labor_Model.Name>Model Worker</PersonalChronicle.UI.Medal.Labor_Model.Name>
+  <PersonalChronicle.UI.Medal.Labor_Worker.Name>Advanced Worker</PersonalChronicle.UI.Medal.Labor_Worker.Name>
+  <PersonalChronicle.UI.Medal.Labor_TechAce.Name>Production Tech Ace</PersonalChronicle.UI.Medal.Labor_TechAce.Name>
+  <PersonalChronicle.UI.Medal.Combat_Hero.Name>Battle Hero</PersonalChronicle.UI.Medal.Combat_Hero.Name>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass.Name>First-Class Merit</PersonalChronicle.UI.Medal.Combat_FirstClass.Name>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee.Name>Enlistee Commendation</PersonalChronicle.UI.Medal.Combat_Enlistee.Name>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster.Name>Model Quartermaster</PersonalChronicle.UI.Medal.Support_Quartermaster.Name>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom.Name>Heirloom Merit</PersonalChronicle.UI.Medal.Legacy_Heirloom.Name>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade.Name>Blade of the Vault</PersonalChronicle.UI.Medal.Legacy_KillerBlade.Name>
+  <PersonalChronicle.UI.Medal.Craft_Legend.Name>Legendary Crafter</PersonalChronicle.UI.Medal.Craft_Legend.Name>
+  <PersonalChronicle.UI.Medal.Craft_MajorProject.Name>Major Projects</PersonalChronicle.UI.Medal.Craft_MajorProject.Name>
+  <!-- 6.1 Labour -->
+  <PersonalChronicle.UI.Medal.Labor_Model_Bronze.Label>Model Worker · Bronze</PersonalChronicle.UI.Medal.Labor_Model_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Labor_Model_Bronze.Desc>Cumulative work time reached 80 days.</PersonalChronicle.UI.Medal.Labor_Model_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Model_Silver.Label>Model Worker · Silver</PersonalChronicle.UI.Medal.Labor_Model_Silver.Label>
+  <PersonalChronicle.UI.Medal.Labor_Model_Silver.Desc>Cumulative work time reached 200 days.</PersonalChronicle.UI.Medal.Labor_Model_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Model_Gold.Label>Model Worker · Gold</PersonalChronicle.UI.Medal.Labor_Model_Gold.Label>
+  <PersonalChronicle.UI.Medal.Labor_Model_Gold.Desc>Cumulative work time reached 500 days; the colony honours this feat by proclamation.</PersonalChronicle.UI.Medal.Labor_Model_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Bronze.Label>Advanced Worker · Bronze</PersonalChronicle.UI.Medal.Labor_Worker_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Bronze.Desc>Cumulative output reached 300 items.</PersonalChronicle.UI.Medal.Labor_Worker_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Silver.Label>Advanced Worker · Silver</PersonalChronicle.UI.Medal.Labor_Worker_Silver.Label>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Silver.Desc>Cumulative output reached 1,000 items.</PersonalChronicle.UI.Medal.Labor_Worker_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Gold.Label>Advanced Worker · Gold</PersonalChronicle.UI.Medal.Labor_Worker_Gold.Label>
+  <PersonalChronicle.UI.Medal.Labor_Worker_Gold.Desc>Cumulative output reached 3,000 items; the colony honours this feat by proclamation.</PersonalChronicle.UI.Medal.Labor_Worker_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Bronze.Label>Production Tech Ace · Bronze</PersonalChronicle.UI.Medal.Labor_TechAce_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Bronze.Desc>Cumulative output market value reached 30,000 silver.</PersonalChronicle.UI.Medal.Labor_TechAce_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Silver.Label>Production Tech Ace · Silver</PersonalChronicle.UI.Medal.Labor_TechAce_Silver.Label>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Silver.Desc>Cumulative output market value reached 100,000 silver.</PersonalChronicle.UI.Medal.Labor_TechAce_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Gold.Label>Production Tech Ace · Gold</PersonalChronicle.UI.Medal.Labor_TechAce_Gold.Label>
+  <PersonalChronicle.UI.Medal.Labor_TechAce_Gold.Desc>Cumulative output market value reached 300,000 silver; the colony honours this feat by proclamation.</PersonalChronicle.UI.Medal.Labor_TechAce_Gold.Desc>
+  <!-- 6.2 Combat -->
+  <PersonalChronicle.UI.Medal.Combat_Hero_Bronze.Label>Battle Hero · Bronze</PersonalChronicle.UI.Medal.Combat_Hero_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Bronze.Desc>Cumulative kills reached 20 enemies.</PersonalChronicle.UI.Medal.Combat_Hero_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Silver.Label>Battle Hero · Silver</PersonalChronicle.UI.Medal.Combat_Hero_Silver.Label>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Silver.Desc>Cumulative kills reached 50 enemies.</PersonalChronicle.UI.Medal.Combat_Hero_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Gold.Label>Battle Hero · Gold</PersonalChronicle.UI.Medal.Combat_Hero_Gold.Label>
+  <PersonalChronicle.UI.Medal.Combat_Hero_Gold.Desc>Cumulative kills reached 120 enemies; the colony honours this feat by proclamation.</PersonalChronicle.UI.Medal.Combat_Hero_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Bronze.Label>First-Class Merit · Bronze</PersonalChronicle.UI.Medal.Combat_FirstClass_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Bronze.Desc>Cumulative damage dealt to enemies reached 2,000.</PersonalChronicle.UI.Medal.Combat_FirstClass_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Silver.Label>First-Class Merit · Silver</PersonalChronicle.UI.Medal.Combat_FirstClass_Silver.Label>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Silver.Desc>Cumulative damage dealt to enemies reached 5,000.</PersonalChronicle.UI.Medal.Combat_FirstClass_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Gold.Label>First-Class Merit · Gold</PersonalChronicle.UI.Medal.Combat_FirstClass_Gold.Label>
+  <PersonalChronicle.UI.Medal.Combat_FirstClass_Gold.Desc>Cumulative damage dealt to enemies reached 12,000; the colony honours this feat by proclamation.</PersonalChronicle.UI.Medal.Combat_FirstClass_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Bronze.Label>Enlistee Commendation · Bronze</PersonalChronicle.UI.Medal.Combat_Enlistee_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Bronze.Desc>Participated in 3 battles.</PersonalChronicle.UI.Medal.Combat_Enlistee_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Silver.Label>Enlistee Commendation · Silver</PersonalChronicle.UI.Medal.Combat_Enlistee_Silver.Label>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Silver.Desc>Participated in 8 battles.</PersonalChronicle.UI.Medal.Combat_Enlistee_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Gold.Label>Enlistee Commendation · Gold</PersonalChronicle.UI.Medal.Combat_Enlistee_Gold.Label>
+  <PersonalChronicle.UI.Medal.Combat_Enlistee_Gold.Desc>Participated in 20 battles; the colony honours this feat by proclamation.</PersonalChronicle.UI.Medal.Combat_Enlistee_Gold.Desc>
+  <!-- 6.3 Support/consumption -->
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Bronze.Label>Model Quartermaster · Bronze</PersonalChronicle.UI.Medal.Support_Quartermaster_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Bronze.Desc>Cumulative resource consumption reached 8,000 silver.</PersonalChronicle.UI.Medal.Support_Quartermaster_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Silver.Label>Model Quartermaster · Silver</PersonalChronicle.UI.Medal.Support_Quartermaster_Silver.Label>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Silver.Desc>Cumulative resource consumption reached 20,000 silver.</PersonalChronicle.UI.Medal.Support_Quartermaster_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Gold.Label>Model Quartermaster · Gold</PersonalChronicle.UI.Medal.Support_Quartermaster_Gold.Label>
+  <PersonalChronicle.UI.Medal.Support_Quartermaster_Gold.Desc>Cumulative resource consumption reached 50,000 silver; the colony honours this feat by proclamation.</PersonalChronicle.UI.Medal.Support_Quartermaster_Gold.Desc>
+  <!-- 6.4 Legacy/equipment -->
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Bronze.Label>Heirloom Merit · Bronze</PersonalChronicle.UI.Medal.Legacy_Heirloom_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Bronze.Desc>Passed down to a 2nd holder.</PersonalChronicle.UI.Medal.Legacy_Heirloom_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Silver.Label>Heirloom Merit · Silver</PersonalChronicle.UI.Medal.Legacy_Heirloom_Silver.Label>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Silver.Desc>Passed down to a 3rd holder.</PersonalChronicle.UI.Medal.Legacy_Heirloom_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Gold.Label>Heirloom Merit · Gold</PersonalChronicle.UI.Medal.Legacy_Heirloom_Gold.Label>
+  <PersonalChronicle.UI.Medal.Legacy_Heirloom_Gold.Desc>Passed down to a 5th holder; the colony honours this lineage by proclamation.</PersonalChronicle.UI.Medal.Legacy_Heirloom_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Bronze.Label>Blade of the Vault · Bronze</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Bronze.Desc>Holders across generations reached 30 cumulative kills.</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Silver.Label>Blade of the Vault · Silver</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Silver.Label>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Silver.Desc>Holders across generations reached 100 cumulative kills.</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Gold.Label>Blade of the Vault · Gold</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Gold.Label>
+  <PersonalChronicle.UI.Medal.Legacy_KillerBlade_Gold.Desc>Holders across generations reached 250 cumulative kills; a name of dread throughout the colony.</PersonalChronicle.UI.Medal.Legacy_KillerBlade_Gold.Desc>
+  <!-- 6.5 Career achievements -->
+  <PersonalChronicle.UI.Medal.Craft_Legend_Bronze.Label>Legendary Crafter · Bronze</PersonalChronicle.UI.Medal.Craft_Legend_Bronze.Label>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Bronze.Desc>Crafted 1 legendary item.</PersonalChronicle.UI.Medal.Craft_Legend_Bronze.Desc>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Silver.Label>Legendary Crafter · Silver</PersonalChronicle.UI.Medal.Craft_Legend_Silver.Label>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Silver.Desc>Crafted 5 legendary items.</PersonalChronicle.UI.Medal.Craft_Legend_Silver.Desc>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Gold.Label>Legendary Crafter · Gold</PersonalChronicle.UI.Medal.Craft_Legend_Gold.Label>
+  <PersonalChronicle.UI.Medal.Craft_Legend_Gold.Desc>Crafted 15 legendary items; the colony honours this feat by proclamation.</PersonalChronicle.UI.Medal.Craft_Legend_Gold.Desc>
+  <PersonalChronicle.UI.Medal.Craft_MajorProject_Gold.Label>Major Projects · Gold</PersonalChronicle.UI.Medal.Craft_MajorProject_Gold.Label>
+  <PersonalChronicle.UI.Medal.Craft_MajorProject_Gold.Desc>Completed 3 major projects.</PersonalChronicle.UI.Medal.Craft_MajorProject_Gold.Desc>
+
+  <!-- Career Archive ITab (independent Pawn inspect page; 4 sub-tabs: Overview/Career/Title/Honor) -->
+  <PersonalChronicle.UI.CareerTab>Career</PersonalChronicle.UI.CareerTab>
+  <PersonalChronicle.UI.Career.HeaderSub>Career archive · work experience grouped by workshop tenure</PersonalChronicle.UI.Career.HeaderSub>
+  <PersonalChronicle.UI.Career.Sub.Overview>Overview</PersonalChronicle.UI.Career.Sub.Overview>
+  <PersonalChronicle.UI.Career.Sub.Career>Resume</PersonalChronicle.UI.Career.Sub.Career>
+  <PersonalChronicle.UI.Career.Sub.Title>Title</PersonalChronicle.UI.Career.Sub.Title>
+  <PersonalChronicle.UI.Career.Sub.Honor>Honor</PersonalChronicle.UI.Career.Sub.Honor>
+  <PersonalChronicle.UI.Career.Overview.Title>Career Overview</PersonalChronicle.UI.Career.Overview.Title>
+  <PersonalChronicle.UI.Career.Overview.Empty>No career overview data to display yet.</PersonalChronicle.UI.Career.Overview.Empty>
+  <PersonalChronicle.UI.Career.Resume.Title>Work Experience</PersonalChronicle.UI.Career.Resume.Title>
+  <PersonalChronicle.UI.Career.Resume.Empty>No work experience recorded (workshop crafting generates career events).</PersonalChronicle.UI.Career.Resume.Empty>
+  <PersonalChronicle.UI.Career.Title.Title>Title Progression</PersonalChronicle.UI.Career.Title.Title>
+  <PersonalChronicle.UI.Career.Title.Empty>Title system not yet integrated (planned; pending P4).</PersonalChronicle.UI.Career.Title.Empty>
+  <PersonalChronicle.UI.Career.Honor.Title>Medal Record</PersonalChronicle.UI.Career.Honor.Title>
+  <PersonalChronicle.UI.Career.Honor.Empty>No medal data yet (medals are granted once thresholds are met).</PersonalChronicle.UI.Career.Honor.Empty>
+  <PersonalChronicle.UI.Career.PlaceholderNote>Career archive: Overview / Resume / Title / Honor tabs all consume real CareerData-derived data; empty states are shown when no data exists.</PersonalChronicle.UI.Career.PlaceholderNote>
+
+  <!-- v4.16: Archive main tab · Career overview entry -->
+  <PersonalChronicle.UI.CareerOverview>Career</PersonalChronicle.UI.CareerOverview>
+  <PersonalChronicle.UI.CareerOverviewDesc>Colony-wide career overview: each colonist's identity, primary skill and next-title progress. Click any row to open their career archive.</PersonalChronicle.UI.CareerOverviewDesc>
+  <PersonalChronicle.UI.CareerEmpty>No colonist archives yet (ensure there are living colonists in the colony).</PersonalChronicle.UI.CareerEmpty>
+  <PersonalChronicle.UI.ColPawn>Name</PersonalChronicle.UI.ColPawn>
+  <PersonalChronicle.UI.ColRole>Identity / Track</PersonalChronicle.UI.ColRole>
+  <PersonalChronicle.UI.ColSkill>Skill / Hours</PersonalChronicle.UI.ColSkill>
+  <PersonalChronicle.UI.ColNextTitle>Next Title / Readiness</PersonalChronicle.UI.ColNextTitle>
+  <PersonalChronicle.UI.NoTitle>Unrated</PersonalChronicle.UI.NoTitle>
+  <PersonalChronicle.UI.TitleMaxed>Capped</PersonalChronicle.UI.TitleMaxed>
+  <PersonalChronicle.UI.NoCareerData>No career data</PersonalChronicle.UI.NoCareerData>
+  <PersonalChronicle.UI.PromotionReadiness>Promotion readiness</PersonalChronicle.UI.PromotionReadiness>
+
+  <!-- Career Overview (identity / qualification / precheck / next title) -->
+  <PersonalChronicle.UI.Career.Ov.Identity>Career Identity</PersonalChronicle.UI.Career.Ov.Identity>
+  <PersonalChronicle.UI.Career.Ov.Undefined>Unrated</PersonalChronicle.UI.Career.Ov.Undefined>
+  <PersonalChronicle.UI.Career.Ov.Skill>Professional Skill</PersonalChronicle.UI.Career.Ov.Skill>
+  <PersonalChronicle.UI.Career.Ov.Hours>Related Hours</PersonalChronicle.UI.Career.Ov.Hours>
+  <PersonalChronicle.UI.Career.Ov.Results>Major Results</PersonalChronicle.UI.Career.Ov.Results>
+  <PersonalChronicle.UI.Career.Ov.Books>Books Written</PersonalChronicle.UI.Career.Ov.Books>
+  <PersonalChronicle.UI.Career.Ov.QualState>Qualification Status</PersonalChronicle.UI.Career.Ov.QualState>
+  <PersonalChronicle.UI.Career.Ov.PreCheck>Qualification Precheck</PersonalChronicle.UI.Career.Ov.PreCheck>
+  <PersonalChronicle.UI.Career.Ov.NextTitle>Next Title</PersonalChronicle.UI.Career.Ov.NextTitle>
+  <PersonalChronicle.UI.Career.Ov.TopTitle>Highest title reached (capped)</PersonalChronicle.UI.Career.Ov.TopTitle>
+  <PersonalChronicle.UI.Career.Ov.Progress>Promotion Readiness</PersonalChronicle.UI.Career.Ov.Progress>
+  <PersonalChronicle.UI.Career.Ov.Gaps>Current Gaps</PersonalChronicle.UI.Career.Ov.Gaps>
+  <PersonalChronicle.UI.Career.Ov.NoGap>No gaps (all requirements met)</PersonalChronicle.UI.Career.Ov.NoGap>
+  <PersonalChronicle.UI.Career.Ov.NoData>No career data yet (crafting generates career events).</PersonalChronicle.UI.Career.Ov.NoData>
+  <PersonalChronicle.UI.Career.Ov.NoQual>No qualification data yet (no title qualification applied).</PersonalChronicle.UI.Career.Ov.NoQual>
+  <PersonalChronicle.UI.Career.Qual.Level>Professional Level</PersonalChronicle.UI.Career.Qual.Level>
+  <PersonalChronicle.UI.Career.Qual.Level.Req>Level ≥ {0}</PersonalChronicle.UI.Career.Qual.Level.Req>
+  <PersonalChronicle.UI.Career.Qual.Time>Career Time</PersonalChronicle.UI.Career.Qual.Time>
+  <PersonalChronicle.UI.Career.Qual.Time.Req>Career time ≥ {0} ticks</PersonalChronicle.UI.Career.Qual.Time.Req>
+  <PersonalChronicle.UI.Career.Qual.Score>Composite Score</PersonalChronicle.UI.Career.Qual.Score>
+  <PersonalChronicle.UI.Career.Qual.Score.Req>Qualification score ≥ {0}</PersonalChronicle.UI.Career.Qual.Score.Req>
+  <PersonalChronicle.UI.Career.Qual.Practical>Practical Exam</PersonalChronicle.UI.Career.Qual.Practical>
+  <PersonalChronicle.UI.Career.Qual.Practical.Req>Excellent products × 2 (real crafting)</PersonalChronicle.UI.Career.Qual.Practical.Req>
+  <PersonalChronicle.UI.Career.Qual.Theory>Theory Exam</PersonalChronicle.UI.Career.Qual.Theory>
+  <PersonalChronicle.UI.Career.Qual.Theory.Req>Book evidence ≥ Good</PersonalChronicle.UI.Career.Qual.Theory.Req>
+  <PersonalChronicle.UI.Career.Qual.Defense>Thesis / Defense</PersonalChronicle.UI.Career.Qual.Defense>
+  <PersonalChronicle.UI.Career.Qual.Defense.Req>Thesis and defense passed</PersonalChronicle.UI.Career.Qual.Defense.Req>
+  <PersonalChronicle.UI.Career.Qual.Met>Met</PersonalChronicle.UI.Career.Qual.Met>
+  <PersonalChronicle.UI.Career.Qual.Unmet>Not met</PersonalChronicle.UI.Career.Qual.Unmet>
+  <PersonalChronicle.UI.Career.Pre.Skill>Core Skill</PersonalChronicle.UI.Career.Pre.Skill>
+  <PersonalChronicle.UI.Career.Pre.Resume>Career Resume</PersonalChronicle.UI.Career.Pre.Resume>
+  <PersonalChronicle.UI.Career.Pre.Achieve>Achievement Record</PersonalChronicle.UI.Career.Pre.Achieve>
+  <PersonalChronicle.UI.Career.Pre.Practical>Practical Exam</PersonalChronicle.UI.Career.Pre.Practical>
+  <PersonalChronicle.UI.Career.Pre.Theory>Theory Exam</PersonalChronicle.UI.Career.Pre.Theory>
+  <PersonalChronicle.UI.Career.Pre.Defense>Thesis / Defense</PersonalChronicle.UI.Career.Pre.Defense>
+  <PersonalChronicle.UI.Career.Pre.Ready>Ready</PersonalChronicle.UI.Career.Pre.Ready>
+  <PersonalChronicle.UI.Career.Pre.Preparing>Preparing</PersonalChronicle.UI.Career.Pre.Preparing>
+  <PersonalChronicle.UI.Career.Pre.NotStarted>Not started</PersonalChronicle.UI.Career.Pre.NotStarted>
+  <PersonalChronicle.UI.Career.Title.State.Granted>Granted</PersonalChronicle.UI.Career.Title.State.Granted>
+  <PersonalChronicle.UI.Career.Title.State.Current>Current</PersonalChronicle.UI.Career.Title.State.Current>
+  <PersonalChronicle.UI.Career.Title.State.Next>Next</PersonalChronicle.UI.Career.Title.State.Next>
+  <PersonalChronicle.UI.Career.Title.State.Locked>Locked</PersonalChronicle.UI.Career.Title.State.Locked>
+  <PersonalChronicle.UI.Career.Title.Requires>Level ≥ {0}</PersonalChronicle.UI.Career.Title.Requires>
+  <PersonalChronicle.UI.Career.Honor.Granted>Granted</PersonalChronicle.UI.Career.Honor.Granted>
+  <PersonalChronicle.UI.Career.Honor.Eligible>Eligible</PersonalChronicle.UI.Career.Honor.Eligible>
+  <PersonalChronicle.UI.Career.Honor.NotGranted>Not granted</PersonalChronicle.UI.Career.Honor.NotGranted>
+
+  <!-- Profession system P2: directions / skills / effects (referenced by Defs/ProfessionalSkills.xml) -->
+  <Professional.Direction.Manufacturing_Precision.Label>Precision</Professional.Direction.Manufacturing_Precision.Label>
+  <Professional.Direction.Manufacturing_Precision.Desc>Manufacturing direction focused on precision craftsmanship.</Professional.Direction.Manufacturing_Precision.Desc>
+  <Professional.Skill.ProfessionalSkill_PrecisionManufacturing.Label>Precision Manufacturing</Professional.Skill.ProfessionalSkill_PrecisionManufacturing.Label>
+  <Professional.Skill.ProfessionalSkill_PrecisionManufacturing.Desc>Professional skill for crafting precision components and similar products.</Professional.Skill.ProfessionalSkill_PrecisionManufacturing.Desc>
+  <Professional.Skill.PrecisionManufacturing.EffectWorkSpeed>Boosts manufacturing work speed</Professional.Skill.PrecisionManufacturing.EffectWorkSpeed>
+  <Professional.Skill.PrecisionManufacturing.EffectQualityBias>Boosts output quality</Professional.Skill.PrecisionManufacturing.EffectQualityBias>
+  <PersonalChronicle.ProfessionalEffect.WorkSpeed.StatPart>Profession: manufacturing speed +{0}%</PersonalChronicle.ProfessionalEffect.WorkSpeed.StatPart>
+  <Professional.Rating.Proficient.Label>Proficient Manufacturer</Professional.Rating.Proficient.Label>
+  <Professional.Rating.Specialist.Label>Specialist Manufacturer</Professional.Rating.Specialist.Label>
+  <Professional.Rating.Senior.Label>Senior Manufacturer</Professional.Rating.Senior.Label>
+  <Professional.Rating.Master.Label>Master Manufacturer</Professional.Rating.Master.Label>
+  <Profession.Direction.Manufacturing_Precision.Label>Precision Manufacturing</Profession.Direction.Manufacturing_Precision.Label>
+  <Profession.Direction.Manufacturing_Weaponry.Label>Weapon Manufacturing</Profession.Direction.Manufacturing_Weaponry.Label>
+  <Profession.Direction.Manufacturing_Equipment.Label>Equipment Manufacturing</Profession.Direction.Manufacturing_Equipment.Label>
+  <Profession.Direction.Manufacturing_Industrial.Label>Industrial Manufacturing</Profession.Direction.Manufacturing_Industrial.Label>
+  <Profession.Direction.Manufacturing_Precision.Specialization>Quality focus: quality bias and quality-control weighting, slow and steady</Profession.Direction.Manufacturing_Precision.Specialization>
+  <Profession.Direction.Manufacturing_Weaponry.Specialization>Throughput focus: highest work-speed bonus, favors rapid output</Profession.Direction.Manufacturing_Weaponry.Specialization>
+  <Profession.Direction.Manufacturing_Equipment.Specialization>Material focus: material application and quality control; efficient with materials (material-efficiency mechanic reserved)</Profession.Direction.Manufacturing_Equipment.Specialization>
+  <Profession.Direction.Manufacturing_Industrial.Specialization>Volume focus: process knowledge and batch output (recipe-unlock mechanic reserved)</Profession.Direction.Manufacturing_Industrial.Specialization>
+
+  <!-- P2 Primary direction picker (Dialog_SetPrimaryDirection, V2.0 §9 recommend≠force) -->
+  <PersonalChronicle.UI.Career.SetDirection.Title>Set Primary Direction</PersonalChronicle.UI.Career.SetDirection.Title>
+  <PersonalChronicle.UI.Career.SetDirection.Hint>The planning area shows system recommendations; this is your "final choice" that overrides them and locks the selected direction.</PersonalChronicle.UI.Career.SetDirection.Hint>
+  <PersonalChronicle.UI.Career.SetDirection.Button>Set Direction</PersonalChronicle.UI.Career.SetDirection.Button>
+  <PersonalChronicle.UI.Career.SetDirection.ButtonCurrent>Direction: {0}</PersonalChronicle.UI.Career.SetDirection.ButtonCurrent>
+  <PersonalChronicle.UI.Career.SetDirection.Empty>No available career directions.</PersonalChronicle.UI.Career.SetDirection.Empty>
+  <PersonalChronicle.UI.Career.SetDirection.NoProfession>Uncategorized</PersonalChronicle.UI.Career.SetDirection.NoProfession>
+  <PersonalChronicle.UI.Career.SetDirection.NoCareer>No career data for this colonist; cannot set direction.</PersonalChronicle.UI.Career.SetDirection.NoCareer>
+  <PersonalChronicle.UI.Career.SetDirection.Done>Primary direction set: {0}</PersonalChronicle.UI.Career.SetDirection.Done>
+  <PersonalChronicle.UI.Career.SetDirection.Cleared>Primary direction cleared (falls back to recommendation).</PersonalChronicle.UI.Career.SetDirection.Cleared>
+  <PersonalChronicle.UI.Career.SetDirection.Clear>Clear selection (use recommendation)</PersonalChronicle.UI.Career.SetDirection.Clear>
+  <PersonalChronicle.UI.Career.Plan.Chosen>Set</PersonalChronicle.UI.Career.Plan.Chosen>
+
+  <!-- P5 Professional Qualification (5 tiers, P7-A title system 2026-08-16: domestic real-world rank system) -->
+  <Professional.Qualification.Q_Precision_Junior.Label>Junior Precision Technician Qualification</Professional.Qualification.Q_Precision_Junior.Label>
+  <Professional.Qualification.Q_Precision_Junior.Desc>Requires level 5 and 60,000 ticks of career time. Entry rank.</Professional.Qualification.Q_Precision_Junior.Desc>
+  <Professional.Qualification.Q_Precision_Assistant.Label>Intermediate Precision Technician Qualification</Professional.Qualification.Q_Precision_Assistant.Label>
+  <Professional.Qualification.Q_Precision_Assistant.Desc>Requires level 15, 200,000 ticks of career time and the Junior qualification. Assistant rank.</Professional.Qualification.Q_Precision_Assistant.Desc>
+  <Professional.Qualification.Q_Precision_Senior.Label>Senior Precision Technician Qualification</Professional.Qualification.Q_Precision_Senior.Label>
+  <Professional.Qualification.Q_Precision_Senior.Desc>Requires level 25, career time, prior qualification, practical &amp; theory exams, thesis and defense.</Professional.Qualification.Q_Precision_Senior.Desc>
+  <Professional.Qualification.Q_Precision_Specialist.Label>Precision Technician Specialist Qualification</Professional.Qualification.Q_Precision_Specialist.Label>
+  <Professional.Qualification.Q_Precision_Specialist.Desc>Requires level 38, 1,200,000 ticks of career time, prior qualification, practical &amp; theory exams, thesis and defense.</Professional.Qualification.Q_Precision_Specialist.Desc>
+  <Professional.Qualification.Q_Precision_Master.Label>Master Precision Technician Qualification</Professional.Qualification.Q_Precision_Master.Label>
+  <Professional.Qualification.Q_Precision_Master.Desc>Requires level 45, 1,800,000 ticks of career time, prior qualification, legendary crafting achievement, thesis and defense.</Professional.Qualification.Q_Precision_Master.Desc>
+
+  <!-- P7 Professional Title (5 tiers) -->
+  <Professional.Title.Title_Precision_Junior.Label>Junior Precision Technician</Professional.Title.Title_Precision_Junior.Label>
+  <Professional.Title.Title_Precision_Assistant.Label>Intermediate Precision Technician</Professional.Title.Title_Precision_Assistant.Label>
+  <Professional.Title.Title_Precision_Senior.Label>Senior Precision Technician</Professional.Title.Title_Precision_Senior.Label>
+  <Professional.Title.Title_Precision_Specialist.Label>Precision Technician Specialist</Professional.Title.Title_Precision_Specialist.Label>
+  <Professional.Title.Title_Precision_Master.Label>Master Precision Technician</Professional.Title.Title_Precision_Master.Label>
+  <PersonalChronicle.UI.Career.DevRandomize>Randomize Career Data (Dev)</PersonalChronicle.UI.Career.DevRandomize>
+  <PersonalChronicle.UI.Dev.Generate>PC: Generate test data</PersonalChronicle.UI.Dev.Generate>
+  <PersonalChronicle.UI.Dev.GenerateFailed>PC: Failed to generate test data, see log</PersonalChronicle.UI.Dev.GenerateFailed>
+  <PersonalChronicle.UI.Dev.Regenerated>PC: Regenerated test data for {0} (randomized) → accepted {1}, rejected {2}</PersonalChronicle.UI.Dev.Regenerated>
+  <PersonalChronicle.UI.Dev.NoCareer>PC Career: no career data</PersonalChronicle.UI.Dev.NoCareer>
+  <PersonalChronicle.UI.Dev.PawnNotArchived>PC Career: pawn not archived</PersonalChronicle.UI.Dev.PawnNotArchived>
+  <PersonalChronicle.UI.Dev.EventAdded>PC Career: test event added</PersonalChronicle.UI.Dev.EventAdded>
+  <PersonalChronicle.UI.Dev.Cleared>PC Career: cleared</PersonalChronicle.UI.Dev.Cleared>
+  <PersonalChronicle.UI.Dev.Printed>PC Career: printed {0} events to log</PersonalChronicle.UI.Dev.Printed>
+  <PersonalChronicle.UI.Dev.Randomized>PC Career: randomized (tier {0} Lv{1}, legendary {2}, major {3}, medals {4})</PersonalChronicle.UI.Dev.Randomized>
+
+  <!-- P8 Achievement Medals -->
+  <UI.Medal.Medal_Craft_Legend_Bronze.Label>Legendary Crafter · Bronze</UI.Medal.Medal_Craft_Legend_Bronze.Label>
+  <UI.Medal.Medal_Craft_Legend_Silver.Label>Legendary Crafter · Silver</UI.Medal.Medal_Craft_Legend_Silver.Label>
+  <UI.Medal.Medal_Craft_Legend_Gold.Label>Legendary Crafter · Gold</UI.Medal.Medal_Craft_Legend_Gold.Label>
+  <UI.Medal.Medal_Craft_MajorProject_Gold.Label>Major Manufacturing Project · Gold</UI.Medal.Medal_Craft_MajorProject_Gold.Label>
+  <!-- Career Archive ITab v1.1.4+: full HTML prototype fidelity (identity bar / career plan / resume / medal wall) -->
+  <PersonalChronicle.UI.Career.Header.Plan>Career Plan</PersonalChronicle.UI.Career.Header.Plan>
+  <PersonalChronicle.UI.Career.Header.Badge>V</PersonalChronicle.UI.Career.Header.Badge>
+  <PersonalChronicle.UI.Career.Honor.Event.Year>Year {0}</PersonalChronicle.UI.Career.Honor.Event.Year>
+  <PersonalChronicle.UI.Career.Resume.Achieve.Produced>Crafted {0} items</PersonalChronicle.UI.Career.Resume.Achieve.Produced>
+  <PersonalChronicle.UI.Career.Resume.Achieve.Fine>, incl. {0} fine+</PersonalChronicle.UI.Career.Resume.Achieve.Fine>
+  <PersonalChronicle.UI.SilverUnit>silver</PersonalChronicle.UI.SilverUnit>
+  <PersonalChronicle.UI.HoursPerDay>≈ {0} h/day</PersonalChronicle.UI.HoursPerDay>
+  <PersonalChronicle.UI.Career.Header.PlanSelected>Career Plan: {0}</PersonalChronicle.UI.Career.Header.PlanSelected>
+  <PersonalChronicle.UI.Career.Header.NoCareer>No career data yet</PersonalChronicle.UI.Career.Header.NoCareer>
+  <PersonalChronicle.UI.Career.Header.Stage>Total hours {1} h · career span {0} days</PersonalChronicle.UI.Career.Header.Stage>
+  <PersonalChronicle.UI.Career.Plan.Title>Career Planning</PersonalChronicle.UI.Career.Plan.Title>
+  <PersonalChronicle.UI.Career.Plan.Empty>No fit analysis data yet.</PersonalChronicle.UI.Career.Plan.Empty>
+  <PersonalChronicle.UI.Career.Plan.Rec>Rec</PersonalChronicle.UI.Career.Plan.Rec>
+  <PersonalChronicle.UI.Career.Plan.Match.High>Strong match</PersonalChronicle.UI.Career.Plan.Match.High>
+  <PersonalChronicle.UI.Career.Plan.Match.Mid>Moderate match</PersonalChronicle.UI.Career.Plan.Match.Mid>
+  <PersonalChronicle.UI.Career.Plan.Match.Low>Weak</PersonalChronicle.UI.Career.Plan.Match.Low>
+  <PersonalChronicle.UI.Career.Plan.Dim.Skill>Skill base</PersonalChronicle.UI.Career.Plan.Dim.Skill>
+  <PersonalChronicle.UI.Career.Plan.Dim.Practice>Practice</PersonalChronicle.UI.Career.Plan.Dim.Practice>
+  <PersonalChronicle.UI.Career.Plan.Dim.Passion>Passion</PersonalChronicle.UI.Career.Plan.Dim.Passion>
+  <PersonalChronicle.UI.Career.Plan.Dim.Achieve>Achievements</PersonalChronicle.UI.Career.Plan.Dim.Achieve>
+  <PersonalChronicle.UI.Career.Plan.Dim.Growth>Growth</PersonalChronicle.UI.Career.Plan.Dim.Growth>
+  <PersonalChronicle.UI.Career.Plan.Basis>Basis: </PersonalChronicle.UI.Career.Plan.Basis>
+  <PersonalChronicle.UI.Career.Plan.NoPros>No notable strengths</PersonalChronicle.UI.Career.Plan.NoPros>
+  <PersonalChronicle.UI.Career.Plan.Dir>Suggested directions: </PersonalChronicle.UI.Career.Plan.Dir>
+  <PersonalChronicle.UI.Career.Ov.NextLine>Next title: {0}</PersonalChronicle.UI.Career.Ov.NextLine>
+  <PersonalChronicle.UI.Career.Ov.Metric.Made>Items crafted</PersonalChronicle.UI.Career.Ov.Metric.Made>
+  <PersonalChronicle.UI.Career.Ov.Metric.Built>Buildings</PersonalChronicle.UI.Career.Ov.Metric.Built>
+  <PersonalChronicle.UI.Career.Ov.Metric.Research>Research</PersonalChronicle.UI.Career.Ov.Metric.Research>
+  <PersonalChronicle.UI.Career.Ov.DepChain>Qualification chain: level → career events → achievement thresholds → granted titles</PersonalChronicle.UI.Career.Ov.DepChain>
+  <PersonalChronicle.UI.Career.Resume.Summary>Workshop Summary</PersonalChronicle.UI.Career.Resume.Summary>
+  <PersonalChronicle.UI.Career.Resume.Current>Current Post</PersonalChronicle.UI.Career.Resume.Current>
+  <PersonalChronicle.UI.Career.Resume.Room>Room: {0}</PersonalChronicle.UI.Career.Resume.Room>
+  <PersonalChronicle.UI.Career.Resume.Uses>Used {0} times</PersonalChronicle.UI.Career.Resume.Uses>
+  <PersonalChronicle.UI.Career.Resume.Summary.Workshops>Workshops</PersonalChronicle.UI.Career.Resume.Summary.Workshops>
+  <PersonalChronicle.UI.Career.Resume.Summary.Made>Total crafted</PersonalChronicle.UI.Career.Resume.Summary.Made>
+  <PersonalChronicle.UI.Career.Resume.Summary.Built>Buildings</PersonalChronicle.UI.Career.Resume.Summary.Built>
+  <PersonalChronicle.UI.Career.Resume.Summary.Research>Research</PersonalChronicle.UI.Career.Resume.Summary.Research>
+  <PersonalChronicle.UI.Career.Resume.Summary.Books>Books</PersonalChronicle.UI.Career.Resume.Summary.Books>
+  <PersonalChronicle.UI.Career.Resume.Current.Workshop>Workshop</PersonalChronicle.UI.Career.Resume.Current.Workshop>
+  <PersonalChronicle.UI.Career.Resume.Current.Room>Room</PersonalChronicle.UI.Career.Resume.Current.Room>
+  <PersonalChronicle.UI.Career.Resume.Current.Uses>Uses</PersonalChronicle.UI.Career.Resume.Current.Uses>
+  <PersonalChronicle.UI.Career.Resume.Current.LastUsed>Last used</PersonalChronicle.UI.Career.Resume.Current.LastUsed>
+  <PersonalChronicle.UI.Career.Honor.AddTip>Open award dialog</PersonalChronicle.UI.Career.Honor.AddTip>
+  <PersonalChronicle.UI.Career.Honor.Contrib>Honor Contribution</PersonalChronicle.UI.Career.Honor.Contrib>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Made>Crafting</PersonalChronicle.UI.Career.Honor.Contrib.Made>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Research>Research</PersonalChronicle.UI.Career.Honor.Contrib.Research>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Built>Construction</PersonalChronicle.UI.Career.Honor.Contrib.Built>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Books>Books</PersonalChronicle.UI.Career.Honor.Contrib.Books>
+  <PersonalChronicle.UI.Career.Honor.Contrib.Medal>Medals</PersonalChronicle.UI.Career.Honor.Contrib.Medal>
+  <PersonalChronicle.UI.Career.Honor.Events>Recent Honor Events</PersonalChronicle.UI.Career.Honor.Events>
+  <PersonalChronicle.UI.Career.Honor.Events.Empty>No honor events yet.</PersonalChronicle.UI.Career.Honor.Events.Empty>
+  <PersonalChronicle.UI.Career.Honor.Event.Medal>Medal granted: {0}</PersonalChronicle.UI.Career.Honor.Event.Medal>
+  <PersonalChronicle.UI.Career.Honor.Event.Title>Title granted: {0}</PersonalChronicle.UI.Career.Honor.Event.Title>
+  <PersonalChronicle.UI.Career.Honor.Tier.Bronze>Bronze</PersonalChronicle.UI.Career.Honor.Tier.Bronze>
+  <PersonalChronicle.UI.Career.Honor.Tier.Silver>Silver</PersonalChronicle.UI.Career.Honor.Tier.Silver>
+  <PersonalChronicle.UI.Career.Honor.Tier.Gold>Gold</PersonalChronicle.UI.Career.Honor.Tier.Gold>
+  <PersonalChronicle.UI.Career.Honor.Detail.Owner>Owner</PersonalChronicle.UI.Career.Honor.Detail.Owner>
+  <PersonalChronicle.UI.Career.Honor.Detail.OwnerPawn>Colonist (Pawn)</PersonalChronicle.UI.Career.Honor.Detail.OwnerPawn>
+  <PersonalChronicle.UI.Career.Honor.Detail.Current>Current</PersonalChronicle.UI.Career.Honor.Detail.Current>
+  <PersonalChronicle.UI.Career.Honor.Detail.Threshold>Threshold</PersonalChronicle.UI.Career.Honor.Detail.Threshold>
+  <PersonalChronicle.UI.Career.Honor.Detail.Progress>Progress</PersonalChronicle.UI.Career.Honor.Detail.Progress>
+  <PersonalChronicle.UI.Career.Honor.Detail.Reached>Reached</PersonalChronicle.UI.Career.Honor.Detail.Reached>
+  <PersonalChronicle.UI.Career.Honor.Detail.NotReached>Not reached</PersonalChronicle.UI.Career.Honor.Detail.NotReached>
+  <PersonalChronicle.UI.Career.Honor.Detail.Require>Required title</PersonalChronicle.UI.Career.Honor.Detail.Require>
+  <PersonalChronicle.UI.Career.Honor.Detail.NoRequire>None (no rating gate)</PersonalChronicle.UI.Career.Honor.Detail.NoRequire>
+  <PersonalChronicle.UI.Career.Honor.Detail.Metric>Metric</PersonalChronicle.UI.Career.Honor.Detail.Metric>
+  <PersonalChronicle.UI.Career.Honor.Detail.Buff>Bonus</PersonalChronicle.UI.Career.Honor.Detail.Buff>
+  <PersonalChronicle.UI.Career.Honor.Detail.NoBuff>No bonus</PersonalChronicle.UI.Career.Honor.Detail.NoBuff>
+  <PersonalChronicle.UI.Career.Major.Engineering>Engineering</PersonalChronicle.UI.Career.Major.Engineering>
+  <PersonalChronicle.UI.Career.Major.Manufacturing>Manufacturing</PersonalChronicle.UI.Career.Major.Manufacturing>
+  <PersonalChronicle.UI.Career.Major.Agriculture>Agriculture</PersonalChronicle.UI.Career.Major.Agriculture>
+  <PersonalChronicle.UI.Career.Major.Forestry>Forestry</PersonalChronicle.UI.Career.Major.Forestry>
+  <PersonalChronicle.UI.Career.Major.AnimalHusbandry>Animal Husbandry</PersonalChronicle.UI.Career.Major.AnimalHusbandry>
+  <PersonalChronicle.UI.Career.Major.Medicine>Medicine</PersonalChronicle.UI.Career.Major.Medicine>
+  <PersonalChronicle.UI.Career.Major.Weapons>Weapons</PersonalChronicle.UI.Career.Major.Weapons>
+  <PersonalChronicle.UI.Career.Major.Mining>Mining</PersonalChronicle.UI.Career.Major.Mining>
+  <PersonalChronicle.UI.Career.Major.Research>Research</PersonalChronicle.UI.Career.Major.Research>
+  <PersonalChronicle.UI.Career.Major.Cooking>Cooking</PersonalChronicle.UI.Career.Major.Cooking>
+  <PersonalChronicle.UI.Career.Major.Art>Art</PersonalChronicle.UI.Career.Major.Art>
+  <PersonalChronicle.UI.Career.Major.Management>Management</PersonalChronicle.UI.Career.Major.Management>
+  <PersonalChronicle.UI.Career.MajorDir.Engineering>Construction / Mechanical engineering</PersonalChronicle.UI.Career.MajorDir.Engineering>
+  <PersonalChronicle.UI.Career.MajorDir.Manufacturing>Precision manufacturing / Weapon crafting</PersonalChronicle.UI.Career.MajorDir.Manufacturing>
+  <PersonalChronicle.UI.Career.MajorDir.Agriculture>Farming / Agricultural production</PersonalChronicle.UI.Career.MajorDir.Agriculture>
+  <PersonalChronicle.UI.Career.MajorDir.Forestry>Timber / Wood production</PersonalChronicle.UI.Career.MajorDir.Forestry>
+  <PersonalChronicle.UI.Career.MajorDir.AnimalHusbandry>Animal training / Herd management</PersonalChronicle.UI.Career.MajorDir.AnimalHusbandry>
+  <PersonalChronicle.UI.Career.MajorDir.Medicine>Clinical care / Medical research</PersonalChronicle.UI.Career.MajorDir.Medicine>
+  <PersonalChronicle.UI.Career.MajorDir.Weapons>Combat / Weapon crafting</PersonalChronicle.UI.Career.MajorDir.Weapons>
+  <PersonalChronicle.UI.Career.MajorDir.Mining>Mining / Mining engineering</PersonalChronicle.UI.Career.MajorDir.Mining>
+  <PersonalChronicle.UI.Career.MajorDir.Research>Science / R&D</PersonalChronicle.UI.Career.MajorDir.Research>
+  <PersonalChronicle.UI.Career.MajorDir.Cooking>Cooking / Food processing</PersonalChronicle.UI.Career.MajorDir.Cooking>
+  <PersonalChronicle.UI.Career.MajorDir.Art>Art / Sculpture</PersonalChronicle.UI.Career.MajorDir.Art>
+  <PersonalChronicle.UI.Career.MajorDir.Management>Personnel / Administration</PersonalChronicle.UI.Career.MajorDir.Management>
 </LanguageData>

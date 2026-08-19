@@ -57,6 +57,8 @@
       <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.dll" />
       <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll" />
       <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll" />
+      <!-- Verse.Def 构造（shortHash=Rand.Range）依赖 netstandard 2.1，必须随引擎拷入，否则 Def 子类 new 不出 -->
+      <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\netstandard.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(EngineDll)"
           DestinationFolder="$(OutDir)"

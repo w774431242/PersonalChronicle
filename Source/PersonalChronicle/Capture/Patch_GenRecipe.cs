@@ -1,6 +1,8 @@
 using System;
 using HarmonyLib;
 using PersonalChronicle.Application;
+using PersonalChronicle.Application.Effects;
+using PersonalChronicle.Domain.Profession;
 using RimWorld;
 using Verse;
 
@@ -104,11 +106,54 @@ namespace PersonalChronicle.Capture
                 {
                     return;
                 }
-                service.OnThingCrafted(product, worker);
+                // P1 CAREER-001：制造事实写入职业 ledger（BE-005）。带 recipe 可派生技能。
+                service.RecordCareerProduced(product, recipeDef, worker);
+                // P3 专业效果：成品品质偏置（精密制造能力 → 真实品质档位偏移）。
+                // 复用本 Postfix 挂载点（原版已 SetQuality，此处事后覆盖），零新增 Patch。
+                TryApplyQualityBias(product, recipeDef, worker);
             }
             catch (Exception ex)
             {
                 ChronicleLog.Warning(ChronicleLog.Category.Capture, "GenRecipe.PostProcessProduct patch failed: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// P3 专业效果：成品品质偏置（V2.0 §11 适配层，品质效果挂载点）。
+        /// 原版 PostProcessProduct 内部已按 GenerateQualityCreatedByPawn 设好品质；
+        /// 本方法在其后（Postfix）按 pawn 的专业能力重算并覆盖品质档位。
+        /// 范围精确（仅制造产物），非玩家派系/无品质物品/无职业效果均零影响。
+        /// </summary>
+        private static void TryApplyQualityBias(Thing product, RecipeDef recipeDef, Pawn worker)
+        {
+            if (product == null || worker == null)
+            {
+                return;
+            }
+            CompQuality compQuality = product.TryGetComp<CompQuality>();
+            if (compQuality == null)
+            {
+                return;
+            }
+            int levels = ProfessionalEffectService.GetQualityBiasLevels(worker, recipeDef);
+            if (levels == 0)
+            {
+                return;
+            }
+            QualityCategory current = compQuality.Quality;
+            int targetIndex = ProfessionalEffectResolver.ClampQuality((int)current, levels);
+            QualityCategory target = (QualityCategory)targetIndex;
+            if (target == current)
+            {
+                return;
+            }
+            compQuality.SetQuality(target, null);
+            if (Prefs.DevMode)
+            {
+                ChronicleLog.Info(ChronicleLog.Category.Capture,
+                    "[CAREER] QualityBias applied: pawn=" + worker.GetUniqueLoadID()
+                    + " recipe=" + (recipeDef != null ? recipeDef.defName : "null")
+                    + " " + current + " -> " + target + " (levels=" + levels + ")");
             }
         }
     }

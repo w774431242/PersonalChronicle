@@ -37,6 +37,8 @@ namespace PersonalChronicle.Archive
             injected = true;
 
             Type tabType = typeof(ITab_Pawn_Chronicle);
+            // 职业档案 ITab：与六宫格 ITab 并列的第二个 Pawn inspect 页（P1 落地，履历真实数据）。
+            Type careerTabType = typeof(ITab_Pawn_Career);
             int count = 0;
 
             foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
@@ -54,21 +56,14 @@ namespace PersonalChronicle.Archive
                     {
                         def.inspectorTabs = new List<Type>();
                     }
-                    if (def.inspectorTabs.Contains(tabType))
-                    {
-                        continue;
-                    }
-                    def.inspectorTabs.Add(tabType);
-
-                    // inspectorTabsResolved is the list the game actually renders; it
-                    // is built during ResolveReferences, so when we inject afterwards
-                    // we must mirror the addition there too.
                     if (def.inspectorTabsResolved == null)
                     {
                         def.inspectorTabsResolved = new List<InspectTabBase>();
                     }
-                    def.inspectorTabsResolved.Add(InspectTabManager.GetSharedInstance(tabType));
-                    count++;
+
+                    // 注入两个 Tab（六宫格档案 + 职业档案），各自幂等去重。
+                    InjectTab(def, tabType, ref count);
+                    InjectTab(def, careerTabType, ref count);
                 }
                 catch (Exception ex)
                 {
@@ -81,6 +76,21 @@ namespace PersonalChronicle.Archive
             {
                 ChronicleLog.Info(ChronicleLog.Category.Ui, "chronicle inspect tab injected into " + count + " humanlike def(s).");
             }
+        }
+
+        /// <summary>
+        /// 向单个 ThingDef 幂等注入一个 ITab 类型（同时写入 inspectorTabs 与
+        /// inspectorTabsResolved，后者是游戏实际渲染的列表）。已存在则跳过。
+        /// </summary>
+        private static void InjectTab(ThingDef def, Type tabType, ref int count)
+        {
+            if (def.inspectorTabs.Contains(tabType))
+            {
+                return;
+            }
+            def.inspectorTabs.Add(tabType);
+            def.inspectorTabsResolved.Add(InspectTabManager.GetSharedInstance(tabType));
+            count++;
         }
     }
 }
