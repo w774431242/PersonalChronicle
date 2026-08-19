@@ -257,12 +257,13 @@
   };
 
   var TIERS = [
-    { key:'junior',  lv:1, name:'精密制造初级技工', level:5,  hours:25,  score:50, exam:false, thesis:false },
-    { key:'assistant', lv:2, name:'精密制造中级技工', level:15, hours:80,  score:50, exam:false, thesis:false },
+    { key:'junior',  lv:1, name:'精密制造初级技工', level:5,  hours:25,  score:50, exam:true,  thesis:false },
+    { key:'assistant', lv:2, name:'精密制造中级技工', level:15, hours:80,  score:50, exam:true,  thesis:false },
     { key:'senior',  lv:3, name:'精密制造高级技工', level:25, hours:240, score:60, exam:true,  thesis:true },
     { key:'specialist', lv:4, name:'精密制造技师',   level:38, hours:480, score:70, exam:true,  thesis:true },
     { key:'master',  lv:5, name:'精密制造高级技师', level:45, hours:720, score:80, exam:true,  thesis:true },
   ];
+  // 2026-08-19 流程修补：全部档位必经考试（实践+理论）；Lv3+ 另需论文/答辩（P1-5 临时关闭已恢复）
   var FSM_STEPS = ['Locked','Eligible','Preparing','PracticalExam','TheoryExam','Thesis','Defense','Qualified','Granted'];
   var CM_NAMES = ['岳明','周工','孙师傅','郑总工','吴技工','冯老师'];
   var QS = ['Poor','Normal','Good','Excellent','Masterwork','Legendary'];
@@ -555,15 +556,22 @@
     renderAll();
   });
   $('devQuality').addEventListener('change', function(){ S.qualityMode = this.value; });
-  // 一键完成申报流程（调试）
-  $('btnQuickFlow').addEventListener('click', function(){
-    S.level = 27; S.hours = 260;
-    renderAll(); renderAll(); renderAll(); // 逐档自动授予 Lv1/Lv2
+  // 一键完成申报流程（调试）：逐档走完整流程（2026-08-19 流程修补：全档必经考试）
+  function runTierExamFlow(){
     $('btnExamApply').click();
+    if (!S.exam) return false;
     for (var i=0;i<3;i++){ S.exam.produced.push('Excellent'); tryGradeExam(); }
     renderAll();
     S.theory.books=1; S.theory.research=1; S.theory.skill=1; S.theory.activity=1;
     renderTheory(); $('btnTheorySubmit').click();
+    return S.exam && S.exam.passed && S.theory.submitted;
+  }
+  $('btnQuickFlow').addEventListener('click', function(){
+    S.level = 27; S.hours = 260;
+    renderAll();
+    runTierExamFlow();  // Lv1：考试→理论→授予
+    runTierExamFlow();  // Lv2：考试→理论→授予
+    runTierExamFlow();  // Lv3：考试→理论
     $('btnThesisStart').click();
     S.thesis.books=2; S.thesis.research=2;
     renderThesis(); $('btnThesisFinish').click();
@@ -575,7 +583,8 @@
   // 实践考试
   $('btnExamApply').addEventListener('click', function(){
     var next = nextTier();
-    if (!next || !next.exam){ log('当前申报档不要求实践考试', 'warn'); return; }
+    // 2026-08-19 流程修补：全部档位必经考试（不再跳过任何档的考试流程）
+    if (!next){ log('已获最高职称封顶', 'warn'); return; }
     S.exam = { qualName:next.name, reqCount:3, minQ:'Excellent', limit:100000, started:S.hours*2400, produced:[], score:0, passed:false, finished:false, overtime:false };
     $('btnExamProduce').disabled = false; $('btnExamReset').disabled = false;
     log('📋 报名实践考试：'+next.name);
@@ -655,18 +664,17 @@
     renderAll(); // 触发资格判定与职称授予（修复点）
   });
 
-  // ───────── 自动化回归（?p9test=1：玩家路径——答辩通过后不额外调用任何渲染即应授予） ─────────
+  // ───────── 自动化回归（?p9test=1：全档位必经考试/论文/答辩的完整流程） ─────────
   if (location.search && location.search.indexOf('p9test=1') >= 0) {
     setTimeout(function () {
       try {
         S.level = 27; S.hours = 260;
-        renderAll(); renderAll(); renderAll(); // 逐档自动授予 Lv1/Lv2
-        $('btnExamApply').click();
-        for (var i = 0; i < 3; i++) { S.exam.produced.push('Excellent'); tryGradeExam(); }
         renderAll();
-        S.theory.books = 1; S.theory.research = 1; S.theory.skill = 1; S.theory.activity = 1;
-        renderTheory();
-        $('btnTheorySubmit').click();
+        // Lv1/Lv2：考试（实践+理论）→ 授予
+        var f1 = runTierExamFlow();
+        var f2 = runTierExamFlow();
+        // Lv3：考试 + 论文 + 答辩 → 授予（答辩 click 后 handler 内 renderAll → evaluateAndGrant，无需额外调用）
+        var f3 = runTierExamFlow();
         $('btnThesisStart').click();
         S.thesis.books = 2; S.thesis.research = 2;
         renderThesis();
@@ -674,10 +682,9 @@
         $('btnDefenseStart').click();
         S.defense.committee = [{ name: '甲', lv: 15, score: 85 }, { name: '乙', lv: 14, score: 80 }, { name: '丙', lv: 16, score: 90 }];
         $('btnDefenseVote').click();
-        // 玩家路径断言：答辩 click 后 handler 内部 renderAll → evaluateAndGrant，无需额外调用
-        var out = 'grantedAfterDefense:' + (S.granted.join(',') || 'NONE')
-          + ' | examPass:' + (S.exam && S.exam.passed)
-          + ' | theory:' + fmt(S.theory.score)
+        var out = 'flow:' + [f1, f2, f3].join('/')
+          + ' | grantedAfterFullFlow:' + (S.granted.join(',') || 'NONE')
+          + ' | examsPassed:' + (S.exam ? S.exam.passed : false)
           + ' | thesis:' + fmt(S.thesis.score)
           + ' | defense:' + fmt(S.defense.score);
         document.title = 'P9TEST ' + out;

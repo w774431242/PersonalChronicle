@@ -65,5 +65,6 @@
 |---|---|---|---|
 | v1.0 | 2026-08-19 | AI | P9-A UI 设计首版 + 预览文件（docs/UI预览/人物档案视窗/P9资格考试UI预览.html，含 ?p9test=1 自检，全链通过） |
 | v1.1 | 2026-08-19 | AI | **玩家向改造**：标题/说明/交互文案玩家化，开发者调试（重置/模拟积累/品质固定/一键流程）与数据契约收入折叠区；**修复答辩通过后未授予职称的 bug**——根因：授予逻辑原藏于渲染函数 renderReqs() 且答辩回调只做局部渲染（renderDefense+renderFsm），授予判定从未触发；修复：抽取业务函数 `evaluateAndGrant()`（判定+授予+玩家可见授予横幅），所有状态变更点统一走 renderAll；回归：?p9test=1 改为**玩家路径断言**（答辩 click 后不额外调用即授予），结果 grantedAfterDefense: junior,assistant,senior ✅ |
+| v1.2 | 2026-08-19 | AI | **流程修补**（反馈：符合资格后未经过考试论文答辩就被授予）：① 全档位（Lv1~Lv5）考试（实践+理论）必经——`QualificationDefs.xml` Junior/Assistant `requiredExam` false→true；② **P1-5 临时关闭否决**：Senior/Specialist/Master 恢复 `requiredThesis/requiredDefense=true`（论文/答辩为必经流程，随 P9-B 落地生效）；③ 预览 TIERS 同步（全档 exam:true、Lv3+ thesis:true），报名按钮不再按档拒绝；④ 自检/一键流程改为**逐档完整链路**（考试→理论→[论文→答辩]→授予）；验证：p9test flow:true/true/true + grantedAfterFullFlow: junior,assistant,senior；模拟器 FlowBlocked（考试未过）Lv50 仍 BLOCKED(exam) 不授予 ✅ |
 
 > **落地（P9-B）时须继承本修复**：C# 侧职称授予（RunQualification 调度）不得依赖 UI 渲染触发；资格判定应随状态变更（考试通过/论文完成/答辩完成事件）由 Data 层统一驱动（现有 reconcile 节流已满足，P9-B 仅补 Dialog 编排）。

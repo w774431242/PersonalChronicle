@@ -60,7 +60,7 @@
 | P1-2 | 实践考试"最低品质"未落地为硬门槛（Score>0 即通过） | ✅ **FIXED** | `ArchiveService.Qualification.cs` RecordExamProduced：`CountAtLeast(qualities, MinQuality) >= RequiredCount` 为通过前置条件；数量够但品质不足时考试继续；回归用例 `RecordExamProduced_QualityBelowMinimum_NotPassedAndContinues` |
 | P1-3 | 实践考试超时路径卡死（超时后永不评分） | ✅ **FIXED** | `ExamData.cs` PracticalExamRecord 新增 `Finished` 字段（append-only，默认 false）；超时即按当前证据评分（×0.6）并置 Finished；回归用例 `RecordExamProduced_Overtime_*` 两条 |
 | P1-4 | 答辩判定字段错配（ThesisId == defName） | ✅ **FIXED** | `ThesisData.cs` DefenseRecord 新增 `QualificationDefName` 字段（append-only）；`QualificationEvaluator` DefensePassed/DefenseScore 优先按 QualificationDefName 精确匹配，旧记录（字段空）回退 ThesisId 兼容早期 DevTest 数据；`DevTestButtons.cs` 同步补字段；回归用例 2 条 |
-| P1-5 | P6 论文/答辩正式入口缺失（Senior+ 职称正式游戏不可授予） | ✅ **FIXED（方案 A 裁决）** | 2026-08-19 PM 批准方案 A：`QualificationDefs.xml` Senior/Specialist/Master 的 `requiredThesis/requiredDefense` 临时置 false（注释登记，P9 入口落地后恢复）；模拟器 qualification-gap 场景同步改为考试缺口对比 |
+| P1-5 | P6 论文/答辩正式入口缺失（Senior+ 职称正式游戏不可授予） | ✅ **已裁决→已恢复（流程修补）** | 2026-08-19 首裁方案 A（临时关闭门槛）→ 同日**否决并恢复**（反馈：符合资格后未经过考试论文答辩就被授予=流程错误）：`QualificationDefs.xml` 全档 `requiredExam=true`（Junior/Assistant 补考试），Senior/Specialist/Master 恢复 `requiredThesis/requiredDefense=true`；生效前提=P9-B 论文/答辩入口落地（P9 预览已确认流程） |
 
 ### P2 级
 

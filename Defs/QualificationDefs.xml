@@ -11,14 +11,15 @@
       现有 Title_Precision_Senior/Master defName 保持不变（存档稳定键），label 重命名。
   -->
 
-  <!-- ===================== Lv1 员级：精密制造初级技工 ===================== -->
+  <!-- ===================== Lv1 员级：精密制造初级技工 =====================
+       2026-08-19 流程修补：全部档位必经考试（实践+理论），不再跳过流程直接授予。 -->
   <PersonalChronicle.Domain.Qualification.QualificationDef>
     <defName>Q_Precision_Junior</defName>
     <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
     <titleDefName>Title_Precision_Junior</titleDefName>
     <requiredMinLevel>5</requiredMinLevel>
     <requiredCareerTimeTicks>60000</requiredCareerTimeTicks>
-    <requiredExam>false</requiredExam>
+    <requiredExam>true</requiredExam>
     <requiredThesis>false</requiredThesis>
     <requiredDefense>false</requiredDefense>
     <minimumScore>0</minimumScore>
@@ -33,7 +34,7 @@
     <requiredMinLevel>15</requiredMinLevel>
     <requiredCareerTimeTicks>200000</requiredCareerTimeTicks>
     <requiredPreviousTitle>Q_Precision_Junior</requiredPreviousTitle>
-    <requiredExam>false</requiredExam>
+    <requiredExam>true</requiredExam>
     <requiredThesis>false</requiredThesis>
     <requiredDefense>false</requiredDefense>
     <minimumScore>0</minimumScore>
@@ -41,9 +42,9 @@
   </PersonalChronicle.Domain.Qualification.QualificationDef>
 
   <!-- ===================== Lv3 中级：精密制造高级技工（沿用现有 Senior） =====================
-       P1-5 裁决（2026-08-19 PM 批准，方案 A）：P9 论文/答辩正式入口未落地前，
-       requiredThesis/requiredDefense 临时置 false，保证职称链正式游戏可授予；
-       P9 入口落地后按《制造类职业资格与荣誉体系设计》原设计恢复 true。 -->
+       P1-5 恢复（2026-08-19 流程修补）：论文/答辩为必经流程，requiredThesis/requiredDefense
+       恢复 true（原"临时关闭"方案被否决——职称授予必须完整经过考试/论文/答辩）。
+       生效前提：P9-B 论文/答辩入口落地（预览已确认流程，落地即恢复可授予）。 -->
   <PersonalChronicle.Domain.Qualification.QualificationDef>
     <defName>Q_Precision_Senior</defName>
     <professionalSkillDefName>ProfessionalSkill_PrecisionManufacturing</professionalSkillDefName>
@@ -52,8 +53,8 @@
     <requiredCareerTimeTicks>600000</requiredCareerTimeTicks>
     <requiredPreviousTitle>Q_Precision_Assistant</requiredPreviousTitle>
     <requiredExam>true</requiredExam>
-    <requiredThesis>false</requiredThesis>
-    <requiredDefense>false</requiredDefense>
+    <requiredThesis>true</requiredThesis>
+    <requiredDefense>true</requiredDefense>
     <minimumScore>60</minimumScore>
     <order>2</order>
   </PersonalChronicle.Domain.Qualification.QualificationDef>
@@ -67,8 +68,8 @@
     <requiredCareerTimeTicks>1200000</requiredCareerTimeTicks>
     <requiredPreviousTitle>Q_Precision_Senior</requiredPreviousTitle>
     <requiredExam>true</requiredExam>
-    <requiredThesis>false</requiredThesis>
-    <requiredDefense>false</requiredDefense>
+    <requiredThesis>true</requiredThesis>
+    <requiredDefense>true</requiredDefense>
     <minimumScore>70</minimumScore>
     <order>3</order>
   </PersonalChronicle.Domain.Qualification.QualificationDef>
@@ -82,8 +83,8 @@
     <requiredCareerTimeTicks>1800000</requiredCareerTimeTicks>
     <requiredPreviousTitle>Q_Precision_Specialist</requiredPreviousTitle>
     <requiredExam>true</requiredExam>
-    <requiredThesis>false</requiredThesis>
-    <requiredDefense>false</requiredDefense>
+    <requiredThesis>true</requiredThesis>
+    <requiredDefense>true</requiredDefense>
     <!-- 大师级要求传奇制造成就（P8 产出键） -->
     <requiredAchievements>
       <li>

@@ -57,13 +57,13 @@ module.exports = {
     },
 
     'qualification-gap': {
-      describe: '资格缺口分析：1000 次制造后各档职称缺口；对比 考试通过 vs 未通过（P1-5 已裁决：论文/答辩门槛临时关闭，不再阻塞 Senior+）',
+      describe: '资格缺口分析：1000 次制造后各档职称缺口；对比 考试/论文答辩 通过 vs 未通过（2026-08-19 流程修补：全档必经考试，Lv3+ 必经论文答辩，门槛已恢复）',
       configs: [
         {
           snapshotEvery: 100,
           pawns: [
             {
-              name: 'ExamPass(考试通过)',
+              name: 'FlowPass(全流程通过)',
               skillDefName: PRECISION_SKILL,
               recipeDefName: RECIPE,
               count: 1000,
@@ -79,7 +79,7 @@ module.exports = {
           snapshotEvery: 100,
           pawns: [
             {
-              name: 'ExamBlocked(考试未通过)',
+              name: 'FlowBlocked(考试/论文未过)',
               skillDefName: PRECISION_SKILL,
               recipeDefName: RECIPE,
               count: 1000,
@@ -87,7 +87,7 @@ module.exports = {
               startTick: 0,
               quality: 'mix',
               examMode: 'blocked',
-              thesisMode: 'pass',
+              thesisMode: 'blocked',
             },
           ],
         },
