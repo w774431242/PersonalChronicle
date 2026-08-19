@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Personal Chronicle 殖民地档案馆 · 玩家游戏手册</title>
+<style>
+  :root{
+    --bg:#0f1117; --bg2:#161a24; --bg3:#1d2330;
+    --ink:#e8ecf4; --ink2:#aab4c8; --ink3:#7a8499;
+    --gold:#d4af37; --gold2:#f0d77a; --line:#2a3142;
+    --accent:#c0392b; --accent2:#8e2a20;
+    --green:#4caf7d; --blue:#5b9bd5; --purple:#9b7bd4;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:linear-gradient(180deg,#0b0d12,#0f1117 40%);
+    color:var(--ink); font-family:"Segoe UI","Microsoft YaHei",-apple-system,sans-serif;
+    line-height:1.9; font-size:15px;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:48px 28px 80px}
+  /* ---- Hero ---- */
+  .hero{
+    text-align:center; padding:54px 24px; border-radius:18px;
+    background:radial-gradient(ellipse at top,rgba(192,57,43,.22),transparent 70%),var(--bg2);
+    border:1px solid var(--line); margin-bottom:34px; position:relative; overflow:hidden;
+  }
+  .hero::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 39h40M39 0v40' stroke='%232a3142' stroke-width='1' fill='none'/%3E%3C/svg%3E");opacity:.4}
+  .hero>*{position:relative}
+  .hero h1{margin:0 0 8px; font-size:34px; letter-spacing:1px;
+    background:linear-gradient(90deg,var(--gold2),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .hero .sub{color:var(--ink2); font-size:15px}
+  .badges{margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  .badge{font-size:12px; padding:5px 13px; border-radius:20px; border:1px solid var(--line); background:var(--bg3); color:var(--ink2)}
+  .badge b{color:var(--gold2)}
+  /* ---- TOC ---- */
+  .toc{background:var(--bg2); border:1px solid var(--line); border-radius:14px; padding:22px 26px; margin-bottom:40px}
+  .toc h2{margin:0 0 14px; font-size:17px; color:var(--gold2); letter-spacing:.5px}
+  .toc ol{margin:0; padding-left:22px; columns:2; column-gap:40px}
+  .toc li{margin:5px 0}
+  .toc a{color:var(--ink2); text-decoration:none}
+  .toc a:hover{color:var(--gold2)}
+  /* ---- Sections ---- */
+  section{margin-bottom:46px; scroll-margin-top:20px}
+  h2.chap{
+    font-size:24px; margin:0 0 18px; padding-bottom:10px; border-bottom:2px solid var(--accent2);
+    display:flex; align-items:baseline; gap:12px;
+  }
+  h2.chap .no{color:var(--gold); font-size:18px; font-weight:700; letter-spacing:1px}
+  h3{font-size:18px; margin:26px 0 12px; color:var(--gold2); border-left:3px solid var(--gold); padding-left:12px}
+  h4{font-size:15.5px; margin:18px 0 8px; color:var(--ink); font-weight:600}
+  p{margin:10px 0; color:var(--ink2)}
+  strong{color:var(--ink)}
+  .hl{color:var(--gold2); font-weight:600}
+  .em{color:var(--blue); font-style:normal; font-weight:600}
+  /* ---- Quote ---- */
+  blockquote{
+    margin:16px 0; padding:14px 20px; border-left:4px solid var(--gold);
+    background:var(--bg3); border-radius:0 10px 10px 0; color:var(--ink); font-size:14.5px;
+  }
+  /* ---- Table ---- */
+  .tbl-wrap{overflow-x:auto; margin:14px 0; border-radius:12px; border:1px solid var(--line)}
+  table{border-collapse:collapse; width:100%; font-size:14px; min-width:520px}
+  thead th{background:var(--bg3); color:var(--gold2); text-align:left; padding:11px 14px; font-weight:600; border-bottom:1px solid var(--line)}
+  tbody td{padding:10px 14px; border-bottom:1px solid var(--line); color:var(--ink2)}
+  tbody tr:nth-child(even){background:rgba(255,255,255,.02)}
+  tbody tr:hover{background:rgba(212,175,55,.06)}
+  /* ---- Card grid ---- */
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:16px 0}
+  .card{background:var(--bg2); border:1px solid var(--line); border-radius:12px; padding:16px 18px}
+  .card h4{margin:0 0 6px; color:var(--gold2)}
+  .card p{margin:0; font-size:13.5px; color:var(--ink3)}
+  /* ---- Flow ---- */
+  .flow{background:var(--bg2); border:1px solid var(--line); border-radius:12px; padding:18px 20px; font-size:14px; color:var(--ink2); line-height:2.1}
+  .flow .arrow{color:var(--gold); font-weight:700; margin:0 6px}
+  .pill{display:inline-block; padding:2px 10px; border-radius:6px; background:var(--bg3); border:1px solid var(--line); color:var(--ink); font-size:13px; margin:2px 0}
+  /* ---- Tier colors ---- */
+  .tier-c{color:#cd7f32; font-weight:600}
+  .tier-s{color:#c0c0c0; font-weight:600}
+  .tier-g{color:var(--gold2); font-weight:600}
+  .tag{display:inline-block; font-size:12px; padding:2px 9px; border-radius:5px; margin:2px 3px 2px 0}
+  .tag.r{background:rgba(192,57,43,.16); color:#e98c80; border:1px solid rgba(192,57,43,.4)}
+  .tag.g{background:rgba(76,175,125,.14); color:#7fd6a6; border:1px solid rgba(76,175,125,.35)}
+  .tag.b{background:rgba(91,155,213,.14); color:#9cc6ee; border:1px solid rgba(91,155,213,.35)}
+  /* ---- Footer ---- */
+  footer{margin-top:60px; padding-top:24px; border-top:1px solid var(--line); text-align:center; color:var(--ink3); font-size:13px}
+  footer .gold{color:var(--gold2)}
+  @media(max-width:640px){ .toc ol{columns:1} .hero h1{font-size:26px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Personal Chronicle · 殖民地档案馆</h1>
+    <div class="sub">玩家游戏手册 · 给你的殖民地写一本「纪传体史书」</div>
+    <div class="badges">
+      <span class="badge">版本 <b>v1.1.4</b></span>
+      <span class="badge">面向 <b>RimWorld 1.6</b></span>
+      <span class="badge">依赖 <b>Harmony</b></span>
+      <span class="badge">语言 <b>中文 / English</b></span>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <h2>目录</h2>
+    <ol>
+      <li><a href="#c0">第〇章 · 一句话理解</a></li>
+      <li><a href="#c1">第一章 · 档案馆是什么</a></li>
+      <li><a href="#c2">第二章 · 人物档案详解</a></li>
+      <li><a href="#c3">第三章 · 职业系统</a></li>
+      <li><a href="#c4">第四章 · 资格/职称/勋章</a></li>
+      <li><a href="#c5">第五章 · 物品/战役/地点</a></li>
+      <li><a href="#c6">第六章 · 社会关系网络</a></li>
+      <li><a href="#c7">第七章 · 界面与主题</a></li>
+      <li><a href="#c8">第八章 · 安装与兼容</a></li>
+      <li><a href="#c9">第九章 · 常见问题</a></li>
+      <li><a href="#c10">第十章 · 概念速查表</a></li>
+    </ol>
+  </nav>
+
+  <!-- C0 -->
+  <section id="c0">
+    <h2 class="chap"><span class="no">第〇章</span>一句话理解</h2>
+    <p>Personal Chronicle 会在你玩游戏的每一刻，静默地记下殖民地里发生的一切——谁加入了、谁死了、谁造了什么、谁打了什么仗、谁住在哪里、谁又成了某某"大师"。</p>
+    <p>它<span class="hl">不替你决定任何事</span>，只是把事实记成档案。但有些档案，会反过来给小人真实的加成：<span class="em">勋章的荣耀、职业的专精、职称的认可。</span></p>
+  </section>
+
+  <!-- C1 -->
+  <section id="c1">
+    <h2 class="chap"><span class="no">第一章</span>档案馆是什么</h2>
+    <h3>1.1 入口</h3>
+    <p>启用模组后，游戏主界面底部的标签栏会出现一个 <span class="hl">「档案馆」</span> 按钮（排在靠后位置，不干扰原版）。点击它，打开一座四层档案库。</p>
+    <h3>1.2 四大类档案</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>分类</th><th>记录谁 / 什么</th><th>你能看到</th></tr></thead>
+      <tbody>
+        <tr><td><strong>人物</strong></td><td>每一个殖民者、奴隶、囚犯</td><td>工时、战斗、社交、足迹、健康、职业、勋章</td></tr>
+        <tr><td><strong>物品</strong></td><td>武器、装备、工坊产物</td><td>谁造的、谁抢的、谁继承的、它杀过谁</td></tr>
+        <tr><td><strong>战役</strong></td><td>每一场袭击与战争</td><td>参战双方、关键节点、战果</td></tr>
+        <tr><td><strong>地点</strong></td><td>每一处被访问、被争夺的角落</td><td>谁长期驻留、谁远征过、谁在此建造/销毁</td></tr>
+      </tbody>
+    </table></div>
+    <h3>1.3 核心概念：事实 ≠ 评价</h3>
+    <p>模组有一条铁律：</p>
+    <blockquote>事实记录只记"发生了什么"，不记"这人有多好"。</blockquote>
+    <p>例如，它记"张三在 5510 tick 制造了一件优秀机械部件"（<span class="em">事实</span>），<strong>不</strong>直接记"张三是优秀工匠"（<span class="em">评价</span>）。评价，是由职业系统、资格系统、勋章系统<strong>在事实之上</strong>慢慢推算出来的。</p>
+    <p>这就是为什么：<span class="hl">旧档补不回历史</span>——因为事实必须在事件发生的那一刻才被捕捉。</p>
+    <h3>1.4 实时记录 vs 历史快照（双轨）</h3>
+    <p>档案馆首页区分两种数据：</p>
+    <div class="grid">
+      <div class="card"><h4>活读 Live</h4><p>游戏此刻的真实事实，如当前在场的殖民者。</p></div>
+      <div class="card"><h4>档案 Archive</h4><p>历史累计的快照记录，如已归档的全部事件。</p></div>
+    </div>
+    <p>这样能避免把冷冻舱里的人算进"当前人口"，也不会因为临时增援而乱建档。</p>
+  </section>
+
+  <!-- C2 -->
+  <section id="c2">
+    <h2 class="chap"><span class="no">第二章</span>人物档案详解</h2>
+    <p>点开任意一个小人，你会看到一张"六宫格"主面板，以及多个子视图。</p>
+    <h3>2.1 六宫格主面板</h3>
+    <p>每一格遵循统一基准：<span class="hl">大数字 + 同行动态指标 + 两行 KPI + 三条固定进度条</span>（数据为空时显示 <code>--</code>，布局不会抖动）。</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>宫格</th><th>记录内容</th></tr></thead>
+      <tbody>
+        <tr><td><strong>工时</strong></td><td>生涯累计工时、日均工时</td></tr>
+        <tr><td><strong>产出</strong></td><td>周产出 / 净值、产值构成</td></tr>
+        <tr><td><strong>击杀</strong></td><td>猎物种类、参战战役数、生涯伤害、击杀构成</td></tr>
+        <tr><td><strong>损耗</strong></td><td>累计折银（进食/用药折算）、周/日均、构成 Top3</td></tr>
+        <tr><td><strong>足迹</strong></td><td>主驻地 / 远征、停留地点 Top3</td></tr>
+        <tr><td><strong>传承</strong></td><td>锻造者是谁、传承链上的击杀占比</td></tr>
+      </tbody>
+    </table></div>
+    <h3>2.2 子视图一览</h3>
+    <div class="grid">
+      <div class="card"><h4>概览</h4><p>生命阶段、健康残值三维评分、职业快照。</p></div>
+      <div class="card"><h4>编年史</h4><p>事件时间轴，点一行可展开描述。</p></div>
+      <div class="card"><h4>生涯</h4><p>累计工时、劳动强度档位、工作场所与住所。</p></div>
+      <div class="card"><h4>战斗履历</h4><p>击杀边 + 参战名册。</p></div>
+      <div class="card"><h4>社会关系</h4><p>恋爱/婚姻/亲缘的结成与结束（网络图）。</p></div>
+      <div class="card"><h4>足迹</h4><p>地点进出履历。</p></div>
+      <div class="card"><h4>健康残值</h4><p>肢体/精神/未衰老三维评分 + 银币估值。</p></div>
+      <div class="card"><h4>职业 / 勋章</h4><p>见第三、第四章。</p></div>
+    </div>
+    <h3>2.3 劳动强度五档</h3>
+    <p>模组会评估每个人的"牛马程度"（纯函数，阈值由数据驱动）：</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>档位</th><th>累计工时阈值（约）</th></tr></thead>
+      <tbody>
+        <tr><td>核动力驴（T0）</td><td>≥ 12 小时/天</td></tr>
+        <tr><td>超级牛马（T1）</td><td>≥ 9 小时/天</td></tr>
+        <tr><td>常规牛马（T2）</td><td>≥ 6 小时/天</td></tr>
+        <tr><td>劣质牛马（T3）</td><td>≥ 3 小时/天</td></tr>
+        <tr><td>社会懒汉（T4）</td><td>&lt; 3 小时/天</td></tr>
+      </tbody>
+    </table></div>
+    <p><span class="em">中途加入的存档，以"模组接入后的天数"为分母计算，绝不崩。</span></p>
+    <h3>2.4 健康残值估值</h3>
+    <p>模组给每具身体估个价（数据驱动，可被其他 Mod 调整）：</p>
+    <div class="grid">
+      <div class="card"><h4>基准</h4><p>1500 银，每年折旧 2%；下限 50。</p></div>
+      <div class="card"><h4>阈值</h4><p>青春 85 / 受损 60。</p></div>
+      <div class="card"><h4>病症罚金</h4><p>哮喘10% / 驼背12% / 白内障8% / 衰弱15% / 糖尿病10% / 酗酒10% / 化学损伤20%。</p></div>
+    </div>
+  </section>
+
+  <!-- C3 -->
+  <section id="c3">
+    <h2 class="chap"><span class="no">第三章</span>职业系统（制造类先行）</h2>
+    <blockquote>职业系统当前以 <span class="hl">制造类</span> 作为第一个完整垂直切片，其余 11 个专业（工程/农业/林业/畜牧/医学/武器/矿业/科研/烹饪/艺术/管理）将随各自垂直切片逐步开放。</blockquote>
+    <h3>3.1 第一原则：职业 ≠ 原版技能</h3>
+    <p>原版 RimWorld 的"技能（Skill）"是<span class="em">证据</span>，不是职业本身。</p>
+    <div class="flow">
+      <span class="pill">Crafting 16</span> <span class="pill">Construction 14</span> <span class="pill">Intellectual 12</span>
+      <span class="arrow">+</span> 你真实做过的制造工作 <span class="arrow">+</span> 你造出的成果 <span class="arrow">+</span> 你的职业履历
+      <span class="arrow">↓</span> <strong>制造类 专业能力</strong>
+    </div>
+    <blockquote>原版 Skill 是基础能力证据，Professional Skill（专业技能）是模组自己的长期能力模型。</blockquote>
+    <h3>3.2 专业四层结构</h3>
+    <div class="flow">
+      一级专业（12 类之一：制造）<br>
+      <span class="arrow">└──</span> 二级方向（制造类 = 精密 / 武器 / 装备 / 工业）<br>
+      <span class="arrow">　　└──</span> 专业技能（如：精密制造）<br>
+      <span class="arrow">　　　　├──</span> 能力维度（加工 / 精度 / 工艺 / 材料 / 质控）<br>
+      <span class="arrow">　　　　└──</span> 专业效果（速度 / 品质 / 配方 / 材料 / 特殊工作）
+    </div>
+    <h3>3.3 事实层：CareerEvent（职业履历）</h3>
+    <p>每一次真实制造，都会写入一条 <span class="hl">CareerEvent</span>，记录：谁、什么时候、做了什么、用的什么配方、造了什么、什么品质、造了几件。</p>
+    <blockquote>职业履历是整个职业系统的"长期事实数据库"——后面所有评价（能力、评级、资格、职称、勋章）都从它派生，且评价规则改了，历史事实永远不变。</blockquote>
+    <h3>3.4 专业能力怎么长出来</h3>
+    <p>你每制造一次，系统按 <span class="em">「行为 → 能力映射矩阵」</span> 把经验分给不同能力维度，<strong>不是五维等量增长</strong>。制造类能力维度：</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>能力</th><th>含义</th><th>典型获取</th></tr></thead>
+      <tbody>
+        <tr><td>加工能力</td><td>基本加工操作</td><td>大多数制造</td></tr>
+        <tr><td>精度控制</td><td>精密操作</td><td>精密机械、电子件</td></tr>
+        <tr><td>工艺理解</td><td>工艺/流程理解</td><td>复杂配方、研究关联</td></tr>
+        <tr><td>材料应用</td><td>材料选择与利用</td><td>高级材料制作</td></tr>
+        <tr><td>质量控制</td><td>品质把控</td><td>高品质产出/检视</td></tr>
+      </tbody>
+    </table></div>
+    <h3>3.5 经验公式（XP）</h3>
+    <div class="flow">
+      单次实践 XP = 基础实践值（默认 10）<br>
+      <span class="arrow">×</span> 配方相关度（匹配 1.0 / 仅工作类型 0.5 / 无匹配 0）<br>
+      <span class="arrow">×</span> 品质系数（普通 1 / 良好 1.2 / 优秀 1.5 / 大师 3 / 传奇 5）<br>
+      <span class="arrow">×</span> 难度系数（首版 1.0）<br>
+      <span class="arrow">×</span> 数量系数（批量累加，上限 4）
+    </div>
+    <p>等级提升采用<span class="hl">边际递减曲线</span>：前期升级快，后期越来越慢，防止数值失控。</p>
+    <h3>3.6 二级方向推荐（推荐 ≠ 强制）</h3>
+    <div class="flow">
+      方向分 = 技能相关度 ×0.35 + 实践适配 ×0.25 + 实践质量 ×0.15 + 成果贡献 ×0.15 + 专业能力 ×0.10
+    </div>
+    <p>推荐只是建议，你最终想走哪条路，自己选。</p>
+    <h3>3.7 专业评级（4 档，由等级派生）</h3>
+    <p>评级<strong>不是</strong>等级，也不是职称。它只是能力水平的一个标签，<span class="em">无考试门槛</span>，由专业等级经软上限曲线自动派生：</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>评级</th><th>触发等级</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>熟练</td><td>≥ 10</td><td>入门档，最低加成</td></tr>
+        <tr><td>专业</td><td>≥ 25</td><td>中段主力</td></tr>
+        <tr><td>高级</td><td>≥ 38</td><td>高段</td></tr>
+        <tr><td>大师</td><td>≥ 45</td><td>顶档，封顶不再增（递减设计）</td></tr>
+      </tbody>
+    </table></div>
+    <h3>3.8 专业效果：从"数据面板"走进"游戏机制"</h3>
+    <p>专业能力<span class="hl">真实改变</span>你下一次工作的结果：</p>
+    <div class="grid">
+      <div class="card"><h4>制造速度</h4><p>通过原版 StatPart 注入配方工作速度统计。拥有技能（等级≥1）且正在制造对应配方时，制造更快。</p></div>
+      <div class="card"><h4>品质倾向</h4><p>制造完成后，按专业效果把产物品质整档偏移（+1 档起）。</p></div>
+    </div>
+    <p>效果全部<span class="em">数据驱动</span>，且经三层隔离（Effect → Resolver → Adapter），不直接乱 patch 游戏，安全可关。</p>
+    <blockquote>验收标准只有一句话：玩家看到的不是"制造类 72/100"这个数字，而是"这个人因为真实做过这些工作，所以形成了某种专业能力；专业能力又真实改变了他下一次工作的结果"。</blockquote>
+  </section>
+
+  <!-- C4 -->
+  <section id="c4">
+    <h2 class="chap"><span class="no">第四章</span>资格、职称与勋章</h2>
+    <h3>4.1 资格状态机</h3>
+    <p>专业等级<strong>绝不直接等于职称</strong>。要走完一条资格认证流水线：</p>
+    <div class="flow">
+      Locked（锁定） <span class="arrow">→</span> Eligible（具备资格） <span class="arrow">→</span> Preparing（准备中）
+      <span class="arrow">→</span> PracticalExam（实践考试） <span class="arrow">→</span> TheoryExam（理论考试）
+      <span class="arrow">→</span> Thesis（论文） <span class="arrow">→</span> Defense（答辩）
+      <span class="arrow">→</span> Qualified（通过） <span class="arrow">→</span> Granted（授予职称）
+    </div>
+    <p>失败会回到 Preparing，而不是删除进度。</p>
+    <h3>4.2 五档职称（现实职称体系）</h3>
+    <p>职称挂载在<span class="hl">二级方向</span>上，分 5 档（由低到高）：</p>
+    <p><span class="pill">员级</span> <span class="arrow">→</span> <span class="pill">助理级</span> <span class="arrow">→</span> <span class="pill">中级</span> <span class="arrow">→</span> <span class="pill">副高级</span> <span class="arrow">→</span> <span class="pill">正高级</span></p>
+    <p>以精密制造（技能人才通道，技工序列）为例，已落地的 5 档：</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>职称</th><th>门槛等级</th><th>生涯时长（tick）</th><th>特殊要求</th></tr></thead>
+      <tbody>
+        <tr><td>初级技工</td><td>5</td><td>60,000</td><td>—</td></tr>
+        <tr><td>中级技工</td><td>15</td><td>200,000</td><td>前置：初级技工</td></tr>
+        <tr><td>高级技工</td><td>25</td><td>600,000</td><td>前置：中级 + 考试/论文/答辩（最低 60/70/80 分）</td></tr>
+        <tr><td>技师</td><td>38</td><td>1,200,000</td><td>前置：高级技工</td></tr>
+        <tr><td>高级技师</td><td>45</td><td>1,800,000</td><td>前置：技师 + 至少 1 次传奇制造</td></tr>
+      </tbody>
+    </table></div>
+    <h3>4.3 考试与论文：在"玩游戏"中完成</h3>
+    <p>模组刻意不做假的"考试按钮"。</p>
+    <div class="grid">
+      <div class="card"><h4>实践考试</h4><p>真实制造行为证据。报名后限时制造指定物品×N、达最低品质，你真实去制造，系统捕获 CareerEvent 评分。</p></div>
+      <div class="card"><h4>理论考试</h4><p>阅读书籍+研究项目+专业能力+理论活动，加权合成（暂无选择题 UI）。</p></div>
+      <div class="card"><h4>论文</h4><p>书籍+研究+成果+履历+专家参与共同形成质量，不是"+1 Thesis"。</p></div>
+      <div class="card"><h4>答辩</h4><p>同阵营高专业等级小人自动列为委员，玩家确认/指定，委员会评分。</p></div>
+    </div>
+    <h3>4.4 勋章体系</h3>
+    <p>勋章是<span class="hl">成就的表彰</span>，分两条路径授予：</p>
+    <div class="grid">
+      <div class="card"><h4>阈值勋章</h4><p>达到累计指标自动授予（工时、击杀、产出银、传承代数）。</p></div>
+      <div class="card"><h4>成就勋章</h4><p>由 CareerEvent 聚合出的成就键（传奇制造次数、大型项目数、已获职称数）触发。</p></div>
+    </div>
+    <p>勋章材质与增益阶梯（数据驱动）：</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>材质</th><th>增益（通道 A 规划 / 通道 B 展示先行）</th></tr></thead>
+      <tbody>
+        <tr><td class="tier-c">铜质</td><td>+3%</td></tr>
+        <tr><td class="tier-s">银质</td><td>+5%</td></tr>
+        <tr><td class="tier-g">金质</td><td>+10% + 殖民地公告（Letter）+ 专属「·金质」后缀</td></tr>
+      </tbody>
+    </table></div>
+    <p>勋章分系：<span class="tag r">劳动系</span><span class="tag r">战斗系</span><span class="tag g">后勤系</span><span class="tag b">传承/装备系</span><span class="tag g">团体系</span><span class="tag b">排名/荣耀系</span></p>
+    <p>（劳动模范/先进工作者/战斗英雄/一等功/模范供应员/传承功勋/镇库之锋/先进集体/劳模标兵 等。）</p>
+    <blockquote>授权闭环：职业行为 → 能力 → 成果 → 资格 → 职称 → 贡献 → <strong>勋章</strong>，最终回写 CareerEvent，形成完整事实闭环。</blockquote>
+  </section>
+
+  <!-- C5 -->
+  <section id="c5">
+    <h2 class="chap"><span class="no">第五章</span>物品、战役与地点档案</h2>
+    <h3>5.1 物品 / 装备档案</h3>
+    <p>概览 · 编年史 · 战斗履历 · 流转记录 · <span class="hl">传承链</span>（谁造的 / 谁抢的 / 谁继承的）。武器始终捕捉；服装按护甲阈值 ≥ 0.20 判定为战斗服装（数据驱动）。</p>
+    <h3>5.2 战役档案</h3>
+    <p>战役生命周期（开始 / 突袭次数 / 结束三 Hook）、参战双方、关键节点与战果；击杀按派系聚合去重。</p>
+    <h3>5.3 地点档案与别名系统</h3>
+    <p>实时地点/持有者/访问聚合（地点地图志）、远征与主驻地。建筑别名三级解析：<span class="em">全局别名 &gt; 个人自定义名 &gt; 原版标签</span>；房间角色别名同样支持。通用改名对话框工坊/房间共用，DLC 感知。</p>
+  </section>
+
+  <!-- C6 -->
+  <section id="c6">
+    <h2 class="chap"><span class="no">第六章</span>社会关系网络</h2>
+    <p>模组记录并推导人际关系：</p>
+    <div class="grid">
+      <div class="card"><h4>直接关系</h4><p>恋人/未婚夫(妻)/配偶/前恋人/前配偶/父母/子女/兄弟姐妹/同父异母兄弟姐妹（排除动物羁绊）。</p></div>
+      <div class="card"><h4>推导关系</h4><p>亲属 + 好感度朋友/宿敌（好感度 ±20，上限 8 个）。</p></div>
+      <div class="card"><h4>网络图</h4><p>最多 24 个节点，池耗尽时螺旋兜底。</p></div>
+    </div>
+  </section>
+
+  <!-- C7 -->
+  <section id="c7">
+    <h2 class="chap"><span class="no">第七章</span>界面与主题</h2>
+    <h3>7.1 设计系统</h3>
+    <div class="grid">
+      <div class="card"><h4>UITheme 令牌层</h4><p>4 套可换肤预设：epic / gothic / wuxia / steampunk，只换颜色不换布局，选择持久化。</p></div>
+      <div class="card"><h4>UIComponents 组件层</h4><p>卡片/标签/进度条/阴影文字/可点击卡片等可复用绘制单元。</p></div>
+    </div>
+    <h3>7.2 自定义规则</h3>
+    <p>中文行高有规范（大卡 ≥110 / 小字 ≥18），保证中文不挤；所有玩家可见文字走翻译键，跟随游戏语言（简体中文 / English）自动切换。</p>
+  </section>
+
+  <!-- C8 -->
+  <section id="c8">
+    <h2 class="chap"><span class="no">第八章</span>安装与兼容</h2>
+    <h3>8.1 安装</h3>
+    <p>① 把整个 <code>PersonalChronicle</code> 文件夹放进游戏 <code>Mods</code> 目录 → ② 启用 <strong>Personal Chronicle - Archive</strong> → ③ 确保 <strong>Harmony</strong> 在其之前加载 → ④ 主界面底部出现「档案馆」即成功。</p>
+    <h3>8.2 依赖与兼容</h3>
+    <div class="grid">
+      <div class="card"><h4>版本</h4><p>RimWorld 1.6。</p></div>
+      <div class="card"><h4>依赖</h4><p>仅 Harmony（唯一外部依赖）。</p></div>
+      <div class="card"><h4>语言</h4><p>内置简体中文与 English。</p></div>
+      <div class="card"><h4>平台</h4><p>Windows / macOS / Linux 均可。</p></div>
+    </div>
+    <p>与 Character Editor 等 Mod 共存；纯只读记录，不修改游戏核心机制。</p>
+    <h3>8.3 存档说明（重要）</h3>
+    <blockquote>想要 100% 完整档案，请新开档。模组是"实时事件采集"，启用前发生的事补不回来。</blockquote>
+    <p>中途加装也可用：当前在场人口会自动建档，只是缺"加装前的历史"。早期存档会自动迁移到最新对象模型（无损升级）。</p>
+  </section>
+
+  <!-- C9 -->
+  <section id="c9">
+    <h2 class="chap"><span class="no">第九章</span>常见问题</h2>
+    <div class="grid">
+      <div class="card"><h4>中途加装老档，老成员认得出吗？</h4><p>会。加载时自动为当前全部人口建档，只是其"加入事件/历史时间线"为空。</p></div>
+      <div class="card"><h4>会拖慢游戏吗？</h4><p>不会明显变慢。120-tick 节流刷新，后台仅做轻量补漏建档。</p></div>
+      <div class="card"><h4>职业加成破坏平衡吗？</h4><p>所有加成 ≤10%，且有软上限封顶（大师后不再增长）。能力须经真实工作积累，无法速成。</p></div>
+      <div class="card"><h4>金质公告会刷屏吗？</h4><p>不会。金质勋章公告只弹一次（去重）。</p></div>
+    </div>
+  </section>
+
+  <!-- C10 -->
+  <section id="c10">
+    <h2 class="chap"><span class="no">第十章</span>概念速查表</h2>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>概念</th><th>一句话</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CareerEvent</strong></td><td>职业系统的"事实数据库"，只记发生了什么</td></tr>
+        <tr><td><strong>Professional Skill</strong></td><td>模组自己的长期能力模型，由原版技能 + 真实行为共同养成</td></tr>
+        <tr><td><strong>Ability 能力维度</strong></td><td>技能拆出的细分能力（加工/精度/工艺/材料/质控），独立成长</td></tr>
+        <tr><td><strong>Rating 评级</strong></td><td>由等级派生的 4 档标签（熟练/专业/高级/大师），无考试门槛</td></tr>
+        <tr><td><strong>Qualification 资格</strong></td><td>通往职称的认证流水线，含考试/论文/答辩</td></tr>
+        <tr><td><strong>Title 职称</strong></td><td>现实职称体系 5 档，挂在二级方向上</td></tr>
+        <tr><td><strong>Medal 勋章</strong></td><td>成就表彰，铜/银/金三材质，可给真实加成</td></tr>
+        <tr><td><strong>双轨统计</strong></td><td>活读（当前事实）+ 档案（历史快照），防冷冻舱虚高</td></tr>
+        <tr><td><strong>多态别名</strong></td><td>全局别名 &gt; 个人自定义名 &gt; 原版标签</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer>
+    <p><span class="gold">Personal Chronicle - Archive · v1.1.4</span> · 为 RimWorld 1.6 打造</p>
+    <p>本手册基于模组设计文档整理，具体数值可能随版本平衡调整。</p>
+  </footer>
+
+</div>
+</body>
+</html>

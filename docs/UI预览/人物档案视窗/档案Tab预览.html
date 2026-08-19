@@ -1,41 +1,151 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <meta charset="UTF-8" />
-<title>档案 Tab 浓缩预览 — v6.6 移除里程碑·传承深度富化 (2026-08-11)</title>
+<title>档案 Tab 浓缩预览 — v1.1.4 主题预设·六宫格统一基准 (2026-08-13)</title>
 <meta name="viewport" content="width=960" />
 <style>
-  /* ---- UITheme tokens (统一取色，禁止散落十六进制) ---- */
+  /* ---- UITheme tokens (统一取色，禁止散落十六进制) ----
+     v1.1.4：四套主流 RPG 主题预设（对齐 C# UITheme.Palette）。
+     :root = Epic（默认）；html[data-theme=gothic/wuxia/steampunk] 覆盖各令牌。
+     主题只换色（v1.1.4 最终：字体不随主题变化，沿用 Verse 原生字体）。
+     全部 CSS 变量经 --* 引用，切换 data-theme 即整体换肤。 */
   :root {
-    --window:   #111820;   /* Window      (0.067,0.094,0.110) */
-    --panel:    #172129;   /* Panel       (0.094,0.129,0.149) */
-    --panel-2:  #151d24;   /* header bg   */
-    --avatar-bg: #2a353e;  /* 头像底（派生暗色） */
-    --btn-1:    #1e2a34;   /* 按钮渐变上 */
-    --btn-2:    #253340;   /* 按钮渐变下 */
-    --card:     #172129;   /* Card        (0.145,0.188,0.212) */
-    --border:   #45535b;   /* Border      (0.270,0.325,0.357) */
-    --border-soft: #2d3a42;/* BorderSoft  (0.180,0.231,0.255) */
-    --border-hi:   #3a4850;/* hover border */
-    --text:     #e9eee9;   /* Text        (0.914,0.933,0.929) */
-    --muted:    #999999;   /* SecondaryText (0.600,0.600,0.600) */
-    --val:      #cdd6d2;   /* 明细值高亮（中性亮色） */
-    --dim:      #718088;   /* Dim        (0.443,0.502,0.525) */
-    --accent:   #d09b61;   /* Accent      (0.816,0.608,0.380) */
-    --accent-soft: rgba(207,170,97,.15);
-    --info:     #95d0fc;   /* Info        (0.584,0.816,0.988) */
-    --alive:    #91e6b0;   /* Alive       (0.570,0.900,0.690) */
-    /* KPI tints — TintForEventKind */
-    --gold:  #f2bd43;      /* PillGold  (0.950,0.740,0.260) */
-    --green: #6bcf8f;      /* PillGreen (0.420,0.810,0.560) */
-    --red:   #dc7575;      /* PillRed   (0.860,0.460,0.460) */
-    --blue:  #5c9ed4;      /* PillBlue  (0.360,0.620,0.830) */
+    --window:   #0e1322;   /* 暗紫深蓝底 */
+    --panel:    #151b2e;
+    --panel-2:  #12182a;
+    --avatar-bg: #1f2740;
+    --btn-1:    #1a2138;
+    --btn-2:    #232c48;
+    --card:     #1a2136;
+    --border:   #8a7740;   /* 鎏金描边 */
+    --border-soft: #3c4060;
+    --border-hi:   #a8944f;
+    --text:     #e8e2d0;   /* 暖羊皮纸文字 */
+    --muted:    #9a93a6;
+    --val:      #d8d2be;
+    --dim:      #6a6a82;
+    --accent:   #d4af37;   /* 鎏金 */
+    --accent-soft: rgba(212,175,55,.15);
+    /* 勋章档位金属色（Tier 角标 / 评级阶梯 / Pill 复用） */
+    --bronze: #b87333;   /* 青铜 */
+    --silver: #c0c0c8;   /* 白银 */
+    --info:     #7fb2e8;
+    --alive:    #7fd6a0;
+    /* KPI tints — TintForEventKind（RPG 化：金/翠/朱/蓝宝石） */
+    --gold:  #e6c05a;      /* PillGold 鎏金 */
+    --green: #6fce8a;      /* PillGreen 祖母绿 */
+    --red:   #c85a4a;      /* PillRed 暗朱 */
+    --blue:  #6a9fdc;      /* PillBlue 蓝宝石 */
     /* Timeline node tints — Timeline* */
-    --tl-join:   #66cc66;  /* (0.400,0.800,0.400) */
-    --tl-craft:  #b3994d;  /* (0.700,0.600,0.300) */
-    --tl-death:  #d95a5a;  /* (0.850,0.350,0.350) */
-    --tl-battle: #e67f33;  /* (0.900,0.500,0.200) */
-    --tl-social: #8099e6;  /* (0.500,0.600,0.900) */
-    --tl-build:  #80828e;  /* (0.500,0.500,0.550) */
+    --tl-join:   #6fce8a;
+    --tl-craft:  #c9a860;
+    --tl-death:  #c85a4a;
+    --tl-battle: #d8873a;
+    --tl-social: #8a9fd8;
+    --tl-build:  #7a7f96;
+  }
+
+  /* ---- Theme: Gothic (暗黑哥特，血源/暗黑破坏神风，对齐 C# Palette.Gothic) ---- */
+  html[data-theme="gothic"] {
+    --window:   #0a0a0d;   /* 墨黑 */
+    --panel:    #121216;
+    --panel-2:  #0e0e12;
+    --avatar-bg: #1a141c;
+    --btn-1:    #17171d;
+    --btn-2:    #20202a;
+    --card:     #16161c;
+    --border:   #4a3038;   /* 暗血红边 */
+    --border-soft: #2a2230;
+    --border-hi:   #6a3a3a;
+    --text:     #cfc8d8;   /* 苍白 */
+    --muted:    #84768e;
+    --val:      #bdb4c8;
+    --dim:      #5c5468;
+    --accent:   #a83232;   /* 血红 */
+    --accent-soft: rgba(168,50,50,.18);
+    --bronze: #8a5a3a;
+    --silver: #9a9aa6;
+    --info:     #7a7ab0;
+    --alive:    #5f9a6a;
+    --gold:  #b89a4a;
+    --green: #5f9a6a;
+    --red:   #c84040;
+    --blue:  #7a5ac8;
+    --tl-join:   #5f9a6a;
+    --tl-craft:  #9a7a4a;
+    --tl-death:  #c84040;
+    --tl-battle: #a83a3a;
+    --tl-social: #7a6ac8;
+    --tl-build:  #5c5a72;
+  }
+
+  /* ---- Theme: Wuxia (东方武侠水墨，宣纸米白+墨色+朱红，对齐 C# Palette.Wuxia) ----
+     NOTE: 浅色主题；硬编码深色 dot 阴影等视觉在后文已做兼容。 */
+  html[data-theme="wuxia"] {
+    --window:   #e8e2d0;   /* 宣纸米白 */
+    --panel:    #ded6bf;
+    --panel-2:  #e4ddc8;
+    --avatar-bg: #d5ccb2;
+    --btn-1:    #d9d0b6;
+    --btn-2:    #cbbfa0;
+    --card:     #e2dac4;
+    --border:   #3a332b;   /* 墨色 */
+    --border-soft: #6f6657;
+    --border-hi:   #2a2420;
+    --text:     #2b2620;   /* 墨黑 */
+    --muted:    #5f584c;
+    --val:      #3a342c;
+    --dim:      #7a7264;
+    --accent:   #a63a2e;   /* 朱红印章 */
+    --accent-soft: rgba(166,58,46,.14);
+    --bronze: #8a6a3a;
+    --silver: #6a6a5a;
+    --info:     #3a6a8a;
+    --alive:    #4f7a55;
+    --gold:  #9a7a2a;
+    --green: #4f7a55;
+    --red:   #8a2f2f;
+    --blue:  #3a6a8a;
+    --tl-join:   #4f7a55;
+    --tl-craft:  #8a6a2a;
+    --tl-death:  #8a2f2f;
+    --tl-battle: #a63a2e;
+    --tl-social: #4a5a7a;
+    --tl-build:  #6a6a5a;
+  }
+
+  /* ---- Theme: Steampunk (蒸汽朋克，黄铜棕+宝石绿，对齐 C# Palette.Steampunk) ---- */
+  html[data-theme="steampunk"] {
+    --window:   #14120d;   /* 深棕底 */
+    --panel:    #1c1a12;
+    --panel-2:  #18160f;
+    --avatar-bg: #2a2415;
+    --btn-1:    #201d12;
+    --btn-2:    #2a2415;
+    --card:     #201d14;
+    --border:   #8a7a3a;   /* 黄铜 */
+    --border-soft: #4a4230;
+    --border-hi:   #a89448;
+    --text:     #e0d6ae;
+    --muted:    #9a9078;
+    --val:      #cec49c;
+    --dim:      #6a6a52;
+    --accent:   #4a9a7a;   /* 宝石绿 */
+    --accent-soft: rgba(74,154,122,.16);
+    --bronze: #8a6a3a;
+    --silver: #b0a890;
+    --info:     #7aa0d0;
+    --alive:    #7fca8a;
+    --gold:  #c9a848;
+    --green: #7fca8a;
+    --red:   #b85a4a;
+    --blue:  #5a8ad0;
+    --tl-join:   #7fca8a;
+    --tl-craft:  #c9a848;
+    --tl-death:  #b85a4a;
+    --tl-battle: #d8873a;
+    --tl-social: #7a8ad0;
+    --tl-build:  #7a7a5a;
   }
 
   /* ---- Reset & base ---- */
@@ -80,10 +190,85 @@
   .pill {
     padding: 2px 10px; border-radius: 10px;
     font-size: 11px; font-weight: 600;
-    background: rgba(198,176,82,.15); color: #c6b052;
-    border: 1px solid rgba(198,176,82,.35);
+    background: var(--accent-soft); color: var(--accent);
+    border: 1px solid var(--border-hi);
   }
-  .pill.alive { background: rgba(91,230,176,.13); color: var(--alive); border-color: rgba(91,230,176,.30); }
+  .pill.alive { background: var(--accent-soft); color: var(--alive); border-color: var(--border-hi); }
+  /* v1.1.4：内嵌主题切换按钮（Header 右侧，循环 史诗→暗黑→水墨→朋克） */
+  .theme-toggle {
+    flex-shrink: 0;
+    margin-left: 6px;
+    padding: 3px 12px;
+    font-size: 11px; font-weight: 600;
+    color: var(--accent);
+    background: linear-gradient(180deg, var(--btn-1) 0%, var(--panel) 100%);
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .theme-toggle:hover { border-color: var(--accent); }
+
+  /* ---- 居住与工作（v1.1.4 三卡：房间 / 工坊 / 类型）
+     C# 已落地：每卡主区点击改名，位置副行点击镜头跳转（CameraJumper.TryJump）。 ---- */
+  .residence-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px 14px 0;
+  }
+  .rw-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    padding: 5px 10px;
+    min-width: 0;
+    max-width: 230px;
+    cursor: pointer;
+    transition: border-color .12s ease;
+  }
+  .rw-card:hover { border-color: var(--accent); }
+  .rw-card::before {
+    content: "";
+    width: 3px; height: 20px;
+    border-radius: 2px;
+    background: var(--border-hi);
+    flex-shrink: 0;
+  }
+  .rw-card.rw-home::before { background: var(--alive); }   /* 房间 = 在世绿，呼应「在册」印章 */
+  .rw-card.rw-work::before { background: var(--gold); }   /* 工坊 = 鎏金，呼应「产出」 */
+  .rw-card.rw-type::before { background: var(--accent); } /* 类型 = 主强调色 */
+  .rw-k {
+    font-size: 10px;
+    color: var(--dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .rw-v {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .rw-v.dim { color: var(--dim); font-weight: 400; font-size: 11px; }
+  .rw-pos {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: auto;
+    padding-left: 8px;
+    border-left: 1px solid var(--border-soft);
+  }
+  .rw-pos.clickable { color: var(--accent); cursor: pointer; }
+  .rw-pos.clickable:hover { text-decoration: underline; }
 
   /* ---- Section title ---- */
   .section-title {
@@ -121,17 +306,41 @@
     border-radius: 4px;
     padding: 8px 10px 8px;
     position: relative;
-    /* 统一固定高度：所有宫格等高，内容超限截断，不被任一卡撑高挤兑 */
-    height: 210px;
+    /* 统一固定高度：所有宫格等高，内容超限截断，不被任一卡撑高挤兑
+       v1.1.4 对齐 C# KpiCardH=250f（220→250，容纳击杀 4 KPI 行 + 3 进度条）
+       v1.1.4 进一步：flex column 让 .kpi-bars-wrap flex:1 撑开剩余空间，等距分布 3 个 bar。 */
+    height: 250px;
     overflow: hidden;
     transition: border-color .15s;
+    display: flex;
+    flex-direction: column;
   }
   .kpi-card:hover { border-color: var(--border-hi); }
   .kpi-accent {
     position: absolute; left: 0; top: 0; bottom: 0;
     width: 3px; border-radius: 2px 0 0 2px;
   }
-  .kpi-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .kpi-label {
+    font-size: 11px; color: var(--muted); margin-bottom: 4px;
+    display: flex; align-items: center; justify-content: space-between;
+    white-space: nowrap;
+  }
+  /* v1.1.4：标题右侧小字（如传承锻造者），右对齐，溢出省略 */
+  .kpi-label-side {
+    font-size: 10px;
+    color: var(--dim);
+    max-width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 1 auto;
+  }
+  /* v1.1.4：进度条 caption 右侧 tag（如传承链击杀数），右对齐 */
+  .kpi-bar-tag {
+    margin-left: auto;
+    color: var(--muted);
+    padding-left: 6px;
+    flex: 0 0 auto;
+  }
   .kpi-value { font-size: 22px; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   /* 长武器名/长文本自动缩小字号（对齐 C# SixGrid 大值区字体自适应） */
   .kpi-value.value-sm { font-size: 16px; }
@@ -177,8 +386,27 @@
     padding-top: 5px;
     border-top: 1px solid var(--border-soft);
   }
-  /* 单条职业进度条：轨道(BorderSoft) + 填充(Accent) + 行内字幕（对齐 ProgressBar 双参版 caption 布局） */
-  .struct-row { margin-top: 4px; }
+  /* v1.1.4 统一基准：bars 容器等距分布——flex column 每条 flex:1，第 1 条贴近 divider 下方、第 N 条贴底（margin-bottom 6px） */
+  .kpi-bars-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding-bottom: 6px;
+    min-height: 0;
+  }
+  .kpi-bars-wrap > .struct-row {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .kpi-bars-wrap > .struct-row:first-child { justify-content: flex-start; }
+  .kpi-bars-wrap > .struct-row:last-child { justify-content: flex-end; }
+  /* 单条职业进度条：轨道(BorderSoft) + 填充(Accent) + 行内字幕（对齐 ProgressBar 双参版 caption 布局）
+     v1.1.4 caption 固定在 bar 上方（与 C# 绘制顺序一致）
+     v1.1.4 加大：caption↔bar 间距 4px→8px（对齐 C# KpiBarGapY=8f） */
+  .struct-row { margin-top: 8px; }
   .struct-bar {
     height: 12px;
     background: var(--border-soft);
@@ -200,7 +428,8 @@
   .tone-alive .struct-fill { background: var(--alive); }
   .struct-caption {
     position: relative;
-    margin-top: 1px;
+    /* v1.1.4: caption↔bar 间距 1px→4px，与 bar↔下一 caption 统一（对齐 C# KpiBarGapY） */
+    margin-top: 4px;
     font-size: 10px;
     line-height: 12px;
     color: var(--val);
@@ -270,9 +499,9 @@
     left: 16px; right: 16px;
     top: 28px;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent) 0%, #a07840 50%, var(--accent) 100%);
+    background: linear-gradient(90deg, var(--accent) 0%, var(--border) 50%, var(--accent) 100%);
     border-radius: 2px;
-    box-shadow: 0 0 8px rgba(207,170,97,.25);
+    box-shadow: 0 0 8px var(--accent-soft);
   }
   .tl-node {
     width: 130px;
@@ -304,7 +533,8 @@
     border: 2px solid rgba(255,255,255,.2);
     position: relative;
     z-index: 3;
-    box-shadow: 0 0 0 3px rgba(23,33,41,.8);
+    /* v1.1.4：描边色用主题边框令牌，浅色主题（水墨）下自适应 */
+    box-shadow: 0 0 0 3px var(--card);
   }
   .tl-stem {
     width: 1px; height: 14px;
@@ -364,6 +594,262 @@
     padding-left: 8px;
     margin: 4px 14px 0;
   }
+
+  /* ---- V1.1.5 预览：ITab 底部预留勋章展示区（对齐 C# DrawMedalPreview 占位区块） ---- */
+  .medal-zone {
+    padding: 10px 14px 4px;
+  }
+  .medal-zone-head {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 8px;
+  }
+  .medal-zone-head::before {
+    content: "";
+    width: 4px; height: 14px;
+    background: var(--accent);
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+  .medal-zone-head .h { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; }
+  .medal-zone-head .rule { flex: 1; height: 1px; background: var(--border); margin-left: 4px; }
+  /* 随机授勋按钮：与 footer 同款 btn-open 视觉，置于勋章区右上 */
+  .medal-zone-head .btn-award {
+    flex: 0 0 auto;
+    padding: 4px 12px;
+    background: linear-gradient(180deg, var(--btn-1) 0%, var(--panel) 100%);
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    color: var(--accent);
+    font-size: 12px; font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .medal-zone-head .btn-award:hover {
+    background: linear-gradient(180deg, var(--btn-2) 0%, var(--btn-1) 100%);
+    border-color: var(--accent);
+  }
+  .medal-strip {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    min-height: 44px;            /* 预留展示高度，空态不塌陷 */
+    align-items: center;
+  }
+  /* 裸勋章图像：仅真实 png + 档位角标，无卡片外壳、无边框 */
+  .medal-icon {
+    position: relative;
+    flex: 0 0 auto;
+    line-height: 0;
+    transition: transform .12s ease;
+    cursor: default;
+  }
+  .medal-icon:hover { transform: translateY(-2px); }
+  .medal-icon img {
+    width: 34px; height: 40px;
+    object-fit: contain;
+    image-rendering: auto;
+    display: block;
+  }
+  .medal-icon img.broken { opacity: .2; background: var(--panel-2); border: 1px dashed var(--border-soft); }
+  /* 档位角标（右上小徽标） */
+  .medal-icon .corner {
+    position: absolute; top: -7px; right: -7px;
+    min-width: 15px; height: 15px; padding: 0 3px;
+    border-radius: 8px;
+    font-size: 9px; font-weight: 700; color: var(--window);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,.5);
+  }
+  .medal-icon.t-bronze .corner { background: var(--bronze); }
+  .medal-icon.t-silver .corner { background: var(--silver); }
+  .medal-icon.t-gold   .corner { background: var(--gold); }
+  .medal-empty {
+    font-size: 11px; color: var(--dim);
+    border: 1px dashed var(--border-soft);
+    border-radius: 4px;
+    padding: 10px 14px;
+    width: 100%;
+    text-align: center;
+  }
+  /* 授勋瞬间微反馈 */
+  .medal-chip.just-granted { animation: medalPop .4s ease; }
+  @keyframes medalPop {
+    0% { transform: scale(.6); opacity: 0; }
+    60% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  /* ---- v1.1.5 预览：勋章条末尾「＋」加号格（打开授勋界面入口，对齐 C# OpenManualAwardDialog） ----
+     默认沉默：不高亮闪烁、不自动弹窗；仅 hover/点击有反馈。视觉用 accent 描边 + 加号，
+     区别于已授勋章（裸 png 无框），明确是「入口」而非「已获勋章」。 */
+  .medal-add {
+    flex: 0 0 auto;
+    width: 34px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px dashed var(--border-hi);
+    border-radius: 4px;
+    color: var(--accent);
+    font-size: 20px; font-weight: 700; line-height: 1;
+    cursor: pointer;
+    background: transparent;
+    transition: border-color .12s ease, background .12s ease, color .12s ease;
+    flex-direction: column;
+  }
+  .medal-add:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+  .medal-add:active { transform: scale(.94); }
+  .medal-add .add-tip {
+    display: none;
+    margin-top: 2px;
+    font-size: 8px; font-weight: 400; line-height: 1;
+    color: var(--dim);
+  }
+  .medal-add:hover .add-tip { display: block; }
+
+  /* ---- v1.1.5 预览：手动授勋 Dialog（对齐 C# Dialog_ManualMedalAward，480×440） ---- */
+  .mask {
+    position: fixed; inset: 0;
+    background: rgba(4,6,12,.62);
+    display: none; align-items: center; justify-content: center;
+    z-index: 50;
+  }
+  .mask.show { display: flex; }
+  .award-dialog {
+    width: 480px; max-height: 440px;
+    background: var(--window);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    box-shadow: 0 16px 50px rgba(0,0,0,.7);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .award-dialog .d-head {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    flex: 0 0 auto;
+  }
+  .award-dialog .d-head .t { font-size: 15px; font-weight: 600; color: var(--text); }
+  .award-dialog .d-head .x {
+    margin-left: auto; cursor: pointer; color: var(--muted); font-size: 16px; line-height: 1;
+    padding: 2px 6px; border-radius: 3px;
+  }
+  .award-dialog .d-head .x:hover { background: var(--card-hover); color: var(--text); }
+  .award-dialog .d-sub {
+    font-size: 10px; color: var(--secondary);
+    padding: 8px 16px 0; flex: 0 0 auto;
+  }
+  .award-dialog .d-body {
+    padding: 10px 16px; overflow-y: auto; flex: 1 1 auto;
+  }
+  .award-dialog .d-body::-webkit-scrollbar { width: 9px; }
+  .award-dialog .d-body::-webkit-scrollbar-thumb { background: var(--border-soft); border-radius: 5px; }
+  /* 单枚可授勋章卡（对齐 C# DrawAwardCard：徽章色块+称号+档位Pill+描述+进度条；整卡可点） */
+  .award-card {
+    display: flex; align-items: center; gap: 14px;
+    min-height: 88px; padding: 10px 12px; margin-bottom: 8px;
+    border: 1px solid var(--border-soft); border-radius: 4px;
+    cursor: pointer; transition: background .12s;
+  }
+  .award-card:hover { background: var(--accent-soft); }
+  .award-card .badge {
+    flex: 0 0 auto; width: 64px; height: 72px; border-radius: 4px;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+    background: var(--panel-2);
+  }
+  /* 引入真实勋章图（defName→中文 png），图填满色块；无图 .no-img 由 inline background 降级 */
+  .award-card .badge img {
+    width: 64px; height: 72px; object-fit: contain; display: block;
+  }
+  .award-card .mid { flex: 1; min-width: 0; }
+  .award-card .mid .lab { font-size: 14px; font-weight: 600; color: var(--text); }
+  .award-card .mid .desc {
+    font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 14px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .award-card .mid .bar {
+    height: 8px; background: var(--border-soft); border-radius: 2px;
+    overflow: hidden; margin-top: 6px; position: relative;
+  }
+  .award-card .mid .bar .fill { height: 100%; border-radius: 2px 0 0 2px; }
+  .award-card .mid .ratio {
+    font-size: 10px; color: var(--muted); margin-top: 2px; text-align: center;
+  }
+  .award-card .tier-pill {
+    flex: 0 0 auto; padding: 2px 10px; border-radius: 10px;
+    font-size: 11px; font-weight: 600; color: var(--window);
+  }
+  .award-empty {
+    text-align: center; color: var(--dim); font-size: 12px;
+    padding: 30px 10px; line-height: 18px;
+  }
+  .award-dialog .d-foot {
+    flex: 0 0 auto; min-height: 28px; padding: 6px 16px;
+    font-size: 11px; color: var(--muted);
+    border-top: 1px solid var(--border-soft);
+  }
+
+  /* ---- v1.1.5 预览：勋章详情 Dialog（点击勋章墙/授勋卡「详情」打开，只读展示） ---- */
+  .detail-dialog {
+    width: 360px; max-height: 520px;
+    background: var(--window);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    box-shadow: 0 16px 50px rgba(0,0,0,.7);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .detail-dialog .d-head {
+    padding: 10px 16px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; flex: 0 0 auto;
+  }
+  .detail-dialog .d-head .t { font-size: 15px; font-weight: 600; color: var(--text); }
+  .detail-dialog .d-head .x {
+    margin-left: auto; cursor: pointer; color: var(--muted); font-size: 16px; line-height: 1;
+    padding: 2px 6px; border-radius: 3px;
+  }
+  .detail-dialog .d-head .x:hover { background: var(--card-hover); color: var(--text); }
+  .detail-dialog .d-body { padding: 16px; overflow-y: auto; flex: 1 1 auto; }
+  .detail-dialog .d-body::-webkit-scrollbar { width: 9px; }
+  .detail-dialog .d-body::-webkit-scrollbar-thumb { background: var(--border-soft); border-radius: 5px; }
+  .detail-top { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+  .detail-top .big-badge {
+    flex: 0 0 auto; width: 72px; height: 84px; border-radius: 4px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; background: var(--panel-2);
+  }
+  .detail-top .big-badge img { width: 72px; height: 84px; object-fit: contain; display: block; }
+  .detail-top .big-badge.no-img { background: var(--panel-2); }
+  .detail-top .dt-title { flex: 1; min-width: 0; }
+  .detail-top .dt-title .nm { font-size: 18px; font-weight: 700; color: var(--text); }
+  .detail-top .dt-title .pill { margin-top: 8px; }
+  .detail-rows { border-top: 1px solid var(--border-soft); padding-top: 10px; }
+  .detail-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 12px; padding: 5px 0; border-bottom: 1px solid var(--border-soft);
+  }
+  .detail-row .k { color: var(--muted); }
+  .detail-row .v { color: var(--text); font-weight: 600; text-align: right; }
+  .detail-desc {
+    font-size: 11px; color: var(--secondary); line-height: 16px;
+    margin: 10px 0; padding: 8px 10px; background: var(--panel-2);
+    border-radius: 4px; border-left: 2px solid var(--border);
+  }
+  .detail-buff {
+    font-size: 11px; color: var(--alive); line-height: 15px;
+    margin-top: 6px; padding: 6px 10px; border-radius: 4px;
+    background: rgba(127,214,160,.10); border: 1px solid rgba(127,214,160,.30);
+  }
+  .award-card .detail-btn {
+    flex: 0 0 auto; align-self: flex-start; margin-top: 2px;
+    font-size: 10px; color: var(--info); cursor: pointer;
+    border: 1px solid var(--border-soft); border-radius: 3px; padding: 2px 8px;
+    background: transparent;
+  }
+  .award-card .detail-btn:hover { border-color: var(--info); color: var(--text); }
+
 </style>
 
 <!-- ============================================================ -->
@@ -380,6 +866,15 @@
       <span class="pill alive">在世</span>
       <span class="pill">在职</span>
     </div>
+    <!-- v1.1.4：内嵌主题切换按钮（对齐 C# DrawHeader 右上角按钮，点击循环 工业→磷光→余烬） -->
+    <button class="theme-toggle" id="btnTheme" title="点击切换 UI 主题">主题</button>
+  </div>
+
+  <!-- ====== 居住与工作（v1.1.4 三卡：房间 / 工坊 / 类型） ====== -->
+  <div class="residence-bar" id="residenceBar">
+    <div class="rw-card rw-home"><span class="rw-k">房间</span><span class="rw-v">--</span><span class="rw-pos">--</span></div>
+    <div class="rw-card rw-work"><span class="rw-k">工坊</span><span class="rw-v">--</span><span class="rw-pos">--</span></div>
+    <div class="rw-card rw-type"><span class="rw-k">类型</span><span class="rw-v">--</span><span class="rw-pos">--</span></div>
   </div>
 
   <!-- ====== SECTION: KPI 六宫格（3列 × 2行 纯网格，无分组分隔） ====== -->
@@ -390,7 +885,17 @@
 
   <!-- Annotation: data source notes -->
   <div class="anno">
-    数据来源（v6.8 落地：战役=个人视角，个人战斗维度归击杀宫格并已持久化）：工时=累计工时(TotalHours,同排第N/M排名ColonyRank/ColonyPopulation)+周/日均+工时结构(CareerBars前3) · 产出=ProductionSilverValue(真实累加器累计,同排=产量件数·种类数类)+产值贡献前3(ProductionTypeViews按类目聚合/按产值降序,caption=类名·产值·百分比) · 击杀=Kills(大值)+猎物种类/参战战役/生涯伤害(DamageDealtTotal持久化)/战斗风格(近战远程比)+击杀构成前2种族 · 战役=BattleCount(个人累计参与)+KPI行(累计参与/累计规模BattleKpis.Roster/累计歼敌BattleKpis.Kills)+个人贡献占比进度条(个人Kills/殖民地Kills,cap100%) · 足迹=PlaceCount(同排HomeDays)+主驻地/远征/最长停留+Stays Top2 · 神器传承=以当前武器(TitleText)为锚点：历代击杀(TotalKills,同行)+锻造者(CreatedByText)/传承代数(GenCount)/当代击杀(Holders.IsCurrent.KillCount)+传承链(Holders各代HolderText+KillCount) · （主驻地/关系/健康残值宫格已移除；里程碑时间轴已移除）· 全部经 DetailSnapshot
+    数据来源（v6.8 落地：个人战斗维度归击杀宫格并已持久化；v1.1.4 统一基准=工时宫格；损耗宫格=替换战役宫格，C# 已落地）：工时=累计工时(TotalHours,同排第N/M排名ColonyRank/ColonyPopulation)+周/日均+工时结构(CareerBars前3) · 产出=ProductionSilverValue(真实累加器累计,同排=产量件数·种类数类)+KPI行(周产出=近7天银/净值=近30天银,ComputeProductionWindowValue扫描Craft/Built按Def基价估值)+产值贡献前3(ProductionTypeViews按类目聚合/按产值降序,固定3条不足"--"占位) · 击杀=Kills(大值,同排=猎物种类X种)+参战战役/生涯伤害(DamageDealtTotal持久化,2 KPI行)+击杀构成前3种族(固定3条不足"--"占位) · 损耗=累计消耗银(ConsumptionAccumulator持久化,Thing.Ingested捕获按Def基价计价,不写事件流)+inline日均损耗(近30天按天桶/30)+KPI行(周损耗=近7天SilverByDay求和/日均损耗)+损耗构成前3类目(食物/药品/燃料/成瘾品,固定3条不足"--"占位) · 足迹=PlaceCount(大值,同排HomeDays主驻地天数)+KPI行(主驻地HomePlaceText/远征次数ExpeditionCount)+停留时长前3地点(Stays按DwellTicks降序,Share01=dwell/总dwell,固定3条不足"--"占位) · 神器传承=以当前武器(TitleText)为锚点：历代击杀(TotalKills,同行)+锻造者(CreatedByText,标题右侧)+传承代数(GenCount)/当代击杀(Holders.IsCurrent.KillCount)+传承链进度条(各代击杀占比,Tag=击杀数,固定3条不足"--"占位) · （主驻地/关系/健康残值宫格已移除；里程碑时间轴已移除；战役宫格已移除，colony级 BattleKpis 仍可在完整档案馆「战役」分类查看）· 全部经 DetailSnapshot
+  </div>
+
+  <!-- ====== V1.1.5 预览：ITab 底部预留勋章展示区（对齐 C# DrawMedalPreview 占位） ====== -->
+  <div class="medal-zone">
+    <div class="medal-zone-head">
+      <span class="h">荣誉勋章</span>
+      <button class="btn-award" id="btnAwardTest" title="预览测试：随机授予一枚勋章（不影响 C# 运行逻辑）" style="opacity:.6;font-size:11px;">🎖 测试授勋</button>
+      <div class="rule"></div>
+    </div>
+    <div class="medal-strip" id="medalStrip"></div>
   </div>
 
   <!-- ====== FOOTER ====== -->
@@ -401,6 +906,31 @@
   </div>
 
 </div>
+
+<!-- ====== v1.1.5 预览：手动授勋 Dialog（对齐 C# Dialog_ManualMedalAward：480×440 / 仅列达标未授 / 点卡即授） ====== -->
+<div class="mask" id="awardMask">
+  <div class="dialog award-dialog">
+    <div class="d-head">
+      <div class="t" id="awardTitle">授予勋章</div>
+      <div class="x" id="awardClose">✕</div>
+    </div>
+    <div class="d-sub">仅列出已达标的未授予勋章 · 点击即授予（金质自动送达信件）</div>
+    <div class="d-body" id="awardBody"><!-- 由 JS 渲染 NewAwards 列表 --></div>
+    <div class="d-foot" id="awardFoot"></div>
+    </div>
+    </div>
+
+    <!-- ====== v1.1.5 预览：勋章详情 Dialog（点击勋章查看具体信息，只读） ====== -->
+    <div class="mask" id="medalDetailMask">
+    <div class="dialog detail-dialog">
+      <div class="d-head">
+        <div class="t">勋章详情</div>
+        <div class="x" id="detailClose">✕</div>
+      </div>
+      <div class="d-body" id="detailBody"><!-- 由 JS 渲染 --></div>
+    </div>
+    </div>
+
 <!-- ============================================================ -->
 
 <!-- ====== 随机化测试脚本（仅预览用，不影响 C# 运行逻辑） ====== -->
@@ -420,12 +950,23 @@
   var WORKS = ["种植","烹饪","建造","采矿","狩猎","研究","治疗","裁缝","驯兽","伐木"];
   var ITEMS = ["木制短弓","精细餐","棉布","长剑","板甲","药草茶","银器","石材","零件","毒箭"];
   var CATS = ["食物","制成品","原材料","零件","武器","衣服","建筑","块堆"];
+  var CONSUME_CATS = ["食物","药品","燃料","成瘾品","衣物","其他"];   // 损耗宫格：消耗品一级类目
   var RACES = ["机械族","人类","部落","动物","昆虫族","海盗","帝国军","野兽"];
   var PLACES = ["星岩哨站","霜原商队","翡翠山谷","黑石要塞","盐沼营地","废弃前哨"];
+  // ---- v1.1.4 试验：住所（RoomRoleLabel）+ 工作场所（Building_WorkTable defName/LabelCap）
+  //      方案 A 捕获（Notify_IterationCompleted→billGiver）+ B 定期快照（OwnedRoom）。
+  //      C# 尚未落地，此处为预览示意数据。 ----
+  var HOME_ROLES = ["卧室 · 主屋","卧室 · 东厢","营房 · 工房","单间 · 石屋","无住所"];
+  var WORKBENCHES = ["锻造台 · 工坊","裁缝台 · 制衣间","研究台 · 书房","熔炉 · 铸造间","料理台 · 厨房"];
 
   // ---- 各宫格数据生成器 ----
   function genWork(emptyP, fill) {
-    if (R.maybe(emptyP)) return { label:"累计工时 · 工时排名", value:"--", unit:"", rank:"", rows:[], bars:[] };
+    if (R.maybe(emptyP)) return {
+      label:"累计工时 · 工时排名", value:"--", unit:"", rank:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"工时结构 · 前 3 职业"
+    };
     var total = R.ri(50, 3000);
     var bars = [];
     var n = fill ? 3 : R.ri(0, 3);
@@ -435,10 +976,12 @@
       var tag = i===0 ? ' <span class="tag-primary">主业</span>' : (i===1 ? ' <span class="tag-secondary">副业</span>' : '');
       bars.push({ caption: works[i] + " · " + h + "h<span class=\"pct\">" + pct + "%</span>" + tag, pct: pct });
     }
+    // 固定 3 条进度条（不足 --/0 占位，对齐 C# workBars）
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
     return {
       label:"累计工时 · 工时排名",
       value: total, unit:"h",
-      // 仅工时使用 "排名 " 前缀；其他宫格 inline 是各自语义（重大/主驻地天数/历代击杀等）。
+      // 仅工时使用 "排名 " 前缀；其他宫格 inline 是各自语义（主驻地天数/历代击杀等）。
       rank: "排名 第 " + R.ri(1,20) + " / " + R.ri(5,30),
       rows: [
         { k:"周工时", v: R.ri(5,90) + " h" },
@@ -450,13 +993,25 @@
   }
 
   function genProd(emptyP, fill) {
-    if (R.maybe(emptyP)) return { label:"产出 · 累计产量", value:"--", unit:"", rank:"", rows:[], bars:[] };
+    if (R.maybe(emptyP)) return {
+      label:"产出 · 累计产量", value:"--", unit:"", rank:"0 类",
+      rows: [
+        { k:"周产出", v:"0 银" },
+        { k:"净值", v:"0 银" }
+      ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"产值贡献 · 前 3 类目"
+    };
     var silver = R.ri(10, 5000);
     var qty = R.ri(1, 200);
     var kinds = R.ri(1, 8);
+    // v1.1.4 统一基准为工时宫格：大字下方 KPI 行=周产出/净值（近 7 / 30 天滚动窗口银币，
+    // C# ComputeProductionWindowValue 扫描 Craft/Built 事件按 Def.BaseMarketValue 估值）。
+    var weekVal = R.ri(0, 800) + " 银";
+    var monthVal = R.ri(0, 3000) + " 银";
     // 真实数据源：ProductionTypeViews（按类目聚合、按产值降序）；bar 候选=类目名。
-    var n = fill ? 3 : R.ri(0, 3);
-    var cats = CATS.slice().sort(function(){return Math.random()-0.5;}).slice(0, n);
+    // 固定 3 条进度条，不足 3 类目用 "--"/0 占位（对齐 C# prodBars，布局稳定）。
+    var cats = CATS.slice().sort(function(){return Math.random()-0.5;}).slice(0, 3);
     // 给每个类目随机产值，再按产值降序（对齐 C# Types 排序）。
     var pairs = cats.map(function(c){ return { c:c, v:R.ri(10, 1500) }; });
     pairs.sort(function(a,b){ return b.v - a.v; });
@@ -465,98 +1020,136 @@
       var pct = total > 0 ? Math.round(p.v / total * 100) : 0;
       return { caption: p.c + "<span class=\"pct\">" + p.v + " 银 · " + pct + "%</span>", pct: pct };
     });
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
     return {
       label:"产出 · 累计产量",
       value: silver, unit:"银",
       // inline：维持产量(件) + 新增种类(类)
       rank: qty + " 件 · " + kinds + " 类",
-      rows: [],
+      rows: [
+        { k:"周产出", v: weekVal },
+        { k:"净值", v: monthVal }
+      ],
       bars: bars,
       structLabel:"产值贡献 · 前 3 类目"
     };
   }
 
   function genKill(emptyP, fill) {
-    if (R.maybe(emptyP)) return { label:"击杀", value:"--", unit:"", rank:"", rows:[], bars:[] };
+    if (R.maybe(emptyP)) return {
+      label:"击杀", value:"--", unit:"杀", rank:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"击杀构成 · 前 3 种族"
+    };
     var total = R.ri(1, 60);
     var bars = [];
-    // v6.8 落地：击杀构成进度条取前 2 种族，为底部 Sub（战斗风格单行）预留空间，避免与进度条重叠。
-    var n = fill ? 2 : R.ri(0, 2);
-    var races = RACES.slice().sort(function(){return Math.random()-0.5;}).slice(0, n);
+    // v1.1.4 落地：击杀构成进度条固定 3 条，不足 3 种族用 "--"/0 占位
+    //（与产出宫格一致，布局稳定；原 v6.8 取前 2 已废除）。
+    var races = RACES.slice().sort(function(){return Math.random()-0.5;}).slice(0, 3);
     for (var i=0;i<races.length;i++){
       var c = R.ri(1, total); var pct = R.ri(5, 80);
       bars.push({ caption: races[i] + "<span class=\"pct\">" + c + " · " + pct + "%</span>", pct: pct });
     }
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
     // ---- 个人战斗维度（v6.8 落地，绑定单 pawn，C# 已持久化累加） ----
     var dmgTotal = R.ri(500, 8000);                 // 生涯伤害：PawnObject.DamageDealtTotal（持久化近似累加）
-    var melee = R.ri(10, 90);                        // 战斗风格：近战击杀占比
-    var pMelee = Math.round(melee), pRanged = 100 - pMelee;
     var battles = R.ri(0, 20);                       // 参战战役：PawnObject.ParticipatedBattles（持久化累加）
     return {
       label:"击杀",
       value: total, unit:"杀",
-      rank: "",
+      // inline：猎物种类并入大字同行（对齐产出"件·类"视觉位；战斗风格已移除）
+      rank: R.ri(0,10) + " 种",
       rows: [
-        { k:"猎物种类", v: R.ri(0,10) + " 种" },
         { k:"参战战役", v: battles + " 场" },
-        { k:"生涯伤害", v: dmgTotal },
-        // 战斗风格并入 KPI 条第 4 行（对齐 C#：避免底部 Sub 与进度条重叠）
-        { k:"战斗风格", v: "近战 " + pMelee + "% · 远程 " + pRanged + "%" }
+        { k:"生涯伤害", v: dmgTotal }
       ],
       bars: bars,
-      structLabel:"击杀构成 · 前 2 种族"
+      structLabel:"击杀构成 · 前 3 种族"
     };
   }
 
-  function genBattle(emptyP, fill) {
-    if (R.maybe(emptyP)) return { label:"战役 · 累计", value:"--", unit:"", rank:"", rows:[], bars:[] };
-    var total = R.ri(1, 30);
-    var kills = R.ri(0, 200);
-    var roster = R.ri(Math.max(1, total), total * 30);   // 累计参战规模（人次）
-    // 个人贡献占比：该 pawn 个人击杀 / 殖民地累计歼敌（分母采用殖民地累计数据）
-    // 战役宫格在个人 ITab 中：大值=个人累计参与战役数，KPI=个人参战/殖民地规模/殖民地歼敌。
-    var myKills = R.ri(1, Math.max(2, kills));           // 个人击杀（绑定单 pawn）
-    var pC = kills>0 ? Math.min(100, Math.round(myKills/kills*100)) : 0;   // 个人贡献占比（cap 100%）
+  function genConsume(emptyP, fill) {
+    if (R.maybe(emptyP)) return {
+      label:"损耗 · 累计消耗", value:"--", unit:"银", rank:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"损耗构成 · 前 3 类目"
+    };
+    // 损耗 = 每日消耗品（食物/药品/成瘾品/燃料）按 Def.BaseMarketValue 计价累计。
+    // v1.1.4 C# 已落地：大值=累计损耗银（ConsumptionAccumulator 持久化累加，
+    // Capture=Thing.Ingested Postfix 每次进食/用药累加基价，不写事件流）；
+    // inline=日均损耗（近 30 天按天桶求和 / 30）；KPI 行=周损耗（近 7 天 SilverByDay 求和）/ 日均损耗；
+    // 进度条=损耗构成前 3 类目（固定 3 条，不足 "--"/0 占位，与产出宫格一致）。
+    var total = R.ri(50, 6000);
+    var daily = R.ri(0, 200) / 10;                          // 日均损耗（银/天，近30天/30）
+    var weekVal = R.ri(0, 700);                              // 周损耗（近 7 天银）
+    var cats = CONSUME_CATS.slice().sort(function(){return Math.random()-0.5;}).slice(0, 3);
+    var pairs = cats.map(function(c){ return { c:c, v:R.ri(5, 900) }; });
+    pairs.sort(function(a,b){ return b.v - a.v; });
+    var totalC = pairs.reduce(function(s,p){ return s + p.v; }, 0);
+    var bars = pairs.map(function(p){
+      var pct = totalC > 0 ? Math.round(p.v / totalC * 100) : 0;
+      return { caption: p.c + "<span class=\"pct\">" + p.v + " 银 · " + pct + "%</span>", pct: pct };
+    });
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
     return {
-      label:"战役 · 累计",
-      value: total, unit:"次",
-      rank: "",
+      label:"损耗 · 累计消耗",
+      value: total, unit:"银",
+      // inline：日均损耗（累计 / 服务天数）
+      rank: "日均 " + daily + " 银/天",
       rows: [
-        { k:"累计参与", v: total },
-        { k:"累计规模", v: roster },
-        { k:"累计歼敌", v: kills }
+        { k:"周损耗", v: weekVal + " 银" },
+        { k:"日均损耗", v: daily + " 银" }
       ],
-      // 仅保留个人贡献占比进度条（分母为殖民地累计歼敌）
-      barBlocks: [
-        { label:"个人贡献占比 · 我对殖民地歼敌", bars:[
-          { caption:"贡献<span class=\"pct\">" + myKills + " / " + kills + " · " + pC + "%</span>", pct: pC }
-        ]}
-      ]
+      bars: bars,
+      structLabel:"损耗构成 · 前 3 类目"
     };
   }
 
   function genFoot(emptyP, fill) {
-    if (R.maybe(emptyP)) return { label:"足迹 · 主驻地", value:"--", unit:"", rank:"", rows:[], bars:[] };
-    var n = fill ? 2 : R.ri(0, 2);
-    var stays = [];
-    var pls = PLACES.slice().sort(function(){return Math.random()-0.5;}).slice(0, n);
-    for (var i=0;i<pls.length;i++) stays.push({ k: pls[i], v: R.ri(1,900) + " 天" });
+    if (R.maybe(emptyP)) return {
+      label:"足迹 · 主驻地", value:"--", unit:"地", rank:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"停留时长 · 前 3 地点"
+    };
+    // 统一基准（与工时/产出/损耗一致）：大字 + inline + 2 KPI 行 + caption + 固定 3 进度条。
+    // 大值=足迹地点数(Footprint.PlaceCount)；inline=主驻地天数(HomeDays)；
+    // KPI 行=主驻地(HomePlaceText)/远征次数(ExpeditionCount)；
+    // 进度条=停留时长前 3 地点(Footprint.Stays 按 DwellTicks 降序, Share01=dwell/总dwell)，固定 3 条不足 "--"/0 占位。
+    var placeCount = R.ri(1, 40);
+    var homeDays = R.ri(0, 900);
+    var exp = R.ri(0, 20);
+    var pls = PLACES.slice().sort(function(){return Math.random()-0.5;}).slice(0, 3);
+    var dwells = pls.map(function(p){ return { p:p, d:R.ri(3, 900) }; });
+    dwells.sort(function(a,b){ return b.d - a.d; });
+    var totalD = dwells.reduce(function(s,x){ return s + x.d; }, 0);
+    var bars = dwells.map(function(x){
+      var pct = totalD > 0 ? Math.round(x.d / totalD * 100) : 0;
+      return { caption: x.p + "<span class=\"pct\">" + x.d + " 天 · " + pct + "%</span>", pct: pct };
+    });
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
     return {
       label:"足迹 · 主驻地",
-      value: R.ri(1, 40), unit:"地",
-      rank: R.ri(0, 900) + " 天",
+      value: placeCount, unit:"地",
+      rank: homeDays + " 天",
       rows: [
         { k:"主驻地", v: R.pick(PLACES) },
-        { k:"远征", v: R.ri(0, 20) + " 次" },
-        { k:"最长停留", v: R.ri(0, 900) + " 天" }
+        { k:"远征", v: exp + " 次" }
       ],
-      bars: stays,
-      structLabel:"停留地点 · Top 2"
+      bars: bars,
+      structLabel:"停留时长 · 前 3 地点"
     };
   }
 
   function genLegacy(emptyP, fill) {
-    if (R.maybe(emptyP)) return { label:"神器传承", value:"--", unit:"", rank:"", rows:[], bars:[] };
+    if (R.maybe(emptyP)) return {
+      label:"神器传承", value:"--", unit:"", rank:"", side:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"传承链（按击杀前 3）"
+    };
     var holders = [];
     var n = fill ? 5 : R.ri(0, 5);
     for (var i=0;i<n;i++){
@@ -565,20 +1158,24 @@
     // 按击杀降序取前 3（对齐 C# 逻辑）
     holders.sort(function(a,b){ return b.kills - a.kills; });
     holders = holders.slice(0, 3);
-    var chainRows = holders.map(function(h, idx){
-      return { k: "第" + (idx+1) + " · " + h.name + " · " + h.gen, v: h.kills + " 杀" };
-    });
     var totalKills = holders.reduce(function(s,h){ return s + h.kills; }, 0);
+    // 传承链进度条：各代击杀占比（Share01 = 该代击杀/总击杀），固定 3 条不足 --/0 占位
+    var chainBars = holders.map(function(h, idx){
+      var pct = totalKills > 0 ? Math.round(h.kills / totalKills * 100) : 0;
+      return { caption: "第" + (idx+1) + " · " + h.name + " · " + h.gen + "<span class=\"pct\">" + pct + "%</span>", pct: pct, tag: h.kills + " 杀" };
+    });
+    while (chainBars.length < 3) chainBars.push({ caption:"--", pct:0 });
     return {
       label:"神器传承",
       value: R.pick(["断颅者之弓","碎星之矛","霜火长弓","远古战锤","毒牙匕首"]),
       rank: "历代 " + totalKills + " 杀",
+      // v1.1.4：锻造者移到「神器传承」标题右侧（side），KPI 行剩 2 行
+      side: "锻 · " + R.pick(NAMES),
       rows: [
-        { k:"锻造者", v: R.pick(NAMES) },
         { k:"传承代数", v: R.ri(1,8) + " 代" },
         { k:"当代击杀", v: (holders.length?holders[0].kills:0) + " 杀" }
       ],
-      bars: chainRows,
+      bars: chainBars,
       structLabel:"传承链（按击杀前 3）"
     };
   }
@@ -589,7 +1186,10 @@
   function renderCard(tone, data) {
     var html = '<div class="kpi-card tone-' + tone + '">';
     html += '<div class="kpi-accent"></div>';
-    html += '<div class="kpi-label">' + esc(data.label) + '</div>';
+    // v1.1.4：side = 标题右侧小字（如传承锻造者），右对齐
+    html += '<div class="kpi-label">' + esc(data.label);
+    if (data.side) html += '<span class="kpi-label-side">' + esc(data.side) + '</span>';
+    html += '</div>';
     // 大值（长武器名自动缩小字号，对齐 C# SixGrid 字体自适应）
     var vstr = (data.value !== "--" && data.value !== null && data.value !== undefined) ? String(data.value) : "";
     var vcls = "kpi-value";
@@ -620,18 +1220,23 @@
     if (blocks) {
       blocks.forEach(function(block){
         html += '<div class="kpi-struct-label">' + esc(block.label || "明细") + '</div>';
+        // v1.1.4：bars 容器用 flex column，每条 flex:1 等距分布，第 1 条贴近 divider 下方、第 N 条贴底。
+        html += '<div class="kpi-bars-wrap">';
         block.bars.forEach(function(b){
           if (b.pct !== undefined && b.pct !== null) {
-            // 进度条
+            // 进度条（caption 在 bar 上方，flex 居中；可选右对齐 tag 如传承链击杀数）
             html += '<div class="struct-row">';
+            html += '<div class="struct-caption">' + b.caption;
+            if (b.tag) html += '<span class="kpi-bar-tag">' + esc(b.tag) + '</span>';
+            html += '</div>';
             html += '<div class="struct-bar"><div class="struct-fill" style="width:' + Math.max(2, b.pct) + '%"></div></div>';
-            html += '<div class="struct-caption">' + b.caption + '</div>';
             html += '</div>';
           } else {
-            // 行列表（传承链）
-            html += '<div class="prod-list"><div class="row"><span class="k">' + esc(b.k) + '</span><span class="v">' + esc(b.v) + '</span></div></div>';
+            // 行列表（传承链，flex 居中）
+            html += '<div class="struct-row chain-row"><div class="prod-list"><div class="row"><span class="k">' + esc(b.k) + '</span><span class="v">' + esc(b.v) + '</span></div></div></div>';
           }
         });
+        html += '</div>';
       });
     } else {
       // 空数据占位（对齐 C# SixGrid 的"暂无记录 --"）
@@ -651,26 +1256,372 @@
     grid.innerHTML = html;
   }
 
+  // ---- v1.1.4 三卡：房间 / 工坊 / 类型（主区点击改名，位置副行点击定位） ----
+  var RENAME_KEYS = {
+    "房间": "为这间房起一个专属昵称（仅展示）：",
+    "工坊": "为这台工坊起一个专属名称：",
+    "类型": "替换这间房的类型标签（底层 Room.Role 不变）："
+  };
+  function renderResidenceBar(rc) {
+    var bar = document.getElementById("residenceBar");
+    if (!bar) return;
+    rc = rc || {};
+    function cell(cls, key, val, pos, posClick) {
+      var v = (val == null || val === "") ? '<span class="rw-v dim">--</span>' : '<span class="rw-v">' + esc(val) + "</span>";
+      var p = (pos == null || pos === "") ? '<span class="rw-pos">--</span>'
+        : '<span class="rw-pos' + (posClick ? " clickable" : "") + '">' + esc(pos) + "</span>";
+      return '<div class="rw-card ' + cls + '" data-key="' + key + '"><span class="rw-k">' + esc(key)
+        + "</span>" + v + p + "</div>";
+    }
+    var homePos = rc.homePos ? rc.homePos : null;
+    var workPos = rc.workPos ? rc.workPos : null;
+    bar.innerHTML =
+      cell("rw-home", "房间", rc.homeRole, homePos, !!homePos)
+      + cell("rw-work", "工坊", rc.workBench, workPos, !!workPos)
+      + cell("rw-type", "类型", rc.roomType, homePos, !!homePos);
+    bar.querySelectorAll(".rw-card").forEach(function (card) {
+      card.addEventListener("click", function () {
+        var key = card.getAttribute("data-key");
+        if (!RENAME_KEYS[key]) return;
+        var prompt = RENAME_KEYS[key];
+        var cur = card.querySelector(".rw-v").textContent;
+        var name = window.prompt(prompt, (cur === "--" ? "" : cur));
+        if (name === null) return;
+        card.querySelector(".rw-v").textContent = name.trim() === "" ? "--" : name.trim();
+      });
+    });
+    bar.querySelectorAll(".rw-pos.clickable").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.stopPropagation();
+        window.alert("镜头跳转至坐标 " + el.textContent + "（C# 实现用 CameraJumper.TryJump）");
+      });
+    });
+  }
+
+  function genResidenceBar(emptyP) {
+    if (R.maybe(emptyP)) return { homeRole: null, workBench: null, roomType: null, homePos: null, workPos: null };
+    var homeRole = R.pick(HOME_ROLES);
+    var workBench = R.pick(WORKBENCHES);
+    return {
+      homeRole: homeRole,
+      workBench: workBench,
+      roomType: homeRole.split(" · ")[0],
+      homePos: R.pick(["12,8", "24,18", "7,31", "40,5"]),
+      workPos: R.pick(["15,22", "9,14", "33,27", "5,40"])
+    };
+  }
+
   // ---- 示例（默认）数据 ----
   function sampleData() {
     return [
-      genWork(0), genProd(0), genKill(0), genBattle(0), genFoot(0), genLegacy(0)
+      genWork(0), genProd(0), genKill(0), genConsume(0), genFoot(0), genLegacy(0)
     ];
   }
 
   // ---- 随机化（六宫格全覆盖 + 数据最大化存在，用于全量测试） ----
   function randomData() {
-    // emptyP = 0（不空置）；fill = true（各子列表取满：进度条3条 / 停留2条 / 传承链候选5取前3）
+    // emptyP = 0（不空置）；fill = true（工时进度条取满3条 / 停留2条 / 传承链候选5取前3）；
+    // 产出/击杀/损耗 bars 恒固定 3 条（不足 "--"/0 占位，fill 不再参与）
     return [
-      genWork(0, true), genProd(0, true), genKill(0, true), genBattle(0, true), genFoot(0, true), genLegacy(0, true)
+      genWork(0, true), genProd(0, true), genKill(0, true), genConsume(0, true), genFoot(0, true), genLegacy(0, true)
     ];
   }
 
-  document.getElementById("btnRandom").addEventListener("click", function(){ renderGrid(randomData()); });
-  document.getElementById("btnReset").addEventListener("click", function(){ renderGrid(sampleData()); });
+  document.getElementById("btnRandom").addEventListener("click", function(){
+    renderGrid(randomData()); renderResidenceBar(genResidenceBar(0));
+  });
+  document.getElementById("btnReset").addEventListener("click", function(){
+    renderGrid(sampleData()); renderResidenceBar(genResidenceBar(0));
+  });
 
-  // 初始渲染示例数据
+  // ---- v1.1.4：主题切换（循环 史诗→暗黑→水墨→朋克，对齐 C# UITheme.NextThemeId） ----
+  var THEMES = [
+    { id: "epic",       label: "史诗奇幻" },
+    { id: "gothic",     label: "暗黑哥特" },
+    { id: "wuxia",      label: "东方水墨" },
+    { id: "steampunk",  label: "蒸汽朋克" }
+  ];
+  var themeBtn = document.getElementById("btnTheme");
+  function applyTheme(themeId) {
+    document.documentElement.setAttribute("data-theme", themeId);
+    for (var i = 0; i < THEMES.length; i++) {
+      if (THEMES[i].id === themeId) { themeBtn.textContent = "主题 · " + THEMES[i].label; return; }
+    }
+  }
+  function nextThemeId(cur) {
+    for (var i = 0; i < THEMES.length; i++) if (THEMES[i].id === cur) return THEMES[(i + 1) % THEMES.length].id;
+    return THEMES[0].id;
+  }
+  if (themeBtn) {
+    var curTheme = document.documentElement.getAttribute("data-theme") || "industrial";
+    applyTheme(curTheme);
+    themeBtn.addEventListener("click", function(){ applyTheme(nextThemeId(document.documentElement.getAttribute("data-theme"))); });
+  }
+
+  // ---- v1.1.5 预览：ITab 底部预留勋章展示区（对齐 C# DrawMedalPreview 占位区块） ----
+  // 勋章池 key = MedalDef.defName（严格对齐 Defs/MedalDefs.xml 真实 27 枚阈值勋章）。
+  // 模拟 C# MedalAwardEvaluator.EvaluatePawn(pawn).NewAwards（仅达标且未授予者入列表）。
+  // threshold = 真实 Def 阈值；current = 当前值（大幅收紧：默认仅少数达标，多数未达标，条件不再宽松）。
+  // title=称号(Label) tier=档位（Bronze/Silver/Gold→小写） metric=指标中文 desc=描述 current/threshold=进度条。
+  // ============================================================
+  // 授勋机制（纯阈值达成，无评级门槛）
+  // 勋章授勋仅需 (阈值达标) AND (尚未授予)。原「工程师职称」评级门槛已移除。
+  // ============================================================
+  var MEDAL_POOL = [
+    // 6.1 劳动系（workTime 单位 tick；productionQuantity 件；productionSilver 银）
+    { key: "Medal_Labor_Model_Bronze",  title: "劳动模范", tier: "bronze", metric: "累计工时", current: 4800000,  threshold: 4800000,  reqGrade: "junior",  desc: "累计工时达 4800000 tick（约 1333 游戏时）。需评级：初级工程师。" },
+    { key: "Medal_Labor_Model_Silver",  title: "劳动模范", tier: "silver", metric: "累计工时", current: 3120000,  threshold: 12000000, reqGrade: "inter",   desc: "累计工时达 12000000 tick（约 3333 游戏时）。需评级：中级工程师。" },
+    { key: "Medal_Labor_Model_Gold",    title: "劳动模范", tier: "gold",   metric: "累计工时", current: 16100000, threshold: 30000000, reqGrade: "senior",  desc: "累计工时达 30000000 tick（约 8333 游戏时）。需评级：高级工程师。" },
+    { key: "Medal_Labor_Worker_Bronze", title: "先进工作者", tier: "bronze", metric: "产出件数", current: 312,       threshold: 300,       reqGrade: "none", desc: "累计产出达 300 件。" },
+    { key: "Medal_Labor_Worker_Silver", title: "先进工作者", tier: "silver", metric: "产出件数", current: 640,       threshold: 1000,      reqGrade: "none", desc: "累计产出达 1000 件。" },
+    { key: "Medal_Labor_Worker_Gold",   title: "先进工作者", tier: "gold",   metric: "产出件数", current: 1180,      threshold: 3000,      reqGrade: "none", desc: "累计产出达 3000 件。" },
+    { key: "Medal_Labor_TechAce_Bronze",title: "技术能手", tier: "bronze", metric: "产出银值", current: 30500,     threshold: 30000,     reqGrade: "none", desc: "累计产出银值达 30000。" },
+    { key: "Medal_Labor_TechAce_Silver",title: "技术能手", tier: "silver", metric: "产出银值", current: 61200,     threshold: 100000,    reqGrade: "none", desc: "累计产出银值达 100000。" },
+    { key: "Medal_Labor_TechAce_Gold",  title: "技术能手", tier: "gold",   metric: "产出银值", current: 138000,    threshold: 300000,    reqGrade: "none", desc: "累计产出银值达 300000。" },
+    // 6.2 战斗系（kills 杀；damageDealt 伤害；participatedBattles 场）
+    { key: "Medal_Combat_Hero_Bronze",  title: "战斗英雄", tier: "bronze", metric: "累计击杀", current: 22,        threshold: 20,        reqGrade: "none", desc: "累计击杀达 20。" },
+    { key: "Medal_Combat_Hero_Silver",  title: "战斗英雄", tier: "silver", metric: "累计击杀", current: 34,        threshold: 50,        reqGrade: "none", desc: "累计击杀达 50。" },
+    { key: "Medal_Combat_Hero_Gold",    title: "战斗英雄", tier: "gold",   metric: "累计击杀", current: 71,        threshold: 120,       reqGrade: "none", desc: "累计击杀达 120。" },
+    { key: "Medal_Combat_FirstClass_Bronze", title: "一等功臣", tier: "bronze", metric: "生涯伤害", current: 2100,  threshold: 2000,      reqGrade: "none", desc: "累计造成伤害达 2000。" },
+    { key: "Medal_Combat_FirstClass_Silver", title: "一等功臣", tier: "silver", metric: "生涯伤害", current: 3200,  threshold: 5000,      reqGrade: "none", desc: "累计造成伤害达 5000。" },
+    { key: "Medal_Combat_FirstClass_Gold",   title: "一等功臣", tier: "gold",   metric: "生涯伤害", current: 6100,  threshold: 12000,     reqGrade: "none", desc: "累计造成伤害达 12000。" },
+    { key: "Medal_Combat_Enlistee_Bronze",title: "新兵勋章", tier: "bronze", metric: "参战次数", current: 3,         threshold: 3,         reqGrade: "none", desc: "累计参战达 3 场。" },
+    { key: "Medal_Combat_Enlistee_Silver",title: "新兵勋章", tier: "silver", metric: "参战次数", current: 5,         threshold: 8,         reqGrade: "none", desc: "累计参战达 8 场。" },
+    { key: "Medal_Combat_Enlistee_Gold",  title: "新兵勋章", tier: "gold",   metric: "参战次数", current: 11,        threshold: 20,        reqGrade: "none", desc: "累计参战达 20 场。" },
+    // 6.3 生产/损耗系（consumptionSilver 银，Pawn 级损耗）
+    { key: "Medal_Support_Quartermaster_Bronze", title: "军需官", tier: "bronze", metric: "损耗银值", current: 8200,  threshold: 8000,      reqGrade: "none", desc: "累计损耗银值达 8000。" },
+    { key: "Medal_Support_Quartermaster_Silver", title: "军需官", tier: "silver", metric: "损耗银值", current: 12400, threshold: 20000,     reqGrade: "none", desc: "累计损耗银值达 20000。" },
+    { key: "Medal_Support_Quartermaster_Gold",   title: "军需官", tier: "gold",   metric: "损耗银值", current: 18800, threshold: 50000,     reqGrade: "none", desc: "累计损耗银值达 50000。" },
+    // 6.4 传承/装备系（Thing 级；heirloomHolders 持有代数；legacyKills 历代击杀）
+    { key: "Medal_Legacy_Heirloom_Bronze", title: "传家宝", tier: "bronze", metric: "持有代数", current: 1,         threshold: 2,         reqGrade: "none", desc: "传承持有达 2 代。" },
+    { key: "Medal_Legacy_Heirloom_Silver", title: "传家宝", tier: "silver", metric: "持有代数", current: 1,         threshold: 3,         reqGrade: "none", desc: "传承持有达 3 代。" },
+    { key: "Medal_Legacy_Heirloom_Gold",   title: "传家宝", tier: "gold",   metric: "持有代数", current: 2,         threshold: 5,         reqGrade: "none", desc: "传承持有达 5 代。" },
+    { key: "Medal_Legacy_KillerBlade_Bronze", title: "传承利刃", tier: "bronze", metric: "历代击杀", current: 34,    threshold: 30,        reqGrade: "none", desc: "传承武器历代击杀达 30。" },
+    { key: "Medal_Legacy_KillerBlade_Silver", title: "传承利刃", tier: "silver", metric: "历代击杀", current: 88,    threshold: 100,       reqGrade: "none", desc: "传承武器历代击杀达 100。" },
+    { key: "Medal_Legacy_KillerBlade_Gold",   title: "传承利刃", tier: "gold",   metric: "历代击杀", current: 137,   threshold: 250,       reqGrade: "none", desc: "传承武器历代击杀达 250。" }
+  ];
+  // 档位→CSS 变量（填充色块 / 进度条 / Pill 背景，复用 --bronze/--silver/--gold）
+  var TIER_VAR = { bronze: "var(--bronze)", silver: "var(--silver)", gold: "var(--gold)" };
+  var TIER_LABEL = { bronze: "青铜", silver: "白银", gold: "黄金" };
+
+  // ---- 图像资产引入：defName → 真实中文 png（Textures/Medals/ 下现有 6 张中文图） ----
+  // 仅劳动模范三档有对应真实图；其余勋章图尚未生成，引用失败降级为色块（onerror）。
+  // 先进团体三张（金/银/铜）为用户额外资产，无 defName 对应，不纳入授勋池，仅留映射备用。
+  var MEDAL_IMG = {
+    "Medal_Labor_Model_Bronze":  "劳动勋章铜牌.png",
+    "Medal_Labor_Model_Silver":  "劳动勋章银牌.png",
+    "Medal_Labor_Model_Gold":    "劳动勋章金牌.png"
+  };
+  function medalImg(key){
+    var fallback = TIER_VAR[(MEDAL_POOL.find(function(m){ return m.key === key; }) || {}).tier] || "var(--border)";
+    if (MEDAL_IMG[key]) {
+      return '<img class="medal-png" src="../../../Textures/Medals/' + MEDAL_IMG[key] + '" alt="' + key + '" '
+           + 'onerror="this.onerror=null; this.style.display=\'none\'; this.parentNode.classList.add(\'no-img\');">';
+    }
+    // 无对应图：返回空，由 CSS .badge.no-img 显示色块降级
+    return '';
+  }
+  var grantedMedals = [];   // 已授予列表（预览态，不写存档）
+
+  function renderMedals(animateKey) {
+    var strip = document.getElementById("medalStrip");
+    if (grantedMedals.length === 0) {
+      strip.innerHTML = '<div class="medal-empty">暂无勋章 · 点击右侧「＋」打开授勋界面</div>';
+      appendAddCell(strip);
+      return;
+    }
+    var html = grantedMedals.map(function(m, i){
+      var cls = "medal-icon t-" + m.tier + (m.key === animateKey ? " just-granted" : "");
+      return '<div class="' + cls + '" data-i="' + i + '" data-key="' + m.key + '" title="' + m.title + ' · ' + TIER_LABEL[m.tier] + '（点击查看详情）">' +
+               medalImg(m.key) +
+               '<span class="corner">' + TIER_LABEL[m.tier].charAt(0) + '</span>' +
+             '</div>';
+    }).join("");
+    strip.innerHTML = html;
+    strip.querySelectorAll(".medal-icon").forEach(function(el){
+      el.style.cursor = "pointer";
+      el.addEventListener("click", function(){ openMedalDetail(el.getAttribute("data-key")); });
+    });
+    appendAddCell(strip);
+  }
+
+  // ---- v1.1.5 预览：勋章条末尾「＋」加号格（打开授勋界面入口，对齐 C# OpenManualAwardDialog） ----
+  // 默认沉默：不加 auto-pop、不高亮动画；仅 hover 显 tip，点击打开授勋界面。
+  function appendAddCell(strip) {
+    var add = document.createElement("div");
+    add.className = "medal-add";
+    add.id = "medalAdd";
+    add.title = "打开授勋界面";
+    add.innerHTML = '<span class="plus">＋</span><span class="add-tip">授勋</span>';
+    add.addEventListener("click", openAwardDialog);
+    strip.appendChild(add);
+  }
+
+  // ---- v1.1.5 预览：手动授勋 Dialog（对齐 C# Dialog_ManualMedalAward） ----
+  // 「＋」加号格点击 → 打开模态；仅列 NewAwards（达标未授）；点卡即授予（从列表移除 + 同步勋章墙 + footer 反馈）。
+  var awardMask = document.getElementById("awardMask");
+  var awardBody = document.getElementById("awardBody");
+  var awardFoot = document.getElementById("awardFoot");
+
+  function openAwardDialog() {
+    renderAwardList();
+    awardFoot.textContent = "授勋条件：指标达标即可授予（不计评级门槛）。";
+    awardMask.classList.add("show");
+  }
+  function closeAwardDialog() { awardMask.classList.remove("show"); }
+
+  // ---- v1.1.5 预览：勋章详情 Dialog（点击勋章查看具体信息，只读，对齐 C# 勋章墙卡片字段） ----
+  // 增益文案对齐 Defs/MedalDefs.xml 的 MedalBuffDef.displayBonus（WorkSpeed/Combat 3/5/10%）。
+  var BUFF_MAP = {
+    "Medal_Labor_Model_Bronze":  "作用速率 +3%（劳动系）",
+    "Medal_Labor_Model_Silver":  "作用速率 +5%（劳动系）",
+    "Medal_Labor_Model_Gold":    "作用速率 +10%（劳动系）",
+    "Medal_Labor_TechAce_Bronze": "作用速率 +3%（劳动系）",
+    "Medal_Labor_TechAce_Silver": "作用速率 +5%（劳动系）",
+    "Medal_Labor_TechAce_Gold":   "作用速率 +10%（劳动系）",
+    "Medal_Combat_Hero_Bronze":   "战斗能力 +3%（战斗系）",
+    "Medal_Combat_Hero_Silver":   "战斗能力 +5%（战斗系）",
+    "Medal_Combat_Hero_Gold":     "战斗能力 +10%（战斗系）",
+    "Medal_Combat_FirstClass_Bronze": "战斗能力 +3%（战斗系）",
+    "Medal_Combat_FirstClass_Silver": "战斗能力 +5%（战斗系）",
+    "Medal_Combat_FirstClass_Gold":   "战斗能力 +10%（战斗系）",
+    "Medal_Combat_Enlistee_Bronze":   "（无增益）",
+    "Medal_Combat_Enlistee_Silver":   "（无增益）",
+    "Medal_Combat_Enlistee_Gold":     "（无增益）",
+    "Medal_Support_Quartermaster_Bronze": "（无增益）",
+    "Medal_Support_Quartermaster_Silver": "（无增益）",
+    "Medal_Support_Quartermaster_Gold":   "（无增益）",
+    "Medal_Labor_Worker_Bronze": "（无增益）",
+    "Medal_Labor_Worker_Silver": "（无增益）",
+    "Medal_Labor_Worker_Gold":   "（无增益）",
+    "Medal_Legacy_Heirloom_Bronze": "（无增益）",
+    "Medal_Legacy_Heirloom_Silver": "（无增益）",
+    "Medal_Legacy_Heirloom_Gold":   "（无增益）",
+    "Medal_Legacy_KillerBlade_Bronze": "战斗能力 +3%（战斗系）",
+    "Medal_Legacy_KillerBlade_Silver": "战斗能力 +5%（战斗系）",
+    "Medal_Legacy_KillerBlade_Gold":   "战斗能力 +10%（战斗系）"
+  };
+  var detailMask = document.getElementById("medalDetailMask");
+  var detailBody = document.getElementById("detailBody");
+  function ownerTypeOf(key){ return key.indexOf("Medal_Legacy_") === 0 ? "装备 / 传承物" : "殖民者（Pawn）"; }
+  function openMedalDetail(key){
+    var p = MEDAL_POOL.find(function(x){ return x.key === key; });
+    if (!p) return;
+    var c = TIER_VAR[p.tier];
+    var pct = p.threshold > 0 ? Math.round(p.current / p.threshold * 100) : 0;
+    var reached = p.current >= p.threshold;
+    var imgHtml = medalImg(p.key);
+    var badgeCls = "big-badge" + (imgHtml === '' ? " no-img" : '');
+    var badgeInner = imgHtml === '' ? '' : imgHtml;
+    var buff = BUFF_MAP[p.key] || "（无增益）";
+    detailBody.innerHTML =
+      '<div class="detail-top">' +
+        '<div class="' + badgeCls + '">' + badgeInner + '</div>' +
+        '<div class="dt-title">' +
+          '<div class="nm">' + p.title + '</div>' +
+          '<span class="pill" style="background:' + c + '22;color:' + c + ';border-color:' + c + '">' + TIER_LABEL[p.tier] + ' · ' + p.metric + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="detail-rows">' +
+        '<div class="detail-row"><span class="k">归属</span><span class="v">' + ownerTypeOf(p.key) + '</span></div>' +
+        '<div class="detail-row"><span class="k">当前值</span><span class="v">' + fmtVal(p.current) + '</span></div>' +
+        '<div class="detail-row"><span class="k">阈值</span><span class="v">' + fmtVal(p.threshold) + '</span></div>' +
+        '<div class="detail-row"><span class="k">进度</span><span class="v">' + pct + '%（' + (reached ? '已达标' : '未达标') + '）</span></div>' +
+        '<div class="detail-row"><span class="k">所需职称</span><span class="v grade-v">无（不限评级）</span></div>' +
+        '<div class="detail-row"><span class="k">defName</span><span class="v" style="font-size:10px;">' + p.key + '</span></div>' +
+      '</div>' +
+      '<div class="detail-desc">' + (p.desc || '') + '</div>' +
+      '<div class="detail-buff">增益：' + buff + '</div>';
+    detailMask.classList.add("show");
+  }
+  function closeMedalDetail(){ detailMask.classList.remove("show"); }
+  document.getElementById("detailClose").addEventListener("click", closeMedalDetail);
+  detailMask.addEventListener("click", function(e){ if (e.target === detailMask) closeMedalDetail(); });
+
+  function renderAwardList() {
+    // NewAwards = 池中未授予者且指标达标（评级门槛已移除）
+    var pending = MEDAL_POOL.filter(function(p){
+      var notGranted = !grantedMedals.some(function(g){ return g.title === p.title && g.tier === p.tier; });
+      var met = p.current >= p.threshold;
+      return notGranted && met;
+    });
+    if (pending.length === 0) {
+      awardBody.innerHTML = '<div class="award-empty">当前没有可授予的勋章。<br>' +
+        '继续累积各项指标，达标后会出现在这里。' +
+        '</div>';
+      return;
+    }
+    awardBody.innerHTML = pending.map(function(p, i){
+      var pct = p.threshold > 0 ? Math.max(2, Math.round(p.current / p.threshold * 100)) : 0;
+      var c = TIER_VAR[p.tier];
+      var imgHtml = medalImg(p.key);
+      var badgeCls = "badge" + (imgHtml === '' ? " no-img" : "");
+      var badgeStyle = imgHtml === '' ? (' style="background:' + c + '"') : '';
+      var badgeInner = imgHtml === '' ? '' : imgHtml;
+      return '<div class="award-card" data-key="' + p.key + '">' +
+               '<div class="' + badgeCls + '"' + badgeStyle + '>' + badgeInner + '</div>' +
+               '<div class="mid">' +
+                 '<div class="lab">' + p.title + '</div>' +
+                 '<div class="desc">' + (p.desc || '') + '</div>' +
+                 '<div class="bar"><div class="fill" style="width:' + pct + '%;background:' + c + '"></div></div>' +
+                 '<div class="ratio">' + fmtVal(p.current) + ' / ' + fmtVal(p.threshold) + '（已达标）</div>' +
+               '</div>' +
+               '<div class="tier-pill" style="background:' + c + '">' + TIER_LABEL[p.tier] + '</div>' +
+               '<button class="detail-btn" data-key="' + p.key + '">详情</button>' +
+             '</div>';
+    }).join("");
+    awardBody.querySelectorAll(".award-card").forEach(function(card){
+      card.addEventListener("click", function(){
+        var p = MEDAL_POOL.find(function(x){ return x.key === card.dataset.key; });
+        if (!p) return;
+        tryAward(p);
+      });
+    });
+    awardBody.querySelectorAll(".detail-btn").forEach(function(btn){
+      btn.addEventListener("click", function(e){
+        e.stopPropagation();
+        openMedalDetail(btn.getAttribute("data-key"));
+      });
+    });
+  }
+
+  function tryAward(p) {
+    // 模拟 C# MedalAwardService.AwardManual：写存档 + 从列表移除 + onAwarded 重建
+    if (grantedMedals.some(function(g){ return g.title === p.title && g.tier === p.tier; })) return;
+    grantedMedals.push({ title: p.title, tier: p.tier, key: p.key });
+    awardFoot.textContent = "已授予：" + p.title + " · " + TIER_LABEL[p.tier];
+    renderMedals(p.key);   // 同步勋章墙（含动画）
+    renderAwardList();     // 即时从列表移除该枚
+  }
+
+  function fmtVal(v){ return v >= 10000 ? (v/1000).toFixed(1) + "K" : v; }
+
+  // Dialog 关闭交互（X / 点遮罩外部 / 测试入口）
+  document.getElementById("awardClose").addEventListener("click", closeAwardDialog);
+  awardMask.addEventListener("click", function(e){ if (e.target === awardMask) closeAwardDialog(); });
+
+  document.getElementById("btnAwardTest").addEventListener("click", function(){
+    // 从池中挑一枚尚未授予的（随机），模拟"随机授勋"
+    var remaining = MEDAL_POOL.filter(function(p){
+      return !grantedMedals.some(function(g){ return g.title === p.title && g.tier === p.tier; });
+    });
+    if (remaining.length === 0) {
+      // 全部已授，重置以便反复演示
+      grantedMedals = [];
+      renderMedals();
+      renderAwardList();
+      return;
+    }
+    var pick = remaining[Math.floor(Math.random() * remaining.length)];
+    var key = pick.key;   // 必须是 MedalDef.defName，与 Textures/Medals/<key>.png 同名
+    grantedMedals.push({ title: pick.title, tier: pick.tier, key: key });
+    renderMedals(key);
+  });
+
+  // 初始渲染示例数据（三卡：房间/工坊/类型 + 位置副行）
   renderGrid(sampleData());
+  renderResidenceBar({ homeRole: "卧室 · 主屋", workBench: "锻造台 · 工坊", roomType: "卧室", homePos: "24,18", workPos: "15,22" });
+  renderMedals();   // 勋章展示区初始空态
 })();
 </script>
 
@@ -686,15 +1637,15 @@ v6.6 预览更新说明 (2026-08-11) — 相对 v6.5：移除里程碑时间轴�
 | 宫格 | 当前 C# 渲染 (BuildCells) | 预览对齐 |
 |------|---------|---------|
 | ① 工时 | `TotalHours`(取整)+"h" 单位；副文=殖民地第N/M(`UI.Kpi.Rank`) | 预览：大值=累计工时 1234 h（`TotalHours`+内联"h"），**同排=工时排名 第3/12**(`ColonyRank/ColonyPopulation`)；KPI 条=周工时(`WeeklyHours`)/日均(`DailyHours`)；工时结构=前 3 职业 mini 进度条（`CareerBars` 按 Ticks 降序前 3，每行 `UIComponents.ProgressBar(Share01,Accent)` + 字幕 + `IsPrimary→主业`/`IsSecondary→副业` 标签） |
-| ② 产出 | `ProductionSilverValue`(取整)+"银" 单位；副文=`ProductionTotal`+"件 · "+种类数+"类"(`ProductionTypeViews.Count`)；**KPI 条已移除**(原单产均值/分类数)；产值贡献前3=`ProductionTypeViews`(`ProductionAccumulator` 真实累计，按类目聚合、按产值降序) | 预览：大值=累计价值 1850 银(`ProductionSilverValue`)，**同排=累计产量 47 件 · 5 类**(`ProductionTotal`+`ProductionTypeViews.Count`)；无 KPI 条；**产值贡献前3类目**=统一进度条(`ProductionTypeViews` 按 MarketValue 降序：武器720银·39%/食物540银·29%/衣服310银·17%)，`Share01=MarketValue/TotalMarketValue` |
-| ③ 击杀 | `Kills>0?Kills:"--"`；副文="击杀"；按阵营 Badge=`KillsByFaction`(`VictimFactionLabel`/`VictimCategory`) | 预览：大值=12 杀；KPI 条=猎物种类(`KillsByRace` 去重数=4)+参战战役(`ParticipatedBattles`)+生涯伤害(`DamageDealtTotal`)；**击杀构成前3种族**=统一进度条(`.struct-*`，填充 PillRed)，`KillsByRace` 按数量降序；**战斗风格子区块**(近战X%/远程Y%，来自击杀事件`CombatStyle`) |
-| ④ 战役 | 个人 ITab：**个人战役累计**为主，仅贡献比采用殖民地累计歼敌作分母 | 预览：大值=个人累计参与战役 9 次；**无右对齐重大指标**；KPI 条(`.prod-list`)=累计参与/累计规模/累计歼敌（参与=个人参战数；规模/歼敌为对应战役的殖民地累计：Roster人次/Kills）；**1 个进度条区块**：个人贡献占比（个人击杀`PawnObject.Kills` / 殖民地累计歼敌`BattleKpisView.Kills`，cap100%，例：10场共100人我杀20→20%）。（"殖民地歼敌构成·歼敌vs损失"与"重大战役率·决定性占比"区块均已移除）无战役时回退"--" |
-| ⑤ 足迹 | `Footprint.PlaceCount>0?PlaceCount:"--"`+"地点" | 预览**富化**：大值=地点数 1(`PlaceCount`)，**同行右对齐=主驻地天数 412 天**(`HomeDays`，`.kpi-rank-inline`)；KPI 条(`.prod-list`)=主驻地名(`HomePlaceText`)/远征次数(`ExpeditionCount`)/最长停留(`HomeDays`)；**停留地点 Top2**(`Footprint.Stays` 按 `DwellTicks` 降序前2：`PlaceText`+`DwellText`)。主驻地信息原独立格，现并入此卡 |
+| ② 产出 | `ProductionSilverValue`(取整)+"银" 单位；副文=`ProductionTotal`+"件 · "+种类数+"类"(`ProductionTypeViews.Count`)；**KPI 条=周产出/净值**(`WeeklyProductionSilver`近7天银/`MonthlyProductionSilver`近30天银，`ComputeProductionWindowValue`扫描Craft/Built事件按Def基价估值)；产值贡献前3(固定3条，不足`--`/0占位)=`ProductionTypeViews`(`ProductionAccumulator` 真实累计，按类目聚合、按产值降序) | 预览：大值=累计价值 1850 银(`ProductionSilverValue`)，**同排=累计产量 47 件 · 5 类**(`ProductionTotal`+`ProductionTypeViews.Count`)；KPI 条=周产出 320 银 / 净值 1250 银；**产值贡献前3类目**=统一进度条(`ProductionTypeViews` 按 MarketValue 降序：武器720银·39%/食物540银·29%/衣服310银·17%，不足3条时`--`/0占位)，`Share01=MarketValue/TotalMarketValue` |
+| ③ 击杀 | `Kills>0?Kills:"--"`；副文="击杀"；**v1.1.4 统一基准**：大字=击杀数+同排=猎物种类 X 种(`KillsByFaction` 去重数)+KPI 行=参战战役(`ParticipatedBattles`)/生涯伤害(`DamageDealtTotal`) 2 行+击杀构成前3种族进度条(固定3条不足`--`/0占位)；战斗风格已移除 | 预览：大值=12 杀，**同排=猎物 4 种**；KPI 条=参战战役(`ParticipatedBattles`)+生涯伤害(`DamageDealtTotal`)；**击杀构成前3种族(固定3条，不足`--`/0占位)**=统一进度条(`.struct-*`，填充 PillRed)，`KillsByFaction` 按数量降序 |
+| ④ 损耗 | **v1.1.4 C# 已落地（替换战役宫格）**：大值=累计消耗银（`ConsumptionAccumulator` 持久化，`Thing.Ingested` Postfix 捕获按 `Def.BaseMarketValue` 计价，不写事件流）；同行=日均损耗（近30天按天桶`SilverByDay`求和/30）；KPI 行=周损耗（近7天）/日均损耗；进度条=损耗构成前3类目（固定3条不足`--`/0占位） | 预览：大值=累计消耗 3280 银；**同排=日均 42.5 银/天**；KPI 条=周损耗 350 银 / 日均损耗 42.5 银；**损耗构成前3类目**=统一进度条（食物 1200银·38% / 药品 950银·30% / 燃料 700银·22%，不足3条`--`/0占位），`Share01=CategorySilver/TotalConsumeSilver`。（原战役宫格已移除；colony 级 `BattleKpis` 数据保留，完整档案馆「战役」分类仍可查看） |
+| ⑤ 足迹 | `Footprint.PlaceCount>0?PlaceCount:"--"`+"地点"；**统一基准（v1.1.4）**：大字=地点数+同排=主驻地天数(`HomeDays`)+KPI 行=主驻地(`HomePlaceText`)/远征次数(`ExpeditionCount`)+停留时长前3地点进度条(`Stays` 按 `DwellTicks` 降序，`Share01=dwell/总dwell`，固定3条不足`--`/0占位) | 预览：大值=地点数 12(`PlaceCount`)，**同排=主驻地天数 412 天**(`HomeDays`，`.kpi-rank-inline`)；KPI 条(`.prod-list`)=主驻地(`HomePlaceText`)/远征次数(`ExpeditionCount`)；**停留时长前3地点**=统一进度条（星岩哨站 320天·48% / 翡翠山谷 210天·31% / 黑石要塞 90天·14%，不足3条`--`/0占位），`Share01=DwellTicks/TotalDwellTicks`。主驻地信息原独立格，现并入此卡 |
 
 **组3 神器传承**（注：原「关系」「健康残值」宫格已移除）
-| ⑦ 神器传承 | 以人物**当前武器**为锚点展示传承；`LegacyView`（`TitleText`武器名/`CreatedByText`锻造者/`GenCount`代数/`TotalKills`历代击杀/`Holders`各代） | 预览**武器锚点重设计**：大值=武器名 断颅者之弓(`TitleText`)，**同行=历代击杀 37**(`TotalKills`)；KPI 条=锻造者(`CreatedByText`)/传承代数(`GenCount`)/当代击杀(`Holders`中`IsCurrent`行的`KillCount`=11)；**传承链**=`Holders` 各代（戈治钟·初代18 / 次代8 / 孙戈·当代11，行式 `HolderText`+`KillCount`）。无传承(`IsEmpty`)时回退"--" |
+| ⑦ 神器传承 | 以人物**当前武器**为锚点展示传承；`LegacyView`（`TitleText`武器名/`CreatedByText`锻造者/`GenCount`代数/`TotalKills`历代击杀/`Holders`各代）；**v1.1.4**：锻造者移标题右侧(`KpiCell.TitleSide`)、传承链改进度条 | 预览**武器锚点重设计**：大值=武器名 断颅者之弓(`TitleText`)，**同行=历代击杀 37**(`TotalKills`)；**标题右侧=锻 · 戈治钟**(`CreatedByText`)；KPI 条=传承代数(`GenCount`)/当代击杀(`Holders`中`IsCurrent`行的`KillCount`=11)；**传承链进度条**=`Holders` 按击杀降序前3（戈治钟·初代 18杀 49% / 次代 8杀 22% / 孙戈·当代 11杀 30%），`Share01=KillCount/TotalKills`，固定3条不足`--`/0占位。无传承(`IsEmpty`)时回退"--" |
 
-> 注：预览 KPI 现为 **6 格（3 列 × 2 行）纯网格**，无分组分隔条（`.kpi-group-sep` 已移除），统一前端样式。卡片顺序：第1行=工时/产出/击杀，第2行=战役/足迹/传承击杀。原「主驻地/关系/健康残值」三宫格已移除（主驻地并入足迹、关系/健康残值从浓缩 Tab 去除）。C# 游戏内 `BuildCells` 仍为独立格，此差异仅为预览层布局取舍，未改运行逻辑。所有卡固定 `height:210px; overflow:hidden` 等高；统一组件：`.kpi-label`(标题) / `.kpi-value`+`.kpi-rank-inline`(大值同行) / `.prod-list`(KPI 条) / `.struct-*`(统一进度条)。
+> 注：预览 KPI 现为 **6 格（3 列 × 2 行）纯网格**，无分组分隔条（`.kpi-group-sep` 已移除），统一前端样式。卡片顺序：第1行=工时/产出/击杀，第2行=损耗/足迹/传承击杀。原「主驻地/关系/健康残值/战役」宫格已移除（主驻地并入足迹、关系/健康残值从浓缩 Tab 去除、战役被损耗替换且 colony 级数据保留在完整档案馆）。C# 游戏内 `BuildCells` 仍为独立格，此差异仅为预览层布局取舍，未改运行逻辑。所有卡固定 `height:250px; overflow:hidden` 等高（v1.1.4 对齐 C# `KpiCardH=250f`）；统一组件：`.kpi-label`(标题) / `.kpi-value`+`.kpi-rank-inline`(大值同行) / `.prod-list`(KPI 条) / `.struct-*`(统一进度条)。
 
 ### B. 时间轴视觉增强
 - 横轴加渐变色 + box-shadow 发光效果
@@ -719,6 +1670,8 @@ Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
 ### E. 严格设计参数表（零自由发挥，对齐 UITheme/UIComponents 真实常量）
 
 #### E0. 全局令牌（UITheme 真实值，禁止另取色）
+> **v1.1.4 主题化**：下表为 **Epic（默认）** 的 RGB 值。UITheme 颜色令牌现已可变 static（`UITheme.Apply(themeId)` 覆盖），另三套预设 **Gothic/Wuxia/Steampunk** 的令牌值见本文件顶部 `html[data-theme="gothic"/"wuxia"/"steampunk"]` 块（对齐 C# `UITheme.Palette`）。派生令牌（SecondaryText=Muted、Blood=Dead、AccentSoft/InfoSoft/Pill{Blue,Gold,Red,Green}）随主色自动派生。主题只换色，字体沿用 Verse 原生字体。任何取值仍禁止在窗口内另取色，一律走令牌。
+
 | 用途 | 令牌 | RGB (0-1) |
 |------|------|-----------|
 | 窗口底 | Window | (0.067, 0.094, 0.110) |
@@ -744,7 +1697,7 @@ Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
 | 六宫格-工时/主业 | PillGold | (0.950, 0.740, 0.260) |
 | 六宫格-产出 | PillGreen | (0.420, 0.810, 0.560) |
 | 六宫格-击杀/传承击杀 | PillRed | (0.860, 0.460, 0.460) |
-| 六宫格-战役 | PillBlue | (0.360, 0.620, 0.830) |
+| 六宫格-损耗 | PillBlue | (0.360, 0.620, 0.830) |
 | 六宫格-足迹/主驻地 | Info | (0.584, 0.816, 0.988) |
 | 六宫格-关系/健康残值 | Alive | (0.570, 0.900, 0.690) |
 
@@ -752,7 +1705,7 @@ Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
 | 参数 | 值 | 来源 |
 |------|----|------|
 | 列数 | 3 | `SixGrid` cols=3 |
-| 卡片高 | C# 112f（`KpiCardH`）；预览视觉 **210px 固定等高** | 预览 `.kpi-card height:210px; overflow:hidden`，防内容挤兑；C# 未改 |
+| 卡片高 | C# **250f**（`KpiCardH`，v1.1.4 220→250：容纳击杀宫格 4 KPI 行 + 3 进度条=226px，工时/产出仍留呼吸）；预览视觉 **250px 固定等高** | 预览 `.kpi-card height:250px; overflow:hidden`，防内容挤兑 |
 | 卡片间距 | 10f | `KpiGap` |
 | 左强调条宽 | 3f | `SixGrid` bar width |
 | 标题区 y | card.y+8, h=18 | `SixGrid` titleR |
@@ -765,6 +1718,7 @@ Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
 | 卡片底 | Panel | `SixGrid` |
 | 边框 | Border | `SixGrid` |
 | 悬停高亮 | DrawHighlightIfMouseover | `SixGrid` |
+| 进度条间距（v1.1.4 统一） | caption 17f / bar 12f / **gap 4f**（caption↔bar 与 bar↔下一 caption 同距，原 3f/4f 不对称已统一） | `KpiBarCaptionH/KpiBarH/KpiBarGapY`，per-bar 预算 37f |
 
 **工时宫格（v6 精简：仅累计工时 / 工时排名 / 工时结构，对齐 UIComponents.ProgressBar + CareerBars，仅 HTML 预览层，未改 C#）**
 - 大值：`Mathf.RoundToInt(TotalHours)` + 内联单位 "h"（`UI.Kpi.Unit.TotalHours`），字色 PillGold
@@ -779,44 +1733,47 @@ Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
 
 > 产出 / 击杀 / 主驻地 / 传承击杀 各宫格的字段映射与 Badge 规则见上方 **A 表**，此处不重复；布局参数统一见 E1 表格。
 
-**产出宫格（v6.7 重设计：累计价值 / 产量·种类 inline / 产值贡献前3类目，真实数据源）**
+**产出宫格（v6.7 重设计 + v1.1.4 统一基准=工时宫格：累计价值 / 产量·种类 inline / 周产出·净值 KPI 行 / 产值贡献前3类目固定3条）**
 - 大值：`Mathf.RoundToInt(ProductionSilverValue)` + 内联 "银"（`UI.Kpi.Unit.Silver`），字色 PillGreen；**同行 inline** = `ProductionTotal`+"件 · "+`ProductionTypeViews.Count`+"类"
-- **KPI 条已移除**（原单产均值 / 分类数）
-- 产值贡献前3类目（**统一进度条** `.struct-*`，填充 PillGreen，真实数据源）：
+- **KPI 行（v1.1.4 新增，对齐工时宫格"周工时/日均"位置）**：周产出=`Mathf.RoundToInt(WeeklyProductionSilver)`+" 银"（近 7 天窗口）、净值=`Mathf.RoundToInt(MonthlyProductionSilver)`+" 银"（近 30 天窗口）。由 `ArchiveUiDataProvider.ComputeProductionWindowValue` 扫描该 pawn 的 Craft/Built 事件按 `ThingDef.BaseMarketValue` 估值（窗口为 0 时显示 0 银，不显示 `--`）
+- 产值贡献前3类目（**统一进度条** `.struct-*`，填充 PillGreen，真实数据源；**固定 3 条，不足 3 类目用 `--`/0 占位**）：
   - 从 `DetailSnapshot.ProductionTypeViews`（来自 `ProductionAccumulator` 持久化累计，每次 Craft/Built 捕获时累加 `Def.MarketValue*quantity`；已按类目聚合、按产值降序）取前 3
   - 每行 = `UIComponents.ProgressBar(rect, share01, PillGreen)` + 行内字幕 `ThingCategoryDef.LabelCap(DefName) + " · " + MarketValue + " 银 · " + (int)(share01*100) + "%"`
   - `share01 = MarketValue / TotalMarketValue`
   - 与累计价值口径一致（真实累计，不再重扫事件流估算）
-- 数据源：`ProductionSilverValue` / `ProductionTotal` / `ProductionLines[0..2].{Label,Value}`
-- C# 当前未渲染该区块；若落地需在 `ArchiveUiDataProvider` 按 Value 降序聚合（`ProductionLines` 需带 Value 字段，窗口只消费），并新增 Keyed 小标题。
+- 数据源：`ProductionSilverValue` / `ProductionTotal` / `WeeklyProductionSilver` / `MonthlyProductionSilver` / `ProductionTypeViews[0..2]`
 
-**击杀宫格（v6.2 统一进度条 + v6.8 个人战斗维度，仅 HTML 预览层）**
-- 大值：`Kills>0?Kills:"--"` + 内联 "杀"（`UI.Kpi.Unit.Kill`），字色 PillRed
-- KPI 条（`.prod-list`）：猎物种类(`KillsByRace` 去重数) / **参战战役**(`ParticipatedBattles`) / **生涯伤害**(`DamageDealtTotal` 持久化累计器)
-- 击杀构成前3种族（用**种族替代阵营**，改用**统一进度条** `.struct-*`，与工时宫格同款，填充 PillRed）：
-  - 从 `snap.KillsByRace`（`{VictimRaceLabel, Count}`）按 `Count` 降序取前 3
-  - 每行 = `UIComponents.ProgressBar(rect, share01, PillRed)` + 行内字幕 `RaceLabel + " · " + Count + " · " + (int)(share01*100) + "%"`
+**击杀宫格（v6.2 统一进度条 + v6.8 个人战斗维度 + v1.1.4 统一基准：猎物种类 inline / 移除战斗风格，C# 已落地）**
+- 大值：`Kills>0?Kills:"--"` + 内联 "杀"（`UI.Kpi.Unit.Kill`），字色 PillRed；**同行 inline** = 猎物种类 `KillsByFaction.Count`+" 种"（与产出宫格"件·类"同视觉位）
+- KPI 行（`.prod-list`，2 行）：**参战战役**(`ParticipatedBattles`) / **生涯伤害**(`DamageDealtTotal` 持久化累计器)
+- 击杀构成前3种族（用**种族替代阵营**，**统一进度条** `.struct-*`，与工时宫格同款，填充 PillRed；**固定 3 条，不足 3 种族用 `--`/0 占位**，与产出宫格一致布局稳定）：
+  - 从 `snap.KillsByFaction`（`{Label, Count}`）按 `Count` 降序取前 3
+  - 每行 = `UIComponents.ProgressBar(rect, share01, PillRed)` + 行内字幕 `Label + " · " + Count`
   - `share01 = Count / TotalKills`
   - 替代原"按阵营 Badge 组"
-- **战斗风格子区块**（`.struct-label` + 行列表，v6.8 新增）：近战击杀 X% / 远程击杀 Y%，来自击杀事件 `CombatStyle` 参数（melee/ranged，由 `weapon`/`VerbProperties.IsMelee` 推断），需落地时在 `Patch_PawnKill` 持久化该参数并 Read Model 聚合 `CombatStyleRatio`
-- 数据源：`Kills` / `KillsByRace[0..2].{VictimRaceLabel, Count}` / `PawnObject.{ParticipatedBattleIds, DamageDealtTotal}` / 击杀事件 `CombatStyle`
-- C# 当前未渲染该区块；若落地需在 `ArchiveUiDataProvider` 聚合（`KillsByRace` 需新增种族维度、`ParticipatedBattles`/`DamageDealtTotal`/`CombatStyleRatio` 需新增，窗口只消费），并新增 Keyed 小标题。
+- **战斗风格已移除**（v1.1.4）：`MeleeKillRatio/MeleeKills/RangedKills` 持久化字段保留，仅 UI 不再展示。
+- 数据源：`Kills` / `KillsByFaction.Count` / `KillsByFaction[0..2].{Label, Count}` / `PawnObject.{ParticipatedBattles, DamageDealtTotal}`
 
-**战役宫格（v6.8 最终契约：个人视角，已 C# 落地）**
-- 大值：`BattleCount>0?BattleCount:"--"` + 内联 "次"（个人累计参与战役数）。
-- KPI 条（`.prod-list`，个人视角）：累计参与 `BattleCount` / 累计规模 `BattleKpis.Roster`（殖民地参战人次）/ 累计歼敌 `BattleKpis.Kills`（殖民地歼敌）。
-- **1 个进度条区块**（`barBlocks`，填充 PillBlue）：个人贡献占比 = 个人击杀 `PawnObject.Kills` / 殖民地累计歼敌 `BattleKpis.Kills`（cap 100%，例：10 场共歼敌 100、我杀 20 → 20%）。
-- 已移除「重大战役率·决定性占比」与「殖民地歼敌构成·歼敌vs损失」两大区块；`Decisive/Losses` 不再参与渲染。
-- **个人维度（参战战役/生涯伤害/战斗风格）在击杀宫格**（绑定单 pawn，持久化累加），战役宫格不重复。
-- 无战役（`BattleCount==0`）时回退为 `--`（保持原语义）。
-- 数据源：`BattleCount` / `BattleKpis.{Kills,Roster}` / `DetailSnapshot.{Kills,ParticipatedBattles,DamageDealtTotal,MeleeKillRatio}`。
+**损耗宫格（v1.1.4 C# 已落地：替换战役宫格，每日消耗品计价）**
+- 语义：损耗 = 该人物日常消耗品（食物/药品/成瘾品等）按 `Def.BaseMarketValue` 折算银币的累计值，与「产出宫格」构成收支对照。
+- 大值：累计损耗银 `ConsumptionAccumulator.TotalSilver`（持久化累加，与 `ProductionAccumulator` 对称），字色 PillBlue。
+- inline（同排）：日均损耗 `近30天 SilverByDay 求和 / 30`（银/天）。
+- KPI 行（`.prod-list`，2 行）：周损耗（近 7 天 `SilverByDay` 求和）/ 日均损耗。
+- 进度条（**统一进度条** `.struct-*`，填充 PillBlue；**固定 3 条，不足 3 类目用 `--`/0 占位**）：损耗构成前 3 类目（食物/药品/燃料/成瘾品/其他），`Share01 = CategorySilver / TotalConsumeSilver`。
+- 数据源：`DetailSnapshot.{ConsumptionTotalSilver, WeeklyConsumptionSilver, DailyConsumptionSilver, ConsumptionTypeViews}`（来自 `ArchiveService.GetConsumptionSummary` ← `ConsumptionAccumulator`）。
+- 捕获点（已落地）：`Patch_ThingIngested` Harmony Postfix on `Verse.Thing.Ingested(Pawn, float)`（反射核验非 virtual、1.6 存在）——所有可摄入物（食物/饮料/成瘾品/药品）统一消费点；只记录玩家派系、chronicle 相关、humanlike 殖民者；**不写事件流**（高频进食，避免事件膨胀）。衣物磨损归属「折旧」（HealthView 已有），不混入。
+- **原战役宫格已移除**：colony 级 `BattleKpis`/BattleObject 数据不删，完整档案馆「战役」分类仍可查看；击杀宫格「参战战役」KPI 行继续消费 `ParticipatedBattles`。
 
-**足迹宫格（v6.4 富化：地点数 / 主驻地天数 / KPI 条 / 停留 Top2，仅 HTML 预览层）**
+**足迹宫格（v6.4 富化 + v1.1.4 统一基准：地点数 / 主驻地天数 inline / 2 KPI 行 / 停留时长前3进度条，C# 已落地）**
 - 大值：`Footprint.PlaceCount>0?PlaceCount:"--"` + 内联 "地"；**主驻地天数** `Footprint.HomeDays` 经 `.kpi-rank-inline` 同行右对齐。
-- KPI 条（`.prod-list` 复用）：主驻地名 `HomePlaceText` / 远征次数 `ExpeditionCount` / 最长停留 `HomeDays`。
-- 停留地点 Top2：从 `Footprint.Stays`（`FootstepView{PlaceText,DwellText,DwellTicks}`，已按 `DwellTicks` 降序）取前 2，行式 `PlaceText · DwellText`。
+- KPI 行（`.prod-list`，统一基准 2 行）：主驻地 `HomePlaceText` / 远征次数 `ExpeditionCount`。
+- 停留时长前3地点（**统一进度条** `.struct-*`，填充 Info/PillInfo；**固定 3 条，不足 3 地点用 `--`/0 占位**）：
+  - 从 `Footprint.Stays`（`FootstepView{PlaceText,DwellText,DwellTicks}`，已按 `DwellTicks` 降序）取前 3
+  - 每行 = `UIComponents.ProgressBar(rect, share01, tint)` + 行内字幕 `PlaceText + " · " + DwellText + " · " + (int)(share01*100) + "%"`
+  - `share01 = DwellTicks / TotalDwellTicks`
 - 原「主驻地」独立宫格已**并入此卡**（主驻地天数/远征/主驻地名均来自 `Footprint`）。
-- 数据源：`Footprint.{PlaceCount,HomeDays,HomePlaceText,ExpeditionCount,Stays}`。C# 当前未渲染该区块；窗口只消费 `Footprint`，并新增 Keyed。
+- **数据更新机制（自动，零手动）**：`ChronicleGameComponent` 周期性对 live pawn 调 `SamplePlaceVisit`——解析当前位置（地图生物群系 / 商队 tile），与 open visit 比对，换地方即关旧开新（写 `LeaveTick` + 新 `PlaceVisit`）；`PlaceHistory` 上限 **32 条**（超限丢最老）。`BuildFootprint` 每次重建从 `PlaceHistory` 派生全部字段。
+- 数据源：`Footprint.{PlaceCount,HomeDays,HomePlaceText,ExpeditionCount,Stays}`。
 
 **传承击杀宫格（v6.4 富化：全链击杀 / 代数 / 称号，仅 HTML 预览层）**
 - 大值：`LegacyView.TotalKills>0?TotalKills:"--"` + 内联 "杀"（legacy→PillRed）；**代数** `LegacyView.GenCount` 经 `.kpi-rank-inline` 同行右对齐。
@@ -824,18 +1781,19 @@ Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
 - 原「关系」「健康残值」宫格已**移除**（从浓缩 Tab 去除）。
 - 数据源：`LegacyView.{TotalKills,GenCount,称号字段}`。C# 当前未渲染该区块；窗口只消费 `LegacyView`，并新增 Keyed。
 
-> **统一进度条约定（v6.1）**：工时/产出/击杀三宫格的"结构/贡献"子区块均复用同一套 `.struct-row`/`.struct-bar`/`.struct-fill`/`.struct-caption` 组件，一一映射 `UIComponents.ProgressBar(rect, share01, tint)`；填充色跟随卡片语义色（`.tone-*` → PillGold/PillGreen/PillRed…）。C# 落地时三处均走 `UIComponents.ProgressBar`，不自写绘制。
+> **统一进度条约定（v6.1，v1.1.4 扩展）**：工时/产出/击杀/损耗/足迹/传承六宫格的"结构/贡献/构成/传承链"子区块均复用同一套 `.struct-row`/`.struct-bar`/`.struct-fill`/`.struct-caption` 组件，一一映射 `UIComponents.ProgressBar(rect, share01, tint)`；填充色跟随卡片语义色（`.tone-*` → PillGold/PillGreen/PillRed/PillBlue/Info…）；caption 右侧可选 `.kpi-bar-tag` 右对齐 tag。C# 落地时各处均走 `UIComponents.ProgressBar`，不自写绘制。
 
-> **v6.6 宫格清单（6 格 / 3列×2行 纯网格，无分隔条）**：第1行=工时/产出/击杀；第2行=战役/足迹/传承击杀（主驻地已并入足迹；关系/健康残值已移除；里程碑时间轴已移除）。统一前端样式：标题 `.kpi-label`、大值 `.kpi-value`+同行 `.kpi-rank-inline`、KPI 条 `.prod-list`、结构/贡献 `.struct-*` 进度条。
+> **v6.6 宫格清单（6 格 / 3列×2行 纯网格，无分隔条）**：第1行=工时/产出/击杀；第2行=损耗/足迹/传承击杀（主驻地已并入足迹；关系/健康残值已移除；战役已被损耗替换；里程碑时间轴已移除）。统一前端样式：标题 `.kpi-label`、大值 `.kpi-value`+同行 `.kpi-rank-inline`、KPI 条 `.prod-list`、结构/贡献 `.struct-*` 进度条。
 
 #### E2. 里程碑时间轴（已移除，v6.6）
 > 预览 v6.6 起移除「里程碑摘要」时间轴段落（HTML 结构 + 相关 CSS `.tl-*` 保留于样式表但不再引用）。理由：浓缩 Tab 聚焦六宫格 KPI，时间轴信息密度低、与六宫格冗余；如需下钻由底部「打开完整档案」按钮进入完整档案馆。C# 游戏内 `DrawMilestones`/`HorizontalTimeline` 不变。
 
-#### E2b. 神器传承（武器锚点重设计，v6.6 后续，仅 HTML 预览层）
+#### E2b. 神器传承（武器锚点重设计，v6.6 后续 + v1.1.4：锻造者移标题右侧 / 传承链进度条）
 - **设计定位**：以人物**当前持有的武器**为锚点展示传承信息（武器名由 `LegacyView.TitleText` 提供，即传承称号，如"断颅者之弓"）。
 - 大值：`TitleText`（武器名，legacy→PillRed）；**同行=历代击杀** `TotalKills`（经 `.kpi-rank-inline`，如"历代 37 杀"）。
-- KPI 条（`.prod-list`）：锻造者 `CreatedByText` / 传承代数 `GenCount` / 当代击杀（`Holders` 中 `IsCurrent==true` 行的 `KillCount`）。
-- 传承链：`LegacyView.Holders`（`LegacyHolderView{HolderText,Generation,IsFirst,IsCurrent,KillCount}`）按 `Generation` 全列，行式 `HolderText · (初代/次代/当代标签) · KillCount 杀`。
+- **标题右侧（v1.1.4 新增 `KpiCell.TitleSide`）**：锻造者 `CreatedByText`（右对齐小字，如"锻 · 戈治钟"）。
+- KPI 条（`.prod-list`，v1.1.4 剩 2 行）：传承代数 `GenCount` / 当代击杀（`Holders` 中 `IsCurrent==true` 行的 `KillCount`）。
+- **传承链进度条（v1.1.4，原行式改为进度条）**：`LegacyView.Holders` 按 `KillCount` 降序取前 3；每行 = `UIComponents.ProgressBar(rect, share01, PillRed)` + 字幕 `ChainRank · HolderText · 代标签 · (int)(share01*100)%` + Tag 右侧 `KillCount 杀`；`share01 = KillCount / TotalKills`；固定 3 条不足 `--`/0 占位。
 - 无传承（`IsEmpty`）时回退 "--"。
 - 数据源：`LegacyView.{TitleText,TotalKills,CreatedByText,GenCount,Holders,IsEmpty}`（`Holders[].{HolderText,IsCurrent,KillCount,Generation}`）。
 - 说明：相对 v6.6 初版（大值=全链击杀、KPI=初代/铸造/当前持有），本次改为武器锚点五要素（武器名/锻造者/传承代数/当代击杀/历代击杀总数/传承链），更贴合"识别当前武器看传承"的诉求。
@@ -843,8 +1801,9 @@ Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
 #### E2c. 六宫格增补 KPI 行（v6.6，仅 HTML 预览层）
 - 工时：KPI 条增补 周工时(`WeeklyHours`)/日均(`DailyHours`)。
 - 产出：KPI 条增补 单产均值(`SilverValue/TotalQuantity`)/分类数。
-- 击杀：KPI 条增补 猎物种类(`KillsByRace` 去重计数)。
-- 战役/足迹：维持 v6.4 富化。
+- 击杀（v1.1.4）：猎物种类改**大字同行 inline**（`KillsByFaction.Count`+" 种"），KPI 行收敛为 参战战役/生涯伤害 2 行；战斗风格已移除。
+- 损耗：新增宫格（替换战役）：周损耗/日均损耗 KPI 行 + 损耗构成前 3 类目进度条（固定 3 条）。
+- 足迹：KPI 行收敛为 主驻地/远征次数（2 行），停留 Top2 行式改为**停留时长前 3 地点进度条**（固定 3 条占位，对齐工时/产出/损耗统一基准）。
 | 参数 | 值 | 来源 |
 |------|----|------|
 | 节点宽 TlNodeW | 120f | 常量（预览视觉 130px，C# 维持 120f 不变） |
@@ -902,4 +1861,17 @@ Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
 - ❌ 不得手写 `GUI.color=...;DrawBox` —— 一律走 `UIComponents.*`
 - ❌ 不得窗口内做排序/null-guard —— 归属 `ArchiveUiDataProvider`
 - ❌ 文案不得硬编码中文字串 —— 一律 Keyed 翻译键
+
+#### F. UI 主题预设 + 内嵌切换按钮（v1.1.4，C# 已落地 + 本预览同步）
+- **四套主流 RPG 主题**（对齐 C# `UITheme.Palette`，替换早期工业/磷光/余烬）：
+  - `epic` **史诗奇幻**（默认）：暗紫深蓝底 + 鎏金描边（上古卷轴/魔兽风）
+  - `gothic` **暗黑哥特**：墨黑底 + 血红点缀（血源/暗黑破坏神风）
+  - `wuxia` **东方武侠水墨**：宣纸米白底 + 墨色 + 朱红印章（只狼/古剑风，**浅色主题**）
+  - `steampunk` **蒸汽朋克**：黄铜棕 + 宝石绿（羞辱/雾都孤儿风）
+- **仅换色（v1.1.4 最终）**：字体不随主题变化（RimWorld 无法可靠加载任意 TTF，OS 字体换肤脆弱），主题只切换颜色令牌，字体沿用 Verse 原生字体。本预览也移除 `--font`。
+- **机制**：`html[data-theme="..."]` 覆盖 `:root` 全部 `--*` 令牌（Window/Panel/Card/Border/Text/Accent/Timeline/Pill 派生）；切换 `data-theme` 即整体换肤，所有 `var(--*)` 自动跟随。
+- **浅色主题兼容**：`.pill`/`.tl-spine`/`.tl-dot` 等原硬编码深色已改为主题令牌（`--accent-soft`/`--border`/`--card`），水墨浅色下自适应。
+- **内嵌按钮**：Header 身份条右侧「主题 · 当前主题名」按钮（对齐 C# `ArchiveMainTabWindow.DrawHeader` 右上角循环按钮）。点击循环 史诗→暗黑→水墨→朋克。
+- **C# 侧**：`UITheme.Apply(themeId)` 覆盖全部可变 static token + 重同步 `ArchiveUiStyle.RefreshFromTheme()`；`ChronicleSettings.ThemeId` 持久化 `"themeId"`；`UITheme.NextThemeId()` 循环；Header 按钮点击写回 Settings 并 `Write()`。
+- **翻译键**（中英同步）：`Settings.Theme/界面主题`、`UI.Theme.Button/主题`、`UI.Theme.ButtonTip`、`UI.Theme.Epic/史诗奇幻`、`UI.Theme.Gothic/暗黑哥特`、`UI.Theme.Wuxia/东方水墨`、`UI.Theme.Steampunk/蒸汽朋克`。
 -->

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>PersonalChronicle 源码文件索引</title>
+<style>
+  /* ===== 页面级：浅灰底 + 白色内容卡，制造背景层级使文字更跳 ===== */
+  body { font-family: "Segoe UI", "Microsoft YaHei", sans-serif; margin: 0; padding: 28px 16px; background: #ece7da; color: #1a1a1a; }
+  .page { max-width: 1180px; margin: 0 auto; background: #ffffff; border: 1px solid #c9bfa3; border-radius: 10px; padding: 28px 32px; box-shadow: 0 2px 10px rgba(80,60,20,0.12); }
+
+  h1 { border-bottom: 3px solid #8a6d3b; padding-bottom: 8px; color: #3d3016; margin-top: 0; }
+  h2 { margin-top: 34px; color: #4a3a18; border-left: 5px solid #c9a227; padding-left: 10px; }
+  h3 { margin-top: 22px; color: #6b5526; font-size: 15px; border-bottom: 1px dashed #c9bfa3; padding-bottom: 4px; }
+
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 20px; font-size: 13px; }
+  th, td { border: 1px solid #c9bfa3; padding: 5px 8px; text-align: left; vertical-align: top; }
+  th { background: #e8dcc0; color: #3d3016; font-weight: 700; }
+  /* 奇偶行轻微条纹，分离相邻行背景，避免整片同色糊在一起 */
+  tbody tr:nth-child(even) { background: #fbf8f0; }
+  tbody tr:nth-child(odd) { background: #ffffff; }
+  td.path { font-family: Consolas, "Courier New", monospace; color: #0d4a78; font-weight: 600; white-space: nowrap; }
+  td.size, td.lines { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; color: #333; }
+  /* 悬停用偏深的暖色而非近白，保证蓝字路径仍清晰可读 */
+  tr:hover { background: #f0e3c4 !important; }
+  tr:hover td.path { color: #0a3a5e; }
+  tfoot td { font-weight: bold; background: #e2d4b0; color: #3d3016; }
+
+  .note { background: #f6f2e7; border: 1px solid #c9bfa3; padding: 12px 16px; border-radius: 6px; font-size: 13px; line-height: 1.7; color: #1a1a1a; }
+  .note code { background: #efe9da; color: #5a3a12; border: 1px solid #d8cba8; padding: 1px 4px; border-radius: 3px; font-family: Consolas, monospace; }
+  .total-bar { font-size: 14px; font-weight: bold; margin: 6px 0 2px; color: #4a3a18; }
+
+  /* 让 <code> 在普通正文（非 .note 内）也有底色区分 */
+  code { background: #f0ece0; color: #5a3a12; padding: 1px 4px; border-radius: 3px; font-family: Consolas, monospace; }
+</style>
+</head>
+<body>
+<div class="page">
+<h1>PersonalChronicle 源码文件索引</h1>
+<p class="note">
+生成日期：2026-08-15 ｜ 规范基准：<code>08-架构层-代码轻量化方案.md</code>（ARC-013）、<code>09-模块文件架构范式.md</code><br>
+根目录：<code>Source/PersonalChronicle/</code>（Namespace 统一 <code>PersonalChronicle.*</code>）｜ 文件总数：135 个 <code>.cs</code><br>
+表格含「相对路径 / 大小 / 行数 / 功能代码」。大小经脚本从磁盘读取，行数为 UTF-8 行计数。
+</p>
+
+<!-- ============ 0. 根 ============ -->
+<h2>0. 根目录（Mod 入口与基础设施）</h2>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">ChronicleMod.cs</td><td class="size" data-b="7102">6.9 KB</td><td class="lines" data-n="160">160</td><td>Mod 入口（Mod 子类）：构造期 <code>UITheme.Apply</code> 填默认调色板、Harmony 初始化、API 注册。</td></tr>
+<tr><td class="path">ChronicleSettings.cs</td><td class="size" data-b="2593">2.5 KB</td><td class="lines" data-n="58">58</td><td><code>ModSettings</code>：录制开关、调试计数、主题 <code>ThemeId</code> 持久化。</td></tr>
+<tr><td class="path">ChronicleLog.cs</td><td class="size" data-b="1972">1.9 KB</td><td class="lines" data-n="52">52</td><td>统一日志 <code>ChronicleLog</code>：分级类别 + <code>Warning</code> 等方法。</td></tr>
+</tbody></table>
+
+<!-- ============ 1. Domain ============ -->
+<h2>1. Domain（领域模型 + 纯逻辑，无 RimWorld UI 依赖，可离线单测）</h2>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Domain/PawnObject.cs</td><td class="size" data-b="6903">6.7 KB</td><td class="lines" data-n="132">132</td><td>殖民者/档案对象核心模型：工时、产出、击杀、损耗、住所、工坊、勋章记录。</td></tr>
+<tr><td class="path">Domain/ThingObject.cs</td><td class="size" data-b="3079">3.0 KB</td><td class="lines" data-n="73">73</td><td>物品/武器档案对象：持有历史、传承链、销毁记录。</td></tr>
+<tr><td class="path">Domain/BattleObject.cs</td><td class="size" data-b="3303">3.2 KB</td><td class="lines" data-n="74">74</td><td>战役对象：起始/结束 Tick、参战方、击杀关联。</td></tr>
+<tr><td class="path">Domain/LocationObject.cs</td><td class="size" data-b="6482">6.3 KB</td><td class="lines" data-n="143">143</td><td>地点对象：主驻地、远征、地点访问聚合。</td></tr>
+<tr><td class="path">Domain/ArchiveObject.cs</td><td class="size" data-b="1206">1.2 KB</td><td class="lines" data-n="34">34</td><td>档案对象基类/通用容器类型。</td></tr>
+<tr><td class="path">Domain/ArchiveCategoryDef.cs</td><td class="size" data-b="1543">1.5 KB</td><td class="lines" data-n="44">44</td><td>档案分类 Def（Pawn/Thing/Battle/Location）。</td></tr>
+<tr><td class="path">Domain/ArchiveCategoryKeys.cs</td><td class="size" data-b="590">0.6 KB</td><td class="lines" data-n="16">16</td><td>档案分类稳定 key 常量。</td></tr>
+<tr><td class="path">Domain/ObjectRef.cs</td><td class="size" data-b="2204">2.2 KB</td><td class="lines" data-n="59">59</td><td>稳定对象引用（defName/thingID/stableId）结构。</td></tr>
+<tr><td class="path">Domain/PawnRecord.cs</td><td class="size" data-b="1960">1.9 KB</td><td class="lines" data-n="56">56</td><td>Pawn 持久记录片段（角色落盘等）。</td></tr>
+<tr><td class="path">Domain/PawnArchiveSnapshots.cs</td><td class="size" data-b="14650">14.3 KB</td><td class="lines" data-n="404">404</td><td>Pawn 多维快照聚合（健康/职业/关系等只读投影源）。</td></tr>
+<tr><td class="path">Domain/ChronicleEvent.cs</td><td class="size" data-b="3296">3.2 KB</td><td class="lines" data-n="86">86</td><td>档案事件模型。</td></tr>
+<tr><td class="path">Domain/ChronicleEventDef.cs</td><td class="size" data-b="2396">2.3 KB</td><td class="lines" data-n="61">61</td><td>事件 Def 定义。</td></tr>
+<tr><td class="path">Domain/ChronicleEventParams.cs</td><td class="size" data-b="3934">3.8 KB</td><td class="lines" data-n="82">82</td><td>事件参数结构。</td></tr>
+<tr><td class="path">Domain/ChronicleEventType.cs</td><td class="size" data-b="1164">1.1 KB</td><td class="lines" data-n="23">23</td><td>事件类型枚举。</td></tr>
+<tr><td class="path">Domain/ChronicleImportance.cs</td><td class="size" data-b="2704">2.6 KB</td><td class="lines" data-n="74">74</td><td>事件重要性评级（Critical/Important/Normal/Routine）计算。</td></tr>
+<tr><td class="path">Domain/ChronicleColonistScanner.cs</td><td class="size" data-b="11933">11.7 KB</td><td class="lines" data-n="290">290</td><td>活读人口扫描：<code>PawnRole</code> 枚举 + 当前殖民地人口角色单元。</td></tr>
+<tr><td class="path">Domain/WorkIntensity.cs</td><td class="size" data-b="7881">7.7 KB</td><td class="lines" data-n="222">222</td><td>劳动强度纯逻辑：<code>WorkIntensityEvaluator</code>（档位评估，纯函数）、策略/输入/结果模型。</td></tr>
+<tr><td class="path">Domain/WorkIntensityDef.cs</td><td class="size" data-b="1217">1.2 KB</td><td class="lines" data-n="36">36</td><td>劳动强度 Def（阈值/档位配置）。</td></tr>
+<tr><td class="path">Domain/WorkTimeAccumulator.cs</td><td class="size" data-b="2727">2.7 KB</td><td class="lines" data-n="73">73</td><td>工时累计器（append-only 累加）。</td></tr>
+<tr><td class="path">Domain/WorkPrioritySnapshot.cs</td><td class="size" data-b="991">1.0 KB</td><td class="lines" data-n="34">34</td><td>工作优先级快照。</td></tr>
+<tr><td class="path">Domain/WorkplaceSnapshot.cs</td><td class="size" data-b="4204">4.1 KB</td><td class="lines" data-n="95">95</td><td>工作场所快照：<code>BuildingStableId</code>/<code>UseCount</code>/<code>RoomRoleDefName</code>（劳模工坊）。</td></tr>
+<tr><td class="path">Domain/ProductionAccumulator.cs</td><td class="size" data-b="2564">2.5 KB</td><td class="lines" data-n="69">69</td><td>产出累计器（件/银/类目）。</td></tr>
+<tr><td class="path">Domain/ConsumptionAccumulator.cs</td><td class="size" data-b="4892">4.8 KB</td><td class="lines" data-n="129">129</td><td>损耗累计器（Patch_ThingIngested 捕获）。</td></tr>
+<tr><td class="path">Domain/PlaceVisit.cs</td><td class="size" data-b="1324">1.3 KB</td><td class="lines" data-n="46">46</td><td>地点访问记录。</td></tr>
+<tr><td class="path">Domain/PlaceVisitKeys.cs</td><td class="size" data-b="1684">1.6 KB</td><td class="lines" data-n="35">35</td><td>地点访问稳定 key 常量（足迹系统）。</td></tr>
+<tr><td class="path">Domain/ResidenceSnapshot.cs</td><td class="size" data-b="2576">2.5 KB</td><td class="lines" data-n="62">62</td><td>住所快照：<code>RoomRoleDefName</code>/<code>LastSeenTick</code>（劳模住所）。</td></tr>
+<tr><td class="path">Domain/HolderRecord.cs</td><td class="size" data-b="2820">2.8 KB</td><td class="lines" data-n="73">73</td><td>物品持有者记录（传承链节点）。</td></tr>
+<tr><td class="path">Domain/DecommissionRecord.cs</td><td class="size" data-b="2287">2.2 KB</td><td class="lines" data-n="57">57</td><td>物品退役/拆解记录。</td></tr>
+<tr><td class="path">Domain/HealthValuation.cs</td><td class="size" data-b="19153">18.7 KB</td><td class="lines" data-n="423">423</td><td>健康估值模型与计算（六宫格健康卡）。</td></tr>
+<tr><td class="path">Domain/HealthValuationDef.cs</td><td class="size" data-b="3701">3.6 KB</td><td class="lines" data-n="83">83</td><td>健康估值 Def。</td></tr>
+<tr><td class="path">Domain/HealthValuationKeys.cs</td><td class="size" data-b="4130">4.0 KB</td><td class="lines" data-n="63">63</td><td>健康估值 key 常量。</td></tr>
+<tr><td class="path">Domain/MedalDef.cs</td><td class="size" data-b="4865">4.8 KB</td><td class="lines" data-n="126">126</td><td>勋章 Def（阈值类），含 <code>SeriesKeyOf</code> 后缀识别（下划线 defName 归并）。</td></tr>
+<tr><td class="path">Domain/MedalAwardEvaluator.cs</td><td class="size" data-b="6132">6.0 KB</td><td class="lines" data-n="148">148</td><td>勋章阈值评估纯逻辑（档位/达标判定）。</td></tr>
+<tr><td class="path">Domain/MedalMetricKeys.cs</td><td class="size" data-b="1937">1.9 KB</td><td class="lines" data-n="37">37</td><td>勋章指标 key 常量。</td></tr>
+<tr><td class="path">Domain/SignificantRelation.cs</td><td class="size" data-b="1167">1.1 KB</td><td class="lines" data-n="37">37</td><td>显著关系模型（社交网络图节点）。</td></tr>
+<tr><td class="path">Domain/SocialRelationFilter.cs</td><td class="size" data-b="6579">6.4 KB</td><td class="lines" data-n="182">182</td><td>社交关系过滤（夫妻/父母/平辈/朋友/宿敌）。</td></tr>
+<tr><td class="path">Domain/SocialRelationPolicyDef.cs</td><td class="size" data-b="2761">2.7 KB</td><td class="lines" data-n="59">59</td><td>社交关系策略 Def。</td></tr>
+<tr><td class="path">Domain/ThingArchivePolicy.cs</td><td class="size" data-b="2926">2.9 KB</td><td class="lines" data-n="74">74</td><td>物品归档策略模型。</td></tr>
+<tr><td class="path">Domain/ThingArchivePolicyDef.cs</td><td class="size" data-b="4554">4.4 KB</td><td class="lines" data-n="119">119</td><td>物品归档策略 Def（哪些物品入档）。</td></tr>
+<tr><td class="path">Domain/DlcStatus.cs</td><td class="size" data-b="2200">2.1 KB</td><td class="lines" data-n="51">51</td><td>DLC 状态查询服务（Anomaly 活跃/Subhuman 判定，缓存静态读取）。</td></tr>
+</tbody></table>
+
+<!-- ============ 2. Application ============ -->
+<h2>2. Application（聚合/查询/写入编排，实现 IArchiveService 等接口）</h2>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Application/ArchiveService.cs</td><td class="size" data-b="35465">34.6 KB</td><td class="lines" data-n="828">828</td><td><b>主文件（partial）</b>：字段 + 基础读写 + ctor + 核心查询入口。</td></tr>
+<tr><td class="path">Application/ArchiveService.Work.cs</td><td class="size" data-b="26379">25.8 KB</td><td class="lines" data-n="649">649</td><td>劳动域：工时统计、劳动强度、殖民地产出排名、职业分解、采样记录。</td></tr>
+<tr><td class="path">Application/ArchiveService.Production.cs</td><td class="size" data-b="6677">6.5 KB</td><td class="lines" data-n="162">162</td><td>产出域：产出汇总、按类目聚合、产出事件、<code>OnThingCrafted</code>。</td></tr>
+<tr><td class="path">Application/ArchiveService.Consumption.cs</td><td class="size" data-b="5883">5.7 KB</td><td class="lines" data-n="143">143</td><td>损耗域：损耗汇总、<code>OnThingConsumed</code>、<code>OnWorkplaceUsed</code>。</td></tr>
+<tr><td class="path">Application/ArchiveService.Battle.cs</td><td class="size" data-b="45013">44.0 KB</td><td class="lines" data-n="1084">1084</td><td>战役域：战役生命周期、参战/伤害、击杀关联、突袭领空。</td></tr>
+<tr><td class="path">Application/ArchiveService.Social.cs</td><td class="size" data-b="9705">9.5 KB</td><td class="lines" data-n="245">245</td><td>社交域：加入/死亡/关系变更、关系快照更新。</td></tr>
+<tr><td class="path">Application/ArchiveService.Location.cs</td><td class="size" data-b="9466">9.2 KB</td><td class="lines" data-n="258">258</td><td>地点域：实时地点、持有者、物品建造/销毁钩子、别名 API。</td></tr>
+<tr><td class="path">Application/ArchiveService.Live.cs</td><td class="size" data-b="14166">13.8 KB</td><td class="lines" data-n="402">402</td><td>Live 实时层：活体 Pawn/殖民者计数、缓存重建、事件记录入口、别名 API。</td></tr>
+<tr><td class="path">Application/IArchiveService.cs</td><td class="size" data-b="12571">12.3 KB</td><td class="lines" data-n="221">221</td><td>档案服务契约（写入/查询/别名/授勋接口）。</td></tr>
+<tr><td class="path">Application/MedalAwardService.cs</td><td class="size" data-b="5093">5.0 KB</td><td class="lines" data-n="122">122</td><td>勋章授予服务：阈值评估→注入 Hediff + 金质公告。</td></tr>
+<tr><td class="path">Application/MedalTranslationKeys.cs</td><td class="size" data-b="2220">2.2 KB</td><td class="lines" data-n="59">59</td><td>勋章翻译键构造（<code>UI.Medal.&lt;defName&gt;.Label/Desc</code>，全项目唯一权威）。</td></tr>
+<tr><td class="path">Application/WorkIntensityContracts.cs</td><td class="size" data-b="11235">11.0 KB</td><td class="lines" data-n="293">293</td><td>劳动强度对外契约/Provider 注册表接口。</td></tr>
+<tr><td class="path">Application/ArchiveLiveViews.cs</td><td class="size" data-b="5503">5.4 KB</td><td class="lines" data-n="165">165</td><td>Live 位置只读视图类型（<code>LocationKind</code>/<code>LocationInfo</code>，不持久化）。</td></tr>
+</tbody></table>
+
+<!-- ============ 3. Data ============ -->
+<h2>3. Data（存档持久化 + 采样 + 别名 + 查询）</h2>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Data/ChronicleGameComponent.cs</td><td class="size" data-b="36884">36.0 KB</td><td class="lines" data-n="733">733</td><td><b>主文件（partial）</b>：<code>ExposeData</code>(Scribe) + <code>FinalizeInit</code>(迁移触发) + 写入口 + 字段声明。</td></tr>
+<tr><td class="path">Data/ChronicleGameComponent.Sampling.cs</td><td class="size" data-b="30072">29.4 KB</td><td class="lines" data-n="745">745</td><td>采样：Tick 采样工时/地点/住所（<code>SampleWorkTimeAndPlaces</code>/<code>SampleResidence</code>）。</td></tr>
+<tr><td class="path">Data/ChronicleGameComponent.Aliases.cs</td><td class="size" data-b="11075">10.8 KB</td><td class="lines" data-n="302">302</td><td>全局别名表：<code>BuildingAliases</code>/<code>RoomRoleAliases</code> + 解析。</td></tr>
+<tr><td class="path">Data/ChronicleGameComponent.Queries.cs</td><td class="size" data-b="18035">17.6 KB</td><td class="lines" data-n="504">504</td><td>查询：全量记录/事件/对象获取、索引查询。</td></tr>
+<tr><td class="path">Data/WorkIntensityDefCatalog.cs</td><td class="size" data-b="4456">4.4 KB</td><td class="lines" data-n="130">130</td><td>劳动强度 Def 目录（DefDatabase 缓存取用）。</td></tr>
+</tbody></table>
+
+<!-- ============ 4. Capture ============ -->
+<h2>4. Capture（Harmony 捕获钩子，只转调 Service，登记于 EXC-2026-001）</h2>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Capture/Patch_BillProduction.cs</td><td class="size" data-b="5568">5.4 KB</td><td class="lines" data-n="120">120</td><td><code>Bill_Production.Notify_IterationCompleted</code> → <code>OnWorkplaceUsed</code>。</td></tr>
+<tr><td class="path">Capture/Patch_ThingIngested.cs</td><td class="size" data-b="3894">3.8 KB</td><td class="lines" data-n="96">96</td><td><code>Thing.Ingested</code> → 损耗累计。</td></tr>
+<tr><td class="path">Capture/Patch_ThingDestroy.cs</td><td class="size" data-b="4100">4.0 KB</td><td class="lines" data-n="95">95</td><td><code>Thing.Destroy</code> → 物品/地点销毁事件。</td></tr>
+<tr><td class="path">Capture/Patch_SetFaction.cs</td><td class="size" data-b="3969">3.9 KB</td><td class="lines" data-n="94">94</td><td><code>Pawn.SetFaction</code> → 派系变更记录。</td></tr>
+<tr><td class="path">Capture/Patch_RoomRoleLabel.cs</td><td class="size" data-b="3667">3.6 KB</td><td class="lines" data-n="90">90</td><td><code>Room.GetRoomRoleLabel</code> → 房间角色别名解析。</td></tr>
+<tr><td class="path">Capture/Patch_Relations.cs</td><td class="size" data-b="3507">3.4 KB</td><td class="lines" data-n="95">95</td><td><code>Pawn_RelationsTracker.Add/RemoveDirectRelation</code> → 社交关系变更。</td></tr>
+<tr><td class="path">Capture/Patch_RaidLordPawnLost.cs</td><td class="size" data-b="3344">3.3 KB</td><td class="lines" data-n="67">67</td><td><code>Lord.Notify_PawnLost</code> → 突袭领主流失。</td></tr>
+<tr><td class="path">Capture/Patch_PawnTakeDamage.cs</td><td class="size" data-b="9255">9.0 KB</td><td class="lines" data-n="208">208</td><td><code>Pawn.TakeDamage</code> → 伤害累计。</td></tr>
+<tr><td class="path">Capture/Patch_PawnKill.cs</td><td class="size" data-b="7855">7.7 KB</td><td class="lines" data-n="191">191</td><td><code>Pawn.Kill</code> → 击杀/传承链记录。</td></tr>
+<tr><td class="path">Capture/Patch_IncidentWorker.cs</td><td class="size" data-b="4436">4.3 KB</td><td class="lines" data-n="90">90</td><td><code>IncidentWorker.TryExecute</code> → 事件捕获。</td></tr>
+<tr><td class="path">Capture/Patch_GenRecipe.cs</td><td class="size" data-b="5480">5.4 KB</td><td class="lines" data-n="129">129</td><td><code>GenRecipe.MakeRecipeProducts</code> → 制作产出。</td></tr>
+<tr><td class="path">Capture/Patch_GenConstruct.cs</td><td class="size" data-b="3791">3.7 KB</td><td class="lines" data-n="79">79</td><td><code>Frame.CompleteConstruction</code> → 建造完成。</td></tr>
+<tr><td class="path">Capture/Patch_BuildingLabel.cs</td><td class="size" data-b="2130">2.1 KB</td><td class="lines" data-n="49">49</td><td><code>Thing.Label</code> → 建筑别名解析。</td></tr>
+<tr><td class="path">Capture/LocationAtlasCapture.cs</td><td class="size" data-b="34604">33.8 KB</td><td class="lines" data-n="783">783</td><td>地点图谱捕获辅助（非 <code>[HarmonyPatch]</code> 本体）。</td></tr>
+<tr><td class="path">Capture/IncidentBattleExtension.cs</td><td class="size" data-b="608">0.6 KB</td><td class="lines" data-n="16">16</td><td>事件→战役扩展关联辅助。</td></tr>
+<tr><td class="path">Capture/CapturePatchDiagnostics.cs</td><td class="size" data-b="2172">2.1 KB</td><td class="lines" data-n="58">58</td><td>捕获 Patch 启动期绑定诊断（EXC-2026-001 证据）。</td></tr>
+</tbody></table>
+
+<!-- ============ 5. Archive ============ -->
+<h2>5. Archive（窗口 / ITab / Dialog / ReadModel 快照，UI 层）</h2>
+<h3>5.1 主窗口 ArchiveMainTabWindow（partial，档案馆）</h3>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Archive/ArchiveMainTabWindow.cs</td><td class="size" data-b="43543">42.5 KB</td><td class="lines" data-n="908">908</td><td><b>主文件</b>：<code>DoWindowContents</code> + 窗口状态字段 + 调度。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Home.cs</td><td class="size" data-b="19927">19.5 KB</td><td class="lines" data-n="438">438</td><td>主页：殖民地档案总览、KPI、时间轴。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Overview.cs</td><td class="size" data-b="9996">9.8 KB</td><td class="lines" data-n="218">218</td><td>概览：分类卡片网格、点击钻取 Pawn/Thing 详情。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Cache.cs</td><td class="size" data-b="46989">45.9 KB</td><td class="lines" data-n="1017">1017</td><td>缓存重建（RefreshCache/Rebuild*，最大 partial）。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Shell.cs</td><td class="size" data-b="24087">23.5 KB</td><td class="lines" data-n="591">591</td><td>头部/侧栏/绘制原语（UI 骨架）。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Nav.cs</td><td class="size" data-b="4261">4.2 KB</td><td class="lines" data-n="135">135</td><td>导航（GoHome/OpenPawnDetail/OpenWeaponDetail）。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Labels.cs</td><td class="size" data-b="15736">15.4 KB</td><td class="lines" data-n="442">442</td><td>标签解析（TabLabel/CategoryLabel/各类 Label）。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Battle.cs</td><td class="size" data-b="13175">12.9 KB</td><td class="lines" data-n="283">283</td><td>战役扫描与展示。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Legacy.cs</td><td class="size" data-b="23265">22.7 KB</td><td class="lines" data-n="461">461</td><td>传承/武器传承链展示。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.Location.cs</td><td class="size" data-b="20277">19.8 KB</td><td class="lines" data-n="458">458</td><td>地点/足迹展示。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.EventDetail.cs</td><td class="size" data-b="16239">15.9 KB</td><td class="lines" data-n="390">390</td><td>事件详情面板。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.WeaponDetail.cs</td><td class="size" data-b="15817">15.4 KB</td><td class="lines" data-n="313">313</td><td>武器详情面板。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.PawnDetail.cs</td><td class="size" data-b="10662">10.4 KB</td><td class="lines" data-n="363">363</td><td><b>Pawn 详情调度（partial）</b>：聚合各宫格。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.PawnOverview.cs</td><td class="size" data-b="19693">19.2 KB</td><td class="lines" data-n="415">415</td><td>Pawn 概览宫格。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.PawnWork.cs</td><td class="size" data-b="18124">17.7 KB</td><td class="lines" data-n="371">371</td><td>Pawn 产出宫格（<code>DrawProductionTab</code>）：产出类型/数量/最近时间表格。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.PawnCombat.cs</td><td class="size" data-b="20631">20.2 KB</td><td class="lines" data-n="463">463</td><td>Pawn 战斗宫格 + 装备。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.PawnMedal.cs</td><td class="size" data-b="37503">36.6 KB</td><td class="lines" data-n="767">767</td><td>Pawn 勋章墙（最高档归并、Buff 通道 B、金质 Letter）。</td></tr>
+<tr><td class="path">Archive/ArchiveMainTabWindow.PawnSocial.cs</td><td class="size" data-b="20426">20.0 KB</td><td class="lines" data-n="408">408</td><td>Pawn 社交网络图。</td></tr>
+</tbody></table>
+
+<h3>5.2 ITab / Dialog / 注入</h3>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Archive/ITab_Pawn_Chronicle.cs</td><td class="size" data-b="39055">38.1 KB</td><td class="lines" data-n="676">676</td><td>人物档案 ITab：劳动代表卡（工坊/住所）+ ✎ 改名、六宫格入口。</td></tr>
+<tr><td class="path">Archive/Dialog_RenameWorkplace.cs</td><td class="size" data-b="5101">5.0 KB</td><td class="lines" data-n="119">119</td><td>通用改名 Dialog（工坊实例/房间角色共用）。</td></tr>
+<tr><td class="path">Archive/ChronicleInspectTabInjector.cs</td><td class="size" data-b="3461">3.4 KB</td><td class="lines" data-n="86">86</td><td>将档案 Tab 注入 humanlike Pawn def（启动期）。</td></tr>
+<tr><td class="path">Archive/DevTestButtons.cs</td><td class="size" data-b="24231">23.7 KB</td><td class="lines" data-n="525">525</td><td>开发者测试工具（生成随机测试数据；反射清理登记 EXC-2026-002）。</td></tr>
+<tr><td class="path">Archive/ArchivePanelBase.cs</td><td class="size" data-b="2971">2.9 KB</td><td class="lines" data-n="62">62</td><td>各面板共享基类（绘制辅助、Z 形正交连线）。</td></tr>
+</tbody></table>
+
+<h3>5.3 ReadModels（只读快照 + 构建）</h3>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Archive/ReadModels/ArchiveSectionSnapshot.cs</td><td class="size" data-b="3060">3.0 KB</td><td class="lines" data-n="56">56</td><td>区块快照基类型/DTO。</td></tr>
+<tr><td class="path">Archive/ReadModels/ArchiveUiDataProvider.cs</td><td class="size" data-b="24387">23.8 KB</td><td class="lines" data-n="560">560</td><td><b>主文件（partial）</b>：<code>BuildHome</code>/<code>BuildOverview</code> + 通用本地化辅助。</td></tr>
+<tr><td class="path">Archive/ReadModels/ArchiveUiDataProvider.Detail.cs</td><td class="size" data-b="43815">42.8 KB</td><td class="lines" data-n="883">883</td><td>详情六宫格构建（健康/工作/工坊/住所/勋章/生命阶段/传承/足迹）。</td></tr>
+<tr><td class="path">Archive/ReadModels/ArchiveUiDataProvider.Event.cs</td><td class="size" data-b="3297">3.2 KB</td><td class="lines" data-n="87">87</td><td>事件/时间轴快照构建。</td></tr>
+<tr><td class="path">Archive/ReadModels/ArchiveUiDataProvider.Ledger.cs</td><td class="size" data-b="9985">9.8 KB</td><td class="lines" data-n="205">205</td><td>生产账本/击杀按派系构建。</td></tr>
+<tr><td class="path">Archive/ReadModels/ArchiveUiDataProvider.Legacy.cs</td><td class="size" data-b="35971">35.1 KB</td><td class="lines" data-n="814">814</td><td>传承/起源/关系图构建。</td></tr>
+<tr><td class="path">Archive/ReadModels/SectionSnapshots.Home.cs</td><td class="size" data-b="3291">3.2 KB</td><td class="lines" data-n="82">82</td><td>Home 快照类（HomeSnapshot/BattleKpisView 等）。</td></tr>
+<tr><td class="path">Archive/ReadModels/SectionSnapshots.Overview.cs</td><td class="size" data-b="3551">3.5 KB</td><td class="lines" data-n="81">81</td><td>概览快照类（OverviewSnapshot/ProductionLineView 等）。</td></tr>
+<tr><td class="path">Archive/ReadModels/SectionSnapshots.Detail.cs</td><td class="size" data-b="30344">29.6 KB</td><td class="lines" data-n="599">599</td><td>详情快照类（WorkplaceView/ResidenceView/MedalView/DetailSnapshot 等）。</td></tr>
+<tr><td class="path">Archive/ReadModels/SectionSnapshots.Event.cs</td><td class="size" data-b="1080">1.1 KB</td><td class="lines" data-n="25">25</td><td>事件快照类（EventSnapshot）。</td></tr>
+<tr><td class="path">Archive/ReadModels/SpanText.cs</td><td class="size" data-b="2526">2.5 KB</td><td class="lines" data-n="63">63</td><td>时长格式化工具。</td></tr>
+<tr><td class="path">Archive/ReadModels/ViewTypes.cs</td><td class="size" data-b="610">0.6 KB</td><td class="lines" data-n="17">17</td><td>ReadModel 视图枚举类型。</td></tr>
+</tbody></table>
+
+<h3>5.4 UI 设计系统</h3>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Archive/UI/UITheme.cs</td><td class="size" data-b="24114">23.5 KB</td><td class="lines" data-n="466">466</td><td><b>Layer 1 设计令牌</b>：<code>Palette</code>(readonly struct) + 4 主题 + <code>Apply</code>/<code>Shadow</code> 颜色 Token 集中管理。</td></tr>
+<tr><td class="path">Archive/UI/UIComponents.cs</td><td class="size" data-b="48165">47.0 KB</td><td class="lines" data-n="955">955</td><td><b>Layer 2 组件</b>：Card/Pill/ProgressBar/ShadowLabel/ClickableCard 等可复用绘制单元。</td></tr>
+<tr><td class="path">Archive/UI/UITextureLibrary.cs</td><td class="size" data-b="2712">2.6 KB</td><td class="lines" data-n="66">66</td><td>UI 纹理库（图标/纹理集中管理）。</td></tr>
+<tr><td class="path">Archive/ArchiveUiStyle.cs</td><td class="size" data-b="6637">6.5 KB</td><td class="lines" data-n="153">153</td><td>转发壳：从 UITheme 同步静态字段供旧调用点使用。</td></tr>
+</tbody></table>
+
+<!-- ============ 6. Api ============ -->
+<h2>6. Api（对外契约与扩展点）</h2>
+<table>
+<thead><tr><th>相对路径</th><th>大小</th><th>行数</th><th>功能代码</th></tr></thead><tbody>
+<tr><td class="path">Api/IPersonalChronicleApi.cs</td><td class="size" data-b="2226">2.2 KB</td><td class="lines" data-n="47">47</td><td>顶层 API 接口（<code>TryGet</code>/<code>Supports</code>/<code>Providers.Register</code>）。</td></tr>
+<tr><td class="path">Api/PersonalChronicleApi.cs</td><td class="size" data-b="970">0.9 KB</td><td class="lines" data-n="31">31</td><td>API 实现单例。</td></tr>
+<tr><td class="path">Api/ApiVersion.cs</td><td class="size" data-b="3955">3.9 KB</td><td class="lines" data-n="75">75</td><td>API 版本语义（<code>(1,1,4)</code> 等）。</td></tr>
+<tr><td class="path">Api/IArchiveQueryService.cs</td><td class="size" data-b="4126">4.0 KB</td><td class="lines" data-n="90">90</td><td>查询契约（GetBuildingAlias/GetRoomRoleAlias/各类查询）。</td></tr>
+<tr><td class="path">Api/IArchiveEventSink.cs</td><td class="size" data-b="777">0.8 KB</td><td class="lines" data-n="18">18</td><td>事件写入契约（<code>TryRecord</code>）。</td></tr>
+<tr><td class="path">Api/IArchiveProvider.cs</td><td class="size" data-b="2099">2.0 KB</td><td class="lines" data-n="43">43</td><td>Provider 契约接口。</td></tr>
+<tr><td class="path">Api/IArchiveProviderRegistry.cs</td><td class="size" data-b="2743">2.7 KB</td><td class="lines" data-n="54">54</td><td>Provider 注册表契约。</td></tr>
+<tr><td class="path">Api/ArchiveProviderRegistry.cs</td><td class="size" data-b="5554">5.4 KB</td><td class="lines" data-n="160">160</td><td>Provider 注册表实现（能力探测/隔离）。</td></tr>
+<tr><td class="path">Api/ArchiveEntityRef.cs</td><td class="size" data-b="2373">2.3 KB</td><td class="lines" data-n="60">60</td><td>实体引用 DTO。</td></tr>
+<tr><td class="path">Api/ArchiveEventInput.cs</td><td class="size" data-b="4303">4.2 KB</td><td class="lines" data-n="101">101</td><td>事件输入契约（稳定 ID/类型/Tick/去重）。</td></tr>
+<tr><td class="path">Api/CaptureResult.cs</td><td class="size" data-b="1110">1.1 KB</td><td class="lines" data-n="32">32</td><td>捕获结果结构。</td></tr>
+<tr><td class="path">Api/DomainProviders/IBattleProvider.cs</td><td class="size" data-b="2543">2.5 KB</td><td class="lines" data-n="64">64</td><td>战役领域 Provider 契约。</td></tr>
+<tr><td class="path">Api/DomainProviders/IPlaceProvider.cs</td><td class="size" data-b="2717">2.7 KB</td><td class="lines" data-n="70">70</td><td>地点领域 Provider 契约。</td></tr>
+<tr><td class="path">Api/DomainProviders/IProductionProvider.cs</td><td class="size" data-b="4300">4.2 KB</td><td class="lines" data-n="100">100</td><td>产出领域 Provider 契约。</td></tr>
+<tr><td class="path">Api/DomainProviders/IRelationProvider.cs</td><td class="size" data-b="2531">2.5 KB</td><td class="lines" data-n="67">67</td><td>社交关系领域 Provider 契约。</td></tr>
+<tr><td class="path">Api/DomainProviders/Builtin/BuiltinBattleProvider.cs</td><td class="size" data-b="2339">2.3 KB</td><td class="lines" data-n="56">56</td><td>内置战役 Provider 实现。</td></tr>
+<tr><td class="path">Api/DomainProviders/Builtin/BuiltinPlaceProvider.cs</td><td class="size" data-b="1769">1.7 KB</td><td class="lines" data-n="45">45</td><td>内置地点 Provider 实现。</td></tr>
+<tr><td class="path">Api/DomainProviders/Builtin/BuiltinProductionProvider.cs</td><td class="size" data-b="2929">2.9 KB</td><td class="lines" data-n="78">78</td><td>内置产出 Provider 实现。</td></tr>
+<tr><td class="path">Api/DomainProviders/Builtin/BuiltinRelationProvider.cs</td><td class="size" data-b="2060">2.0 KB</td><td class="lines" data-n="52">52</td><td>内置社交关系 Provider 实现。</td></tr>
+</tbody></table>
+
+<!-- ============ 汇总 ============ -->
+<h2>汇总统计</h2>
+<div class="total-bar" id="grandTotal"></div>
+<table id="summaryTable">
+<thead><tr><th>分层</th><th>文件数</th><th>总大小</th><th>总行数</th></tr></thead>
+<tbody>
+<tr><td>0. 根目录</td><td>3</td><td class="size" data-b="11667">11.4 KB</td><td class="lines" data-n="270">270</td></tr>
+<tr><td>1. Domain</td><td>40</td><td class="size" data-b="200034">195.3 KB</td><td class="lines" data-n="4950">4950</td></tr>
+<tr><td>2. Application</td><td>13</td><td class="size" data-b="178540">174.4 KB</td><td class="lines" data-n="4239">4239</td></tr>
+<tr><td>3. Data</td><td>5</td><td class="size" data-b="100562">98.3 KB</td><td class="lines" data-n="2409">2409</td></tr>
+<tr><td>4. Capture</td><td>16</td><td class="size" data-b="123519">120.6 KB</td><td class="lines" data-n="2117">2117</td></tr>
+<tr><td>5. Archive</td><td>43</td><td class="size" data-b="727573">710.5 KB</td><td class="lines" data-n="16023">16023</td></tr>
+<tr><td>6. Api</td><td>19</td><td class="size" data-b="59626">58.2 KB</td><td class="lines" data-n="1402">1402</td></tr>
+</tbody>
+<tfoot><tr><td>合计</td><td>135</td><td class="size" id="totSize">—</td><td class="lines" id="totLines">—</td></tr></tfoot>
+</table>
+
+<h2>命名语义与治理映射</h2>
+<p class="note">
+<b>后缀职责</b>（TERM-004）：<code>*Def</code>=静态 Def；<code>*Service</code>=业务用例；<code>*Snapshot</code>=只读投影；<code>*Accumulator</code>=累计器；<code>*Patch</code>=Harmony 钩子；<code>*Window</code>/<code>*Panel</code>/<code>*Dialog</code>=UI 容器；<code>*Keys</code>=翻译/稳定 key 常量。<br>
+<b>partial 治理</b>（ARC-013）：<code>ArchiveService</code>(7 子文件)、<code>ChronicleGameComponent</code>(3 子文件)、<code>ArchiveMainTabWindow</code>(主+19 子)、<code>ArchiveUiDataProvider</code>(4 子)、<code>SectionSnapshots</code>(4 子) 均为物理切片，零契约改动。<br>
+<b>分层归位</b>：Domain 纯逻辑 / Application 编排 / Data 持久化 / Capture 钩子 / Archive UI / Api 契约，单向依赖（MATRIX-001）。<br>
+空壳 <code>SectionSnapshots.cs</code> 已于 2026-08-15 删除；Harmony 捕获见 <code>EXC-2026-001</code>；DevTest 反射见 <code>EXC-2026-002</code>。
+</p>
+
+<script>
+(function () {
+  function sum(selector, attr) {
+    var els = document.querySelectorAll(selector);
+    var t = 0;
+    for (var i = 0; i < els.length; i++) t += parseInt(els[i].getAttribute(attr), 10) || 0;
+    return t;
+  }
+  // 汇总表内各分层求和
+  var rows = document.querySelectorAll('#summaryTable tbody tr');
+  var tb = 0, tn = 0;
+  rows.forEach(function (r) {
+    tb += parseInt(r.querySelector('.size').getAttribute('data-b'), 10) || 0;
+    tn += parseInt(r.querySelector('.lines').getAttribute('data-n'), 10) || 0;
+  });
+  document.getElementById('totSize').textContent = (tb / 1024).toFixed(1) + ' KB';
+  document.getElementById('totSize').setAttribute('data-b', tb);
+  document.getElementById('totLines').textContent = tn.toLocaleString();
+  document.getElementById('totLines').setAttribute('data-n', tn);
+  document.getElementById('grandTotal').textContent =
+    '全项目：' + rows.length + ' 个分层 / 文件数见上表 / 总大小 ' + (tb / 1024).toFixed(1) + ' KB / 总行数 ' + tn.toLocaleString();
+})();
+</script>
+</div>
+</body>
+</html>
