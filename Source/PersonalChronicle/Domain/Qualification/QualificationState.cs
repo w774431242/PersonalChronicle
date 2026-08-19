@@ -57,7 +57,8 @@ namespace PersonalChronicle.Domain.Qualification
 
     /// <summary>
     /// 单条资格进度（P5 状态机：Locked→Eligible→Preparing→PracticalExam→
-    /// TheoryExam→Thesis→Defense→Qualified→Granted，失败回 Preparing）。
+    /// TheoryExam→Thesis→Defense→Review→Granted，失败回 Preparing；
+    /// Review=评级评审期（2026-08-19：结算评级以工作日答复，不自动即时授予））。
     /// 持久化用 string Status（兼容存档，枚举名稳定）。
     /// </summary>
     public sealed class QualificationProgress : IExposable
@@ -76,6 +77,15 @@ namespace PersonalChronicle.Domain.Qualification
         /// <summary>综合评分（0~100，资格判定门槛用）。</summary>
         public float CompositeScore;
 
+        /// <summary>
+        /// 评级评审开始 tick（2026-08-19 新增，append-only）：资格满足（含答辩）后进入评审期，
+        /// 经过 ReviewDays 个工作日（60000 tick/日）后答复授予。0 = 未进入评审（旧存档兼容）。
+        /// </summary>
+        public long ReviewStartedTick;
+
+        /// <summary>评审工作日数（0 = 按 QualificationDef.reviewDays，缺省 3）。</summary>
+        public int ReviewDays;
+
         public long AppliedTick;
         public long DecidedTick;
 
@@ -88,6 +98,8 @@ namespace PersonalChronicle.Domain.Qualification
             Scribe_Values.Look(ref ThesisPassed, "thesisPassed", false);
             Scribe_Values.Look(ref DefensePassed, "defensePassed", false);
             Scribe_Values.Look(ref CompositeScore, "compositeScore", 0f);
+            Scribe_Values.Look(ref ReviewStartedTick, "reviewStartedTick", 0L);
+            Scribe_Values.Look(ref ReviewDays, "reviewDays", 0);
             Scribe_Values.Look(ref AppliedTick, "appliedTick", 0L);
             Scribe_Values.Look(ref DecidedTick, "decidedTick", 0L);
         }
@@ -103,6 +115,8 @@ namespace PersonalChronicle.Domain.Qualification
         public const string TheoryExam = "TheoryExam";
         public const string Thesis = "Thesis";
         public const string Defense = "Defense";
+        /// <summary>评级评审期（2026-08-19：答辩后进入，N 个工作日后答复授予）。</summary>
+        public const string Review = "Review";
         public const string Qualified = "Qualified";
         public const string Granted = "Granted";
 
@@ -110,6 +124,27 @@ namespace PersonalChronicle.Domain.Qualification
         public static bool IsFullyPrepared(QualificationProgress p)
         {
             return p != null && p.PracticalPassed && p.TheoryPassed && p.ThesisPassed && p.DefensePassed;
+        }
+    }
+
+    /// <summary>
+    /// 评级评审纯函数（2026-08-19：结算评级以工作日答复，不自动即时授予）。
+    /// 答辩完成后资格满足 → 记录 ReviewStartedTick 进入评审期 → 经过 ReviewDays 个
+    /// 工作日（60000 tick/日）后 IsDue=true，方可授予。
+    /// </summary>
+    public static class QualificationReview
+    {
+        /// <summary>默认评审工作日数（QualificationDef.reviewDays 缺省）。</summary>
+        public const int DefaultReviewDays = 3;
+
+        public static bool IsDue(long reviewStartedTick, int reviewDays, long nowTick)
+        {
+            if (reviewStartedTick <= 0L)
+            {
+                return false;
+            }
+            int days = reviewDays > 0 ? reviewDays : DefaultReviewDays;
+            return nowTick >= reviewStartedTick + (long)days * 60000L;
         }
     }
 }

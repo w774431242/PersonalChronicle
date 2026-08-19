@@ -63,9 +63,26 @@ namespace PersonalChronicle.Data
                     }
                     // 更新进度状态机
                     QualificationProgress progress = EnsureQualificationProgress(pawnObject, e.Def.defName);
-                    progress.Status = QualificationStatus.Qualified;
                     progress.CompositeScore = e.CompositeScore;
-                    progress.DecidedTick = Find.TickManager.TicksGame;
+                    long now = Find.TickManager.TicksGame;
+
+                    // 2026-08-19 评级评审期：结算评级以工作日答复，不自动即时授予。
+                    // 资格满足（含答辩）首次检测 → 进入 Review（记录开始 tick）；未到期 → 保持 Review。
+                    if (progress.ReviewStartedTick <= 0L)
+                    {
+                        progress.ReviewStartedTick = now;
+                        progress.ReviewDays = e.Def.reviewDays > 0 ? e.Def.reviewDays : QualificationReview.DefaultReviewDays;
+                        progress.Status = QualificationStatus.Review;
+                        progress.DecidedTick = now;
+                        continue;
+                    }
+                    if (!QualificationReview.IsDue(progress.ReviewStartedTick, progress.ReviewDays, now))
+                    {
+                        progress.Status = QualificationStatus.Review;
+                        continue;
+                    }
+                    // 评审到期 → 授予（或标记 Qualified 等待 UI 确认，autoGrant=false 时）
+                    progress.Status = QualificationStatus.Qualified;
 
                     ProfessionalTitleDef titleDef = DefDatabase<ProfessionalTitleDef>.GetNamedSilentFail(e.Def.titleDefName);
                     if (titleDef == null || !titleDef.autoGrant)

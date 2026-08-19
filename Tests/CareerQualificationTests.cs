@@ -436,6 +436,41 @@ namespace PersonalChronicle.Tests
             Assert.IsFalse(rec.Passed);
         }
 
+        // ───────────────────────── 2026-08-19 评级评审期（结算以工作日答复，不自动即时授予） ─────────────────────────
+
+        [Test]
+        public void QualificationReview_NotStarted_NotDue()
+        {
+            // 未进入评审（ReviewStartedTick=0）→ 永不视为到期
+            Assert.IsFalse(QualificationReview.IsDue(0L, 3, 999999L));
+        }
+
+        [Test]
+        public void QualificationReview_NotDue_WithinDays()
+        {
+            // 开始后 3 个工作日内（60000 tick/日）未到期
+            long start = 100000L;
+            Assert.IsFalse(QualificationReview.IsDue(start, 3, start + 3L * 60000L - 1L));
+        }
+
+        [Test]
+        public void QualificationReview_Due_AfterDays()
+        {
+            // 满 3 个工作日（含）即到期
+            long start = 100000L;
+            Assert.IsTrue(QualificationReview.IsDue(start, 3, start + 3L * 60000L));
+            Assert.IsTrue(QualificationReview.IsDue(start, 3, start + 500000L));
+        }
+
+        [Test]
+        public void QualificationReview_DefaultDays_WhenZero()
+        {
+            // reviewDays=0 → 缺省 3 个工作日
+            long start = 100000L;
+            Assert.IsFalse(QualificationReview.IsDue(start, 0, start + 3L * 60000L - 1L));
+            Assert.IsTrue(QualificationReview.IsDue(start, 0, start + 3L * 60000L));
+        }
+
         // ───────────────────────── 2026-08-19 验收 P1-4 回归：答辩匹配 ─────────────────────────
 
         private static QualificationDef MakeFullQual(string defName, string skill, bool reqThesis, bool reqDefense)

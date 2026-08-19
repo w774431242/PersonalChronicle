@@ -188,3 +188,4 @@
 | git 提交 | ✅ 5 个逻辑提交（规范体系 / 职业体系实现 / 档案工作区 / 工具与预览 / 杂项文档）；DLL 待重建 |
 | SDK 复验 | ✅ 完成（2026-08-19）：dotnet-install 安装 SDK 8.0.424 → 主项目编译 **0 错 0 警** → 单测 **168 过 / 3 跳 / 0 失败**（含本轮 15 个新用例全部通过）→ DLL 已重建并提交 |
 | 流程通道 | ✅ 修补（2026-08-19 第二轮反馈）：考试/理论/论文/答辩按申报档隔离（C# QualificationDefName 匹配语义，预览 `S.tiers[key]`）；实践考试制造上限（`PracticalExamRecord.MaxProduced` 默认 2×要求，C# + 2 回归用例）；答辩完成统一结算授予；单测 **170 过 / 3 跳 / 0 失败**，DLL 已重建 |
+| 评级评审期 | ✅ 修补（2026-08-19 第三轮反馈）：结算评级为独立最后一步（答辩后 Review→Granted），**N 个工作日答复**（`QualificationDef.reviewDays` 默认 3 + `QualificationReview.IsDue` + `QualificationProgress.ReviewStartedTick/ReviewDays`；RunQualification 评审门控）；预览评审卡 + 等待推进；p9test reviewGated 通过；单测 **174 过 / 3 跳 / 0 失败**（+4 评审用例），DLL 已重建 |

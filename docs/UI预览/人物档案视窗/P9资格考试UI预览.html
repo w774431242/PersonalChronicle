@@ -123,10 +123,11 @@
       <div class="ladder" id="ladder"></div>
     </div>
     <div class="card">
-      <div class="cap">我的资格进度（当前申报档流程：实践考试 → 理论考试 → 论文 → 答辩 → 授予）</div>
+      <div class="cap">我的资格进度（当前申报档流程：实践考试 → 理论考试 → 论文 → 答辩 → 评级评审 → 授予）</div>
       <div class="fsm" id="fsm"></div>
       <div style="height:8px"></div>
       <div id="reqs"></div>
+      <div id="reviewCard"></div>
     </div>
   </div>
 
@@ -244,11 +245,12 @@
     { key:'specialist', lv:4, name:'精密制造技师',   level:38, hours:480, score:70, exam:true,  thesis:true },
     { key:'master',  lv:5, name:'精密制造高级技师', level:45, hours:720, score:80, exam:true,  thesis:true },
   ];
-  var FSM_STEPS = ['Locked','Eligible','Preparing','PracticalExam','TheoryExam','Thesis','Defense','Qualified','Granted'];
+  var FSM_STEPS = ['Locked','Eligible','Preparing','PracticalExam','TheoryExam','Thesis','Defense','Review','Granted'];
   var CM_NAMES = ['岳明','周工','孙师傅','郑总工','吴技工','冯老师'];
   var QS = ['Poor','Normal','Good','Excellent','Masterwork','Legendary'];
   var QW = [0.05, 0.40, 0.30, 0.20, 0.04, 0.01];
   var EXAM_MAX_MULT = 2;   // 实践考试制造上限 = 要求件数 × 2
+  var REVIEW_DAYS = 3;     // 评级评审工作日数（2026-08-19：结算评级以工作日答复，不自动即时授予）
 
   function $(id){ return document.getElementById(id); }
   function fmt(v){ return Math.round(v*100)/100; }
@@ -271,6 +273,7 @@
       theorySubmitted: false, theoryScore: 0,
       thesis: { started:false, books:0, research:0, score:0, done:false },
       defense: { started:false, committee:[], score:0, done:false },
+      review: null,   // 评级评审期：{ pendingDays, done }（2026-08-19）
     };
     return S.tiers[key];
   }
@@ -284,7 +287,12 @@
       + 0.15*(thesisOk?90:0) + 0.2*(S.level/50*100);
   }
 
-  // ───────── 业务层：资格判定 + 自动授予（与渲染分离；按当前申报档评估） ─────────
+  // ───────── 业务层：资格判定 + 评级评审期 + 自动授予（与渲染分离） ─────────
+  // 2026-08-19：结算评级以工作日答复——资格满足（含答辩）后先进入评审期（Review），
+  // 经 REVIEW_DAYS 个工作日答复后才授予；评审期由 advanceReview 推进（模拟时间流逝）。
+  function reviewDue(cs){
+    return cs && cs.review && cs.review.done;
+  }
   function evaluateAndGrant(){
     var next = nextTier();
     if (!next) return false;
@@ -294,13 +302,38 @@
     var theoryOk = !next.exam || cs.theorySubmitted;
     var thesisOk = !next.thesis || (cs.thesis.done && cs.defense.done);
     var scoreOk = compositeScore(next) >= next.score;
-    if (lvOk && hrOk && scoreOk && examOk && theoryOk && thesisOk && S.granted.indexOf(next.key)<0){
+    var prepared = lvOk && hrOk && scoreOk && examOk && theoryOk && thesisOk;
+    if (!prepared) return false;
+    // 资格满足 → 进入评级评审期（若未开始）；评审未答复 → 不授予
+    if (!cs.review){
+      cs.review = { pendingDays: REVIEW_DAYS, done: false };
+      log('⏳ 进入评级评审期：'+next.name+'（预计 '+REVIEW_DAYS+' 个工作日后答复）', 'warn');
+    }
+    if (!cs.review.done) return false;
+    // 评审答复到期 → 授予
+    if (S.granted.indexOf(next.key)<0){
       S.granted.push(next.key);
       showGrantBanner(next);
-      log('🎖 职称授予：'+next.name, 'ok');
+      log('🎖 评级答复：授予职称 '+next.name, 'ok');
       return true;
     }
     return false;
+  }
+
+  function advanceReview(){
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!cs || !cs.review || cs.review.done) return false;
+    cs.review.pendingDays--;
+    if (cs.review.pendingDays <= 0){
+      cs.review.pendingDays = 0;
+      cs.review.done = true;
+      log('🗓 评级评审已答复（'+next.name+'）', 'ok');
+    } else {
+      log('🗓 评审推进 1 个工作日（剩余 '+cs.review.pendingDays+' 日）');
+    }
+    renderAll();
+    return cs.review.done;
   }
 
   function showGrantBanner(tier){
@@ -327,7 +360,11 @@
     var examOk = !tier.exam || (cs.exam && cs.exam.passed);
     var theoryOk = !tier.exam || cs.theorySubmitted;
     var thesisOk = !tier.thesis || (cs.thesis.done && cs.defense.done);
-    if (lvOk && hrOk && examOk && theoryOk && thesisOk) return { st:'eligible', label:'可授予' };
+    if (lvOk && hrOk && examOk && theoryOk && thesisOk){
+      // 2026-08-19 评级评审期：资格满足先评审，答复后才授予
+      if (cs.review && !cs.review.done) return { st:'active', label:'评审中' };
+      return { st:'eligible', label:'可授予' };
+    }
     return { st:'active', label:'申报中' };
   }
 
@@ -384,8 +421,31 @@
   // ───────── 渲染（先业务判定，再渲染；状态变更统一走 renderAll） ─────────
   function renderAll(){
     evaluateAndGrant();
-    renderLadder(); renderFsm(); renderReqs(); renderExam(); renderTheory(); renderThesis(); renderDefense(); renderRecord(); renderStatus();
+    renderLadder(); renderFsm(); renderReqs(); renderReview(); renderExam(); renderTheory(); renderThesis(); renderDefense(); renderRecord(); renderStatus();
   }
+  // 评级评审卡（2026-08-19：结算评级以工作日答复，不自动即时授予）
+  function renderReview(){
+    var host = $('reviewCard');
+    if (!host) return;
+    var next = nextTier();
+    var cs = next ? tierState(next.key) : null;
+    if (!cs || !cs.review){
+      host.innerHTML = '';
+      return;
+    }
+    var r = cs.review;
+    if (r.done){
+      host.innerHTML = '<div class="verdict pass" style="margin-top:10px">✅ 评级评审已答复：本档职称授予已生效</div>';
+      return;
+    }
+    host.innerHTML = '<div style="margin-top:10px;border:1px solid var(--warn);border-radius:6px;padding:10px 12px;background:#241f12">'
+      + '<div style="font-size:12px;color:var(--warn)">⏳ 评级评审中：'+next.name+'</div>'
+      + '<div style="font-size:11px;color:var(--muted);margin-top:4px">已评审 '+(REVIEW_DAYS-r.pendingDays)+' / '+REVIEW_DAYS+' 个工作日 · 答复后将授予职称</div>'
+      + '<button class="btn" id="btnAdvanceReview" style="margin-top:8px;font-size:11px">🗓 等待 1 个工作日（模拟时间流逝）</button></div>';
+    var btn = $('btnAdvanceReview');
+    if (btn) btn.addEventListener('click', function(){ advanceReview(); });
+  }
+
   function renderLadder(){
     var html = '';
     TIERS.forEach(function(t){
@@ -439,6 +499,7 @@
       ['实践考试', next.exam?(cs.exam?(cs.exam.passed?'通过（'+fmt(cs.exam.score)+'分）':(cs.exam.finished?'未通过（'+fmt(cs.exam.score)+'分）':'进行中')):'未报名'):'不要求', examOk, examOk?'通过':'待进行'],
       ['理论考试', next.exam?(cs.theorySubmitted?'通过（'+fmt(cs.theoryScore)+'分）':'待提交'):'不要求', theoryOk, theoryOk?'通过':'待进行'],
       ['论文 / 答辩', next.thesis?(cs.defense.done?'通过（论文'+fmt(cs.thesis.score)+' · 答辩'+fmt(cs.defense.score)+'）':(cs.thesis.done?'答辩待进行':'待进行')):'不要求', thesisOk, thesisOk?'通过':'待进行'],
+      ['评级评审', cs.review?(cs.review.done?'已答复（授予）':'评审中（已 '+(REVIEW_DAYS-cs.review.pendingDays)+'/'+REVIEW_DAYS+' 个工作日）'):'待结算', reviewDue(cs), reviewDue(cs)?'答复':'评审中'],
     ];
     $('reqs').innerHTML = rows.map(function(r){
       return '<div class="req"><span class="n">'+r[0]+'</span><span class="d">'+r[1]+'</span>'
@@ -553,7 +614,7 @@
     }
     if (d.done){
       area.innerHTML = '<div style="margin-top:8px"><span class="score">'+fmt(d.score)+'<span class="of"> / 100</span></span>'
-        + '<div class="verdict pass">✅ 答辩通过（本档）· 评级流程结算后将授予职称</div></div>';
+        + '<div class="verdict pass">✅ 答辩通过（本档）· 已进入评级评审期（'+REVIEW_DAYS+' 个工作日后答复）</div></div>';
     } else {
       area.innerHTML = '<div style="margin-top:6px">'+d.committee.map(function(c){
         return '<div class="cm"><div class="av">'+c.name[0]+'</div><div class="nm">'+c.name
@@ -737,8 +798,10 @@
   $('btnQuickFlow').addEventListener('click', function(){
     S.level = 27; S.hours = 260;
     renderAll();
-    var f1 = runTierExamFlow();   // Lv1
+    var f1 = runTierExamFlow();   // Lv1：考试+理论 → 进入评审
+    advanceReview(); advanceReview(); advanceReview();  // 评审 3 日 → 授予
     var f2 = runTierExamFlow();   // Lv2
+    advanceReview(); advanceReview(); advanceReview();
     var f3 = runTierExamFlow();   // Lv3 考试+理论
     var cs3 = tierState('senior');
     $('btnThesisStart').click();
@@ -747,6 +810,7 @@
     $('btnDefenseStart').click();
     cs3.defense.committee = [{name:'甲',lv:15,score:85},{name:'乙',lv:14,score:80},{name:'丙',lv:16,score:90}];
     $('btnDefenseVote').click();
+    advanceReview(); advanceReview(); advanceReview();  // 答辩后评审 3 日 → 授予
     log('⚡ 一键流程完成：'+[f1,f2,f3].join('/')+' · 职称链 '+S.granted.join(' → '), 'ok');
   });
 
@@ -769,9 +833,16 @@
         // ④ 绕过禁用直接论文选题 → 被守卫拦截
         $('btnThesisStart').click();
         var gateThesisBlocked = !tierState('junior').thesis.started;
-        // ── 正常逐档全流程 ──
+        // ── 正常逐档全流程（每档：考试+理论 → 评审 3 日 → 授予）──
         var f1 = runTierExamFlow();
+        // 评审期断言 ①：理论考试结束后不得立即授予（评审中）
+        var reviewGated1 = S.granted.indexOf('junior') < 0;
+        var reviewState1 = tierState('junior').review ? (tierState('junior').review.done ? 'done' : 'pending') : 'none';
+        advanceReview(); advanceReview(); advanceReview();
+        var grantedJunior = S.granted.indexOf('junior') >= 0;
         var f2 = runTierExamFlow();
+        advanceReview(); advanceReview(); advanceReview();
+        var grantedAssistant = S.granted.indexOf('assistant') >= 0;
         var f3 = runTierExamFlow();
         var cs3 = tierState('senior');
         $('btnThesisStart').click();
@@ -781,9 +852,18 @@
         $('btnDefenseStart').click();
         cs3.defense.committee = [{ name: '甲', lv: 15, score: 85 }, { name: '乙', lv: 14, score: 80 }, { name: '丙', lv: 16, score: 90 }];
         $('btnDefenseVote').click();
+        // 评审期断言 ②：答辩通过后不立即授予（进入评审）
+        var reviewGated3 = S.granted.indexOf('senior') < 0;
+        var reviewState3 = cs3.review ? (cs3.review.done ? 'done' : 'pending') : 'none';
+        advanceReview(); advanceReview(); advanceReview();
+        var grantedSenior = S.granted.indexOf('senior') >= 0;
         var out = 'gates:' + [gateTheoryBtn, gateTheoryBlocked, gateThesisBtn, gateThesisBlocked].map(function(x){return x?'Y':'N';}).join('/')
           + ' | flow:' + [f1, f2, f3].join('/')
-          + ' | grantedAfterFullFlow:' + (S.granted.join(',') || 'NONE');
+          + ' | reviewGated1:' + (reviewGated1 ? 'Y' : 'N')
+          + ' | reviewState1:' + reviewState1
+          + ' | reviewGated3:' + (reviewGated3 ? 'Y' : 'N')
+          + ' | reviewState3:' + reviewState3
+          + ' | grantedAfterReview:' + [grantedJunior, grantedAssistant, grantedSenior].map(function(x){return x?'Y':'N';}).join('/');
         document.title = 'P9TEST ' + out;
         document.body.setAttribute('data-p9test', out);
       } catch (e) {
