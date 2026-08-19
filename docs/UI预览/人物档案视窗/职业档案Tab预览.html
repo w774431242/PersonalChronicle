@@ -1,0 +1,5882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>职业档案 · RimWorld ITab Concept</title>
+<style>
+  :root{
+    --bg:#0e1012;
+    --panel:#171a1d;
+    --panel-hi:#1d2125;
+    --panel-low:#121416;
+    --line:#363b40;
+    --line-soft:#292e33;
+    --text:#d6d8d9;
+    --muted:#92979b;
+    --dim:#646a70;
+    --warm:#c6a15a;
+    --warm-dim:#806b3f;
+    --good:#8ca873;
+    --warn:#c19b55;
+    --bad:#aa675b;
+    --blue:#7e9db6;
+    --shadow:rgba(0,0,0,.36);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:#090b0d;
+    color:var(--text);
+    font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;
+    font-size:13px;
+  }
+
+  .window{
+    width:980px;
+    margin:28px auto;
+    background:var(--bg);
+    border:1px solid #41474c;
+    box-shadow:0 18px 45px var(--shadow);
+  }
+
+  .titlebar{
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 14px;
+    background:linear-gradient(#24282c,#1a1d20);
+    border-bottom:1px solid #454b50;
+  }
+
+  .title{
+    font-weight:700;
+    letter-spacing:.08em;
+    color:#e0e1e2;
+  }
+
+  .close{
+    color:#7f858a;
+    font-size:15px;
+  }
+
+  .btn-dev{
+    padding:4px 12px;
+    background:linear-gradient(180deg,#1d2125 0%,#14171a 100%);
+    border:1px dashed var(--warm-dim);
+    border-radius:4px;
+    color:var(--warm);
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .15s;
+    white-space:nowrap;
+  }
+  .btn-dev:hover{ border-color:var(--warm); color:#e0d3b5; }
+
+  .personbar{
+    display:grid;
+    grid-template-columns:60px 1fr auto;
+    gap:12px;
+    align-items:center;
+    padding:12px 14px;
+    background:var(--panel-low);
+    border-bottom:1px solid var(--line-soft);
+  }
+
+  .portrait{
+    width:60px;
+    height:60px;
+    background:
+      radial-gradient(circle at 50% 38%,#8e7f69 0 12px,transparent 13px),
+      linear-gradient(#454b51,#202429);
+    border:1px solid #4b5157;
+    position:relative;
+  }
+
+  .portrait:after{
+    content:"";
+    position:absolute;
+    left:12px; right:12px; bottom:8px;
+    height:18px;
+    border-top:2px solid #9c8d75;
+    border-radius:50%;
+    opacity:.45;
+  }
+
+  .name{
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:3px;
+  }
+
+  .sub{
+    color:var(--muted);
+  }
+
+  .status{
+    text-align:right;
+    min-width:210px;
+  }
+
+  .status-main{
+    color:var(--warm);
+    font-weight:700;
+    margin-bottom:3px;
+  }
+
+  .status-sub{
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  .tabs{
+    display:flex;
+    padding:0 10px;
+    background:#14171a;
+    border-bottom:1px solid var(--line);
+  }
+
+  .tab{
+    position:relative;
+    padding:10px 15px 9px;
+    color:#8d9398;
+    cursor:pointer;
+    user-select:none;
+  }
+
+  .tab:hover{color:#c3c6c8}
+  .tab.active{color:#e0d3b5}
+  .tab.active:after{
+    content:"";
+    position:absolute;
+    left:10px; right:10px; bottom:-1px;
+    height:2px;
+    background:var(--warm);
+  }
+
+  .content{
+    padding:14px;
+    background:
+      linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px),
+      var(--bg);
+    background-size:24px 24px;
+  }
+
+  .pane{display:none}
+  .pane.active{display:block}
+
+  .section{
+    margin-bottom:13px;
+    border:1px solid var(--line-soft);
+    background:rgba(22,25,28,.96);
+  }
+
+  .section-head{
+    min-height:31px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 10px;
+    background:#1b1f22;
+    border-bottom:1px solid var(--line-soft);
+    font-weight:700;
+    color:#c8cbcd;
+  }
+
+  .section-head .hint{
+    color:var(--dim);
+    font-weight:400;
+    font-size:11px;
+  }
+
+  .section-body{padding:10px}
+
+  .overview-grid{
+    display:grid;
+    grid-template-columns:1.12fr .88fr;
+    gap:13px;
+  }
+
+  .identity{
+    display:grid;
+    grid-template-columns:1fr 170px;
+    gap:12px;
+  }
+
+  /* 职业规划·适配分析单行 chip + 悬停明细卡片样式见下方 .plan-cats/.plan-chip/.plan-pop 区块 */
+
+  .role-name{
+    font-size:20px;
+    color:#e5d8bc;
+    font-weight:700;
+    margin-bottom:2px;
+  }
+
+  .role-desc{color:var(--muted)}
+  .rankline{
+    margin-top:11px;
+    color:var(--dim);
+  }
+
+  .rankline b{color:var(--text)}
+
+  .progress{
+    height:9px;
+    background:#0d0f11;
+    border:1px solid #363b3f;
+    margin-top:7px;
+  }
+
+  .progress > i{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,#7d6637,#c6a15a);
+  }
+
+  .metric-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-top:12px;
+  }
+
+  .metric{
+    border:1px solid var(--line-soft);
+    background:#131619;
+    padding:8px;
+  }
+
+  .metric .label{color:var(--dim);font-size:11px}
+  .metric .value{margin-top:3px;font-size:16px;font-weight:700}
+
+  .snapshot{
+    border-left:1px solid var(--line-soft);
+    padding-left:12px;
+  }
+
+  .snapshot-row{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    padding:7px 0;
+    border-bottom:1px solid #24282c;
+  }
+
+  .snapshot-row:last-child{border-bottom:0}
+  .snapshot-row span:first-child{color:var(--muted)}
+  .snapshot-row strong{color:#d7d9da}
+
+  .tag{
+    display:inline-block;
+    padding:2px 6px;
+    border:1px solid #4b4a42;
+    color:#d1c39e;
+    background:#28251d;
+    font-size:11px;
+  }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+  }
+
+  .timeline{
+    position:relative;
+    padding-left:16px;
+  }
+
+  .timeline:before{
+    content:"";
+    position:absolute;
+    left:4px;
+    top:4px;
+    bottom:4px;
+    width:1px;
+    background:#444a4f;
+  }
+
+  .event{
+    position:relative;
+    padding:0 0 12px 12px;
+  }
+
+  .event:before{
+    content:"";
+    position:absolute;
+    left:-15px;
+    top:4px;
+    width:7px;height:7px;
+    background:#171a1d;
+    border:1px solid #6f767b;
+  }
+
+  .event.major:before{border-color:var(--warm); background:var(--warm)}
+  .event .date{color:var(--dim);font-size:11px}
+  .event .text{margin-top:2px}
+  .event .meta{color:var(--muted);font-size:11px;margin-top:2px}
+
+  /* 履历·工作经历（简历式：工坊就职时段 + 成果） */
+  .resume-block{
+    border-left:2px solid var(--warm);
+    padding:4px 0 12px 12px;
+    margin-left:2px;
+  }
+  .resume-block:last-child{padding-bottom:0}
+  .resume-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:10px;
+  }
+  .resume-org{color:var(--text);font-size:13px;font-weight:600}
+  .resume-period{color:var(--dim);font-size:11px;white-space:nowrap}
+  .resume-orgmeta{color:var(--muted);font-size:11px;margin:3px 0 6px}
+  .resume-achv{margin:0;padding-left:16px;display:flex;flex-direction:column;gap:4px}
+  .resume-achv li{color:var(--dim);font-size:12px;line-height:1.5}
+  .resume-achv strong{color:var(--text);font-weight:600}
+
+  .medals{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+  }
+
+  .medal{
+    display:grid;
+    grid-template-columns:48px 1fr auto;
+    gap:9px;
+    align-items:center;
+    padding:9px;
+    background:#141719;
+    border:1px solid var(--line-soft);
+  }
+
+  .medal-icon{
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #55504a;
+    background:radial-gradient(circle,#7b5d30 0 8px,#2d261c 9px 16px,#17191b 17px);
+    color:#e0c17e;
+    font-size:19px;
+  }
+
+  .medal .mname{font-weight:700}
+  .medal .reason{font-size:11px;color:var(--muted);margin-top:3px}
+  .medal .year{font-size:11px;color:var(--dim)}
+
+  .legend{
+    padding:7px 8px;
+    color:var(--dim);
+    font-size:11px;
+    border-top:1px solid var(--line-soft);
+    background:#121517;
+  }
+
+  .footer-note{
+    color:#656b70;
+    font-size:10px;
+    padding:2px 2px 0;
+  }
+
+  /* 数据契约侧栏（原型标注：每区块对应 C# 字段，未来 P4 接入对照） */
+  .datamap-toggle{
+    position:fixed;
+    right:18px;bottom:18px;
+    z-index:30;
+    padding:7px 12px;
+    background:#1d2125;
+    border:1px solid #4b5157;
+    color:#c8cbcd;
+    font-size:12px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .datamap-toggle:hover{color:#e0d3b5}
+  .datamap{
+    position:fixed;
+    right:18px;bottom:58px;
+    z-index:29;
+    width:340px;
+    max-height:72vh;
+    overflow:auto;
+    background:#111417;
+    border:1px solid #4b5157;
+    box-shadow:0 12px 30px rgba(0,0,0,.5);
+    padding:10px 12px;
+    font-size:11px;
+    color:#aeb2b5;
+    display:none;
+  }
+  .datamap.open{display:block}
+  .datamap h4{margin:0 0 8px;color:#e0d3b5;font-size:12px}
+  .datamap .dm-tab{color:#c6a15a;font-weight:700;margin:10px 0 4px}
+  .datamap .dm-row{padding:3px 0;border-bottom:1px solid #23282c;line-height:1.5}
+  .datamap .dm-row b{color:#d6d8d9}
+  .datamap .dm-row code{color:#8ca873;font-family:Consolas,monospace}
+  .datamap .dm-note{color:#7f858a;margin-top:8px;line-height:1.5}
+
+  /* ===== 总览·资格预检（新增区块，与职称阶梯同一目标） ===== */
+  .career-title{
+    font-size:15px;
+    font-weight:700;
+    color:#e5d8bc;
+    margin-bottom:10px;
+  }
+
+  .cond-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px 16px;
+  }
+
+  .cond-item{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:5px 0;
+    border-bottom:1px solid #24282c;
+  }
+  .cond-item:last-child{border-bottom:0}
+
+  .cond-icon{
+    width:18px;height:18px;
+    display:inline-flex;align-items:center;justify-content:center;
+    border-radius:50%;
+    font-size:11px;font-weight:700;flex-shrink:0;
+  }
+  .cond-item.done   .cond-icon{color:var(--good);background:#1a2418;border:1px solid #3d513a}
+  .cond-item.pending .cond-icon{color:var(--warn);background:#2a2314;border:1px solid #705d35}
+  .cond-item.not-started .cond-icon{color:var(--dim);background:#16181a;border:1px solid #3a3d41}
+
+  .cond-label{font-weight:600;color:#c8cbcd;flex:1}
+  .cond-status{font-size:11px;color:var(--dim);text-align:right;min-width:44px}
+
+  /* 当前资格状态（总览·原版资格区块） */
+  .requirement{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 0;
+    border-bottom:1px solid #24282c;
+  }
+  .requirement:last-child{border-bottom:0}
+  .req-name{font-weight:600;color:#c8cbcd;width:64px;flex:0 0 auto}
+  .req-note{color:var(--muted);font-size:11px;flex:1}
+  .req-state{
+    font-size:11px;font-weight:600;
+    padding:2px 8px;border-radius:10px;
+    flex:0 0 auto;
+  }
+  .req-state.ok{color:var(--good);background:#1a2418;border:1px solid #3d513a}
+  .req-state.wait{color:var(--warn);background:#2a2314;border:1px solid #705d35}
+
+  /* 右栏：下一职称 */
+  .next-title{
+    font-size:19px;
+    font-weight:700;
+    color:#e5d8bc;
+    margin-bottom:10px;
+  }
+
+  .progress-bar-wrap{
+    display:flex;align-items:center;gap:9px;margin-bottom:12px;
+  }
+  .progress-label{color:var(--muted);font-size:12px;white-space:nowrap}
+
+  .progress-bar{
+    flex:1;height:10px;background:#0d0f11;border:1px solid #363b3f;border-radius:2px;overflow:hidden
+  }
+  .progress-bar > i{
+    display:block;height:100%;
+    background:linear-gradient(90deg,#7d6637,#c6a15a);
+  }
+  .progress-pct{font-weight:700;color:var(--warm);font-size:14px;min-width:32px;text-align:right}
+
+  .gap-section{margin-bottom:10px}
+  .gap-label{font-size:11px;color:var(--dim);margin-bottom:5px}
+  .gap-tags{display:flex;gap:6px;flex-wrap:wrap}
+  .gap-tag{
+    display:inline-block;padding:3px 9px;
+    border:1px solid #4b4a42;color:#d1c39e;background:#28251d;font-size:11px;border-radius:2px;
+  }
+
+  .dep-chain{
+    font-size:10px;color:var(--dim);
+    padding-top:8px;border-top:1px solid #25292d;line-height:1.5
+  }
+
+  /* 总览·职业规划（顶层框架：先规划，后续内容皆其进度展开） */
+  .career-plan{
+    border:1px solid var(--line-soft);
+    background:linear-gradient(180deg,#1b1d20,#16191c);
+    margin-bottom:13px;
+  }
+  .plan-head{
+    display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+    padding:9px 10px;border-bottom:1px solid var(--line-soft);
+    background:#1f2327;
+  }
+  .plan-title{font-weight:700;color:#e5d8bc;font-size:14px}
+  .plan-body{padding:10px}
+  /* 专业适配分析：单行紧凑专业名，悬停展开明细卡片（避免空间占用） */
+  .plan-cats{
+    display:flex;flex-wrap:wrap;gap:6px;margin-bottom:2px;
+  }
+  .plan-chip{
+    position:relative;
+    display:inline-flex;align-items:center;gap:6px;
+    padding:5px 11px;border:1px solid #3a3d41;border-radius:14px;
+    background:#1a1d20;cursor:pointer;font-size:12px;color:#c8cbcd;
+    transition:border-color .12s,background .12s,color .12s;
+  }
+  .plan-chip:hover{border-color:var(--warm);background:#211d15;color:#e0d3b5;}
+  /* top1=推荐（仅以「荐」角标+排名标识，不做边框高亮；高亮只留给选中 primary） */
+  .plan-chip.top1{border-color:#3a3d41;color:#c8cbcd;}
+  .plan-chip.primary{background:#241d12;border-color:var(--warm);color:#e0d3b5;box-shadow:inset 0 0 0 1px var(--warm-dim);}
+  /* "荐"角标：适配高分（≥80）或排名第一的专业右上角推荐标记，点击可选中为当前职业 */
+  .plan-chip .rec{
+    position:absolute;top:-8px;right:-8px;
+    font-size:9px;line-height:1;font-weight:700;font-style:normal;
+    color:#0d0f11;background:linear-gradient(90deg,#e6b34a,#f2d27a);
+    border:1px solid #f4d485;border-radius:3px;padding:2px 4px;
+    box-shadow:0 2px 6px rgba(0,0,0,.5);pointer-events:none;
+  }
+  .plan-chip .rank{
+    flex:0 0 auto;width:16px;height:16px;border-radius:50%;
+    background:#2a2e32;color:#cdb98a;font-size:10px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .plan-chip.primary .rank{background:var(--warm);color:#0d0f11;}
+  .plan-chip .nm{font-weight:600;white-space:nowrap;}
+  .plan-chip .mini{
+    font-size:10px;color:var(--dim);font-variant-numeric:tabular-nums;
+  }
+  /* 悬停明细卡片 */
+  .plan-pop{
+    position:fixed;z-index:60;width:268px;
+    padding:10px 12px;background:#111417;border:1px solid #5a626a;border-radius:4px;
+    box-shadow:0 12px 30px rgba(0,0,0,.6);display:none;pointer-events:none;
+  }
+  .plan-pop.open{display:block}
+  .plan-pop .pp-head{display:flex;align-items:baseline;gap:8px;margin-bottom:7px;}
+  .plan-pop .pp-name{font-size:14px;font-weight:700;color:#e0d3b5;white-space:nowrap;}
+  .plan-pop .pp-fit{margin-left:auto;font-size:16px;font-weight:700;color:#e5d8bc;font-variant-numeric:tabular-nums;}
+  .plan-pop .pp-fit small{font-size:10px;color:var(--muted);font-weight:400;}
+  .plan-pop .pp-stars{font-size:11px;letter-spacing:1px;color:#7a6a45;margin-bottom:6px;}
+  .plan-pop .pp-stars .on{color:var(--warm);}
+  .plan-pop .pp-tag{
+    display:inline-block;font-size:10px;padding:1px 7px;border-radius:9px;
+    border:1px solid #4b5157;color:var(--dim);margin-left:6px;vertical-align:middle;
+  }
+  .plan-pop .pp-tag.high{color:#0d0f11;background:linear-gradient(90deg,#e6b34a,#f2d27a);border-color:#f4d485;font-weight:700;}
+  .plan-pop .pp-tag.mid{color:#cdb98a;border-color:#6a5d3b;}
+  .plan-pop .pp-tag.low{color:#8a8f93;}
+  .plan-pop .dim{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:11px;}
+  .plan-pop .dim .lbl{width:64px;color:var(--muted);flex:0 0 auto;}
+  .plan-pop .dim .bar{flex:1;height:7px;background:#0d0f11;border-radius:2px;overflow:hidden;}
+  .plan-pop .dim .bar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,#b07d2e,#e6b34a);}
+  .plan-pop .dim .v{width:30px;text-align:right;color:#cdb98a;font-variant-numeric:tabular-nums;flex:0 0 auto;}
+  .plan-pop .pros{margin-top:7px;font-size:10px;line-height:16px;border-top:1px dashed #363b40;padding-top:6px;}
+  .plan-pop .pros .h{color:var(--muted);margin-right:4px;}
+  .plan-pop .pros .good{color:#8fbf6a;}
+  .plan-pop .pros .bad{color:#c98a5a;}
+  .plan-pop .dir{margin-top:6px;font-size:10px;color:var(--muted);}
+  .plan-pop .dir b{color:#cdb98a;font-weight:600;}
+
+  /* 主方向悬停详情：能力 / 加成 Buff / 评级递增（复用 .plan-pop 暗色浮层语言） */
+  .plan-pop .pp-cap{font-size:10px;color:var(--muted);margin-top:8px;padding-top:6px;border-top:1px dashed #363b40;letter-spacing:.5px;}
+  .plan-pop .pp-ability{margin-top:6px;}
+  .plan-pop .pp-ability .ab{display:flex;align-items:flex-start;gap:7px;margin-bottom:6px;font-size:11px;}
+  .plan-pop .pp-ability .ab .dot{flex:0 0 auto;width:6px;height:6px;border-radius:50%;margin-top:5px;background:var(--warm-dim);}
+  .plan-pop .pp-ability .ab .an{color:#e0d3b5;font-weight:600;}
+  .plan-pop .pp-ability .ab .ab-eff{flex:0 0 auto;margin-left:6px;font-size:10px;font-weight:700;color:#8fbf6a;white-space:nowrap;background:rgba(143,191,106,.12);padding:1px 6px;border-radius:8px;}
+  .plan-pop .pp-eff{margin-top:6px;background:rgba(0,0,0,.22);border:1px solid #2f343a;border-radius:6px;padding:7px 9px;}
+  .plan-pop .pp-eff .eff-item{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;}
+  .plan-pop .pp-eff .eff-item .eff-k{color:#cdb98a;}
+  .plan-pop .pp-eff .eff-item .eff-v{color:#8fbf6a;font-weight:700;}
+  .plan-pop .pp-eff .eff-note{font-size:9px;color:var(--muted);line-height:13px;margin-top:3px;opacity:.85;}
+  .plan-pop .pp-rating{margin-top:6px;}
+  .plan-pop .pp-rating .rt-row{display:flex;justify-content:space-between;font-size:10px;padding:3px 8px;border-radius:5px;margin-bottom:3px;background:rgba(0,0,0,.18);}
+  .plan-pop .pp-rating .rt-tier{color:#e0d3b5;font-weight:600;}
+  .plan-pop .pp-rating .rt-val{color:#8fbf6a;}
+  .plan-pop .pp-orient{flex:0 0 auto;margin-left:8px;font-size:10px;font-weight:700;color:#0d0f11;background:linear-gradient(90deg,#7fb0e0,#5e8fc4);padding:2px 9px;border-radius:9px;align-self:center;}
+  .dir-card .card-tag{display:inline-block;font-size:9px;font-weight:700;color:#cfe3f5;background:rgba(94,143,196,.18);border:1px solid rgba(94,143,196,.4);padding:0 6px;border-radius:7px;margin-left:5px;vertical-align:middle;}
+  
+  
+  .plan-pop .pp-skill{margin-top:4px;}
+  .plan-pop .pp-skill .sk{display:inline-block;font-size:10px;padding:1px 7px;border-radius:9px;margin:0 4px 4px 0;color:#0d0f11;background:linear-gradient(90deg,#b8a06e,#d4b85a);font-weight:700;}
+  .plan-pop .pp-mech{margin-top:9px;padding-top:7px;border-top:1px dashed #363b40;}
+  .plan-pop .mech{margin-bottom:8px;}
+  .plan-pop .mech .mt{font-size:11px;font-weight:700;color:#e0d3b5;margin-bottom:2px;}
+  .plan-pop .mech .md{font-size:10px;line-height:15px;color:#cdb98a;}
+  .plan-pop .mech .ms{font-size:9px;color:var(--muted);margin-top:2px;opacity:.8;}
+  .dir-empty{padding:24px 18px;color:var(--muted);font-size:12px;line-height:18px;text-align:center;}
+.plan-pop .pp-ability .ab-gain{flex:0 0 auto;margin-left:6px;font-size:10px;font-weight:700;color:#8fbf6a;white-space:nowrap;}
+.plan-pop .pp-ability .ab .abr{color:var(--muted);font-size:10px;}
+  .plan-pop .pp-effect{display:flex;gap:8px;margin-top:8px;}
+  .plan-pop .pp-effect .buff{
+    flex:1;padding:6px 8px;border-radius:4px;text-align:center;
+    background:linear-gradient(180deg,#e6b34a,#f2d27a);border:1px solid #f4d485;color:#0d0f11;
+  }
+  .plan-pop .pp-effect .buff .bv{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;}
+  .plan-pop .pp-effect .buff .bl{font-size:9px;opacity:.8;}
+  .plan-pop .pp-effect .buff.q{background:linear-gradient(180deg,#9fb0bf,#c4d2de);border-color:#cdd9e3;}
+  .plan-pop .pp-rating{margin-top:9px;padding-top:7px;border-top:1px dashed #363b40;}
+  .plan-pop .pp-rating .rh{font-size:10px;color:var(--muted);margin-bottom:5px;letter-spacing:.5px;}
+  .plan-pop .pp-rating .rt{display:flex;align-items:stretch;gap:4px;}
+  .plan-pop .pp-rating .step{flex:1;background:#16191c;border:1px solid #363b40;border-radius:3px;padding:4px 2px;text-align:center;}
+  .plan-pop .pp-rating .step .st{font-size:10px;color:#cdb98a;font-weight:600;}
+  .plan-pop .pp-rating .step .sv{font-size:9px;color:var(--muted);margin-top:2px;line-height:1.3;}
+  .plan-pop .pp-rating .step .sv b{color:#8fbf6a;font-weight:700;}
+
+  /* 主方向对话框（与预览文件职业生涯游戏界面预览.html 一致） */
+  .dir-dialog{ width:440px; max-height:520px; background:var(--bg); border:1px solid var(--warm); border-radius:6px; box-shadow:0 16px 50px rgba(0,0,0,.7); display:flex; flex-direction:column; overflow:hidden; }
+  .dir-dialog .d-head{ padding:10px 16px; border-bottom:1px solid #363b40; display:flex; align-items:center; flex:0 0 auto; }
+  .dir-dialog .d-head .t{ font-size:15px; font-weight:600; color:var(--text); }
+  .dir-dialog .d-head .x{ margin-left:auto; cursor:pointer; color:var(--muted); font-size:16px; line-height:1; padding:2px 6px; border-radius:3px; }
+  .dir-dialog .d-head .x:hover{ background:#1a1f23; color:var(--text); }
+  .dir-dialog .d-body{ padding:12px 16px; overflow-y:auto; flex:1 1 auto; }
+  .dir-dialog .d-body::-webkit-scrollbar{ width:9px; }
+  .dir-dialog .d-body::-webkit-scrollbar-thumb{ background:#292e33; border-radius:5px; }
+  .dir-dialog .d-foot{ flex:0 0 auto; padding:8px 16px; border-top:1px solid #292e33; text-align:right; }
+  .dir-dialog .d-foot button{ background:transparent; border:1px solid #363b40; color:var(--dim); font-size:11px; padding:4px 12px; border-radius:3px; cursor:pointer; }
+  .dir-dialog .d-foot button:hover{ border-color:var(--warm); color:#e0d3b5; }
+  .dir-card{ display:flex; align-items:center; gap:10px; padding:9px 10px; margin-bottom:8px; border:1px solid var(--line-soft); border-radius:4px; background:var(--panel); cursor:pointer; transition:border-color .12s, background .12s; }
+  .dir-card:hover{ border-color:var(--warm); background:var(--m-accent-soft); }
+  .dir-card.sel{ border-color:var(--warm); background:#241d12; }
+  .dir-card .sw{ width:16px; height:18px; border-radius:2px; flex:0 0 auto; }
+  .dir-card .nm{ font-weight:700; color:var(--text); }
+  .dir-card .pf{ color:var(--dim); font-size:11px; }
+  .dir-card .desc{ font-size:10px; color:var(--muted); margin-top:2px; }
+  .dir-card .chk{ margin-left:auto; color:var(--warm); font-weight:700; }
+
+  /* 悬停"荐"标签时显示专业技能值 */
+  .skill-tip{
+    position:fixed;
+    z-index:40;
+    min-width:170px;
+    padding:8px 10px;
+    background:#111417;
+    border:1px solid #4b5157;
+    border-radius:3px;
+    box-shadow:0 10px 26px rgba(0,0,0,.55);
+    font-size:11px;
+    color:#aeb2b5;
+    display:none;
+    pointer-events:none;
+  }
+  .skill-tip.open{display:block}
+  .skill-tip h5{margin:0 0 7px;font-size:12px;color:#e0d3b5;font-weight:700}
+  .skill-tip .sk-row{
+    display:flex;justify-content:space-between;gap:12px;
+    padding:2px 0;border-bottom:1px solid #23282c;line-height:1.5;
+  }
+  .skill-tip .sk-row:last-child{border-bottom:0}
+  .skill-tip .sk-name{color:#c4c7c9}
+  .skill-tip .sk-val{color:#d7d9da;font-weight:600}
+  .skill-tip .sk-val.hi{color:var(--warm)}
+  .skill-tip .sk-sec{
+    font-size:10px;color:var(--dim);font-weight:600;letter-spacing:.05em;
+    margin:7px 0 2px;
+  }
+  .skill-tip .sk-sec:first-of-type{margin-top:2px}
+  .skill-tip .sk-ability{
+    font-size:11px;color:#c4c7c9;margin-bottom:4px;
+    padding:4px 6px;background:#1a1f23;border-radius:2px;
+  }
+  .skill-tip .sk-ability b{color:var(--warm);font-weight:700}
+
+  /* ===== 勋章墙（从档案Tab预览.html 移植，适配本文件令牌调色板） ===== */
+  /* 金属档位色（源文件 --bronze/--silver/--gold 本地化） */
+  :root{
+    --m-bronze:#b87333;
+    --m-silver:#c0c0c8;
+    --m-gold:#c6a15a;
+    --m-accent-soft:rgba(198,161,90,.15);
+    --m-border-hi:#4b5157;
+  }
+  .medal-zone{ padding:10px 14px 4px; }
+  .medal-zone-head{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .medal-zone-head::before{
+    content:""; width:4px; height:14px; background:var(--warm);
+    border-radius:1px; flex-shrink:0;
+  }
+  .medal-zone-head .h{ font-size:13px; font-weight:600; color:#c8cbcd; white-space:nowrap; }
+  .medal-zone-head .rule{ flex:1; height:1px; background:#363b40; margin-left:4px; }
+  .medal-zone-head .btn-award{
+    flex:0 0 auto; padding:4px 12px;
+    background:linear-gradient(180deg,#1d2125 0%,#14171a 100%);
+    border:1px solid var(--m-border-hi); border-radius:4px;
+    color:var(--warm); font-size:12px; font-weight:600; cursor:pointer;
+    transition:all .15s; white-space:nowrap;
+  }
+  .medal-zone-head .btn-award:hover{ border-color:var(--warm); }
+  .medal-strip{ display:flex; gap:12px; flex-wrap:wrap; min-height:44px; align-items:center; }
+  .medal-icon{ position:relative; flex:0 0 auto; line-height:0; transition:transform .12s ease; cursor:default; }
+  .medal-icon:hover{ transform:translateY(-2px); }
+  .medal-icon img{ width:34px; height:40px; object-fit:contain; display:block; }
+  .medal-icon img.broken{ opacity:.2; background:var(--panel); border:1px dashed #292e33; }
+  .medal-icon .corner{
+    position:absolute; top:-7px; right:-7px; min-width:15px; height:15px; padding:0 3px;
+    border-radius:8px; font-size:9px; font-weight:700; color:#0d0f11;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(0,0,0,.5);
+  }
+  .medal-icon.t-bronze .corner{ background:var(--m-bronze); }
+  .medal-icon.t-silver .corner{ background:var(--m-silver); }
+  .medal-icon.t-gold   .corner{ background:var(--m-gold); }
+  .medal-empty{
+    font-size:11px; color:var(--dim); border:1px dashed #292e33; border-radius:4px;
+    padding:10px 14px; width:100%; text-align:center;
+  }
+  .medal-chip.just-granted{ animation:medalPop .4s ease; }
+  @keyframes medalPop{
+    0%{ transform:scale(.6); opacity:0; }
+    60%{ transform:scale(1.08); opacity:1; }
+    100%{ transform:scale(1); }
+  }
+  .medal-add{
+    flex:0 0 auto; width:34px; height:40px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px dashed var(--m-border-hi); border-radius:4px;
+    color:var(--warm); font-size:20px; font-weight:700; line-height:1;
+    cursor:pointer; background:transparent; flex-direction:column;
+    transition:border-color .12s ease, background .12s ease, color .12s ease;
+  }
+  .medal-add:hover{ border-color:var(--warm); background:var(--m-accent-soft); color:#e0d3b5; }
+  .medal-add:active{ transform:scale(.94); }
+  .medal-add .add-tip{ display:none; margin-top:2px; font-size:8px; font-weight:400; line-height:1; color:var(--dim); }
+  .medal-add:hover .add-tip{ display:block; }
+
+  /* 手动授勋 Dialog + 勋章详情 Dialog */
+  .mask{
+    position:fixed; inset:0; background:rgba(4,6,12,.62);
+    display:none; align-items:center; justify-content:center; z-index:50;
+  }
+  .mask.show{ display:flex; }
+  .award-dialog{
+    width:480px; max-height:440px; background:var(--bg);
+    border:1px solid var(--warm); border-radius:6px;
+    box-shadow:0 16px 50px rgba(0,0,0,.7); display:flex; flex-direction:column; overflow:hidden;
+  }
+  .award-dialog .d-head{ padding:10px 16px; border-bottom:1px solid #363b40; display:flex; align-items:center; flex:0 0 auto; }
+  .award-dialog .d-head .t{ font-size:15px; font-weight:600; color:var(--text); }
+  .award-dialog .d-head .x{ margin-left:auto; cursor:pointer; color:var(--muted); font-size:16px; line-height:1; padding:2px 6px; border-radius:3px; }
+  .award-dialog .d-head .x:hover{ background:#1a1f23; color:var(--text); }
+  .award-dialog .d-sub{ font-size:10px; color:var(--muted); padding:8px 16px 0; flex:0 0 auto; }
+  .award-dialog .d-body{ padding:10px 16px; overflow-y:auto; flex:1 1 auto; }
+  .award-dialog .d-body::-webkit-scrollbar{ width:9px; }
+  .award-dialog .d-body::-webkit-scrollbar-thumb{ background:#292e33; border-radius:5px; }
+  .award-card{ display:flex; align-items:center; gap:14px; min-height:88px; padding:10px 12px; margin-bottom:8px; border:1px solid #292e33; border-radius:4px; cursor:pointer; transition:background .12s; }
+  .award-card:hover{ background:var(--m-accent-soft); }
+  .award-card .badge{ flex:0 0 auto; width:64px; height:72px; border-radius:4px; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--panel); }
+  .award-card .badge img{ width:64px; height:72px; object-fit:contain; display:block; }
+  .award-card .mid{ flex:1; min-width:0; }
+  .award-card .mid .lab{ font-size:14px; font-weight:600; color:var(--text); }
+  .award-card .mid .desc{ font-size:10px; color:var(--muted); margin-top:2px; line-height:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .award-card .mid .bar{ height:8px; background:#292e33; border-radius:2px; overflow:hidden; margin-top:6px; position:relative; }
+  .award-card .mid .bar .fill{ height:100%; border-radius:2px 0 0 2px; }
+  .award-card .mid .ratio{ font-size:10px; color:var(--muted); margin-top:2px; text-align:center; }
+  .award-card .tier-pill{ flex:0 0 auto; padding:2px 10px; border-radius:10px; font-size:11px; font-weight:600; color:#0d0f11; }
+  .award-empty{ text-align:center; color:var(--dim); font-size:12px; padding:30px 10px; line-height:18px; }
+
+  /* ===== 数据模拟调试面板 ===== */
+  .sim-panel{ margin:8px 0 12px; border:1px solid #363b40; border-radius:6px; background:#15191d; overflow:hidden; }
+  .sim-head{ display:flex; align-items:center; gap:10px; padding:8px 12px; background:#1b2025; border-bottom:1px solid #292e33; }
+  .sim-title{ font-size:13px; font-weight:600; color:var(--text); white-space:nowrap; }
+  .sim-hint{ font-size:10px; color:var(--muted); flex:1; line-height:14px; }
+  .sim-close{ cursor:pointer; color:var(--muted); font-size:16px; line-height:1; padding:0 6px; border-radius:3px; }
+  .sim-close:hover{ background:#1a1f23; color:var(--text); }
+  .sim-tabs{ display:flex; gap:4px; padding:6px 12px 0; }
+  .sim-tab{ font-size:11px; padding:4px 12px; border-radius:4px 4px 0 0; cursor:pointer; color:var(--muted); border:1px solid transparent; border-bottom:none; }
+  .sim-tab.active{ color:var(--text); background:#15191d; border-color:#363b40; }
+  .sim-body{ padding:10px 12px; border-top:1px solid #363b40; }
+  .sim-pane{ display:none; gap:8px; align-items:center; flex-wrap:wrap; }
+  .sim-pane.active{ display:flex; }
+  .sim-pane label{ font-size:11px; color:var(--muted); }
+  .sim-select, .sim-input{ font-size:12px; padding:3px 8px; border-radius:4px; border:1px solid #292e33; background:var(--panel); color:var(--text); }
+  .sim-input{ width:140px; }
+  .sim-btn{ font-size:11px; padding:4px 14px; border-radius:4px; border:1px solid var(--warm); background:transparent; color:var(--warm); cursor:pointer; }
+  .sim-btn:hover{ background:rgba(200,160,90,.12); }
+  .sim-stats{ padding:7px 12px; font-size:11px; color:var(--dim); border-top:1px solid #292e33; background:#1b2025; }
+  .award-dialog .d-foot{ flex:0 0 auto; min-height:28px; padding:6px 16px; font-size:11px; color:var(--muted); border-top:1px solid #292e33; }
+
+  .detail-dialog{
+    width:360px; max-height:520px; background:var(--bg);
+    border:1px solid var(--warm); border-radius:6px; box-shadow:0 16px 50px rgba(0,0,0,.7);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .detail-dialog .d-head{ padding:10px 16px; border-bottom:1px solid #363b40; display:flex; align-items:center; flex:0 0 auto; }
+  .detail-dialog .d-head .t{ font-size:15px; font-weight:600; color:var(--text); }
+  .detail-dialog .d-head .x{ margin-left:auto; cursor:pointer; color:var(--muted); font-size:16px; line-height:1; padding:2px 6px; border-radius:3px; }
+  .detail-dialog .d-head .x:hover{ background:#1a1f23; color:var(--text); }
+  .detail-dialog .d-body{ padding:16px; overflow-y:auto; flex:1 1 auto; }
+  .detail-dialog .d-body::-webkit-scrollbar{ width:9px; }
+  .detail-dialog .d-body::-webkit-scrollbar-thumb{ background:#292e33; border-radius:5px; }
+  .detail-top{ display:flex; gap:14px; align-items:center; margin-bottom:14px; }
+  .detail-top .big-badge{ flex:0 0 auto; width:72px; height:84px; border-radius:4px; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--panel); }
+  .detail-top .big-badge img{ width:72px; height:84px; object-fit:contain; display:block; }
+  .detail-top .big-badge.no-img{ background:var(--panel); }
+  .detail-top .dt-title{ flex:1; min-width:0; }
+  .detail-top .dt-title .nm{ font-size:18px; font-weight:700; color:var(--text); }
+  .detail-top .dt-title .pill{ margin-top:8px; }
+  .detail-rows{ border-top:1px solid #292e33; padding-top:10px; }
+  .detail-row{ display:flex; justify-content:space-between; align-items:baseline; font-size:12px; padding:5px 0; border-bottom:1px solid #292e33; }
+  .detail-row .k{ color:var(--muted); }
+  .detail-row .v{ color:var(--text); font-weight:600; text-align:right; }
+  .detail-desc{ font-size:11px; color:var(--muted); line-height:16px; margin:10px 0; padding:8px 10px; background:var(--panel); border-radius:4px; border-left:2px solid #363b40; }
+  .detail-buff{ font-size:11px; color:var(--good); line-height:15px; margin-top:6px; padding:6px 10px; border-radius:4px; background:rgba(140,168,115,.10); border:1px solid rgba(140,168,115,.30); }
+  .award-card .detail-btn{ flex:0 0 auto; align-self:flex-start; margin-top:2px; font-size:10px; color:var(--blue); cursor:pointer; border:1px solid #292e33; border-radius:3px; padding:2px 8px; background:transparent; }
+  .award-card .detail-btn:hover{ border-color:var(--blue); color:var(--text); }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <div class="title">职业档案</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button id="btnDevRandomize" class="btn-dev" title="覆盖式随机生成 P1~P8 职业数据（对应 C# DevTestButtons.CareerRandomize，仅 Prefs.DevMode 时显示）">🎲 随机职业数据</button>
+      <button id="btnSimInit" class="btn-dev" title="数据初始化：模拟一个环世界原版殖民者，没有任何职业档案数据（清空五维样本/职业身份/资格/履历/勋章，显示空状态）">📊 数据初始化</button>
+      <button id="btnSimBehave" class="btn-dev" title="数据模拟：开发者调试 UI，模拟原版游戏行为（制作/建造/研究/著书），驱动职业档案数据增长并实时刷新">🧪 数据模拟</button>
+      <div class="close">×</div>
+    </div>
+  </div>
+
+  <div class="personbar">
+    <div class="portrait"></div>
+    <div>
+      <div class="name">林舟</div>
+      <div class="sub">职业规划：未选择 · 结算周期 5512</div>
+    </div>
+    <div class="status">
+      <div class="status-main">精密制造高级技工</div>
+      <div class="status-sub">职业阶段：成熟期 · 职业资历 8.4 年</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="overview">总览</div>
+    <div class="tab" data-tab="career">履历</div>
+    <div class="tab" data-tab="honor">勋章</div>
+  </div>
+
+  <!-- ===== 数据模拟面板（开发者调试：模拟原版游戏行为驱动职业档案数据增长） ===== -->
+  <div id="simPanel" class="sim-panel" style="display:none">
+    <div class="sim-head">
+      <span class="sim-title">🧪 数据模拟 · 开发者调试</span>
+      <span class="sim-hint">模拟原版游戏行为，驱动职业档案数据增长（对应 C# CareerEvent → XP → 技能/履历派生）</span>
+      <span class="sim-close" id="simClose">×</span>
+    </div>
+    <div class="sim-tabs">
+      <span class="sim-tab active" data-act="craft">制作物品</span>
+      <span class="sim-tab" data-act="construct">建造</span>
+      <span class="sim-tab" data-act="research">研究</span>
+      <span class="sim-tab" data-act="write">著书</span>
+    </div>
+    <div class="sim-body">
+      <!-- 制作 -->
+      <div class="sim-pane active" data-pane="craft">
+        <label>原版物品（机械能制作）</label>
+        <select id="simCraftItem" class="sim-select"></select>
+        <label>品质</label>
+        <select id="simCraftQuality" class="sim-select">
+          <option value="Normal">普通</option>
+          <option value="Good">良好</option>
+          <option value="Excellent">优秀</option>
+          <option value="Masterwork">大师</option>
+          <option value="Legendary">传奇</option>
+        </select>
+        <button id="simCraftBtn" class="sim-btn">执行制作</button>
+      </div>
+      <!-- 建造 -->
+      <div class="sim-pane" data-pane="construct">
+        <label>建筑类型</label>
+        <select id="simBuildItem" class="sim-select">
+          <option value="Wall">墙</option>
+          <option value="Door">门</option>
+          <option value="Floor">地板</option>
+          <option value="Battery">蓄电池</option>
+          <option value="SolarPanel">太阳能板</option>
+          <option value="Cooler">冷气机</option>
+          <option value="Heater">加热器</option>
+          <option value="Table2x2">2x2 桌</option>
+        </select>
+        <label>品质</label>
+        <select id="simBuildQuality" class="sim-select">
+          <option value="Normal">普通</option>
+          <option value="Good">良好</option>
+          <option value="Excellent">优秀</option>
+          <option value="Masterwork">大师</option>
+          <option value="Legendary">传奇</option>
+        </select>
+        <button id="simBuildBtn" class="sim-btn">执行建造</button>
+      </div>
+      <!-- 研究 -->
+      <div class="sim-pane" data-pane="research">
+        <label>研究项目</label>
+        <select id="simResearchItem" class="sim-select">
+          <option value="Smithing">锻造</option>
+          <option value="Machining">机械加工</option>
+          <option value="Electricity">电力</option>
+          <option value="Construction">建筑工程</option>
+          <option value="Cooking">烹饪</option>
+          <option value="Medicine">医药</option>
+          <option value="Tailoring">裁缝</option>
+          <option value="Gunpowder">火药</option>
+        </select>
+        <button id="simResearchBtn" class="sim-btn">执行研究</button>
+      </div>
+      <!-- 著书 -->
+      <div class="sim-pane" data-pane="write">
+        <label>书名</label>
+        <input id="simWriteName" class="sim-input" value="机械维护实务" />
+        <button id="simWriteBtn" class="sim-btn">执行著书</button>
+      </div>
+    </div>
+    <div class="sim-stats" id="simStats">行为次数：0 · 制造件数：0 · 当前技能：—</div>
+  </div>
+
+  <div class="content">
+
+    <section class="pane active" id="overview">
+
+      <!-- ===== 职业规划（顶层框架：先规划，后续内容是其进度展开） ===== -->
+      <div class="career-plan">
+        <div class="plan-head">
+          <div class="plan-title">职业规划</div>
+          <button id="btnSetDir" class="btn-dev" style="margin-left:auto;font-size:11px;padding:3px 10px;">设定主方向</button>
+        </div>
+        <div class="plan-body">
+          <div class="plan-cats" id="planCats"><!-- 由 fitAnalysis 动态渲染 12 个专业名 chip（单行紧凑，悬停弹出五维明细） --></div>
+        </div>
+      </div>
+
+      <!-- ============ 主方向对话框（浮层，与预览文件一致） ============ -->
+      <div class="mask" id="dirMask">
+        <div class="dir-dialog">
+          <div class="d-head"><span class="t">设定职业主方向</span><span class="x" id="dirClose">×</span></div>
+          <div class="d-body" id="dirBody"></div>
+          <div class="d-foot"><button id="dirClear">清除选择（回落推荐）</button></div>
+        </div>
+      </div>
+
+      <!-- ===== 原版总览 ===== -->
+      <div class="overview-grid">
+        <div class="section">
+          <div class="section-head">
+            <span>职业身份</span>
+            <span class="hint">当前状态</span>
+          </div>
+          <div class="section-body" id="ovIdentity"><!-- 由 renderOverview() 动态渲染（对齐 C# CareerRandomize 随机数据） --></div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <span>当前资格状态</span>
+            <span class="hint">下一节点：精密制造技师</span>
+          </div>
+          <div class="section-body" id="ovQualState"><!-- 由 renderOverview() 动态渲染（资格状态机 Q_Precision_Junior/Assistant/Senior/Specialist/Master） --></div>
+        </div>
+      </div>
+
+      <!-- ===== 新增版总览（资格预检视角：与职称阶梯同一目标，避免数据打架） ===== -->
+      <div class="overview-grid">
+
+        <!-- 左栏：当前职业状态 -->
+        <div class="section">
+          <div class="section-head">
+            <span>资格预检</span>
+            <span class="hint">职业状态视角</span>
+          </div>
+          <div class="section-body" id="ovPreCheck"><!-- 由 renderOverview() 动态渲染（资格预检 6 条件） --></div>
+        </div>
+
+        <!-- 右栏：下一职称 -->
+        <div class="section">
+          <div class="section-head">
+            <span>下一职称</span>
+          </div>
+          <div class="section-body" id="ovNextTitle"><!-- 由 renderOverview() 动态渲染（下一职称 + 缺口） --></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="pane" id="career">
+      <div class="section">
+        <div class="section-head">
+          <span>工作经历</span>
+          <span class="hint">按工坊就职时段记录职业成果</span>
+        </div>
+        <div class="section-body" id="cvBlocks"><!-- 由 renderCareer() 动态渲染（工作经历 = 工坊就职时段 + 期间成果） --></div>
+      </div>
+
+      <div class="two-col">
+        <div class="section">
+          <div class="section-head"><span>工坊汇总</span></div>
+          <div class="section-body" id="cvSummary"><!-- 由 renderCareer() 动态渲染 --></div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><span>当前就职</span></div>
+          <div class="section-body" id="cvCurrent"><!-- 由 renderCareer() 动态渲染 --></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pane" id="honor">
+      <!-- 荣誉勋章墙（移植自档案Tab预览.html：裸 png + 档位角标 + ＋ 打开授勋界面） -->
+      <div class="medal-zone">
+        <div class="medal-zone-head">
+          <span class="h">荣誉勋章</span>
+          <button class="btn-award" id="btnAwardTest" title="预览测试：随机授予一枚勋章（不影响 C# 运行逻辑）" style="opacity:.6;font-size:11px;">🎖 测试授勋</button>
+          <div class="rule"></div>
+        </div>
+        <div class="medal-strip" id="medalStrip"></div>
+      </div>
+
+      <div class="two-col">
+        <div class="section">
+          <div class="section-head"><span>荣誉贡献结构</span></div>
+          <div class="section-body">
+            <div class="snapshot-row"><span>职业贡献</span><strong>82</strong></div>
+            <div class="snapshot-row"><span>技术贡献</span><strong>91</strong></div>
+            <div class="snapshot-row"><span>科研贡献</span><strong>63</strong></div>
+            <div class="snapshot-row"><span>社会贡献</span><strong>58</strong></div>
+            <div class="snapshot-row"><span>特殊贡献</span><strong>37</strong></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><span>最近荣誉事件</span></div>
+          <div class="section-body">
+            <div class="timeline">
+              <div class="event major"><div class="date">5512 年</div><div class="text">获得技术先进个人勋章</div><div class="meta">依据：重大技术贡献</div></div>
+              <div class="event"><div class="date">5510 年</div><div class="text">获得劳动贡献勋章</div><div class="meta">依据：长期职业贡献</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 手动授勋 Dialog（480×440，仅列达标未授，点卡即授） -->
+    <div class="mask" id="awardMask">
+      <div class="dialog award-dialog">
+        <div class="d-head">
+          <div class="t">授予勋章</div>
+          <div class="x" id="awardClose">✕</div>
+        </div>
+        <div class="d-sub">仅列出已达标的未授予勋章 · 点击即授予（金质自动送达信件）</div>
+        <div class="d-body" id="awardBody"></div>
+        <div class="d-foot" id="awardFoot"></div>
+      </div>
+    </div>
+
+    <!-- 勋章详情 Dialog（点击勋章查看具体信息，只读） -->
+    <div class="mask" id="medalDetailMask">
+      <div class="dialog detail-dialog">
+        <div class="d-head">
+          <div class="t">勋章详情</div>
+          <div class="x" id="detailClose">✕</div>
+        </div>
+        <div class="d-body" id="detailBody"></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Concept UI：前端仅展示人物职业档案，不直接计算职称资格或授勋条件。
+      本页为自包含可视化原型（总览/履历/勋章 3 Tab 可切换，右下角「数据契约」标注各区块 C# 字段来源）；
+      <b>P5~P8 资格 / 考试 / 职称 / 勋章 已代码落地</b>（Domain 纯逻辑 + Application 编排 + 数据驱动 Def，附录见 DataMap）；
+      荣誉墙/授勋/详情为可运行预览，勋章现含「阈值勋章」+「成就勋章（MedalKind.Achievement，依据 AchievementEvaluator 聚合）」两类。
+      「🎲 随机职业数据」按钮对应 C# <code>DevTestButtons.CareerRandomize(Pawn)</code>，仅 <code>Prefs.DevMode</code> 时显示（本预览默认显示以便演示）。
+      职业规划区现采用第一版职业"宇宙"骨架：<b>12 个一级专业</b>（工程/制造/农业/林业/畜牧/医学/武器/矿业/科研/烹饪/艺术/管理）；
+      算法为<b>专业适配分析</b>（非"推荐职业"）：五维 <code>ProfessionalFit = 基础能力×0.45 + 实践×0.25 + 兴趣×0.10 + 成果×0.10 + 成长×0.10</code>，
+      基础能力经 <code>skillBase</code> 边际递减（18→19 增益远小于 2→3），权重矩阵 <code>MAJOR_WEIGHTS</code> 每专业 12 技能权重和=100%；
+      专业名单行紧凑排列、悬停弹出五维明细卡片与优势✓/短板△，<b>只提供决策依据，由玩家选择专业</b>。
+    </div>
+  </div>
+</div>
+
+<!-- 数据契约侧栏（原型标注，不影响视觉；未来 P4 职业系统接入时对照） -->
+<div class="datamap-toggle" id="datamapToggle">数据契约 ▸</div>
+<div class="datamap" id="datamap">
+  <h4>职业档案 Tab · 数据契约 v0.1</h4>
+
+  <div class="dm-tab">总览 / Overview</div>
+  <div class="dm-row"><b>职业规划（专业适配分析，非"推荐职业"）</b> → 第一版职业"宇宙"骨架：<b>12 个一级专业</b>（工程/制造/农业/林业/畜牧/医学/武器/矿业/科研/烹饪/艺术/管理）；原则=分类须被原版 <code>SkillDef</code> + <code>WorkType</code> + Job/Recipe/Research 持续提供成长来源；<b>关键设计=一个原版 Skill 可进入多个专业形成不同 CareerSkill</b>（Crafting→工程/制造/武器，Plants→农业/林业，Intellectual→科研/工程/医学）；候选由 <code>MAJOR_WEIGHTS</code> 12 权重矩阵驱动（每专业 12 技能权重和=100%）。<b>五维推荐算法</b> <code>analyzeMajor</code>：基础能力(skillBase 边际递减)×0.45 + 实践适配(practiceNorm)×0.25 + 兴趣倾向(Passion)×0.10 + 成果表现(qualityScore)×0.10 + 成长潜力×0.10 = <code>ProfessionalFit 0~100</code>；可解释输出=五维条形+优势√/短板△+推荐方向；<b>只提供决策依据，不替玩家决定职业</b>。后续不增一级分类，只往每类下扩职业方向→职业技能→技能专精（工程/制造/科研/医学/武器优先做闭环）；目标职称路径待 P4 职称体系驱动；原版 12 技能 defName 已核验</div>
+  <div class="dm-row"><b>职业身份·职称</b> → <code>PawnObject.CareerData</code>（P4 职称评定结果）</div>
+  <div class="dm-row"><b>专业技能</b> → <code>PawnObject.SkillSnapshot</code>（技能等级）</div>
+  <div class="dm-row"><b>相关工时</b> → <code>WorkIntensityView.TotalHours</code></div>
+  <div class="dm-row"><b>当前资格状态</b> → P4 职称资格判定（规划中，预览为静态样例）</div>
+  <div class="dm-row"><b>资格预检条件</b> → P4 资格依赖链（规划中）</div>
+
+  <div class="dm-tab">履历 / Career（工作经历）</div>
+  <div class="dm-row"><b>一段经历 = 工坊就职时段</b> → 由 <code>CareerData.Events</code> 按 <code>Tick</code> 落入 <code>WorkplaceSnapshot</code> 的 [首次使用, 末次使用] 区间切分</div>
+  <div class="dm-row"><b>工坊 / 房间</b> → <code>WorkplaceSnapshot.BuildingDefName</code> / <code>RoomRoleDefName</code>（经 DefDatabase.LabelCap 实时解析）</div>
+  <div class="dm-row"><b>制造件数 / 品质</b> → <code>CareerData.Events</code> 过滤 <code>ItemProduced</code> + <code>Quality</code> 字段</div>
+  <div class="dm-row"><b>建造 / 研究 / 著书</b> → <code>CareerData.Events</code> 过滤对应 <code>CareerEventType</code>（P1 仅 ItemProduced 真实写入，余为白名单占位）</div>
+  <div class="dm-row"><b>累计使用 / 最近使用</b> → <code>WorkplaceSnapshot.UseCount</code> / <code>LastUsedTick</code></div>
+
+  <div class="dm-tab">勋章 / Honor（P7 已落地）</div>
+  <div class="dm-row"><b>荣誉勋章墙</b> → <code>ChronicleGameComponent.GrantedMedals</code>（P7 勋章体系，代码已落地）；含两类：① 阈值勋章（<code>MedalDef.threshold</code> 传统指标）② 成就勋章（<code>MedalKind.Achievement</code> + <code>achievementKey</code>，由 <code>AchievementEvaluator.Aggregate</code> 聚合 CareerEvent 派生指标：LegendaryMade / MajorProjects / TitleCount / ExamPassCount / LongServiceTicks）</div>
+  <div class="dm-row"><b>授勋流程</b> → <code>MedalAwardEvaluator.EvaluatePawn</code> 分发阈值/成就路径 → 达标写入 <code>CareerEvent(MedalGranted)</code>（<code>MedalAwardService.WriteMedalGrantedEvent</code> 回写事实库，闭环）</div>
+  <div class="dm-row"><b>荣誉贡献结构</b> → P7 贡献维度（规划中，预览为静态样例）</div>
+
+  <div class="dm-tab">资格 / 职称（P5~P8 已落地）</div>
+  <div class="dm-row"><b>资格定义</b> → <code>QualificationDef</code>（<code>Defs/QualificationDefs.xml</code>：Q_Precision_Junior / Q_Precision_Assistant / Q_Precision_Senior / Q_Precision_Specialist / Q_Precision_Master）</div>
+  <div class="dm-row"><b>职称定义</b> → <code>ProfessionalTitleDef</code>（<code>Defs/QualificationDefs.xml</code>：Title_Precision_Junior / Title_Precision_Assistant / Title_Precision_Senior / Title_Precision_Specialist / Title_Precision_Master）</div>
+  <div class="dm-row"><b>资格状态机</b> → <code>QualificationState</code>：Locked → Eligible → Preparing → PracticalExam → TheoryExam → Thesis → Defense → Qualified → Granted（锁定 → 符合条件 → 准备中 → 实践考试 → 理论考试 → 论文 → 答辩 → 已通过 → 已授予，失败回准备中）</div>
+  <div class="dm-row"><b>实践考试</b> → 真实制造行为证据（无假按钮，由 CareerEvent 派生）</div>
+  <div class="dm-row"><b>理论考试</b> → <code>ExamScoring</code> 加权合成（无 AI 问答，阶段一）</div>
+  <div class="dm-row"><b>著作证据</b> → <code>BookEvidence</code>（CareerEvent.BookProduced，真实 Hook 待接）；<b>论文/答辩</b> → <code>ThesisData</code></div>
+  <div class="dm-row"><b>编排入口</b> → <code>ArchiveService.RunQualification(this)</code>（由 <code>ChronicleGameComponent.Sampling</code> 节流调用），append-only Scribe（未 bump schema）</div>
+  <div class="dm-row"><b>开发者测试</b> → <code>DevTestButtons.CareerRandomize(Pawn)</code>，仅 <code>Prefs.DevMode</code> 显示，覆盖式随机生成 P1~P8 全维度数据</div>
+
+  <div class="dm-note">
+    说明：本预览为纯前端原型。代码层已落地 P1（CareerData.Events + WorkplaceSnapshot 真实写入履历）、
+    P5~P8（资格/考试/职称/勋章 Domain 纯逻辑 + Application 编排，数据驱动 Def，零新 Harmony Patch）。
+    勋章墙/授勋/详情交互可运行；成就勋章图待补（暂用 no-img 占位）。BookProduced 真实 Hook 与 P9 资格 UI 仍待接入。
+  </div>
+</div>
+
+<script>
+  const dmToggle = document.getElementById('datamapToggle');
+  const dm = document.getElementById('datamap');
+  dmToggle.addEventListener('click', () => {
+    const open = dm.classList.toggle('open');
+    dmToggle.textContent = open ? '数据契约 ▾' : '数据契约 ▸';
+  });
+</script>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panes = document.querySelectorAll('.pane');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.dataset.tab;
+      tabs.forEach(t => t.classList.toggle('active', t === tab));
+      panes.forEach(p => p.classList.toggle('active', p.id === id));
+    });
+  });
+
+  /* ===== 专业适配分析算法（推荐而非决定；五维可解释） =====
+     设计来自 PM 方案（2026-08-16 定稿）：算法只"告诉玩家最适合哪些专业、为什么、差距在哪"，
+     不替玩家决定职业。生命周期：未专业化 → 原版技能分析 → 适配算法 → 玩家选择 → 生成技能树 → 成长 → 职称 → 荣誉 → 勋章。
+
+     第一层：原版技能基础分（边际递减，非线性）
+       skillBase(level) = 100 × (1 − (1 − level/20)^1.6)，使 18→19 提升远小于 2→3。
+     第二层：专业权重矩阵 MAJOR_WEIGHTS（每专业 12 技能权重和 = 100%）。
+       · 一个原版 Skill 可进入多个专业（Crafting→工程/制造/武器，Plants→农业/林业，Intellectual→科研/工程/医学…）
+       · 武器类含路线分叉（战斗 Shooting/Melee / 武器制造 Crafting / 武器工程 Crafting+Intellectual+Construction）
+     五维综合（0~100）：
+       ProfessionalFit = SkillBase×0.45 + PracticeFit×0.25 + PassionFit×0.10
+                        + AchievementFit×0.10 + GrowthPotential×0.10
+       · SkillBase    ：Σ(权重 × skillBase(等级))            —— 有没有基础
+       · PracticeFit   ：Σ(权重 × practiceNorm(实践次数))     —— 实际上是不是一直在干
+       · PassionFit    ：Σ(权重 × passionScore(兴趣))         —— 天然倾向（无=0/兴趣=50/热情=100）
+       · AchievementFit：Σ(权重 × qualityScore(品质分布))      —— 干得好不好（Normal~Legendary）
+       · GrowthPotential：第一版固定样本（不塞年龄/特性，避免黑箱）—— 学习速度/相关技能数
+     可解释输出：每专业五维条形 + 优势√（高权重且高值技能/高实践） + 短板△（高权重但低值）。
+  */
+
+  // 12 技能 → 专业权重矩阵（权重和 = 100）。键为原版 SkillDef 名。
+  const MAJOR_WEIGHTS = {
+    '工程类': { Construction:35, Crafting:25, Intellectual:20, Mining:10, Artistic:5, Plants:5 },
+    '制造类': { Crafting:50, Intellectual:15, Construction:15, Mining:10, Artistic:10 },
+    '农业类': { Plants:60, Animals:15, Intellectual:10, Construction:5, Crafting:5, Medical:5 },
+    '林业类': { Plants:50, Construction:15, Mining:10, Animals:10, Crafting:10, Intellectual:5 },
+    '畜牧类': { Animals:60, Plants:15, Medical:10, Social:5, Intellectual:5, Crafting:5 },
+    '医学类': { Medical:55, Intellectual:25, Social:5, Crafting:5, Animals:5, Plants:5 },
+    '武器类': { Shooting:30, Crafting:25, Melee:20, Intellectual:10, Construction:5, Mining:5, Medical:5 },
+    '矿业类': { Mining:65, Construction:10, Crafting:10, Intellectual:10, Plants:5 },
+    '科研类': { Intellectual:70, Medical:10, Crafting:5, Construction:5, Artistic:5, Social:5 },
+    '烹饪类': { Cooking:70, Plants:10, Animals:10, Medical:5, Crafting:5 },
+    '艺术类': { Artistic:70, Crafting:15, Social:5, Intellectual:5, Construction:5 },
+    '管理类': { Social:45, Intellectual:25, Medical:5, Crafting:5, Construction:5, Animals:5, Plants:5, Shooting:5 }
+  };
+
+  // 第一层：原版技能边际递减基础分（0~100）
+  function skillBase(level){
+    const L = Math.max(0, Math.min(20, level || 0));
+    return Math.round(100 * (1 - Math.pow(1 - L/20, 1.6)));
+  }
+
+  // 示例人物"林舟"的五维样本数据（原型模拟；接后端后由 CareerData/WorkIntensityView 等真实提供）
+  // DevMode「随机职业数据」可整体重新生成（对齐 C# DevTestButtons.CareerRandomize）
+  var SAMPLE_SKILLS = {
+    Shooting:4, Melee:6, Construction:14, Mining:10, Cooking:8,
+    Plants:7, Animals:5, Crafting:16, Artistic:9, Medicine:3,
+    Social:6, Intellectual:12
+  };
+  // 实践次数（按专业维度归一化用），这里以"原版行为计数"近似：建造/制造/研究/采矿 等
+  var SAMPLE_PRACTICE = {
+    Construction:243, Crafting:312, Intellectual:18, Mining:4,
+    Plants:120, Animals:60, Medicine:30, Shooting:40, Melee:55,
+    Cooking:90, Artistic:70, Social:50
+  };
+  // Passion（无=0/兴趣=50/热情=100）
+  var SAMPLE_PASSION = {
+    Crafting:100, Construction:50, Intellectual:0, Mining:0,
+    Plants:50, Animals:0, Medicine:0, Shooting:0, Melee:50,
+    Cooking:50, Artistic:50, Social:0
+  };
+  // 成果品质分布（各品质计数；Normal/Good/Excellent/Masterwork/Legendary 权重 40/60/80/95/100 归一化）
+  var SAMPLE_QUALITY = { Normal:180, Good:64, Excellent:22, Masterwork:6, Legendary:0 };
+  // 成长潜力（第一版固定样本，不塞年龄/特性）
+  var SAMPLE_GROWTH = {
+    Construction:84, Crafting:88, Intellectual:80, Mining:70,
+    Plants:66, Animals:60, Medical:55, Shooting:58, Melee:62,
+    Cooking:72, Artistic:75, Social:64
+  };
+
+  // 归一化辅助
+  const PRACTICE_CAP = 320;                       // 实践次数上限（用于归一）
+  function practiceNorm(n){ return Math.round(Math.min(1, (n||0)/PRACTICE_CAP) * 100); }
+  const QUAL_W = { Normal:40, Good:60, Excellent:80, Masterwork:95, Legendary:100 };
+  function qualityScore(dist){
+    let num=0, den=0;
+    for (const k in dist){ num += (QUAL_W[k]||0)*(dist[k]||0); den += (dist[k]||0); }
+    return den ? Math.round(num/den) : 0;
+  }
+
+  // 计算单专业五维 + 综合适配分
+  function analyzeMajor(major){
+    const w = MAJOR_WEIGHTS[major];
+    let skill=0, practice=0, passion=0, growth=0;
+    for (const k in w){
+      const wt = w[k]/100;
+      skill    += wt * skillBase(SAMPLE_SKILLS[k]);
+      practice += wt * practiceNorm(SAMPLE_PRACTICE[k]);
+      passion  += wt * (SAMPLE_PASSION[k]||0);
+      growth   += wt * (SAMPLE_GROWTH[k]||0);
+    }
+    // 成果表现：同一人物的作品整体品质（SAMPLE_QUALITY）按"该专业实践规模占比"加权，
+    // 实践越多→产出越多→品质分布更具代表性且持续提升（符合 §17 用实际行为验证专业）。
+    const baseQuality = qualityScore(SAMPLE_QUALITY);          // 0~100 全局品质代表值
+    const ach = baseQuality * (0.5 + 0.5 * (practice/100));    // 实践占比驱动代表性
+    const fit = Math.round(skill*0.45 + practice*0.25 + passion*0.10 + ach*0.10 + growth*0.10);
+    return {
+      major, fit: Math.round(fit),
+      dims: {
+        skill: Math.round(skill), practice: Math.round(practice),
+        passion: Math.round(passion), ach: Math.round(ach), growth: Math.round(growth)
+      }, weights: w
+    };
+  }
+
+  // 星级：≥85 高度匹配(5★满) / 65~84 一般(4★) / <65 偏弱(3★)
+  function starHtml(fit){
+    let n = fit>=85 ? 5 : (fit>=65 ? 4 : 3);
+    let s = '';
+    for (let i=0;i<5;i++) s += i<n ? '<span class="on">★</span>' : '☆';
+    return s;
+  }
+  function fitTag(fit){
+    if (fit>=85) return '<span class="tag high">高度匹配</span>';
+    if (fit>=65) return '<span class="tag mid">一般匹配</span>';
+    return '<span class="tag low">偏弱</span>';
+  }
+
+  // 优势√ / 短板△：高权重技能中，基础分≥70 为优势，<40 为短板
+  function prosCons(major, w){
+    const pros=[], cons=[];
+    const entries = Object.entries(w).sort((a,b)=>b[1]-a[1]).slice(0,3); // 取权重最高的 3 个技能
+    for (const [k,wt] of entries){
+      const sb = skillBase(SAMPLE_SKILLS[k]);
+      const cn = SKILL_CN[k]||k;
+      if (sb>=70) pros.push(cn+' '+SAMPLE_SKILLS[k]);
+      else if (sb<40) cons.push(cn+' 偏低('+SAMPLE_SKILLS[k]+')');
+    }
+    return { pros, cons };
+  }
+
+  // 推荐方向（按专业预设，后端可由职业方向表驱动）：12 专业 × 4 二级方向
+  const MAJOR_DIRS = {
+    '工程类':'待设计文档定义（含二级方向）', '制造类':'精密制造 / 武器制造 / 装备制造 / 工业制造',
+    '农业类':'待设计文档定义（含二级方向）', '林业类':'待设计文档定义（含二级方向）',
+    '畜牧类':'待设计文档定义（含二级方向）', '医学类':'待设计文档定义（含二级方向）',
+    '武器类':'待设计文档定义（含二级方向）', '矿业类':'待设计文档定义（含二级方向）',
+    '科研类':'待设计文档定义（含二级方向）', '烹饪类':'待设计文档定义（含二级方向）',
+    '艺术类':'待设计文档定义（含二级方向）', '管理类':'待设计文档定义（含二级方向）'
+  };
+
+  const SKILL_CN = {
+    Shooting:'射击', Melee:'格斗', Construction:'建造', Mining:'采矿',
+    Cooking:'烹饪', Plants:'种植', Animals:'驯兽', Crafting:'制造',
+    Artistic:'艺术', Medicine:'医疗', Social:'社交', Intellectual:'智力'
+  };
+
+  // 悬停明细卡片（全局单例，跟随 chip 定位）
+  const planPop = document.createElement('div');
+  planPop.className = 'plan-pop';
+  document.body.appendChild(planPop);
+
+  function popContent(r){
+    const dim = r.dims;
+    const { pros, cons } = prosCons(r.major, r.weights);
+    const prosHtml = (pros.length?pros.map(p=>'<span class="good">✓ '+p+'</span> ').join(''):'<span class="bad">暂无显著优势</span>')
+                  + (cons.length?'<br>'+cons.map(c=>'<span class="bad">△ '+c+'</span> ').join(''):'');
+    return '<div class="pp-head">'
+        + '<span class="pp-name">'+r.major+'</span>'
+        + fitTag(r.fit).replace('tag','pp-tag')
+        + '<span class="pp-fit">'+r.fit+'<small>/100</small></span>'
+      + '</div>'
+      + '<div class="pp-stars">'+starHtml(r.fit)+'</div>'
+      + dimRow('基础能力', dim.skill)
+      + dimRow('实践经验', dim.practice)
+      + dimRow('兴趣倾向', dim.passion)
+      + dimRow('成果表现', dim.ach)
+      + dimRow('成长潜力', dim.growth)
+      + '<div class="pros"><span class="h">主要依据：</span>'+prosHtml+'</div>'
+      + '<div class="dir">推荐方向：<b>'+(MAJOR_DIRS[r.major]||'—')+'</b></div>';
+  }
+
+  function positionPop(chip){
+    const rect = chip.getBoundingClientRect();
+    const pw = planPop.offsetWidth, ph = planPop.offsetHeight;
+    let left = rect.left;
+    let top = rect.bottom + 6;
+    if (left + pw > window.innerWidth - 10) left = Math.max(10, window.innerWidth - pw - 10);
+    if (top + ph > window.innerHeight - 10) top = Math.max(10, rect.top - ph - 6);
+    planPop.style.left = left + 'px';
+    planPop.style.top  = top + 'px';
+  }
+
+  // 渲染：单行紧凑专业名，悬停展开五维明细卡片（按 fit 降序，第一张 top1，选中的当前专业 primary 高亮）
+  // DevMode 随机化后重新调用（样本数据变化 → 适配分/排序/优势短板全刷新）
+  function renderFitAnalysis(){
+    var container = document.getElementById('planCats');
+    if (!container) return;
+    var all = Object.keys(MAJOR_WEIGHTS).map(analyzeMajor).sort(function(a,b){return b.fit-a.fit;});
+    container.innerHTML = all.map(function(r, idx) {
+      var cls = ['plan-chip'];
+      if (idx===0) cls.push('top1');
+      if (r.major===CURRENT_MAJOR) cls.push('primary');
+      // "荐"角标：适配分≥80（高度匹配）或排名第一 → 右上角推荐标记
+      var rec = (r.fit >= 80 || idx === 0) ? '<span class="rec">荐</span>' : '';
+      return '<span class="'+cls.join(' ')+'" data-idx="'+idx+'">'
+        + '<span class="rank">'+(idx+1)+'</span>'
+        + '<span class="nm">'+r.major+'</span>'
+        + '<span class="mini">'+r.fit+'</span>'
+        + rec
+      + '</span>';
+    }).join('');
+
+    container.querySelectorAll('.plan-chip').forEach(function(chip) {
+      var r = all[parseInt(chip.dataset.idx, 10)];
+      chip.addEventListener('mouseenter', function(){
+        planPop.innerHTML = popContent(r);
+        planPop.classList.add('open');
+        positionPop(chip);
+      });
+      chip.addEventListener('mousemove', function(){ positionPop(chip); });
+      chip.addEventListener('mouseleave', function(){ planPop.classList.remove('open'); });
+      // 点击选中为当前职业：primary 高亮切换 + 身份卡/职称链按该专业动态联动
+      chip.addEventListener('click', function(){
+        planPop.classList.remove('open');
+        if (CURRENT_MAJOR === r.major) return;
+        applyMajor(r.major);
+      });
+    });
+  }
+
+  /* ===== 主方向对话框（与预览文件职业生涯游戏界面预览.html 一致） ===== */
+  // 12 专业 × 4 二级方向（与 §2.5 设计文档对齐；弹窗按当前专业动态取）
+  // 方案 A：仅保留设计文档 V2.0 完整定义的制造类 4 二级方向（§174/§416-419）。
+  // 其余 11 专业为规划骨架，文档未定义二级方向，悬停/弹窗提示待展开，不编造数值。
+  // 机制描述来源于环世界英文 Wiki 取证译简中（见 mech[].src）。
+  /* 二级方向：12 专业 × 4 方向 = 48 条（恢复到方案 A 之前结构；制造类为真实机制，其余 11 专业为示例占位·待设计文档定义） */
+var ALL_DIRECTIONS={
+  "工程类": [
+    {
+      "n": "建筑工程",
+      "p": "Profession · 工程类",
+      "desc": "建筑工程（示例占位·待设计文档定义）",
+      "c": "#e0c77a",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Construction",
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 建造速度",
+        "quality": "+1档 建筑品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 建造速度"
+        ],
+        [
+          "专业",
+          "+5% 建造速度 / +2档 建筑品质"
+        ],
+        [
+          "高级",
+          "+8% 建造速度 / +4档 建筑品质"
+        ],
+        [
+          "大师",
+          "+10% 建造速度 / +6档 建筑品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "施工速度",
+          "brief": "核心操作",
+          "eff": "建造速度 +1%"
+        },
+        {
+          "name": "结构设计",
+          "brief": "熟练运用",
+          "eff": "建造速度 +1%"
+        },
+        {
+          "name": "建造精度",
+          "brief": "深度掌握",
+          "eff": "建筑品质 +0.5 档"
+        },
+        {
+          "name": "材料核算",
+          "brief": "境界突破",
+          "eff": "建筑品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】建筑工程 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "机械工程",
+      "p": "Profession · 工程类",
+      "desc": "机械工程（示例占位·待设计文档定义）",
+      "c": "#9fb0bf",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Construction",
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 建造速度",
+        "quality": "+1档 建筑品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 建造速度"
+        ],
+        [
+          "专业",
+          "+5% 建造速度 / +2档 建筑品质"
+        ],
+        [
+          "高级",
+          "+8% 建造速度 / +4档 建筑品质"
+        ],
+        [
+          "大师",
+          "+10% 建造速度 / +6档 建筑品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "组装速度",
+          "brief": "核心操作",
+          "eff": "建造速度 +1%"
+        },
+        {
+          "name": "机械精度",
+          "brief": "熟练运用",
+          "eff": "建造速度 +1%"
+        },
+        {
+          "name": "传动效率",
+          "brief": "深度掌握",
+          "eff": "建筑品质 +0.5 档"
+        },
+        {
+          "name": "部件工艺",
+          "brief": "境界突破",
+          "eff": "建筑品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】机械工程 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "电力工程",
+      "p": "Profession · 工程类",
+      "desc": "电力工程（示例占位·待设计文档定义）",
+      "c": "#b0a07a",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Construction",
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 建造速度",
+        "quality": "+1档 建筑品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 建造速度"
+        ],
+        [
+          "专业",
+          "+5% 建造速度 / +2档 建筑品质"
+        ],
+        [
+          "高级",
+          "+8% 建造速度 / +4档 建筑品质"
+        ],
+        [
+          "大师",
+          "+10% 建造速度 / +6档 建筑品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "铺设速度",
+          "brief": "核心操作",
+          "eff": "建造速度 +1%"
+        },
+        {
+          "name": "电路精度",
+          "brief": "熟练运用",
+          "eff": "建造速度 +1%"
+        },
+        {
+          "name": "供电管理",
+          "brief": "深度掌握",
+          "eff": "建筑品质 +0.5 档"
+        },
+        {
+          "name": "线路安全",
+          "brief": "境界突破",
+          "eff": "建筑品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】电力工程 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "自动化工程",
+      "p": "Profession · 工程类",
+      "desc": "自动化工程（示例占位·待设计文档定义）",
+      "c": "#7e9db6",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Construction",
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 建造速度",
+        "quality": "+1档 建筑品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 建造速度"
+        ],
+        [
+          "专业",
+          "+5% 建造速度 / +2档 建筑品质"
+        ],
+        [
+          "高级",
+          "+8% 建造速度 / +4档 建筑品质"
+        ],
+        [
+          "大师",
+          "+10% 建造速度 / +6档 建筑品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "布设速度",
+          "brief": "核心操作",
+          "eff": "建造速度 +1%"
+        },
+        {
+          "name": "自动化精度",
+          "brief": "熟练运用",
+          "eff": "建造速度 +1%"
+        },
+        {
+          "name": "产线效率",
+          "brief": "深度掌握",
+          "eff": "建筑品质 +0.5 档"
+        },
+        {
+          "name": "维护管理",
+          "brief": "境界突破",
+          "eff": "建筑品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】自动化工程 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "制造类": [
+    {
+      "n": "精密制造",
+      "p": "Manufacturing · 制造类",
+      "desc": "精密制造（设计文档 V2.0 定义）",
+      "c": "#c89bb0",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 制造速度",
+        "quality": "+1 品质档",
+        "note": "整体效果来自职业 Def（P3 落地值）；下方为能力贡献拆分示意"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 速度"
+        ],
+        [
+          "专业",
+          "+5% 速度 / +2% 品质"
+        ],
+        [
+          "高级",
+          "+8% 速度 / +4% 品质"
+        ],
+        [
+          "大师",
+          "+10% 速度 / +6% 品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "基础能力",
+          "brief": "核心操作",
+          "eff": "效率 +1%"
+        },
+        {
+          "name": "进阶能力",
+          "brief": "熟练运用",
+          "eff": "效率 +1%"
+        },
+        {
+          "name": "专精能力",
+          "brief": "深度掌握",
+          "eff": "品质 +0.5 档"
+        },
+        {
+          "name": "大师能力",
+          "brief": "境界突破",
+          "eff": "品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "这个方向靠「制造」和「智力」两项原版技能成长。制造技能越高，越能做出高等级装备，也才能解锁更高级的制造配方。",
+          "src": "rimworldwiki.com/wiki/Skills"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "专注精密制造后，你做出来的零件更不容易出「劣质/糟糕」，更容易稳定拿到「良好/优秀」，高级组件的整体品质明显更可靠。",
+          "src": "rimworldwiki.com/wiki/Quality"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "选这个方向会让你做相关物品的速度变快（制造类职业效果，具体加成比例由游戏设定决定）。",
+          "src": "rimworldwiki.com/wiki/Global_Work_Speed"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "职业还会给你的成品「品质往上提一档」的机会（如普通→良好），数值由游戏设定，不是固定值。",
+          "src": "设计文档·制造类职业效果设计.md"
+        }
+      ]
+    },
+    {
+      "n": "武器制造",
+      "p": "Manufacturing · 制造类",
+      "desc": "武器制造（设计文档 V2.0 定义）",
+      "c": "#9bb0a0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 制造速度",
+        "quality": "+1 品质档",
+        "note": "整体效果来自职业 Def（P3 落地值）；下方为能力贡献拆分示意"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 速度"
+        ],
+        [
+          "专业",
+          "+5% 速度 / +2% 品质"
+        ],
+        [
+          "高级",
+          "+8% 速度 / +4% 品质"
+        ],
+        [
+          "大师",
+          "+10% 速度 / +6% 品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "基础能力",
+          "brief": "核心操作",
+          "eff": "效率 +1%"
+        },
+        {
+          "name": "进阶能力",
+          "brief": "熟练运用",
+          "eff": "效率 +1%"
+        },
+        {
+          "name": "专精能力",
+          "brief": "深度掌握",
+          "eff": "品质 +0.5 档"
+        },
+        {
+          "name": "大师能力",
+          "brief": "境界突破",
+          "eff": "品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "这个方向靠「制造」原版技能成长。枪械、近战武器都靠它决定品质，而且大多有最低制造等级门槛（比如突击步枪要 Lv6、电荷长枪要 Lv9 才能造）。",
+          "src": "rimworldwiki.com/wiki/Skills"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "专注武器制造后，你造的枪械/近战武器品质更稳，更容易出「良好/优秀」，高级武器整体更可靠。",
+          "src": "rimworldwiki.com/wiki/Quality"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "选这个方向会让你造武器的速度变快（具体加成比例由游戏设定决定）。",
+          "src": "rimworldwiki.com/wiki/Global_Work_Speed"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "职业还会给你的武器成品「品质往上提一档」的机会，数值由游戏设定，不是固定值。",
+          "src": "设计文档·制造类职业效果设计.md"
+        }
+      ]
+    },
+    {
+      "n": "装备制造",
+      "p": "Manufacturing · 制造类",
+      "desc": "装备制造（设计文档 V2.0 定义）",
+      "c": "#b09b9b",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 制造速度",
+        "quality": "+1 品质档",
+        "note": "整体效果来自职业 Def（P3 落地值）；下方为能力贡献拆分示意"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 速度"
+        ],
+        [
+          "专业",
+          "+5% 速度 / +2% 品质"
+        ],
+        [
+          "高级",
+          "+8% 速度 / +4% 品质"
+        ],
+        [
+          "大师",
+          "+10% 速度 / +6% 品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "基础能力",
+          "brief": "核心操作",
+          "eff": "效率 +1%"
+        },
+        {
+          "name": "进阶能力",
+          "brief": "熟练运用",
+          "eff": "效率 +1%"
+        },
+        {
+          "name": "专精能力",
+          "brief": "深度掌握",
+          "eff": "品质 +0.5 档"
+        },
+        {
+          "name": "大师能力",
+          "brief": "境界突破",
+          "eff": "品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "这个方向靠「制造」原版技能成长，属于裁缝类工作。衣服和护甲的品质都由制造技能决定（注意：雕像看艺术、建筑看建造，不受制造影响）。",
+          "src": "rimworldwiki/Crafting"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "专注装备制造后，你做的护甲/衣物品质更稳，更容易出「良好/优秀」，高级护甲整体更可靠。",
+          "src": "rimworldwiki.com/wiki/Quality"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "选这个方向会让你做护甲衣物的速度变快（具体加成比例由游戏设定决定）。",
+          "src": "rimworldwiki.com/wiki/Global_Work_Speed"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "职业还会给你的护甲/衣物成品「品质往上提一档」的机会，数值由游戏设定，不是固定值。",
+          "src": "设计文档·制造类职业效果设计.md"
+        }
+      ]
+    },
+    {
+      "n": "工业制造",
+      "p": "Manufacturing · 制造类",
+      "desc": "工业制造（设计文档 V2.0 定义）",
+      "c": "#a0a0c0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 制造速度",
+        "quality": "+1 品质档",
+        "note": "整体效果来自职业 Def（P3 落地值）；下方为能力贡献拆分示意"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 速度"
+        ],
+        [
+          "专业",
+          "+5% 速度 / +2% 品质"
+        ],
+        [
+          "高级",
+          "+8% 速度 / +4% 品质"
+        ],
+        [
+          "大师",
+          "+10% 速度 / +6% 品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "基础能力",
+          "brief": "核心操作",
+          "eff": "效率 +1%"
+        },
+        {
+          "name": "进阶能力",
+          "brief": "熟练运用",
+          "eff": "效率 +1%"
+        },
+        {
+          "name": "专精能力",
+          "brief": "深度掌握",
+          "eff": "品质 +0.5 档"
+        },
+        {
+          "name": "大师能力",
+          "brief": "境界突破",
+          "eff": "品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "这个方向靠「制造」原版技能成长，覆盖炼油、制石砖、熔炼等一般劳动。",
+          "src": "rimworldwiki.com/wiki/Global_Work_Speed"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "选这个方向会让你做工业制品（石砖、钢、组件等）的速度明显变快（具体加成比例由游戏设定决定）。",
+          "src": "rimworldwiki.com/wiki/Global_Work_Speed"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "相关制成品（有品质判定的工业件）品质更稳，更容易拿到「良好/优秀」。",
+          "src": "rimworldwiki.com/wiki/Quality"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "职业还会给你的工业成品「品质往上提一档」的机会，数值由游戏设定，不是固定值。",
+          "src": "设计文档·制造类职业效果设计.md"
+        }
+      ]
+    }
+  ],
+  "农业类": [
+    {
+      "n": "粮食种植",
+      "p": "Profession · 农业类",
+      "desc": "粮食种植（示例占位·待设计文档定义）",
+      "c": "#c0b080",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Plants",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 收获产量",
+        "quality": "+1% 种植速度",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 收获产量"
+        ],
+        [
+          "专业",
+          "+5% 收获产量 / +2% 种植速度"
+        ],
+        [
+          "高级",
+          "+8% 收获产量 / +4% 种植速度"
+        ],
+        [
+          "大师",
+          "+10% 收获产量 / +6% 种植速度"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "种植速度",
+          "brief": "核心操作",
+          "eff": "收获产量 +1%"
+        },
+        {
+          "name": "收获产量",
+          "brief": "熟练运用",
+          "eff": "收获产量 +1%"
+        },
+        {
+          "name": "育种改良",
+          "brief": "深度掌握",
+          "eff": "种植速度 +0.5 %"
+        },
+        {
+          "name": "田间管理",
+          "brief": "境界突破",
+          "eff": "种植速度 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】粮食种植 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "经济作物",
+      "p": "Profession · 农业类",
+      "desc": "经济作物（示例占位·待设计文档定义）",
+      "c": "#80c0b0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Plants",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 收获产量",
+        "quality": "+1% 种植速度",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 收获产量"
+        ],
+        [
+          "专业",
+          "+5% 收获产量 / +2% 种植速度"
+        ],
+        [
+          "高级",
+          "+8% 收获产量 / +4% 种植速度"
+        ],
+        [
+          "大师",
+          "+10% 收获产量 / +6% 种植速度"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "种植速度",
+          "brief": "核心操作",
+          "eff": "收获产量 +1%"
+        },
+        {
+          "name": "收获产量",
+          "brief": "熟练运用",
+          "eff": "收获产量 +1%"
+        },
+        {
+          "name": "作物选育",
+          "brief": "深度掌握",
+          "eff": "种植速度 +0.5 %"
+        },
+        {
+          "name": "市场品控",
+          "brief": "境界突破",
+          "eff": "种植速度 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】经济作物 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "土壤改良",
+      "p": "Profession · 农业类",
+      "desc": "土壤改良（示例占位·待设计文档定义）",
+      "c": "#c0a080",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Plants",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 收获产量",
+        "quality": "+1% 种植速度",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 收获产量"
+        ],
+        [
+          "专业",
+          "+5% 收获产量 / +2% 种植速度"
+        ],
+        [
+          "高级",
+          "+8% 收获产量 / +4% 种植速度"
+        ],
+        [
+          "大师",
+          "+10% 收获产量 / +6% 种植速度"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "施肥效率",
+          "brief": "核心操作",
+          "eff": "收获产量 +1%"
+        },
+        {
+          "name": "土壤肥力",
+          "brief": "熟练运用",
+          "eff": "收获产量 +1%"
+        },
+        {
+          "name": "水土保持",
+          "brief": "深度掌握",
+          "eff": "种植速度 +0.5 %"
+        },
+        {
+          "name": "增产管理",
+          "brief": "境界突破",
+          "eff": "种植速度 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】土壤改良 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "温室栽培",
+      "p": "Profession · 农业类",
+      "desc": "温室栽培（示例占位·待设计文档定义）",
+      "c": "#a0c080",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Plants",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 收获产量",
+        "quality": "+1% 种植速度",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 收获产量"
+        ],
+        [
+          "专业",
+          "+5% 收获产量 / +2% 种植速度"
+        ],
+        [
+          "高级",
+          "+8% 收获产量 / +4% 种植速度"
+        ],
+        [
+          "大师",
+          "+10% 收获产量 / +6% 种植速度"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "栽种速度",
+          "brief": "核心操作",
+          "eff": "收获产量 +1%"
+        },
+        {
+          "name": "温室产量",
+          "brief": "熟练运用",
+          "eff": "收获产量 +1%"
+        },
+        {
+          "name": "环境调控",
+          "brief": "深度掌握",
+          "eff": "种植速度 +0.5 %"
+        },
+        {
+          "name": "无土栽培",
+          "brief": "境界突破",
+          "eff": "种植速度 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】温室栽培 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "林业类": [
+    {
+      "n": "林木采伐",
+      "p": "Profession · 林业类",
+      "desc": "林木采伐（示例占位·待设计文档定义）",
+      "c": "#b080c0",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Plants",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 采伐产量",
+        "quality": "+1档 木材品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 采伐产量"
+        ],
+        [
+          "专业",
+          "+5% 采伐产量 / +2档 木材品质"
+        ],
+        [
+          "高级",
+          "+8% 采伐产量 / +4档 木材品质"
+        ],
+        [
+          "大师",
+          "+10% 采伐产量 / +6档 木材品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "采伐速度",
+          "brief": "核心操作",
+          "eff": "采伐产量 +1%"
+        },
+        {
+          "name": "木材产量",
+          "brief": "熟练运用",
+          "eff": "采伐产量 +1%"
+        },
+        {
+          "name": "选木识别",
+          "brief": "深度掌握",
+          "eff": "木材品质 +0.5 档"
+        },
+        {
+          "name": "安全作业",
+          "brief": "境界突破",
+          "eff": "木材品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】林木采伐 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "造林抚育",
+      "p": "Profession · 林业类",
+      "desc": "造林抚育（示例占位·待设计文档定义）",
+      "c": "#80b0c0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Plants",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 采伐产量",
+        "quality": "+1档 木材品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 采伐产量"
+        ],
+        [
+          "专业",
+          "+5% 采伐产量 / +2档 木材品质"
+        ],
+        [
+          "高级",
+          "+8% 采伐产量 / +4档 木材品质"
+        ],
+        [
+          "大师",
+          "+10% 采伐产量 / +6档 木材品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "栽植速度",
+          "brief": "核心操作",
+          "eff": "采伐产量 +1%"
+        },
+        {
+          "name": "幼苗成活",
+          "brief": "熟练运用",
+          "eff": "采伐产量 +1%"
+        },
+        {
+          "name": "抚育管理",
+          "brief": "深度掌握",
+          "eff": "木材品质 +0.5 档"
+        },
+        {
+          "name": "林地养护",
+          "brief": "境界突破",
+          "eff": "木材品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】造林抚育 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "林产加工",
+      "p": "Profession · 林业类",
+      "desc": "林产加工（示例占位·待设计文档定义）",
+      "c": "#c080a0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Plants",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 采伐产量",
+        "quality": "+1档 木材品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 采伐产量"
+        ],
+        [
+          "专业",
+          "+5% 采伐产量 / +2档 木材品质"
+        ],
+        [
+          "高级",
+          "+8% 采伐产量 / +4档 木材品质"
+        ],
+        [
+          "大师",
+          "+10% 采伐产量 / +6档 木材品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "加工速度",
+          "brief": "核心操作",
+          "eff": "采伐产量 +1%"
+        },
+        {
+          "name": "木材品质",
+          "brief": "熟练运用",
+          "eff": "采伐产量 +1%"
+        },
+        {
+          "name": "板材利用",
+          "brief": "深度掌握",
+          "eff": "木材品质 +0.5 档"
+        },
+        {
+          "name": "工艺加工",
+          "brief": "境界突破",
+          "eff": "木材品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】林产加工 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "野生抚育",
+      "p": "Profession · 林业类",
+      "desc": "野生抚育（示例占位·待设计文档定义）",
+      "c": "#a0c0b0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Plants",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 采伐产量",
+        "quality": "+1档 木材品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 采伐产量"
+        ],
+        [
+          "专业",
+          "+5% 采伐产量 / +2档 木材品质"
+        ],
+        [
+          "高级",
+          "+8% 采伐产量 / +4档 木材品质"
+        ],
+        [
+          "大师",
+          "+10% 采伐产量 / +6档 木材品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "采集效率",
+          "brief": "核心操作",
+          "eff": "采伐产量 +1%"
+        },
+        {
+          "name": "野产产量",
+          "brief": "熟练运用",
+          "eff": "采伐产量 +1%"
+        },
+        {
+          "name": "生态保护",
+          "brief": "深度掌握",
+          "eff": "木材品质 +0.5 档"
+        },
+        {
+          "name": "可持续采",
+          "brief": "境界突破",
+          "eff": "木材品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】野生抚育 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "畜牧类": [
+    {
+      "n": "家畜饲养",
+      "p": "Profession · 畜牧类",
+      "desc": "家畜饲养（示例占位·待设计文档定义）",
+      "c": "#c0c080",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Animals",
+        "Medicine",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 畜产产量",
+        "quality": "+1% 屠宰效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 畜产产量"
+        ],
+        [
+          "专业",
+          "+5% 畜产产量 / +2% 屠宰效率"
+        ],
+        [
+          "高级",
+          "+8% 畜产产量 / +4% 屠宰效率"
+        ],
+        [
+          "大师",
+          "+10% 畜产产量 / +6% 屠宰效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "饲养效率",
+          "brief": "核心操作",
+          "eff": "畜产产量 +1%"
+        },
+        {
+          "name": "畜产产量",
+          "brief": "熟练运用",
+          "eff": "畜产产量 +1%"
+        },
+        {
+          "name": "繁殖管理",
+          "brief": "深度掌握",
+          "eff": "屠宰效率 +0.5 %"
+        },
+        {
+          "name": "饲料配方",
+          "brief": "境界突破",
+          "eff": "屠宰效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】家畜饲养 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "兽医防疫",
+      "p": "Profession · 畜牧类",
+      "desc": "兽医防疫（示例占位·待设计文档定义）",
+      "c": "#80c0a0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Animals",
+        "Medicine",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 畜产产量",
+        "quality": "+1% 屠宰效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 畜产产量"
+        ],
+        [
+          "专业",
+          "+5% 畜产产量 / +2% 屠宰效率"
+        ],
+        [
+          "高级",
+          "+8% 畜产产量 / +4% 屠宰效率"
+        ],
+        [
+          "大师",
+          "+10% 畜产产量 / +6% 屠宰效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "诊疗质量",
+          "brief": "核心操作",
+          "eff": "畜产产量 +1%"
+        },
+        {
+          "name": "防疫效果",
+          "brief": "熟练运用",
+          "eff": "畜产产量 +1%"
+        },
+        {
+          "name": "护理速度",
+          "brief": "深度掌握",
+          "eff": "屠宰效率 +0.5 %"
+        },
+        {
+          "name": "疫病防治",
+          "brief": "境界突破",
+          "eff": "屠宰效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】兽医防疫 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "驯兽训练",
+      "p": "Profession · 畜牧类",
+      "desc": "驯兽训练（示例占位·待设计文档定义）",
+      "c": "#b0a0c0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Animals",
+        "Medicine",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 畜产产量",
+        "quality": "+1% 屠宰效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 畜产产量"
+        ],
+        [
+          "专业",
+          "+5% 畜产产量 / +2% 屠宰效率"
+        ],
+        [
+          "高级",
+          "+8% 畜产产量 / +4% 屠宰效率"
+        ],
+        [
+          "大师",
+          "+10% 畜产产量 / +6% 屠宰效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "驯服概率",
+          "brief": "核心操作",
+          "eff": "畜产产量 +1%"
+        },
+        {
+          "name": "训练效率",
+          "brief": "熟练运用",
+          "eff": "畜产产量 +1%"
+        },
+        {
+          "name": "服从管理",
+          "brief": "深度掌握",
+          "eff": "屠宰效率 +0.5 %"
+        },
+        {
+          "name": "兽群调度",
+          "brief": "境界突破",
+          "eff": "屠宰效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】驯兽训练 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "毛皮加工",
+      "p": "Profession · 畜牧类",
+      "desc": "毛皮加工（示例占位·待设计文档定义）",
+      "c": "#a0b0c0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Animals",
+        "Medicine",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 畜产产量",
+        "quality": "+1% 屠宰效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 畜产产量"
+        ],
+        [
+          "专业",
+          "+5% 畜产产量 / +2% 屠宰效率"
+        ],
+        [
+          "高级",
+          "+8% 畜产产量 / +4% 屠宰效率"
+        ],
+        [
+          "大师",
+          "+10% 畜产产量 / +6% 屠宰效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "加工速度",
+          "brief": "核心操作",
+          "eff": "畜产产量 +1%"
+        },
+        {
+          "name": "毛皮品质",
+          "brief": "熟练运用",
+          "eff": "畜产产量 +1%"
+        },
+        {
+          "name": "屠宰效率",
+          "brief": "深度掌握",
+          "eff": "屠宰效率 +0.5 %"
+        },
+        {
+          "name": "皮革工艺",
+          "brief": "境界突破",
+          "eff": "屠宰效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】毛皮加工 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "医学类": [
+    {
+      "n": "临床医学",
+      "p": "Profession · 医学类",
+      "desc": "临床医学（示例占位·待设计文档定义）",
+      "c": "#c0a0b0",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Medicine",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 手术成功率",
+        "quality": "+1% 治疗质量",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 手术成功率"
+        ],
+        [
+          "专业",
+          "+5% 手术成功率 / +2% 治疗质量"
+        ],
+        [
+          "高级",
+          "+8% 手术成功率 / +4% 治疗质量"
+        ],
+        [
+          "大师",
+          "+10% 手术成功率 / +6% 治疗质量"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "治疗质量",
+          "brief": "核心操作",
+          "eff": "手术成功率 +1%"
+        },
+        {
+          "name": "诊断精度",
+          "brief": "熟练运用",
+          "eff": "手术成功率 +1%"
+        },
+        {
+          "name": "护理速度",
+          "brief": "深度掌握",
+          "eff": "治疗质量 +0.5 %"
+        },
+        {
+          "name": "急救效率",
+          "brief": "境界突破",
+          "eff": "治疗质量 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】临床医学 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "药物制剂",
+      "p": "Profession · 医学类",
+      "desc": "药物制剂（示例占位·待设计文档定义）",
+      "c": "#b0c0a0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Medicine",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 手术成功率",
+        "quality": "+1% 治疗质量",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 手术成功率"
+        ],
+        [
+          "专业",
+          "+5% 手术成功率 / +2% 治疗质量"
+        ],
+        [
+          "高级",
+          "+8% 手术成功率 / +4% 治疗质量"
+        ],
+        [
+          "大师",
+          "+10% 手术成功率 / +6% 治疗质量"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "制药速度",
+          "brief": "核心操作",
+          "eff": "手术成功率 +1%"
+        },
+        {
+          "name": "药品品质",
+          "brief": "熟练运用",
+          "eff": "手术成功率 +1%"
+        },
+        {
+          "name": "配方掌握",
+          "brief": "深度掌握",
+          "eff": "治疗质量 +0.5 %"
+        },
+        {
+          "name": "药理研究",
+          "brief": "境界突破",
+          "eff": "治疗质量 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】药物制剂 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "外科手技",
+      "p": "Profession · 医学类",
+      "desc": "外科手技（示例占位·待设计文档定义）",
+      "c": "#c080c0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Medicine",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 手术成功率",
+        "quality": "+1% 治疗质量",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 手术成功率"
+        ],
+        [
+          "专业",
+          "+5% 手术成功率 / +2% 治疗质量"
+        ],
+        [
+          "高级",
+          "+8% 手术成功率 / +4% 治疗质量"
+        ],
+        [
+          "大师",
+          "+10% 手术成功率 / +6% 治疗质量"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "手术成功率",
+          "brief": "核心操作",
+          "eff": "手术成功率 +1%"
+        },
+        {
+          "name": "操作精度",
+          "brief": "熟练运用",
+          "eff": "手术成功率 +1%"
+        },
+        {
+          "name": "术后护理",
+          "brief": "深度掌握",
+          "eff": "治疗质量 +0.5 %"
+        },
+        {
+          "name": "器械使用",
+          "brief": "境界突破",
+          "eff": "治疗质量 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】外科手技 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "心理卫生",
+      "p": "Profession · 医学类",
+      "desc": "心理卫生（示例占位·待设计文档定义）",
+      "c": "#80c0c0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Medicine",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 手术成功率",
+        "quality": "+1% 治疗质量",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 手术成功率"
+        ],
+        [
+          "专业",
+          "+5% 手术成功率 / +2% 治疗质量"
+        ],
+        [
+          "高级",
+          "+8% 手术成功率 / +4% 治疗质量"
+        ],
+        [
+          "大师",
+          "+10% 手术成功率 / +6% 治疗质量"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "治疗质量",
+          "brief": "核心操作",
+          "eff": "手术成功率 +1%"
+        },
+        {
+          "name": "沟通效果",
+          "brief": "熟练运用",
+          "eff": "手术成功率 +1%"
+        },
+        {
+          "name": "心理疏导",
+          "brief": "深度掌握",
+          "eff": "治疗质量 +0.5 %"
+        },
+        {
+          "name": "康复管理",
+          "brief": "境界突破",
+          "eff": "治疗质量 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】心理卫生 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "武器类": [
+    {
+      "n": "武器维护",
+      "p": "Profession · 武器类",
+      "desc": "武器维护（示例占位·待设计文档定义）",
+      "c": "#c0a080",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Crafting",
+        "Shooting"
+      ],
+      "effects": {
+        "speed": "+3% 射击精度",
+        "quality": "+1档 武器品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 射击精度"
+        ],
+        [
+          "专业",
+          "+5% 射击精度 / +2档 武器品质"
+        ],
+        [
+          "高级",
+          "+8% 射击精度 / +4档 武器品质"
+        ],
+        [
+          "大师",
+          "+10% 射击精度 / +6档 武器品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "维护效率",
+          "brief": "核心操作",
+          "eff": "射击精度 +1%"
+        },
+        {
+          "name": "武器品质",
+          "brief": "熟练运用",
+          "eff": "射击精度 +1%"
+        },
+        {
+          "name": "拆解检修",
+          "brief": "深度掌握",
+          "eff": "武器品质 +0.5 档"
+        },
+        {
+          "name": "耐久保养",
+          "brief": "境界突破",
+          "eff": "武器品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】武器维护 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "弹药工程",
+      "p": "Profession · 武器类",
+      "desc": "弹药工程（示例占位·待设计文档定义）",
+      "c": "#a0c0c0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Crafting",
+        "Shooting"
+      ],
+      "effects": {
+        "speed": "+3% 射击精度",
+        "quality": "+1档 武器品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 射击精度"
+        ],
+        [
+          "专业",
+          "+5% 射击精度 / +2档 武器品质"
+        ],
+        [
+          "高级",
+          "+8% 射击精度 / +4档 武器品质"
+        ],
+        [
+          "大师",
+          "+10% 射击精度 / +6档 武器品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "装填速度",
+          "brief": "核心操作",
+          "eff": "射击精度 +1%"
+        },
+        {
+          "name": "弹药品质",
+          "brief": "熟练运用",
+          "eff": "射击精度 +1%"
+        },
+        {
+          "name": "爆炸威力",
+          "brief": "深度掌握",
+          "eff": "武器品质 +0.5 档"
+        },
+        {
+          "name": "材料配方",
+          "brief": "境界突破",
+          "eff": "武器品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】弹药工程 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "近战锻造",
+      "p": "Profession · 武器类",
+      "desc": "近战锻造（示例占位·待设计文档定义）",
+      "c": "#c0b0a0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Crafting",
+        "Shooting"
+      ],
+      "effects": {
+        "speed": "+3% 射击精度",
+        "quality": "+1档 武器品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 射击精度"
+        ],
+        [
+          "专业",
+          "+5% 射击精度 / +2档 武器品质"
+        ],
+        [
+          "高级",
+          "+8% 射击精度 / +4档 武器品质"
+        ],
+        [
+          "大师",
+          "+10% 射击精度 / +6档 武器品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "锻造速度",
+          "brief": "核心操作",
+          "eff": "射击精度 +1%"
+        },
+        {
+          "name": "近战命中",
+          "brief": "熟练运用",
+          "eff": "射击精度 +1%"
+        },
+        {
+          "name": "武器品质",
+          "brief": "深度掌握",
+          "eff": "武器品质 +0.5 档"
+        },
+        {
+          "name": "刀锋工艺",
+          "brief": "境界突破",
+          "eff": "武器品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】近战锻造 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "武器工程",
+      "p": "Profession · 武器类",
+      "desc": "武器工程（示例占位·待设计文档定义）",
+      "c": "#a0c0b0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Crafting",
+        "Shooting"
+      ],
+      "effects": {
+        "speed": "+3% 射击精度",
+        "quality": "+1档 武器品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 射击精度"
+        ],
+        [
+          "专业",
+          "+5% 射击精度 / +2档 武器品质"
+        ],
+        [
+          "高级",
+          "+8% 射击精度 / +4档 武器品质"
+        ],
+        [
+          "大师",
+          "+10% 射击精度 / +6档 武器品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "制造速度",
+          "brief": "核心操作",
+          "eff": "射击精度 +1%"
+        },
+        {
+          "name": "射击精度",
+          "brief": "熟练运用",
+          "eff": "射击精度 +1%"
+        },
+        {
+          "name": "武器品质",
+          "brief": "深度掌握",
+          "eff": "武器品质 +0.5 档"
+        },
+        {
+          "name": "工程设计",
+          "brief": "境界突破",
+          "eff": "武器品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】武器工程 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "矿业类": [
+    {
+      "n": "矿产开采",
+      "p": "Profession · 矿业类",
+      "desc": "矿产开采（示例占位·待设计文档定义）",
+      "c": "#b0a0c0",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Mining",
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 采矿产量",
+        "quality": "+1% 精炼效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 采矿产量"
+        ],
+        [
+          "专业",
+          "+5% 采矿产量 / +2% 精炼效率"
+        ],
+        [
+          "高级",
+          "+8% 采矿产量 / +4% 精炼效率"
+        ],
+        [
+          "大师",
+          "+10% 采矿产量 / +6% 精炼效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "挖掘速度",
+          "brief": "核心操作",
+          "eff": "采矿产量 +1%"
+        },
+        {
+          "name": "采矿产量",
+          "brief": "熟练运用",
+          "eff": "采矿产量 +1%"
+        },
+        {
+          "name": "矿脉识别",
+          "brief": "深度掌握",
+          "eff": "精炼效率 +0.5 %"
+        },
+        {
+          "name": "安全开采",
+          "brief": "境界突破",
+          "eff": "精炼效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】矿产开采 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "地质勘探",
+      "p": "Profession · 矿业类",
+      "desc": "地质勘探（示例占位·待设计文档定义）",
+      "c": "#a0b0c0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Mining",
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 采矿产量",
+        "quality": "+1% 精炼效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 采矿产量"
+        ],
+        [
+          "专业",
+          "+5% 采矿产量 / +2% 精炼效率"
+        ],
+        [
+          "高级",
+          "+8% 采矿产量 / +4% 精炼效率"
+        ],
+        [
+          "大师",
+          "+10% 采矿产量 / +6% 精炼效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "勘探效率",
+          "brief": "核心操作",
+          "eff": "采矿产量 +1%"
+        },
+        {
+          "name": "矿脉判断",
+          "brief": "熟练运用",
+          "eff": "采矿产量 +1%"
+        },
+        {
+          "name": "取样精度",
+          "brief": "深度掌握",
+          "eff": "精炼效率 +0.5 %"
+        },
+        {
+          "name": "地质分析",
+          "brief": "境界突破",
+          "eff": "精炼效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】地质勘探 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "冶炼精炼",
+      "p": "Profession · 矿业类",
+      "desc": "冶炼精炼（示例占位·待设计文档定义）",
+      "c": "#c0a0c0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Mining",
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 采矿产量",
+        "quality": "+1% 精炼效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 采矿产量"
+        ],
+        [
+          "专业",
+          "+5% 采矿产量 / +2% 精炼效率"
+        ],
+        [
+          "高级",
+          "+8% 采矿产量 / +4% 精炼效率"
+        ],
+        [
+          "大师",
+          "+10% 采矿产量 / +6% 精炼效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "冶炼速度",
+          "brief": "核心操作",
+          "eff": "采矿产量 +1%"
+        },
+        {
+          "name": "精炼效率",
+          "brief": "熟练运用",
+          "eff": "采矿产量 +1%"
+        },
+        {
+          "name": "金属纯度",
+          "brief": "深度掌握",
+          "eff": "精炼效率 +0.5 %"
+        },
+        {
+          "name": "炉温控制",
+          "brief": "境界突破",
+          "eff": "精炼效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】冶炼精炼 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "油气开采",
+      "p": "Profession · 矿业类",
+      "desc": "油气开采（示例占位·待设计文档定义）",
+      "c": "#a0c0b0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Mining",
+        "Crafting",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 采矿产量",
+        "quality": "+1% 精炼效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 采矿产量"
+        ],
+        [
+          "专业",
+          "+5% 采矿产量 / +2% 精炼效率"
+        ],
+        [
+          "高级",
+          "+8% 采矿产量 / +4% 精炼效率"
+        ],
+        [
+          "大师",
+          "+10% 采矿产量 / +6% 精炼效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "开采速度",
+          "brief": "核心操作",
+          "eff": "采矿产量 +1%"
+        },
+        {
+          "name": "油气产量",
+          "brief": "熟练运用",
+          "eff": "采矿产量 +1%"
+        },
+        {
+          "name": "压力管理",
+          "brief": "深度掌握",
+          "eff": "精炼效率 +0.5 %"
+        },
+        {
+          "name": "安全作业",
+          "brief": "境界突破",
+          "eff": "精炼效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】油气开采 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "科研类": [
+    {
+      "n": "基础研究",
+      "p": "Profession · 科研类",
+      "desc": "基础研究（示例占位·待设计文档定义）",
+      "c": "#b0c0a0",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Intellectual",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 研究速度",
+        "quality": "+1% 学习效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 研究速度"
+        ],
+        [
+          "专业",
+          "+5% 研究速度 / +2% 学习效率"
+        ],
+        [
+          "高级",
+          "+8% 研究速度 / +4% 学习效率"
+        ],
+        [
+          "大师",
+          "+10% 研究速度 / +6% 学习效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "研究速度",
+          "brief": "核心操作",
+          "eff": "研究速度 +1%"
+        },
+        {
+          "name": "理论深度",
+          "brief": "熟练运用",
+          "eff": "研究速度 +1%"
+        },
+        {
+          "name": "实验设计",
+          "brief": "深度掌握",
+          "eff": "学习效率 +0.5 %"
+        },
+        {
+          "name": "论文产出",
+          "brief": "境界突破",
+          "eff": "学习效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】基础研究 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "应用研发",
+      "p": "Profession · 科研类",
+      "desc": "应用研发（示例占位·待设计文档定义）",
+      "c": "#a0c0c0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Intellectual",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 研究速度",
+        "quality": "+1% 学习效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 研究速度"
+        ],
+        [
+          "专业",
+          "+5% 研究速度 / +2% 学习效率"
+        ],
+        [
+          "高级",
+          "+8% 研究速度 / +4% 学习效率"
+        ],
+        [
+          "大师",
+          "+10% 研究速度 / +6% 学习效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "研发速度",
+          "brief": "核心操作",
+          "eff": "研究速度 +1%"
+        },
+        {
+          "name": "成果转化",
+          "brief": "熟练运用",
+          "eff": "研究速度 +1%"
+        },
+        {
+          "name": "原型制作",
+          "brief": "深度掌握",
+          "eff": "学习效率 +0.5 %"
+        },
+        {
+          "name": "工程应用",
+          "brief": "境界突破",
+          "eff": "学习效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】应用研发 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "逆向工程",
+      "p": "Profession · 科研类",
+      "desc": "逆向工程（示例占位·待设计文档定义）",
+      "c": "#b0a0c0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Intellectual",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 研究速度",
+        "quality": "+1% 学习效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 研究速度"
+        ],
+        [
+          "专业",
+          "+5% 研究速度 / +2% 学习效率"
+        ],
+        [
+          "高级",
+          "+8% 研究速度 / +4% 学习效率"
+        ],
+        [
+          "大师",
+          "+10% 研究速度 / +6% 学习效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "解析速度",
+          "brief": "核心操作",
+          "eff": "研究速度 +1%"
+        },
+        {
+          "name": "技术还原",
+          "brief": "熟练运用",
+          "eff": "研究速度 +1%"
+        },
+        {
+          "name": "样本分析",
+          "brief": "深度掌握",
+          "eff": "学习效率 +0.5 %"
+        },
+        {
+          "name": "知识提炼",
+          "brief": "境界突破",
+          "eff": "学习效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】逆向工程 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "数据分析",
+      "p": "Profession · 科研类",
+      "desc": "数据分析（示例占位·待设计文档定义）",
+      "c": "#a0b0c0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Intellectual",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 研究速度",
+        "quality": "+1% 学习效率",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 研究速度"
+        ],
+        [
+          "专业",
+          "+5% 研究速度 / +2% 学习效率"
+        ],
+        [
+          "高级",
+          "+8% 研究速度 / +4% 学习效率"
+        ],
+        [
+          "大师",
+          "+10% 研究速度 / +6% 学习效率"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "分析速度",
+          "brief": "核心操作",
+          "eff": "研究速度 +1%"
+        },
+        {
+          "name": "模型精度",
+          "brief": "熟练运用",
+          "eff": "研究速度 +1%"
+        },
+        {
+          "name": "数据处理",
+          "brief": "深度掌握",
+          "eff": "学习效率 +0.5 %"
+        },
+        {
+          "name": "洞察发现",
+          "brief": "境界突破",
+          "eff": "学习效率 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】数据分析 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "烹饪类": [
+    {
+      "n": "日常烹饪",
+      "p": "Profession · 烹饪类",
+      "desc": "日常烹饪（示例占位·待设计文档定义）",
+      "c": "#c0a0b0",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Cooking",
+        "Plants",
+        "Animals"
+      ],
+      "effects": {
+        "speed": "+3% 烹饪速度",
+        "quality": "+1档 食物品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 烹饪速度"
+        ],
+        [
+          "专业",
+          "+5% 烹饪速度 / +2档 食物品质"
+        ],
+        [
+          "高级",
+          "+8% 烹饪速度 / +4档 食物品质"
+        ],
+        [
+          "大师",
+          "+10% 烹饪速度 / +6档 食物品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "烹饪速度",
+          "brief": "核心操作",
+          "eff": "烹饪速度 +1%"
+        },
+        {
+          "name": "食物品质",
+          "brief": "熟练运用",
+          "eff": "烹饪速度 +1%"
+        },
+        {
+          "name": "营养搭配",
+          "brief": "深度掌握",
+          "eff": "食物品质 +0.5 档"
+        },
+        {
+          "name": "火候掌握",
+          "brief": "境界突破",
+          "eff": "食物品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】日常烹饪 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "烘焙面点",
+      "p": "Profession · 烹饪类",
+      "desc": "烘焙面点（示例占位·待设计文档定义）",
+      "c": "#a0c0a0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Cooking",
+        "Plants",
+        "Animals"
+      ],
+      "effects": {
+        "speed": "+3% 烹饪速度",
+        "quality": "+1档 食物品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 烹饪速度"
+        ],
+        [
+          "专业",
+          "+5% 烹饪速度 / +2档 食物品质"
+        ],
+        [
+          "高级",
+          "+8% 烹饪速度 / +4档 食物品质"
+        ],
+        [
+          "大师",
+          "+10% 烹饪速度 / +6档 食物品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "烘焙速度",
+          "brief": "核心操作",
+          "eff": "烹饪速度 +1%"
+        },
+        {
+          "name": "面点品质",
+          "brief": "熟练运用",
+          "eff": "烹饪速度 +1%"
+        },
+        {
+          "name": "发酵控制",
+          "brief": "深度掌握",
+          "eff": "食物品质 +0.5 档"
+        },
+        {
+          "name": "造型工艺",
+          "brief": "境界突破",
+          "eff": "食物品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】烘焙面点 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "酿酒酿造",
+      "p": "Profession · 烹饪类",
+      "desc": "酿酒酿造（示例占位·待设计文档定义）",
+      "c": "#b0a0c0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Cooking",
+        "Plants",
+        "Animals"
+      ],
+      "effects": {
+        "speed": "+3% 烹饪速度",
+        "quality": "+1档 食物品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 烹饪速度"
+        ],
+        [
+          "专业",
+          "+5% 烹饪速度 / +2档 食物品质"
+        ],
+        [
+          "高级",
+          "+8% 烹饪速度 / +4档 食物品质"
+        ],
+        [
+          "大师",
+          "+10% 烹饪速度 / +6档 食物品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "酿造速度",
+          "brief": "核心操作",
+          "eff": "烹饪速度 +1%"
+        },
+        {
+          "name": "酒品品质",
+          "brief": "熟练运用",
+          "eff": "烹饪速度 +1%"
+        },
+        {
+          "name": "发酵管理",
+          "brief": "深度掌握",
+          "eff": "食物品质 +0.5 档"
+        },
+        {
+          "name": "风味调配",
+          "brief": "境界突破",
+          "eff": "食物品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】酿酒酿造 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "食品保存",
+      "p": "Profession · 烹饪类",
+      "desc": "食品保存（示例占位·待设计文档定义）",
+      "c": "#c080a0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Cooking",
+        "Plants",
+        "Animals"
+      ],
+      "effects": {
+        "speed": "+3% 烹饪速度",
+        "quality": "+1档 食物品质",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 烹饪速度"
+        ],
+        [
+          "专业",
+          "+5% 烹饪速度 / +2档 食物品质"
+        ],
+        [
+          "高级",
+          "+8% 烹饪速度 / +4档 食物品质"
+        ],
+        [
+          "大师",
+          "+10% 烹饪速度 / +6档 食物品质"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "加工速度",
+          "brief": "核心操作",
+          "eff": "烹饪速度 +1%"
+        },
+        {
+          "name": "保鲜效果",
+          "brief": "熟练运用",
+          "eff": "烹饪速度 +1%"
+        },
+        {
+          "name": "防腐工艺",
+          "brief": "深度掌握",
+          "eff": "食物品质 +0.5 档"
+        },
+        {
+          "name": "储存管理",
+          "brief": "境界突破",
+          "eff": "食物品质 +0.5 档（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】食品保存 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "艺术类": [
+    {
+      "n": "雕塑造型",
+      "p": "Profession · 艺术类",
+      "desc": "雕塑造型（示例占位·待设计文档定义）",
+      "c": "#80c0b0",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Artistic",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 美观度",
+        "quality": "+1% 市场价值",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 美观度"
+        ],
+        [
+          "专业",
+          "+5% 美观度 / +2% 市场价值"
+        ],
+        [
+          "高级",
+          "+8% 美观度 / +4% 市场价值"
+        ],
+        [
+          "大师",
+          "+10% 美观度 / +6% 市场价值"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "创作速度",
+          "brief": "核心操作",
+          "eff": "美观度 +1%"
+        },
+        {
+          "name": "美观度",
+          "brief": "熟练运用",
+          "eff": "美观度 +1%"
+        },
+        {
+          "name": "艺术品质",
+          "brief": "深度掌握",
+          "eff": "市场价值 +0.5 %"
+        },
+        {
+          "name": "市场价值",
+          "brief": "境界突破",
+          "eff": "市场价值 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】雕塑造型 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "绘画艺术",
+      "p": "Profession · 艺术类",
+      "desc": "绘画艺术（示例占位·待设计文档定义）",
+      "c": "#c0a080",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Artistic",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 美观度",
+        "quality": "+1% 市场价值",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 美观度"
+        ],
+        [
+          "专业",
+          "+5% 美观度 / +2% 市场价值"
+        ],
+        [
+          "高级",
+          "+8% 美观度 / +4% 市场价值"
+        ],
+        [
+          "大师",
+          "+10% 美观度 / +6% 市场价值"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "绘画速度",
+          "brief": "核心操作",
+          "eff": "美观度 +1%"
+        },
+        {
+          "name": "美观度",
+          "brief": "熟练运用",
+          "eff": "美观度 +1%"
+        },
+        {
+          "name": "艺术品质",
+          "brief": "深度掌握",
+          "eff": "市场价值 +0.5 %"
+        },
+        {
+          "name": "市场价值",
+          "brief": "境界突破",
+          "eff": "市场价值 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】绘画艺术 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "音乐演奏",
+      "p": "Profession · 艺术类",
+      "desc": "音乐演奏（示例占位·待设计文档定义）",
+      "c": "#a0c0b0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Artistic",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 美观度",
+        "quality": "+1% 市场价值",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 美观度"
+        ],
+        [
+          "专业",
+          "+5% 美观度 / +2% 市场价值"
+        ],
+        [
+          "高级",
+          "+8% 美观度 / +4% 市场价值"
+        ],
+        [
+          "大师",
+          "+10% 美观度 / +6% 市场价值"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "演奏效率",
+          "brief": "核心操作",
+          "eff": "美观度 +1%"
+        },
+        {
+          "name": "心情增益",
+          "brief": "熟练运用",
+          "eff": "美观度 +1%"
+        },
+        {
+          "name": "艺术品质",
+          "brief": "深度掌握",
+          "eff": "市场价值 +0.5 %"
+        },
+        {
+          "name": "演出效果",
+          "brief": "境界突破",
+          "eff": "市场价值 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】音乐演奏 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "工艺饰品",
+      "p": "Profession · 艺术类",
+      "desc": "工艺饰品（示例占位·待设计文档定义）",
+      "c": "#b0a0c0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Artistic",
+        "Crafting"
+      ],
+      "effects": {
+        "speed": "+3% 美观度",
+        "quality": "+1% 市场价值",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 美观度"
+        ],
+        [
+          "专业",
+          "+5% 美观度 / +2% 市场价值"
+        ],
+        [
+          "高级",
+          "+8% 美观度 / +4% 市场价值"
+        ],
+        [
+          "大师",
+          "+10% 美观度 / +6% 市场价值"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "加工速度",
+          "brief": "核心操作",
+          "eff": "美观度 +1%"
+        },
+        {
+          "name": "美观度",
+          "brief": "熟练运用",
+          "eff": "美观度 +1%"
+        },
+        {
+          "name": "饰品品质",
+          "brief": "深度掌握",
+          "eff": "市场价值 +0.5 %"
+        },
+        {
+          "name": "市场价值",
+          "brief": "境界突破",
+          "eff": "市场价值 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】工艺饰品 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ],
+  "管理类": [
+    {
+      "n": "组织协调",
+      "p": "Profession · 管理类",
+      "desc": "组织协调（示例占位·待设计文档定义）",
+      "c": "#a0b0c0",
+      "tag": "品质特化",
+      "srcSkills": [
+        "Social",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 社交影响力",
+        "quality": "+1% 交易折扣",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 社交影响力"
+        ],
+        [
+          "专业",
+          "+5% 社交影响力 / +2% 交易折扣"
+        ],
+        [
+          "高级",
+          "+8% 社交影响力 / +4% 交易折扣"
+        ],
+        [
+          "大师",
+          "+10% 社交影响力 / +6% 交易折扣"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "协调效率",
+          "brief": "核心操作",
+          "eff": "社交影响力 +1%"
+        },
+        {
+          "name": "社交影响",
+          "brief": "熟练运用",
+          "eff": "社交影响力 +1%"
+        },
+        {
+          "name": "团队协作",
+          "brief": "深度掌握",
+          "eff": "交易折扣 +0.5 %"
+        },
+        {
+          "name": "调度能力",
+          "brief": "境界突破",
+          "eff": "交易折扣 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】组织协调 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "谈判外交",
+      "p": "Profession · 管理类",
+      "desc": "谈判外交（示例占位·待设计文档定义）",
+      "c": "#c0a0c0",
+      "tag": "耐久特化",
+      "srcSkills": [
+        "Social",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 社交影响力",
+        "quality": "+1% 交易折扣",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 社交影响力"
+        ],
+        [
+          "专业",
+          "+5% 社交影响力 / +2% 交易折扣"
+        ],
+        [
+          "高级",
+          "+8% 社交影响力 / +4% 交易折扣"
+        ],
+        [
+          "大师",
+          "+10% 社交影响力 / +6% 交易折扣"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "交易折扣",
+          "brief": "核心操作",
+          "eff": "社交影响力 +1%"
+        },
+        {
+          "name": "外交效果",
+          "brief": "熟练运用",
+          "eff": "社交影响力 +1%"
+        },
+        {
+          "name": "谈判技巧",
+          "brief": "深度掌握",
+          "eff": "交易折扣 +0.5 %"
+        },
+        {
+          "name": "好感提升",
+          "brief": "境界突破",
+          "eff": "交易折扣 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】谈判外交 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "人才培养",
+      "p": "Profession · 管理类",
+      "desc": "人才培养（示例占位·待设计文档定义）",
+      "c": "#a0c0b0",
+      "tag": "防护特化",
+      "srcSkills": [
+        "Social",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 社交影响力",
+        "quality": "+1% 交易折扣",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 社交影响力"
+        ],
+        [
+          "专业",
+          "+5% 社交影响力 / +2% 交易折扣"
+        ],
+        [
+          "高级",
+          "+8% 社交影响力 / +4% 交易折扣"
+        ],
+        [
+          "大师",
+          "+10% 社交影响力 / +6% 交易折扣"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "教学效率",
+          "brief": "核心操作",
+          "eff": "社交影响力 +1%"
+        },
+        {
+          "name": "学习加成",
+          "brief": "熟练运用",
+          "eff": "社交影响力 +1%"
+        },
+        {
+          "name": "导师能力",
+          "brief": "深度掌握",
+          "eff": "交易折扣 +0.5 %"
+        },
+        {
+          "name": "传承效果",
+          "brief": "境界突破",
+          "eff": "交易折扣 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】人才培养 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    },
+    {
+      "n": "后勤调度",
+      "p": "Profession · 管理类",
+      "desc": "后勤调度（示例占位·待设计文档定义）",
+      "c": "#b0c0a0",
+      "tag": "产量特化",
+      "srcSkills": [
+        "Social",
+        "Intellectual"
+      ],
+      "effects": {
+        "speed": "+3% 社交影响力",
+        "quality": "+1% 交易折扣",
+        "note": "该方向效果 Def 尚未落地（待垂直切片）；下方为原版技能/Stat 映射的合理数值，具体以设计文档冻结为准"
+      },
+      "rating": [
+        [
+          "熟练",
+          "+3% 社交影响力"
+        ],
+        [
+          "专业",
+          "+5% 社交影响力 / +2% 交易折扣"
+        ],
+        [
+          "高级",
+          "+8% 社交影响力 / +4% 交易折扣"
+        ],
+        [
+          "大师",
+          "+10% 社交影响力 / +6% 交易折扣"
+        ]
+      ],
+      "abilities": [
+        {
+          "name": "调度效率",
+          "brief": "核心操作",
+          "eff": "社交影响力 +1%"
+        },
+        {
+          "name": "物流管理",
+          "brief": "熟练运用",
+          "eff": "社交影响力 +1%"
+        },
+        {
+          "name": "资源分配",
+          "brief": "深度掌握",
+          "eff": "交易折扣 +0.5 %"
+        },
+        {
+          "name": "统筹规划",
+          "brief": "境界突破",
+          "eff": "交易折扣 +0.5 %（稳定）"
+        }
+      ],
+      "mech": [
+        {
+          "t": "🔧 由什么决定",
+          "d": "【示例占位】后勤调度 方向靠对应原版技能成长（具体技能待设计文档定义）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⭐ 对你的实际好处",
+          "d": "【示例占位】专注此方向可提升相关工作的产出质量与效率（数值为演示用示例，非真实原版数据）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "⚡ 制造更快",
+          "d": "【示例占位】制作效率 +3%（演示数值）。",
+          "src": "示例·未落地"
+        },
+        {
+          "t": "🎯 品质更上一层",
+          "d": "【示例占位】品质 +1 档（演示数值）。",
+          "src": "示例·未落地"
+        }
+      ]
+    }
+  ]
+};;
+
+  var currentDir = (ALL_DIRECTIONS[CURRENT_MAJOR || '制造类'] || [])[0] ? (ALL_DIRECTIONS[CURRENT_MAJOR || '制造类'][0].n) : null;
+  var dirMask = document.getElementById('dirMask');
+  function dirPopContent(d){
+    var ab=(d.abilities||[]).map(function(a){return '<div class="ab"><span class="dot"></span><div style="flex:1"><span class="an">'+a.name+'</span></div><span class="ab-eff">'+a.eff+'</span></div>';}).join('');
+    var tag=d.tag?'<span class="pp-orient">'+d.tag+'</span>':'';
+    return '<div class="pp-head"><span class="pp-name">'+d.n+'</span>'+tag+'</div>'
+      +'<div class="pp-ability">'+ab+'</div>';}
+  function openDirDialog(){var list=ALL_DIRECTIONS[CURRENT_MAJOR]||[];var b=document.getElementById('dirBody');
+  if(!list.length){b.innerHTML='<div class="dir-empty">该专业暂未定义二级方向。</div>';dirMask.classList.add('show');return;}
+  b.innerHTML=list.map(function(d){var sel=d.n===currentDir;return '<div class="dir-card'+(sel?' sel':'')+'" data-n="'+d.n+'"><span class="sw" style="background:'+d.c+'"></span><div><div class="nm">'+d.n+(d.tag?' <span class="card-tag">'+d.tag+'</span>':'')+'</div><div class="pf">'+d.p+'</div><div class="desc">'+d.desc+'</div></div>'+(sel?'<span class="chk">✓</span>':'')+'</div>';}).join('');
+  b.querySelectorAll('.dir-card').forEach(function(card){var d=list.filter(function(x){return x.n===card.dataset.n;})[0];card.addEventListener('mouseenter',function(){planPop.innerHTML=dirPopContent(d);planPop.classList.add('open');positionPop(card);});card.addEventListener('mousemove',function(){positionPop(card);});card.addEventListener('mouseleave',function(){planPop.classList.remove('open');});card.addEventListener('click',function(){currentDir=card.dataset.n;openDirDialog();});});
+  dirMask.classList.add('show');}
+  document.getElementById('btnSetDir').addEventListener('click',openDirDialog);
+  document.getElementById('dirClose').addEventListener('click',function(){dirMask.classList.remove('show');});
+  dirMask.addEventListener('click',function(e){if(e.target===dirMask)dirMask.classList.remove('show');});
+  document.getElementById('dirClear').addEventListener('click',function(){currentDir=null;dirMask.classList.remove('show');});
+
+  function dimRow(label, v){
+    return '<div class="dim"><span class="lbl">'+label+'</span>'
+      + '<span class="bar"><i style="width:'+Math.max(0,Math.min(100,v))+'%"></i></span>'
+      + '<span class="v">'+v+'</span></div>';
+  }
+
+  /* ===== 总览 / 履历数据模型 + 渲染（DevMode「随机职业数据」会整体覆盖刷新） =====
+     对齐 C# DevTestButtons.CareerRandomize(Pawn) 覆盖范围（P1~P8 全链路）：
+     CareerEvent 事实 / 资格状态 / 考试 / 论文答辩 / 职称 / 成就勋章。 */
+
+  // 职称 5 档元数据（档位门槛全专业统一，对齐 Defs/QualificationDefs.xml）：
+  //   Lv1 员级(≥5/25h) → Lv2 助理级(≥15/80h) → Lv3 中级(≥25/240h) → Lv4 副高级(≥38/480h) → Lv5 正高级(≥45/720h)
+  //   hours 门槛按 60000tick≈25h 换算
+  var TIER_ORDER = ["junior", "assistant", "senior", "specialist", "master"];
+  var TIER_LEVELS = { junior: 5,  assistant: 15, senior: 25,  specialist: 38,  master: 45 };
+  var TIER_HOURS  = { junior: 25, assistant: 80, senior: 240, specialist: 480, master: 720 };
+  var TIER_SCORES = { junior: 50, assistant: 50, senior: 60,  specialist: 70,  master: 80 };
+  var TIER_NEXT   = { junior: "assistant", assistant: "senior", senior: "specialist", specialist: "master", master: null };
+  var TIER_PREV   = { junior: null, assistant: "junior", senior: "assistant", specialist: "senior", master: "specialist" };
+  // 12 专业 × 5 档职称称呼（对齐《全部专业职称称呼体系.md》§2 总表；制造类走技能人才通道带"精密制造"方向前缀）
+  var MAJOR_TITLES = {
+    "工程类": ["技术员", "助理工程师", "工程师", "高级工程师", "正高级工程师"],
+    "制造类": ["精密制造初级技工", "精密制造中级技工", "精密制造高级技工", "精密制造技师", "精密制造高级技师"],
+    "农业类": ["农业技术员", "助理农艺师", "农艺师", "高级农艺师", "正高级农艺师"],
+    "林业类": ["林业技术员", "助理林业工程师", "林业工程师", "高级林业工程师", "正高级林业工程师"],
+    "畜牧类": ["畜牧技术员", "助理畜牧师", "畜牧师", "高级畜牧师", "正高级畜牧师"],
+    "医学类": ["医士", "医师", "主治医师", "副主任医师", "主任医师"],
+    "武器类": ["武器技术员", "助理武器工程师", "武器工程师", "高级武器工程师", "正高级武器工程师"],
+    "矿业类": ["采矿技术员", "助理采矿工程师", "采矿工程师", "高级采矿工程师", "正高级采矿工程师"],
+    "科研类": ["研究实习员", "助理研究员", "副研究员", "研究员", "首席研究员"],
+    "烹饪类": ["厨工", "厨师", "高级厨师", "特级厨师", "烹饪大师"],
+    "艺术类": ["艺徒", "艺人", "三级艺术家", "二级艺术家", "一级艺术家"],
+    "管理类": ["管理员", "助理管理师", "管理师", "高级管理师", "正高级管理师"]
+  };
+  // 专业 → 技能展示名（制造类示例人物为"精密制造"方向，其余取专业名）
+  var MAJOR_SKILL_NAME = { "制造类": "精密制造" };
+  // 当前选中专业（初始未选择 → 职业规划无 primary 高亮；职称展示兜底制造类示例）
+  var CURRENT_MAJOR = null;
+  // 职称表按当前专业动态生成（未选中时兜底制造类）
+  function getTierMeta(){
+    var titles = MAJOR_TITLES[CURRENT_MAJOR] || MAJOR_TITLES["制造类"];
+    var map = {};
+    TIER_ORDER.forEach(function(k, i){
+      map[k] = {
+        name: titles[i],
+        next: TIER_NEXT[k],
+        level: TIER_LEVELS[k],
+        hours: TIER_HOURS[k],
+        score: TIER_SCORES[k],
+        prev: TIER_PREV[k]
+      };
+    });
+    return map;
+  }
+
+  var CAREER = {
+    identity: {
+      roleName: "精密制造高级技工", roleDesc: "精密制造 · 制造类",
+      nextTitle: "精密制造技师", progress: 74,
+      skill: "精密制造 Lv25", hours: "640 h", results: 11, books: 3,
+      metrics: [["职业贡献", 82], ["技术贡献", 91], ["科研贡献", 63]]
+    },
+    qual: [ // 当前资格状态（对齐 Defs/QualificationDefs.xml Q_Precision_Specialist 区间：申报技师）
+      ["专业等级", "精密制造 ≥ 38", "wait", "未满足"],
+      ["职业资历", "相关工作 ≥ 1,200,000 tick", "ok", "满足"],
+      ["综合评分", "资格评定 ≥ 70", "ok", "满足"],
+      ["实践考试", "优秀品质成果 × 2（真实制造）", "ok", "通过"],
+      ["理论考试", "专业著作 ≥ 良好", "wait", "待进行"],
+      ["论文 / 答辩", "委员会评审", "wait", "待进行"]
+    ],
+    preCheck: [ // 资格预检 6 条件
+      ["核心技能", "未满足", "not-started"], ["职业履历", "已满足", "done"],
+      ["成果记录", "已满足", "done"], ["实践考试", "准备中", "pending"],
+      ["理论考试", "未开始", "not-started"], ["论文 / 答辩", "未开始", "not-started"]
+    ],
+    nextTitle: { name: "精密制造技师", pct: 82, gaps: ["理论考试", "论文", "答辩"] },
+    resume: [ // 工作经历（工坊就职时段 + 期间成果）
+      { org: "机械加工坊 · 首席技工", period: "5508 – 5512（4 年）", meta: "工坊：冷链装配台 · 房间：工业车间",
+        achv: ["制造产出 <strong>1,240</strong> 件机械部件，其中优秀品质 <strong>186</strong> 件、传奇 <strong>2</strong> 件", "主导建成殖民地冷链系统（建造 1 座）", "完成《机械维护实务》专著（著书 1 部）"] },
+      { org: "研究工坊 · 研究技工", period: "5505 – 5508（3 年）", meta: "工坊：电子工作台 · 房间：实验室",
+        achv: ["制造产出 <strong>860</strong> 件电子元件，优秀品质 <strong>94</strong> 件", "完成「高效冶炼」等 <strong>3</strong> 项研究", "累计使用工坊 <strong>2,100</strong> 次"] },
+      { org: "基础工坊 · 学徒技工", period: "5504 – 5505（1 年）", meta: "工坊：简易工作台 · 房间：工棚",
+        achv: ["制造产出 <strong>320</strong> 件基础构件，熟练度由 9 升至 14"] }
+    ],
+    summary: [["就职工坊数", 3], ["制造总件数", 2420], ["建造总数", 1], ["研究总数", 3], ["著书总数", 1]],
+    current: [["工坊", "冷链装配台"], ["房间", "工业车间"], ["累计使用", "2,100 次"], ["最近使用", "5512 年"]]
+  };
+
+  function renderOverview(){
+    // 空状态：模拟「无职业档案的原版殖民者」（无数据 → 显示占位，不抛错）
+    if (!CAREER || !CAREER.identity || !CAREER.identity.roleName) {
+      var emptyMsg = '<div class="medal-empty">暂无职业档案数据（原版殖民者）。'
+        + '在「🧪 数据模拟」中执行制作/建造/研究/著书等行为，或在「📊 数据初始化」后设定主方向，将在此生成职业身份。</div>';
+      document.getElementById('ovIdentity').innerHTML = emptyMsg;
+      document.getElementById('ovQualState').innerHTML = '';
+      document.getElementById('ovPreCheck').innerHTML = '';
+      document.getElementById('ovNextTitle').innerHTML = '';
+      return;
+    }
+    var d = CAREER.identity;
+    document.getElementById('ovIdentity').innerHTML =
+      '<div class="identity">' +
+        '<div>' +
+          '<div class="role-name">' + d.roleName + '</div>' +
+          '<div class="role-desc">' + d.roleDesc + '</div>' +
+          '<div class="rankline">下一职称：<b>' + d.nextTitle + '</b></div>' +
+          '<div class="progress"><i style="width:' + d.progress + '%"></i></div>' +
+          '<div class="rankline">晋升准备度：<b>' + d.progress + '%</b></div>' +
+          '<div class="rankline" style="font-size:11px;color:var(--dim)">口径：基于工时/成果/技能的综合评估</div>' +
+        '</div>' +
+        '<div class="snapshot">' +
+          '<div class="snapshot-row"><span>专业技能</span><strong>' + d.skill + '</strong></div>' +
+          '<div class="snapshot-row"><span>相关工时</span><strong>' + d.hours + '</strong></div>' +
+          '<div class="snapshot-row"><span>重大成果</span><strong>' + d.results + '</strong></div>' +
+          '<div class="snapshot-row"><span>专业著作</span><strong>' + d.books + '</strong></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="metric-grid">' +
+        d.metrics.map(function(m){ return '<div class="metric"><div class="label">' + m[0] + '</div><div class="value">' + m[1] + '</div></div>'; }).join('') +
+      '</div>';
+
+    document.getElementById('ovQualState').innerHTML =
+      CAREER.qual.map(function(q){
+        return '<div class="requirement">' +
+          '<div class="req-name">' + q[0] + '</div>' +
+          '<div class="req-note">' + q[1] + '</div>' +
+          '<div class="req-state ' + q[2] + '">' + q[3] + '</div>' +
+        '</div>';
+      }).join('');
+
+    document.getElementById('ovPreCheck').innerHTML =
+      '<div class="career-title">' + CAREER.identity.roleName + ' · 资格准备度</div>' +
+      '<div class="cond-grid">' +
+        CAREER.preCheck.map(function(c){
+          return '<div class="cond-item ' + c[2] + '">' +
+            '<span class="cond-icon">' + (c[2]==='done' ? '✓' : (c[2]==='pending' ? '●' : '○')) + '</span>' +
+            '<span class="cond-label">' + c[0] + '</span>' +
+            '<span class="cond-status">' + c[1] + '</span>' +
+          '</div>';
+        }).join('') +
+      '</div>';
+
+    var nt = CAREER.nextTitle;
+    document.getElementById('ovNextTitle').innerHTML =
+      '<div class="next-title">' + nt.name + '</div>' +
+      '<div class="progress-bar-wrap">' +
+        '<span class="progress-label">资格完成</span>' +
+        '<div class="progress-bar"><i style="width:' + nt.pct + '%"></i></div>' +
+        '<span class="progress-pct">' + nt.pct + '%</span>' +
+      '</div>' +
+      '<div class="dep-chain">口径：已满足条件数 / 总条件数（与上方综合评估 ' + CAREER.identity.progress + '% 不同维度）</div>' +
+      '<div class="gap-section">' +
+        '<div class="gap-label">当前缺口</div>' +
+        '<div class="gap-tags">' + nt.gaps.map(function(g){ return '<span class="gap-tag">' + g + '</span>'; }).join('') + '</div>' +
+      '</div>' +
+      '<div class="dep-chain">资格依赖：拆解等级 → 职业事件 → 成果阈值 → 已完成资格</div>';
+  }
+
+  function renderCareer(){
+    // 空状态：无工作经历（原版殖民者未发生职业行为）
+    if (!CAREER || !CAREER.resume || CAREER.resume.length === 0) {
+      document.getElementById('cvBlocks').innerHTML =
+        '<div class="medal-empty">暂无工作经历。在「🧪 数据模拟」中执行制造/建造/研究/著书等行为后，将按工坊时段生成履历。</div>';
+      document.getElementById('cvSummary').innerHTML = '';
+      document.getElementById('cvCurrent').innerHTML = '';
+      return;
+    }
+    document.getElementById('cvBlocks').innerHTML =
+      CAREER.resume.map(function(r){
+        return '<div class="resume-block">' +
+          '<div class="resume-head">' +
+            '<div class="resume-org">' + r.org + '</div>' +
+            '<div class="resume-period">' + r.period + '</div>' +
+          '</div>' +
+          '<div class="resume-orgmeta">' + r.meta + '</div>' +
+          '<ul class="resume-achv">' + r.achv.map(function(a){ return '<li>' + a + '</li>'; }).join('') + '</ul>' +
+        '</div>';
+      }).join('');
+
+    document.getElementById('cvSummary').innerHTML =
+      CAREER.summary.map(function(s){
+        return '<div class="snapshot-row"><span>' + s[0] + '</span><strong>' + (s[1] >= 1000 ? s[1].toLocaleString() : s[1]) + '</strong></div>';
+      }).join('');
+
+    document.getElementById('cvCurrent').innerHTML =
+      CAREER.current.map(function(c){
+        return '<div class="snapshot-row"><span>' + c[0] + '</span><strong>' + c[1] + '</strong></div>';
+      }).join('');
+  }
+
+  // 职称链数据生成：按当前专业职称表 + 指定档位推导身份/资格/预检/下一职称/节点/阶梯（申报对象=下一档）
+  function buildCareerOverview(tier, proLevel, hours){
+    var TIER_META = getTierMeta();
+    var major = CURRENT_MAJOR || '制造类';
+    var titles = MAJOR_TITLES[major];
+    var dirName = MAJOR_SKILL_NAME[major] || major.replace('类','');
+    var tierIdx = TIER_ORDER.indexOf(tier);
+    var curMeta = TIER_META[tier];
+    var nextMeta = curMeta.next ? TIER_META[curMeta.next] : null;
+    var lvOk = nextMeta ? proLevel >= nextMeta.level : true;   // 专业等级门槛
+    var hrOk = nextMeta ? hours >= nextMeta.hours : true;      // 资历门槛（h，对齐 60000tick≈25h）
+    var bookOk = CAREER.identity.books >= 2;                   // 理论考试：专业著作 ≥ 良好
+    CAREER.identity.roleName = curMeta.name;
+    CAREER.identity.roleDesc = major + ' · ' + ((MAJOR_DIRS[major] || '').split(' / ')[0] || dirName);
+    CAREER.identity.nextTitle = nextMeta ? nextMeta.name : '已获最高职称（' + titles[4] + '封顶）';
+    CAREER.identity.progress = tier === 'master' ? 100 : (tier === 'senior' ? 70 + Math.floor(Math.random()*25) : 35 + Math.floor(Math.random()*30));
+    CAREER.identity.skill = dirName + ' Lv' + proLevel;
+    CAREER.qual = [
+      ["专业等级", nextMeta ? dirName + " ≥ " + nextMeta.level : dirName + " ≥ 45（已封顶）", lvOk ? "ok" : "wait", lvOk ? "满足" : "未满足"],
+      ["职业资历", "相关工作 ≥ " + (nextMeta ? (nextMeta.hours * 2400).toLocaleString() : "1,800,000") + " tick", hrOk ? "ok" : "wait", hrOk ? "满足" : "未满足"],
+      ["综合评分", "资格评定 ≥ " + (nextMeta ? nextMeta.score : 80), "ok", "满足"],
+      ["实践考试", "优秀品质成果 × 2（真实制造）", "ok", "通过"],
+      ["理论考试", "专业著作 ≥ 良好", bookOk ? "ok" : "wait", bookOk ? "通过" : "待进行"],
+      ["论文 / 答辩", "委员会评审", "wait", "待进行"]
+    ];
+    CAREER.preCheck = [
+      ["核心技能", lvOk ? "已满足" : "未满足", lvOk ? "done" : "not-started"],
+      ["职业履历", hrOk ? "已满足" : "未满足", hrOk ? "done" : "not-started"],
+      ["成果记录", "已满足", "done"],
+      ["实践考试", Math.random()<0.6 ? "通过" : "准备中", Math.random()<0.6 ? "done" : "pending"],
+      ["理论考试", bookOk ? "通过" : (Math.random()<0.4 ? "通过" : "未开始"), bookOk ? "done" : (Math.random()<0.4 ? "done" : "not-started")],
+      ["论文 / 答辩", Math.random()<0.3 ? "通过" : "未开始", Math.random()<0.3 ? "done" : "not-started"]];
+    var gapArr = [];
+    if (nextMeta && !lvOk) gapArr.push("专业等级");
+    if (CAREER.preCheck[4][2] !== "done") gapArr.push("理论考试");
+    if (CAREER.preCheck[5][2] !== "done") gapArr.push("论文", "答辩");
+    CAREER.nextTitle = { name: nextMeta ? nextMeta.name : '已获最高职称',
+      pct: tier === 'master' ? 100 : (tierIdx >= 3 ? 55 + Math.floor(Math.random()*30) : 35 + Math.floor(Math.random()*35)),
+      gaps: gapArr.length ? gapArr : ["（无）"] };
+  }
+
+  // 选中职业：primary 高亮切换 + 身份卡/职称链按该专业职称表动态联动（示例档位=中级 Lv3，申报副高级 Lv4）
+  function applyMajor(major){
+    CURRENT_MAJOR = major;
+    var titles = MAJOR_TITLES[major];
+    var sub = document.querySelector('.personbar .sub');
+    if (sub) sub.textContent = '职业规划：' + major + ' · 结算周期 5512';
+    var sm = document.querySelector('.status-main');
+    if (sm) sm.textContent = titles[2];   // Lv3 中级档
+    // 保留当前技能等级/资历，职称链按新专业重推
+    var proLevel = 25, hours = 240;
+    var m = /\bLv(\d+)\b/.exec(CAREER.identity.skill);
+    if (m) proLevel = parseInt(m[1], 10);
+    var hm = /^([\d,]+)\s*h/.exec(CAREER.identity.hours);
+    if (hm) hours = parseInt(hm[1].replace(/,/g,''), 10);
+    buildCareerOverview('senior', proLevel, hours);
+    renderFitAnalysis();
+    renderOverview();
+    renderCareer();
+  }
+
+  // DevMode 随机化：随机生成五维样本 + 总览 + 履历数据并重渲染（勋章在脚本块 3 内联动）
+  function randomizeCareerData(){
+    // 1) 原版技能/实践/兴趣/品质/成长样本随机
+    var skills = ["Shooting","Melee","Construction","Mining","Cooking","Plants","Animals","Crafting","Artistic","Medicine","Social","Intellectual"];
+    SAMPLE_SKILLS = {}; SAMPLE_PRACTICE = {}; SAMPLE_PASSION = {}; SAMPLE_GROWTH = {};
+    skills.forEach(function(k){
+      SAMPLE_SKILLS[k] = 1 + Math.floor(Math.random() * 20);
+      SAMPLE_PRACTICE[k] = Math.floor(Math.random() * 340);
+      SAMPLE_PASSION[k] = Math.random() < 0.3 ? 0 : (Math.random() < 0.5 ? 50 : 100);
+      SAMPLE_GROWTH[k] = 40 + Math.floor(Math.random() * 60);
+    });
+    // 保证制造/建造至少一项偏强（工程/制造类示例人物）
+    SAMPLE_SKILLS.Crafting = Math.max(SAMPLE_SKILLS.Crafting, 12);
+    SAMPLE_PRACTICE.Crafting = Math.max(SAMPLE_PRACTICE.Crafting, 180);
+    SAMPLE_QUALITY = { Normal: 60 + Math.floor(Math.random()*120), Good: 20 + Math.floor(Math.random()*60),
+                       Excellent: Math.floor(Math.random()*40), Masterwork: Math.floor(Math.random()*12),
+                       Legendary: Math.random() < 0.5 ? 0 : 1 + Math.floor(Math.random()*3) };
+
+    // 2) 总览（身份/资格/预检/下一职称/节点/阶梯）——职称分档基于 Defs/QualificationDefs.xml 数据区间（5 档）：
+    //    Q_Precision_Junior：等级≥5 / 资历 60000tick     → 精密制造初级技工
+    //    Q_Precision_Assistant：等级≥15 / 资历 200000tick → 精密制造中级技工
+    //    Q_Precision_Senior：等级≥25 / 资历 600000tick / 考试·论文·答辩 / 综合≥60 → 精密制造高级技工
+    //    Q_Precision_Specialist：等级≥38 / 资历 1200000tick / 考试·论文·答辩 / 综合≥70 → 精密制造技师
+    //    Q_Precision_Master：等级≥45 / 资历 1800000tick / 传奇制造≥1 / 综合≥80 → 精密制造高级技师
+    var skillLv = SAMPLE_SKILLS.Crafting;
+    var proLevel = 10 + Math.floor(Math.random() * 40);   // 专业等级 10~49（对齐 C# rng.Next(10,50)）
+    var legendMade = SAMPLE_QUALITY.Legendary || 0;        // 传奇制造数（P8 成就键 LegendaryMade）
+    var tier = proLevel >= 45 && legendMade >= 1 ? 'master'
+             : proLevel >= 38 ? 'specialist'
+             : proLevel >= 25 ? 'senior'
+             : proLevel >= 15 ? 'assistant' : 'junior';
+    var hours = 300 + Math.floor(Math.random() * 900);     // 相关资历（Junior 门槛 60000tick ≈ 25h）
+    CAREER.identity = {
+      roleName: "", roleDesc: "", nextTitle: "", progress: 0,
+      skill: "", hours: hours.toLocaleString() + " h",
+      results: 3 + Math.floor(Math.random()*12),
+      books: 1 + Math.floor(Math.random()*4),
+      metrics: [["职业贡献", 40+Math.floor(Math.random()*55)], ["技术贡献", 40+Math.floor(Math.random()*55)], ["科研贡献", 30+Math.floor(Math.random()*55)]]
+    };
+    // 身份 / 资格 / 预检 / 下一职称 / 节点 / 阶梯——按当前专业职称表 5 档推导（申报对象 = 下一档职称）
+    buildCareerOverview(tier, proLevel, hours);
+
+    // 3) 履历（2~4 段工作经历 + 汇总/当前就职联动）
+    var orgs = [["机械加工坊", "首席技工", "冷链装配台", "工业车间"], ["研究工坊", "研究技工", "电子工作台", "实验室"],
+                ["武器工坊", "武器匠", "精密装配台", "车间"], ["精加工坊", "工艺师", "精密车床", "精工车间"]];
+    var nSeg = 2 + Math.floor(Math.random() * 3); // 2~4 段
+    var segs = [];
+    for (var i = 0; i < nSeg; i++) segs.push(orgs[Math.floor(Math.random() * orgs.length)]);
+    // 去重后保序
+    segs = segs.filter(function(v, idx, a){ return a.indexOf(v) === idx; }).slice(0, 4);
+    var totalMade = 0, totalStudy = 0;
+    CAREER.resume = segs.map(function(s, idx){
+      var made = 150 + Math.floor(Math.random() * 1100);
+      var fine = Math.floor(made * (0.05 + Math.random() * 0.15));
+      var legend = Math.random() < 0.5 ? 1 : 0;
+      totalMade += made;
+      totalStudy += Math.floor(Math.random() * 4);
+      return { org: s[0] + " · " + s[1],
+               period: (5505 + idx) + " – " + (5508 + idx) + "（" + (3+idx) + " 年）",
+               meta: "工坊：" + s[2] + " · 房间：" + s[3],
+               achv: ["制造产出 <strong>" + made.toLocaleString() + "</strong> 件" + s[0].replace("坊","部件") + "，其中优秀品质 <strong>" + fine + "</strong> 件" + (legend ? "、传奇 <strong>" + legend + "</strong> 件" : ""),
+                      "累计使用工坊 <strong>" + Math.floor(Math.random()*2000 + 500).toLocaleString() + "</strong> 次"] };
+    });
+    CAREER.summary = [["就职工坊数", CAREER.resume.length], ["制造总件数", totalMade],
+      ["建造总数", Math.floor(Math.random()*3)], ["研究总数", totalStudy], ["著书总数", CAREER.identity.books]];
+    var cur = CAREER.resume[0] || { org: "—", meta: "—", achv: [] };
+    CAREER.current = [["工坊", cur.org.split(" · ")[0]], ["房间", cur.meta.split("：")[2] || "—"],
+      ["累计使用", "2,100 次"], ["最近使用", "5512 年"]];
+
+    // 4) 重渲染（专业适配 + 总览 + 履历）
+    renderFitAnalysis();
+    renderOverview();
+    renderCareer();
+  }
+
+  // 初始渲染
+  renderFitAnalysis();
+  renderOverview();
+  renderCareer();
+</script>
+
+<!-- 勋章墙逻辑（移植自档案Tab预览.html，纯阈值达成、无评级门槛） -->
+<script>
+(function () {
+  "use strict";
+
+  // 勋章池 key = MedalDef.defName（对齐 Defs/MedalDefs.xml 真实阈值勋章）。
+  // threshold = 真实 Def 阈值；current = 当前值；title=称号 tier=档位 metric=指标中文。
+  var MEDAL_POOL = [
+    { key: "Medal_Labor_Model_Bronze",  title: "劳动模范", tier: "bronze", metric: "累计工时", current: 4800000,  threshold: 4800000,  reqGrade: "junior", desc: "累计工时达 4800000 tick（约 1333 游戏时）。需评级：初级工程师。" },
+    { key: "Medal_Labor_Model_Silver",  title: "劳动模范", tier: "silver", metric: "累计工时", current: 3120000,  threshold: 12000000, reqGrade: "inter",  desc: "累计工时达 12000000 tick（约 3333 游戏时）。需评级：中级工程师。" },
+    { key: "Medal_Labor_Model_Gold",    title: "劳动模范", tier: "gold",   metric: "累计工时", current: 16100000, threshold: 30000000, reqGrade: "senior", desc: "累计工时达 30000000 tick（约 8333 游戏时）。需评级：精密制造高级技工。" },
+    { key: "Medal_Labor_Worker_Bronze", title: "先进工作者", tier: "bronze", metric: "产出件数", current: 312,  threshold: 300,   reqGrade: "none", desc: "累计产出达 300 件。" },
+    { key: "Medal_Labor_Worker_Silver", title: "先进工作者", tier: "silver", metric: "产出件数", current: 640,  threshold: 1000,  reqGrade: "none", desc: "累计产出达 1000 件。" },
+    { key: "Medal_Labor_Worker_Gold",   title: "先进工作者", tier: "gold",   metric: "产出件数", current: 1180, threshold: 3000,  reqGrade: "none", desc: "累计产出达 3000 件。" },
+    { key: "Medal_Labor_TechAce_Bronze",title: "技术能手", tier: "bronze", metric: "产出银值", current: 30500, threshold: 30000, reqGrade: "none", desc: "累计产出银值达 30000。" },
+    { key: "Medal_Labor_TechAce_Silver",title: "技术能手", tier: "silver", metric: "产出银值", current: 61200, threshold: 100000,reqGrade: "none", desc: "累计产出银值达 100000。" },
+    { key: "Medal_Labor_TechAce_Gold",  title: "技术能手", tier: "gold",   metric: "产出银值", current: 138000,threshold: 300000,reqGrade: "none", desc: "累计产出银值达 300000。" },
+    { key: "Medal_Combat_Hero_Bronze",  title: "战斗英雄", tier: "bronze", metric: "累计击杀", current: 22,   threshold: 20,    reqGrade: "none", desc: "累计击杀达 20。" },
+    { key: "Medal_Combat_Hero_Silver",  title: "战斗英雄", tier: "silver", metric: "累计击杀", current: 34,   threshold: 50,    reqGrade: "none", desc: "累计击杀达 50。" },
+    { key: "Medal_Combat_Hero_Gold",    title: "战斗英雄", tier: "gold",   metric: "累计击杀", current: 71,   threshold: 120,   reqGrade: "none", desc: "累计击杀达 120。" },
+    { key: "Medal_Combat_FirstClass_Bronze", title: "一等功臣", tier: "bronze", metric: "生涯伤害", current: 2100, threshold: 2000, reqGrade: "none", desc: "累计造成伤害达 2000。" },
+    { key: "Medal_Combat_FirstClass_Silver", title: "一等功臣", tier: "silver", metric: "生涯伤害", current: 3200, threshold: 5000, reqGrade: "none", desc: "累计造成伤害达 5000。" },
+    { key: "Medal_Combat_FirstClass_Gold",   title: "一等功臣", tier: "gold",   metric: "生涯伤害", current: 6100, threshold: 12000,reqGrade: "none", desc: "累计造成伤害达 12000。" },
+    { key: "Medal_Combat_Enlistee_Bronze",title: "新兵勋章", tier: "bronze", metric: "参战次数", current: 3,  threshold: 3,  reqGrade: "none", desc: "累计参战达 3 场。" },
+    { key: "Medal_Combat_Enlistee_Silver",title: "新兵勋章", tier: "silver", metric: "参战次数", current: 5,  threshold: 8,  reqGrade: "none", desc: "累计参战达 8 场。" },
+    { key: "Medal_Combat_Enlistee_Gold",  title: "新兵勋章", tier: "gold",   metric: "参战次数", current: 11, threshold: 20, reqGrade: "none", desc: "累计参战达 20 场。" },
+    { key: "Medal_Support_Quartermaster_Bronze", title: "军需官", tier: "bronze", metric: "损耗银值", current: 8200,  threshold: 8000,  reqGrade: "none", desc: "累计损耗银值达 8000。" },
+    { key: "Medal_Support_Quartermaster_Silver", title: "军需官", tier: "silver", metric: "损耗银值", current: 12400, threshold: 20000, reqGrade: "none", desc: "累计损耗银值达 20000。" },
+    { key: "Medal_Support_Quartermaster_Gold",   title: "军需官", tier: "gold",   metric: "损耗银值", current: 18800, threshold: 50000, reqGrade: "none", desc: "累计损耗银值达 50000。" },
+    { key: "Medal_Legacy_Heirloom_Bronze", title: "传家宝", tier: "bronze", metric: "持有代数", current: 1, threshold: 2, reqGrade: "none", desc: "传承持有达 2 代。" },
+    { key: "Medal_Legacy_Heirloom_Silver", title: "传家宝", tier: "silver", metric: "持有代数", current: 1, threshold: 3, reqGrade: "none", desc: "传承持有达 3 代。" },
+    { key: "Medal_Legacy_Heirloom_Gold",   title: "传家宝", tier: "gold",   metric: "持有代数", current: 2, threshold: 5, reqGrade: "none", desc: "传承持有达 5 代。" },
+    { key: "Medal_Legacy_KillerBlade_Bronze", title: "传承利刃", tier: "bronze", metric: "历代击杀", current: 34,  threshold: 30,  reqGrade: "none", desc: "传承武器历代击杀达 30。" },
+    { key: "Medal_Legacy_KillerBlade_Silver", title: "传承利刃", tier: "silver", metric: "历代击杀", current: 88,  threshold: 100, reqGrade: "none", desc: "传承武器历代击杀达 100。" },
+    { key: "Medal_Legacy_KillerBlade_Gold",   title: "传承利刃", tier: "gold",   metric: "历代击杀", current: 137, threshold: 250, reqGrade: "none", desc: "传承武器历代击杀达 250。" },
+
+    // ===== P7 成就勋章（MedalKind.Achievement；依据 Defs/MedalDefs.xml） =====
+    // kind: "achievement" + achievementKey 对应 AchievementEvaluator 聚合键；
+    // current = 聚合当前值（原型模拟），threshold = MedalDef.achievementThreshold。
+    { key: "Medal_Craft_Legend_Bronze",  title: "传奇匠人", tier: "bronze", metric: "传奇制造", kind: "achievement", achievementKey: "LegendaryMade",       current: 1,  threshold: 1,  reqGrade: "none", desc: "累计制造传奇品质物品达 1 件（AchievementEvaluator.LegendaryMade）。" },
+    { key: "Medal_Craft_Legend_Silver",  title: "传奇匠人", tier: "silver", metric: "传奇制造", kind: "achievement", achievementKey: "LegendaryMade",       current: 1,  threshold: 3,  reqGrade: "none", desc: "累计制造传奇品质物品达 3 件。" },
+    { key: "Medal_Craft_Legend_Gold",    title: "传奇匠人", tier: "gold",   metric: "传奇制造", kind: "achievement", achievementKey: "LegendaryMade",       current: 1,  threshold: 8,  reqGrade: "none", desc: "累计制造传奇品质物品达 8 件。" },
+    { key: "Medal_Craft_MajorProject_Gold", title: "重大工程功臣", tier: "gold", metric: "重大项目", kind: "achievement", achievementKey: "MajorProjects",     current: 11, threshold: 10, reqGrade: "none", desc: "主导/参与重大工程达 10 项（AchievementEvaluator.MajorProjects）。" }
+  ];
+
+  // 档位→色彩（复用本地 --m-bronze/--m-silver/--m-gold）+ 中文名
+  var TIER_VAR = { bronze: "var(--m-bronze)", silver: "var(--m-silver)", gold: "var(--m-gold)" };
+  var TIER_LABEL = { bronze: "青铜", silver: "白银", gold: "黄金" };
+
+  // 图像资产：defName → 真实中文 png（Textures/Medals/ 下现有劳动模范图；成就勋章图待补）
+  var MEDAL_IMG = {
+    "Medal_Labor_Model_Bronze":  "劳动勋章铜牌.png",
+    "Medal_Labor_Model_Silver":  "劳动勋章银牌.png",
+    "Medal_Labor_Model_Gold":    "劳动勋章金牌.png"
+  };
+
+  // 成就勋章无独立 png 时回退到通用占位（no-img 样式已处理）
+  function medalImg(key){
+    if (MEDAL_IMG[key]) {
+      return '<img class="medal-png" src="../../../Textures/Medals/' + MEDAL_IMG[key] + '" alt="' + key + '" '
+           + 'onerror="this.onerror=null; this.style.display=\'none\'; this.parentNode.classList.add(\'no-img\');">';
+    }
+    return '';
+  }
+  var grantedMedals = [];
+
+  function renderMedals(animateKey) {
+    var strip = document.getElementById("medalStrip");
+    if (grantedMedals.length === 0) {
+      strip.innerHTML = '<div class="medal-empty">暂无勋章 · 点击右侧「＋」打开授勋界面</div>';
+      appendAddCell(strip);
+      return;
+    }
+    var html = grantedMedals.map(function(m, i){
+      var cls = "medal-icon t-" + m.tier + (m.key === animateKey ? " just-granted" : "");
+      return '<div class="' + cls + '" data-i="' + i + '" data-key="' + m.key + '" title="' + m.title + ' · ' + TIER_LABEL[m.tier] + '（点击查看详情）">' +
+               medalImg(m.key) +
+               '<span class="corner">' + TIER_LABEL[m.tier].charAt(0) + '</span>' +
+             '</div>';
+    }).join("");
+    strip.innerHTML = html;
+    strip.querySelectorAll(".medal-icon").forEach(function(el){
+      el.style.cursor = "pointer";
+      el.addEventListener("click", function(){ openMedalDetail(el.getAttribute("data-key")); });
+    });
+    appendAddCell(strip);
+  }
+
+  function appendAddCell(strip) {
+    var add = document.createElement("div");
+    add.className = "medal-add";
+    add.id = "medalAdd";
+    add.title = "打开授勋界面";
+    add.innerHTML = '<span class="plus">＋</span><span class="add-tip">授勋</span>';
+    add.addEventListener("click", openAwardDialog);
+    strip.appendChild(add);
+  }
+
+  var awardMask = document.getElementById("awardMask");
+  var awardBody = document.getElementById("awardBody");
+  var awardFoot = document.getElementById("awardFoot");
+
+  function openAwardDialog() {
+    renderAwardList();
+    awardFoot.textContent = "授勋条件：指标达标即可授予（不计评级门槛）。";
+    awardMask.classList.add("show");
+  }
+  function closeAwardDialog() { awardMask.classList.remove("show"); }
+
+  var BUFF_MAP = {
+    "Medal_Labor_Model_Bronze":  "作用速率 +3%（劳动系）", "Medal_Labor_Model_Silver":  "作用速率 +5%（劳动系）", "Medal_Labor_Model_Gold":    "作用速率 +10%（劳动系）",
+    "Medal_Labor_TechAce_Bronze": "作用速率 +3%（劳动系）", "Medal_Labor_TechAce_Silver": "作用速率 +5%（劳动系）", "Medal_Labor_TechAce_Gold":   "作用速率 +10%（劳动系）",
+    "Medal_Combat_Hero_Bronze":   "战斗能力 +3%（战斗系）", "Medal_Combat_Hero_Silver":   "战斗能力 +5%（战斗系）", "Medal_Combat_Hero_Gold":     "战斗能力 +10%（战斗系）",
+    "Medal_Combat_FirstClass_Bronze": "战斗能力 +3%（战斗系）", "Medal_Combat_FirstClass_Silver": "战斗能力 +5%（战斗系）", "Medal_Combat_FirstClass_Gold":   "战斗能力 +10%（战斗系）",
+    "Medal_Combat_Enlistee_Bronze": "（无增益）", "Medal_Combat_Enlistee_Silver": "（无增益）", "Medal_Combat_Enlistee_Gold": "（无增益）",
+    "Medal_Support_Quartermaster_Bronze": "（无增益）", "Medal_Support_Quartermaster_Silver": "（无增益）", "Medal_Support_Quartermaster_Gold": "（无增益）",
+    "Medal_Labor_Worker_Bronze": "（无增益）", "Medal_Labor_Worker_Silver": "（无增益）", "Medal_Labor_Worker_Gold": "（无增益）",
+    "Medal_Legacy_Heirloom_Bronze": "（无增益）", "Medal_Legacy_Heirloom_Silver": "（无增益）", "Medal_Legacy_Heirloom_Gold": "（无增益）",
+    "Medal_Legacy_KillerBlade_Bronze": "战斗能力 +3%（战斗系）", "Medal_Legacy_KillerBlade_Silver": "战斗能力 +5%（战斗系）", "Medal_Legacy_KillerBlade_Gold": "战斗能力 +10%（战斗系）",
+    "Medal_Craft_Legend_Bronze": "制造品质加成（成就系）", "Medal_Craft_Legend_Silver": "制造品质加成（成就系）", "Medal_Craft_Legend_Gold": "制造品质加成（成就系）",
+    "Medal_Craft_MajorProject_Gold": "重大工程加成（成就系）"
+  };
+  var detailMask = document.getElementById("medalDetailMask");
+  var detailBody = document.getElementById("detailBody");
+  function ownerTypeOf(key){ return key.indexOf("Medal_Legacy_") === 0 ? "装备 / 传承物" : "殖民者（Pawn）"; }
+  function openMedalDetail(key){
+    var p = MEDAL_POOL.find(function(x){ return x.key === key; });
+    if (!p) return;
+    var c = TIER_VAR[p.tier];
+    var pct = p.threshold > 0 ? Math.round(p.current / p.threshold * 100) : 0;
+    var reached = p.current >= p.threshold;
+    var imgHtml = medalImg(p.key);
+    var badgeCls = "big-badge" + (imgHtml === '' ? " no-img" : '');
+    var buff = BUFF_MAP[p.key] || "（无增益）";
+    detailBody.innerHTML =
+      '<div class="detail-top">' +
+        '<div class="' + badgeCls + '">' + imgHtml + '</div>' +
+        '<div class="dt-title">' +
+          '<div class="nm">' + p.title + '</div>' +
+          '<span class="pill" style="background:' + c + '22;color:' + c + ';border-color:' + c + '">' + TIER_LABEL[p.tier] + ' · ' + p.metric + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="detail-rows">' +
+        '<div class="detail-row"><span class="k">归属</span><span class="v">' + ownerTypeOf(p.key) + '</span></div>' +
+        '<div class="detail-row"><span class="k">当前值</span><span class="v">' + fmtVal(p.current) + '</span></div>' +
+        '<div class="detail-row"><span class="k">阈值</span><span class="v">' + fmtVal(p.threshold) + '</span></div>' +
+        '<div class="detail-row"><span class="k">进度</span><span class="v">' + pct + '%（' + (reached ? '已达标' : '未达标') + '）</span></div>' +
+        '<div class="detail-row"><span class="k">所需职称</span><span class="v">无（不限评级）</span></div>' +
+        '<div class="detail-row"><span class="k">defName</span><span class="v" style="font-size:10px;">' + p.key + '</span></div>' +
+      '</div>' +
+      '<div class="detail-desc">' + (p.desc || '') + '</div>' +
+      '<div class="detail-buff">增益：' + buff + '</div>';
+    detailMask.classList.add("show");
+  }
+  function closeMedalDetail(){ detailMask.classList.remove("show"); }
+  document.getElementById("detailClose").addEventListener("click", closeMedalDetail);
+  detailMask.addEventListener("click", function(e){ if (e.target === detailMask) closeMedalDetail(); });
+
+  function renderAwardList() {
+    var pending = MEDAL_POOL.filter(function(p){
+      var notGranted = !grantedMedals.some(function(g){ return g.title === p.title && g.tier === p.tier; });
+      var met = p.current >= p.threshold;
+      return notGranted && met;
+    });
+    if (pending.length === 0) {
+      awardBody.innerHTML = '<div class="award-empty">当前没有可授予的勋章。<br>继续累积各项指标，达标后会出现在这里。</div>';
+      return;
+    }
+    awardBody.innerHTML = pending.map(function(p){
+      var pct = p.threshold > 0 ? Math.max(2, Math.round(p.current / p.threshold * 100)) : 0;
+      var c = TIER_VAR[p.tier];
+      var imgHtml = medalImg(p.key);
+      var badgeCls = "badge" + (imgHtml === '' ? " no-img" : "");
+      var badgeStyle = imgHtml === '' ? (' style="background:' + c + '"') : '';
+      return '<div class="award-card" data-key="' + p.key + '">' +
+               '<div class="' + badgeCls + '"' + badgeStyle + '>' + imgHtml + '</div>' +
+               '<div class="mid">' +
+                 '<div class="lab">' + p.title + '</div>' +
+                 '<div class="desc">' + (p.desc || '') + '</div>' +
+                 '<div class="bar"><div class="fill" style="width:' + pct + '%;background:' + c + '"></div></div>' +
+                 '<div class="ratio">' + fmtVal(p.current) + ' / ' + fmtVal(p.threshold) + '（已达标）</div>' +
+               '</div>' +
+               '<div class="tier-pill" style="background:' + c + '">' + TIER_LABEL[p.tier] + '</div>' +
+               '<button class="detail-btn" data-key="' + p.key + '">详情</button>' +
+             '</div>';
+    }).join("");
+    awardBody.querySelectorAll(".award-card").forEach(function(card){
+      card.addEventListener("click", function(){
+        var p = MEDAL_POOL.find(function(x){ return x.key === card.dataset.key; });
+        if (p) tryAward(p);
+      });
+    });
+    awardBody.querySelectorAll(".detail-btn").forEach(function(btn){
+      btn.addEventListener("click", function(e){
+        e.stopPropagation();
+        openMedalDetail(btn.getAttribute("data-key"));
+      });
+    });
+  }
+
+  function tryAward(p) {
+    if (grantedMedals.some(function(g){ return g.title === p.title && g.tier === p.tier; })) return;
+    grantedMedals.push({ title: p.title, tier: p.tier, key: p.key });
+    awardFoot.textContent = "已授予：" + p.title + " · " + TIER_LABEL[p.tier];
+    renderMedals(p.key);
+    renderAwardList();
+  }
+
+  function fmtVal(v){ return v >= 10000 ? (v/1000).toFixed(1) + "K" : v; }
+
+  document.getElementById("awardClose").addEventListener("click", closeAwardDialog);
+  awardMask.addEventListener("click", function(e){ if (e.target === awardMask) closeAwardDialog(); });
+
+  document.getElementById("btnAwardTest").addEventListener("click", function(){
+    var remaining = MEDAL_POOL.filter(function(p){
+      return !grantedMedals.some(function(g){ return g.title === p.title && g.tier === p.tier; });
+    });
+    if (remaining.length === 0) {
+      grantedMedals = [];
+      renderMedals();
+      renderAwardList();
+      return;
+    }
+    var pick = remaining[Math.floor(Math.random() * remaining.length)];
+    grantedMedals.push({ title: pick.title, tier: pick.tier, key: pick.key });
+    renderMedals(pick.key);
+  });
+
+  // 勋章墙初始空态
+  renderMedals();
+
+  // DevMode「随机职业数据」按钮（mock，对齐 C# DevTestButtons.CareerRandomize）：
+  // 覆盖式随机生成 P1~P8 全链路数据（总览资格/职称 + 履历工作经历 + 勋章授予状态），
+  // 刷新全部 3 个 tab，并自动切到总览 tab 展示结果（与 C# 全量随机语义一致）。
+  var btnDev = document.getElementById("btnDevRandomize");
+  if (btnDev) {
+    btnDev.addEventListener("click", function () {
+      // 1) 总览（资格状态/职称阶梯）+ 履历（工作经历）+ 五维样本（专业适配）全量随机
+      randomizeCareerData();
+
+      // 2) 勋章：按当前达标状态覆盖式随机授予（阈值 + 成就两类）
+      grantedMedals = [];
+      var pool = MEDAL_POOL.filter(function (p) { return p.kind !== "achievement"; });
+      var n = 2 + Math.floor(Math.random() * 4);
+      for (var i = 0; i < n; i++) {
+        var pick = pool[Math.floor(Math.random() * pool.length)];
+        if (!grantedMedals.some(function (g) { return g.key === pick.key; })) {
+          grantedMedals.push({ title: pick.title, tier: pick.tier, key: pick.key });
+        }
+      }
+      renderMedals();
+
+      // 3) 自动切到总览 tab（第一个 pane），让资格/职称随机结果立即可见
+      var ovTab = document.querySelector('.tab[data-tab="overview"]');
+      if (ovTab) {
+        document.querySelectorAll(".tab").forEach(function (t) { t.classList.toggle("active", t === ovTab); });
+        document.querySelectorAll(".pane").forEach(function (p) { p.classList.toggle("active", p.id === "overview"); });
+      }
+    });
+  }
+
+  // 「📊 数据初始化」按钮：确定性全量模拟（非随机、可复现），覆盖全部模块，供非游戏调试。
+  // 与主块 renderFitAnalysis/renderOverview/renderCareer（全局）及本 IIEE 内 grantedMedals/renderMedals 联动。
+  function simulateFullData() {
+    // 1) 确定性五维样本（偏制造的完整示例人物，可复现）
+    SAMPLE_SKILLS = { Shooting:9, Melee:7, Construction:14, Mining:11, Cooking:8, Plants:10, Animals:9, Crafting:16, Artistic:8, Medicine:9, Social:10, Intellectual:13 };
+    SAMPLE_PRACTICE = { Shooting:40, Melee:30, Construction:160, Mining:90, Cooking:60, Plants:70, Animals:55, Crafting:300, Artistic:40, Medicine:50, Social:65, Intellectual:130 };
+    SAMPLE_PASSION = { Shooting:0, Melee:0, Construction:50, Mining:0, Cooking:0, Plants:0, Animals:0, Crafting:100, Artistic:50, Medicine:0, Social:50, Intellectual:100 };
+    SAMPLE_GROWTH = { Shooting:50, Melee:48, Construction:66, Mining:58, Cooking:55, Plants:57, Animals:54, Crafting:72, Artistic:60, Medicine:56, Social:62, Intellectual:70 };
+    SAMPLE_QUALITY = { Normal:180, Good:70, Excellent:26, Masterwork:7, Legendary:2 };
+
+    // 2) 专业/方向（确定性）
+    CURRENT_MAJOR = '制造类';
+    var dirName = '精密制造';
+    if (typeof MAJOR_DIRS !== 'undefined' && MAJOR_DIRS['制造类']) {
+      dirName = (MAJOR_DIRS['制造类'].split(' / ')[0]) || dirName;
+    }
+    currentDir = dirName;
+
+    // 3) 总览 / 资格状态 / 预检 / 下一职称（确定性、自洽：高级技工申报技师）
+    CAREER.identity = {
+      roleName: "精密制造高级技工", roleDesc: "精密制造 · 制造类",
+      nextTitle: "精密制造技师", progress: 74,
+      skill: "精密制造 Lv31", hours: "640 h", results: 11, books: 3,
+      metrics: [["职业贡献", 82], ["技术贡献", 91], ["科研贡献", 63]]
+    };
+    CAREER.qual = [
+      ["专业等级", "精密制造 ≥ 38", "wait", "未满足"],
+      ["职业资历", "相关工作 ≥ 1,200,000 tick", "ok", "满足"],
+      ["综合评分", "资格评定 ≥ 70", "ok", "满足"],
+      ["实践考试", "优秀品质成果 × 2（真实制造）", "ok", "通过"],
+      ["理论考试", "专业著作 ≥ 良好", "wait", "待进行"],
+      ["论文 / 答辩", "委员会评审", "wait", "待进行"]
+    ];
+    CAREER.preCheck = [
+      ["核心技能", "未满足", "not-started"], ["职业履历", "已满足", "done"],
+      ["成果记录", "已满足", "done"], ["实践考试", "准备中", "pending"],
+      ["理论考试", "未开始", "not-started"], ["论文 / 答辩", "未开始", "not-started"]
+    ];
+    CAREER.nextTitle = { name: "精密制造技师", pct: 82, gaps: ["理论考试", "论文", "答辩"] };
+
+    // 4) 履历（确定性 3 段工作经历 + 汇总/当前）
+    CAREER.resume = [
+      { org: "机械加工坊 · 首席技工", period: "5508 – 5512（4 年）", meta: "工坊：冷链装配台 · 房间：工业车间",
+        achv: ["制造产出 <strong>1,240</strong> 件机械部件，其中优秀品质 <strong>186</strong> 件、传奇 <strong>2</strong> 件", "主导建成殖民地冷链系统（建造 1 座）", "完成《机械维护实务》专著（著书 1 部）"] },
+      { org: "研究工坊 · 研究技工", period: "5505 – 5508（3 年）", meta: "工坊：电子工作台 · 房间：实验室",
+        achv: ["制造产出 <strong>860</strong> 件电子元件，优秀品质 <strong>94</strong> 件", "完成「高效冶炼」等 <strong>3</strong> 项研究", "累计使用工坊 <strong>2,100</strong> 次"] },
+      { org: "基础工坊 · 学徒技工", period: "5504 – 5505（1 年）", meta: "工坊：简易工作台 · 房间：工棚",
+        achv: ["制造产出 <strong>320</strong> 件基础构件，熟练度由 9 升至 14"] }
+    ];
+    CAREER.summary = [["就职工坊数", 3], ["制造总件数", 2420], ["建造总数", 1], ["研究总数", 3], ["著书总数", 1]];
+    CAREER.current = [["工坊", "冷链装配台"], ["房间", "工业车间"], ["累计使用", "2,100 次"], ["最近使用", "5512 年"]];
+
+    // 5) 勋章（确定性授予：覆盖劳动/成就/战斗/工作多类，含已达标阈值与成就勋章）
+    grantedMedals = [
+      { title: "劳动模范", tier: "gold", key: "Medal_Labor_Model_Gold" },
+      { title: "先进工作者", tier: "gold", key: "Medal_Labor_Worker_Gold" },
+      { title: "技术能手", tier: "silver", key: "Medal_Labor_TechAce_Silver" },
+      { title: "传奇匠人", tier: "silver", key: "Medal_Craft_Legend_Silver" },
+      { title: "重大工程功臣", tier: "gold", key: "Medal_Craft_MajorProject_Gold" },
+      { title: "战斗英雄", tier: "silver", key: "Medal_Combat_Hero_Silver" },
+      { title: "军需官", tier: "bronze", key: "Medal_Support_Quartermaster_Bronze" }
+    ];
+
+    // 6) 全量重渲染（规划/身份/资格/预检/职称/履历/勋章）
+    if (typeof renderFitAnalysis === 'function') renderFitAnalysis();
+    if (typeof renderOverview === 'function') renderOverview();
+    if (typeof renderCareer === 'function') renderCareer();
+    renderMedals();
+    if (typeof renderAwardList === 'function') renderAwardList();
+
+    // 7) 自动切到总览 tab，完整结果立即可见
+    var ovTab = document.querySelector('.tab[data-tab="overview"]');
+    if (ovTab) {
+      document.querySelectorAll('.tab').forEach(function (t) { t.classList.toggle('active', t === ovTab); });
+      document.querySelectorAll('.pane').forEach(function (p) { p.classList.toggle('active', p.id === 'overview'); });
+    }
+  }
+
+  var btnSim = document.getElementById("btnSimInit");
+  if (btnSim) {
+    btnSim.addEventListener("click", function () { simulateFullData(); });
+  }
+})();
+</script>
+
+<!-- ===== 真实数据模拟桥接（开发者调试：📊 数据初始化 / 🧪 数据模拟 接入真实管线，替代上方 mock 随机数据）
+     依赖顺序：sim-core（公式管线，与 C# 对齐）→ defs-data（Defs/*.xml）→ recipes-data（原版制造数据）→ sim-bridge -->
+<script src="../../../Tools/DataSimulator/dev/sim-core.js"></script>
+<script src="../../../Tools/DataSimulator/dev/defs-data.js"></script>
+<script src="../../../Tools/DataSimulator/dev/recipes-data.js"></script>
+<script src="../../../Tools/DataSimulator/dev/sim-bridge.js"></script>
+</body>
+</html>

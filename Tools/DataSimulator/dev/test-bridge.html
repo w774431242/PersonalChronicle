@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>bridge-diagnose</title></head>
+<body>
+<div id="result">pending</div>
+<script src="sim-core.js"></script>
+<script src="defs-data.js"></script>
+<script src="recipes-data.js"></script>
+<script>
+(function () {
+  var r = document.getElementById('result');
+  var lines = [];
+  lines.push('SimCore: ' + (typeof window.SimCore));
+  lines.push('SIM_DEFS: ' + (typeof window.SIM_DEFS));
+  lines.push('defs skills: ' + (window.SIM_DEFS ? Object.keys(window.SIM_DEFS.skills).length : 0));
+  lines.push('defs quals: ' + (window.SIM_DEFS ? window.SIM_DEFS.qualifications.length : 0));
+  lines.push('VANILLA_RECIPES: ' + (window.VANILLA_RECIPES ? window.VANILLA_RECIPES.length : 0));
+  lines.push('VANILLA_CRAFTABLES: ' + (window.VANILLA_CRAFTABLES ? window.VANILLA_CRAFTABLES.length : 0));
+  lines.push('P2R: ' + (window.VANILLA_PRODUCT_TO_RECIPE ? Object.keys(window.VANILLA_PRODUCT_TO_RECIPE).length : 0));
+  r.textContent = lines.join(' | ');
+})();
+</script>
+</body></html>
