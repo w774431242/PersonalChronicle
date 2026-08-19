@@ -482,12 +482,16 @@
     }).join('');
     var done = t.books>=1 && t.research>=1 && t.skill>=1 && t.activity>=1;
     var submitted = cs ? cs.theorySubmitted : false;
-    $('btnTheorySubmit').disabled = !done || submitted;
+    // 顺序门控：实践考试通过后才可提交理论考试（2026-08-19 严格顺序开放）
+    var examPassed = cs ? (!next.exam || (cs.exam && cs.exam.passed)) : false;
+    $('btnTheorySubmit').disabled = !done || submitted || !examPassed;
     if (submitted){
       $('theoryResult').innerHTML = '<div style="margin-top:10px"><span class="score">'+fmt(cs.theoryScore)+'<span class="of"> / 100</span></span>'
         + '<div class="verdict pass">✅ 理论考试已提交（本档）</div></div>';
+    } else if (!examPassed){
+      $('theoryResult').innerHTML = '<div class="timeline-empty" style="padding:8px 0;color:var(--warn)">🔒 需先通过本档实践考试，方可提交理论考试。</div>';
     } else {
-      $('theoryResult').innerHTML = '<div class="timeline-empty" style="padding:8px 0">尚未提交（本档职称需重新提交一次理论考试）。</div>';
+      $('theoryResult').innerHTML = '<div class="timeline-empty" style="padding:8px 0">四方面依据齐备后提交理论考试（本档职称需重新提交一次）。</div>';
     }
   }
   function renderThesis(){
@@ -496,13 +500,23 @@
     var cs = next ? tierState(next.key) : null;
     if (!next || !next.thesis){
       area.innerHTML = '<div class="timeline-empty">本档职称不要求论文。</div>';
+      $('btnThesisStart').disabled = true;
+      $('btnThesisCiteBook').disabled = true;
+      $('btnThesisCiteResearch').disabled = true;
+      $('btnThesisFinish').disabled = true;
       return;
     }
     var th = cs.thesis;
-    $('btnThesisStart').disabled = th.done;
+    // 顺序门控：理论考试提交后才可论文选题（2026-08-19 严格顺序开放）
+    var theoryOk = !next.exam || cs.theorySubmitted;
+    $('btnThesisStart').disabled = th.done || !theoryOk;
     $('btnThesisCiteBook').disabled = th.done;
     $('btnThesisCiteResearch').disabled = th.done;
     $('btnThesisFinish').disabled = th.done || th.books<2 || th.research<2;
+    if (!theoryOk){
+      area.innerHTML = '<div class="timeline-empty" style="color:var(--warn)">🔒 需先提交本档理论考试，方可进行论文选题。</div>';
+      return;
+    }
     if (!th.started){
       area.innerHTML = '<div class="timeline-empty">尚未选题（本档职称需独立完成论文）。</div>';
       return;
@@ -521,16 +535,25 @@
     var cs = next ? tierState(next.key) : null;
     if (!next || !next.thesis){
       area.innerHTML = '<div class="timeline-empty">本档职称不要求答辩。</div>';
+      $('btnDefenseStart').disabled = true;
+      $('btnDefenseVote').disabled = true;
       return;
     }
     var d = cs.defense;
+    // 顺序门控：论文完成后才可召开答辩（2026-08-19 严格顺序开放）
+    $('btnDefenseStart').disabled = d.started || !cs.thesis.done;
+    $('btnDefenseVote').disabled = !d.started || d.done;
+    if (!cs.thesis.done){
+      area.innerHTML = '<div class="timeline-empty" style="color:var(--warn)">🔒 需先完成本档论文，方可召开答辩。</div>';
+      return;
+    }
     if (!d.started){
-      area.innerHTML = '<div class="timeline-empty">尚未召开。需先完成本档论文。</div>';
+      area.innerHTML = '<div class="timeline-empty">尚未召开。论文完成后即可召开答辩。</div>';
       return;
     }
     if (d.done){
       area.innerHTML = '<div style="margin-top:8px"><span class="score">'+fmt(d.score)+'<span class="of"> / 100</span></span>'
-        + '<div class="verdict pass">✅ 答辩通过（本档）</div></div>';
+        + '<div class="verdict pass">✅ 答辩通过（本档）· 评级流程结算后将授予职称</div></div>';
     } else {
       area.innerHTML = '<div style="margin-top:6px">'+d.committee.map(function(c){
         return '<div class="cm"><div class="av">'+c.name[0]+'</div><div class="nm">'+c.name
@@ -634,6 +657,8 @@
     var next = nextTier();
     var cs = next ? tierState(next.key) : null;
     if (!cs || cs.theorySubmitted) return;
+    // 顺序守卫：实践考试未通过不得提交理论考试
+    if (next.exam && (!cs.exam || !cs.exam.passed)){ log('🔒 需先通过本档实践考试，方可提交理论考试', 'warn'); return; }
     var t = S.theory;
     function ms(n){ return n>=1 ? 85+Math.min(15,n*2) : 0; }
     cs.theoryScore = 0.4*ms(t.books) + 0.3*ms(t.research) + 0.2*ms(t.skill) + 0.1*ms(t.activity);
@@ -646,6 +671,8 @@
     var next = nextTier();
     var cs = next ? tierState(next.key) : null;
     if (!cs || !next.thesis) { log('本档不要求论文', 'warn'); return; }
+    // 顺序守卫：理论考试未提交不得论文选题
+    if (!cs.theorySubmitted){ log('🔒 需先提交本档理论考试，方可论文选题', 'warn'); return; }
     cs.thesis.started = true;
     log('📝 论文选题（'+next.name+'）：《精密制造工艺研究》');
     renderAll();
@@ -723,12 +750,26 @@
     log('⚡ 一键流程完成：'+[f1,f2,f3].join('/')+' · 职称链 '+S.granted.join(' → '), 'ok');
   });
 
-  // ───────── 自动化回归（?p9test=1） ─────────
+  // ───────── 自动化回归（?p9test=1：严格顺序门控 + 逐档完整流程） ─────────
   if (location.search && location.search.indexOf('p9test=1') >= 0) {
     setTimeout(function () {
       try {
         S.level = 27; S.hours = 260;
         renderAll();
+        // ── 乱序门控断言（2026-08-19 严格顺序开放）──
+        // ① 实践考试未通过 → 理论提交被禁用
+        var gateTheoryBtn = $('btnTheorySubmit').disabled;
+        // ② 绕过禁用直接提交理论 → 被守卫拦截
+        S.theory.books = 1; S.theory.research = 1; S.theory.skill = 1; S.theory.activity = 1;
+        renderTheory();
+        $('btnTheorySubmit').click();
+        var gateTheoryBlocked = !tierState('junior').theorySubmitted;
+        // ③ 理论未提交 → 论文选题被禁用（Lv3 前置）
+        var gateThesisBtn = $('btnThesisStart').disabled;
+        // ④ 绕过禁用直接论文选题 → 被守卫拦截
+        $('btnThesisStart').click();
+        var gateThesisBlocked = !tierState('junior').thesis.started;
+        // ── 正常逐档全流程 ──
         var f1 = runTierExamFlow();
         var f2 = runTierExamFlow();
         var f3 = runTierExamFlow();
@@ -740,9 +781,9 @@
         $('btnDefenseStart').click();
         cs3.defense.committee = [{ name: '甲', lv: 15, score: 85 }, { name: '乙', lv: 14, score: 80 }, { name: '丙', lv: 16, score: 90 }];
         $('btnDefenseVote').click();
-        var out = 'flow:' + [f1, f2, f3].join('/')
-          + ' | grantedAfterFullFlow:' + (S.granted.join(',') || 'NONE')
-          + ' | seniorExamIndependent:' + (tierState('assistant').exam && tierState('assistant').exam.passed ? 'Y' : 'N');
+        var out = 'gates:' + [gateTheoryBtn, gateTheoryBlocked, gateThesisBtn, gateThesisBlocked].map(function(x){return x?'Y':'N';}).join('/')
+          + ' | flow:' + [f1, f2, f3].join('/')
+          + ' | grantedAfterFullFlow:' + (S.granted.join(',') || 'NONE');
         document.title = 'P9TEST ' + out;
         document.body.setAttribute('data-p9test', out);
       } catch (e) {
