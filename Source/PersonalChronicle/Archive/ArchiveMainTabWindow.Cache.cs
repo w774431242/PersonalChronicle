@@ -59,11 +59,6 @@ namespace PersonalChronicle.Archive
                 RebuildDetailCache(service, revision);
             }
             RebuildEventCache(service, revision);
-            // v4.16: 职业档案总览仅在 Career 视图激活时构建（其余视图不渲染它）。
-            if (view == MainView.Career)
-            {
-                RefreshCareerCache(service);
-            }
             // v4.5.3: only pull the full event stream when the Home timeline is the
             // active presentation; the KPI dashboard never reads cachedTimelineEvents.
             if (homeViewMode == HomeViewMode.Timeline)
@@ -217,6 +212,8 @@ namespace PersonalChronicle.Archive
             cachedCoUse = detail.CoUse ?? new ReadModels.CoUseView();
             cachedDecommission = detail.Decommission ?? new ReadModels.DecommissionView();
             cachedRelations = detail.Relations ?? new List<ReadModels.RelationView>();
+            // v4.17: 职业档案快照（嵌入「生涯」tab；Read Model 派生，窗口只消费）。
+            cachedCareerOverview = detail.CareerOverview ?? new ReadModels.CareerOverviewView();
             if (cachedDetailObject == null)
             {
                 // Object vanished (data cleaned up): safe fallback to overview.
@@ -379,6 +376,7 @@ namespace PersonalChronicle.Archive
             cachedCoUse = new ReadModels.CoUseView();
             cachedDecommission = new ReadModels.DecommissionView();
             cachedRelations = new List<ReadModels.RelationView>();
+            cachedCareerOverview = new ReadModels.CareerOverviewView();
             legacyExpanded = false;
         }
 
@@ -1015,19 +1013,6 @@ namespace PersonalChronicle.Archive
                 });
             }
             return b;
-        }
-
-        /// <summary>
-        /// v4.16: 构建殖民地级职业档案总览行（Read Model 派生，排序/过滤归属 Provider）。
-        /// 列表点击 → OpenPawnDetail 直接进入该殖民者的职业档案 Tab。
-        /// </summary>
-        private void RefreshCareerCache(IArchiveService service)
-        {
-            IReadOnlyList<ReadModels.CareerOverviewRowView> rows =
-                uiDataProvider.BuildCareerOverview(service, service.GetDataRevision());
-            cachedCareerRows = rows == null
-                ? new List<ReadModels.CareerOverviewRowView>()
-                : new List<ReadModels.CareerOverviewRowView>(rows);
         }
 
         /// <summary>

@@ -731,6 +731,85 @@
   <PersonalChronicle.UI.Career.Qual.Actions>Flow actions (Practical → Theory → Thesis → Defense → Review)</PersonalChronicle.UI.Career.Qual.Actions>
   <PersonalChronicle.UI.Career.Qual.Gate>Blocked: {0}</PersonalChronicle.UI.Career.Qual.Gate>
   <PersonalChronicle.UI.Career.Qual.SubmitResult>Result: {0}</PersonalChronicle.UI.Career.Qual.SubmitResult>
+  <PersonalChronicle.UI.Career.Qual.NoTitle>No granted titles yet.</PersonalChronicle.UI.Career.Qual.NoTitle>
+  <PersonalChronicle.UI.Career.Qual.Block.Practical>Practical Exam</PersonalChronicle.UI.Career.Qual.Block.Practical>
+  <PersonalChronicle.UI.Career.Qual.Block.Theory>Theory Exam</PersonalChronicle.UI.Career.Qual.Block.Theory>
+  <PersonalChronicle.UI.Career.Qual.Block.Thesis>Thesis</PersonalChronicle.UI.Career.Qual.Block.Thesis>
+  <PersonalChronicle.UI.Career.Qual.Block.Defense>Defense</PersonalChronicle.UI.Career.Qual.Block.Defense>
+  <PersonalChronicle.UI.Career.Qual.Block.Titles>Granted Titles</PersonalChronicle.UI.Career.Qual.Block.Titles>
+  <!-- Qualification page action texts (hardcoded Chinese → keys, 2026-08-20) -->
+  <PersonalChronicle.UI.Career.Qual.Step.Granted>✓</PersonalChronicle.UI.Career.Qual.Step.Granted>
+  <PersonalChronicle.UI.Career.Qual.Step.Applying>Applying</PersonalChronicle.UI.Career.Qual.Step.Applying>
+  <PersonalChronicle.UI.Career.Qual.Step.Locked>·</PersonalChronicle.UI.Career.Qual.Step.Locked>
+  <PersonalChronicle.UI.Career.Qual.Cond.Level>Skill Level</PersonalChronicle.UI.Career.Qual.Cond.Level>
+  <PersonalChronicle.UI.Career.Qual.Cond.Level.Note>{0} ≥ {1}</PersonalChronicle.UI.Career.Qual.Cond.Level.Note>
+  <PersonalChronicle.UI.Career.Qual.Cond.Time>Tenure</PersonalChronicle.UI.Career.Qual.Cond.Time>
+  <PersonalChronicle.UI.Career.Qual.Cond.Time.Note>Related work ≥ {0} ticks</PersonalChronicle.UI.Career.Qual.Cond.Time.Note>
+  <PersonalChronicle.UI.Career.Qual.Cond.Score>Composite Score</PersonalChronicle.UI.Career.Qual.Cond.Score>
+  <PersonalChronicle.UI.Career.Qual.Cond.Score.Note>Rating ≥ {0} (current {1})</PersonalChronicle.UI.Career.Qual.Cond.Score.Note>
+  <PersonalChronicle.UI.Career.Qual.Cond.Practical>Practical Exam</PersonalChronicle.UI.Career.Qual.Cond.Practical>
+  <PersonalChronicle.UI.Career.Qual.Cond.Practical.Passed>Passed (real crafting evidence)</PersonalChronicle.UI.Career.Qual.Cond.Practical.Passed>
+  <PersonalChronicle.UI.Career.Qual.Cond.Practical.Active>In progress</PersonalChronicle.UI.Career.Qual.Cond.Practical.Active>
+  <PersonalChronicle.UI.Career.Qual.Cond.Practical.None>Not applied</PersonalChronicle.UI.Career.Qual.Cond.Practical.None>
+  <PersonalChronicle.UI.Career.Qual.Cond.Theory>Theory Exam</PersonalChronicle.UI.Career.Qual.Cond.Theory>
+  <PersonalChronicle.UI.Career.Qual.Cond.Theory.Passed>Passed (evidence weighted)</PersonalChronicle.UI.Career.Qual.Cond.Theory.Passed>
+  <PersonalChronicle.UI.Career.Qual.Cond.Theory.Todo>Pending submission</PersonalChronicle.UI.Career.Qual.Cond.Theory.Todo>
+  <PersonalChronicle.UI.Career.Qual.Cond.Paper>Thesis / Defense</PersonalChronicle.UI.Career.Qual.Cond.Paper>
+  <PersonalChronicle.UI.Career.Qual.Cond.Paper.Passed>Passed</PersonalChronicle.UI.Career.Qual.Cond.Paper.Passed>
+  <PersonalChronicle.UI.Career.Qual.Cond.Paper.Pending>Defense pending</PersonalChronicle.UI.Career.Qual.Cond.Paper.Pending>
+  <PersonalChronicle.UI.Career.Qual.Cond.Paper.Todo>Pending</PersonalChronicle.UI.Career.Qual.Cond.Paper.Todo>
+  <PersonalChronicle.UI.Career.Qual.Cond.Review>Rating Review</PersonalChronicle.UI.Career.Qual.Cond.Review>
+  <PersonalChronicle.UI.Career.Qual.Cond.Review.Running>Reviewing (reply in N workdays)</PersonalChronicle.UI.Career.Qual.Cond.Review.Running>
+  <PersonalChronicle.UI.Career.Qual.Cond.Review.Done>Answered</PersonalChronicle.UI.Career.Qual.Cond.Review.Done>
+  <PersonalChronicle.UI.Career.Qual.Cond.Review.Todo>Awaiting settlement</PersonalChronicle.UI.Career.Qual.Cond.Review.Todo>
+  <PersonalChronicle.UI.Career.Qual.Cond.Satisfied>✓ Met</PersonalChronicle.UI.Career.Qual.Cond.Satisfied>
+  <PersonalChronicle.UI.Career.Qual.Cond.Unsatisfied>○ Not met</PersonalChronicle.UI.Career.Qual.Cond.Unsatisfied>
+  <PersonalChronicle.UI.Career.Qual.Btn.ApplyPractical>Apply for Practical Exam</PersonalChronicle.UI.Career.Qual.Btn.ApplyPractical>
+  <PersonalChronicle.UI.Career.Qual.Btn.SubmitTheory>Submit Theory Exam</PersonalChronicle.UI.Career.Qual.Btn.SubmitTheory>
+  <PersonalChronicle.UI.Career.Qual.Btn.Thesis>Thesis / Defense</PersonalChronicle.UI.Career.Qual.Btn.Thesis>
+  <PersonalChronicle.UI.Career.Qual.Btn.Defense>Hold Defense</PersonalChronicle.UI.Career.Qual.Btn.Defense>
+  <PersonalChronicle.UI.Career.Qual.Gate.PracticalFirst>Practical exam must be passed first</PersonalChronicle.UI.Career.Qual.Gate.PracticalFirst>
+  <PersonalChronicle.UI.Career.Qual.Gate.TheoryFirst>Theory exam must be submitted first</PersonalChronicle.UI.Career.Qual.Gate.TheoryFirst>
+  <PersonalChronicle.UI.Career.Qual.Gate.ThesisFirst>Thesis must be completed first</PersonalChronicle.UI.Career.Qual.Gate.ThesisFirst>
+  <PersonalChronicle.UI.Career.Qual.Theory.Passed>✓ Theory exam passed (evidence weighted)</PersonalChronicle.UI.Career.Qual.Theory.Passed>
+  <PersonalChronicle.UI.Career.Qual.Theory.Todo>Pending (submit once all four grounds are ready)</PersonalChronicle.UI.Career.Qual.Theory.Todo>
+  <PersonalChronicle.UI.Career.Qual.Thesis.Done>✓ Thesis completed</PersonalChronicle.UI.Career.Qual.Thesis.Done>
+  <PersonalChronicle.UI.Career.Qual.Thesis.Todo>Not written (opens after theory submitted)</PersonalChronicle.UI.Career.Qual.Thesis.Todo>
+  <PersonalChronicle.UI.Career.Qual.Defense.Passed>✓ Defense passed (entering rating review)</PersonalChronicle.UI.Career.Qual.Defense.Passed>
+  <PersonalChronicle.UI.Career.Qual.Defense.Todo>Pending (opens after thesis completed)</PersonalChronicle.UI.Career.Qual.Defense.Todo>
+  <PersonalChronicle.UI.Career.Qual.Review.Due>Rating review due, awaiting settlement</PersonalChronicle.UI.Career.Qual.Review.Due>
+  <PersonalChronicle.UI.Career.Qual.Review.Running>Rating review in progress: reply in N workdays (settled after defense, not immediate)</PersonalChronicle.UI.Career.Qual.Review.Running>
+  <PersonalChronicle.UI.Career.Qual.Task.Label>Task: {0} · require {1} pcs ≥ {2} · cap {3} pcs · produced {4} pcs ({5}){6}</PersonalChronicle.UI.Career.Qual.Task.Label>
+  <PersonalChronicle.UI.Career.Qual.Task.Passed> · ✓ passed {0} pts</PersonalChronicle.UI.Career.Qual.Task.Passed>
+  <PersonalChronicle.UI.Career.Qual.Task.Failed> · ✗ failed (re-apply allowed)</PersonalChronicle.UI.Career.Qual.Task.Failed>
+  <PersonalChronicle.UI.Career.Qual.Task.Active> · in progress (craft matching recipes to gather evidence)</PersonalChronicle.UI.Career.Qual.Task.Active>
+  <PersonalChronicle.UI.Career.Qual.Practical.Passed>Practical exam passed (this tier)</PersonalChronicle.UI.Career.Qual.Practical.Passed>
+  <!-- Qualification flow dialog texts (hardcoded Chinese → keys, 2026-08-20) -->
+  <PersonalChronicle.UI.Career.Flow.Title.Exam>Practical Exam · {0}</PersonalChronicle.UI.Career.Flow.Title.Exam>
+  <PersonalChronicle.UI.Career.Flow.Exam.Requirement>Requirement: craft 3 industrial/space components, min quality Excellent (evidence collected from real crafting)</PersonalChronicle.UI.Career.Flow.Exam.Requirement>
+  <PersonalChronicle.UI.Career.Flow.Exam.Limit>Craft cap: 6 · time limit: 100000 ticks (fails if not met in time; re-apply allowed)</PersonalChronicle.UI.Career.Flow.Exam.Limit>
+  <PersonalChronicle.UI.Career.Flow.Exam.Produced>Produced: {0}/{1} pcs ({2})</PersonalChronicle.UI.Career.Flow.Exam.Produced>
+  <PersonalChronicle.UI.Career.Flow.Exam.Evidence>Evidence is auto-collected from real crafting (Patch_GenRecipe chain). Craft industrial/space components in game to pass.</PersonalChronicle.UI.Career.Flow.Exam.Evidence>
+  <PersonalChronicle.UI.Career.Flow.Exam.NotApplied>Not applied yet. Use the button below to apply for this tier's practical exam.</PersonalChronicle.UI.Career.Flow.Exam.NotApplied>
+  <PersonalChronicle.UI.Career.Flow.Btn.Confirm>Confirm Application</PersonalChronicle.UI.Career.Flow.Btn.Confirm>
+  <PersonalChronicle.UI.Career.Flow.Btn.Close>Close</PersonalChronicle.UI.Career.Flow.Btn.Close>
+  <PersonalChronicle.UI.Career.Flow.Title.Thesis>Thesis · {0}</PersonalChronicle.UI.Career.Flow.Title.Thesis>
+  <PersonalChronicle.UI.Career.Flow.Thesis.Topic>Topic: "Precision Manufacturing Process Research" (complete by citing books and research)</PersonalChronicle.UI.Career.Flow.Thesis.Topic>
+  <PersonalChronicle.UI.Career.Flow.Btn.ChooseTopic>Choose Thesis Topic</PersonalChronicle.UI.Career.Flow.Btn.ChooseTopic>
+  <PersonalChronicle.UI.Career.Flow.Thesis.Progress>Books cited {0}/2 · Research {1}/2</PersonalChronicle.UI.Career.Flow.Thesis.Progress>
+  <PersonalChronicle.UI.Career.Flow.Btn.CiteBook>Cite Book</PersonalChronicle.UI.Career.Flow.Btn.CiteBook>
+  <PersonalChronicle.UI.Career.Flow.Btn.CiteResearch>Cite Research</PersonalChronicle.UI.Career.Flow.Btn.CiteResearch>
+  <PersonalChronicle.UI.Career.Flow.Btn.FinishThesis>Complete Thesis</PersonalChronicle.UI.Career.Flow.Btn.FinishThesis>
+  <PersonalChronicle.UI.Career.Flow.Thesis.NeedRefs>Requires 2 books + 2 research citations</PersonalChronicle.UI.Career.Flow.Thesis.NeedRefs>
+  <PersonalChronicle.UI.Career.Flow.Thesis.Done>✓ Thesis completed: {0} pts</PersonalChronicle.UI.Career.Flow.Thesis.Done>
+  <PersonalChronicle.UI.Career.Flow.Thesis.Next>Next: hold the defense (button in the Defense block).</PersonalChronicle.UI.Career.Flow.Thesis.Next>
+  <PersonalChronicle.UI.Career.Flow.Title.Defense>Defense · {0}</PersonalChronicle.UI.Career.Flow.Title.Defense>
+  <PersonalChronicle.UI.Career.Flow.Defense.Committee>Review committee (same faction · auto-gathered by Crafting level):</PersonalChronicle.UI.Career.Flow.Defense.Committee>
+  <PersonalChronicle.UI.Career.Flow.Defense.Member>• {0} · Crafting Lv{1}</PersonalChronicle.UI.Career.Flow.Defense.Member>
+  <PersonalChronicle.UI.Career.Flow.Defense.NoCommittee>No committee members found (need same-faction colonists).</PersonalChronicle.UI.Career.Flow.Defense.NoCommittee>
+  <PersonalChronicle.UI.Career.Flow.Btn.HoldDefense>Hold Defense</PersonalChronicle.UI.Career.Flow.Btn.HoldDefense>
+  <PersonalChronicle.UI.Career.Flow.Btn.Grade>Committee Grading</PersonalChronicle.UI.Career.Flow.Btn.Grade>
+  <PersonalChronicle.UI.Career.Flow.Defense.Passed>✓ Defense passed: {0} pts (rating review auto-starts; answer in N workdays)</PersonalChronicle.UI.Career.Flow.Defense.Passed>
   <PersonalChronicle.UI.Career.Overview.Title>Career Overview</PersonalChronicle.UI.Career.Overview.Title>
   <PersonalChronicle.UI.Career.Overview.Empty>No career overview data to display yet.</PersonalChronicle.UI.Career.Overview.Empty>
   <PersonalChronicle.UI.Career.Resume.Title>Work Experience</PersonalChronicle.UI.Career.Resume.Title>
@@ -741,18 +820,7 @@
   <PersonalChronicle.UI.Career.Honor.Empty>No medal data yet (medals are granted once thresholds are met).</PersonalChronicle.UI.Career.Honor.Empty>
   <PersonalChronicle.UI.Career.PlaceholderNote>Career archive: Overview / Resume / Title / Honor tabs all consume real CareerData-derived data; empty states are shown when no data exists.</PersonalChronicle.UI.Career.PlaceholderNote>
 
-  <!-- v4.16: Archive main tab · Career overview entry -->
-  <PersonalChronicle.UI.CareerOverview>Career</PersonalChronicle.UI.CareerOverview>
-  <PersonalChronicle.UI.CareerOverviewDesc>Colony-wide career overview: each colonist's identity, primary skill and next-title progress. Click any row to open their career archive.</PersonalChronicle.UI.CareerOverviewDesc>
-  <PersonalChronicle.UI.CareerEmpty>No colonist archives yet (ensure there are living colonists in the colony).</PersonalChronicle.UI.CareerEmpty>
-  <PersonalChronicle.UI.ColPawn>Name</PersonalChronicle.UI.ColPawn>
-  <PersonalChronicle.UI.ColRole>Identity / Track</PersonalChronicle.UI.ColRole>
-  <PersonalChronicle.UI.ColSkill>Skill / Hours</PersonalChronicle.UI.ColSkill>
-  <PersonalChronicle.UI.ColNextTitle>Next Title / Readiness</PersonalChronicle.UI.ColNextTitle>
-  <PersonalChronicle.UI.NoTitle>Unrated</PersonalChronicle.UI.NoTitle>
-  <PersonalChronicle.UI.TitleMaxed>Capped</PersonalChronicle.UI.TitleMaxed>
-  <PersonalChronicle.UI.NoCareerData>No career data</PersonalChronicle.UI.NoCareerData>
-  <PersonalChronicle.UI.PromotionReadiness>Promotion readiness</PersonalChronicle.UI.PromotionReadiness>
+  <!-- v4.17: main-tab Career nav removed; career profile is embedded in the pawn detail Career tab (reuses Career.Ov.* keys) -->
 
   <!-- Career Overview (identity / qualification / precheck / next title) -->
   <PersonalChronicle.UI.Career.Ov.Identity>Career Identity</PersonalChronicle.UI.Career.Ov.Identity>
@@ -770,6 +838,10 @@
   <PersonalChronicle.UI.Career.Ov.NoGap>No gaps (all requirements met)</PersonalChronicle.UI.Career.Ov.NoGap>
   <PersonalChronicle.UI.Career.Ov.NoData>No career data yet (crafting generates career events).</PersonalChronicle.UI.Career.Ov.NoData>
   <PersonalChronicle.UI.Career.Ov.NoQual>No qualification data yet (no title qualification applied).</PersonalChronicle.UI.Career.Ov.NoQual>
+  <PersonalChronicle.UI.Career.Ov.Plan>Career Plan</PersonalChronicle.UI.Career.Ov.Plan>
+  <PersonalChronicle.UI.Career.Ov.Qual>Qualification Status</PersonalChronicle.UI.Career.Ov.Qual>
+  <PersonalChronicle.UI.Career.Ov.SetPrimary>Set Primary Direction</PersonalChronicle.UI.Career.Ov.SetPrimary>
+  <PersonalChronicle.UI.Career.Ov.Maxed>Capped (no higher title)</PersonalChronicle.UI.Career.Ov.Maxed>
   <PersonalChronicle.UI.Career.Qual.Level>Professional Level</PersonalChronicle.UI.Career.Qual.Level>
   <PersonalChronicle.UI.Career.Qual.Level.Req>Level ≥ {0}</PersonalChronicle.UI.Career.Qual.Level.Req>
   <PersonalChronicle.UI.Career.Qual.Time>Career Time</PersonalChronicle.UI.Career.Qual.Time>
@@ -834,6 +906,19 @@
   <PersonalChronicle.UI.Career.SetDirection.Done>Primary direction set: {0}</PersonalChronicle.UI.Career.SetDirection.Done>
   <PersonalChronicle.UI.Career.SetDirection.Cleared>Primary direction cleared (falls back to recommendation).</PersonalChronicle.UI.Career.SetDirection.Cleared>
   <PersonalChronicle.UI.Career.SetDirection.Clear>Clear selection (use recommendation)</PersonalChronicle.UI.Career.SetDirection.Clear>
+  <PersonalChronicle.UI.Career.SetDirection.AbilityPrefix>Ability focus: {0}</PersonalChronicle.UI.Career.SetDirection.AbilityPrefix>
+  <PersonalChronicle.UI.Career.SetDirection.Growth>Growth: base {0} / cap {1} XP / max level {2}</PersonalChronicle.UI.Career.SetDirection.Growth>
+  <PersonalChronicle.UI.Career.SetDirection.PendingSkill>Skill data pending vertical-slice release (only specialization semantics defined)</PersonalChronicle.UI.Career.SetDirection.PendingSkill>
+  <PersonalChronicle.UI.Career.SetDirection.Selected>✓</PersonalChronicle.UI.Career.SetDirection.Selected>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Quality>Quality</PersonalChronicle.UI.Career.SetDirection.Spec.Quality>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Throughput>Throughput</PersonalChronicle.UI.Career.SetDirection.Spec.Throughput>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Material>Material</PersonalChronicle.UI.Career.SetDirection.Spec.Material>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Volume>Volume</PersonalChronicle.UI.Career.SetDirection.Spec.Volume>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.machining>Machining</PersonalChronicle.UI.Career.SetDirection.Ability.machining>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.precisionControl>Precision Control</PersonalChronicle.UI.Career.SetDirection.Ability.precisionControl>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.processKnowledge>Process Knowledge</PersonalChronicle.UI.Career.SetDirection.Ability.processKnowledge>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.materialApplication>Material Application</PersonalChronicle.UI.Career.SetDirection.Ability.materialApplication>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.qualityControl>Quality Control</PersonalChronicle.UI.Career.SetDirection.Ability.qualityControl>
   <PersonalChronicle.UI.Career.Plan.Chosen>Set</PersonalChronicle.UI.Career.Plan.Chosen>
 
   <!-- P5 Professional Qualification (5 tiers, P7-A title system 2026-08-16: domestic real-world rank system) -->
@@ -884,6 +969,7 @@
   <PersonalChronicle.UI.Career.Plan.Title>Career Planning</PersonalChronicle.UI.Career.Plan.Title>
   <PersonalChronicle.UI.Career.Plan.Empty>No fit analysis data yet.</PersonalChronicle.UI.Career.Plan.Empty>
   <PersonalChronicle.UI.Career.Plan.Rec>Rec</PersonalChronicle.UI.Career.Plan.Rec>
+  <PersonalChronicle.UI.Career.Plan.Match.Overall>Fit {0} / 100</PersonalChronicle.UI.Career.Plan.Match.Overall>
   <PersonalChronicle.UI.Career.Plan.Match.High>Strong match</PersonalChronicle.UI.Career.Plan.Match.High>
   <PersonalChronicle.UI.Career.Plan.Match.Mid>Moderate match</PersonalChronicle.UI.Career.Plan.Match.Mid>
   <PersonalChronicle.UI.Career.Plan.Match.Low>Weak</PersonalChronicle.UI.Career.Plan.Match.Low>
@@ -959,7 +1045,7 @@
   <PersonalChronicle.UI.Career.MajorDir.Medicine>Clinical care / Medical research</PersonalChronicle.UI.Career.MajorDir.Medicine>
   <PersonalChronicle.UI.Career.MajorDir.Weapons>Combat / Weapon crafting</PersonalChronicle.UI.Career.MajorDir.Weapons>
   <PersonalChronicle.UI.Career.MajorDir.Mining>Mining / Mining engineering</PersonalChronicle.UI.Career.MajorDir.Mining>
-  <PersonalChronicle.UI.Career.MajorDir.Research>Science / R&D</PersonalChronicle.UI.Career.MajorDir.Research>
+  <PersonalChronicle.UI.Career.MajorDir.Research>Science / R&amp;D</PersonalChronicle.UI.Career.MajorDir.Research>
   <PersonalChronicle.UI.Career.MajorDir.Cooking>Cooking / Food processing</PersonalChronicle.UI.Career.MajorDir.Cooking>
   <PersonalChronicle.UI.Career.MajorDir.Art>Art / Sculpture</PersonalChronicle.UI.Career.MajorDir.Art>
   <PersonalChronicle.UI.Career.MajorDir.Management>Personnel / Administration</PersonalChronicle.UI.Career.MajorDir.Management>

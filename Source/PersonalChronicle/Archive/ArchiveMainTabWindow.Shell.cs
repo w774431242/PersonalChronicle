@@ -95,15 +95,6 @@ namespace PersonalChronicle.Archive
             y = DrawSidebarCategory(inner, y, itemHeight, itemGap, ArchiveCategoryKeys.Location, service);
             y += 8f;
 
-            // v4.16: 职业档案入口（殖民地级总览，避免人物 ITab 长款空间不足）。
-            if (DrawSidebarItem(inner.x, y, inner.width, itemHeight,
-                "PersonalChronicle.UI.CareerOverview".Translate().ToString(), null, view == MainView.Career))
-            {
-                GoCareer();
-            }
-            y += itemHeight + itemGap;
-            y += 8f;
-
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.Dim;
             Widgets.Label(new Rect(inner.x, y, inner.width, 18f),
@@ -196,9 +187,6 @@ namespace PersonalChronicle.Archive
                     break;
                 case MainView.EventDetail:
                     DrawEventContent(inner, service);
-                    break;
-                case MainView.Career:
-                    DrawCareerContent(inner, service);
                     break;
             }
         }
@@ -410,42 +398,6 @@ namespace PersonalChronicle.Archive
                 return "PersonalChronicle.UI.SocialEndedTitle".Translate(relLabel, other).ToString();
             }
             return "PersonalChronicle.UI.SocialFormedTitle".Translate(relLabel, other).ToString();
-        }
-
-        private void DrawPlacesTab(Rect rect, IArchiveService service)
-        {
-            Color prevColor = GUI.color;
-            float y = rect.y;
-            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.PlacesCurrent".Translate().ToString());
-
-            LocationInfo info = service.GetLiveLocation(detailObjectId);
-            if (info == null || info.Kind == LocationKind.None)
-            {
-                Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(rect.x, y, rect.width, 22f),
-                    "PersonalChronicle.UI.NoLocationData".Translate().ToString());
-                Text.Font = GameFont.Tiny;
-                GUI.color = UITheme.SecondaryText;
-                Widgets.Label(new Rect(rect.x, y + 26f, rect.width, 40f),
-                    "PersonalChronicle.UI.NoLocationExplanation".Translate().ToString());
-                GUI.color = prevColor;
-                return;
-            }
-
-            if (info.Kind == LocationKind.Map)
-            {
-                string place = string.IsNullOrEmpty(info.MapDefName)
-                    ? "PersonalChronicle.UI.UnknownPlace".Translate().ToString()
-                    : BiomeLabel(info.MapDefName);
-                y = DrawDetailRow(rect.x, y, rect.width,
-                    "PersonalChronicle.UI.PlacesMap".Translate().ToString(), place);
-            }
-            else if (info.Kind == LocationKind.Caravan)
-            {
-                y = DrawDetailRow(rect.x, y, rect.width,
-                    "PersonalChronicle.UI.PlacesCaravan".Translate().ToString(),
-                    "PersonalChronicle.UI.PlacesWorldTile".Translate(info.WorldTile).ToString());
-            }
         }
 
         private static IReadOnlyList<ReadModels.LegacyHolderView> SubList(

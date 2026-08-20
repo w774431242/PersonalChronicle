@@ -66,6 +66,12 @@ namespace PersonalChronicle.Archive
         {
             Color prevColor = GUI.color;
             float y = rect.y;
+
+            // v4.17: 职业档案界面嵌入个人档案「生涯」tab（职业身份 / 下一职称 / 资格状态）。
+            // 数据源 = cachedCareerOverview（Read Model 派生的 DetailSnapshot.CareerOverview），
+            // 窗口只消费快照，不做任何查询/排序/判定（架构 §3.1 G 层边界）。
+            y = DrawCareerProfileSection(rect, y);
+
             DrawWorkIntensityHeader(rect, ref y, service);
             DrawWorkIntensityCards(rect, ref y);
 
@@ -113,6 +119,175 @@ namespace PersonalChronicle.Archive
                 }
                 y += ((types.Count + 1) / 2) * 58f;
             }
+        }
+
+        // ---- v4.17 职业档案区块（嵌入「生涯」tab；只消费 CareerOverviewView 快照） ----
+
+        /// <summary>职业档案区块总高度（无职业数据时返回 0，与绘制路径同口径）。</summary>
+        private float CareerProfileBlockHeight()
+        {
+            ReadModels.CareerOverviewView ov = cachedCareerOverview;
+            if (ov == null || !ov.HasData)
+            {
+                return 0f;
+            }
+            float h = UITheme.SectionTitleHeight + UITheme.SpaceXs;   // 标题
+            h += 92f + UITheme.SpaceMd;                                // 职业身份
+            h += UITheme.SectionTitleHeight + UITheme.SpaceXs;         // 下一职称标题
+            h += (string.IsNullOrEmpty(ov.NextTitle) ? 36f : 84f) + UITheme.SpaceMd;
+            h += UITheme.SectionTitleHeight + UITheme.SpaceXs;         // 资格状态标题
+            int rows = (ov.Qual != null && ov.Qual.Count > 0) ? (ov.Qual.Count + 1) / 2 : 0;
+            h += (rows > 0 ? rows * (30f + 8f) : 26f) + UITheme.SpaceMd;
+            return h + 8f;
+        }
+
+        private float DrawCareerProfileSection(Rect rect, float y)
+        {
+            ReadModels.CareerOverviewView ov = cachedCareerOverview;
+            if (ov == null || !ov.HasData)
+            {
+                return y;
+            }
+
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.CareerTab".Translate().ToString());
+
+            // —— 职业身份（主职称大字 + 方向/技能/工时副行 + 5 指标小格）——
+            float pad = UITheme.PanelPadding;
+            float innerW = rect.width - 2f * pad;
+            Rect block = new Rect(rect.x, y, rect.width, 92f);
+            ArchiveUiStyle.DrawPanel(block, ArchiveUiStyle.PanelRaised);
+            float bx = block.x + pad;
+            float by = block.y + 12f;
+
+            string role = string.IsNullOrEmpty(ov.RoleName)
+                ? "PersonalChronicle.UI.Career.Ov.Undefined".Translate().ToString()
+                : ov.RoleName;
+            UIComponents.Label(new Rect(bx, by, innerW, 28f), role, UITheme.FontValue, UITheme.Accent);
+
+            string sub = ov.RoleDesc ?? string.Empty;
+            if (!string.IsNullOrEmpty(ov.SkillText))
+            {
+                sub = string.IsNullOrEmpty(sub) ? ov.SkillText : sub + " · " + ov.SkillText;
+            }
+            if (!string.IsNullOrEmpty(ov.HoursText))
+            {
+                sub = string.IsNullOrEmpty(sub) ? ov.HoursText : sub + " · " + ov.HoursText;
+            }
+            UIComponents.Label(new Rect(bx, by + 32f, innerW, 20f), sub, UITheme.FontLabel, UITheme.Muted);
+
+            float statY = by + 56f;
+            float statGap = 10f;
+            float statW = (innerW - statGap * 4f) / 5f;
+            DrawCareerMiniStat(new Rect(bx, statY, statW, 28f),
+                FormatCompact(ov.Made), "PersonalChronicle.UI.Career.Ov.Metric.Made".Translate().ToString());
+            DrawCareerMiniStat(new Rect(bx + (statW + statGap), statY, statW, 28f),
+                FormatCompact(ov.Built), "PersonalChronicle.UI.Career.Ov.Metric.Built".Translate().ToString());
+            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 2f, statY, statW, 28f),
+                FormatCompact(ov.Researched), "PersonalChronicle.UI.Career.Ov.Metric.Research".Translate().ToString());
+            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 3f, statY, statW, 28f),
+                FormatCompact(ov.Books), "PersonalChronicle.UI.Career.Ov.Books".Translate().ToString());
+            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 4f, statY, statW, 28f),
+                FormatCompact(ov.Results), "PersonalChronicle.UI.Career.Ov.Results".Translate().ToString());
+            y += 92f + UITheme.SpaceMd;
+
+            // —— 下一职称（进度条 + 缺口）——
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Career.Ov.NextTitle".Translate().ToString());
+            if (string.IsNullOrEmpty(ov.NextTitle))
+            {
+                UIComponents.TintedBox(new Rect(rect.x, y, rect.width, 36f), UITheme.Panel);
+                UIComponents.Label(new Rect(rect.x + 10f, y, rect.width - 20f, 36f),
+                    "PersonalChronicle.UI.Career.Ov.Maxed".Translate().ToString(),
+                    UITheme.FontLabel, UITheme.PillGold, TextAnchor.MiddleLeft);
+                y += 36f + UITheme.SpaceMd;
+            }
+            else
+            {
+                float blockH = 84f;
+                Rect nb = new Rect(rect.x, y, rect.width, blockH);
+                UIComponents.Panel(nb, UITheme.Panel);
+                UIComponents.Border(nb, UITheme.BorderSoft);
+                float nbx = nb.x + pad;
+                float nbw = nb.width - 2f * pad;
+                UIComponents.Label(new Rect(nbx, nb.y + 8f, nbw, 24f), ov.NextTitle,
+                    UITheme.FontValue, UITheme.Text);
+                UIComponents.ProgressBar(new Rect(nbx, nb.y + 36f, nbw, 14f),
+                    Mathf.Clamp01(ov.Progress / 100f), UITheme.PillGold, ov.Progress + "%");
+                if (ov.NextGaps != null && ov.NextGaps.Count > 0)
+                {
+                    string gaps = "PersonalChronicle.UI.Career.Ov.Gaps".Translate().ToString()
+                        + " " + string.Join(" / ", ov.NextGaps);
+                    UIComponents.Label(new Rect(nbx, nb.y + 58f, nbw, 18f), gaps,
+                        UITheme.FontLabel, UITheme.Dim);
+                }
+                y += blockH + UITheme.SpaceMd;
+            }
+
+            // —— 资格状态（6 条件 2 列网格）——
+            DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Career.Ov.Qual".Translate().ToString());
+            if (ov.Qual == null || ov.Qual.Count == 0)
+            {
+                UIComponents.Label(new Rect(rect.x, y, rect.width, 20f),
+                    "PersonalChronicle.UI.Career.Ov.NoQual".Translate().ToString(),
+                    UITheme.FontLabel, UITheme.Dim);
+                y += 26f + UITheme.SpaceMd;
+            }
+            else
+            {
+                float gap = 8f;
+                int cols = 2;
+                float rowH = 30f;
+                float cellW = (rect.width - gap * (cols - 1)) / cols;
+                for (int i = 0; i < ov.Qual.Count; i++)
+                {
+                    int col = i % cols;
+                    int row = i / cols;
+                    Rect cell = new Rect(rect.x + col * (cellW + gap), y + row * (rowH + gap), cellW, rowH);
+                    DrawCareerQualCell(cell, ov.Qual[i]);
+                }
+                int rows = (ov.Qual.Count + cols - 1) / cols;
+                y += rows * (rowH + gap) + UITheme.SpaceMd;
+            }
+
+            return y + 8f;
+        }
+
+        private static void DrawCareerMiniStat(Rect r, string value, string label)
+        {
+            UIComponents.Label(new Rect(r.x, r.y, r.width, 16f), value, UITheme.FontValue, UITheme.Text, TextAnchor.MiddleLeft);
+            UIComponents.Label(new Rect(r.x, r.y + 16f, r.width, 14f), label, UITheme.FontLabel, UITheme.Dim, TextAnchor.MiddleLeft);
+        }
+
+        private static void DrawCareerQualCell(Rect r, ReadModels.CareerQualView q)
+        {
+            Color prevColor = GUI.color;
+            GameFont prevFont = Verse.Text.Font;
+            TextAnchor prevAnchor = Verse.Text.Anchor;
+            try
+            {
+                UIComponents.TintedBox(r, UITheme.Panel);
+                UIComponents.Border(r, UITheme.BorderSoft);
+                bool ok = q != null && q.StateKey == "ok";
+                Rect dot = new Rect(r.x + 8f, r.y + (r.height - 12f) / 2f, 12f, 12f);
+                UIComponents.TintedBox(dot, ok ? UITheme.PillGreen : UITheme.PillRed);
+                Rect txt = new Rect(dot.xMax + 8f, r.y, r.width - 28f, r.height);
+                Verse.Text.Font = GameFont.Small;
+                Verse.Text.Anchor = TextAnchor.MiddleLeft;
+                GUI.color = ok ? UITheme.Text : UITheme.Muted;
+                Widgets.Label(txt, (q != null ? q.Label : "?") + "  " + (q != null ? q.Note : string.Empty));
+            }
+            finally
+            {
+                GUI.color = prevColor;
+                Verse.Text.Font = prevFont;
+                Verse.Text.Anchor = prevAnchor;
+            }
+        }
+
+        /// <summary>紧凑数字：≥10000 显示 K 后缀（与职业档案 ITab 同口径）。</summary>
+        private static string FormatCompact(int v)
+        {
+            if (v >= 10000) return (v / 1000.0).ToString("0.0") + "K";
+            return v.ToString();
         }
 
         private void DrawWorkIntensityHeader(Rect rect, ref float y, IArchiveService service)

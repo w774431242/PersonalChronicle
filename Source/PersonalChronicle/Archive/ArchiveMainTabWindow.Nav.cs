@@ -36,15 +36,6 @@ namespace PersonalChronicle.Archive
             overviewScroll = Vector2.zero;
         }
 
-        private void GoCareer()
-        {
-            view = MainView.Career;
-            detailObjectId = null;
-            cachedEventDetail = null;
-            ClearDetailCache();
-            careerScroll = Vector2.zero;
-        }
-
         public void RequestPawnDetail(string stableId)
         {
             if (string.IsNullOrEmpty(stableId))

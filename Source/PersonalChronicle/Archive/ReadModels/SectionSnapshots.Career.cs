@@ -104,30 +104,4 @@ namespace PersonalChronicle.Archive.ReadModels
         /// <summary>门槛说明（如 "等级 ≥ 25 且前置资格"）。</summary>
         public string Note;
     }
-
-    /// <summary>
-    /// v4.16: 档案馆主界面「职业档案」总览单行（殖民地级）。
-    /// 由单个殖民者的 <see cref="CareerOverviewView"/> 派生；窗口点击行 → 打开该殖民者档案职业 Tab。
-    /// </summary>
-    public sealed class CareerOverviewRowView
-    {
-        /// <summary>档案对象稳定 id（PawnObject.StableId，用于跳转）。</summary>
-        public string StableId;
-        /// <summary>殖民者显示名（null-guard 后回退 "?"）。</summary>
-        public string Name;
-        /// <summary>当前职称（未评定 → null）。</summary>
-        public string RoleName;
-        /// <summary>方向/专业描述（如 "精密制造 · 机械工程"）。</summary>
-        public string RoleDesc;
-        /// <summary>主职业技能文本（如 "精密制造 Lv25"）。</summary>
-        public string SkillText;
-        /// <summary>相关工时文本（如 "640 h"）。</summary>
-        public string HoursText;
-        /// <summary>下一职称名（已封顶 → null）。</summary>
-        public string NextTitle;
-        /// <summary>晋升准备度 0~100。</summary>
-        public int Progress;
-        /// <summary>是否有任何职业数据（无 → UI 空态，仍可在列表中显示）。</summary>
-        public bool HasData;
-    }
 }

@@ -105,58 +105,10 @@ namespace PersonalChronicle.Archive.ReadModels
             return snap;
         }
 
-        // —— v4.16: 档案馆主界面「职业档案」总览（殖民地级）——
-        /// <summary>
-        /// 构建殖民地级职业档案总览行：遍历所有 Pawn 档案对象，复用单殖民者
-        /// <see cref="BuildCareerOverview(PawnObject)"/> 派生身份/下一职称，再投影为
-        /// <see cref="CareerOverviewRowView"/>。排序/空态 null-guard 归属本方法（Read Model）。
-        /// </summary>
-        public IReadOnlyList<CareerOverviewRowView> BuildCareerOverview(IArchiveService service, long revision)
-        {
-            List<CareerOverviewRowView> rows = new List<CareerOverviewRowView>();
-            if (service == null)
-            {
-                return rows;
-            }
-            IReadOnlyList<ArchiveObject> pawns = service.GetObjectsOfCategory(ArchiveCategoryKeys.Pawn);
-            if (pawns == null || pawns.Count == 0)
-            {
-                return rows;
-            }
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                ArchiveObject obj = pawns[i];
-                if (obj == null)
-                {
-                    continue;
-                }
-                PawnObject pawn = obj as PawnObject;
-                if (pawn == null)
-                {
-                    continue;
-                }
-                CareerOverviewView overview = BuildCareerOverview(pawn);
-                rows.Add(new CareerOverviewRowView
-                {
-                    StableId = pawn.StableId,
-                    Name = string.IsNullOrEmpty(pawn.LabelShort) ? "?" : pawn.LabelShort,
-                    RoleName = overview.RoleName,
-                    RoleDesc = overview.RoleDesc,
-                    SkillText = overview.SkillText,
-                    HoursText = overview.HoursText,
-                    NextTitle = overview.NextTitle,
-                    Progress = overview.Progress,
-                    HasData = overview.HasData
-                });
-            }
-            // 排序：有职业数据的在前，其次按姓名稳定排序（避免每帧抖动）。
-            rows.Sort((a, b) =>
-            {
-                int byData = b.HasData.CompareTo(a.HasData);
-                return byData != 0 ? byData : System.StringComparer.Ordinal.Compare(a.Name, b.Name);
-            });
-            return rows;
-        }
+        // —— v4.16 职业档案导航已移除（职业档案界面嵌入个人档案「生涯」tab）——
+        // 殖民地级职业档案总览（CareerOverviewRowView / BuildCareerOverview(service, revision)）
+        // 于本次修复整体删除：侧边栏「职业档案」入口与 MainView.Career 一并移除，
+        // 职业身份/下一职称/资格状态改由个人档案「生涯」tab 消费单人生成 CareerOverviewView。
 
         // ---- v4.15 condense tab core KPI (Read Model only) ----
         // Aggregates the six digest cells consumed by ITab_Pawn_Chronicle. Every
@@ -530,9 +482,18 @@ namespace PersonalChronicle.Archive.ReadModels
             }
             int startYear = GenDate.Year((long)minTick, 0f);
             int endYear = GenDate.Year((long)maxTick, 0f);
-            string period = startYear == endYear
-                ? startYear.ToString()
-                : startYear + " – " + endYear;
+            // 日期表达：同年显示单日/年；跨年显示 "YYYY/M/D – YYYY/M/D"（GenDate 格式化避免 tick 范围歧义）。
+            string period;
+            if (startYear == endYear)
+            {
+                period = GenDate.DateReadoutStringAt((long)minTick, Vector2.zero)
+                    + " – " + GenDate.DateReadoutStringAt((long)maxTick, Vector2.zero);
+            }
+            else
+            {
+                period = GenDate.DateReadoutStringAt((long)minTick, Vector2.zero)
+                    + " – " + GenDate.DateReadoutStringAt((long)maxTick, Vector2.zero);
+            }
 
             IArchiveService service = PersonalChronicleMod.ArchiveService;
             string workLabel = ResolveWorkplaceLabel(service, pawn, null);
@@ -762,52 +723,14 @@ namespace PersonalChronicle.Archive.ReadModels
         }
 
         /// <summary>
-        /// 下一档资格：以 <see cref="QualificationDef.requiredPreviousTitle"/> 链为唯一权威。
-        /// 候选 = 「其前置职称已被授予、且自身尚未授予」的资格（即真正站在已授最高档肩膀上的下一档），
-        /// 取其中 order 最小者（最接近当前档）。
-        /// 彻底消除跨方向误判：不再按全局 order 取「第一个未授予」（否则会命中其它低档方向，如「高级技工」下一职称为「初级」）。
-        /// 已授多方向时，因每个资格的 requiredPreviousTitle 精确指向前一档，天然只命中同一方向链的下一档。
+        /// 下一档资格：委托 <see cref="QualificationEvaluator.NextQualification"/>（Domain 纯逻辑，
+        /// 职称/资格双键匹配 + 严格高于当前已授最高档），以 DefDatabase 全量资格为候选集。
         /// </summary>
         private static QualificationDef FindNextQualification(CareerData cd)
         {
-            if (cd == null || cd.GrantedTitles == null || cd.GrantedTitles.Count == 0)
-            {
-                return null;
-            }
-
-            QualificationDef best = null;
-            for (int i = 0; i < DefDatabase<QualificationDef>.AllDefsListForReading.Count; i++)
-            {
-                QualificationDef q = DefDatabase<QualificationDef>.AllDefsListForReading[i];
-                if (q == null || string.IsNullOrEmpty(q.requiredPreviousTitle) || string.IsNullOrEmpty(q.titleDefName))
-                {
-                    continue;
-                }
-                // 前置职称必须已授予，且自身尚未授予 → 才是「合规的下一档」。
-                if (!HasGrantedTitle(cd, q.requiredPreviousTitle) || HasGrantedTitle(cd, q.titleDefName))
-                {
-                    continue;
-                }
-                if (best == null || q.order < best.order)
-                {
-                    best = q;
-                }
-            }
-            return best;
-        }
-
-        private static bool HasGrantedTitle(CareerData cd, string titleDefName)
-        {
-            if (cd == null || cd.GrantedTitles == null || string.IsNullOrEmpty(titleDefName)) return false;
-            for (int i = 0; i < cd.GrantedTitles.Count; i++)
-            {
-                GrantedTitle gt = cd.GrantedTitles[i];
-                if (gt != null && string.Equals(gt.TitleDefName, titleDefName, System.StringComparison.Ordinal))
-                {
-                    return true;
-                }
-            }
-            return false;
+            if (cd == null) return null;
+            return QualificationEvaluator.NextQualification(
+                cd, DefDatabase<QualificationDef>.AllDefsListForReading);
         }
 
         private static string TitleLabel(ProfessionalTitleDef titleDef)
@@ -1072,7 +995,7 @@ namespace PersonalChronicle.Archive.ReadModels
             int currentIdx = -1;
             for (int i = 0; i < quals.Count; i++)
             {
-                if (HasGrantedTitle(cd, quals[i].titleDefName))
+                if (QualificationEvaluator.HasGrantedTitleKey(cd, quals[i].titleDefName))
                 {
                     currentIdx = i;
                 }

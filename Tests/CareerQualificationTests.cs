@@ -206,6 +206,121 @@ namespace PersonalChronicle.Tests
             Assert.AreEqual("previousTitle", list[0].Reason);
         }
 
+        // ───────────────────────── v4.17 下一职称链（防倒挂 + 双键匹配） ─────────────────────────
+        // 回归背景：主界面「职业档案」列表出现「当前职称(高级技工) > 下一职称(初级技工)」。
+        // 根因：requiredPreviousTitle 存资格 defName，Read Model 曾只比职称 defName，
+        // 前置链永远不满足 → 回落最低档。修复后 NextQualification 双键匹配 + 严格高于当前档。
+
+        private static QualificationDef MakeLadderQual(string defName, string titleDefName,
+            string requiredPreviousTitle, int order)
+        {
+            return new QualificationDef
+            {
+                defName = defName,
+                professionalSkillDefName = "SkillX",
+                titleDefName = titleDefName,
+                requiredMinLevel = 5,
+                requiredCareerTimeTicks = 0,
+                requiredPreviousTitle = requiredPreviousTitle,
+                minimumScore = 0f,
+                order = order
+            };
+        }
+
+        /// <summary>精密制造 5 档阶梯（对齐 Defs/QualificationDefs.xml）。</summary>
+        private static List<QualificationDef> MakePrecisionLadder()
+        {
+            return new List<QualificationDef>
+            {
+                MakeLadderQual("Q_Precision_Junior", "Title_Precision_Junior", null, 0),
+                MakeLadderQual("Q_Precision_Assistant", "Title_Precision_Assistant", "Q_Precision_Junior", 1),
+                MakeLadderQual("Q_Precision_Senior", "Title_Precision_Senior", "Q_Precision_Assistant", 2),
+                MakeLadderQual("Q_Precision_Specialist", "Title_Precision_Specialist", "Q_Precision_Senior", 3),
+                MakeLadderQual("Q_Precision_Master", "Title_Precision_Master", "Q_Precision_Specialist", 4)
+            };
+        }
+
+        private static CareerData MakeCareerWithTitles(params string[] titleDefNames)
+        {
+            PawnObject p = new PawnObject();
+            p.CareerData = new CareerData();
+            p.CareerData.GrantedTitles = new List<GrantedTitle>();
+            long tick = 100L;
+            foreach (string t in titleDefNames)
+            {
+                p.CareerData.GrantedTitles.Add(new GrantedTitle(t, t.Replace("Title_", "Q_"), tick));
+                tick += 100L;
+            }
+            return p.CareerData;
+        }
+
+        [Test]
+        public void HasGrantedTitleKey_MatchesByTitleDefName()
+        {
+            CareerData cd = MakeCareerWithTitles("Title_Precision_Junior");
+            Assert.IsTrue(QualificationEvaluator.HasGrantedTitleKey(cd, "Title_Precision_Junior"));
+            Assert.IsFalse(QualificationEvaluator.HasGrantedTitleKey(cd, "Title_Precision_Senior"));
+        }
+
+        [Test]
+        public void HasGrantedTitleKey_MatchesByQualificationDefName()
+        {
+            // requiredPreviousTitle 存的是资格 defName —— 必须能命中职称记录
+            CareerData cd = MakeCareerWithTitles("Title_Precision_Junior");
+            Assert.IsTrue(QualificationEvaluator.HasGrantedTitleKey(cd, "Q_Precision_Junior"));
+        }
+
+        [Test]
+        public void NextQualification_NoTitles_PicksFirstTier()
+        {
+            CareerData cd = MakeCareerWithTitles();
+            QualificationDef next = QualificationEvaluator.NextQualification(cd, MakePrecisionLadder());
+            Assert.IsNotNull(next);
+            Assert.AreEqual("Q_Precision_Junior", next.defName);
+        }
+
+        [Test]
+        public void NextQualification_HighTitleOnly_NeverBelowCurrent()
+        {
+            // 只授「高级技工」(order 2)：下一职称必须严格高于当前档 → 技师(Specialist, order 3)，
+            // 绝不能回落到「初级技工」(order 0) —— 修复「当前职称高于下一职称」倒挂回归用例。
+            CareerData cd = MakeCareerWithTitles("Title_Precision_Senior");
+            QualificationDef next = QualificationEvaluator.NextQualification(cd, MakePrecisionLadder());
+            Assert.IsNotNull(next);
+            Assert.AreEqual("Q_Precision_Specialist", next.defName);
+            Assert.IsTrue(next.order > 2, "next order must exceed current highest order");
+        }
+
+        [Test]
+        public void NextQualification_MissingLowerTier_NotFirstTier()
+        {
+            // 授予「中级技工 + 高级技工」（低档缺失）：仍应取高级技工的下一档，
+            // 而不是把缺失的「初级技工」当作下一职称。
+            CareerData cd = MakeCareerWithTitles("Title_Precision_Assistant", "Title_Precision_Senior");
+            QualificationDef next = QualificationEvaluator.NextQualification(cd, MakePrecisionLadder());
+            Assert.IsNotNull(next);
+            Assert.AreEqual("Q_Precision_Specialist", next.defName);
+        }
+
+        [Test]
+        public void NextQualification_FullChain_CappedReturnsNull()
+        {
+            CareerData cd = MakeCareerWithTitles(
+                "Title_Precision_Junior", "Title_Precision_Assistant", "Title_Precision_Senior",
+                "Title_Precision_Specialist", "Title_Precision_Master");
+            Assert.IsNull(QualificationEvaluator.NextQualification(cd, MakePrecisionLadder()));
+        }
+
+        [Test]
+        public void NextQualification_PrerequisiteByQualificationKey_Satisfied()
+        {
+            // 前置职称按资格 defName 存储时，双键匹配必须放行第二档（回归：旧实现永远跳过第二档起）
+            CareerData cd = MakeCareerWithTitles("Title_Precision_Junior");
+            QualificationDef next = QualificationEvaluator.NextQualification(cd, MakePrecisionLadder());
+            Assert.IsNotNull(next);
+            Assert.AreEqual("Q_Precision_Assistant", next.defName);
+        }
+
         // ───────────────────────── P8 成就聚合 ─────────────────────────
 
         [Test]

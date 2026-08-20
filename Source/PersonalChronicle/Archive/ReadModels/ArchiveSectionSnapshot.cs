@@ -52,8 +52,5 @@ namespace PersonalChronicle.Archive.ReadModels
         /// and null-guarded. Centralizes the ordering that the Home timeline needs so the
         /// draw path never orders <see cref="IArchiveService"/> results itself (design doc §7.4).</summary>
         IReadOnlyList<ChronicleEvent> BuildTimelineEvents(IArchiveService service, long revision);
-
-        /// <summary>v4.16: colony-wide 职业档案总览行（排序/过滤归属 Provider）。</summary>
-        IReadOnlyList<CareerOverviewRowView> BuildCareerOverview(IArchiveService service, long revision);
     }
 }

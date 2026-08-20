@@ -734,6 +734,85 @@
   <PersonalChronicle.UI.Career.Qual.Actions>流程操作（实践考试 → 理论考试 → 论文 → 答辩 → 评级评审）</PersonalChronicle.UI.Career.Qual.Actions>
   <PersonalChronicle.UI.Career.Qual.Gate>无法进行：{0}</PersonalChronicle.UI.Career.Qual.Gate>
   <PersonalChronicle.UI.Career.Qual.SubmitResult>操作结果：{0}</PersonalChronicle.UI.Career.Qual.SubmitResult>
+  <PersonalChronicle.UI.Career.Qual.NoTitle>暂无已授予职称记录。</PersonalChronicle.UI.Career.Qual.NoTitle>
+  <PersonalChronicle.UI.Career.Qual.Block.Practical>实践考试</PersonalChronicle.UI.Career.Qual.Block.Practical>
+  <PersonalChronicle.UI.Career.Qual.Block.Theory>理论考试</PersonalChronicle.UI.Career.Qual.Block.Theory>
+  <PersonalChronicle.UI.Career.Qual.Block.Thesis>论文</PersonalChronicle.UI.Career.Qual.Block.Thesis>
+  <PersonalChronicle.UI.Career.Qual.Block.Defense>答辩</PersonalChronicle.UI.Career.Qual.Block.Defense>
+  <PersonalChronicle.UI.Career.Qual.Block.Titles>职称记录</PersonalChronicle.UI.Career.Qual.Block.Titles>
+  <!-- 资格页操作文本（Qualification 子页 P2 硬编码收敛 2026-08-20） -->
+  <PersonalChronicle.UI.Career.Qual.Step.Granted>✓</PersonalChronicle.UI.Career.Qual.Step.Granted>
+  <PersonalChronicle.UI.Career.Qual.Step.Applying>申报中</PersonalChronicle.UI.Career.Qual.Step.Applying>
+  <PersonalChronicle.UI.Career.Qual.Step.Locked>·</PersonalChronicle.UI.Career.Qual.Step.Locked>
+  <PersonalChronicle.UI.Career.Qual.Cond.Level>专业等级</PersonalChronicle.UI.Career.Qual.Cond.Level>
+  <PersonalChronicle.UI.Career.Qual.Cond.Level.Note>{0} ≥ {1}</PersonalChronicle.UI.Career.Qual.Cond.Level.Note>
+  <PersonalChronicle.UI.Career.Qual.Cond.Time>职业资历</PersonalChronicle.UI.Career.Qual.Cond.Time>
+  <PersonalChronicle.UI.Career.Qual.Cond.Time.Note>相关工作 ≥ {0} tick</PersonalChronicle.UI.Career.Qual.Cond.Time.Note>
+  <PersonalChronicle.UI.Career.Qual.Cond.Score>综合评分</PersonalChronicle.UI.Career.Qual.Cond.Score>
+  <PersonalChronicle.UI.Career.Qual.Cond.Score.Note>资格评定 ≥ {0}（当前 {1}）</PersonalChronicle.UI.Career.Qual.Cond.Score.Note>
+  <PersonalChronicle.UI.Career.Qual.Cond.Practical>实践考试</PersonalChronicle.UI.Career.Qual.Cond.Practical>
+  <PersonalChronicle.UI.Career.Qual.Cond.Practical.Passed>通过（真实制造证据）</PersonalChronicle.UI.Career.Qual.Cond.Practical.Passed>
+  <PersonalChronicle.UI.Career.Qual.Cond.Practical.Active>进行中</PersonalChronicle.UI.Career.Qual.Cond.Practical.Active>
+  <PersonalChronicle.UI.Career.Qual.Cond.Practical.None>未报名</PersonalChronicle.UI.Career.Qual.Cond.Practical.None>
+  <PersonalChronicle.UI.Career.Qual.Cond.Theory>理论考试</PersonalChronicle.UI.Career.Qual.Cond.Theory>
+  <PersonalChronicle.UI.Career.Qual.Cond.Theory.Passed>通过（证据加权合成）</PersonalChronicle.UI.Career.Qual.Cond.Theory.Passed>
+  <PersonalChronicle.UI.Career.Qual.Cond.Theory.Todo>待提交</PersonalChronicle.UI.Career.Qual.Cond.Theory.Todo>
+  <PersonalChronicle.UI.Career.Qual.Cond.Paper>论文 / 答辩</PersonalChronicle.UI.Career.Qual.Cond.Paper>
+  <PersonalChronicle.UI.Career.Qual.Cond.Paper.Passed>通过</PersonalChronicle.UI.Career.Qual.Cond.Paper.Passed>
+  <PersonalChronicle.UI.Career.Qual.Cond.Paper.Pending>答辩待进行</PersonalChronicle.UI.Career.Qual.Cond.Paper.Pending>
+  <PersonalChronicle.UI.Career.Qual.Cond.Paper.Todo>待进行</PersonalChronicle.UI.Career.Qual.Cond.Paper.Todo>
+  <PersonalChronicle.UI.Career.Qual.Cond.Review>评级评审</PersonalChronicle.UI.Career.Qual.Cond.Review>
+  <PersonalChronicle.UI.Career.Qual.Cond.Review.Running>评审中（N 个工作日后答复）</PersonalChronicle.UI.Career.Qual.Cond.Review.Running>
+  <PersonalChronicle.UI.Career.Qual.Cond.Review.Done>已答复</PersonalChronicle.UI.Career.Qual.Cond.Review.Done>
+  <PersonalChronicle.UI.Career.Qual.Cond.Review.Todo>待结算</PersonalChronicle.UI.Career.Qual.Cond.Review.Todo>
+  <PersonalChronicle.UI.Career.Qual.Cond.Satisfied>✓ 满足</PersonalChronicle.UI.Career.Qual.Cond.Satisfied>
+  <PersonalChronicle.UI.Career.Qual.Cond.Unsatisfied>○ 未满足</PersonalChronicle.UI.Career.Qual.Cond.Unsatisfied>
+  <PersonalChronicle.UI.Career.Qual.Btn.ApplyPractical>报名实践考试</PersonalChronicle.UI.Career.Qual.Btn.ApplyPractical>
+  <PersonalChronicle.UI.Career.Qual.Btn.SubmitTheory>提交理论考试</PersonalChronicle.UI.Career.Qual.Btn.SubmitTheory>
+  <PersonalChronicle.UI.Career.Qual.Btn.Thesis>论文 / 答辩</PersonalChronicle.UI.Career.Qual.Btn.Thesis>
+  <PersonalChronicle.UI.Career.Qual.Btn.Defense>召开答辩</PersonalChronicle.UI.Career.Qual.Btn.Defense>
+  <PersonalChronicle.UI.Career.Qual.Gate.PracticalFirst>需先通过实践考试</PersonalChronicle.UI.Career.Qual.Gate.PracticalFirst>
+  <PersonalChronicle.UI.Career.Qual.Gate.TheoryFirst>需先提交理论考试</PersonalChronicle.UI.Career.Qual.Gate.TheoryFirst>
+  <PersonalChronicle.UI.Career.Qual.Gate.ThesisFirst>需先完成论文</PersonalChronicle.UI.Career.Qual.Gate.ThesisFirst>
+  <PersonalChronicle.UI.Career.Qual.Theory.Passed>✅ 理论考试已通过（证据加权合成）</PersonalChronicle.UI.Career.Qual.Theory.Passed>
+  <PersonalChronicle.UI.Career.Qual.Theory.Todo>待提交（四依据齐备后提交）</PersonalChronicle.UI.Career.Qual.Theory.Todo>
+  <PersonalChronicle.UI.Career.Qual.Thesis.Done>✅ 论文已完成</PersonalChronicle.UI.Career.Qual.Thesis.Done>
+  <PersonalChronicle.UI.Career.Qual.Thesis.Todo>待撰写（提交理论后开启）</PersonalChronicle.UI.Career.Qual.Thesis.Todo>
+  <PersonalChronicle.UI.Career.Qual.Defense.Passed>✅ 答辩已通过（进入评级评审）</PersonalChronicle.UI.Career.Qual.Defense.Passed>
+  <PersonalChronicle.UI.Career.Qual.Defense.Todo>待进行（完成论文后开启）</PersonalChronicle.UI.Career.Qual.Defense.Todo>
+  <PersonalChronicle.UI.Career.Qual.Review.Due>⏳ 评级评审已到期，待结算授予</PersonalChronicle.UI.Career.Qual.Review.Due>
+  <PersonalChronicle.UI.Career.Qual.Review.Running>⏳ 评级评审中：N 个工作日后答复（答辩后结算，非即时授予）</PersonalChronicle.UI.Career.Qual.Review.Running>
+  <PersonalChronicle.UI.Career.Qual.Task.Label>任务：{0} · 要求 {1} 件 ≥ {2} · 上限 {3} 件 · 已产出 {4} 件（{5}）{6}</PersonalChronicle.UI.Career.Qual.Task.Label>
+  <PersonalChronicle.UI.Career.Qual.Task.Passed> · ✅ 已通过 {0} 分</PersonalChronicle.UI.Career.Qual.Task.Passed>
+  <PersonalChronicle.UI.Career.Qual.Task.Failed> · ✗ 未通过（可重新报名）</PersonalChronicle.UI.Career.Qual.Task.Failed>
+  <PersonalChronicle.UI.Career.Qual.Task.Active> · 进行中（制造对应配方采集证据）</PersonalChronicle.UI.Career.Qual.Task.Active>
+  <PersonalChronicle.UI.Career.Qual.Practical.Passed>实践考试已通过（本档）</PersonalChronicle.UI.Career.Qual.Practical.Passed>
+  <!-- 资格流程对话框文本（Dialog_QualificationFlow P2 硬编码收敛 2026-08-20） -->
+  <PersonalChronicle.UI.Career.Flow.Title.Exam>实践考试 · {0}</PersonalChronicle.UI.Career.Flow.Title.Exam>
+  <PersonalChronicle.UI.Career.Flow.Exam.Requirement>要求：制造 3 件工业/太空组件，最低品质 Excellent（真实制造采集证据）</PersonalChronicle.UI.Career.Flow.Exam.Requirement>
+  <PersonalChronicle.UI.Career.Flow.Exam.Limit>制造上限：6 件 · 时限：100000 tick（超限/超时未达标即失败，可重新报名）</PersonalChronicle.UI.Career.Flow.Exam.Limit>
+  <PersonalChronicle.UI.Career.Flow.Exam.Produced>已产出：{0}/{1} 件（{2}）</PersonalChronicle.UI.Career.Flow.Exam.Produced>
+  <PersonalChronicle.UI.Career.Flow.Exam.Evidence>证据由真实制造自动采集（Patch_GenRecipe 链路）。请在游戏中制造工业组件/太空组件完成考试。</PersonalChronicle.UI.Career.Flow.Exam.Evidence>
+  <PersonalChronicle.UI.Career.Flow.Exam.NotApplied>尚未报名。点击下方按钮报名本档实践考试。</PersonalChronicle.UI.Career.Flow.Exam.NotApplied>
+  <PersonalChronicle.UI.Career.Flow.Btn.Confirm>📋 确认报名</PersonalChronicle.UI.Career.Flow.Btn.Confirm>
+  <PersonalChronicle.UI.Career.Flow.Btn.Close>关闭</PersonalChronicle.UI.Career.Flow.Btn.Close>
+  <PersonalChronicle.UI.Career.Flow.Title.Thesis>论文 · {0}</PersonalChronicle.UI.Career.Flow.Title.Thesis>
+  <PersonalChronicle.UI.Career.Flow.Thesis.Topic>课题：《精密制造工艺研究》（引用书籍与研究完成论文）</PersonalChronicle.UI.Career.Flow.Thesis.Topic>
+  <PersonalChronicle.UI.Career.Flow.Btn.ChooseTopic>📝 论文选题</PersonalChronicle.UI.Career.Flow.Btn.ChooseTopic>
+  <PersonalChronicle.UI.Career.Flow.Thesis.Progress>已引用书籍 {0}/2 · 研究 {1}/2</PersonalChronicle.UI.Career.Flow.Thesis.Progress>
+  <PersonalChronicle.UI.Career.Flow.Btn.CiteBook>📚 引用书籍</PersonalChronicle.UI.Career.Flow.Btn.CiteBook>
+  <PersonalChronicle.UI.Career.Flow.Btn.CiteResearch>🔬 引用研究</PersonalChronicle.UI.Career.Flow.Btn.CiteResearch>
+  <PersonalChronicle.UI.Career.Flow.Btn.FinishThesis>✅ 完成论文</PersonalChronicle.UI.Career.Flow.Btn.FinishThesis>
+  <PersonalChronicle.UI.Career.Flow.Thesis.NeedRefs>需引用 2 本书籍 + 2 项研究</PersonalChronicle.UI.Career.Flow.Thesis.NeedRefs>
+  <PersonalChronicle.UI.Career.Flow.Thesis.Done>✅ 论文完成：{0} 分</PersonalChronicle.UI.Career.Flow.Thesis.Done>
+  <PersonalChronicle.UI.Career.Flow.Thesis.Next>下一步：召开答辩（答辩子页按钮）。</PersonalChronicle.UI.Career.Flow.Thesis.Next>
+  <PersonalChronicle.UI.Career.Flow.Title.Defense>答辩 · {0}</PersonalChronicle.UI.Career.Flow.Title.Defense>
+  <PersonalChronicle.UI.Career.Flow.Defense.Committee>评审委员会（同阵营 · 按 Crafting 等级自动召集）：</PersonalChronicle.UI.Career.Flow.Defense.Committee>
+  <PersonalChronicle.UI.Career.Flow.Defense.Member>• {0} · 制造 Lv{1}</PersonalChronicle.UI.Career.Flow.Defense.Member>
+  <PersonalChronicle.UI.Career.Flow.Defense.NoCommittee>未找到可召集的委员（需同阵营殖民者）。</PersonalChronicle.UI.Career.Flow.Defense.NoCommittee>
+  <PersonalChronicle.UI.Career.Flow.Btn.HoldDefense>🎤 召开答辩</PersonalChronicle.UI.Career.Flow.Btn.HoldDefense>
+  <PersonalChronicle.UI.Career.Flow.Btn.Grade>🗳 委员会评分</PersonalChronicle.UI.Career.Flow.Btn.Grade>
+  <PersonalChronicle.UI.Career.Flow.Defense.Passed>✅ 答辩通过：{0} 分（评级评审自动开始，N 个工作日后答复授予）</PersonalChronicle.UI.Career.Flow.Defense.Passed>
   <PersonalChronicle.UI.Career.Overview.Title>职业总览</PersonalChronicle.UI.Career.Overview.Title>
   <PersonalChronicle.UI.Career.Overview.Empty>职业总览暂无可展示数据。</PersonalChronicle.UI.Career.Overview.Empty>
   <PersonalChronicle.UI.Career.Resume.Title>工作经历</PersonalChronicle.UI.Career.Resume.Title>
@@ -744,18 +823,7 @@
   <PersonalChronicle.UI.Career.Honor.Empty>暂无勋章数据（需达成勋章阈值后授予）。</PersonalChronicle.UI.Career.Honor.Empty>
   <PersonalChronicle.UI.Career.PlaceholderNote>职业档案：总览/履历/职称/勋章四页均已接入真实数据（CareerData 派生），无数据时显示空态说明。</PersonalChronicle.UI.Career.PlaceholderNote>
 
-  <!-- v4.16: 档案馆主界面 · 职业档案总览入口 -->
-  <PersonalChronicle.UI.CareerOverview>职业档案</PersonalChronicle.UI.CareerOverview>
-  <PersonalChronicle.UI.CareerOverviewDesc>殖民地级职业生涯总览：列出每位殖民者的职业身份、主技能与下一职称进度；点击任意行进入其职业档案。</PersonalChronicle.UI.CareerOverviewDesc>
-  <PersonalChronicle.UI.CareerEmpty>暂无殖民者档案（确保殖民地中有存活殖民者）。</PersonalChronicle.UI.CareerEmpty>
-  <PersonalChronicle.UI.ColPawn>姓名</PersonalChronicle.UI.ColPawn>
-  <PersonalChronicle.UI.ColRole>职业身份 / 方向</PersonalChronicle.UI.ColRole>
-  <PersonalChronicle.UI.ColSkill>主技能 / 工时</PersonalChronicle.UI.ColSkill>
-  <PersonalChronicle.UI.ColNextTitle>下一职称 / 准备度</PersonalChronicle.UI.ColNextTitle>
-  <PersonalChronicle.UI.NoTitle>未评定</PersonalChronicle.UI.NoTitle>
-  <PersonalChronicle.UI.TitleMaxed>已封顶</PersonalChronicle.UI.TitleMaxed>
-  <PersonalChronicle.UI.NoCareerData>暂无职业数据</PersonalChronicle.UI.NoCareerData>
-  <PersonalChronicle.UI.PromotionReadiness>晋升准备度</PersonalChronicle.UI.PromotionReadiness>
+  <!-- v4.17: 主界面「职业档案」导航已移除，职业档案界面嵌入个人档案「生涯」tab（Career.Ov.* 键复用） -->
 
   <!-- 职业档案 · 总览（身份/资格/预检/下一职称） -->
   <PersonalChronicle.UI.Career.Ov.Identity>职业身份</PersonalChronicle.UI.Career.Ov.Identity>
@@ -773,6 +841,10 @@
   <PersonalChronicle.UI.Career.Ov.NoGap>无缺口（已满足全部条件）</PersonalChronicle.UI.Career.Ov.NoGap>
   <PersonalChronicle.UI.Career.Ov.NoData>暂无职业数据（需制造行为产生职业事件后派生）。</PersonalChronicle.UI.Career.Ov.NoData>
   <PersonalChronicle.UI.Career.Ov.NoQual>暂无资格数据（尚未申请任何职称资格）。</PersonalChronicle.UI.Career.Ov.NoQual>
+  <PersonalChronicle.UI.Career.Ov.Plan>职业规划</PersonalChronicle.UI.Career.Ov.Plan>
+  <PersonalChronicle.UI.Career.Ov.Qual>资格状态</PersonalChronicle.UI.Career.Ov.Qual>
+  <PersonalChronicle.UI.Career.Ov.SetPrimary>设定主方向</PersonalChronicle.UI.Career.Ov.SetPrimary>
+  <PersonalChronicle.UI.Career.Ov.Maxed>已封顶（无更高职称）</PersonalChronicle.UI.Career.Ov.Maxed>
   <PersonalChronicle.UI.Career.Qual.Level>专业等级</PersonalChronicle.UI.Career.Qual.Level>
   <PersonalChronicle.UI.Career.Qual.Level.Req>专业等级 ≥ {0}</PersonalChronicle.UI.Career.Qual.Level.Req>
   <PersonalChronicle.UI.Career.Qual.Time>职业资历</PersonalChronicle.UI.Career.Qual.Time>
@@ -837,6 +909,19 @@
   <PersonalChronicle.UI.Career.SetDirection.Done>已设定主方向：{0}</PersonalChronicle.UI.Career.SetDirection.Done>
   <PersonalChronicle.UI.Career.SetDirection.Cleared>已清除主方向（回落系统推荐）。</PersonalChronicle.UI.Career.SetDirection.Cleared>
   <PersonalChronicle.UI.Career.SetDirection.Clear>清除选择（回落推荐）</PersonalChronicle.UI.Career.SetDirection.Clear>
+  <PersonalChronicle.UI.Career.SetDirection.AbilityPrefix>能力侧重：{0}</PersonalChronicle.UI.Career.SetDirection.AbilityPrefix>
+  <PersonalChronicle.UI.Career.SetDirection.Growth>成长：基础 {0} / 上限 {1} XP / 满级 {2}</PersonalChronicle.UI.Career.SetDirection.Growth>
+  <PersonalChronicle.UI.Career.SetDirection.PendingSkill>技能数据待垂直切片落地（仅特化语义已定）</PersonalChronicle.UI.Career.SetDirection.PendingSkill>
+  <PersonalChronicle.UI.Career.SetDirection.Selected>✓</PersonalChronicle.UI.Career.SetDirection.Selected>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Quality>品质</PersonalChronicle.UI.Career.SetDirection.Spec.Quality>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Throughput>产量</PersonalChronicle.UI.Career.SetDirection.Spec.Throughput>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Material>材料</PersonalChronicle.UI.Career.SetDirection.Spec.Material>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Volume>批量</PersonalChronicle.UI.Career.SetDirection.Spec.Volume>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.machining>加工能力</PersonalChronicle.UI.Career.SetDirection.Ability.machining>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.precisionControl>精度控制</PersonalChronicle.UI.Career.SetDirection.Ability.precisionControl>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.processKnowledge>工艺理解</PersonalChronicle.UI.Career.SetDirection.Ability.processKnowledge>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.materialApplication>材料应用</PersonalChronicle.UI.Career.SetDirection.Ability.materialApplication>
+  <PersonalChronicle.UI.Career.SetDirection.Ability.qualityControl>质量控制</PersonalChronicle.UI.Career.SetDirection.Ability.qualityControl>
   <PersonalChronicle.UI.Career.Plan.Chosen>选</PersonalChronicle.UI.Career.Plan.Chosen>
 
   <!-- P5 职业资格（5 档，P7-A 职称体系 2026-08-16：国内现实职称体系 员级→助理→中级→副高→正高） -->
@@ -887,6 +972,7 @@
   <PersonalChronicle.UI.Career.Plan.Title>职业规划</PersonalChronicle.UI.Career.Plan.Title>
   <PersonalChronicle.UI.Career.Plan.Empty>暂无适配分析数据。</PersonalChronicle.UI.Career.Plan.Empty>
   <PersonalChronicle.UI.Career.Plan.Rec>荐</PersonalChronicle.UI.Career.Plan.Rec>
+  <PersonalChronicle.UI.Career.Plan.Match.Overall>适配分 {0} / 100</PersonalChronicle.UI.Career.Plan.Match.Overall>
   <PersonalChronicle.UI.Career.Plan.Match.High>高度匹配</PersonalChronicle.UI.Career.Plan.Match.High>
   <PersonalChronicle.UI.Career.Plan.Match.Mid>一般匹配</PersonalChronicle.UI.Career.Plan.Match.Mid>
   <PersonalChronicle.UI.Career.Plan.Match.Low>偏弱</PersonalChronicle.UI.Career.Plan.Match.Low>

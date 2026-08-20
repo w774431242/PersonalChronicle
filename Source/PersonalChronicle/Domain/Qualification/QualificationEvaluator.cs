@@ -159,29 +159,10 @@ namespace PersonalChronicle.Domain.Qualification
                 }
             }
 
-            // 5. 前置职称
-            if (!string.IsNullOrEmpty(def.requiredPreviousTitle) && cd != null && cd.GrantedTitles != null)
+            // 5. 前置职称（职称/资格双键匹配，见 HasGrantedTitleKey 注释）
+            if (!string.IsNullOrEmpty(def.requiredPreviousTitle) && cd != null)
             {
-                bool hasPrev = false;
-                for (int i = 0; i < cd.GrantedTitles.Count; i++)
-                {
-                    GrantedTitle g = cd.GrantedTitles[i];
-                    if (g == null)
-                    {
-                        continue;
-                    }
-                    // 2026-08-19 修复（数据模拟工具运行暴露）：requiredPreviousTitle 存的是资格
-                    // defName（如 Q_Precision_Junior），而 GrantedTitles 记录职称 defName
-                    // （如 Title_Precision_Junior）——原实现只比 TitleDefName 导致前置职称链
-                    // 从第二档起永远不满足。改为职称/资格双键匹配。
-                    if (string.Equals(g.TitleDefName, def.requiredPreviousTitle, System.StringComparison.Ordinal)
-                        || string.Equals(g.QualificationDefName, def.requiredPreviousTitle, System.StringComparison.Ordinal))
-                    {
-                        hasPrev = true;
-                        break;
-                    }
-                }
-                if (!hasPrev)
+                if (!HasGrantedTitleKey(cd, def.requiredPreviousTitle))
                 {
                     e.Reason = "previousTitle";
                     return e;
@@ -371,6 +352,79 @@ namespace PersonalChronicle.Domain.Qualification
                 }
             }
             return 0f;
+        }
+
+        // ───────────────────────── 职称链共享判定（Read Model 与 UI 复用） ─────────────────────────
+
+        /// <summary>
+        /// 已授予职称双键匹配：key 既可能是职称 defName（Title_Precision_Junior），
+        /// 也可能是资格 defName（Q_Precision_Junior）。Defs 的 <c>requiredPreviousTitle</c>
+        /// 存的是资格 defName，而 GrantedTitles 记录职称 defName —— 必须双键比较，
+        /// 否则前置职称链从第二档起永远判定不满足（2026-08-19 数据模拟工具暴露）。
+        /// 本方法是全模组唯一的前置职称判定入口（QualificationEvaluator / Read Model 共用）。
+        /// </summary>
+        public static bool HasGrantedTitleKey(CareerData cd, string titleOrQualDefName)
+        {
+            if (cd == null || cd.GrantedTitles == null || string.IsNullOrEmpty(titleOrQualDefName))
+            {
+                return false;
+            }
+            for (int i = 0; i < cd.GrantedTitles.Count; i++)
+            {
+                GrantedTitle g = cd.GrantedTitles[i];
+                if (g == null)
+                {
+                    continue;
+                }
+                if (string.Equals(g.TitleDefName, titleOrQualDefName, System.StringComparison.Ordinal)
+                    || string.Equals(g.QualificationDefName, titleOrQualDefName, System.StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 下一档资格选择（纯逻辑，可注入 defs 供离线单测）：
+        /// 候选 = 未授予 + 前置职称已授予（双键；无前置 = 第一档）+ 档位严格高于当前已授最高档。
+        /// 取 order 最小者；封顶（全部授予）返回 null。
+        /// 守卫说明：不按全局 order 取「第一个未授予」——否则已授「高级技工」(order 2) 但低档
+        /// 「初级技工」(order 0) 未授予时会把「下一职称」算成低级档，出现当前职称高于下一职称。
+        /// 档位顺序以 QualificationDef.order 为准（与 ProfessionalTitleDef.order 同源同值）。
+        /// </summary>
+        public static QualificationDef NextQualification(CareerData cd, IEnumerable<QualificationDef> defs)
+        {
+            if (cd == null || defs == null)
+            {
+                return null;
+            }
+            int currentMaxOrder = -1;
+            if (cd.GrantedTitles != null)
+            {
+                foreach (QualificationDef q in defs)
+                {
+                    if (q == null || string.IsNullOrEmpty(q.titleDefName)) continue;
+                    if (HasGrantedTitleKey(cd, q.titleDefName) && q.order > currentMaxOrder)
+                    {
+                        currentMaxOrder = q.order;
+                    }
+                }
+            }
+            QualificationDef best = null;
+            foreach (QualificationDef q in defs)
+            {
+                if (q == null || string.IsNullOrEmpty(q.titleDefName)) continue;
+                // 1) 已授予 → 跳过。
+                if (HasGrantedTitleKey(cd, q.titleDefName)) continue;
+                // 2) 前置职称：有前置必须已授予（双键），否则跳过。
+                if (!string.IsNullOrEmpty(q.requiredPreviousTitle)
+                    && !HasGrantedTitleKey(cd, q.requiredPreviousTitle)) continue;
+                // 3) 严格高于当前已授最高档：杜绝「当前职称高于下一职称」的倒挂显示。
+                if (currentMaxOrder >= 0 && q.order <= currentMaxOrder) continue;
+                if (best == null || q.order < best.order) best = q;
+            }
+            return best;
         }
     }
 }

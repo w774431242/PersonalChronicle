@@ -31,8 +31,7 @@ namespace PersonalChronicle.Archive
             Overview,
             PawnDetail,
             WeaponDetail,
-            EventDetail,
-            Career
+            EventDetail
         }
 
         private enum NavTarget
@@ -105,9 +104,6 @@ namespace PersonalChronicle.Archive
         private Vector2 overviewScroll;
         private Vector2 detailScroll;
         private Vector2 eventScroll;
-        private Vector2 careerScroll;
-        /// <summary>v4.16: colony-wide 职业档案总览行（Read Model 派生，缓存于刷新节奏）。</summary>
-        private List<ReadModels.CareerOverviewRowView> cachedCareerRows = new List<ReadModels.CareerOverviewRowView>();
         /// <summary>Scroll-wheel zoom factor for the social network graph (1 = default).</summary>
         private float socialNetworkZoom = 1f;
         /// <summary>Whether the user has scrolled the social graph (disables auto-fit).</summary>
@@ -194,6 +190,12 @@ namespace PersonalChronicle.Archive
         private ReadModels.MakerChainView cachedMakerChain = new ReadModels.MakerChainView();
         private ReadModels.CoUseView cachedCoUse = new ReadModels.CoUseView();
         private ReadModels.DecommissionView cachedDecommission = new ReadModels.DecommissionView();
+        /// <summary>
+        /// v4.17: 职业档案视图（嵌入个人档案「生涯」tab）。
+        /// 职业档案导航移除后，职业身份/下一职称/资格状态由本快照承载；
+        /// 镜像 DetailSnapshot.CareerOverview（Read Model 派生，窗口只消费）。
+        /// </summary>
+        private ReadModels.CareerOverviewView cachedCareerOverview = new ReadModels.CareerOverviewView();
 
         // Event view cache.
         private List<TreeLineView> cachedEventTree = new List<TreeLineView>();
@@ -456,8 +458,10 @@ namespace PersonalChronicle.Archive
                     ? (cachedIntensityWorkTypes.Count + 1) / 2 : 0;
                 int productionRows = (productionTypes + 1) / 2;
                 float productionSummaryHeight = productionTypes > 0 ? 86f : 0f;
+                // v4.17: 顶部职业档案区块（职业身份/下一职称/资格状态）高度。
+                float profileH = CareerProfileBlockHeight();
                 return Mathf.Max(980f,
-                    280f + intensityRows * 120f + productionSummaryHeight
+                    profileH + 280f + intensityRows * 120f + productionSummaryHeight
                     + productionRows * 58f + 16 * 26f);
             }
             if (tab == "CombatLog")
@@ -683,9 +687,9 @@ namespace PersonalChronicle.Archive
         /// the shared UIComponents.StatCell so all KPI cells share one renderer.
         /// </summary>
 
-        private static readonly Color AlivePill = UITheme.PillGreen;
-        private static readonly Color DeadPill = UITheme.Dead;
-        private static readonly Color BluePill = UITheme.PillBlue;
+        private static Color AlivePill => UITheme.PillGreen;
+        private static Color DeadPill => UITheme.Dead;
+        private static Color BluePill => UITheme.PillBlue;
 
 
 
