@@ -85,6 +85,9 @@ namespace PersonalChronicle.Archive
         private void DrawWeaponCraft(Rect rect, IArchiveService service)
         {
             Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            try
+            {
             float y = rect.y;
             if (!string.IsNullOrEmpty(cachedCraftCrafterId))
             {
@@ -109,11 +112,21 @@ namespace PersonalChronicle.Archive
                 DrawEventRow(row, line.DateText, line.NameText, line.ParamsText);
                 y += TimelineRowHeight;
             }
+            }
+            finally
+            {
+                // v4.17 体检：恢复字体（空态分支 Text.Font=Small 泄漏）。
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+            }
         }
 
         private void DrawPawnItems(Rect rect, IArchiveService service)
         {
             Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            try
+            {
             float y = rect.y;
             DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.HeldItems".Translate().ToString());
 
@@ -147,6 +160,13 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Small;
                 Widgets.Label(new Rect(rect.x, y, rect.width, 22f),
                     "PersonalChronicle.UI.NoRelated".Translate().ToString());
+            }
+            }
+            finally
+            {
+                // v4.17 体检：恢复字体（空态/行内 Text.Font 泄漏）。
+                GUI.color = prevColor;
+                Text.Font = prevFont;
             }
         }
 

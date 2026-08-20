@@ -17,6 +17,9 @@ namespace PersonalChronicle.Archive
         private void DrawSocialTab(Rect rect, IArchiveService service)
         {
             Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            try
+            {
             float y = rect.y;
             PawnObject pawn = cachedDetailObject as PawnObject;
 
@@ -141,6 +144,13 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Small;
                 Widgets.Label(new Rect(rect.x, y, rect.width, 22f),
                     "PersonalChronicle.UI.NoSocialData".Translate().ToString());
+            }
+            }
+            finally
+            {
+                // v4.17 体检：恢复字体（表头/行/空态多处 Text.Font 置位，旧实现只还原 color）。
+                GUI.color = prevColor;
+                Text.Font = prevFont;
             }
         }
 

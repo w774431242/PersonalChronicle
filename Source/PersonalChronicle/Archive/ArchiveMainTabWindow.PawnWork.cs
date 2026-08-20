@@ -17,6 +17,9 @@ namespace PersonalChronicle.Archive
         private void DrawProductionTab(Rect rect, IArchiveService service)
         {
             Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            try
+            {
             float y = rect.y;
             DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Tab.Production".Translate().ToString());
 
@@ -65,11 +68,21 @@ namespace PersonalChronicle.Archive
                 Widgets.DrawLineHorizontal(row.x, row.yMax, row.width);
                 y += RowHeight + 2f;
             }
+            }
+            finally
+            {
+                // v4.17 体检：恢复字体（旧实现空态/行循环后 Text.Font 停留在 Small/Tiny）。
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+            }
         }
 
         private void DrawCareerTab(Rect rect, IArchiveService service)
         {
             Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            try
+            {
             float y = rect.y;
 
             // v4.17: 职业档案界面嵌入个人档案「生涯」tab（职业身份 / 下一职称 / 资格状态）。
@@ -123,6 +136,13 @@ namespace PersonalChronicle.Archive
                     GUI.color = prevColor;
                 }
                 y += ((types.Count + 1) / 2) * 58f;
+            }
+            }
+            finally
+            {
+                // v4.17 体检：恢复字体（旧实现空态/卡片行后 Text.Font 停留在 Tiny）。
+                GUI.color = prevColor;
+                Text.Font = prevFont;
             }
         }
 
@@ -430,6 +450,10 @@ namespace PersonalChronicle.Archive
         private void DrawWorkIntensityCards(Rect rect, ref float y)
         {
             Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            try
+            {
             DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.WorkTime".Translate().ToString());
             Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.Muted;
@@ -484,9 +508,16 @@ namespace PersonalChronicle.Archive
                 Widgets.FillableBar(new Rect(card.x + UITheme.CardPadX, card.y + 106f, card.width - UITheme.CardPadX * 2f, 6f),
                     Mathf.Clamp01(row.Share01));
             }
-            Text.Font = GameFont.Small;
             int rows = (cachedIntensityWorkTypes.Count + 1) / 2;
             y += rows * (cardHeight + cardGap);
+            }
+            finally
+            {
+                // v4.17 体检：恢复字体/锚点（旧实现循环后强制 Text.Font=Small 而非还原原值）。
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+            }
         }
 
         private static string BuildIntensityRelativeLabel(WorkIntensityView intensity)
