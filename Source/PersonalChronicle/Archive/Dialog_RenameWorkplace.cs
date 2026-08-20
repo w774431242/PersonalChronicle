@@ -25,17 +25,19 @@ namespace PersonalChronicle.Archive
         private const float ButtonH = 34f;
         private const float ButtonGap = 10f;
         private const float WinW = 420f;
-        // v1.1.4 高度加大：hint 可能换行两行（类型名示例文案），WinH 需容纳。
-        private const float WinH = 196f;
+        // v4.17 体检：窗口高度不再固定——按 hint 实际换行高度动态计算（见 winHeight）。
 
         private readonly string title;
         private readonly string hint;
         private readonly Action<string> onCommit;
         private string input;
+        /// <summary>v4.17 体检：窗口高度按 hint 实际换行高度动态计算（旧固定 WinH=196，
+        /// 长提示 3+ 行时按钮行被窗口底边裁掉）。</summary>
+        private float winHeight;
 
         public override Vector2 InitialSize
         {
-            get { return new Vector2(WinW, WinH); }
+            get { return new Vector2(WinW, winHeight); }
         }
 
         /// <param name="titleKey">标题翻译键。</param>
@@ -56,6 +58,12 @@ namespace PersonalChronicle.Archive
             absorbInputAroundWindow = true;
             drawShadow = true;
             forcePause = true;
+            // 与 DoWindowContents 布局同口径（hint 宽度 = inRect.width = WinW）。
+            GameFont prevFont = Text.Font;
+            Text.Font = GameFont.Tiny;
+            float hintH = Mathf.Max(16f, Text.CalcHeight(this.hint, WinW) + 2f);
+            Text.Font = prevFont;
+            winHeight = TitleH + FieldH + 6f + hintH + 8f + ButtonH + 10f;
         }
 
         // v4.17 体检：closeOnAccept=true 但旧实现未提交输入——玩家按回车窗口直接

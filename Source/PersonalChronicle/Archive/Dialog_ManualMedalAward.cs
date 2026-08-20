@@ -241,21 +241,11 @@ namespace PersonalChronicle.Archive
             return value.ToString("0.#");
         }
 
+        // v4.17 体检：Truncate 逐字符 CalcSize 每帧分配（PERF-001）→ 委托 UIComponents
+        // 的 TruncateToWidth（中段截断 + 字体配对恢复，设计系统唯一收敛点）。
         private static string Truncate(string text, float maxWidth, GameFont font)
         {
-            if (string.IsNullOrEmpty(text)) return string.Empty;
-            Text.Font = font;
-            if (Text.CalcSize(text).x <= maxWidth) return text;
-            string suffix = "…";
-            Text.Font = font;
-            float suffixW = Text.CalcSize(suffix).x;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            for (int i = 0; i < text.Length; i++)
-            {
-                sb.Append(text[i]);
-                if (Text.CalcSize(sb.ToString() + suffix).x > maxWidth) break;
-            }
-            return sb.ToString() + suffix;
+            return UIComponents.TruncateToWidth(text ?? string.Empty, maxWidth, font);
         }
     }
 }
