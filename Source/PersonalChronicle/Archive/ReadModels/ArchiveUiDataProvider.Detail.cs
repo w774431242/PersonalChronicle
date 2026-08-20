@@ -64,6 +64,8 @@ namespace PersonalChronicle.Archive.ReadModels
                     BuildDetailCoreKpis(snap, service, detailObjectId, pawn);
                     // v1.1.4 勋章体系：勋章墙视图（阈值类判定 → MedalView 列表，含未授予灰态）。
                     snap.Medals = BuildMedals(pawn);
+                    // 职业事实计数：统一聚合 9 类事件（UI 只消费，禁止绘制路径直查 Domain）。
+                    snap.FactCounts = BuildCareerFactCounts(pawn);
                 }
                 else if (snap.DetailObject is ThingObject thing)
                 {
@@ -670,11 +672,17 @@ namespace PersonalChronicle.Archive.ReadModels
             // 相关工时：按事件首末 tick 跨度（60000tick ≈ 25h → 1h ≈ 2400 tick）。
             long spanTicks = CareerSpanTicks(cd);
             int hours = (int)(spanTicks / 2400L);
-            // 重大成果 = ItemProduced 计数；著作 = Books 计数。
+            // 事实计数指标：统一从 RecordCountByType 聚合（UI 只消费，禁止绘制路径直查 Domain）。
             int results = 0;
-            if (cd.RecordCountByType != null && cd.RecordCountByType.TryGetValue(CareerEventType.ItemProduced, out int prodCount))
+            int made = 0;
+            int built = 0;
+            int researched = 0;
+            if (cd.RecordCountByType != null)
             {
-                results = prodCount;
+                cd.RecordCountByType.TryGetValue(CareerEventType.ItemProduced, out results);
+                cd.RecordCountByType.TryGetValue(CareerEventType.ItemProduced, out made);
+                cd.RecordCountByType.TryGetValue(CareerEventType.ConstructionCompleted, out built);
+                cd.RecordCountByType.TryGetValue(CareerEventType.ResearchCompleted, out researched);
             }
             int books = cd.Books != null ? cd.Books.Count : 0;
 
@@ -689,6 +697,9 @@ namespace PersonalChronicle.Archive.ReadModels
             view.HoursText = hours > 0 ? hours + " h" : null;
             view.Results = results;
             view.Books = books;
+            view.Made = made;
+            view.Built = built;
+            view.Researched = researched;
 
             // —— 下一职称 + 资格状态 + 预检 ——
             QualificationDef nextQual = FindNextQualification(cd);
@@ -704,6 +715,31 @@ namespace PersonalChronicle.Archive.ReadModels
                 view.NextGaps = ComputeGaps(view.Qual, view.PreCheck);
             }
             return view;
+        }
+
+        /// <summary>
+        /// 职业事实计数（UI-001 / ARC-002：事实聚合归属 Provider）。
+        /// 统一从 <c>CareerData.RecordCountByType</c> 取全部 9 类事件计数，
+        /// 窗口（Overview/Resume/Honor）只消费本快照，不再直查 Domain。
+        /// </summary>
+        private static CareerFactCounts BuildCareerFactCounts(PawnObject pawn)
+        {
+            CareerFactCounts c = new CareerFactCounts();
+            if (pawn == null || pawn.CareerData == null || pawn.CareerData.RecordCountByType == null)
+            {
+                return c;
+            }
+            Dictionary<string, int> counts = pawn.CareerData.RecordCountByType;
+            counts.TryGetValue(CareerEventType.WorkCompleted, out c.WorkCompleted);
+            counts.TryGetValue(CareerEventType.ItemProduced, out c.ItemProduced);
+            counts.TryGetValue(CareerEventType.ConstructionCompleted, out c.ConstructionCompleted);
+            counts.TryGetValue(CareerEventType.ResearchCompleted, out c.ResearchCompleted);
+            counts.TryGetValue(CareerEventType.BookProduced, out c.BookProduced);
+            counts.TryGetValue(CareerEventType.ExamPassed, out c.ExamPassed);
+            counts.TryGetValue(CareerEventType.ThesisDefended, out c.ThesisDefended);
+            counts.TryGetValue(CareerEventType.TitleGranted, out c.TitleGranted);
+            counts.TryGetValue(CareerEventType.MedalGranted, out c.MedalGranted);
+            return c;
         }
 
         /// <summary>已授最高档职称 Def（按 TitleDef.order 取最大）。</summary>

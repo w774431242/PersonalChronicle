@@ -5,6 +5,25 @@ using System.Collections.Generic;
 namespace PersonalChronicle.Archive.ReadModels
 {
     /// <summary>
+    /// 职业事实计数快照（UI-001 / ARC-002：事实聚合归属 Provider，窗口只消费）。
+    /// 统一从 <c>CareerData.RecordCountByType</c> 聚合全部 9 类事件计数，
+    /// 替代各页面在绘制路径里直接 <c>CountEvents(po, ...)</c> 直查 Domain 的违规写法。
+    /// 只读、无 Save 语义、由 BuildCareerFactCounts 构建。
+    /// </summary>
+    public sealed class CareerFactCounts
+    {
+        public int WorkCompleted;
+        public int ItemProduced;
+        public int ConstructionCompleted;
+        public int ResearchCompleted;
+        public int BookProduced;
+        public int ExamPassed;
+        public int ThesisDefended;
+        public int TitleGranted;
+        public int MedalGranted;
+    }
+
+    /// <summary>
     /// 职业档案 · 总览视图（对齐 docs/UI预览/人物档案视窗/职业档案Tab预览.html 总览 4 区块）：
     /// 职业身份 / 当前资格状态 / 资格预检 / 下一职称。窗口只消费，不重新判定。
     /// </summary>
@@ -22,10 +41,17 @@ namespace PersonalChronicle.Archive.ReadModels
         public string SkillText;
         /// <summary>相关工时文本（如 "640 h"）。</summary>
         public string HoursText;
-        /// <summary>重大成果数（ItemProduced 等事实计数）。</summary>
+        /// <summary>重大成果数（ItemProduced 事实计数；与 Made/Built/Researched 口径统一来自 RecordCountByType）。</summary>
         public int Results;
         /// <summary>专业著作数（BookEvidence 计数）。</summary>
         public int Books;
+        // —— 事实计数指标（UI-001：统一由 Provider 从 RecordCountByType 聚合，窗口只消费，禁止绘制路径直查 Domain）——
+        /// <summary>制造产出件数（CareerEventType.ItemProduced 聚合）。</summary>
+        public int Made;
+        /// <summary>建造完成数（CareerEventType.ConstructionCompleted 聚合）。</summary>
+        public int Built;
+        /// <summary>研究完成数（CareerEventType.ResearchCompleted 聚合）。</summary>
+        public int Researched;
 
         // —— 下一职称 ——
         /// <summary>下一职称名（已封顶 → null）。</summary>

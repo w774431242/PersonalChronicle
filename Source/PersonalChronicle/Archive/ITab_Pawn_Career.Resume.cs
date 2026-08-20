@@ -124,8 +124,10 @@ namespace PersonalChronicle.Archive
                     if (snap.WorkExperiences[i] != null) made += snap.WorkExperiences[i].ProducedCount;
                 }
             }
-            int built = CountEvents(po, CareerEventType.ConstructionCompleted);
-            int researched = CountEvents(po, CareerEventType.ResearchCompleted);
+            // UI-001：事实计数统一消费快照 FactCounts，不再直查 Domain（移除 CountEvents）。
+            CareerFactCounts fc = snap != null ? snap.FactCounts : null;
+            int built = fc != null ? fc.ConstructionCompleted : 0;
+            int researched = fc != null ? fc.ResearchCompleted : 0;
             int books = po != null && po.CareerData != null && po.CareerData.Books != null ? po.CareerData.Books.Count : 0;
             float ry = panel.y + 6f;
             ry = SnapshotRow(panel, ry, "PersonalChronicle.UI.Career.Resume.Summary.Workshops".Translate().ToString(), workshops.ToString());

@@ -101,17 +101,19 @@ namespace PersonalChronicle.Archive
                 Rect contrib = new Rect(view.x, y, innerW, 6f * 26f + 8f);
                 UIComponents.Panel(contrib, UITheme.Panel);
                 PawnObject po = snap != null ? snap.DetailObject as PawnObject : null;
+                // UI-001：事实计数统一消费快照 FactCounts，不再直查 Domain（移除 CountEvents）。
+                CareerFactCounts fc = snap != null ? snap.FactCounts : null;
                 float cy = contrib.y + 6f;
                 cy = SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Made".Translate().ToString(),
-                    CountEvents(po, CareerEventType.ItemProduced).ToString());
+                    (fc != null ? fc.ItemProduced : 0).ToString());
                 cy = SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Research".Translate().ToString(),
-                    CountEvents(po, CareerEventType.ResearchCompleted).ToString());
+                    (fc != null ? fc.ResearchCompleted : 0).ToString());
                 cy = SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Built".Translate().ToString(),
-                    CountEvents(po, CareerEventType.ConstructionCompleted).ToString());
+                    (fc != null ? fc.ConstructionCompleted : 0).ToString());
                 cy = SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Books".Translate().ToString(),
                     (po != null && po.CareerData != null && po.CareerData.Books != null ? po.CareerData.Books.Count : 0).ToString());
                 SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Medal".Translate().ToString(),
-                    CountEvents(po, CareerEventType.MedalGranted).ToString());
+                    (fc != null ? fc.MedalGranted : 0).ToString());
                 y += contrib.height + UITheme.SpaceSm;
 
                 // ---- 最近荣誉事件（真实 TitleGranted/MedalGranted 事实）----

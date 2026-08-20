@@ -302,13 +302,6 @@ namespace PersonalChronicle.Archive
         }
 
         // ================= 通用 helper =================
-        private static int CountEvents(PawnObject po, string eventType)
-        {
-            if (po == null || po.CareerData == null || po.CareerData.RecordCountByType == null) return 0;
-            po.CareerData.RecordCountByType.TryGetValue(eventType, out int c);
-            return c;
-        }
-
         private static long CareerSpanTicks(CareerData cd)
         {
             if (cd == null || cd.Events == null || cd.Events.Count == 0) return 0L;

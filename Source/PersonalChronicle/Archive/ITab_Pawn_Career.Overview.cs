@@ -285,10 +285,12 @@ namespace PersonalChronicle.Archive
 
             // 数据值采用简单直白的文本列表（对齐用户要求：不额外卡片样式、紧凑省空间）。
             // 行 = label（左）+ value（右对齐），7 行：专业技能/相关工时/重大成果/专业著作/制造/建造/研究。
-            PawnObject po = snap != null ? snap.DetailObject as PawnObject : null;
-            int made = CountEvents(po, CareerEventType.ItemProduced);
-            int built = CountEvents(po, CareerEventType.ConstructionCompleted);
-            int researched = CountEvents(po, CareerEventType.ResearchCompleted);
+            // UI-001：Made/Built/Researched 全部来自快照（Provider 已从 RecordCountByType 聚合），
+            // 窗口不直查/直聚合 Domain（移除旧 CountEvents 直查）。
+            CareerFactCounts fc = snap != null ? snap.FactCounts : null;
+            int made = fc != null ? fc.ItemProduced : 0;
+            int built = fc != null ? fc.ConstructionCompleted : 0;
+            int researched = fc != null ? fc.ResearchCompleted : 0;
             y = ValueRow(view, y, innerW,
                 "PersonalChronicle.UI.Career.Ov.Skill".Translate().ToString(),
                 ov != null ? (ov.SkillText ?? "--") : "--");

@@ -306,6 +306,12 @@ namespace PersonalChronicle.Archive.ReadModels
         public CareerOverviewView CareerOverview = new CareerOverviewView();
 
         /// <summary>
+        /// 职业事实计数（9 类事件）。由 <see cref="ArchiveUiDataProvider.BuildCareerFactCounts"/>
+        /// 从 RecordCountByType 统一聚合；窗口消费，禁止绘制路径直查 Domain（UI-001 / ARC-002）。
+        /// </summary>
+        public CareerFactCounts FactCounts = new CareerFactCounts();
+
+        /// <summary>
         /// 职业档案 · 职称链（5 档，对齐 Defs/QualificationDefs.xml）。
         /// 由 <see cref="ArchiveUiDataProvider.BuildTitleTiers"/> 从 DefDatabase + 授予历史派生。
         /// </summary>

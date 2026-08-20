@@ -28,9 +28,10 @@ namespace PersonalChronicle.Archive
     {
         // ---- Layout metrics (CJK-safe; see UI standards §4) ----
         // v1.1.4 UI 优化：移除角色信息头（DrawHeader），顶部改 3 卡布局（房间/工坊/类型），
-        // 每卡主区点击改名、位置副行点击镜头跳转。TabHeight 720 保证六宫格 + footer 完整可见。
+        // 每卡主区点击改名、位置副行点击镜头跳转。TabHeight 640 避免 ITab 向上展开时顶部被屏幕/窗口边界遮盖；
+        // 六宫格内部仍用 ScrollView 滚动兜底，内容不会溢出。
         private const float TabWidth = 560f;
-        private const float TabHeight = 720f;
+        private const float TabHeight = 640f;
         private const float Pad = UITheme.PanelPadding;
         private const float ButtonH = 34f;
         // SixGridH is computed in FillTab from the available body height; do not hard-code.
