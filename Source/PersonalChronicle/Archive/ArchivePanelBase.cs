@@ -43,20 +43,22 @@ namespace PersonalChronicle.Archive
         }
 
         /// <summary>
-        /// Snapshot the three mutable GUI state fields so a panel's drawing can be
+        /// Snapshot the four mutable GUI state fields so a panel's drawing can be
         /// wrapped in try/finally and always restored — the v3.0 UI pairing rule.
+        /// v4.17 体检：补 Text.WordWrap（ShadowLabel 会修改它，旧快照遗漏）。
         /// </summary>
-        protected static (Color color, GameFont font, TextAnchor anchor) CaptureGuiState()
+        protected static (Color color, GameFont font, TextAnchor anchor, bool wordWrap) CaptureGuiState()
         {
-            return (GUI.color, Text.Font, Text.Anchor);
+            return (GUI.color, Text.Font, Text.Anchor, Text.WordWrap);
         }
 
-        /// <summary>Restore the three mutable GUI state fields captured earlier.</summary>
-        protected static void RestoreGuiState((Color color, GameFont font, TextAnchor anchor) state)
+        /// <summary>Restore the mutable GUI state fields captured earlier.</summary>
+        protected static void RestoreGuiState((Color color, GameFont font, TextAnchor anchor, bool wordWrap) state)
         {
             GUI.color = state.color;
             Text.Font = state.font;
             Text.Anchor = state.anchor;
+            Text.WordWrap = state.wordWrap;
         }
     }
 }

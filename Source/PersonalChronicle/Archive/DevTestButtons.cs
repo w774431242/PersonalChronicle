@@ -342,12 +342,10 @@ namespace PersonalChronicle.Archive
                         if (record.Consumption.SilverByDay != null) record.Consumption.SilverByDay.Clear();
                         record.Consumption.TotalSilver = 0f;
                     }
-                    // P1 CAREER-001：覆盖式重置职业事实 ledger（Debug 环境）。
-                    if (record.CareerData != null)
-                    {
-                        record.CareerData.Events.Clear();
-                        if (record.CareerData.RecordCountByType != null) record.CareerData.RecordCountByType.Clear();
-                    }
+                    // v4.17 体检：不再清 CareerData.Events / RecordCountByType ——
+                    // 本流程（DevSimulate）只写战役/击杀（SourceId=DevTest 的 ChronicleEvent
+                    // + 个人战斗累加器），不产生职业事实；旧代码会误删玩家真实的制造履历。
+                    // 职业随机化按钮（CareerRandomize）自带覆盖式重置，无需在此清理。
                 }
             }
             catch (Exception ex)
@@ -704,6 +702,9 @@ namespace PersonalChronicle.Archive
             cd.Events.Clear();
             if (cd.RecordCountByType != null) cd.RecordCountByType.Clear();
             cd.Professional = new ProfessionalState();
+            // 主方向固定为精密制造（与下方 Title/Qualification 派生键一致），
+            // 让 P9-TitleBadge 称号徽章在地图/顶栏/档案/选中条可见（依赖 primaryDirection 筛选）。
+            cd.Professional.primaryDirection = "ProfessionalSkill_PrecisionManufacturing";
             cd.Qualification = new QualificationState();
             cd.Exams = new ExamData();
             cd.Books = new List<BookEvidence>();

@@ -67,6 +67,27 @@ namespace PersonalChronicle.Archive
                 // in DrawHomeTimeline, and the ordering/null-guard lives in the snapshot
                 // builder, not the window — design doc §7.4).
                 cachedTimelineEvents = uiDataProvider.BuildTimelineEvents(service, revision);
+                // v4.17 体检：可见行数与预格式化视图在缓存刷新时一次构建
+                // （绘制路径零遍历/零分配；旧实现每帧 DateReadoutStringAt+Translate）。
+                cachedTimelineItems.Clear();
+                if (cachedTimelineEvents != null)
+                {
+                    for (int i = 0; i < cachedTimelineEvents.Count; i++)
+                    {
+                        ChronicleEvent ev = cachedTimelineEvents[i];
+                        if (ev == null) continue;
+                        if (ChronicleEventImportance.Resolve(ev) < ChronicleImportance.Important) continue;
+                        cachedTimelineItems.Add(new TimelineItemView
+                        {
+                            Event = ev,
+                            DateText = GenDate.DateReadoutStringAt(ev.Tick, Vector2.zero),
+                            TitleText = EventName(ev),
+                            Glyph = EventTypeToGlyph(ev.TypeKey),
+                            Color = EventTypeToColor(ev.TypeKey)
+                        });
+                    }
+                }
+                cachedTimelineVisibleCount = cachedTimelineItems.Count;
             }
         }
 
@@ -128,13 +149,15 @@ namespace PersonalChronicle.Archive
 
             // RecentEvents is already sorted descending by tick and null-guarded by
             // the read-model provider (P3). The window only formats.
+            // v4.17 体检：按 RecentRecordCount=6 截断——Read Model 返回 20 条，
+            // 全部缓存会让第 7+ 行绘制在滚动区外被裁且不可达（可见即不可达）。
             IReadOnlyList<ChronicleEvent> recent = home.RecentEvents;
             if (recent == null || recent.Count == 0)
             {
                 return;
             }
-
-            for (int i = 0; i < recent.Count; i++)
+            int take = Mathf.Min(recent.Count, RecentRecordCount);
+            for (int i = 0; i < take; i++)
             {
                 ChronicleEvent ev = recent[i];
                 if (ev == null || ev.Primary == null || string.IsNullOrEmpty(ev.Primary.LabelSnapshot))

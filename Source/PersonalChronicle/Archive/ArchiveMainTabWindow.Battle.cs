@@ -216,6 +216,48 @@ namespace PersonalChronicle.Archive
             return y + step;
         }
 
+        // v4.17 体检（审计 P1-3）：伤亡行按对象事件索引查询 + 缓存（仿 Location
+        // cachedChronicleByLoc 模式）——旧实现每帧 service.GetAllEvents() 全库扫描。
+        private readonly Dictionary<string, List<ChronicleEvent>> cachedCasualtyByBattle =
+            new Dictionary<string, List<ChronicleEvent>>();
+        private long cachedCasualtyRev = -1L;
+
+        /// <summary>该战役的伤亡 Death 事件（最多 maxRows 行；revision 变化时整体失效）。</summary>
+        private List<ChronicleEvent> CasualtyLines(BattleObject battle, IArchiveService service)
+        {
+            if (battle == null || service == null || string.IsNullOrEmpty(battle.StableId))
+            {
+                return null;
+            }
+            long rev = service.GetDataRevision();
+            if (rev != cachedCasualtyRev)
+            {
+                cachedCasualtyByBattle.Clear();
+                cachedCasualtyRev = rev;
+            }
+            if (cachedCasualtyByBattle.TryGetValue(battle.StableId, out List<ChronicleEvent> lines))
+            {
+                return lines;
+            }
+            lines = new List<ChronicleEvent>();
+            // GetEventsFor 按对象索引（Primary/Subjects 双匹配）——含 subjects=该战役的
+            // Death 事件，等价于旧全库扫描结果，但只读单对象事件流。
+            IReadOnlyList<ChronicleEvent> evs = service.GetEventsFor(battle.StableId);
+            if (evs != null)
+            {
+                for (int i = 0; i < evs.Count; i++)
+                {
+                    ChronicleEvent ev = evs[i];
+                    if (ev != null && ev.TypeKey == ChronicleEventType.Death)
+                    {
+                        lines.Add(ev);
+                    }
+                }
+            }
+            cachedCasualtyByBattle[battle.StableId] = lines;
+            return lines;
+        }
+
         private float DrawBattleCasualtyPanel(Rect rect, BattleObject battle, IArchiveService service)
         {
             const float rowH = 20f;
@@ -224,31 +266,8 @@ namespace PersonalChronicle.Archive
             {
                 return 0f;
             }
-            IReadOnlyList<ChronicleEvent> all = service.GetAllEvents();
-            List<ChronicleEvent> lines = new List<ChronicleEvent>();
-            if (all != null)
-            {
-                for (int i = 0; i < all.Count; i++)
-                {
-                    ChronicleEvent ev = all[i];
-                    if (ev == null || ev.Subjects == null || ev.TypeKey != ChronicleEventType.Death)
-                    {
-                        continue;
-                    }
-                    for (int s = 0; s < ev.Subjects.Count; s++)
-                    {
-                        ObjectRef sub = ev.Subjects[s];
-                        if (sub != null
-                            && sub.CategoryKey == ArchiveCategoryKeys.Battle
-                            && sub.StableId == battle.StableId)
-                        {
-                            lines.Add(ev);
-                            break;
-                        }
-                    }
-                }
-            }
-            if (lines.Count == 0)
+            List<ChronicleEvent> lines = CasualtyLines(battle, service);
+            if (lines == null || lines.Count == 0)
             {
                 UIComponents.Label(new Rect(rect.x + UITheme.CardPadX, rect.y + 2f,
                     rect.width - UITheme.CardPadX * 2f, rowH),

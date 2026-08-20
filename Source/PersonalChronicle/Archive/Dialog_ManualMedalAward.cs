@@ -25,7 +25,7 @@ namespace PersonalChronicle.Archive
         private const float TitleH = 28f;
         private const float WinW = 480f;
         private const float WinH = 440f;
-        private const float CardH = 64f;
+        private const float CardH = 76f;
         private const float CardGap = 8f;
         private const float PadX = 12f;
         private const float FooterH = 28f;
@@ -174,12 +174,12 @@ namespace PersonalChronicle.Archive
                 GUI.color = tierColor;
                 Widgets.DrawBoxSolid(badge, tierColor);
 
-                // 称号（上）
+                // 称号（上；v4.17 体检：长称号截断，不换行压住 desc）
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.UpperLeft;
                 Rect labelRect = new Rect(card.x + 30f, card.y + 6f, card.width - 96f, 22f);
                 GUI.color = UITheme.Text;
-                Widgets.Label(labelRect, label);
+                Widgets.Label(labelRect, Truncate(label, labelRect.width, GameFont.Small));
 
                 // 档位 Pill（右上）
                 Rect pill = new Rect(card.x + card.width - 58f, card.y + 8f, 50f, 18f);
@@ -189,16 +189,16 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Tiny;
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = UITheme.Muted;
-                Rect descRect = new Rect(card.x + 30f, card.y + 28f, card.width - 38f, 16f);
+                Rect descRect = new Rect(card.x + 30f, card.y + 30f, card.width - 38f, 16f);
                 Widgets.Label(descRect, Truncate(desc, descRect.width, GameFont.Tiny));
 
-                // 进度条 + 值/阈值（底部）
-                Rect bar = new Rect(card.x + 30f, card.y + 46f, card.width - 38f, UITheme.ProgressbarH);
+                // 进度条 + 值/阈值（底部）——v4.17 体检：卡高 64→76，四段内容不再重叠
+                Rect bar = new Rect(card.x + 30f, card.y + 48f, card.width - 38f, UITheme.ProgressbarH);
                 UIComponents.ProgressBar(bar, progress, tierColor);
                 Text.Font = GameFont.Tiny;
                 Text.Anchor = TextAnchor.MiddleCenter;
                 GUI.color = UITheme.Muted;
-                Rect cap = new Rect(card.x + 30f, bar.yMax + 1f, card.width - 38f, 14f);
+                Rect cap = new Rect(card.x + 30f, bar.yMax + 2f, card.width - 38f, 14f);
                 Widgets.Label(cap, ratio);
             }
             finally

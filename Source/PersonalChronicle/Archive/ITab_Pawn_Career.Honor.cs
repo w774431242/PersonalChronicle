@@ -22,7 +22,7 @@ namespace PersonalChronicle.Archive
         {
             Rect view = new Rect(rect.x, rect.y, rect.width, rect.height);
             float innerW = view.width - UITheme.ScrollbarThickness;
-            float contentH = EstimateHonorH(snap);
+            float contentH = EstimateHonorH(snap, innerW);
             contentH = Mathf.Max(contentH, view.height);
             Widgets.BeginScrollView(view, ref scroll, new Rect(view.x, view.y, innerW, contentH));
             try
@@ -34,9 +34,14 @@ namespace PersonalChronicle.Archive
                     "PersonalChronicle.UI.Career.Honor.Title".Translate().ToString());
                 y += UITheme.SectionTitleHeight;
 
-                Rect wall = new Rect(view.x, y, innerW, MedIconH + 12f);
-                UIComponents.Panel(wall, UITheme.Panel);
+                // v4.17 体检：先按行数建墙再画图标——旧实现先画单行背景、循环内才
+                // 动态增高，第 2+ 行勋章画在面板背景外（悬空于滚动背景上）。
                 List<MedalView> granted = CollectGrantedMedals(snap);
+                int perRow = Mathf.Max(1, (int)((innerW - 8f) / (MedIconW + 8f)));
+                int rows = granted.Count == 0 ? 1 : Mathf.CeilToInt(granted.Count / (float)perRow);
+                Rect wall = new Rect(view.x, y, innerW,
+                    MedIconH + 12f + (rows - 1) * (MedIconH + 8f));
+                UIComponents.Panel(wall, UITheme.Panel);
                 float ix = wall.x + 8f;
                 float iy = wall.y + 6f;
                 if (granted.Count == 0)
@@ -52,7 +57,6 @@ namespace PersonalChronicle.Archive
                     {
                         ix = wall.x + 8f;
                         iy += MedIconH + 8f;
-                        wall.height = iy - wall.y + 6f + MedIconH;
                     }
                     DrawMedalIcon(new Rect(ix, iy, MedIconW, MedIconH), m);
                     ix += MedIconW + 8f;
@@ -130,13 +134,16 @@ namespace PersonalChronicle.Archive
                 }
                 else
                 {
+                    // 名称查表：MedalView 已派生 UI.Medal.<defName>.Label 的翻译文案，
+                    // CareerEvent 只携带 defName，借查表避免回到 MedalDef.LabelCap 的 raw defName。
+                    Dictionary<string, string> labelMap = BuildMedalLabelMap(snap);
                     int shown = 0;
                     for (int i = 0; i < honorEvents.Count && shown < 8; i++)
                     {
                         CareerEvent ev = honorEvents[i];
                         string date = "PersonalChronicle.UI.Career.Honor.Event.Year".Translate(
                             GenDate.Year(ev.Tick, 0f).ToString()).ToString();
-                        string text = HonorEventText(ev);
+                        string text = HonorEventText(ev, labelMap);
                         Rect row = new Rect(view.x, y, innerW, 24f);
                         UIComponents.Label(new Rect(row.x, row.y, 70f, 20f), date, UITheme.FontLabel, UITheme.Dim);
                         UIComponents.Label(new Rect(row.x + 70f, row.y, innerW - 70f, 20f),
@@ -224,29 +231,95 @@ namespace PersonalChronicle.Archive
             return result;
         }
 
-        private string HonorEventText(CareerEvent ev)
+        private string HonorEventText(CareerEvent ev, Dictionary<string, string> labelMap)
         {
             if (ev == null) return "--";
             if (string.Equals(ev.EventType, CareerEventType.MedalGranted, StringComparison.Ordinal))
             {
-                MedalDef def = DefDatabase<MedalDef>.GetNamedSilentFail(ev.DefName);
-                if (def != null) return "PersonalChronicle.UI.Career.Honor.Event.Medal".Translate(def.LabelCap);
-                return "PersonalChronicle.UI.Career.Honor.Event.Medal".Translate(ev.DefName ?? "--");
+                string name = LookupLabel(labelMap, ev.DefName, () =>
+                {
+                    MedalDef def = DefDatabase<MedalDef>.GetNamedSilentFail(ev.DefName);
+                    return def != null ? def.LabelCap : null;
+                });
+                return "PersonalChronicle.UI.Career.Honor.Event.Medal".Translate(name ?? "--");
             }
             if (string.Equals(ev.EventType, CareerEventType.TitleGranted, StringComparison.Ordinal))
             {
-                ProfessionalTitleDef def = DefDatabase<ProfessionalTitleDef>.GetNamedSilentFail(ev.DefName);
-                if (def != null) return "PersonalChronicle.UI.Career.Honor.Event.Title".Translate(def.LabelCap);
-                return "PersonalChronicle.UI.Career.Honor.Event.Title".Translate(ev.DefName ?? "--");
+                string name = LookupLabel(labelMap, ev.DefName, () =>
+                {
+                    ProfessionalTitleDef def = DefDatabase<ProfessionalTitleDef>.GetNamedSilentFail(ev.DefName);
+                    return def != null ? def.LabelCap : null;
+                });
+                return "PersonalChronicle.UI.Career.Honor.Event.Title".Translate(name ?? "--");
             }
             return ev.EventType ?? "--";
         }
 
-        private static float EstimateHonorH(DetailSnapshot snap)
+        /// <summary>勋章/职称 defName → 翻译后中文标签；优先 MedalView.Label，无则回退到 Def.LabelCap。</summary>
+        private static Dictionary<string, string> BuildMedalLabelMap(DetailSnapshot snap)
         {
-            float h = 30f + MedIconH + 12f + 8f;         // 勋章墙
+            Dictionary<string, string> map = new Dictionary<string, string>();
+            if (snap != null && snap.Medals != null)
+            {
+                for (int i = 0; i < snap.Medals.Count; i++)
+                {
+                    MedalView mv = snap.Medals[i];
+                    if (mv == null || string.IsNullOrEmpty(mv.DefName)) continue;
+                    if (!string.IsNullOrEmpty(mv.Label) && !map.ContainsKey(mv.DefName))
+                    {
+                        map[mv.DefName] = mv.Label;
+                    }
+                }
+            }
+            return map;
+        }
+
+        private static string LookupLabel(Dictionary<string, string> map, string key, System.Func<string> fallback)
+        {
+            if (!string.IsNullOrEmpty(key) && map != null && map.TryGetValue(key, out string v) && !string.IsNullOrEmpty(v))
+            {
+                return v;
+            }
+            string f = fallback != null ? fallback() : null;
+            return string.IsNullOrEmpty(f) ? null : f;
+        }
+
+        private static float EstimateHonorH(DetailSnapshot snap, float innerW)
+        {
+            // 勋章墙：按已授予勋章数估算行数，避免动态换行后被裁切。
+            // 布局：起始 x=+8，每格 MedIconW+8，换行条件 ix+MedIconW+8 > wall.xMax。
+            int grantedCount = 0;
+            if (snap != null && snap.Medals != null)
+            {
+                for (int i = 0; i < snap.Medals.Count; i++)
+                {
+                    MedalView m = snap.Medals[i];
+                    if (m != null && m.IsGranted) grantedCount++;
+                }
+            }
+            int perRow = Mathf.Max(1, (int)((innerW - 8f) / (MedIconW + 8f)));
+            int rows = grantedCount == 0 ? 1 : Mathf.CeilToInt(grantedCount / (float)perRow);
+            float wallH = MedIconH + 12f + (rows - 1) * (MedIconH + 8f);
+            float h = 30f + wallH + 8f;                  // 勋章墙
             h += 30f + 6f * 26f + 8f;                    // 贡献结构
-            h += 30f + 4f * 26f + 8f;                    // 最近荣誉事件（最多 8 行，估 4）
+            // 最近荣誉事件：最多 8 行，空则 1 行。
+            int honorCount = 0;
+            if (snap != null && snap.DetailObject is PawnObject po
+                && po.CareerData != null && po.CareerData.Events != null)
+            {
+                for (int i = po.CareerData.Events.Count - 1; i >= 0; i--)
+                {
+                    CareerEvent ev = po.CareerData.Events[i];
+                    if (ev == null) continue;
+                    if (string.Equals(ev.EventType, CareerEventType.MedalGranted, StringComparison.Ordinal)
+                        || string.Equals(ev.EventType, CareerEventType.TitleGranted, StringComparison.Ordinal))
+                    {
+                        honorCount++;
+                    }
+                }
+            }
+            float eventsH = honorCount == 0 ? 26f : Mathf.Min(honorCount, 8) * 26f;
+            h += 30f + eventsH + 8f;                     // 最近荣誉事件
             return h + UITheme.SpaceMd * 3f;
         }
     }

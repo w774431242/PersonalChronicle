@@ -40,8 +40,9 @@ namespace PersonalChronicle.Archive.UI
 
         /// <summary>Text shadow colour used by <see cref="UIComponents.ShadowLabel"/>.
         /// Centralised here (Design System Layer 1) so the shadow tint is a single
-        /// token instead of a hard-coded literal in the drawing code (ASSET-002).</summary>
-        internal static Color Shadow { get { return new Color(0f, 0f, 0f, 0.85f); } }
+        /// token instead of a hard-coded literal in the drawing code (ASSET-002).
+        /// v4.17 体检：readonly 字段（旧 getter 每次 new Color，虽无堆分配但属散落色值）。</summary>
+        internal static readonly Color Shadow = new Color(0f, 0f, 0f, 0.85f);
 
         /// <summary>
         /// Returns the localised display label for a theme id (translation key
@@ -284,6 +285,20 @@ namespace PersonalChronicle.Archive.UI
                 case MedalTier.Gold: return PillGold;
                 case MedalTier.Silver: return SecondaryText;
                 case MedalTier.Bronze: return TimelineCraft;
+                default: return SecondaryText;
+            }
+        }
+
+        // ---- v1.1.5: professional title tier tint (员/助/中/副高/正高), derived from palette ----
+        internal static Color TitleTierColor(int tier)
+        {
+            switch (tier)
+            {
+                case 0: return TimelineCraft;       // 员级 (铜)
+                case 1: return TimelineCraft;       // 助理级 (铜)
+                case 2: return SecondaryText;       // 中级 (银)
+                case 3: return PillGold;            // 副高级 (金)
+                case 4: return Dead;                // 正高级 (橙红)
                 default: return SecondaryText;
             }
         }

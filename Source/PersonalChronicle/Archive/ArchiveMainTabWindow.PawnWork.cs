@@ -29,9 +29,11 @@ namespace PersonalChronicle.Archive
             }
 
             // Column headers (all translated; no hardcoded copy).
+            // 窄面板保护：固定列宽减法可能产生负宽，列宽统一 clamp 到 ≥0。
             Text.Font = GameFont.Tiny;
             GUI.color = UITheme.SecondaryText;
-            Widgets.Label(new Rect(rect.x + 6f, y, rect.width - 300f, 18f),
+            float typeColW = Mathf.Max(0f, rect.width - 300f);
+            Widgets.Label(new Rect(rect.x + 6f, y, typeColW, 18f),
                 "PersonalChronicle.UI.ProductionType".Translate().ToString());
             Widgets.Label(new Rect(rect.x + rect.width - 280f, y, 90f, 18f),
                 "PersonalChronicle.UI.ProductionCount".Translate().ToString());
@@ -46,11 +48,14 @@ namespace PersonalChronicle.Archive
                 Rect row = new Rect(rect.x, y, rect.width, RowHeight - 4f);
 
                 Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(row.x + 6f, row.y + 4f, row.width - 300f, 22f), line.Label);
+                Widgets.Label(new Rect(row.x + 6f, row.y + 4f, typeColW, 22f), line.Label);
 
-                Text.Font = GameFont.Tiny;
-                Widgets.Label(new Rect(row.x + row.width - 280f, row.y + 6f, 90f, 18f), line.Count.ToString());
-                Widgets.Label(new Rect(row.x + row.width - 190f, row.y + 6f, 180f, 18f), FormatDate(line.LastTick));
+                if (row.width >= 280f)
+                {
+                    Text.Font = GameFont.Tiny;
+                    Widgets.Label(new Rect(row.x + row.width - 280f, row.y + 6f, 90f, 18f), line.Count.ToString());
+                    Widgets.Label(new Rect(row.x + row.width - 190f, row.y + 6f, 180f, 18f), FormatDate(line.LastTick));
+                }
 
                 // Click → jump to the thing's detail (Weapon/Thing nav target).
                 if (Widgets.ButtonInvisible(row))
@@ -132,7 +137,7 @@ namespace PersonalChronicle.Archive
                 return 0f;
             }
             float h = UITheme.SectionTitleHeight + UITheme.SpaceXs;   // 标题
-            h += 92f + UITheme.SpaceMd;                                // 职业身份
+            h += 104f + UITheme.SpaceMd;                               // 职业身份（含 5 指标格）
             h += UITheme.SectionTitleHeight + UITheme.SpaceXs;         // 下一职称标题
             h += (string.IsNullOrEmpty(ov.NextTitle) ? 36f : 84f) + UITheme.SpaceMd;
             h += UITheme.SectionTitleHeight + UITheme.SpaceXs;         // 资格状态标题
@@ -154,7 +159,9 @@ namespace PersonalChronicle.Archive
             // —— 职业身份（主职称大字 + 方向/技能/工时副行 + 5 指标小格）——
             float pad = UITheme.PanelPadding;
             float innerW = rect.width - 2f * pad;
-            Rect block = new Rect(rect.x, y, rect.width, 92f);
+            // v4.17 体检：block 高 92f→104f —— MiniStat 值行（Small 22f）+ 标签行（Tiny 18f）
+            // 需 40f 单元，旧 16f/14f 矩形会裁切 Medium 字体且 statY 越过面板底边。
+            Rect block = new Rect(rect.x, y, rect.width, 104f);
             ArchiveUiStyle.DrawPanel(block, ArchiveUiStyle.PanelRaised);
             float bx = block.x + pad;
             float by = block.y + 12f;
@@ -175,20 +182,20 @@ namespace PersonalChronicle.Archive
             }
             UIComponents.Label(new Rect(bx, by + 32f, innerW, 20f), sub, UITheme.FontLabel, UITheme.Muted);
 
-            float statY = by + 56f;
+            float statY = by + 52f;
             float statGap = 10f;
             float statW = (innerW - statGap * 4f) / 5f;
-            DrawCareerMiniStat(new Rect(bx, statY, statW, 28f),
+            DrawCareerMiniStat(new Rect(bx, statY, statW, 40f),
                 FormatCompact(ov.Made), "PersonalChronicle.UI.Career.Ov.Metric.Made".Translate().ToString());
-            DrawCareerMiniStat(new Rect(bx + (statW + statGap), statY, statW, 28f),
+            DrawCareerMiniStat(new Rect(bx + (statW + statGap), statY, statW, 40f),
                 FormatCompact(ov.Built), "PersonalChronicle.UI.Career.Ov.Metric.Built".Translate().ToString());
-            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 2f, statY, statW, 28f),
+            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 2f, statY, statW, 40f),
                 FormatCompact(ov.Researched), "PersonalChronicle.UI.Career.Ov.Metric.Research".Translate().ToString());
-            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 3f, statY, statW, 28f),
+            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 3f, statY, statW, 40f),
                 FormatCompact(ov.Books), "PersonalChronicle.UI.Career.Ov.Books".Translate().ToString());
-            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 4f, statY, statW, 28f),
+            DrawCareerMiniStat(new Rect(bx + (statW + statGap) * 4f, statY, statW, 40f),
                 FormatCompact(ov.Results), "PersonalChronicle.UI.Career.Ov.Results".Translate().ToString());
-            y += 92f + UITheme.SpaceMd;
+            y += 104f + UITheme.SpaceMd;
 
             // —— 下一职称（进度条 + 缺口）——
             DrawSectionTitle(rect, ref y, "PersonalChronicle.UI.Career.Ov.NextTitle".Translate().ToString());
@@ -251,10 +258,14 @@ namespace PersonalChronicle.Archive
             return y + 8f;
         }
 
+        /// <summary>
+        /// v4.17 体检：MiniStat 值行用 Small（行高 22f）而非 Medium（28f 会裁切 16f 矩形），
+        /// 标签行 18f（Tiny CJK 安全）；单元总高 40f 与 DrawCareerProfileSection 布局一致。
+        /// </summary>
         private static void DrawCareerMiniStat(Rect r, string value, string label)
         {
-            UIComponents.Label(new Rect(r.x, r.y, r.width, 16f), value, UITheme.FontValue, UITheme.Text, TextAnchor.MiddleLeft);
-            UIComponents.Label(new Rect(r.x, r.y + 16f, r.width, 14f), label, UITheme.FontLabel, UITheme.Dim, TextAnchor.MiddleLeft);
+            UIComponents.Label(new Rect(r.x, r.y, r.width, 22f), value, UITheme.FontBody, UITheme.Text, TextAnchor.MiddleLeft);
+            UIComponents.Label(new Rect(r.x, r.y + 22f, r.width, 18f), label, UITheme.FontLabel, UITheme.Dim, TextAnchor.MiddleLeft);
         }
 
         private static void DrawCareerQualCell(Rect r, ReadModels.CareerQualView q)

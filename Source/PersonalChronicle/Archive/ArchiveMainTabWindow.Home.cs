@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using PersonalChronicle.Application;
@@ -13,10 +13,17 @@ namespace PersonalChronicle.Archive
     /// <summary>Partial of ArchiveMainTabWindow 鈥?Home view drawing (BUG-BASE-01 refactor).</summary>
     public sealed partial class ArchiveMainTabWindow
     {
+        /// <summary>v4.17 体检：Home 视图切换条预翻译标签（静态缓存，绘制零分配）。</summary>
+        private static string[] homeTabLabels;
+
         private void DrawHomeContent(Rect inner, IArchiveService service)
         {
             Color prevColor = GUI.color;
-            float contentHeight = ComputeHomeHeight(inner.width);
+            // v4.17 体检：Timeline 模式不得复用 KPI 版高度估算（≈700f 固定值），
+            // 长列表行会绘制在 viewRect 外不可见且无法滚动——按可见事件数单独估算。
+            float contentHeight = homeViewMode == HomeViewMode.Timeline
+                ? ComputeHomeTimelineHeight()
+                : ComputeHomeHeight(inner.width);
             float viewHeight = Mathf.Max(inner.height, contentHeight);
             Rect viewRect = new Rect(inner.x, inner.y, inner.width - 16f, viewHeight);
 
@@ -66,14 +73,19 @@ namespace PersonalChronicle.Archive
 
         private float DrawHomeViewTabs(Rect viewRect, float y, IArchiveService service)
         {
+            // v4.17 体检：标签/模式数组静态缓存（旧每帧 new[] + Translate 分配）。
+            if (homeTabLabels == null)
+            {
+                homeTabLabels = new string[]
+                {
+                    "PersonalChronicle.UI.HomeKpiView".Translate().ToString(),
+                    "PersonalChronicle.UI.HomeTimelineView".Translate().ToString()
+                };
+            }
             float tabWidth = 150f;
             float gap = 8f;
             float x = viewRect.x;
-            string[] labels = new[]
-            {
-                "PersonalChronicle.UI.HomeKpiView".Translate().ToString(),
-                "PersonalChronicle.UI.HomeTimelineView".Translate().ToString()
-            };
+            string[] labels = homeTabLabels;
             HomeViewMode[] modes = new[] { HomeViewMode.Kpi, HomeViewMode.Timeline };
             float startY = y;
             for (int i = 0; i < labels.Length; i++)
@@ -114,7 +126,7 @@ namespace PersonalChronicle.Archive
             TextAnchor prevAnchor = Text.Anchor;
             try
             {
-            if (cachedTimelineEvents == null || cachedTimelineEvents.Count == 0)
+            if (cachedTimelineItems == null || cachedTimelineItems.Count == 0)
             {
                 Text.Font = GameFont.Small;
                 GUI.color = ArchiveUiStyle.SecondaryText;
@@ -122,36 +134,33 @@ namespace PersonalChronicle.Archive
                     "PersonalChronicle.UI.NoTimelineEvents".Translate().ToString());
                 return;
             }
-            // cachedTimelineEvents is already sorted ascending by Tick at
-            // cache-rebuild time; reuse directly (no per-frame allocation/sort).
-            IReadOnlyList<ChronicleEvent> ordered = cachedTimelineEvents;
+            // v4.17 体检：遍历预格式化视图（cachedTimelineItems，缓存刷新时构建）——
+            // 旧实现每帧 DateReadoutStringAt/EventName/Translate 分配。
             float spineX = viewRect.x + 14f;
             float nodeX = spineX + 18f;
             float rowH = 54f;
             float currentY = y;
             bool left = true;
-            for (int i = 0; i < ordered.Count; i++)
+            for (int i = 0; i < cachedTimelineItems.Count; i++)
             {
-                ChronicleEvent ev = ordered[i];
+                TimelineItemView item = cachedTimelineItems[i];
+                ChronicleEvent ev = item.Event;
                 if (ev == null)
                 {
                     continue;
                 }
-                if (ChronicleEventImportance.Resolve(ev) < ChronicleImportance.Important)
-                {
-                    // Timeline shows only key milestones (keeps large saves calm).
-                    continue;
-                }
-                string typeKey = ev.TypeKey;
-                string icon = EventTypeToGlyph(typeKey);
-                Color color = EventTypeToColor(typeKey);
-                string title = EventName(ev);
-                string date = GenDate.DateReadoutStringAt(ev.Tick, Vector2.zero);
+                string icon = item.Glyph;
+                Color color = item.Color;
+                string title = item.TitleText;
+                string date = item.DateText;
 
                 // compute card geometry first (connector needs it).
+                // 修复：nodeX 已含 viewRect.x（spineX = x+14，nodeX = spineX+18），
+                // 旧式 viewRect.width - nodeX - viewRect.x 双重扣除 x 导致卡片只有
+                // 应有宽度一半、右侧大面积留白。正确口径 = viewRect.xMax - nodeX。
                 const float cardGap = 16f;
                 const float minCardW = 40f;
-                float availableW = Mathf.Max(0f, viewRect.width - nodeX - viewRect.x - 24f);
+                float availableW = Mathf.Max(0f, viewRect.xMax - nodeX - 24f);
                 float cardW = Mathf.Max(minCardW, availableW / 2f - cardGap / 2f);
                 float cardX = left ? nodeX : nodeX + cardW + cardGap;
                 Rect cardRect = new Rect(cardX, currentY + 4f, cardW, rowH - 8f);
@@ -206,8 +215,22 @@ namespace PersonalChronicle.Archive
             // tabs + KPI groups (2 section titles + 3 large cards + 5 small cards) + two columns.
             float tabsHeight = HomeViewTabHeight + 12f;
             float kpiHeight = 86f + 58f + 2 * 22f + 2 * 16f;
-            float columnsHeight = 6 * TimelineRowHeight + 40f + 4 * 70f + 60f;
+            // 66f 卡 + 6f 间距（对齐 DrawImportantArchives 的 66+GridGap-8…实际 66+6）。
+            float columnsHeight = 6 * TimelineRowHeight + 40f + 4 * 72f + 60f;
             return 4f + 30f + 26f + tabsHeight + kpiHeight + 20f + columnsHeight + 20f;
+        }
+
+        /// <summary>
+        /// v4.17 体检：Timeline 模式滚动高度 —— 头部（标题/描述/视图切换条）+ 可见事件
+        /// 行数 × 行距（54f，与 DrawHomeTimeline 同口径）+ 底部留白。可见行数由缓存刷新
+        /// 时计算（cachedTimelineVisibleCount），绘制路径零遍历。
+        /// </summary>
+        private float ComputeHomeTimelineHeight()
+        {
+            const float rowH = 54f;
+            const float bottomPad = 20f;
+            float headH = 4f + 30f + 26f + (HomeViewTabHeight + 12f);
+            return headH + cachedTimelineVisibleCount * rowH + bottomPad;
         }
 
 
@@ -319,7 +342,9 @@ namespace PersonalChronicle.Archive
                 float valueY = isLarge ? inner.y + 24f : inner.y + 22f;
                 GUI.color = accent;
                 Text.Anchor = TextAnchor.MiddleLeft;
-                Widgets.Label(new Rect(inner.x, valueY, inner.width, valueH), value);
+                // v4.17 体检：超长数值（服务天数等）截断加省略号，不再溢出卡片。
+                Widgets.Label(new Rect(inner.x, valueY, inner.width, valueH),
+                    UIComponents.TruncateToWidth(value, inner.width, GameFont.Medium));
                 Text.Anchor = TextAnchor.UpperLeft;
 
                 if (!string.IsNullOrEmpty(subLabel))
@@ -379,8 +404,9 @@ namespace PersonalChronicle.Archive
                 return;
             }
 
-            // 64f = CJK-safe three-line card (Tiny 18 + Small 24 + Tiny 18 = 60f + 4f pad).
-            const float cardHeight = 64f;
+            // 66f = CJK-safe three-line card (Tiny 18 + Small 24 + Tiny 18 = 60f + 6f pad)；
+            // v4.17 体检：64f 时第三行（SubLabel，y+46 h18 → 底 64）与卡片底边框 0 间距，提至 66f。
+            const float cardHeight = 66f;
             const float cardGap = UITheme.GridGap;
             for (int i = 0; i < cachedImportantCards.Count; i++)
             {

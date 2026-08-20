@@ -32,7 +32,8 @@ namespace PersonalChronicle.Archive
                 float headH = 18f;
                 float colX = rect.x + 6f;
                 float colW1 = 120f;
-                float colW2 = rect.width - colW1 - 90f - 12f;
+                // 窄面板保护：剩余列宽 clamp 到 ≥0（小屏/压缩窗口不产生负宽）。
+                float colW2 = Mathf.Max(0f, rect.width - colW1 - 90f - 12f);
                 float colW3 = 90f;
                 Text.Font = GameFont.Tiny;
                 GUI.color = UITheme.Muted;
@@ -206,24 +207,6 @@ namespace PersonalChronicle.Archive
                 }
             }
 
-            // Scroll-wheel zoom: scale the whole graph around the panel centre so
-            // dense relations separate instead of overlapping. Consume the scroll
-            // event so it does not also scroll the surrounding detail view.
-            if (nodes.Count > 0 && panel.Contains(Event.current.mousePosition))
-            {
-                if (Event.current.type == EventType.ScrollWheel)
-                {
-                    float delta = Event.current.delta.y;
-                    if (delta != 0f)
-                    {
-                        socialNetworkZoomTouched = true;
-                        socialNetworkZoom = Mathf.Clamp(
-                            socialNetworkZoom * (delta < 0f ? 1.1f : 0.9f), 0.6f, 2.4f);
-                        Event.current.Use();
-                    }
-                }
-            }
-
             // Importance-driven grid slots: spouses occupy the symmetric left/right
             // anchor (the "extension centre"), parents sit above, children below,
             // siblings on the sides and friends/rivals/others on the outer ring.
@@ -270,6 +253,39 @@ namespace PersonalChronicle.Archive
                 socialNetworkZoom = zoom;
             }
 
+            // v4.17 体检：面板高度计算提为局部函数（zoom 依赖），供滚轮缩放后重算。
+            float ComputePanelHeightFor(float z)
+            {
+                float ncH = baseNodeH * z;
+                float rs = ncH + Mathf.Max(ncH * gapRatio, minNodeGap * z);
+                return Mathf.Max(basePanelHeight, basePanelHeight * z,
+                    (maxAbsRow * 2 + 1) * rs + ncH + 32f);
+            }
+
+            // 面板高度初值（基于当前 zoom），随后才处理滚轮事件——
+            // 修复旧版：滚轮命中区固定在 246f 底板（实际有节点时面板 ≥338f），
+            // 图下半部滚轮缩放失效且事件漏入外层滚动视图。
+            float panelHeight = ComputePanelHeightFor(zoom);
+            panel = new Rect(panel.x, panel.y, panel.width, panelHeight);
+
+            // Scroll-wheel zoom: scale the whole graph around the panel centre so
+            // dense relations separate instead of overlapping. Consume the scroll
+            // event so it does not also scroll the surrounding detail view.
+            if (nodes.Count > 0 && panel.Contains(Event.current.mousePosition))
+            {
+                if (Event.current.type == EventType.ScrollWheel && Event.current.delta.y != 0f)
+                {
+                    socialNetworkZoomTouched = true;
+                    socialNetworkZoom = Mathf.Clamp(
+                        socialNetworkZoom * (Event.current.delta.y < 0f ? 1.1f : 0.9f), 0.6f, 2.4f);
+                    zoom = socialNetworkZoom;
+                    // zoom 变化 → 面板高度与几何全部重算。
+                    panelHeight = ComputePanelHeightFor(zoom);
+                    panel = new Rect(panel.x, panel.y, panel.width, panelHeight);
+                    Event.current.Use();
+                }
+            }
+
             float nodeWidth = baseNodeW * zoom;
             float centerCardW = baseCenterW * zoom;
             float centerCardH = baseCenterH * zoom;
@@ -280,13 +296,6 @@ namespace PersonalChronicle.Archive
             float colSpacing = nodeWidth + Mathf.Max(nodeWidth * gapRatio, minNodeGap * zoom);
             float rowSpacing = nodeCardH + Mathf.Max(nodeCardH * gapRatio, minNodeGap * zoom);
 
-            // Grow the panel vertically with zoom AND with the grid extent so the
-            // outermost nodes stay inside its frame.
-            float panelHeight = Mathf.Max(
-                basePanelHeight,
-                basePanelHeight * zoom,
-                (maxAbsRow * 2 + 1) * rowSpacing + nodeCardH + 32f);
-            panel = new Rect(panel.x, panel.y, panel.width, panelHeight);
             ArchiveUiStyle.DrawPanel(panel, ArchiveUiStyle.PanelRaised);
 
             Vector2 center = new Vector2(panel.center.x, panel.center.y) + socialNetworkPan;
@@ -357,14 +366,25 @@ namespace PersonalChronicle.Archive
             {
                 Rect nodeRect = nodeRects[i];
                 ArchiveUiStyle.DrawCard(nodeRect, nodes[i].Active ? ArchiveUiStyle.Info : ArchiveUiStyle.Muted);
-                // 中文行高经验：节点标签（Small）≥22f，关系标签（Tiny）≥18f；
-                // 经 UIComponents.Label 渲染，font/color/anchor 内部配对恢复。
-                UIComponents.Label(new Rect(nodeRect.x + UITheme.CardPadX, nodeRect.y + UITheme.SpaceXxs,
-                    nodeRect.width - UITheme.CardPadX * 2f, UITheme.FontBodyLineHeight * zoom),
-                    nodes[i].Label, UITheme.FontBody, UITheme.Text, TextAnchor.MiddleCenter);
-                UIComponents.Label(new Rect(nodeRect.x + UITheme.CardPadX, nodeRect.y + UITheme.SpaceLg * zoom,
-                    nodeRect.width - UITheme.CardPadX * 2f, 18f * zoom),
-                    nodes[i].RelationLabel, UITheme.FontLabel, UITheme.Muted, TextAnchor.MiddleCenter);
+                // v4.17 体检：节点卡两行文字在缩放（auto-fit 典型 z≈0.66）下重叠——
+                // 旧式 label1 高 22z / label2 顶 24z 在 z<0.8 时相交，且行高随 z 缩小
+                // 低于字体真实行高被垂直裁切。改为：行高固定（Small 22f / Tiny 18f），
+                // label2 贴卡底；卡片放不下两行（z 过小）时只显示 label1，关系文本进 Tooltip。
+                float label1Top = nodeRect.y + UITheme.SpaceXxs;
+                float label2Top = nodeRect.yMax - 18f - UITheme.SpaceXxs;
+                bool showRel = label2Top >= label1Top + UITheme.FontBodyLineHeight + 2f;
+                UIComponents.Label(new Rect(nodeRect.x + UITheme.CardPadX, label1Top,
+                    nodeRect.width - UITheme.CardPadX * 2f, UITheme.FontBodyLineHeight),
+                    nodes[i].Label, UITheme.FontBody, UITheme.Text, TextAnchor.MiddleLeft);
+                if (showRel)
+                {
+                    UIComponents.Label(new Rect(nodeRect.x + UITheme.CardPadX, label2Top,
+                        nodeRect.width - UITheme.CardPadX * 2f, 18f),
+                        nodes[i].RelationLabel, UITheme.FontLabel, UITheme.Muted, TextAnchor.MiddleLeft);
+                }
+                // 完整信息（姓名 + 关系）始终可经 Tooltip 查看（缩放隐藏关系行时兜底）。
+                string tip = nodes[i].Label + (showRel ? "" : " · " + nodes[i].RelationLabel);
+                TooltipHandler.TipRegion(nodeRect, tip);
                 if (Widgets.ButtonInvisible(nodeRect))
                 {
                     NavigateTarget(service, NavTarget.Pawn, nodes[i].StableId, null);

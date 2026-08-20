@@ -1,4 +1,5 @@
 using System;
+using PersonalChronicle.Archive.UI;
 using UnityEngine;
 using Verse;
 
@@ -57,8 +58,18 @@ namespace PersonalChronicle.Archive
             forcePause = true;
         }
 
+        // v4.17 体检：closeOnAccept=true 但旧实现未提交输入——玩家按回车窗口直接
+        // 关闭且输入被静默丢弃。引擎该版本 Window 无 OnAcceptKey 可重写，改为在
+        // DoWindowContents 内检测回车键（IMGUI 对话框惯例回车=确定）。
         public override void DoWindowContents(Rect inRect)
         {
+            if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
+            {
+                CommitAndClose();
+                Event.current.Use();
+                return;
+            }
+
             float y = inRect.y;
             Rect titleRect = new Rect(inRect.x, y, inRect.width, TitleH);
             Text.Font = GameFont.Medium;
@@ -79,9 +90,16 @@ namespace PersonalChronicle.Archive
             float hintH = Text.CalcHeight(hint, inRect.width);
             float hintBoxH = Mathf.Max(16f, hintH + 2f);
             Rect hintRect = new Rect(inRect.x, y, inRect.width, hintBoxH);
-            GUI.color = new Color(0.6f, 0.6f, 0.6f);
-            Widgets.Label(hintRect, hint);
-            GUI.color = Color.white;
+            Color prevHintColor = GUI.color;
+            try
+            {
+                GUI.color = UITheme.Muted;
+                Widgets.Label(hintRect, hint);
+            }
+            finally
+            {
+                GUI.color = prevHintColor;
+            }
             Text.Font = GameFont.Small;
             y += hintRect.height + 8f;
 

@@ -1,7 +1,8 @@
 // 职业档案 ITab（独立于六宫格 ITab_Pawn_Chronicle 的第二个 Pawn inspect 页）。
 // v1.1.4+ 高度还原 docs/UI预览/人物档案视窗/职业档案Tab预览.html：
-//   · 3 子页 = 总览（职业规划 12 专业适配分析 + 职业身份 + 当前资格状态 + 资格预检 + 下一职称）
+//   · 4 子页 = 总览（职业规划 12 专业适配分析 + 职业身份 + 当前资格状态 + 资格预检 + 下一职称）
 //              / 履历（工作经历 resume-block + 工坊汇总 + 当前就职）/ 勋章（勋章墙 + 贡献结构 + 最近荣誉事件）
+//              / 资格（P9：职称阶梯 + 实践/理论/论文/答辩 + 职称记录）
 //   · 顶部身份卡（徽章块 + 姓名 + 职业规划 + 当前职称 + 职业资历）
 //   · Tab 尺寸自适应屏幕（640 上限；低分辨率/高 UI 缩放自动收缩，内容滚动）
 // 边界契约（与 ITab_Pawn_Chronicle 一致，架构 §3.1 / UI 标准 §5）：
@@ -49,6 +50,14 @@ namespace PersonalChronicle.Archive
             "PersonalChronicle.UI.Career.Sub.Career",
             "PersonalChronicle.UI.Career.Sub.Honor",
             "PersonalChronicle.UI.Career.Sub.Qualification"
+        };
+
+        // 12 一级专业稳定键（对齐 ProfessionalFitAnalyzer.MAJOR_WEIGHTS）。
+        private static readonly string[] MajorKeys =
+        {
+            "Engineering", "Manufacturing", "Agriculture", "Forestry",
+            "AnimalHusbandry", "Medicine", "Weapons", "Mining",
+            "Research", "Cooking", "Art", "Management"
         };
 
         // 12 原版技能稳定键（ProfessionalFitAnalyzer 输入键 = SkillDef.defName）。
@@ -137,6 +146,11 @@ namespace PersonalChronicle.Archive
 
             EnsureSnapshot(service, pawn);
             DetailSnapshot snap = cachedSnapshot;
+            // 会话态主方向高亮：对齐已持久化的 primaryDirection（仅前端展示，不写后端）。
+            PawnObject po = snap != null ? snap.DetailObject as PawnObject : null;
+            currentMajorKey = (po != null && po.CareerData != null && po.CareerData.Professional != null)
+                ? po.CareerData.Professional.primaryDirection
+                : null;
             if (snap == null)
             {
                 UIComponents.Label(outer, "PersonalChronicle.UI.NoService".Translate(),
@@ -235,14 +249,15 @@ namespace PersonalChronicle.Archive
                 UITheme.FontLabel, UITheme.Muted);
 
             // 右侧：当前职称（右上）+ 职业资历（右下）。
+            // v4.17 体检：职称行高 22f→28f（Medium 行高 ≥28f，CJK 不裁切）。
             CareerOverviewView ov = snap != null ? snap.CareerOverview : null;
             string role = ov != null && !string.IsNullOrEmpty(ov.RoleName)
                 ? ov.RoleName
                 : "PersonalChronicle.UI.Career.Ov.Undefined".Translate().ToString();
-            UIComponents.Label(new Rect(header.x + header.width - 10f - rightZoneW, header.y + 8f, rightZoneW, 22f),
+            UIComponents.Label(new Rect(header.x + header.width - 10f - rightZoneW, header.y + 8f, rightZoneW, 28f),
                 UIComponents.TruncateToWidth(role, rightZoneW, UITheme.FontValue),
                 UITheme.FontValue, UITheme.Accent, TextAnchor.UpperRight);
-            UIComponents.Label(new Rect(header.x + header.width - 10f - rightZoneW, header.y + 60f, rightZoneW, 20f),
+            UIComponents.Label(new Rect(header.x + header.width - 10f - rightZoneW, header.y + 62f, rightZoneW, 20f),
                 UIComponents.TruncateToWidth(HeaderStageText(snap), rightZoneW, UITheme.FontLabel),
                 UITheme.FontLabel, UITheme.Dim, TextAnchor.UpperRight);
 
@@ -372,6 +387,19 @@ namespace PersonalChronicle.Archive
             if (string.IsNullOrEmpty(majorKey)) return "";
             string label = MajorLabel(majorKey);
             return FirstChar(label);
+        }
+
+        /// <summary>该一级专业是否为玩家已选主方向（经 primaryDirection 匹配其 ProfessionalDirectionDef.profession）。</summary>
+        private bool IsMajorChosen(string majorKey)
+        {
+            if (string.IsNullOrEmpty(majorKey)) return false;
+            PawnObject po = cachedSnapshot != null ? cachedSnapshot.DetailObject as PawnObject : null;
+            if (po == null || po.CareerData == null || po.CareerData.Professional == null) return false;
+            string pd = po.CareerData.Professional.primaryDirection;
+            if (string.IsNullOrEmpty(pd)) return false;
+            ProfessionalDirectionDef ddef = DefDatabase<ProfessionalDirectionDef>.GetNamedSilentFail(pd);
+            if (ddef == null || string.IsNullOrEmpty(ddef.profession)) return false;
+            return ddef.profession == majorKey;
         }
 
         private static string TierLabel(MedalTier tier)

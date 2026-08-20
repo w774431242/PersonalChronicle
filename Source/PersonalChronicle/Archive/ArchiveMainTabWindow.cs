@@ -227,6 +227,17 @@ namespace PersonalChronicle.Archive
         private HomeViewMode homeViewMode = HomeViewMode.Kpi;
         private const float HomeViewTabHeight = 38f;
         private IReadOnlyList<ChronicleEvent> cachedTimelineEvents;
+        /// <summary>
+        /// v4.17 体检：Timeline 可见事件行数（Importance ≥ 当前阈值），
+        /// 于缓存刷新时计算一次，供 DrawHomeContent 估算滚动高度（绘制路径零遍历）。
+        /// </summary>
+        private int cachedTimelineVisibleCount;
+        /// <summary>
+        /// v4.17 体检：时间线预格式化视图（缓存刷新时构建）——旧实现绘制路径每帧
+        /// GenDate.DateReadoutStringAt / EventName(Translate) / EventTypeToGlyph 分配
+        /// 字符串与颜色（PERF-001），现在绘制只消费快照。
+        /// </summary>
+        private List<TimelineItemView> cachedTimelineItems = new List<TimelineItemView>();
 
         // P2-6: read-model provider. All section query+sort+null-guard logic is
         // delegated here; the window only consumes immutable snapshots.
@@ -436,20 +447,6 @@ namespace PersonalChronicle.Archive
         private float ComputeDetailPanelHeight(Rect panel)
         {
             string tab = CurrentTabKey();
-            if (tab == "Timeline")
-            {
-                float h = 48f;
-                for (int i = 0; i < cachedDetailEvents.Count; i++)
-                {
-                    EventLineView line = cachedDetailEvents[i];
-                    if (line.Event == null || !ShouldShowTimelineEvent(line.Event))
-                    {
-                        continue;
-                    }
-                    h += TimelineLineHeight(line, panel.width);
-                }
-                return h + 20f;
-            }
             if (tab == "Career")
             {
                 int productionTypes = cachedProductionSummary != null && cachedProductionSummary.Types != null
@@ -466,12 +463,21 @@ namespace PersonalChronicle.Archive
             }
             if (tab == "CombatLog")
             {
+                // v4.17 体检：按实际绘制布局估算——旧实现按单列累加每张卡高，
+                // 而 DrawFactionCodex 在宽面板（≥720f）双列排布 → 估算约 2 倍，
+                // 滚动区底部大段空白。按行分组取行内最大卡高。
                 float h = 260f;
-                for (int i = 0; i < cachedFactionCodex.Count; i++)
+                int cols = panel.width >= FactionCodexTwoColumnWidth ? 2 : 1;
+                for (int i = 0; i < cachedFactionCodex.Count; i += cols)
                 {
-                    FactionCodexView card = cachedFactionCodex[i];
-                    bool expanded = expandedFactions.Contains(card.FactionKey);
-                    h += FactionCodexCardHeight(card, expanded) + 12f;
+                    float rowH = 0f;
+                    for (int j = i; j < i + cols && j < cachedFactionCodex.Count; j++)
+                    {
+                        FactionCodexView card = cachedFactionCodex[j];
+                        bool expanded = expandedFactions.Contains(card.FactionKey);
+                        rowH = Mathf.Max(rowH, FactionCodexCardHeight(card, expanded));
+                    }
+                    h += rowH + FactionCodexGap;
                 }
                 return h;
             }
@@ -479,7 +485,15 @@ namespace PersonalChronicle.Archive
             {
                 int relationCount = cachedDetailObject is PawnObject pawn && pawn.Relations != null
                     ? pawn.Relations.Count : 0;
-                int socialEvents = cachedDetailRawEvents.Count(IsSocialEvent);
+                // v4.17 体检：手写循环计数（原 LINQ Count(IsSocialEvent) 每帧分配迭代器）。
+                int socialEvents = 0;
+                for (int i = 0; i < cachedDetailRawEvents.Count; i++)
+                {
+                    if (cachedDetailRawEvents[i] != null && IsSocialEvent(cachedDetailRawEvents[i]))
+                    {
+                        socialEvents++;
+                    }
+                }
                 // The network panel grows with zoom and with the grid extent (outer
                 // nodes must stay inside). Estimate the actual panel height using
                 // the same rowSpacing math as DrawSocialNetwork so nothing is cut.
@@ -492,13 +506,28 @@ namespace PersonalChronicle.Archive
                 float panelH = Mathf.Max(
                     246f, 246f * zoom,
                     (maxAbsRow * 2 + 1) * rowSpacing + baseNodeH * zoom + 32f);
-                // v4.14: + importantRel table (header + rows) height.
+                // v4.17 体检（审计 #22/#1）：高度估算与 DrawSocialTab 实际布局对齐——
+                // ① 4 个 SectionTitle（网络/重要关系/关系事件/交织）各 30f；
+                // ② 重要关系表：表头 18+2 + 行×20 + 尾 8；
+                // ③ 关系事件行步进 = TimelineRowHeight(34f)；
+                // ④ 交织行步进 = RowHeight+2f = 42f（旧 24f 低估 18f/行 → 底部被裁）；
+                // ⑤ 段间 8f 间距。
+                float sectionTitles = 4 * UITheme.SectionTitleHeight;
+                int intertwined = 0;
+                for (int i = 0; i < cachedLinkedObjects.Count; i++)
+                {
+                    if (cachedLinkedObjects[i].CategoryKey == ArchiveCategoryKeys.Pawn)
+                    {
+                        intertwined++;
+                    }
+                }
                 int relRows = cachedRelations != null ? cachedRelations.Count : 0;
                 float relTableH = (cachedRelations != null && cachedRelations.Count > 0)
-                    ? 20f + relRows * 20f + 8f : 28f;
-                return panelH + 8f + relTableH + relationCount * 8f
-                    + socialEvents * (TimelineRowHeight + 2f)
-                    + cachedLinkedObjects.Count * 24f;
+                    ? 18f + 2f + relRows * 20f + 8f : 28f;
+                return panelH + 8f + sectionTitles + relTableH + 8f
+                    + (socialEvents > 0 ? socialEvents * TimelineRowHeight : 28f) + 8f
+                    + (intertwined > 0 ? intertwined * (RowHeight + 2f) : 28f)
+                    + 8f + 8f;
             }
             if (tab == "Legacy")
             {
@@ -813,6 +842,16 @@ namespace PersonalChronicle.Archive
             public string TitleText;
             public string TypeText;
             public ChronicleEvent Event;
+        }
+
+        /// <summary>v4.17 体检：时间线单行预格式化视图（缓存刷新时构建，绘制零分配）。</summary>
+        private struct TimelineItemView
+        {
+            public ChronicleEvent Event;
+            public string DateText;
+            public string TitleText;
+            public string Glyph;
+            public Color Color;
         }
 
         private struct EventLineView

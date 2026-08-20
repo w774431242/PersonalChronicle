@@ -25,12 +25,19 @@ namespace PersonalChronicle.Archive
             // v1.1.4: embedded theme-switch button (top-right). Cycles the UI theme
             // and persists the choice through ChronicleSettings. Tooltip shows the
             // current theme name.
-            float btnW = 120f;
+            // v4.17 体检：按钮宽按标签实测 + 截断（长主题名/长翻译不裁切，UI-009）。
             float btnH = 26f;
-            Rect themeBtn = new Rect(rect.xMax - btnW - 10f, rect.y + 14f, btnW, btnH);
-            string nextId = UITheme.NextThemeId(UITheme.ActiveThemeId);
             string btnLabel = "PersonalChronicle.UI.Theme.Button".Translate()
                 .ToString() + " · " + UITheme.GetDisplayName(UITheme.ActiveThemeId);
+            GameFont prevFontMeasure = Text.Font;
+            Text.Font = GameFont.Small;
+            float btnW = Mathf.Clamp(Text.CalcSize(btnLabel).x + 20f, 110f, 180f);
+            Text.Font = prevFontMeasure;
+            Rect themeBtn = new Rect(rect.xMax - btnW - 10f, rect.y + 14f, btnW, btnH);
+            string nextId = UITheme.NextThemeId(UITheme.ActiveThemeId);
+            string btnTip = "PersonalChronicle.UI.Theme.ButtonTip".Translate(
+                UITheme.GetDisplayName(UITheme.ActiveThemeId),
+                UITheme.GetDisplayName(nextId)).ToString();
             if (Widgets.ButtonText(themeBtn, btnLabel))
             {
                 UITheme.Apply(nextId);
@@ -134,10 +141,13 @@ namespace PersonalChronicle.Archive
             Color prevColor = GUI.color;
             GameFont prevFont = Text.Font;
             Rect item = new Rect(inner.x, y, inner.width, height);
-            ArchiveUiStyle.DrawSelectedNavigation(item, false);
+            // v4.17 体检：占位工具无点击响应——去掉悬停高亮（避免暗示可点），
+            // 仅保留 Tooltip 说明占位（原 DrawSelectedNavigation(false) 会产生悬停高亮）。
             GUI.color = ArchiveUiStyle.Dim;
             Text.Font = GameFont.Small;
-            Widgets.Label(new Rect(item.x + 13f, item.y + 7f, item.width - 20f, 20f), labelKey.Translate().ToString());
+            string label = UIComponents.TruncateToWidth(
+                labelKey.Translate().ToString(), item.width - 20f, GameFont.Small);
+            Widgets.Label(new Rect(item.x + 13f, item.y + 5f, item.width - 20f, UITheme.FontBodyLineHeight), label);
             GUI.color = prevColor;
             Text.Font = prevFont;
             TooltipHandler.TipRegion(item, "PersonalChronicle.UI.ToolsPlaceholder".Translate().ToString());
@@ -152,15 +162,19 @@ namespace PersonalChronicle.Archive
             Rect rect = new Rect(x, y, width, height);
             ArchiveUiStyle.DrawSelectedNavigation(rect, selected);
             Text.Font = GameFont.Small;
+            // v4.17 体检：文本矩形行高 ≥ FontBodyLineHeight（22f，CJK 安全），
+            // 长分类名（含计数）截断加省略号，不再换行后溢出裁切。
             if (string.IsNullOrEmpty(countText))
             {
-                Widgets.Label(new Rect(rect.x + 13f, rect.y + 7f, rect.width - 20f, 20f), label);
+                string clipped = UIComponents.TruncateToWidth(label, rect.width - 20f, GameFont.Small);
+                Widgets.Label(new Rect(rect.x + 13f, rect.y + 4f, rect.width - 20f, UITheme.FontBodyLineHeight), clipped);
             }
             else
             {
-                Widgets.Label(new Rect(rect.x + 13f, rect.y + 7f, rect.width - 60f, 20f), label);
+                string clipped = UIComponents.TruncateToWidth(label, rect.width - 60f, GameFont.Small);
+                Widgets.Label(new Rect(rect.x + 13f, rect.y + 4f, rect.width - 60f, UITheme.FontBodyLineHeight), clipped);
                 Text.Anchor = TextAnchor.MiddleRight;
-                Widgets.Label(new Rect(rect.x + rect.width - 48f, rect.y + 7f, 38f, 20f), countText);
+                Widgets.Label(new Rect(rect.x + rect.width - 48f, rect.y + 4f, 38f, UITheme.FontBodyLineHeight), countText);
             }
             Text.Anchor = prevAnchor;
             Text.Font = prevFont;
@@ -288,9 +302,6 @@ namespace PersonalChronicle.Archive
                     {
                         DrawPawnOverview(panel, service);
                     }
-                    break;
-                case "Timeline":
-                    DrawDetailTimeline(panel, service);
                     break;
                 case "Career":
                     DrawCareerTab(panel, service);
@@ -481,9 +492,19 @@ namespace PersonalChronicle.Archive
 
         private static void DrawNoService(Rect inRect)
         {
-            Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(0f, inRect.height / 2f - 14f, inRect.width, 28f),
-                "PersonalChronicle.UI.NoService".Translate().ToString());
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            try
+            {
+                Text.Font = GameFont.Medium;
+                Widgets.Label(new Rect(0f, inRect.height / 2f - 14f, inRect.width, 28f),
+                    "PersonalChronicle.UI.NoService".Translate().ToString());
+            }
+            finally
+            {
+                Text.Font = prevFont;
+                GUI.color = prevColor;
+            }
         }
 
         private static void DrawSectionTitle(Rect rect, ref float y, string title)
@@ -504,13 +525,19 @@ namespace PersonalChronicle.Archive
             GUI.color = ArchiveUiStyle.Dim;
             Widgets.Label(new Rect(row.x + 8f, row.y + 4f, 146f, 18f), dateText);
 
+            // 窄面板保护：固定列宽减法可能产生负宽（小屏/压缩窗口），clamp 到 0。
             Text.Font = GameFont.Small;
             GUI.color = ArchiveUiStyle.Text;
-            Widgets.Label(new Rect(row.x + 162f, row.y + 4f, row.width - 162f - 190f, 20f), titleText);
+            float titleW = Mathf.Max(0f, row.width - 162f - 190f);
+            Widgets.Label(new Rect(row.x + 162f, row.y + 4f, titleW, 20f), titleText);
 
-            Text.Font = GameFont.Tiny;
-            GUI.color = ArchiveUiStyle.Muted;
-            Widgets.Label(new Rect(row.x + row.width - 186f, row.y + 4f, 182f, 18f), typeText);
+            // 右对齐列：面板过窄时整体隐藏（避免与标题列重叠/越界）。
+            if (row.width >= 186f + 160f)
+            {
+                Text.Font = GameFont.Tiny;
+                GUI.color = ArchiveUiStyle.Muted;
+                Widgets.Label(new Rect(row.x + row.width - 186f, row.y + 4f, 182f, 18f), typeText);
+            }
             GUI.color = previous;
             Text.Font = prevFont;
 

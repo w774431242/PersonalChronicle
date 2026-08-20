@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using PersonalChronicle.Application;
 using PersonalChronicle.Archive.ReadModels;
@@ -113,6 +113,15 @@ namespace PersonalChronicle.Archive
 
         protected override void FillTab()
         {
+            // v4.17 体检：Tab 尺寸屏幕自适应（与 ITab_Pawn_Career 同款兜底）——
+            // 低分辨率/高 UI 缩放下固定 560×640 会把顶边推出屏幕。
+            float w = Mathf.Min(TabWidth, Verse.UI.screenWidth - 24f);
+            float h = Mathf.Min(TabHeight, Verse.UI.screenHeight - 240f);
+            if (Mathf.Abs(size.x - w) > 1f || Mathf.Abs(size.y - h) > 1f)
+            {
+                size = new Vector2(w, h);
+            }
+
             Pawn pawn = SelPawnSafe;
             IArchiveService service = PersonalChronicleMod.ArchiveService;
             Rect outer = new Rect(0f, 0f, size.x, size.y).ContractedBy(Pad);

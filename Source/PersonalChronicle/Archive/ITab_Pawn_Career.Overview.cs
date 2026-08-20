@@ -1,12 +1,11 @@
-// ITab_Pawn_Career partial：总览子页（职业规划/职业身份/资格状态/预检/下一职称）。
-// ARC-013 文件治理，物理切片零契约改动；见主文件 ITab_Pawn_Career.cs 类文档。
-using System;
+// 职业档案 ITab · 总览子页（partial）。
+// 范围：仅前端 UI 表达优化（视觉得分 + 信息层级），不触碰数据/后端/Read Model。
+// 设计系统：全部经 UIComponents + UITheme；禁止散落 GUI.color / new Color。
+// CJK 行高基线：大区标题 ≤ SectionTitle(24f) / 区块内 ValueRow ≥ 22f / 小字 ≥ 18f。
 using System.Collections.Generic;
-using PersonalChronicle.Application;
 using PersonalChronicle.Archive.ReadModels;
 using PersonalChronicle.Archive.UI;
 using PersonalChronicle.Data;
-using PersonalChronicle.Domain;
 using PersonalChronicle.Domain.Career;
 using PersonalChronicle.Domain.Profession;
 using RimWorld;
@@ -17,152 +16,175 @@ namespace PersonalChronicle.Archive
 {
     public partial class ITab_Pawn_Career
     {
-        // ================= 子页：总览 =================
-        private void DrawOverviewTab(Rect rect, Pawn pawn, DetailSnapshot snap)
-        {
-            Rect view = new Rect(rect.x, rect.y, rect.width, rect.height);
-            float innerW = view.width - UITheme.ScrollbarThickness;
-            float contentH = EstimateOverviewH(snap);
-            contentH = Mathf.Max(contentH, view.height);
-            Widgets.BeginScrollView(view, ref scroll, new Rect(view.x, view.y, innerW, contentH));
-            try
-            {
-                float y = view.y;
-                y = DrawPlanSection(view, y, innerW, pawn);
-                y = DrawIdentityBlock(view, y, innerW, snap);
-                y = DrawQualBlock(view, y, innerW, snap);
-                y = DrawPreCheckBlock(view, y, innerW, snap);
-                y = DrawNextTitleBlock(view, y, innerW, snap);
-            }
-            finally
-            {
-                Widgets.EndScrollView();
-            }
-        }
+        // 总览区块行高
+        private const float OvValueRowH = 24f;
 
-        private static float EstimateOverviewH(DetailSnapshot snap)
+        private float DrawOverviewTab(Rect rect, Pawn pawn, DetailSnapshot snap)
         {
             CareerOverviewView ov = snap != null ? snap.CareerOverview : null;
-            float h = 0f;
-            h += 30f + 12f + 3f * (ChipH + 6f);            // 职业规划（标题 + 3 行 chips）
-            h += 30f + 150f;                               // 职业身份
-            h += 30f + (ov != null && ov.Qual != null ? ov.Qual.Count * 30f : 0f) + 8f;      // 资格状态
-            h += 30f + (ov != null && ov.PreCheck != null ? ov.PreCheck.Count * 30f : 0f) + 8f; // 预检
-            h += 30f + 130f;                               // 下一职称
-            return h + UITheme.SpaceMd * 4f;
+            // v4.17 体检：滚动内容宽度预留滚动条位（右缘元素不再被滚动条覆盖）。
+            float width = rect.width - UITheme.ScrollbarThickness;
+            float viewH = CalcOverviewHeight(ov, width);
+            Rect view = new Rect(0f, 0f, width, Mathf.Max(viewH, 1f));
+            Widgets.BeginScrollView(rect, ref scroll, view);
+
+            float             y = 0f;
+            if (ov == null || !ov.HasData)
+            {
+                UIComponents.TintedBox(view, UITheme.Panel);
+                UIComponents.Label(new Rect(view.x + 12f, view.y + 12f, view.width - 24f, 24f),
+                    "PersonalChronicle.UI.Career.Ov.NoData".Translate().ToString(), UITheme.FontBody, UITheme.Muted);
+                Widgets.EndScrollView();
+                return viewH;
+            }
+
+            y = DrawIdentityBlock(view, y, width, ov);
+            y = DrawPlanSection(view, y, width, pawn);
+            y = DrawQualSection(view, y, width, ov);
+            y = DrawNextTitleSection(view, y, width, ov);
+
+            Widgets.EndScrollView();
+            return viewH;
         }
 
-        // ---- 职业规划（12 专业适配分析 chips）----
-        private float DrawPlanSection(Rect view, float y, float innerW, Pawn pawn)
+        // ================= 职业身份（强锚点，带分隔节奏）=================
+        private float DrawIdentityBlock(Rect view, float y, float width, CareerOverviewView ov)
         {
-            UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
-                "PersonalChronicle.UI.Career.Plan.Title".Translate().ToString());
-            y += UITheme.SectionTitleHeight;
+            float pad = UITheme.PanelPadding;
+            float innerW = width - 2f * pad;
 
-            // P2 缺口补全：玩家主方向选择入口（推荐≠强制；写入 primaryDirection）。
-            // 仅当已有方向 Def 时才显示按钮，避免空列表误导。
-            if (DefDatabase<ProfessionalDirectionDef>.AllDefsListForReading.Count > 0)
+            // v4.17 体检：block 高 92f→104f —— MiniStat 值行（Small 22f）+ 标签行（Tiny 18f）
+            // 单元需 40f，旧 16f/14f 矩形裁切 Medium 字体且 statY 越过面板底边。
+            Rect block = new Rect(view.x, y, width, 104f);
+            UIComponents.Panel(block, UITheme.Panel);
+            UIComponents.Border(block, UITheme.BorderSoft);
+
+            float bx = block.x + pad;
+            float bw = block.width - 2f * pad;
+            float by = block.y + 12f;
+
+            // 主职称（大字 + 方向色）
+            ProfessionalDirectionDef dirDef = TryGetDirectionDef(cachedSnapshot);
+            Color accent = dirDef != null ? ParseHex(dirDef.colorHex, UITheme.Accent) : UITheme.Accent;
+            string role = string.IsNullOrEmpty(ov.RoleName)
+                ? "PersonalChronicle.UI.Career.Ov.Undefined".Translate().ToString()
+                : ov.RoleName;
+            UIComponents.Label(new Rect(bx, by, bw, 28f), role, UITheme.FontValue, accent);
+
+            // 副标题：方向 · 技能 · 工时（一行小字）
+            string sub = ov.RoleDesc ?? "";
+            if (!string.IsNullOrEmpty(ov.SkillText))
             {
-                float btnW = 132f;
-                Rect dirBtn = new Rect(view.x + innerW - btnW, y - UITheme.SectionTitleHeight - 2f, btnW, 24f);
-                Color btnPrevColor = GUI.color;
-                GameFont btnPrevFont = Verse.Text.Font;
-                TextAnchor btnPrevAnchor = Verse.Text.Anchor;
-                try
-                {
-                    string currentDir = CurrentPrimaryDirection(pawn);
-                    string btnLabel = string.IsNullOrEmpty(currentDir)
-                        ? "PersonalChronicle.UI.Career.SetDirection.Button".Translate().ToString()
-                        : "PersonalChronicle.UI.Career.SetDirection.ButtonCurrent".Translate(
-                            DefDatabase<ProfessionalDirectionDef>.GetNamedSilentFail(currentDir)?.LabelCap ?? currentDir).ToString();
-                    if (Widgets.ButtonText(dirBtn, btnLabel))
-                    {
-                        OpenSetDirectionDialog(pawn);
-                    }
-                }
-                finally
-                {
-                    GUI.color = btnPrevColor;
-                    Verse.Text.Font = btnPrevFont;
-                    Verse.Text.Anchor = btnPrevAnchor;
-                }
+                sub = string.IsNullOrEmpty(sub) ? ov.SkillText : sub + " · " + ov.SkillText;
             }
-
-            if (fitResults == null || fitResults.Count == 0)
+            if (!string.IsNullOrEmpty(ov.HoursText))
             {
-                UIComponents.Label(new Rect(view.x, y, innerW, 22f),
-                    "PersonalChronicle.UI.Career.Plan.Empty".Translate().ToString(),
-                    UITheme.FontBody, UITheme.Muted);
-                return y + 26f;
+                sub = string.IsNullOrEmpty(sub) ? ov.HoursText : sub + " · " + ov.HoursText;
             }
+            UIComponents.Label(new Rect(bx, by + 32f, bw, 20f), sub, UITheme.FontLabel, UITheme.Muted);
 
-            float chipGap = 6f;
-            float perCol = ChipW + chipGap;
-            int perRow = Mathf.Max(1, (int)(innerW / perCol));
+            // 指标行（制造/建造/研究 三宫格 + 著作 + 成果）
+            float statY = by + 52f;
+            float statGap = 10f;
+            float statW = (bw - statGap * 4f) / 5f;
+            DrawMiniStat(new Rect(bx, statY, statW, 40f), FormatValue(ov.Made), "PersonalChronicle.UI.Career.Ov.Metric.Made".Translate().ToString());
+            DrawMiniStat(new Rect(bx + statW + statGap, statY, statW, 40f), FormatValue(ov.Built), "PersonalChronicle.UI.Career.Ov.Metric.Built".Translate().ToString());
+            DrawMiniStat(new Rect(bx + (statW + statGap) * 2f, statY, statW, 40f), FormatValue(ov.Researched), "PersonalChronicle.UI.Career.Ov.Metric.Research".Translate().ToString());
+            DrawMiniStat(new Rect(bx + (statW + statGap) * 3f, statY, statW, 40f), FormatValue(ov.Books), "PersonalChronicle.UI.Career.Ov.Books".Translate().ToString());
+            DrawMiniStat(new Rect(bx + (statW + statGap) * 4f, statY, statW, 40f), FormatValue(ov.Results), "PersonalChronicle.UI.Career.Ov.Results".Translate().ToString());
+
+            return y + block.height + UITheme.SpaceMd;
+        }
+
+        /// <summary>v4.17 体检：值行 Small 22f + 标签行 Tiny 18f（单元 40f，CJK 安全）。</summary>
+        private static void DrawMiniStat(Rect r, string value, string label)
+        {
+            UIComponents.Label(new Rect(r.x, r.y, r.width, 22f), value, UITheme.FontBody, UITheme.Text, TextAnchor.MiddleLeft);
+            UIComponents.Label(new Rect(r.x, r.y + 22f, r.width, 18f), label, UITheme.FontLabel, UITheme.Dim, TextAnchor.MiddleLeft);
+        }
+
+        // ================= 职业规划（12 专业 chips + 「选」角标）=================
+        private float DrawPlanSection(Rect view, float y, float width, Pawn pawn)
+        {
+            y = DrawSectionTitle(view, y, width, "PersonalChronicle.UI.Career.Ov.Plan".Translate());
+
+            float btnH = 30f;
+            Rect btnRect = new Rect(view.x, y, width, btnH);
+            DrawPlanButton(btnRect, pawn);
+            y += btnH + UITheme.SpaceXs;
+
+            // 12 专业 chip 网格（4 列 x 3 行），选中小高亮、主方向青色「选」角标、
+            // 适配分析 top1/高分 金色「荐」角标（对齐 HTML .plan-chip .rec）。
+            int cols = 4;
+            float gap = 8f;
+            float chipH = 28f;
+            float chipW = (width - gap * (cols - 1)) / cols;
+            ProfessionalFitResult topFit = fitResults != null && fitResults.Count > 0 ? fitResults[0] : null;
+            for (int i = 0; i < 12; i++)
+            {
+                int col = i % cols;
+                int row = i / cols;
+                string mkey = MajorKeys[i];
+                bool selected = mkey == currentMajorKey;
+                bool isTop1 = topFit != null && topFit.Major == mkey;
+                Rect chip = new Rect(view.x + col * (chipW + gap), y + row * (chipH + gap), chipW, chipH);
+                DrawPlanChip(chip, mkey, selected, isTop1, FitFor(fitResults, mkey));
+            }
+            y += 3 * (chipH + gap) + UITheme.SpaceMd;
+            return y;
+        }
+
+        private void DrawPlanChip(Rect r, string majorKey, bool selected, bool isTop1, ProfessionalFitResult fit)
+        {
             Color prevColor = GUI.color;
             GameFont prevFont = Verse.Text.Font;
             TextAnchor prevAnchor = Verse.Text.Anchor;
             try
             {
-                for (int i = 0; i < fitResults.Count; i++)
+                string label = MajorLabel(majorKey);
+                string glyph = MajorGlyph(majorKey);
+                Color chipBg = selected ? UITheme.PanelRaised : UITheme.Panel;
+                UIComponents.TintedBox(r, chipBg);
+                if (selected) UIComponents.Border(r, UITheme.PillGold);
+                else UIComponents.Border(r, UITheme.BorderSoft);
+
+                Rect glyphRect = new Rect(r.x + 4f, r.y + (r.height - 18f) / 2f, 18f, 18f);
+                UIComponents.TintedBox(glyphRect, selected ? UITheme.PillGold : UITheme.PanelRaised);
+                UIComponents.Label(glyphRect, glyph, UITheme.FontLabel, selected ? UITheme.Text : UITheme.Muted, TextAnchor.MiddleCenter);
+
+                Rect textRect = new Rect(glyphRect.xMax + 4f, r.y, r.width - 22f - 18f, r.height);
+                // v4.17 体检：英文专业名（如 "Animal Husbandry"）超 chipW 会换行被裁——
+                // 截断加省略号（UI-009）。
+                string clippedLabel = UIComponents.TruncateToWidth(label, textRect.width, GameFont.Small);
+                Verse.Text.Font = GameFont.Small;
+                Verse.Text.Anchor = TextAnchor.MiddleLeft;
+                GUI.color = selected ? UITheme.Text : UITheme.Muted;
+                Widgets.Label(textRect, clippedLabel);
+
+                bool isMajor = IsMajorChosen(majorKey);
+                // 角标规则（对齐 HTML .plan-chip .rec/.rank）：「选」青角标只给 primary；
+                // 「荐」金角标给适配 top1 或 Fit≥80（与「选」互斥，选优先）。
+                if (isMajor)
                 {
-                    ProfessionalFitResult r = fitResults[i];
-                    int col = i % perRow;
-                    int row = i / perRow;
-                    Rect chip = new Rect(view.x + col * perCol, y + row * (ChipH + chipGap), ChipW, ChipH);
-                    bool selected = string.Equals(currentMajorKey, r.Major, StringComparison.Ordinal);
-                    bool isTop1 = i == 0;
-                    bool recommend = r.Fit >= 80 || isTop1;
-                    // P2 缺口补全：持久化选定的主方向（primaryDirection）对应专业显示「选」角标（推荐≠强制）。
-                    bool chosen = IsMajorChosen(pawn, r.Major);
-
-                    UIComponents.TintedBox(chip, selected ? UITheme.PanelRaised : UITheme.Panel);
-                    UIComponents.Border(chip, selected ? UITheme.PillGold : UITheme.BorderSoft);
-                    if (recommend && !selected)
-                    {
-                        UIComponents.Border(chip, UITheme.PillGold);
-                    }
-
-                    // 排名 + 专业名 + 适配分。
-                    Verse.Text.Font = GameFont.Tiny;
-                    Verse.Text.Anchor = TextAnchor.MiddleLeft;
-                    GUI.color = UITheme.Dim;
-                    Widgets.Label(new Rect(chip.x + 4f, chip.y, 20f, ChipH), (i + 1).ToString());
-                    GUI.color = selected ? UITheme.Text : UITheme.Muted;
-                    Widgets.Label(new Rect(chip.x + 20f, chip.y, ChipW - 44f, ChipH),
-                        MajorLabel(r.Major));
-                    Verse.Text.Anchor = TextAnchor.MiddleRight;
-                    GUI.color = r.Fit >= 65 ? UITheme.PillGold : UITheme.Dim;
-                    Widgets.Label(new Rect(chip.x + ChipW - 30f, chip.y, 26f, ChipH), r.Fit.ToString());
-                    Verse.Text.Anchor = TextAnchor.UpperLeft;
-                    GUI.color = prevColor;
-                    Verse.Text.Font = prevFont;
-                    Verse.Text.Anchor = prevAnchor;
-
-                    // 「荐」角标（右上角小标签）。
-                    if (recommend)
-                    {
-                        Rect rec = new Rect(chip.xMax - 14f, chip.y - 5f, 16f, 14f);
-                        UIComponents.Badge(rec, "PersonalChronicle.UI.Career.Plan.Rec".Translate().ToString(), UITheme.PillGold);
-                    }
-
-                    // 「选」角标（左上角青色，玩家持久化选定的主方向）。
-                    if (chosen)
-                    {
-                        Rect chosenBadge = new Rect(chip.x - 4f, chip.y - 5f, 16f, 14f);
-                        UIComponents.Badge(chosenBadge, "PersonalChronicle.UI.Career.Plan.Chosen".Translate().ToString(), UITheme.PillGreen);
-                    }
-
-                    // 悬停：五维明细 tooltip（星级 + 五维 + 优势/短板 + 推荐方向）。
-                    TooltipHandler.TipRegion(chip, new TipSignal(BuildPlanTooltip(r)));
-
-                    // 点击：选中为当前专业（身份卡联动；再点取消）。
-                    if (Widgets.ButtonInvisible(chip))
-                    {
-                        currentMajorKey = string.Equals(currentMajorKey, r.Major, StringComparison.Ordinal)
-                            ? null
-                            : r.Major;
-                    }
+                    Rect badge = new Rect(r.xMax - 18f, r.y + 2f, 16f, 14f);
+                    UIComponents.TintedBox(badge, UITheme.Info);
+                    UIComponents.Label(badge, "PersonalChronicle.UI.Career.Plan.Chosen".Translate(),
+                        UITheme.FontLabel, UITheme.Text, TextAnchor.MiddleCenter);
+                }
+                else if (isTop1 || (fit != null && fit.Fit >= 80))
+                {
+                    Rect badge = new Rect(r.xMax - 18f, r.y + 2f, 16f, 14f);
+                    UIComponents.TintedBox(badge, UITheme.PillGold);
+                    UIComponents.Label(badge, "PersonalChronicle.UI.Career.Plan.Rec".Translate(),
+                        UITheme.FontLabel, UITheme.Text, TextAnchor.MiddleCenter);
+                }
+                // 悬停明细：适配分 + 五维（对齐 HTML .plan-pop）。
+                if (fit != null)
+                {
+                    string tip = "PersonalChronicle.UI.Career.Plan.Match.Overall".Translate(fit.Fit.ToString())
+                        + "\n"
+                        + FitDimText(fit);
+                    TooltipHandler.TipRegion(r, new TipSignal(tip));
                 }
             }
             finally
@@ -171,279 +193,177 @@ namespace PersonalChronicle.Archive
                 Verse.Text.Font = prevFont;
                 Verse.Text.Anchor = prevAnchor;
             }
-            return y + 3f * (ChipH + chipGap) + UITheme.SpaceSm;
         }
 
-        private string BuildPlanTooltip(ProfessionalFitResult r)
+        private static ProfessionalFitResult FitFor(List<ProfessionalFitResult> fits, string majorKey)
         {
-            string title = MajorLabel(r.Major) + " · " + r.Fit + "/100";
-            string tag = r.Fit >= 85
-                ? "PersonalChronicle.UI.Career.Plan.Match.High".Translate().ToString()
-                : (r.Fit >= 65
-                    ? "PersonalChronicle.UI.Career.Plan.Match.Mid".Translate().ToString()
-                    : "PersonalChronicle.UI.Career.Plan.Match.Low".Translate().ToString());
-            int stars = r.Fit >= 85 ? 5 : (r.Fit >= 65 ? 4 : 3);
-            string starLine = new string('★', stars) + new string('☆', 5 - stars) + "  " + tag;
-            string nl = "\n";
-            string dims = "PersonalChronicle.UI.Career.Plan.Dim.Skill".Translate() + " " + r.SkillScore + nl
-                + "PersonalChronicle.UI.Career.Plan.Dim.Practice".Translate() + " " + r.PracticeScore + nl
-                + "PersonalChronicle.UI.Career.Plan.Dim.Passion".Translate() + " " + r.PassionScore + nl
-                + "PersonalChronicle.UI.Career.Plan.Dim.Achieve".Translate() + " " + r.AchievementScore + nl
-                + "PersonalChronicle.UI.Career.Plan.Dim.Growth".Translate() + " " + r.GrowthScore;
-            string pros = r.Pros.Count > 0
-                ? "✓ " + JoinSkillNames(r.Pros)
-                : "PersonalChronicle.UI.Career.Plan.NoPros".Translate().ToString();
-            string cons = r.Cons.Count > 0
-                ? "△ " + JoinSkillNames(r.Cons)
-                : "";
-            string dir = "PersonalChronicle.UI.Career.Plan.Dir".Translate() + MajorDirLabel(r.Major);
-            return title + nl + starLine + nl + nl + dims + nl + nl
-                + "PersonalChronicle.UI.Career.Plan.Basis".Translate() + pros + (cons.Length > 0 ? nl + cons : "")
-                + nl + dir;
-        }
-
-        private string JoinSkillNames(List<string> defNames)
-        {
-            if (defNames == null || defNames.Count == 0) return "";
-            List<string> names = new List<string>();
-            for (int i = 0; i < defNames.Count; i++)
+            if (fits == null || string.IsNullOrEmpty(majorKey)) return null;
+            for (int i = 0; i < fits.Count; i++)
             {
-                SkillDef sd = DefDatabase<SkillDef>.GetNamedSilentFail(defNames[i]);
-                names.Add(sd != null ? sd.LabelCap : defNames[i]);
+                if (fits[i] != null && fits[i].Major == majorKey) return fits[i];
             }
-            return string.Join("、", names);
+            return null;
         }
 
-        // ---- 主方向选择入口（P2 缺口补全）----
-        private static string CurrentPrimaryDirection(Pawn pawn)
+        private static string FitDimText(ProfessionalFitResult fit)
         {
-            if (pawn == null) return null;
-            IArchiveService service = PersonalChronicleMod.ArchiveService;
-            if (service == null) return null;
-            PawnObject po = service.GetObject(pawn.GetUniqueLoadID()) as PawnObject;
-            if (po == null || po.CareerData == null || po.CareerData.Professional == null) return null;
-            return po.CareerData.Professional.primaryDirection;
+            return "PersonalChronicle.UI.Career.Plan.Dim.Skill".Translate() + " " + fit.SkillScore
+                + "\n" + "PersonalChronicle.UI.Career.Plan.Dim.Practice".Translate() + " " + fit.PracticeScore
+                + "\n" + "PersonalChronicle.UI.Career.Plan.Dim.Passion".Translate() + " " + fit.PassionScore
+                + "\n" + "PersonalChronicle.UI.Career.Plan.Dim.Achieve".Translate() + " " + fit.AchievementScore
+                + "\n" + "PersonalChronicle.UI.Career.Plan.Dim.Growth".Translate() + " " + fit.GrowthScore;
         }
 
-        /// <summary>判断某 12 专业 key 是否对应玩家持久化选定的主方向（primaryDirection）。
-        /// 映射：方向 Def.profession == Major key（如 Manufacturing_Precision.profession = "Manufacturing"）。</summary>
-        private bool IsMajorChosen(Pawn pawn, string majorKey)
+        private void DrawPlanButton(Rect r, Pawn pawn)
         {
-            if (pawn == null || string.IsNullOrEmpty(majorKey)) return false;
-            string dir = CurrentPrimaryDirection(pawn);
-            if (string.IsNullOrEmpty(dir)) return false;
-            ProfessionalDirectionDef dirDef = DefDatabase<ProfessionalDirectionDef>.GetNamedSilentFail(dir);
-            if (dirDef == null) return false;
-            return string.Equals(dirDef.profession, majorKey, System.StringComparison.Ordinal);
-        }
-
-        private void OpenSetDirectionDialog(Pawn pawn)
-        {
-            if (pawn == null || Current.Game == null) return;
-            ChronicleGameComponent component = Current.Game.GetComponent<ChronicleGameComponent>();
-            if (component == null) return;
-            string current = CurrentPrimaryDirection(pawn);
-            // 选择落盘后重建本 ITab 快照，使身份卡/规划区即时反映。
-            Dialog_SetPrimaryDirection dialog = new Dialog_SetPrimaryDirection(
-                pawn, component, current,
-                () =>
+            Color prevColor = GUI.color;
+            GameFont prevFont = Verse.Text.Font;
+            TextAnchor prevAnchor = Verse.Text.Anchor;
+            try
+            {
+                Verse.Text.Font = GameFont.Small;
+                if (Widgets.ButtonText(r, "PersonalChronicle.UI.Career.Ov.SetPrimary".Translate().ToString()))
                 {
-                    IArchiveService service = PersonalChronicleMod.ArchiveService;
-                    if (service != null) EnsureSnapshot(service, pawn);
-                });
-            Find.WindowStack.Add(dialog);
-        }
-
-        // ---- 职业身份 ----
-        private float DrawIdentityBlock(Rect view, float y, float innerW, DetailSnapshot snap)
-        {
-            CareerOverviewView ov = snap != null ? snap.CareerOverview : null;
-            UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
-                "PersonalChronicle.UI.Career.Ov.Identity".Translate().ToString());
-            y += UITheme.SectionTitleHeight;
-
-            Rect panel = new Rect(view.x, y, innerW, 74f);
-            UIComponents.Panel(panel, UITheme.Panel);
-            string roleName = ov != null && !string.IsNullOrEmpty(ov.RoleName)
-                ? ov.RoleName
-                : "PersonalChronicle.UI.Career.Ov.Undefined".Translate().ToString();
-            UIComponents.Label(new Rect(panel.x + 10f, panel.y + 6f, panel.width - 20f, 26f),
-                UIComponents.TruncateToWidth(roleName, panel.width - 20f, UITheme.FontValue),
-                UITheme.FontValue, UITheme.Text);
-            string roleDesc = ov != null ? (ov.RoleDesc ?? "--") : "--";
-            UIComponents.Label(new Rect(panel.x + 10f, panel.y + 34f, panel.width - 20f, 18f),
-                UIComponents.TruncateToWidth(roleDesc, panel.width - 20f, UITheme.FontLabel),
-                UITheme.FontLabel, UITheme.Muted);
-            string nextLine = "PersonalChronicle.UI.Career.Ov.NextLine".Translate(
-                (ov != null && !string.IsNullOrEmpty(ov.NextTitle))
-                    ? ov.NextTitle
-                    : "PersonalChronicle.UI.Career.Ov.TopTitle".Translate().ToString());
-            UIComponents.Label(new Rect(panel.x + 10f, panel.y + 54f, panel.width - 20f, 18f),
-                UIComponents.TruncateToWidth(nextLine, panel.width - 20f, UITheme.FontLabel),
-                UITheme.FontLabel, UITheme.PillGold);
-            y += panel.height + UITheme.SpaceXs;
-
-            // 数据值采用简单直白的文本列表（对齐用户要求：不额外卡片样式、紧凑省空间）。
-            // 行 = label（左）+ value（右对齐），7 行：专业技能/相关工时/重大成果/专业著作/制造/建造/研究。
-            // UI-001：Made/Built/Researched 全部来自快照（Provider 已从 RecordCountByType 聚合），
-            // 窗口不直查/直聚合 Domain（移除旧 CountEvents 直查）。
-            CareerFactCounts fc = snap != null ? snap.FactCounts : null;
-            int made = fc != null ? fc.ItemProduced : 0;
-            int built = fc != null ? fc.ConstructionCompleted : 0;
-            int researched = fc != null ? fc.ResearchCompleted : 0;
-            y = ValueRow(view, y, innerW,
-                "PersonalChronicle.UI.Career.Ov.Skill".Translate().ToString(),
-                ov != null ? (ov.SkillText ?? "--") : "--");
-            y = ValueRow(view, y, innerW,
-                "PersonalChronicle.UI.Career.Ov.Hours".Translate().ToString(),
-                ov != null ? (ov.HoursText ?? "--") : "--");
-            y = ValueRow(view, y, innerW,
-                "PersonalChronicle.UI.Career.Ov.Results".Translate().ToString(),
-                ov != null ? ov.Results.ToString() : "0");
-            y = ValueRow(view, y, innerW,
-                "PersonalChronicle.UI.Career.Ov.Books".Translate().ToString(),
-                ov != null ? ov.Books.ToString() : "0");
-            y = ValueRow(view, y, innerW,
-                "PersonalChronicle.UI.Career.Ov.Metric.Made".Translate().ToString(), made.ToString());
-            y = ValueRow(view, y, innerW,
-                "PersonalChronicle.UI.Career.Ov.Metric.Built".Translate().ToString(), built.ToString());
-            y = ValueRow(view, y, innerW,
-                "PersonalChronicle.UI.Career.Ov.Metric.Research".Translate().ToString(), researched.ToString());
-            y += UITheme.SpaceSm;
-            return y;
-        }
-
-        /// <summary>文本列表行：label 左 / value 右对齐，无卡片样式。</summary>
-        private float ValueRow(Rect view, float y, float innerW, string label, string value)
-        {
-            UIComponents.Label(new Rect(view.x, y, innerW * 0.42f, 20f),
-                UIComponents.TruncateToWidth(label, innerW * 0.42f, UITheme.FontBody),
-                UITheme.FontBody, UITheme.Text);
-            UIComponents.Label(new Rect(view.x + innerW * 0.42f, y, innerW * 0.58f, 20f),
-                UIComponents.TruncateToWidth(value ?? "--", innerW * 0.58f, UITheme.FontBody),
-                UITheme.FontBody, UITheme.Muted, TextAnchor.UpperRight);
-            return y + 22f;
-        }
-
-        // ---- 当前资格状态（6 条件行）----
-        private float DrawQualBlock(Rect view, float y, float innerW, DetailSnapshot snap)
-        {
-            CareerOverviewView ov = snap != null ? snap.CareerOverview : null;
-            UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
-                "PersonalChronicle.UI.Career.Ov.QualState".Translate().ToString());
-            y += UITheme.SectionTitleHeight;
-            if (ov == null || ov.Qual == null || ov.Qual.Count == 0)
-            {
-                UIComponents.Label(new Rect(view.x, y, innerW, 22f),
-                    "PersonalChronicle.UI.Career.Ov.NoQual".Translate().ToString(),
-                    UITheme.FontBody, UITheme.Muted);
-                return y + 26f;
+                    Find.WindowStack.Add(new Dialog_SetPrimaryDirection(
+                        pawn,
+                        Current.Game != null ? Current.Game.GetComponent<ChronicleGameComponent>() : null,
+                        currentMajorKey,
+                        () =>
+                        {
+                            scroll = Vector2.zero;
+                        }));
+                }
             }
+            finally
+            {
+                GUI.color = prevColor;
+                Verse.Text.Font = prevFont;
+                Verse.Text.Anchor = prevAnchor;
+            }
+        }
+
+        // ================= 当前资格状态（6 条件，图标化 badge）=================
+        private float DrawQualSection(Rect view, float y, float width, CareerOverviewView ov)
+        {
+            y = DrawSectionTitle(view, y, width, "PersonalChronicle.UI.Career.Ov.Qual".Translate());
+            if (ov.Qual == null || ov.Qual.Count == 0)
+            {
+                UIComponents.Label(new Rect(view.x, y, width, 20f),
+                    "PersonalChronicle.UI.Career.Ov.NoQual".Translate().ToString(), UITheme.FontLabel, UITheme.Dim);
+                return y + 24f + UITheme.SpaceMd;
+            }
+
+            y += UITheme.SpaceXs;
+            float gap = 8f;
+            int cols = 2;
+            float rowH = 30f;
+            float cellW = (width - gap * (cols - 1)) / cols;
             for (int i = 0; i < ov.Qual.Count; i++)
             {
-                CareerQualView q = ov.Qual[i];
-                if (q == null) continue;
-                Rect row = new Rect(view.x, y, innerW, 28f);
-                UIComponents.Label(new Rect(row.x, row.y, innerW * 0.22f, 22f),
-                    q.Label ?? "", UITheme.FontBody, UITheme.Text);
-                UIComponents.Label(new Rect(row.x + innerW * 0.22f, row.y, innerW * 0.5f, 22f),
-                    UIComponents.TruncateToWidth(q.Note ?? "", innerW * 0.5f, UITheme.FontLabel),
-                    UITheme.FontLabel, UITheme.Muted);
-                Color stateColor = string.Equals(q.StateKey, "ok", StringComparison.Ordinal) ? UITheme.PillGreen : UITheme.PillRed;
-                UIComponents.Pill(new Rect(row.x + innerW * 0.72f, row.y + 3f, innerW * 0.28f - 4f, 20f),
-                    q.StateText ?? "", stateColor);
-                y += 30f;
+                int col = i % cols;
+                int row = i / cols;
+                Rect cell = new Rect(view.x + col * (cellW + gap), y + row * (rowH + gap), cellW, rowH);
+                DrawQualCell(cell, ov.Qual[i]);
             }
-            y += UITheme.SpaceSm;
+            int rows = (ov.Qual.Count + cols - 1) / cols;
+            y += rows * (rowH + gap) + UITheme.SpaceMd;
             return y;
         }
 
-        // ---- 资格预检（✓/●/○ 条件行）----
-        private float DrawPreCheckBlock(Rect view, float y, float innerW, DetailSnapshot snap)
+        private static void DrawQualCell(Rect r, CareerQualView q)
         {
-            CareerOverviewView ov = snap != null ? snap.CareerOverview : null;
-            UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
-                "PersonalChronicle.UI.Career.Ov.PreCheck".Translate().ToString());
-            y += UITheme.SectionTitleHeight;
-            if (ov == null || ov.PreCheck == null || ov.PreCheck.Count == 0)
+            Color prevColor = GUI.color;
+            GameFont prevFont = Verse.Text.Font;
+            TextAnchor prevAnchor = Verse.Text.Anchor;
+            try
             {
-                UIComponents.Label(new Rect(view.x, y, innerW, 22f),
-                    "PersonalChronicle.UI.Career.Ov.NoQual".Translate().ToString(),
-                    UITheme.FontBody, UITheme.Muted);
-                return y + 26f;
+                UIComponents.TintedBox(r, UITheme.Panel);
+                UIComponents.Border(r, UITheme.BorderSoft);
+
+                bool ok = q.StateKey == "ok";
+                Rect dot = new Rect(r.x + 8f, r.y + (r.height - 12f) / 2f, 12f, 12f);
+                UIComponents.TintedBox(dot, ok ? UITheme.PillGreen : UITheme.PillRed);
+
+                Rect txt = new Rect(dot.xMax + 8f, r.y, r.width - 28f, r.height);
+                Verse.Text.Font = GameFont.Small;
+                Verse.Text.Anchor = TextAnchor.MiddleLeft;
+                GUI.color = ok ? UITheme.Text : UITheme.Muted;
+                Widgets.Label(txt, q.Label + "  " + q.Note);
             }
-            for (int i = 0; i < ov.PreCheck.Count; i++)
+            finally
             {
-                CareerPreCheckView p = ov.PreCheck[i];
-                if (p == null) continue;
-                Rect row = new Rect(view.x, y, innerW, 28f);
-                bool done = string.Equals(p.StateKey, "done", StringComparison.Ordinal);
-                bool pending = string.Equals(p.StateKey, "pending", StringComparison.Ordinal);
-                string icon = done ? "✓" : (pending ? "●" : "○");
-                Color iconColor = done ? UITheme.PillGreen : (pending ? UITheme.PillGold : UITheme.Dim);
-                UIComponents.Label(new Rect(row.x, row.y, 24f, 22f), icon, UITheme.FontBody, iconColor);
-                UIComponents.Label(new Rect(row.x + 24f, row.y, innerW * 0.5f, 22f),
-                    p.Label ?? "", UITheme.FontBody, UITheme.Text);
-                UIComponents.Label(new Rect(row.x + innerW * 0.5f, row.y, innerW * 0.5f - 4f, 22f),
-                    UIComponents.TruncateToWidth(p.StateText ?? "", innerW * 0.5f - 4f, UITheme.FontLabel),
-                    UITheme.FontLabel, done ? UITheme.PillGreen : UITheme.Muted, TextAnchor.UpperRight);
-                y += 30f;
+                GUI.color = prevColor;
+                Verse.Text.Font = prevFont;
+                Verse.Text.Anchor = prevAnchor;
             }
-            y += UITheme.SpaceSm;
-            return y;
         }
 
-        // ---- 下一职称 ----
-        private float DrawNextTitleBlock(Rect view, float y, float innerW, DetailSnapshot snap)
+        // ================= 下一职称（进度条 + 5 档阶梯 + 缺口）=================
+        private float DrawNextTitleSection(Rect view, float y, float width, CareerOverviewView ov)
         {
-            CareerOverviewView ov = snap != null ? snap.CareerOverview : null;
-            UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
-                "PersonalChronicle.UI.Career.Ov.NextTitle".Translate().ToString());
-            y += UITheme.SectionTitleHeight;
-
-            Rect panel = new Rect(view.x, y, innerW, 116f);
-            UIComponents.Panel(panel, UITheme.Panel);
-            string nextTitle = (ov != null && !string.IsNullOrEmpty(ov.NextTitle))
-                ? ov.NextTitle
-                : "PersonalChronicle.UI.Career.Ov.TopTitle".Translate().ToString();
-            UIComponents.Label(new Rect(panel.x + 10f, panel.y + 6f, panel.width - 20f, 24f),
-                UIComponents.TruncateToWidth(nextTitle, panel.width - 20f, UITheme.FontValue),
-                UITheme.FontValue, UITheme.Text);
-
-            int progress = ov != null ? ov.Progress : 0;
-            Rect barRow = new Rect(panel.x + 10f, panel.y + 36f, panel.width - 20f, 20f);
-            UIComponents.Label(new Rect(barRow.x, barRow.y, 90f, 18f),
-                "PersonalChronicle.UI.Career.Ov.Progress".Translate().ToString(),
-                UITheme.FontLabel, UITheme.Muted);
-            UIComponents.ProgressBar(new Rect(barRow.x + 90f, barRow.y + 2f, barRow.width - 150f, 14f),
-                progress / 100f, UITheme.Accent);
-            UIComponents.Label(new Rect(barRow.x + barRow.width - 52f, barRow.y, 52f, 18f),
-                progress + "%", UITheme.FontLabel, UITheme.Accent, TextAnchor.UpperRight);
-
-            Rect gapRow = new Rect(panel.x + 10f, panel.y + 62f, panel.width - 20f, 22f);
-            if (ov != null && ov.NextGaps != null && ov.NextGaps.Count > 0)
+            y = DrawSectionTitle(view, y, width, "PersonalChronicle.UI.Career.Ov.NextTitle".Translate());
+            if (string.IsNullOrEmpty(ov.NextTitle))
             {
-                UIComponents.Label(new Rect(gapRow.x, gapRow.y, 90f, 18f),
-                    "PersonalChronicle.UI.Career.Ov.Gaps".Translate().ToString(),
-                    UITheme.FontLabel, UITheme.Muted);
-                string gapText = string.Join(" / ", ov.NextGaps);
-                UIComponents.Label(new Rect(gapRow.x + 90f, gapRow.y, gapRow.width - 90f, 20f),
-                    UIComponents.TruncateToWidth(gapText, gapRow.width - 90f, UITheme.FontLabel),
-                    UITheme.FontLabel, UITheme.Warn);
-            }
-            else
-            {
-                UIComponents.Label(new Rect(gapRow.x, gapRow.y, gapRow.width, 18f),
-                    "PersonalChronicle.UI.Career.Ov.NoGap".Translate().ToString(),
-                    UITheme.FontLabel, UITheme.Muted);
+                UIComponents.TintedBox(new Rect(view.x, y, width, 36f), UITheme.Panel);
+                UIComponents.Label(new Rect(view.x + 10f, y, width - 20f, 36f),
+                    "PersonalChronicle.UI.Career.Ov.Maxed".Translate().ToString(), UITheme.FontLabel, UITheme.PillGold, TextAnchor.MiddleLeft);
+                return y + 36f + UITheme.SpaceMd;
             }
 
-            // 依赖链 + 口径注释（对齐 HTML .dep-chain）。
-            UIComponents.Label(new Rect(panel.x + 10f, panel.y + 90f, panel.width - 20f, 18f),
-                "PersonalChronicle.UI.Career.Ov.DepChain".Translate().ToString(),
-                UITheme.FontLabel, UITheme.Dim);
-            y += panel.height + UITheme.SpaceMd;
-            return y;
+            float padX = UITheme.PanelPadding;
+            float blockH = 30f + OvValueRowH * 2f + 8f + 16f;
+            Rect block = new Rect(view.x, y, width, blockH);
+            UIComponents.Panel(block, UITheme.Panel);
+            UIComponents.Border(block, UITheme.BorderSoft);
+            float bx = block.x + padX;
+            float bw = block.width - 2f * padX;
+            float by = block.y + 8f;
+
+            UIComponents.Label(new Rect(bx, by, bw, 24f), ov.NextTitle, UITheme.FontValue, UITheme.Text);
+
+            float barY = by + 28f;
+            UIComponents.ProgressBar(new Rect(bx, barY, bw, 14f), Mathf.Clamp01(ov.Progress / 100f),
+                UITheme.PillGold, ov.Progress + "%");
+
+            // 缺口（若有；v4.17 体检：多缺口英文串换行被 18f 行高裁剪 → 截断）
+            float gapY = barY + 20f;
+            if (ov.NextGaps != null && ov.NextGaps.Count > 0)
+            {
+                string gaps = "PersonalChronicle.UI.Career.Ov.Gaps".Translate().ToString()
+                    + " " + string.Join(" / ", ov.NextGaps);
+                string clippedGaps = UIComponents.TruncateToWidth(gaps, bw, UITheme.FontLabel);
+                UIComponents.Label(new Rect(bx, gapY, bw, 18f), clippedGaps, UITheme.FontLabel, UITheme.Dim);
+            }
+
+            return y + block.height + UITheme.SpaceMd;
+        }
+
+        // ================= 通用 =================
+        private float DrawSectionTitle(Rect view, float y, float width, string title)
+        {
+            float h = 24f;
+            UIComponents.SectionTitle(new Rect(view.x, y, width, h), y, title);
+            return y + h + UITheme.SpaceXs;
+        }
+
+        private float CalcOverviewHeight(CareerOverviewView ov, float width)
+        {
+            float h = UITheme.SpaceMd;
+            h += 104f + UITheme.SpaceMd;                      // 身份（含 5 指标格）
+            h += 24f + UITheme.SpaceXs;                       // 规划标题
+            h += 30f + UITheme.SpaceXs;                       // 设定按钮
+            h += 3 * (28f + 8f) + UITheme.SpaceMd;            // 12 chips
+            h += 24f + UITheme.SpaceXs;                       // 资格标题
+            if (ov != null && ov.Qual != null && ov.Qual.Count > 0)
+            {
+                int rows = (ov.Qual.Count + 1) / 2;
+                h += UITheme.SpaceXs + rows * (30f + 8f) + UITheme.SpaceMd;
+            }
+            else h += 24f + UITheme.SpaceMd;
+            h += 24f + UITheme.SpaceXs;                       // 下一职称标题
+            h += (string.IsNullOrEmpty(ov?.NextTitle) ? 36f : (30f + OvValueRowH * 2f + 8f + 16f)) + UITheme.SpaceMd;
+            h += UITheme.SpaceMd;
+            return h;
         }
     }
 }

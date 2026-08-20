@@ -165,7 +165,14 @@ namespace PersonalChronicle.Archive.UI
             GUI.color = prev;
 
             float padX = 7f;
-            float labelW = Verse.Text.CalcSize(key).x + 4f;
+            float labelW = 0f;
+            if (!string.IsNullOrEmpty(key))
+            {
+                GameFont prevFont = Verse.Text.Font;
+                Verse.Text.Font = keyFont;
+                labelW = Verse.Text.CalcSize(key).x + 4f;
+                Verse.Text.Font = prevFont;
+            }
             Label(new Rect(rect.x + padX, rect.y, labelW, rect.height),
                 key, keyFont, UITheme.Dim, TextAnchor.MiddleLeft);
 
@@ -180,10 +187,12 @@ namespace PersonalChronicle.Archive.UI
 
         /// <summary>
         /// v1.1.4 UI 优化：按可用宽度截断文字并加省略号，避免长名字撑爆 PairCard 把按钮遮住。
+        /// v4.17 体检：maxWidth≤0 时返回空串（旧返回全文会画进 0 宽矩形溢出）。
         /// </summary>
         private static string TruncateForWidth(string text, float maxWidth, GameFont font)
         {
-            if (string.IsNullOrEmpty(text) || maxWidth <= 0f) return text ?? string.Empty;
+            if (string.IsNullOrEmpty(text)) return text ?? string.Empty;
+            if (maxWidth <= 0f) return string.Empty;
             GameFont prev = Verse.Text.Font;
             try
             {
@@ -212,12 +221,15 @@ namespace PersonalChronicle.Archive.UI
             GameFont prevFont = Verse.Text.Font;
             Verse.Text.Font = GameFont.Small;
             // Title block width derived from real text extent (CJK-safe); the rule
-            // starts after it instead of a fixed 230px offset.
+            // starts after it instead of a fixed 230px offset. 长标题按可用宽度截断
+            // （UI-009），避免换行后超出 22f 固定高度被裁剪。
+            float maxTitleW = Mathf.Max(40f, rect.width - 18f);
             float titleW = Mathf.Min(240f, Verse.Text.CalcSize(title).x + 8f);
+            string clipped = TruncateToWidth(title, titleW, GameFont.Small);
             GUI.color = UITheme.Accent;
             Widgets.DrawBoxSolid(new Rect(rect.x, y + 4f, 4f, 14f), UITheme.Accent);
             GUI.color = prevColor;
-            Widgets.Label(new Rect(rect.x + 10f, y, titleW, 22f), title);
+            Widgets.Label(new Rect(rect.x + 10f, y, Mathf.Min(titleW, maxTitleW), 22f), clipped);
             float ruleX = rect.x + 10f + titleW + 4f;
             Rule(new Rect(ruleX, y + 11f, Mathf.Max(0f, rect.width - (ruleX - rect.x)), UITheme.RuleHeight),
                 UITheme.Border);
@@ -250,14 +262,15 @@ namespace PersonalChronicle.Archive.UI
         {
             Color prev = GUI.color;
             GameFont prevFont = Verse.Text.Font;
-            GUI.color = new Color(color.r, color.g, color.b, 0.16f);
+            TextAnchor prevAnchor = Verse.Text.Anchor;
+            GUI.color = UITheme.WithAlpha(color, 0.16f);
             Widgets.DrawBoxSolid(rect, GUI.color);
             Border(rect, color);
             GUI.color = color;
             Verse.Text.Font = GameFont.Tiny;
             Verse.Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(rect, label);
-            Verse.Text.Anchor = TextAnchor.UpperLeft;
+            Widgets.Label(rect, TruncateToWidth(label ?? "", Mathf.Max(0f, rect.width - 4f), GameFont.Tiny));
+            Verse.Text.Anchor = prevAnchor;
             Verse.Text.Font = prevFont;
             GUI.color = prev;
         }
@@ -267,14 +280,15 @@ namespace PersonalChronicle.Archive.UI
         {
             Color prev = GUI.color;
             GameFont prevFont = Verse.Text.Font;
+            TextAnchor prevAnchor = Verse.Text.Anchor;
             Verse.Text.Font = GameFont.Tiny;
-            GUI.color = new Color(color.r, color.g, color.b, 0.14f);
+            GUI.color = UITheme.WithAlpha(color, 0.14f);
             Widgets.DrawBoxSolid(rect, GUI.color);
             Border(rect, color);
             GUI.color = color;
             Verse.Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(rect, label);
-            Verse.Text.Anchor = TextAnchor.UpperLeft;
+            Widgets.Label(rect, TruncateToWidth(label ?? "", Mathf.Max(0f, rect.width - 4f), GameFont.Tiny));
+            Verse.Text.Anchor = prevAnchor;
             Verse.Text.Font = prevFont;
             GUI.color = prev;
         }
@@ -308,6 +322,7 @@ namespace PersonalChronicle.Archive.UI
 
             Color prev = GUI.color;
             GameFont prevFont = Verse.Text.Font;
+            TextAnchor prevAnchor = Verse.Text.Anchor;
             try
             {
                 // left accent bar
@@ -319,11 +334,12 @@ namespace PersonalChronicle.Archive.UI
                 // value 占据卡片整宽（左侧 padX，右侧预留箭头区），长文本加省略号。
                 float valueRight = rect.xMax - padX - (subClickable ? arrowW : 0f);
                 float valueW = Mathf.Max(0f, valueRight - (rect.x + padX) - 2f);
-                // key 行：Tiny 10px 高，居中偏上
-                Label(new Rect(rect.x + padX, rect.y + 3f, valueW, 14f),
-                    key, keyFont, UITheme.Dim, TextAnchor.UpperLeft);
-                // value 行：Small 20px 高，居中对齐卡片中线偏下
-                Label(new Rect(rect.x + padX, rect.y + rect.height * 0.42f, valueW, 20f),
+                // key 行：Tiny，行高按真实 LineHeight（CJK ≥18f），不再硬编码 14f。
+                float keyH = Verse.Text.LineHeight;
+                Label(new Rect(rect.x + padX, rect.y + 3f, valueW, keyH),
+                    TruncateToWidth(key ?? "", valueW, keyFont), keyFont, UITheme.Dim, TextAnchor.UpperLeft);
+                // value 行：Small，行高 = FontBodyLineHeight（22f，CJK 安全），避免基线被裁。
+                Label(new Rect(rect.x + padX, rect.y + rect.height * 0.42f, valueW, UITheme.FontBodyLineHeight),
                     TruncateForWidth(value, valueW, valueFont), valueFont, UITheme.Text, TextAnchor.UpperLeft);
 
                 // Jump-to arrow on the right (only when subClickable). Coordinates are
@@ -331,8 +347,7 @@ namespace PersonalChronicle.Archive.UI
                 if (subClickable)
                 {
                     Rect arrowRect = new Rect(rect.xMax - arrowW, rect.y, arrowW, rect.height);
-                    Color arrowColor = accent;
-                    GUI.color = arrowColor;
+                    GUI.color = accent;
                     Verse.Text.Anchor = TextAnchor.MiddleCenter;
                     Verse.Text.Font = GameFont.Tiny;
                     Widgets.Label(arrowRect, "▶");
@@ -342,7 +357,7 @@ namespace PersonalChronicle.Archive.UI
             finally
             {
                 Verse.Text.Font = prevFont;
-                Verse.Text.Anchor = TextAnchor.UpperLeft;
+                Verse.Text.Anchor = prevAnchor;
                 GUI.color = prev;
             }
 
@@ -530,16 +545,20 @@ namespace PersonalChronicle.Archive.UI
             Verse.Text.Font = prevFont;
         }
 
-        /// <summary>Subsection header (small accent rule + localized title key).</summary>
+        /// <summary>Subsection header (small accent rule + localized title key).
+        /// v4.17 体检：长 Key 截断 + 规则高度负值保护（UI-009 / 参数空间）。</summary>
         internal static void DrawSubsectionHeader(Rect rect, string key)
         {
             Color prev = GUI.color;
             GameFont prevFont = Verse.Text.Font;
-            Rect rule = new Rect(rect.x, rect.y + 4f, 3f, rect.height - 8f);
+            Rect rule = new Rect(rect.x, rect.y + 4f, 3f, Mathf.Max(0f, rect.height - 8f));
             Widgets.DrawBoxSolid(rule, UITheme.Accent);
             Verse.Text.Font = GameFont.Small;
             GUI.color = UITheme.Text;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y, rect.width - 10f, rect.height), key.Translate().ToString());
+            string title = key.Translate().ToString();
+            float titleW = Mathf.Max(0f, rect.width - 10f);
+            Widgets.Label(new Rect(rect.x + 10f, rect.y, titleW, rect.height),
+                TruncateToWidth(title, titleW, GameFont.Small));
             GUI.color = prev;
             Verse.Text.Font = prevFont;
         }
@@ -677,10 +696,15 @@ namespace PersonalChronicle.Archive.UI
             try
             {
                 int rows = (cells.Length + cols - 1) / cols;
-                float contentH = rows * (KpiCardH + KpiGap);
+                // v4.17 体检：内容高 = 行高总和 - 2f 与视口精确对齐（ITab 六宫格
+                // 恰好 2 行 520f vs 视口 518f，旧值恒显 2px 垂直滚动条）。
+                float contentH = Mathf.Max(0f, rows * (KpiCardH + KpiGap) - 2f);
                 // v1.1.4 横向修复：inner 宽扣除滚动条，cardW 基于 inner.width 计算，
                 // 保证 3 列恰好填满 inner（第三列不再被 scrollview 右边缘裁掉）。
-                Rect inner = new Rect(0f, 0f, rect.width - UITheme.ScrollbarThickness, Mathf.Max(contentH, rect.height));
+                // v4.17 体检：极窄容器下宽度 clamp 到 ≥0（避免负宽 Rect）。
+                Rect inner = new Rect(0f, 0f,
+                    Mathf.Max(0f, rect.width - UITheme.ScrollbarThickness),
+                    Mathf.Max(contentH, rect.height));
                 float cardW = (inner.width - KpiGap * (cols - 1)) / cols;
 
                 Widgets.BeginScrollView(rect, ref scroll, inner);
@@ -717,7 +741,9 @@ namespace PersonalChronicle.Archive.UI
                         Verse.Text.Font = prevFont;
                         float sideW = Mathf.Clamp(sideSize.x + 6f, 0f, titleR.width * 0.55f);
                         Rect sideR = new Rect(titleR.xMax - sideW, titleR.y, sideW, titleR.height);
-                        Label(sideR, c.TitleSide, GameFont.Tiny, UITheme.Muted, TextAnchor.MiddleRight);
+                        // v4.17 体检：TitleSide 只 clamp 宽度不截断 → 长文本向左溢出盖标题。
+                        Label(sideR, UIComponents.TruncateToWidth(c.TitleSide, sideW - 4f, GameFont.Tiny),
+                            GameFont.Tiny, UITheme.Muted, TextAnchor.MiddleRight);
                         titleR = new Rect(titleR.x, titleR.y, titleR.width - sideW - 4f, titleR.height);
                     }
                     Label(titleR, c.TitleKey.Translate().ToString(), GameFont.Tiny, UITheme.SecondaryText);
@@ -736,7 +762,9 @@ namespace PersonalChronicle.Archive.UI
                         float mW = Mathf.Clamp(mSize.x + 6f, 0f, valR.width * 0.55f);
                         float mH = 18f;
                         Rect metricR = new Rect(valR.xMax - mW, valR.y + (valR.height - mH) * 0.5f, mW, mH);
-                        Label(metricR, c.InlineMetric, GameFont.Tiny, valueEmpty ? UITheme.Dim : UITheme.Muted, TextAnchor.MiddleRight);
+                        // v4.17 体检：同行指标截断（长文本向左溢出盖大数值）。
+                        Label(metricR, UIComponents.TruncateToWidth(c.InlineMetric, mW - 4f, GameFont.Tiny),
+                            GameFont.Tiny, valueEmpty ? UITheme.Dim : UITheme.Muted, TextAnchor.MiddleRight);
                         valueTextR = new Rect(valR.x, valR.y, valR.width - mW - 4f, valR.height);
                     }
                     // Adaptive font: long weapon names (e.g. >4 Chinese characters) can

@@ -74,7 +74,12 @@ namespace PersonalChronicle.Archive
                     h += 22f + 20f + w.Achievements.Count * 20f + UITheme.SpaceXs + 8f;
                 }
             }
-            h += 30f + 30f + 8f * 26f + UITheme.SpaceMd;
+            // v4.17 体检：尾部按绘制路径逐段对齐（旧 30+30+8*26+SpaceMd=284 少算约 222px）：
+            // SpaceSm(12) + 汇总 SectionTitle(30) + 两列面板各 (8*26+8+SpaceXs) + SpaceMd(16)。
+            h += UITheme.SpaceSm
+                + UITheme.SectionTitleHeight
+                + 2f * (8f * 26f + 8f + UITheme.SpaceXs)
+                + UITheme.SpaceMd;
             return h;
         }
 

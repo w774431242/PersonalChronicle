@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using PersonalChronicle.Application;
@@ -52,12 +52,18 @@ namespace PersonalChronicle.Archive
                 Text.Font = GameFont.Tiny;
                 Widgets.Label(new Rect(row.x + 4f, row.y + 3f, 150f, 18f), line.DateText);
 
+                // 窄面板保护：固定列宽减法可能产生负宽（小屏/压缩窗口），clamp 到 0。
                 Text.Font = GameFont.Small;
-                Widgets.Label(new Rect(row.x + 158f, row.y + 3f, row.width - 158f - 190f, 20f), line.NameText);
+                float titleW = Mathf.Max(0f, row.width - 158f - 190f);
+                Widgets.Label(new Rect(row.x + 158f, row.y + 3f, titleW, 20f), line.NameText);
 
-                Text.Font = GameFont.Tiny;
-                GUI.color = UITheme.SecondaryText;
-                Widgets.Label(new Rect(row.x + row.width - 186f, row.y + 3f, 182f, 18f), line.ParamsText);
+                // 右对齐列：面板过窄时整体隐藏（避免与标题列重叠/越界）。
+                if (row.width >= 186f + 158f)
+                {
+                    Text.Font = GameFont.Tiny;
+                    GUI.color = UITheme.SecondaryText;
+                    Widgets.Label(new Rect(row.x + row.width - 186f, row.y + 3f, 182f, 18f), line.ParamsText);
+                }
                 GUI.color = prevColor;
 
                 float cy = row.y + TimelineRowHeight;
@@ -234,6 +240,7 @@ namespace PersonalChronicle.Archive
             Color prevColor = GUI.color;
             GameFont prevFont = Text.Font;
             TextAnchor prevAnchor = Text.Anchor;
+            bool scrollBegan = false;
             try
             {
             if (cachedEventDetail == null)
@@ -249,6 +256,7 @@ namespace PersonalChronicle.Archive
             Rect viewRect = new Rect(inner.x, inner.y, inner.width - 16f, viewHeight);
 
             Widgets.BeginScrollView(inner, ref eventScroll, viewRect);
+            scrollBegan = true;
 
             float y = viewRect.y + 4f;
             Text.Font = GameFont.Medium;
@@ -278,18 +286,26 @@ namespace PersonalChronicle.Archive
             DrawTree(viewRect.x + 10f, ty, treePanel.width - 20f, service);
             y = treePanel.yMax + 18f;
 
-            // Event description.
+            // Event description. 高度按真实文本测量（Text.CalcHeight），长描述可换行
+            // 展开而不是被固定 90f 框裁剪（UI-009 多语言布局）；上限 300f 防极端文本撑爆。
             Text.Font = GameFont.Small;
             Widgets.Label(new Rect(viewRect.x, y, viewRect.width, 22f),
                 "PersonalChronicle.UI.EventDescription".Translate().ToString());
             y += 28f;
 
-            Rect descBox = new Rect(viewRect.x, y, viewRect.width, 90f);
+            Text.Font = GameFont.Tiny;
+            float descTextW = viewRect.width - 24f;
+            float descTextH = Text.CalcHeight(
+                string.IsNullOrEmpty(cachedEventDescription)
+                    ? "PersonalChronicle.UI.NoEvents".Translate().ToString()
+                    : cachedEventDescription,
+                descTextW);
+            float descBoxH = Mathf.Clamp(descTextH + 20f, 90f, 300f);
+            Rect descBox = new Rect(viewRect.x, y, viewRect.width, descBoxH);
             UIComponents.TintedBox(descBox, UITheme.OverlayWhite04);
             DrawBorder(descBox, ArchiveUiStyle.Border);
-            Text.Font = GameFont.Tiny;
             GUI.color = ArchiveUiStyle.SecondaryText;
-            Widgets.Label(new Rect(descBox.x + 12f, descBox.y + 10f, descBox.width - 24f, descBox.height - 20f),
+            Widgets.Label(new Rect(descBox.x + 12f, descBox.y + 10f, descTextW, descBox.height - 20f),
                 string.IsNullOrEmpty(cachedEventDescription)
                     ? "PersonalChronicle.UI.NoEvents".Translate().ToString()
                     : cachedEventDescription);
@@ -299,7 +315,12 @@ namespace PersonalChronicle.Archive
             }
             finally
             {
-                Widgets.EndScrollView();
+                // v4.17 体检：cachedEventDetail 为空时从未 BeginScrollView——
+                // 旧版无条件 EndScrollView 会多弹出一层 GUI group，窗口错位。
+                if (scrollBegan)
+                {
+                    Widgets.EndScrollView();
+                }
                 GUI.color = prevColor;
                 Text.Font = prevFont;
                 Text.Anchor = prevAnchor;
@@ -320,9 +341,16 @@ namespace PersonalChronicle.Archive
             const float treeGap = 18f;
             const float descTitleH = 22f;
             const float descGap = 28f;
-            const float descBoxH = 90f;
             const float bottomPad = 20f;
             float treeHeight = treeHeaderH + Mathf.Max(1, cachedEventTree.Count) * treeRowH + treePad;
+            // 描述框高度与绘制路径同口径（Tiny 字体实际文本测量，clamp 90~300）。
+            float descTextW = width - 24f;
+            float descTextH = Text.CalcHeight(
+                string.IsNullOrEmpty(cachedEventDescription)
+                    ? "PersonalChronicle.UI.NoEvents".Translate().ToString()
+                    : cachedEventDescription,
+                descTextW);
+            float descBoxH = Mathf.Clamp(descTextH + 20f, 90f, 300f);
             return topPad + titleH + titleGap + treeHeight + treeGap
                 + descTitleH + descGap + descBoxH + bottomPad;
         }
@@ -331,11 +359,14 @@ namespace PersonalChronicle.Archive
         private void DrawTree(float x, float y, float width, IArchiveService service)
         {
             Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
             const float indent = 18f;
             const float stub = 12f;
             const float rowHeight = 22f;
 
             Text.Font = GameFont.Tiny;
+            try
+            {
             for (int i = 0; i < cachedEventTree.Count; i++)
             {
                 TreeLineView line = cachedEventTree[i];
@@ -380,6 +411,13 @@ namespace PersonalChronicle.Archive
                         NavigateTarget(service, line.Target, line.StableId, line.TargetEvent);
                     }
                 }
+            }
+            }
+            finally
+            {
+                // v4.17 体检：恢复字体（旧实现循环后 Text.Font 停留在 Tiny，泄漏给后续绘制）。
+                GUI.color = prevColor;
+                Text.Font = prevFont;
             }
         }
 

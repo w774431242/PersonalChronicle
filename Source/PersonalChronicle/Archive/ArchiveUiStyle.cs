@@ -61,6 +61,16 @@ namespace PersonalChronicle.Archive
         internal static Color TimelineCraft;
         internal static Color TimelineBuilt;
         internal static Color TimelineOther;
+        // v4.17 体检：补全 UITheme 其余 token 的转发（旧兼容壳漏转，新增 token 时静默漂移）。
+        internal static Color Blood;
+        internal static Color PillBlue;
+        internal static Color PillGold;
+        internal static Color PillRed;
+        internal static Color PillGreen;
+        internal static Color OverlayWhite04;
+        internal static Color InfoSoft;
+        internal static Color BadgeIncompleteFill;
+        internal static Color Shadow;
 
         /// <summary>
         /// Re-sync every forwarded colour from the active <see cref="UITheme"/>
@@ -97,6 +107,15 @@ namespace PersonalChronicle.Archive
             TimelineCraft = UITheme.TimelineCraft;
             TimelineBuilt = UITheme.TimelineBuilt;
             TimelineOther = UITheme.TimelineOther;
+            Blood = UITheme.Blood;
+            PillBlue = UITheme.PillBlue;
+            PillGold = UITheme.PillGold;
+            PillRed = UITheme.PillRed;
+            PillGreen = UITheme.PillGreen;
+            OverlayWhite04 = UITheme.OverlayWhite04;
+            InfoSoft = UITheme.InfoSoft;
+            BadgeIncompleteFill = UITheme.BadgeIncompleteFill;
+            Shadow = UITheme.Shadow;
         }
 
         // ---- Faction-codex specific (not generic tokens) ----
@@ -132,9 +151,15 @@ namespace PersonalChronicle.Archive
         internal static void DrawSectionMarker(Rect rect, Color color)
         {
             Color previous = GUI.color;
-            GUI.color = color;
-            Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, 4f, rect.height), color);
-            GUI.color = previous;
+            try
+            {
+                GUI.color = color;
+                Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, 4f, rect.height), color);
+            }
+            finally
+            {
+                GUI.color = previous;
+            }
         }
 
         internal static void DrawSelectedNavigation(Rect rect, bool selected)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using PersonalChronicle.Application;
@@ -92,7 +92,10 @@ namespace PersonalChronicle.Archive
                     cardWidth = LocationCardWidth;
                     cardHeight = LocationCardHeight;
                 }
-                int perRow = Mathf.Max(1, (int)((width + gap) / (cardWidth + gap)));
+                // v4.17 体检：估算宽度与绘制一致（绘制 viewRect.width = inner.width-16f，
+                // 旧用含滚动条的 inner.width 会在临界宽度下低估行数 → 底部裁切）。
+                float estWidth = width - 16f;
+                int perRow = Mathf.Max(1, (int)((estWidth + gap) / (cardWidth + gap)));
                 height += 30f; // section title
                 int rows = (objects.Count - 1) / perRow + 1;
                 height += rows * (cardHeight + gap);
@@ -101,10 +104,43 @@ namespace PersonalChronicle.Archive
                 if (key == ArchiveCategoryKeys.Location)
                 {
                     height += LocationKpiStripHeight + 8f;
+                    // v4.17 体检（审计 P1-2）：已展开地点的内联编年史面板高度计入滚动估算
+                    // （行数取缓存快照，未展开算 0；展开瞬间下一帧生效）。
+                    for (int oi = 0; oi < objects.Count; oi++)
+                    {
+                        LocationObject loc = objects[oi] as LocationObject;
+                        if (loc == null || !expandedLocations.Contains(loc.StableId)) continue;
+                        int lineCount = 0;
+                        if (cachedChronicleByLoc.TryGetValue(loc.StableId, out List<ChronicleEvent> chron)
+                            && chron != null)
+                        {
+                            lineCount = chron.Count;
+                        }
+                        float panelH = lineCount > 0
+                            ? Mathf.Min(lineCount, 6) * 20f + 4f
+                            : 24f;
+                        height += panelH + 2f; // 面板高 + 卡片下缘间隙
+                    }
                 }
                 else if (key == ArchiveCategoryKeys.Battle)
                 {
                     height += BattleKpiStripHeight + 8f;
+                    // v4.17 体检（审计 P1-2）：已展开战役的伤亡面板高度计入滚动估算。
+                    for (int oi = 0; oi < objects.Count; oi++)
+                    {
+                        BattleObject battle = objects[oi] as BattleObject;
+                        if (battle == null || !expandedBattles.Contains(battle.StableId)) continue;
+                        int lineCount = 0;
+                        if (cachedCasualtyByBattle.TryGetValue(battle.StableId, out List<ChronicleEvent> lines)
+                            && lines != null)
+                        {
+                            lineCount = lines.Count;
+                        }
+                        float panelH = lineCount > 0
+                            ? Mathf.Min(lineCount, 6) * 20f + 4f
+                            : 24f;
+                        height += panelH + 2f;
+                    }
                 }
             }
             return height + 20f;
