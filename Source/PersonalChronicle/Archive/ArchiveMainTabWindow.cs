@@ -567,17 +567,27 @@ namespace PersonalChronicle.Archive
                     if (hr == null) { h += baseRowH; continue; }
                     // v4.9.1: pin the font to Tiny and measure at the render width
                     // (col width minus the 4f inner padding) — same as DrawLegacyTab.
+                    // v4.17 体检：测量期间改字体包 try/finally（CalcHeight 抛异常时
+                    // 字体泄漏到后续绘制）。
                     GameFont measurePrevFont = Verse.Text.Font;
-                    Verse.Text.Font = GameFont.Tiny;
-                    float fromRenderW = Mathf.Max(1f, wColFrom - 4f);
-                    float toRenderW = Mathf.Max(1f, wColTo - 4f);
-                    float fromH = !string.IsNullOrEmpty(hr.FromText)
-                        ? Verse.Text.CalcHeight(hr.FromText, fromRenderW)
-                        : baseRowH;
-                    float toH = !string.IsNullOrEmpty(hr.ToText)
-                        ? Verse.Text.CalcHeight(hr.ToText, toRenderW)
-                        : baseRowH;
-                    Verse.Text.Font = measurePrevFont;
+                    float fromH;
+                    float toH;
+                    try
+                    {
+                        Verse.Text.Font = GameFont.Tiny;
+                        float fromRenderW = Mathf.Max(1f, wColFrom - 4f);
+                        float toRenderW = Mathf.Max(1f, wColTo - 4f);
+                        fromH = !string.IsNullOrEmpty(hr.FromText)
+                            ? Verse.Text.CalcHeight(hr.FromText, fromRenderW)
+                            : baseRowH;
+                        toH = !string.IsNullOrEmpty(hr.ToText)
+                            ? Verse.Text.CalcHeight(hr.ToText, toRenderW)
+                            : baseRowH;
+                    }
+                    finally
+                    {
+                        Verse.Text.Font = measurePrevFont;
+                    }
                     float rowH = Mathf.Max(baseRowH, Mathf.Max(fromH, toH) + 6f);
                     if (rowH > baseRowH) rowH += 4f;
                     h += rowH;
