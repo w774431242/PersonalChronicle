@@ -17,6 +17,28 @@ namespace PersonalChronicle.Archive
 {
     public partial class ITab_Pawn_Career
     {
+        // v4.17 体检（审计 #15）：勋章墙/荣誉事件/标签映射在快照变化时缓存，
+        // 旧实现每帧重建 List×2 + Dictionary（PERF-001）。
+        private List<MedalView> cachedGrantedMedals;
+        private List<CareerEvent> cachedHonorEvents;
+        private Dictionary<string, string> cachedMedalLabelMap;
+        private long cachedHonorRev = -1L;
+
+        /// <summary>按快照 revision 惰性重建 Honor 页派生数据（绘制路径零分配）。</summary>
+        private void EnsureHonorCache(DetailSnapshot snap)
+        {
+            long rev = snap != null ? snap.BuiltFromRevision : -1L;
+            if (rev == cachedHonorRev && cachedGrantedMedals != null)
+            {
+                return;
+            }
+            cachedHonorRev = rev;
+            cachedGrantedMedals = CollectGrantedMedals(snap);
+            PawnObject po = snap != null ? snap.DetailObject as PawnObject : null;
+            cachedHonorEvents = CollectHonorEvents(po);
+            cachedMedalLabelMap = BuildMedalLabelMap(snap);
+        }
+
         // ================= 子页：勋章 =================
         private void DrawHonorTab(Rect rect, Pawn pawn, DetailSnapshot snap)
         {
@@ -36,7 +58,9 @@ namespace PersonalChronicle.Archive
 
                 // v4.17 体检：先按行数建墙再画图标——旧实现先画单行背景、循环内才
                 // 动态增高，第 2+ 行勋章画在面板背景外（悬空于滚动背景上）。
-                List<MedalView> granted = CollectGrantedMedals(snap);
+                // 数据经 EnsureHonorCache 缓存（每帧不再重建 List/Dictionary）。
+                EnsureHonorCache(snap);
+                List<MedalView> granted = cachedGrantedMedals;
                 int perRow = Mathf.Max(1, (int)((innerW - 8f) / (MedIconW + 8f)));
                 int rows = granted.Count == 0 ? 1 : Mathf.CeilToInt(granted.Count / (float)perRow);
                 Rect wall = new Rect(view.x, y, innerW,
@@ -120,11 +144,11 @@ namespace PersonalChronicle.Archive
                     (fc != null ? fc.MedalGranted : 0).ToString());
                 y += contrib.height + UITheme.SpaceSm;
 
-                // ---- 最近荣誉事件（真实 TitleGranted/MedalGranted 事实）----
+                // ---- 最近荣誉事件（真实 TitleGranted/MedalGranted 事实；经缓存）----
                 UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
                     "PersonalChronicle.UI.Career.Honor.Events".Translate().ToString());
                 y += UITheme.SectionTitleHeight;
-                List<CareerEvent> honorEvents = CollectHonorEvents(po);
+                List<CareerEvent> honorEvents = cachedHonorEvents;
                 if (honorEvents.Count == 0)
                 {
                     UIComponents.Label(new Rect(view.x, y, innerW, 22f),
@@ -136,7 +160,8 @@ namespace PersonalChronicle.Archive
                 {
                     // 名称查表：MedalView 已派生 UI.Medal.<defName>.Label 的翻译文案，
                     // CareerEvent 只携带 defName，借查表避免回到 MedalDef.LabelCap 的 raw defName。
-                    Dictionary<string, string> labelMap = BuildMedalLabelMap(snap);
+                    // v4.17 体检：标签映射经 EnsureHonorCache 缓存，不再每帧重建 Dictionary。
+                    Dictionary<string, string> labelMap = cachedMedalLabelMap;
                     int shown = 0;
                     for (int i = 0; i < honorEvents.Count && shown < 8; i++)
                     {
