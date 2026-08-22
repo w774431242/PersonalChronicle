@@ -30,14 +30,16 @@ namespace PersonalChronicle.Archive
         private const float TitleH = 28f;
         private const float WinW = 440f;
         private const float WinH = 460f;
-        private const float CardH = 96f;
+        private const float CardH = 56f;
         private const float CardGap = 8f;
         private const float PadX = 12f;
         private const float FooterH = 30f;
+        private const float TipH = 18f;
 
         private readonly Pawn pawn;
         private readonly ChronicleGameComponent component;
         private readonly System.Action onCommitted;
+        private readonly string filterProfession;
         private List<ProfessionalDirectionDef> directions;
         private string currentDirection;
         private Vector2 scroll;
@@ -50,12 +52,14 @@ namespace PersonalChronicle.Archive
 
         /// <param name="pawn">目标殖民者活读实例。</param>
         /// <param name="component">持久化组件（取 PawnObject + MarkChanged）。</param>
+        /// <param name="profession">一级专业稳定键（如 "Manufacturing"）；非空时只列出该专业下的二级方向。</param>
         /// <param name="currentDirection">当前已选主方向 defName（null/空 = 未限定）。</param>
         /// <param name="onCommitted">选择落盘后的回调（用于触发 ITab 快照重建）。</param>
-        public Dialog_SetPrimaryDirection(Pawn pawn, ChronicleGameComponent component, string currentDirection, System.Action onCommitted)
+        public Dialog_SetPrimaryDirection(Pawn pawn, ChronicleGameComponent component, string profession, string currentDirection, System.Action onCommitted)
         {
             this.pawn = pawn;
             this.component = component;
+            this.filterProfession = string.IsNullOrEmpty(profession) ? null : profession;
             this.currentDirection = string.IsNullOrEmpty(currentDirection) ? null : currentDirection;
             this.onCommitted = onCommitted;
             this.scroll = Vector2.zero;
@@ -77,16 +81,24 @@ namespace PersonalChronicle.Archive
             List<ProfessionalDirectionDef> all = DefDatabase<ProfessionalDirectionDef>.AllDefsListForReading;
             for (int i = 0; i < all.Count; i++)
             {
-                if (all[i] != null)
+                ProfessionalDirectionDef d = all[i];
+                if (d == null) continue;
+                // 一级专业过滤：profession 非空时只保留归属该专业的二级方向。
+                if (filterProfession != null && !string.Equals(d.profession, filterProfession, System.StringComparison.Ordinal))
                 {
-                    directions.Add(all[i]);
+                    continue;
                 }
+                directions.Add(d);
             }
             directions.Sort((a, b) => a.order.CompareTo(b.order));
         }
 
         public override void DoWindowContents(Rect inRect)
         {
+            // 原生 Window 默认是浅色 widget 背景——覆盖为 UITheme.Window 深色，
+            // 避免二级方向选择卡片透出原生白底（与 ITab 深色主题一致）。
+            UIComponents.TintedBox(inRect, UITheme.Window);
+
             float y = inRect.y;
             Rect titleRect = new Rect(inRect.x, y, inRect.width, TitleH);
             Text.Font = GameFont.Medium;
@@ -117,12 +129,12 @@ namespace PersonalChronicle.Archive
                 Text.Anchor = prevAnchor;
             }
 
-            Rect bodyRect = new Rect(inRect.x, y, inRect.width, inRect.height - (y - inRect.y) - FooterH);
+            Rect bodyRect = new Rect(inRect.x, y, inRect.width, inRect.height - (y - inRect.y) - FooterH - TipH);
 
             if (directions == null || directions.Count == 0)
             {
                 DrawCenteredNote(bodyRect, "PersonalChronicle.UI.Career.SetDirection.Empty".Translate());
-                DrawFooter(inRect, inRect.yMax - FooterH, inRect.width);
+                DrawFooter(inRect, inRect.yMax - FooterH - TipH, inRect.width);
                 return;
             }
 
@@ -141,7 +153,7 @@ namespace PersonalChronicle.Archive
             }
             Widgets.EndScrollView();
 
-            DrawFooter(inRect, inRect.yMax - FooterH, inRect.width);
+            DrawFooter(inRect, inRect.yMax - FooterH - TipH, inRect.width);
         }
 
         private void DrawDirectionCard(Rect card, ProfessionalDirectionDef dir)
@@ -153,6 +165,16 @@ namespace PersonalChronicle.Archive
             TextAnchor prevAnchor = Text.Anchor;
             try
             {
+                // v1.1.5 patch7：BeginScrollView 内 ButtonInvisible 必须先注册再绘制——
+                // 原版实现在 try/finally 外注册，滚动矩阵更新后 Event.current 矩阵已切换，
+                // card.Contains(Event.current.mousePosition) 可能误判。挪到视觉绘制之前可避免。
+                if (Widgets.ButtonInvisible(card))
+                {
+                    TrySelect(dir);
+                    Event.current.Use();
+                }
+
+                UIComponents.TintedBox(card, selected ? UITheme.PanelRaised : UITheme.Panel);
                 UIComponents.Border(card, selected ? UITheme.PillGold : UITheme.BorderSoft);
                 Widgets.DrawHighlightIfMouseover(card);
 
@@ -162,59 +184,29 @@ namespace PersonalChronicle.Archive
                 GUI.color = badgeColor;
                 Widgets.DrawBoxSolid(badge, badgeColor);
 
-                // 方向名（上）+ 所属一级专业（下）。
-                string label = dir.LabelCap;
+                // 方向名（上）+ 所属一级专业 + 特化点（下，紧凑在 56px 卡内）。
+                string label = dir.GetDisplayLabel().Translate().ToString();
                 string profession = !string.IsNullOrEmpty(dir.profession)
-                    ? dir.profession
+                    ? ("PersonalChronicle.UI.Career.Major." + dir.profession).Translate().ToString()
                     : "PersonalChronicle.UI.Career.SetDirection.NoProfession".Translate();
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.UpperLeft;
                 GUI.color = selected ? UITheme.Text : UITheme.Muted;
-                Rect labelRect = new Rect(card.x + 34f, card.y + 6f, card.width - 50f, 22f);
+                Rect labelRect = new Rect(card.x + 34f, card.y + 6f, card.width - 64f, 22f);
                 Widgets.Label(labelRect, label);
 
                 Text.Font = GameFont.Tiny;
                 GUI.color = UITheme.Dim;
-                Rect profRect = new Rect(card.x + 34f, card.y + 28f, card.width - 50f, 16f);
+                Rect profRect = new Rect(card.x + 34f, card.y + 30f, card.width - 64f, 16f);
                 Widgets.Label(profRect, profession);
 
-                // §7.1 方向特化点：徽标（specializationKey 中文）+ 一句话说明，让 4 方向可区分。
+                // §7.1 方向特化点：徽标（specializationKey 中文），放在第二行右侧，与专业同行不超卡高。
                 string specKey = dir.specializationKey;
                 if (!string.IsNullOrEmpty(specKey))
                 {
                     string specLabel = SpecializationLabel(specKey);
-                    Rect specBadge = new Rect(card.x + 34f, card.y + 44f, 46f, 16f);
+                    Rect specBadge = new Rect(card.x + card.width - 78f, card.y + 30f, 64f, 16f);
                     UIComponents.Badge(specBadge, specLabel, UITheme.PillBlue);
-                    Rect specDesc = new Rect(card.x + 84f, card.y + 44f, card.width - 96f, 16f);
-                    Text.Font = GameFont.Tiny;
-                    Text.Anchor = TextAnchor.UpperLeft;
-                    GUI.color = UITheme.Muted;
-                    Widgets.Label(specDesc, dir.specializationDescKey.Translate());
-                }
-
-                // 技能数据行：能力维度侧重 + 成长曲线（仅当方向已落地技能 Def；其余诚实占位）。
-                ProfessionalSkillDef skill = FirstSkillOfDirection(dir);
-                float rowY = card.y + 62f;
-                if (skill != null)
-                {
-                    string abilities = string.Join(" / ", skill.abilityKeys.ConvertAll(AbilityLabel));
-                    Rect abRect = new Rect(card.x + 34f, rowY, card.width - 50f, 16f);
-                    Text.Font = GameFont.Tiny;
-                    Text.Anchor = TextAnchor.UpperLeft;
-                    GUI.color = UITheme.Dim;
-                    Widgets.Label(abRect, "能力侧重：" + abilities);
-                    Rect curveRect = new Rect(card.x + 34f, rowY + 16f, card.width - 50f, 14f);
-                    GUI.color = UITheme.Dim;
-                    Widgets.Label(curveRect, string.Format("成长：基础 {0} / 上限 {1} XP / 满级 {2}",
-                        Mathf.RoundToInt(skill.xpPerPracticeBase), Mathf.RoundToInt(skill.xpCap), skill.maxLevel));
-                }
-                else
-                {
-                    Rect pendRect = new Rect(card.x + 34f, rowY, card.width - 50f, 16f);
-                    Text.Font = GameFont.Tiny;
-                    Text.Anchor = TextAnchor.UpperLeft;
-                    GUI.color = UITheme.Dim;
-                    Widgets.Label(pendRect, "技能数据待垂直切片落地（仅特化语义已定）");
                 }
 
                 // 选中态「✓」角标（右上）。
@@ -224,19 +216,18 @@ namespace PersonalChronicle.Archive
                     GUI.color = UITheme.PillGold;
                     Text.Font = GameFont.Small;
                     Text.Anchor = TextAnchor.MiddleCenter;
-                    Widgets.Label(chk, "✓");
+                    Widgets.Label(chk, "PersonalChronicle.UI.Career.SetDirection.Selected".Translate());
                 }
+
+                // 鼠标悬停 → 显示具体数据加成详情（效果类型 + 强度 + 目标 Stat + 能力维度 + 成长曲线）。
+                // 卡片本身精简，加成明细不常显（对齐需求：悬停显示）。
+                TooltipHandler.TipRegion(card, new TipSignal(BuildDirectionBonusTip(dir)));
             }
             finally
             {
                 GUI.color = prevColor;
                 Text.Font = prevFont;
                 Text.Anchor = prevAnchor;
-            }
-
-            if (Widgets.ButtonInvisible(card))
-            {
-                TrySelect(dir);
             }
         }
 
@@ -256,7 +247,7 @@ namespace PersonalChronicle.Archive
             po.CareerData.Professional.primaryDirection = dir.defName;
             component.MarkChanged();
             currentDirection = dir.defName;
-            tip = "PersonalChronicle.UI.Career.SetDirection.Done".Translate(dir.LabelCap);
+            tip = "PersonalChronicle.UI.Career.SetDirection.Done".Translate(dir.GetDisplayLabel().Translate().ToString());
             if (onCommitted != null)
             {
                 onCommitted();
@@ -285,14 +276,30 @@ namespace PersonalChronicle.Archive
 
         private void DrawFooter(Rect inRect, float y, float width)
         {
+            // 反馈提示行（tip：选择/清除成功后的确认反馈，非空才绘制）。
+            Color prevColor = GUI.color;
+            GameFont prevFont = Text.Font;
+            TextAnchor prevAnchor = Text.Anchor;
+            try
+            {
+                Text.Font = GameFont.Tiny;
+                Text.Anchor = TextAnchor.UpperLeft;
+                GUI.color = UITheme.Dim;
+                Widgets.Label(new Rect(inRect.x, y, width, TipH), tip ?? string.Empty);
+            }
+            finally
+            {
+                GUI.color = prevColor;
+                Text.Font = prevFont;
+                Text.Anchor = prevAnchor;
+            }
+
             // 「清除选择」：null = 不限定方向（回落推荐）。
-            Rect clearRect = new Rect(inRect.x, y, width, FooterH);
+            Rect clearRect = new Rect(inRect.x, y + TipH, width, FooterH);
             if (Widgets.ButtonText(clearRect, "PersonalChronicle.UI.Career.SetDirection.Clear".Translate()))
             {
                 ClearSelection();
             }
-            // 反馈提示区（右侧小字，避免与按钮重叠：仅在有 tip 时显示于按钮上方不现实，
-            // 这里直接复用 tip 在按钮文本下方不可行，故省略独立提示行，tip 已通过 Done 反馈给玩家）。
         }
 
         private void ClearSelection()
@@ -319,31 +326,20 @@ namespace PersonalChronicle.Archive
             return fallback;
         }
 
-        /// <summary>§7.1 方向特化语义 key → 中文展示（UI 展示层，不参与业务判定）。</summary>
+        /// <summary>§7.1 方向特化语义 key → 展示文本（经翻译键；UI 展示层，不参与业务判定）。</summary>
         private static string SpecializationLabel(string key)
         {
-            switch (key)
-            {
-                case "Quality": return "品质";
-                case "Throughput": return "产量";
-                case "Material": return "材料";
-                case "Volume": return "批量";
-                default: return key;
-            }
+            string full = "PersonalChronicle.UI.Career.SetDirection.Spec." + key;
+            string v = full.Translate().ToString();
+            return string.IsNullOrEmpty(v) || v == full ? key : v;
         }
 
-        /// <summary>能力维度 key → 中文展示（UI 展示层；abilityKeys 为稳定内部标识）。</summary>
+        /// <summary>能力维度 key → 展示文本（经翻译键；UI 展示层；abilityKeys 为稳定内部标识）。</summary>
         private static string AbilityLabel(string key)
         {
-            switch (key)
-            {
-                case "machining": return "加工能力";
-                case "precisionControl": return "精度控制";
-                case "processKnowledge": return "工艺理解";
-                case "materialApplication": return "材料应用";
-                case "qualityControl": return "质量控制";
-                default: return key;
-            }
+            string full = "PersonalChronicle.UI.Career.SetDirection.Ability." + key;
+            string v = full.Translate().ToString();
+            return string.IsNullOrEmpty(v) || v == full ? key : v;
         }
 
         /// <summary>取方向首个已落地技能 Def（按 skillDefNames → DefDatabase 解析）。</summary>
@@ -363,6 +359,103 @@ namespace PersonalChronicle.Archive
                 }
             }
             return null;
+        }
+
+        /// <summary>取方向下全部技能 Def（按 skillDefNames 解析；供悬停加成汇总）。</summary>
+        private static List<ProfessionalSkillDef> SkillsOfDirection(ProfessionalDirectionDef dir)
+        {
+            var list = new List<ProfessionalSkillDef>();
+            if (dir == null || dir.skillDefNames == null) return list;
+            List<ProfessionalSkillDef> all = DefDatabase<ProfessionalSkillDef>.AllDefsListForReading;
+            for (int i = 0; i < dir.skillDefNames.Count; i++)
+            {
+                string name = dir.skillDefNames[i];
+                for (int j = 0; j < all.Count; j++)
+                {
+                    if (string.Equals(all[j].defName, name, System.StringComparison.Ordinal))
+                    {
+                        list.Add(all[j]);
+                    }
+                }
+            }
+            return list;
+        }
+
+        /// <summary>悬停加成明细：方向 → 技能 → 效果（类型 + 强度 + 目标 Stat）+ 能力维度 + 成长曲线。</summary>
+        private static string BuildDirectionBonusTip(ProfessionalDirectionDef dir)
+        {
+            if (dir == null) return string.Empty;
+            var sb = new System.Text.StringBuilder();
+            sb.Append(dir.GetDisplayLabel().Translate().ToString());
+
+            List<ProfessionalSkillDef> skills = SkillsOfDirection(dir);
+            if (skills.Count == 0)
+            {
+                sb.Append("\n").Append("PersonalChronicle.UI.Career.SetDirection.PendingSkill".Translate());
+                return sb.ToString();
+            }
+
+            // 能力维度侧重（合并方向下技能 abilityKeys）。
+            var abilitySet = new HashSet<string>();
+            foreach (ProfessionalSkillDef s in skills)
+            {
+                if (s.abilityKeys != null)
+                {
+                    foreach (string a in s.abilityKeys) abilitySet.Add(a);
+                }
+            }
+            if (abilitySet.Count > 0)
+            {
+                string abilities = string.Join(" / ", System.Linq.Enumerable.ToList(abilitySet).ConvertAll(AbilityLabel));
+                sb.Append("\n").Append("PersonalChronicle.UI.Career.SetDirection.AbilityPrefix".Translate(abilities));
+            }
+
+            // 数据加成：效果类型 + 强度 + 目标 Stat。
+            var seenEffects = new HashSet<string>();
+            foreach (ProfessionalSkillDef s in skills)
+            {
+                if (s.effectDefNames == null) continue;
+                foreach (string ename in s.effectDefNames)
+                {
+                    if (string.IsNullOrEmpty(ename) || !seenEffects.Add(ename)) continue;
+                    ProfessionalEffectDef eff = DefDatabase<ProfessionalEffectDef>.GetNamedSilentFail(ename);
+                    if (eff == null) continue;
+                    string effLabel = !string.IsNullOrEmpty(eff.labelKey)
+                        ? eff.labelKey.Translate().ToString()
+                        : ename;
+                    string statName = !string.IsNullOrEmpty(eff.statDefName)
+                        ? eff.statDefName
+                        : "—";
+                    // value：WorkSpeed/QualityBias 等按语义格式化（+5% / +1 档）。
+                    string valText = FormatEffectValue(eff.kind, eff.value);
+                    sb.Append("\n").Append(effLabel)
+                        .Append("  ").Append(valText)
+                        .Append("  (").Append(statName).Append(")");
+                }
+            }
+
+            // 成长曲线（首个有数据的技能）。
+            ProfessionalSkillDef first = skills[0];
+            sb.Append("\n").Append("PersonalChronicle.UI.Career.SetDirection.Growth".Translate(
+                Mathf.RoundToInt(first.xpPerPracticeBase),
+                Mathf.RoundToInt(first.xpCap),
+                first.maxLevel));
+
+            return sb.ToString();
+        }
+
+        /// <summary>效果强度按类型格式化展示（WorkSpeed 为乘算 %，QualityBias 为整档偏移，其余原值）。</summary>
+        private static string FormatEffectValue(ProfessionalEffectKind kind, float value)
+        {
+            switch (kind)
+            {
+                case ProfessionalEffectKind.WorkSpeed:
+                    return (value >= 0 ? "+" : "") + Mathf.RoundToInt(value * 100f) + "%";
+                case ProfessionalEffectKind.QualityBias:
+                    return (value >= 0 ? "+" : "") + value.ToString("0");
+                default:
+                    return value.ToString("0.##");
+            }
         }
     }
 }

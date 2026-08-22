@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>战斗履历 · CombatLog 预览（IMGUI 风格） — PersonalChronicle</title>
+<!--
+  本预览是对 RimWorld 即时模式 UI（Unity IMGUI + Verse.Widgets）的忠实复刻。
+  约束（与 ArchiveMainTabWindow / ArchiveUiStyle 一致）：
+  - 无圆角 / 无阴影 / 无渐变 / 无动画 / 无模糊 —— IMGUI 每帧重绘，只有实色矩形 + 1px 线框。
+  - 颜色全部取 ArchiveUiStyle 的十进制 RGBA 常量（转成 hex）。
+  - 卡片 = 实色填充 + 1px 边框 + 左侧 2px 阵营强调色竖线。
+  - 区块标题 = 4px 强调色竖标 + 文字 + 右侧横线。
+  - 字体按 Verse.Text.Font 的 GameFont.Small（标题）/ Medium（数字）/ Tiny（小字）对应到 CSS 字号。
+-->
+<style>
+  :root{
+    /* ArchiveUiStyle 实际颜色（0..1 转 0..255） */
+    --window:#111819;          /* Window   0.067,0.094,0.110 */
+    --panel:#182126;           /* Panel    0.094,0.129,0.149 */
+    --panel2:#202a30;          /* PanelRaised 0.125,0.165,0.188 */
+    --card:#253036;            /* Card     0.145,0.188,0.212 */
+    --cardhover:#30433c;       /* 未用：IMGUI 仅 DrawHighlightIfMouseover */
+    --border:#45535b;          /* Border   0.270,0.325,0.357 */
+    --bordersoft:#2e3b41;      /* BorderSoft 0.180,0.231,0.255 */
+    --text:#e9eeee;            /* Text     0.914,0.933,0.929 */
+    --muted:#a5b0b4;           /* Muted    0.647,0.690,0.706 */
+    --dim:#718086;             /* Dim      0.443,0.502,0.525 */
+    --accent:#d09b61;          /* Accent   0.816,0.608,0.380 */
+    --accentsoft:rgba(208,155,97,.15);
+    --info:#95d0fc;            /* Info     0.584,0.816,0.988 */
+    --alive:#91e6b0;           /* Alive    0.570,0.900,0.690 */
+    --dead:#d95a5a;            /* Dead/FactionHostile 0.850,0.350,0.350 */
+    /* 阵营强调色（v4.3 FactionAccent，严格对齐 UITheme.Faction*） */
+    --fenemy:var(--dead);      /* Enemy  = FactionHostile(红) */
+    --fmech:var(--info);       /* Mechanoid = Info(蓝) */
+    --fanimal:var(--alive);    /* Animal = Alive(绿) */
+    --funknown:var(--muted);   /* Unknown = Muted */
+    --fplayer:var(--accent);   /* Player = FactionPlayer = Accent(金) */
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--window);color:var(--text);
+    font-family:"Segoe UI",system-ui,"Microsoft YaHei",sans-serif;font-size:13px;}
+  .app{max-width:860px;margin:0 auto;padding:14px;}
+
+  /* 窗口顶栏：IMGUI 无渐变，仅实色条 */
+  .topbar{display:flex;align-items:center;padding:6px 8px;background:var(--panel);
+    border:1px solid var(--bordersoft);border-bottom:none;}
+  .tab{color:var(--muted);font-size:12px;padding:3px 10px;margin-right:2px;}
+  .tab.active{background:var(--panel2);color:var(--text);border:1px solid var(--bordersoft);}
+  .sub{margin-left:auto;color:var(--dim);font-size:11px;}
+
+  /* 主面板：实色 + 边框（DrawPanel） */
+  .stage{background:var(--panel);border:1px solid var(--bordersoft);
+    border-top:none;padding:12px;}
+
+  /* 死亡档案：实色卡 + 边框 + 无圆角 */
+  .death{background:var(--card);border:1px solid var(--bordersoft);
+    padding:8px 10px;margin-bottom:8px;}
+  .death h3{margin:0 0 6px;font-size:12px;color:var(--accent);}
+  .drow{font-size:12px;padding:1px 0;}
+  .drow .k{color:var(--muted);display:inline-block;width:86px;}
+
+  /* 区块标题：4px 竖标 + 文字 + 横线（DrawSectionTitle） */
+  .sec{display:flex;align-items:center;margin:14px 0 6px;}
+  .sec .bar{width:4px;height:14px;background:var(--accent);flex:none;}
+  .sec .t{font-size:13px;color:var(--text);margin:0 0 0 8px;}
+  .sec .rule{flex:1;height:1px;background:var(--border);margin-left:12px;}
+
+  /* 阵营图鉴卡片：实色卡 + 边框 + 左侧 2px 强调竖线（DrawCard） */
+  .fcard{position:relative;background:var(--card);border:1px solid var(--bordersoft);
+    padding:8px 10px 8px 12px;margin-bottom:10px;}
+  .fcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;}
+  .fcard.f-enemy::before{background:var(--fenemy);}
+  .fcard.f-mech::before{background:var(--fmech);}
+  .fcard.f-animal::before{background:var(--fanimal);}
+  .fcard.f-unknown::before{background:var(--funknown);}
+  .fcard.f-player::before{background:var(--fplayer);}
+  .fcodex{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  @media (max-width:680px){ .fcodex{grid-template-columns:1fr;} }
+
+  /* 卡头：色点 + 阵营名 + 类型徽章 + 关系徽章（DrawBadge） */
+  .fhead{display:flex;align-items:center;gap:8px;}
+  .fdot{width:10px;height:10px;flex:none;}
+  .fdot.enemy{background:var(--fenemy);} .fdot.mech{background:var(--fmech);}
+  .fdot.animal{background:var(--fanimal);} .fdot.unknown{background:var(--funknown);}
+  .fdot.player{background:var(--fplayer);}
+  .fname{font-size:13px;color:var(--text);}
+  .badge{font-size:11px;line-height:1;padding:2px 7px;border:1px solid currentColor;}
+  .fkind{color:var(--muted);border-color:var(--bordersoft);}
+  .frel{margin-left:auto;text-align:center;}
+  .frel.hostile{color:var(--dead);}
+  .frel.neutral{color:var(--muted);}
+  .frel.ally{color:var(--alive);}
+  .frel.unresolved{color:var(--muted);}
+
+  /* 4 格指标：深色内嵌格 + Medium 数字 + Tiny 标签（DrawFactionStat） */
+  .fstats{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px;}
+  .fstat{background:rgba(0,0,0,.22);padding:4px 8px;border:1px solid var(--bordersoft);}
+  .fstat .n{font-size:17px;line-height:1.15;color:var(--text);}
+  .fstat .l{font-size:11px;color:var(--muted);margin-top:2px;}
+  .fstat.kill .n{color:var(--dead);}
+  .fstat.raid .n{color:var(--accent);}
+  .fstat.battle .n{color:var(--info);}
+  .fstat.loss .n{color:var(--dead);}
+  .fstat.dash .n{color:var(--dim);}
+
+  /* 击杀构成条：6px 实色分段（无圆角） */
+  .fbar{display:flex;height:6px;margin-top:8px;background:rgba(0,0,0,.25);}
+  .fbar i{display:block;height:100%;}
+  .fbar i.s1{background:var(--accent);} .fbar i.s2{background:var(--info);}
+  .fbar i.s3{background:var(--alive);} .fbar i.s4{background:var(--muted);}
+  .fbar-l{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+  .fbar-l span{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+  .fbar-l i{width:8px;height:8px;display:inline-block;}
+
+  /* 就地展开明细：固定 5 行高 + 内嵌滚动条（对应 Widgets.BeginScrollView） */
+  .fdetail{margin-top:8px;padding-top:6px;border-top:1px solid var(--bordersoft);
+    height:100px;overflow-y:auto;}
+  .frow{display:flex;gap:6px;font-size:11px;line-height:1.8;align-items:baseline;}
+  .frow .fd{color:var(--muted);flex:none;width:88px;
+    font-variant-numeric:tabular-nums;}
+  .frow .ft{color:var(--text);flex:1;min-width:0;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap;}
+  .frow .fk{color:var(--accent);flex:none;max-width:46%;
+    text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+  /* 脚注：分割虚线 + 小字 */
+  .footer{margin-top:12px;color:var(--muted);font-size:11px;
+    border-top:1px dashed var(--border);padding-top:8px;}
+  .footer div{margin-top:4px;}
+  .meta{color:var(--dim);font-size:11px;}
+  code{color:var(--info);}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- 顶栏：个人档案馆 子页签（选中"战斗履历"） -->
+  <div class="topbar">
+    <div class="tab">主页</div>
+    <div class="tab">概览</div>
+    <div class="tab active">战斗履历</div>
+    <div class="tab">生涯</div>
+    <div class="sub">PersonalChronicle · 选中：戈治钟（已归档）</div>
+  </div>
+
+  <div class="stage">
+
+    <!-- 死亡档案：仅死亡殖民者显示（DrawPawnCombat 头部） -->
+    <div class="death">
+      <h3>死亡档案 · DEATH DOSSIER</h3>
+      <div class="drow"><span class="k">死亡日期</span><span>第 3 年 · 第 214 天</span></div>
+      <div class="drow"><span class="k">死亡原因</span><span>爆头 / 钝器重击</span></div>
+      <div class="drow"><span class="k">击杀者</span><span>海盗袭掠者（机械师）</span></div>
+    </div>
+
+    <!-- 阵营图鉴 -->
+    <div class="sec"><span class="bar"></span><span class="t">阵营图鉴 · FACTION CODEX</span><span class="rule"></span></div>
+
+    <div class="fcodex">
+
+      <!-- 敌方派系：金 -->
+      <div class="fcard f-enemy">
+        <div class="fhead"><span class="fdot enemy"></span><span class="fname">海盗帮 · 黑鸦团</span>
+          <span class="badge fkind">人形 / 派系</span><span class="badge frel hostile">敌对</span></div>
+        <div class="fstats">
+          <div class="fstat kill"><div class="n">12</div><div class="l">击杀数</div></div>
+          <div class="fstat raid"><div class="n">4</div><div class="l">袭击次数</div></div>
+          <div class="fstat battle"><div class="n">3</div><div class="l">交战战役</div></div>
+          <div class="fstat dash"><div class="n">—</div><div class="l">我方阵亡</div></div>
+        </div>
+        <div class="fbar">
+          <i class="s1" style="width:58%"></i><i class="s2" style="width:17%"></i>
+          <i class="s3" style="width:17%"></i><i class="s4" style="width:8%"></i>
+        </div>
+        <div class="fbar-l">
+          <span><i style="background:var(--accent)"></i>袭掠者 7</span>
+          <span><i style="background:var(--info)"></i>机械师 2</span>
+          <span><i style="background:var(--alive)"></i>狙击手 2</span>
+          <span><i style="background:var(--muted)"></i>其他 1</span>
+        </div>
+        <div class="fdetail">
+          <div class="frow"><span class="fd">第1年·172.02:11</span><span class="ft">袭掠者 · 黑衫</span><span class="fk">霰弹枪</span></div>
+          <div class="frow"><span class="fd">第1年·188.14:30</span><span class="ft">袭掠者 · 独眼</span><span class="fk">长剑</span></div>
+          <div class="frow"><span class="fd">第2年·041.09:05</span><span class="ft">狙击手 · 灰隼</span><span class="fk">步枪</span></div>
+          <div class="frow"><span class="fd">第2年·133.17:22</span><span class="ft">机械师 · 锈臂</span><span class="fk">EMP 手榴弹</span></div>
+          <div class="frow"><span class="fd">第3年·214.02:11</span><span class="ft">袭掠者 · 断指</span><span class="fk">霰弹枪</span></div>
+          <div class="frow"><span class="fd">第3年·220.08:40</span><span class="ft">袭掠者 · 秃鹫</span><span class="fk">步枪</span></div>
+          <div class="frow"><span class="fd">第3年·241.19:02</span><span class="ft">机械师 · 铁脊</span><span class="fk">EMP 手榴弹</span></div>
+          <div class="frow"><span class="fd">第3年·266.12:31</span><span class="ft">袭掠者 · 疤脸</span><span class="fk">霰弹枪</span></div>
+          <div class="frow"><span class="fd">第3年·271.03:55</span><span class="ft">狙击手 · 白眉</span><span class="fk">长剑</span></div>
+          <div class="frow"><span class="fd">第3年·283.16:20</span><span class="ft">袭掠者 · 狼牙</span><span class="fk">步枪</span></div>
+          <div class="frow"><span class="fd">第3年·299.01:47</span><span class="ft">机械师 · 铜肩</span><span class="fk">EMP 手榴弹</span></div>
+        </div>
+      </div>
+
+      <!-- 机械族：蓝 -->
+      <div class="fcard f-mech">
+        <div class="fhead"><span class="fdot mech"></span><span class="fname">机械族</span>
+          <span class="badge fkind">机械 / 派系</span><span class="badge frel hostile">敌对</span></div>
+        <div class="fstats">
+          <div class="fstat kill"><div class="n">6</div><div class="l">击杀数</div></div>
+          <div class="fstat raid"><div class="n">2</div><div class="l">袭击次数</div></div>
+          <div class="fstat battle"><div class="n">2</div><div class="l">交战战役</div></div>
+          <div class="fstat dash"><div class="n">—</div><div class="l">我方阵亡</div></div>
+        </div>
+        <div class="fbar">
+          <i class="s2" style="width:50%"></i><i class="s1" style="width:33%"></i>
+          <i class="s4" style="width:17%"></i>
+        </div>
+        <div class="fbar-l">
+          <span><i style="background:var(--info)"></i>机械虫 3</span>
+          <span><i style="background:var(--accent)"></i>百夫长 2</span>
+          <span><i style="background:var(--muted)"></i>其他 1</span>
+        </div>
+        <div class="fdetail">
+          <div class="frow"><span class="fd">第2年·351.07:30</span><span class="ft">机械虫 · 锯齿</span><span class="fk">EMP 手榴弹</span></div>
+          <div class="frow"><span class="fd">第3年·088.11:44</span><span class="ft">百夫长 · 铁壳</span><span class="fk">步枪</span></div>
+          <div class="frow"><span class="fd">第3年·102.06:12</span><span class="ft">机械虫 · 锯牙</span><span class="fk">步枪</span></div>
+          <div class="frow"><span class="fd">第3年·118.21:33</span><span class="ft">机械虫 · 灰壳</span><span class="fk">EMP 手榴弹</span></div>
+          <div class="frow"><span class="fd">第3年·130.15:48</span><span class="ft">百夫长 · 铜壁</span><span class="fk">长剑</span></div>
+          <div class="frow"><span class="fd">第3年·144.09:27</span><span class="ft">机械虫 · 铁颚</span><span class="fk">步枪</span></div>
+          <div class="frow"><span class="fd">第3年·158.20:04</span><span class="ft">机械虫 · 锯齿</span><span class="fk">EMP 手榴弹</span></div>
+        </div>
+      </div>
+
+      <!-- 动物 / 无派系：绿 -->
+      <div class="fcard f-animal">
+        <div class="fhead"><span class="fdot animal"></span><span class="fname">野生动物 / 无派系</span>
+          <span class="badge fkind">动物 / 无派系</span><span class="badge frel neutral">中立</span></div>
+        <div class="fstats">
+          <div class="fstat kill"><div class="n">4</div><div class="l">击杀数</div></div>
+          <div class="fstat raid"><div class="n">1</div><div class="l">兽潮/事件</div></div>
+          <div class="fstat battle"><div class="n">1</div><div class="l">交战战役</div></div>
+          <div class="fstat dash"><div class="n">—</div><div class="l">我方阵亡</div></div>
+        </div>
+        <div class="fbar">
+          <i class="s3" style="width:50%"></i><i class="s1" style="width:25%"></i>
+          <i class="s4" style="width:25%"></i>
+        </div>
+        <div class="fbar-l">
+          <span><i style="background:var(--alive)"></i>麻雀 2</span>
+          <span><i style="background:var(--accent)"></i>疯狂野猪 1</span>
+          <span><i style="background:var(--muted)"></i>任务怪 1</span>
+        </div>
+        <div class="fdetail">
+          <div class="frow"><span class="fd">第2年·300.21:05</span><span class="ft">麻雀</span><span class="fk">复合弓</span></div>
+          <div class="frow"><span class="fd">第3年·041.13:56</span><span class="ft">麻雀</span><span class="fk">复合弓</span></div>
+          <div class="frow"><span class="fd">第3年·127.08:19</span><span class="ft">疯狂野猪</span><span class="fk">长剑</span></div>
+          <div class="frow"><span class="fd">第3年·203.22:41</span><span class="ft">任务怪 · 虚空犬</span><span class="fk">步枪</span></div>
+        </div>
+      </div>
+
+      <!-- 未知 / 环境：灰 -->
+      <div class="fcard f-unknown">
+        <div class="fhead"><span class="fdot unknown"></span><span class="fname">未知 / 环境</span>
+          <span class="badge fkind">UnknownKiller 桶</span><span class="badge frel unresolved">未解析</span></div>
+        <div class="fstats">
+          <div class="fstat kill"><div class="n">1</div><div class="l">击杀数</div></div>
+          <div class="fstat dash"><div class="n">—</div><div class="l">袭击次数</div></div>
+          <div class="fstat battle"><div class="n">1</div><div class="l">交战战役</div></div>
+          <div class="fstat dash"><div class="n">—</div><div class="l">我方阵亡</div></div>
+        </div>
+        <div class="fbar"><i class="s4" style="width:100%"></i></div>
+        <div class="fbar-l"><span><i style="background:var(--muted)"></i>未知 1</span></div>
+      </div>
+
+      <!-- 我方 · 殖民地：红（固定置底，指标含义不同） -->
+      <div class="fcard f-player">
+        <div class="fhead"><span class="fdot player"></span><span class="fname">我方 · 殖民地</span>
+          <span class="badge fkind">玩家派系</span><span class="badge frel ally">友方</span></div>
+        <div class="fstats">
+          <div class="fstat loss"><div class="n">3</div><div class="l">阵亡人数</div></div>
+          <div class="fstat battle"><div class="n">5</div><div class="l">参战战役</div></div>
+          <div class="fstat kill"><div class="n">23</div><div class="l">总击杀</div></div>
+          <div class="fstat dash"><div class="n">—</div><div class="l">胜率</div></div>
+        </div>
+        <div class="fbar"><i class="s3" style="width:100%"></i></div>
+        <div class="fbar-l"><span><i style="background:var(--alive)"></i>我方阵亡明细（仅此卡显示真实数）</span></div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <div>共 5 场战役，23 次击杀。（采样说明：战役按「同类型作战事件间隔 &gt; 30,000 tick 即拆分」聚类；击杀按天去重，跨战役同一目标同日只计一次。）</div>
+      <div>归属规则：击杀记给<b>造成伤害最高</b>的 chronicle 殖民者（如 A 削 80% 血、B 抢补刀 → 记 A）；补刀者 B 若 ≠ A，则在事件详情中记为「协助」并写入 <code>assist</code> 参数。凶手无法解析（环境致死/近战转发/敌方互杀）时归入 UnknownKiller 聚合桶，不丢弃。</div>
+      <div>捕获条件（v4.0 绝对宽松）：<b>任何 Pawn.Kill 死亡都会记录</b>，不限制种族/类型。阵营卡片归属键取自受害者 faction，faction 为空（野生动物/任务怪）归「无派系」卡，凶手不可解析归「未知/环境」卡。</div>
+      <div class="legend">
+        <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--dead)"></span>击杀（红）</span>
+        <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--accent)"></span>我方派系（金）</span>
+        <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--info)"></span>机械（蓝）</span>
+        <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--alive)"></span>动物（绿）</span>
+        <span><span class="dot" style="display:inline-block;width:10px;height:10px;background:var(--muted)"></span>未知（灰）</span>
+      </div>
+      <div class="meta">本预览严格按 IMGUI 复刻（实色 + 1px 线框，无圆角/阴影/渐变/动画/模糊）。对应代码：<code>ArchiveMainTabWindow.DrawPawnCombat → DrawFactionCodex → DrawFactionCodexCard → DrawFactionStat</code>，配色 <code>ArchiveUiStyle.FactionAccent</code>，卡片底 <code>ArchiveUiStyle.DrawCard</code>。非游戏内截图。</div>
+      <div class="meta">说明：敌方卡「我方阵亡」显示「—」（击杀事件受害者是敌方，无法归因我方死亡）；「胜率」「首末交战/主要击杀者/常用武器/胜负/威胁等级」汇总项已删除（v4.3），明细见展开列表。</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

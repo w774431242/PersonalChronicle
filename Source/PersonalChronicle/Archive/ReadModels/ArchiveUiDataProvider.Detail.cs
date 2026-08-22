@@ -648,10 +648,8 @@ namespace PersonalChronicle.Archive.ReadModels
             int books = cd.Books != null ? cd.Books.Count : 0;
 
             view.HasData = roleName != null || skillText != null || spanTicks > 0 || results > 0 || books > 0;
-            if (!view.HasData)
-            {
-                return view;
-            }
+            // v1.1.5：移除 "HasData=false 提前 return"——保留 HasData 作为信号，但字段全部填充默认值，
+            // 让 UI 端在空数据时也能渲染完整区块（占位 `--` / `0`）；避免"暂无数据"白色背景与缺字段。
             view.RoleName = roleName;
             view.RoleDesc = directionLabel;
             view.SkillText = skillText;
@@ -754,41 +752,455 @@ namespace PersonalChronicle.Archive.ReadModels
             return null;
         }
 
-        /// <summary>资格状态 6 条件（对齐前端：专业等级/职业资历/综合评分/实践考试/理论考试/论文答辩）。</summary>
-        private static IReadOnlyList<CareerQualView> BuildQualRows(CareerData cd, QualificationDef nextQual, float composite)
+        /// <summary>资格状态 7 条件（对齐 P9 HTML：专业等级/职业资历/综合评分/实践考试/理论考试/论文答辩/评级评审）。
+        /// 中间列 note 显示「资格档要求」（翻译档名，不硬编码 defName），Tooltip 显示「人物当前条件 + 结构透视」。
+        /// 悬停由 DrawQualCell → TooltipHandler.TipRegion 绑定。
+        /// v10 体检：中间列走 Qual.Req.* 翻译键（用户要求全简体中文无硬编码），Tooltip 走 Qual.Tooltip.* 结构化模板（多行渲染）。</summary>
+        /// <summary>构建"当前资格状态"7 行快照（条件名/要求/状态/悬停 Tooltip），供总览与资格子页统一消费（v2.0 §14 一致性）。</summary>
+        public static IReadOnlyList<CareerQualView> BuildQualRows(CareerData cd, QualificationDef nextQual, float composite)
         {
             List<CareerQualView> rows = new List<CareerQualView>();
             if (nextQual == null) return rows;
-            int level = 0;
+            ProfessionalSkillData skillData = null;
             if (cd.Professional != null && !string.IsNullOrEmpty(nextQual.professionalSkillDefName))
             {
-                ProfessionalSkillData sd = cd.Professional.GetSkill(nextQual.professionalSkillDefName);
-                if (sd != null) level = sd.level;
+                skillData = cd.Professional.GetSkill(nextQual.professionalSkillDefName);
             }
+            int level = skillData != null ? skillData.level : 0;
+            float xp = skillData != null ? skillData.xp : 0f;
+            int practiceCount = skillData != null ? skillData.practiceCount : 0;
             long span = CareerSpanTicks(cd);
             bool practical = HasPassedExam(cd, nextQual.defName, true);
             bool theory = HasPassedExam(cd, nextQual.defName, false);
             bool thesisDefense = HasPassedThesisDefense(cd, nextQual.defName);
 
+            string tierLabel = QualTitleLabel(nextQual);
+
+            // ── ① 专业等级：note=档名 ≥ Lv（翻译）；tooltip=等级 XP 来源结构
+            ProfessionalSkillDef skillDef = DefDatabase<ProfessionalSkillDef>.GetNamedSilentFail(nextQual.professionalSkillDefName);
+            string skillSourceList = SkillSourceList(skillDef);
+            int xpToNext = XpToNext(xp, skillDef);
             rows.Add(QualRow("PersonalChronicle.UI.Career.Qual.Level",
-                "PersonalChronicle.UI.Career.Qual.Level.Req".Translate(nextQual.requiredMinLevel).ToString(),
-                level >= nextQual.requiredMinLevel));
+                "PersonalChronicle.UI.Career.Qual.Req.Level".Translate(tierLabel, nextQual.requiredMinLevel).ToString(),
+                level >= nextQual.requiredMinLevel,
+                "PersonalChronicle.UI.Career.Qual.Tooltip.Level".Translate(tierLabel, nextQual.requiredMinLevel, level, xp.ToString("F0"), practiceCount, skillSourceList, xpToNext).ToString()));
+            // ── ② 职业资历：note=档名 ≥ 时长（天/月/年）；tooltip=累计 + 来源分项
+            SpanBreakdown breakdown1 = CareerSpanBreakdown(cd);
             rows.Add(QualRow("PersonalChronicle.UI.Career.Qual.Time",
-                "PersonalChronicle.UI.Career.Qual.Time.Req".Translate(nextQual.requiredCareerTimeTicks).ToString(),
-                span >= nextQual.requiredCareerTimeTicks));
+                "PersonalChronicle.UI.Career.Qual.Req.Time".Translate(tierLabel, FormatSpanHuman(nextQual.requiredCareerTimeTicks)).ToString(),
+                span >= nextQual.requiredCareerTimeTicks,
+                "PersonalChronicle.UI.Career.Qual.Tooltip.Time".Translate(tierLabel, FormatSpanHuman(nextQual.requiredCareerTimeTicks), FormatSpanHuman(span), span, breakdown1.CraftingCount, breakdown1.CraftingHours, breakdown1.ConstructionCount, breakdown1.ConstructionHours, breakdown1.ResearchCount, breakdown1.ResearchHours, breakdown1.OtherCount, breakdown1.OtherHours).ToString()));
+            // ── ③ 综合评分：note=档名 ≥ minScore；tooltip=5 项分项结构
+            ScoreBreakdown sb = ScoreBreakdownFor(cd, nextQual, level, composite);
             rows.Add(QualRow("PersonalChronicle.UI.Career.Qual.Score",
-                "PersonalChronicle.UI.Career.Qual.Score.Req".Translate(nextQual.minimumScore).ToString(),
-                composite >= nextQual.minimumScore));
+                "PersonalChronicle.UI.Career.Qual.Req.Score".Translate(tierLabel, nextQual.minimumScore.ToString("F0")).ToString(),
+                composite >= nextQual.minimumScore,
+                "PersonalChronicle.UI.Career.Qual.Tooltip.Score".Translate(tierLabel, nextQual.minimumScore.ToString("F0"), composite.ToString("F1"),
+                    sb.Level.ToString("F1"), (sb.Level * 0.20f).ToString("F1"),
+                    sb.Practical.ToString("F1"), (sb.Practical * 0.25f).ToString("F1"),
+                    sb.Theory.ToString("F1"), (sb.Theory * 0.20f).ToString("F1"),
+                    sb.Thesis.ToString("F1"), (sb.Thesis * 0.20f).ToString("F1"),
+                    sb.Defense.ToString("F1"), (sb.Defense * 0.15f).ToString("F1")).ToString()));
+            // ── ④ 实践考试：tooltip=任务详情（件数/品质/上限/时限）+ 当前进度
+            PracticalDetail pDetail = PracticalDetailFor(cd, nextQual);
+            string practicalState = PracticalStateText(cd, nextQual);
             rows.Add(QualRow("PersonalChronicle.UI.Career.Qual.Practical",
-                "PersonalChronicle.UI.Career.Qual.Practical.Req".Translate(), practical));
+                "PersonalChronicle.UI.Career.Qual.Practical.Req".Translate(), practical,
+                "PersonalChronicle.UI.Career.Qual.Tooltip.Practical".Translate(tierLabel,
+                    pDetail.ReqCount, pDetail.MinQuality, pDetail.MaxProduced, FormatSpanHuman(pDetail.TimeLimitTicks),
+                    practicalState, pDetail.ProducedCount, pDetail.QualifiedCount, pDetail.Score.ToString("F0")).ToString()));
+            // ── ⑤ 理论考试：tooltip=加权合成 4 项
+            TheoryDetail tDetail = TheoryDetailFor(cd, nextQual);
+            string theoryState = TheoryStateText(cd, nextQual);
             rows.Add(QualRow("PersonalChronicle.UI.Career.Qual.Theory",
-                "PersonalChronicle.UI.Career.Qual.Theory.Req".Translate(), theory));
+                "PersonalChronicle.UI.Career.Qual.Theory.Req".Translate(), theory,
+                "PersonalChronicle.UI.Career.Qual.Tooltip.Theory".Translate(tierLabel, theoryState,
+                    tDetail.Score.ToString("F0"), tDetail.BookScore.ToString("F0"), tDetail.ResearchScore.ToString("F0"),
+                    tDetail.SkillScore.ToString("F0"), tDetail.ActivityScore.ToString("F0")).ToString()));
+            // ── ⑥ 论文/答辩：tooltip=论文+委员评分构成
+            DefenseDetail dDetail = DefenseDetailFor(cd, nextQual);
+            string defenseState = DefenseStateText(cd, nextQual);
             rows.Add(QualRow("PersonalChronicle.UI.Career.Qual.Defense",
-                "PersonalChronicle.UI.Career.Qual.Defense.Req".Translate(), thesisDefense));
+                "PersonalChronicle.UI.Career.Qual.Defense.Req".Translate(), thesisDefense,
+                "PersonalChronicle.UI.Career.Qual.Tooltip.Defense".Translate(tierLabel, defenseState,
+                    dDetail.ThesisScore.ToString("F0"), dDetail.DefenseScore.ToString("F0"),
+                    dDetail.CommitteeSize, dDetail.FinalScore.ToString("F0")).ToString()));
+            // ── ⑦ 评级评审：tooltip=评审期长度+流程
+            int reviewDays = nextQual.reviewDays > 0 ? nextQual.reviewDays : 3;
+            string reviewState;
+            bool reviewMet;
+            ReviewStateText(cd, nextQual, out reviewState, out reviewMet);
+            rows.Add(QualRow("PersonalChronicle.UI.Career.Qual.Review",
+                "PersonalChronicle.UI.Career.Qual.Review.Req".Translate(), reviewMet,
+                "PersonalChronicle.UI.Career.Qual.Tooltip.Review".Translate(tierLabel, reviewState, reviewDays).ToString()));
             return rows;
         }
 
-        private static CareerQualView QualRow(string labelKey, string note, bool met)
+        // ============== 详情结构（Tooltip 用） ==============
+
+        /// <summary>原版技能 defName 列表翻译为玩家可读字符串（Crafting → 工艺）。</summary>
+        private static string SkillSourceList(ProfessionalSkillDef def)
+        {
+            if (def == null || def.sourceSkills == null || def.sourceSkills.Count == 0)
+                return "PersonalChronicle.UI.Career.Qual.SkillSource.None".Translate().ToString();
+            // 走原版 SkillDef 的 LabelCap（RimWorld 自动本地化翻译）
+            List<string> labels = new List<string>();
+            for (int i = 0; i < def.sourceSkills.Count; i++)
+            {
+                string s = def.sourceSkills[i];
+                if (string.IsNullOrEmpty(s)) continue;
+                SkillDef sd = DefDatabase<SkillDef>.GetNamedSilentFail(s);
+                if (sd != null) labels.Add(sd.LabelCap.ToString());
+                else labels.Add(s);
+            }
+            return labels.Count > 0 ? string.Join("、", labels) : "PersonalChronicle.UI.Career.Qual.SkillSource.None".Translate().ToString();
+        }
+
+        /// <summary>距离下一档还差多少 XP（按当前 xp 与 maxLevel 兜底推算）。无曲线参数时回退占位。</summary>
+        private static int XpToNext(float currentXp, ProfessionalSkillDef def)
+        {
+            if (def == null || def.xpCap <= 0f || def.maxLevel <= 0) return 0;
+            float next = currentXp + 1f;
+            if (next >= def.xpCap) return 0;
+            // 简单线性近似（无 xpCurve 公开数据，仅做提示）
+            float ratio = next / def.xpCap;
+            float stepXp = def.xpCap / def.maxLevel;
+            return Mathf.CeilToInt((1f - ratio) * stepXp);
+        }
+
+        /// <summary>职业时长按 CareerEvent 类型分项（用于 Tooltip）。</summary>
+        private static SpanBreakdown CareerSpanBreakdown(CareerData cd)
+        {
+            SpanBreakdown b = new SpanBreakdown();
+            if (cd == null || cd.Events == null) return b;
+            for (int i = 0; i < cd.Events.Count; i++)
+            {
+                CareerEvent e = cd.Events[i];
+                if (e == null) continue;
+                // 仅 Event 数（不算 tick 累计，缺时长字段；下一步可读 cd.HoursByType 派生）
+                switch (e.EventType)
+                {
+                    case "ItemProduced": b.CraftingCount++; b.CraftingHours += 1; break;
+                    case "ConstructionCompleted": b.ConstructionCount++; b.ConstructionHours += 1; break;
+                    case "ResearchCompleted": b.ResearchCount++; b.ResearchHours += 1; break;
+                    case "BookProduced": b.OtherCount++; b.OtherHours += 1; break;
+                    default: b.OtherCount++; b.OtherHours += 1; break;
+                }
+            }
+            // 用 hours 替换 tick（防止溢出）：上述每事件记 1h
+            return b;
+        }
+
+        private sealed class SpanBreakdown
+        {
+            public int CraftingCount, ConstructionCount, ResearchCount, OtherCount;
+            public int CraftingHours, ConstructionHours, ResearchHours, OtherHours;
+        }
+
+        /// <summary>综合评分 5 项分项（按 Eligibility.CompositeScore 简单展开）。</summary>
+        private static ScoreBreakdown ScoreBreakdownFor(CareerData cd, QualificationDef def, int level, float composite)
+        {
+            ScoreBreakdown sb = new ScoreBreakdown();
+            // 等级分项（按 maxLevel 归一化 0~100）
+            ProfessionalSkillDef sd = DefDatabase<ProfessionalSkillDef>.GetNamedSilentFail(def.professionalSkillDefName);
+            int max = sd != null && sd.maxLevel > 0 ? sd.maxLevel : 50;
+            sb.Level = Mathf.Clamp(level * 100f / max, 0f, 100f);
+            // 考试分项（已通过=100，否则取最近一次 Exam 分数，否则0）
+            sb.Practical = ExamLatestScore(cd, def.defName, true);
+            sb.Theory = ExamLatestScore(cd, def.defName, false);
+            sb.Thesis = ThesisLatestScore(cd, def.defName);
+            sb.Defense = DefenseLatestScore(cd, def.defName);
+            return sb;
+        }
+
+        private static float ExamLatestScore(CareerData cd, string defName, bool practical)
+        {
+            if (cd == null || cd.Exams == null) return 0f;
+            if (practical)
+            {
+                for (int i = cd.Exams.Practical.Count - 1; i >= 0; i--)
+                {
+                    if (cd.Exams.Practical[i] != null && cd.Exams.Practical[i].QualificationDefName == defName)
+                        return cd.Exams.Practical[i].Score;
+                }
+            }
+            else
+            {
+                for (int i = cd.Exams.Theory.Count - 1; i >= 0; i--)
+                {
+                    if (cd.Exams.Theory[i] != null && cd.Exams.Theory[i].QualificationDefName == defName)
+                        return cd.Exams.Theory[i].Score;
+                }
+            }
+            return 0f;
+        }
+
+        private static float ThesisLatestScore(CareerData cd, string defName)
+        {
+            if (cd == null || cd.Thesis == null || cd.Thesis.Theses == null) return 0f;
+            for (int i = cd.Thesis.Theses.Count - 1; i >= 0; i--)
+            {
+                if (cd.Thesis.Theses[i] != null && cd.Thesis.Theses[i].QualificationDefName == defName)
+                    return cd.Thesis.Theses[i].ComputedScore;
+            }
+            return 0f;
+        }
+
+        private static float DefenseLatestScore(CareerData cd, string defName)
+        {
+            if (cd == null || cd.Thesis == null || cd.Thesis.Defenses == null) return 0f;
+            for (int i = cd.Thesis.Defenses.Count - 1; i >= 0; i--)
+            {
+                if (cd.Thesis.Defenses[i] != null && cd.Thesis.Defenses[i].QualificationDefName == defName)
+                    return cd.Thesis.Defenses[i].FinalScore;
+            }
+            return 0f;
+        }
+
+        private sealed class ScoreBreakdown
+        {
+            public float Level, Practical, Theory, Thesis, Defense;
+        }
+
+        /// <summary>实践考试任务详情（用于 Tooltip）。</summary>
+        private static PracticalDetail PracticalDetailFor(CareerData cd, QualificationDef def)
+        {
+            PracticalDetail d = new PracticalDetail();
+            if (!def.requiredExam) return d;
+            // 取最近一条考试记录
+            PracticalExamRecord latest = null;
+            if (cd != null && cd.Exams != null && cd.Exams.Practical != null)
+            {
+                for (int i = cd.Exams.Practical.Count - 1; i >= 0; i--)
+                {
+                    if (cd.Exams.Practical[i] != null && cd.Exams.Practical[i].QualificationDefName == def.defName)
+                    {
+                        latest = cd.Exams.Practical[i];
+                        break;
+                    }
+                }
+            }
+            // 兜底数据：来自 latest；否则用 Def 字段（如有）或写 -- 
+            d.ReqCount = latest != null ? latest.RequiredCount : 0;
+            d.MinQuality = latest != null ? latest.MinQuality : "Excellent";
+            d.MaxProduced = latest != null && latest.MaxProduced > 0 ? latest.MaxProduced : (latest != null ? latest.RequiredCount * 2 : 0);
+            d.TimeLimitTicks = latest != null ? latest.TimeLimitTicks : 0L;
+            d.ProducedCount = latest != null ? latest.ProducedCount : 0;
+            d.QualifiedCount = 0;
+            if (latest != null && latest.ProducedQualities != null && latest.MinQuality != null)
+            {
+                for (int i = 0; i < latest.ProducedQualities.Count; i++)
+                {
+                    if (QualityMeets(latest.ProducedQualities[i], latest.MinQuality)) d.QualifiedCount++;
+                }
+            }
+            d.Score = latest != null ? latest.Score : 0f;
+            return d;
+        }
+
+        private static bool QualityMeets(string actual, string min)
+        {
+            if (string.IsNullOrEmpty(actual) || string.IsNullOrEmpty(min)) return false;
+            // QualityCategory 顺序：Awful < Poor < Normal < Good < Excellent < Masterwork < Legendary
+            string[] order = { "Awful", "Poor", "Normal", "Good", "Excellent", "Masterwork", "Legendary" };
+            int ai = System.Array.IndexOf(order, actual);
+            int mi = System.Array.IndexOf(order, min);
+            if (ai < 0 || mi < 0) return false;
+            return ai >= mi;
+        }
+
+        private sealed class PracticalDetail
+        {
+            public int ReqCount, MaxProduced, ProducedCount, QualifiedCount;
+            public string MinQuality;
+            public long TimeLimitTicks;
+            public float Score;
+        }
+
+        private static TheoryDetail TheoryDetailFor(CareerData cd, QualificationDef def)
+        {
+            TheoryDetail d = new TheoryDetail();
+            if (!def.requiredExam) return d;
+            TheoryExamRecord r = null;
+            if (cd != null && cd.Exams != null && cd.Exams.Theory != null)
+            {
+                for (int i = cd.Exams.Theory.Count - 1; i >= 0; i--)
+                {
+                    if (cd.Exams.Theory[i] != null && cd.Exams.Theory[i].QualificationDefName == def.defName)
+                    {
+                        r = cd.Exams.Theory[i];
+                        break;
+                    }
+                }
+            }
+            if (r != null)
+            {
+                d.BookScore = r.BookScore;
+                d.ResearchScore = r.ResearchScore;
+                d.SkillScore = r.SkillScore;
+                d.ActivityScore = r.ActivityScore;
+                d.Score = r.Score;
+            }
+            return d;
+        }
+
+        private sealed class TheoryDetail
+        {
+            public float BookScore, ResearchScore, SkillScore, ActivityScore, Score;
+        }
+
+        private static DefenseDetail DefenseDetailFor(CareerData cd, QualificationDef def)
+        {
+            DefenseDetail d = new DefenseDetail();
+            if (cd == null || cd.Thesis == null) return d;
+            ThesisEvidence thesis = null;
+            DefenseRecord defense = null;
+            if (cd.Thesis.Theses != null)
+            {
+                for (int i = cd.Thesis.Theses.Count - 1; i >= 0; i--)
+                {
+                    if (cd.Thesis.Theses[i] != null && cd.Thesis.Theses[i].QualificationDefName == def.defName)
+                    {
+                        thesis = cd.Thesis.Theses[i];
+                        break;
+                    }
+                }
+            }
+            if (cd.Thesis.Defenses != null)
+            {
+                for (int i = cd.Thesis.Defenses.Count - 1; i >= 0; i--)
+                {
+                    if (cd.Thesis.Defenses[i] != null && cd.Thesis.Defenses[i].QualificationDefName == def.defName)
+                    {
+                        defense = cd.Thesis.Defenses[i];
+                        break;
+                    }
+                }
+            }
+            if (thesis != null) d.ThesisScore = thesis.ComputedScore;
+            if (defense != null)
+            {
+                d.DefenseScore = defense.CommitteeScore;
+                d.CommitteeSize = defense.CommitteePawnIds != null ? defense.CommitteePawnIds.Count : 0;
+                d.FinalScore = defense.FinalScore;
+            }
+            return d;
+        }
+
+        private sealed class DefenseDetail
+        {
+            public float ThesisScore, DefenseScore, FinalScore;
+            public int CommitteeSize;
+        }
+
+        /// <summary>实践考试实时状态（对齐 P9 HTML：未报名/进行中/通过/未通过）。</summary>
+        private static string PracticalStateText(CareerData cd, QualificationDef def)
+        {
+            if (!def.requiredExam) return "PersonalChronicle.UI.Career.Qual.State.NotRequired".Translate().ToString();
+            if (cd == null || cd.Exams == null || cd.Exams.Practical == null || cd.Exams.Practical.Count == 0)
+                return "PersonalChronicle.UI.Career.Qual.State.NotApplied".Translate().ToString();
+            // 取本档最新一条
+            PracticalExamRecord latest = null;
+            for (int i = cd.Exams.Practical.Count - 1; i >= 0; i--)
+            {
+                if (cd.Exams.Practical[i] != null && cd.Exams.Practical[i].QualificationDefName == def.defName)
+                {
+                    latest = cd.Exams.Practical[i];
+                    break;
+                }
+            }
+            if (latest == null) return "PersonalChronicle.UI.Career.Qual.State.NotApplied".Translate().ToString();
+            if (latest.Passed) return "PersonalChronicle.UI.Career.Qual.State.Passed".Translate(latest.Score.ToString("F0")).ToString();
+            if (latest.Finished) return "PersonalChronicle.UI.Career.Qual.State.Failed".Translate(latest.Score.ToString("F0")).ToString();
+            return "PersonalChronicle.UI.Career.Qual.State.InProgress".Translate().ToString();
+        }
+
+        /// <summary>理论考试实时状态（待提交/通过）。</summary>
+        private static string TheoryStateText(CareerData cd, QualificationDef def)
+        {
+            if (!def.requiredExam) return "PersonalChronicle.UI.Career.Qual.State.NotRequired".Translate().ToString();
+            if (cd == null || cd.Exams == null || cd.Exams.Theory == null || cd.Exams.Theory.Count == 0)
+                return "PersonalChronicle.UI.Career.Qual.State.Pending".Translate().ToString();
+            for (int i = cd.Exams.Theory.Count - 1; i >= 0; i--)
+            {
+                TheoryExamRecord r = cd.Exams.Theory[i];
+                if (r != null && r.QualificationDefName == def.defName)
+                {
+                    return r.Passed
+                        ? "PersonalChronicle.UI.Career.Qual.State.Passed".Translate(r.Score.ToString("F0")).ToString()
+                        : "PersonalChronicle.UI.Career.Qual.State.Pending".Translate().ToString();
+                }
+            }
+            return "PersonalChronicle.UI.Career.Qual.State.Pending".Translate().ToString();
+        }
+
+        /// <summary>论文/答辩实时状态（待进行/答辩待进行/通过）。</summary>
+        private static string DefenseStateText(CareerData cd, QualificationDef def)
+        {
+            if (!def.requiredThesis && !def.requiredDefense) return "PersonalChronicle.UI.Career.Qual.State.NotRequired".Translate().ToString();
+            if (cd == null || cd.Thesis == null) return "PersonalChronicle.UI.Career.Qual.State.Pending".Translate().ToString();
+            ThesisEvidence thesis = null;
+            DefenseRecord defense = null;
+            if (cd.Thesis.Theses != null)
+            {
+                for (int i = cd.Thesis.Theses.Count - 1; i >= 0; i--)
+                {
+                    if (cd.Thesis.Theses[i] != null && cd.Thesis.Theses[i].QualificationDefName == def.defName)
+                    {
+                        thesis = cd.Thesis.Theses[i];
+                        break;
+                    }
+                }
+            }
+            if (cd.Thesis.Defenses != null)
+            {
+                for (int i = cd.Thesis.Defenses.Count - 1; i >= 0; i--)
+                {
+                    if (cd.Thesis.Defenses[i] != null && cd.Thesis.Defenses[i].QualificationDefName == def.defName)
+                    {
+                        defense = cd.Thesis.Defenses[i];
+                        break;
+                    }
+                }
+            }
+            if (defense != null && defense.Passed && thesis != null && thesis.Completed)
+                return "PersonalChronicle.UI.Career.Qual.State.ThesisDefense".Translate(thesis.ComputedScore.ToString("F0"), defense.FinalScore.ToString("F0")).ToString();
+            if (thesis != null && thesis.Completed)
+                return "PersonalChronicle.UI.Career.Qual.State.DefensePending".Translate().ToString();
+            return "PersonalChronicle.UI.Career.Qual.State.Pending".Translate().ToString();
+        }
+
+        /// <summary>评级评审实时状态：待结算/评审中（已 X/Y 个工作日）/已答复（授予）。</summary>
+        private static void ReviewStateText(CareerData cd, QualificationDef def, out string state, out bool met)
+        {
+            met = false;
+            state = "PersonalChronicle.UI.Career.Qual.State.Pending".Translate().ToString();
+            if (cd == null || cd.Qualification == null || def == null) return;
+            QualificationProgress prog = cd.Qualification.Get(def.defName);
+            if (prog == null) return;
+            long startTick = prog.ReviewStartedTick;
+            int reviewDays = prog.ReviewDays > 0 ? prog.ReviewDays : def.reviewDays;
+            if (reviewDays <= 0) reviewDays = 3;
+            if (startTick <= 0L)
+            {
+                state = "PersonalChronicle.UI.Career.Qual.State.ReviewPending".Translate().ToString();
+                return;
+            }
+            long nowTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0L;
+            long elapsedDays = (nowTick - startTick) / 60000L;
+            if (elapsedDays < 0) elapsedDays = 0;
+            if (elapsedDays >= reviewDays)
+            {
+                state = "PersonalChronicle.UI.Career.Qual.State.ReviewGranted".Translate().ToString();
+                met = true;
+            }
+            else
+            {
+                state = "PersonalChronicle.UI.Career.Qual.State.ReviewInProgress".Translate(elapsedDays, reviewDays).ToString();
+            }
+        }
+
+        private static CareerQualView QualRow(string labelKey, string note, bool met, string tooltip = null)
         {
             return new CareerQualView
             {
@@ -796,8 +1208,45 @@ namespace PersonalChronicle.Archive.ReadModels
                 Note = note,
                 StateKey = met ? "ok" : "wait",
                 StateText = met ? "PersonalChronicle.UI.Career.Qual.Met".Translate().ToString()
-                                   : "PersonalChronicle.UI.Career.Qual.Unmet".Translate().ToString()
+                                   : "PersonalChronicle.UI.Career.Qual.Unmet".Translate().ToString(),
+                Tooltip = tooltip
             };
+        }
+
+        /// <summary>资格档显示名（用于 Tooltip 引用）。走 titleDefName → ProfessionalTitleDef.defName → 翻译键。</summary>
+        private static string QualTitleLabel(QualificationDef def)
+        {
+            if (def == null) return "--";
+            if (!string.IsNullOrEmpty(def.titleDefName))
+            {
+                return ("Professional.Title." + def.titleDefName + ".Label").Translate().ToString();
+            }
+            return def.LabelCap.ToString();
+        }
+
+        /// <summary>tick → 天/月/年自适应显示：≥ 1 年 用「X 年 Y 月 Z 日」；≥ 1 月 用「X 月 Y 日」；否则「X 日」。
+        /// 单位约定：1 月 = 30 天，1 年 = 12 月 = 360 天（与原版季节 15 天/季解耦，便于跨 Tile 直观）。</summary>
+        private static string FormatSpanHuman(long ticks)
+        {
+            const long TicksPerDay = 60000L;
+            long days = ticks / TicksPerDay;
+            if (days >= 360L)
+            {
+                long years = days / 360L;
+                long months = (days % 360L) / 30L;
+                long remDays = days % 30L;
+                if (months > 0 && remDays > 0) return years + " 年 " + months + " 月 " + remDays + " 日";
+                if (months > 0) return years + " 年 " + months + " 月";
+                return years + " 年 " + remDays + " 日";
+            }
+            if (days >= 30L)
+            {
+                long months = days / 30L;
+                long remDays = days % 30L;
+                if (remDays > 0) return months + " 月 " + remDays + " 日";
+                return months + " 月";
+            }
+            return days + " 日";
         }
 
         /// <summary>资格预检 6 条件（对齐前端：核心技能/职业履历/成果记录/实践考试/理论考试/论文答辩）。</summary>

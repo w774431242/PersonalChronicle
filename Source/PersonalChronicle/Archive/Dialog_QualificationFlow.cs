@@ -42,6 +42,9 @@ namespace PersonalChronicle.Archive
 
         public override void DoWindowContents(Rect inRect)
         {
+            // 原生 Window 默认浅色背景——覆盖为 UITheme.Window 深色（须在 BeginGroup 之前）。
+            UIComponents.TintedBox(inRect, UITheme.Window);
+
             Text.Font = GameFont.Small;
             GUI.BeginGroup(inRect);
             try
@@ -60,16 +63,17 @@ namespace PersonalChronicle.Archive
         private void DrawExam(Rect r)
         {
             UIComponents.Label(new Rect(0f, 6f, r.width, 24f),
-                "实践考试 · " + def.defName, UITheme.FontValue, UITheme.Text);
+                "PersonalChronicle.UI.Career.Flow.Title.Exam".Translate(def.defName),
+                UITheme.FontValue, UITheme.Text);
             UIComponents.Rule(new Rect(0f, 34f, r.width, 1f), UITheme.BorderSoft);
 
             float y = 46f;
             UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                "要求：制造 3 件工业/太空组件，最低品质 Excellent（真实制造采集证据）",
+                "PersonalChronicle.UI.Career.Flow.Exam.Requirement".Translate(),
                 UITheme.FontLabel, UITheme.Muted);
             y += 24f;
             UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                "制造上限：6 件 · 时限：100000 tick（超限/超时未达标即失败，可重新报名）",
+                "PersonalChronicle.UI.Career.Flow.Exam.Limit".Translate(),
                 UITheme.FontLabel, UITheme.Muted);
             y += 24f;
 
@@ -94,31 +98,34 @@ namespace PersonalChronicle.Archive
                 string produced = active.ProducedQualities != null && active.ProducedQualities.Count > 0
                     ? string.Join("、", active.ProducedQualities.ToArray()) : "—";
                 UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                    "已产出：" + active.ProducedCount + "/" + maxN + " 件（" + produced + "）",
+                    "PersonalChronicle.UI.Career.Flow.Exam.Produced".Translate(
+                        active.ProducedCount, maxN, produced),
                     UITheme.FontLabel, active.Passed ? UITheme.PillGreen : UITheme.Muted);
                 y += 24f;
                 UIComponents.Label(new Rect(0f, y, r.width, 40f),
-                    "证据由真实制造自动采集（Patch_GenRecipe 链路）。请在游戏中制造工业组件/太空组件完成考试。",
+                    "PersonalChronicle.UI.Career.Flow.Exam.Evidence".Translate(),
                     UITheme.FontLabel, UITheme.Dim);
                 y += 44f;
             }
             else
             {
                 UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                    "尚未报名。点击下方按钮报名本档实践考试。",
+                    "PersonalChronicle.UI.Career.Flow.Exam.NotApplied".Translate(),
                     UITheme.FontLabel, UITheme.Dim);
                 y += 26f;
             }
 
             y = r.height - 40f;
-            if (active == null && Widgets.ButtonText(new Rect(0f, y, 150f, 30f), "📋 确认报名"))
+            if (active == null && Widgets.ButtonText(new Rect(0f, y, 150f, 30f),
+                "PersonalChronicle.UI.Career.Flow.Btn.Confirm".Translate()))
             {
                 string res = QualificationFlowService.ApplyForPracticalExam(pawnObject, def, Find.TickManager.TicksGame);
                 Messages.Message("PersonalChronicle.UI.Career.Qual.SubmitResult".Translate(res), pawn,
                     res == QualificationFlowService.Ok ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.NeutralEvent);
                 Close();
             }
-            if (Widgets.ButtonText(new Rect(160f, y, 120f, 30f), "关闭"))
+            if (Widgets.ButtonText(new Rect(160f, y, 120f, 30f),
+                "PersonalChronicle.UI.Career.Flow.Btn.Close".Translate()))
             {
                 Close();
             }
@@ -128,7 +135,8 @@ namespace PersonalChronicle.Archive
         private void DrawThesis(Rect r)
         {
             UIComponents.Label(new Rect(0f, 6f, r.width, 24f),
-                "论文 · " + def.defName, UITheme.FontValue, UITheme.Text);
+                "PersonalChronicle.UI.Career.Flow.Title.Thesis".Translate(def.defName),
+                UITheme.FontValue, UITheme.Text);
             UIComponents.Rule(new Rect(0f, 34f, r.width, 1f), UITheme.BorderSoft);
 
             CareerData cd = pawnObject != null ? pawnObject.CareerData : null;
@@ -136,13 +144,14 @@ namespace PersonalChronicle.Archive
 
             float y = 46f;
             UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                "课题：《精密制造工艺研究》（引用书籍与研究完成论文）",
+                "PersonalChronicle.UI.Career.Flow.Thesis.Topic".Translate(),
                 UITheme.FontLabel, UITheme.Muted);
             y += 26f;
 
             if (thesis == null)
             {
-                if (Widgets.ButtonText(new Rect(0f, y, 200f, 30f), "📝 论文选题"))
+                if (Widgets.ButtonText(new Rect(0f, y, 200f, 30f),
+                    "PersonalChronicle.UI.Career.Flow.Btn.ChooseTopic".Translate()))
                 {
                     string res = QualificationFlowService.StartThesis(pawnObject, def,
                         "thesis_" + def.defName + "_" + Find.TickManager.TicksGame);
@@ -155,17 +164,19 @@ namespace PersonalChronicle.Archive
             int books = thesis.SourceBookIds != null ? thesis.SourceBookIds.Count : 0;
             int research = thesis.SourceResearchEventIds != null ? thesis.SourceResearchEventIds.Count : 0;
             UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                "已引用书籍 " + books + "/2 · 研究 " + research + "/2",
+                "PersonalChronicle.UI.Career.Flow.Thesis.Progress".Translate(books, research),
                 UITheme.FontLabel, UITheme.Muted);
             y += 26f;
 
             if (!thesis.Completed)
             {
-                if (books < 2 && Widgets.ButtonText(new Rect(0f, y, 150f, 30f), "📚 引用书籍"))
+                if (books < 2 && Widgets.ButtonText(new Rect(0f, y, 150f, 30f),
+                    "PersonalChronicle.UI.Career.Flow.Btn.CiteBook".Translate()))
                 {
                     QualificationFlowService.CiteThesisBook(pawnObject, def, "book_" + (books + 1));
                 }
-                if (research < 2 && Widgets.ButtonText(new Rect(160f, y, 150f, 30f), "🔬 引用研究"))
+                if (research < 2 && Widgets.ButtonText(new Rect(160f, y, 150f, 30f),
+                    "PersonalChronicle.UI.Career.Flow.Btn.CiteResearch".Translate()))
                 {
                     string res = CiteResearch();
                     Messages.Message("PersonalChronicle.UI.Career.Qual.SubmitResult".Translate(res), pawn,
@@ -173,7 +184,8 @@ namespace PersonalChronicle.Archive
                 }
                 y += 38f;
                 bool canFinish = books >= 2 && research >= 2;
-                if (Widgets.ButtonText(new Rect(0f, y, 150f, 30f), "✅ 完成论文"))
+                if (Widgets.ButtonText(new Rect(0f, y, 150f, 30f),
+                    "PersonalChronicle.UI.Career.Flow.Btn.FinishThesis".Translate()))
                 {
                     string res = QualificationFlowService.CompleteThesis(pawnObject, def);
                     Messages.Message("PersonalChronicle.UI.Career.Qual.SubmitResult".Translate(res), pawn,
@@ -182,18 +194,18 @@ namespace PersonalChronicle.Archive
                 if (!canFinish)
                 {
                     UIComponents.Label(new Rect(160f, y + 6f, r.width - 160f, 20f),
-                        "需引用 2 本书籍 + 2 项研究",
+                        "PersonalChronicle.UI.Career.Flow.Thesis.NeedRefs".Translate(),
                         UITheme.FontLabel, UITheme.Dim);
                 }
             }
             else
             {
                 UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                    "✅ 论文完成：" + thesis.ComputedScore.ToString("0.0") + " 分",
+                    "PersonalChronicle.UI.Career.Flow.Thesis.Done".Translate(thesis.ComputedScore.ToString("0.0")),
                     UITheme.FontLabel, UITheme.PillGreen);
                 y += 26f;
                 UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                    "下一步：召开答辩（答辩子页按钮）。",
+                    "PersonalChronicle.UI.Career.Flow.Thesis.Next".Translate(),
                     UITheme.FontLabel, UITheme.Dim);
             }
         }
@@ -202,7 +214,8 @@ namespace PersonalChronicle.Archive
         private void DrawDefense(Rect r)
         {
             UIComponents.Label(new Rect(0f, 6f, r.width, 24f),
-                "答辩 · " + def.defName, UITheme.FontValue, UITheme.Text);
+                "PersonalChronicle.UI.Career.Flow.Title.Defense".Translate(def.defName),
+                UITheme.FontValue, UITheme.Text);
             UIComponents.Rule(new Rect(0f, 34f, r.width, 1f), UITheme.BorderSoft);
 
             CareerData cd = pawnObject != null ? pawnObject.CareerData : null;
@@ -216,7 +229,7 @@ namespace PersonalChronicle.Archive
             if (committeeCache.Count > 0)
             {
                 UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                    "评审委员会（同阵营 · 按 Crafting 等级自动召集）：",
+                    "PersonalChronicle.UI.Career.Flow.Defense.Committee".Translate(),
                     UITheme.FontLabel, UITheme.Muted);
                 y += 24f;
                 for (int i = 0; i < committeeCache.Count; i++)
@@ -225,7 +238,8 @@ namespace PersonalChronicle.Archive
                     int lv = cm != null && cm.skills != null && cm.skills.GetSkill(SkillDefOf.Crafting) != null
                         ? cm.skills.GetSkill(SkillDefOf.Crafting).Level : 0;
                     UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                        "• " + (cm != null ? cm.LabelShort : "?") + " · 制造 Lv" + lv,
+                        "PersonalChronicle.UI.Career.Flow.Defense.Member".Translate(
+                            cm != null ? cm.LabelShort : "?", lv),
                         UITheme.FontLabel, UITheme.Dim);
                     y += 22f;
                 }
@@ -233,7 +247,7 @@ namespace PersonalChronicle.Archive
             else
             {
                 UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                    "未找到可召集的委员（需同阵营殖民者）。",
+                    "PersonalChronicle.UI.Career.Flow.Defense.NoCommittee".Translate(),
                     UITheme.FontLabel, UITheme.Warn);
                 y += 24f;
             }
@@ -241,13 +255,15 @@ namespace PersonalChronicle.Archive
             if (defense == null || !defense.Passed)
             {
                 y = r.height - 40f;
-                if (Widgets.ButtonText(new Rect(0f, y, 150f, 30f), "🎤 召开答辩"))
+                if (Widgets.ButtonText(new Rect(0f, y, 150f, 30f),
+                    "PersonalChronicle.UI.Career.Flow.Btn.HoldDefense".Translate()))
                 {
                     string res = QualificationFlowService.StartDefense(pawnObject, def, committeeCache);
                     Messages.Message("PersonalChronicle.UI.Career.Qual.SubmitResult".Translate(res), pawn,
                         res == QualificationFlowService.Ok ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.NeutralEvent);
                 }
-                if (defense != null && Widgets.ButtonText(new Rect(160f, y, 150f, 30f), "🗳 委员会评分"))
+                if (defense != null && Widgets.ButtonText(new Rect(160f, y, 150f, 30f),
+                    "PersonalChronicle.UI.Career.Flow.Btn.Grade".Translate()))
                 {
                     string res = QualificationFlowService.GradeDefense(pawnObject, def, committeeCache);
                     Messages.Message("PersonalChronicle.UI.Career.Qual.SubmitResult".Translate(res), pawn,
@@ -258,7 +274,7 @@ namespace PersonalChronicle.Archive
             else
             {
                 UIComponents.Label(new Rect(0f, y, r.width, 20f),
-                    "✅ 答辩通过：" + defense.FinalScore.ToString("0.0") + " 分（评级评审自动开始，N 个工作日后答复授予）",
+                    "PersonalChronicle.UI.Career.Flow.Defense.Passed".Translate(defense.FinalScore.ToString("0.0")),
                     UITheme.FontLabel, UITheme.PillGreen);
             }
         }

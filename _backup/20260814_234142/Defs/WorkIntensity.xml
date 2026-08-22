@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    Work intensity is Def-driven. External mods may XML-patch the policy or
+    add/replace tiers without referencing PersonalChronicle implementation
+    classes. Labels/tags are translation keys, never save data.
+  -->
+  <PersonalChronicle.Domain.WorkIntensityPolicyDef>
+    <defName>PersonalChronicleWorkIntensityPolicy</defName>
+    <minimumSampleDays>5</minimumSampleDays>
+    <overloadRatio>1.5</overloadRatio>
+    <slackRatio>0.5</slackRatio>
+    <tierDefNames>
+      <li>PersonalChronicleWorkIntensityT0</li>
+      <li>PersonalChronicleWorkIntensityT1</li>
+      <li>PersonalChronicleWorkIntensityT2</li>
+      <li>PersonalChronicleWorkIntensityT3</li>
+      <li>PersonalChronicleWorkIntensityT4</li>
+    </tierDefNames>
+  </PersonalChronicle.Domain.WorkIntensityPolicyDef>
+
+  <PersonalChronicle.Domain.WorkIntensityTierDef>
+    <defName>PersonalChronicleWorkIntensityT0</defName>
+    <tierKey>ReactorMule</tierKey>
+    <displayCode>T0</displayCode>
+    <minimumDailyHours>12</minimumDailyHours>
+    <labelKey>PersonalChronicle.UI.IntensityTier.ReactorMule</labelKey>
+    <tagKey>PersonalChronicle.UI.IntensityTag.ReactorMule</tagKey>
+    <colorHex>#D85A30</colorHex>
+    <order>0</order>
+  </PersonalChronicle.Domain.WorkIntensityTierDef>
+
+  <PersonalChronicle.Domain.WorkIntensityTierDef>
+    <defName>PersonalChronicleWorkIntensityT1</defName>
+    <tierKey>SuperWorkhorse</tierKey>
+    <displayCode>T1</displayCode>
+    <minimumDailyHours>9</minimumDailyHours>
+    <labelKey>PersonalChronicle.UI.IntensityTier.SuperWorkhorse</labelKey>
+    <tagKey>PersonalChronicle.UI.IntensityTag.SuperWorkhorse</tagKey>
+    <colorHex>#BA7517</colorHex>
+    <order>1</order>
+  </PersonalChronicle.Domain.WorkIntensityTierDef>
+
+  <PersonalChronicle.Domain.WorkIntensityTierDef>
+    <defName>PersonalChronicleWorkIntensityT2</defName>
+    <tierKey>RegularWorkhorse</tierKey>
+    <displayCode>T2</displayCode>
+    <minimumDailyHours>6</minimumDailyHours>
+    <labelKey>PersonalChronicle.UI.IntensityTier.RegularWorkhorse</labelKey>
+    <tagKey>PersonalChronicle.UI.IntensityTag.RegularWorkhorse</tagKey>
+    <colorHex>#D8A42E</colorHex>
+    <order>2</order>
+  </PersonalChronicle.Domain.WorkIntensityTierDef>
+
+  <PersonalChronicle.Domain.WorkIntensityTierDef>
+    <defName>PersonalChronicleWorkIntensityT3</defName>
+    <tierKey>PoorWorkhorse</tierKey>
+    <displayCode>T3</displayCode>
+    <minimumDailyHours>3</minimumDailyHours>
+    <labelKey>PersonalChronicle.UI.IntensityTier.PoorWorkhorse</labelKey>
+    <tagKey>PersonalChronicle.UI.IntensityTag.PoorWorkhorse</tagKey>
+    <colorHex>#6BAA84</colorHex>
+    <order>3</order>
+  </PersonalChronicle.Domain.WorkIntensityTierDef>
+
+  <PersonalChronicle.Domain.WorkIntensityTierDef>
+    <defName>PersonalChronicleWorkIntensityT4</defName>
+    <tierKey>SocialSlacker</tierKey>
+    <displayCode>T4</displayCode>
+    <minimumDailyHours>0</minimumDailyHours>
+    <labelKey>PersonalChronicle.UI.IntensityTier.SocialSlacker</labelKey>
+    <tagKey>PersonalChronicle.UI.IntensityTag.SocialSlacker</tagKey>
+    <colorHex>#6B7A8F</colorHex>
+    <order>4</order>
+  </PersonalChronicle.Domain.WorkIntensityTierDef>
+</Defs>

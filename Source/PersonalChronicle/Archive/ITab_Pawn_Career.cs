@@ -161,36 +161,7 @@ namespace PersonalChronicle.Archive
             EnsureFit(pawn, snap);
 
             float y = outer.y;
-            y = DrawHeader(outer, y, pawn, snap);
-            y = DrawSubTabs(new Rect(outer.x, y, outer.width, TabBarH));
-
-            // 开发者模式：随机职业数据按钮（仅 DevMode 显示，避免污染正常 UI）。
-            if (Prefs.DevMode)
-            {
-                Rect rndRect = new Rect(outer.x, y, outer.width, ButtonH);
-                Color prevColor = GUI.color;
-                GameFont prevFont = Verse.Text.Font;
-                TextAnchor prevAnchor = Verse.Text.Anchor;
-                try
-                {
-                    if (Widgets.ButtonText(rndRect, "PersonalChronicle.UI.Career.DevRandomize".Translate()))
-                    {
-                        DevTestButtons.CareerRandomize(pawn);
-                        EnsureSnapshot(service, pawn);
-                        EnsureFit(pawn, cachedSnapshot);
-                        // 对齐 HTML randomizeCareerData：随机后自动切回总览 tab，让结果立即可见。
-                        subTabIndex = 0;
-                        scroll = Vector2.zero;
-                    }
-                }
-                finally
-                {
-                    GUI.color = prevColor;
-                    Verse.Text.Font = prevFont;
-                    Verse.Text.Anchor = prevAnchor;
-                }
-                y += ButtonH + UITheme.SpaceXs;
-            }
+            y = DrawSubTabs(new Rect(outer.x, y, outer.width, TabBarH), pawn, service);
 
             Rect body = new Rect(outer.x, y, outer.width, outer.yMax - y - UITheme.SpaceXs);
             switch (SubTabs[subTabIndex])
@@ -203,85 +174,21 @@ namespace PersonalChronicle.Archive
         }
 
         // ================= 顶部身份卡（personbar）=================
+        // v1.1.5：删除顶部头像/徽章/姓名/职业规划容器（视觉冗余 — 该信息已覆盖在子页头区块）；
+        // 释放顶部 96f+SpaceXs → 子页 Tab 直接上移，内容区更大。
         private float DrawHeader(Rect outer, float y, Pawn pawn, DetailSnapshot snap)
         {
-            Rect header = new Rect(outer.x, y, outer.width, HeaderH);
-            UIComponents.Panel(header, UITheme.Panel);
-
-            // 左：职业徽章块（方向色 + 首字；不依赖 PortraitsCache，无引擎 API 风险）。
-            Rect badge = new Rect(header.x + 10f, header.y + (HeaderH - BadgeW) / 2f, BadgeW, BadgeW);
-            Color badgeColor = UITheme.Accent;
-            ProfessionalDirectionDef dirDef = TryGetDirectionDef(snap);
-            if (dirDef != null)
-            {
-                badgeColor = ParseHex(dirDef.colorHex, UITheme.Accent);
-            }
-            UIComponents.TintedBox(badge, badgeColor);
-            UIComponents.Border(badge, UITheme.BorderSoft);
-            string glyph = MajorGlyph(currentMajorKey);
-            if (string.IsNullOrEmpty(glyph) && dirDef != null)
-            {
-                glyph = FirstChar(dirDef.LabelCap);
-            }
-            if (string.IsNullOrEmpty(glyph)) glyph = "PersonalChronicle.UI.Career.Header.Badge".Translate().ToString();
-            UIComponents.Label(new Rect(badge.x, badge.y + 12f, badge.width, 32f),
-                glyph, UITheme.FontValue, UITheme.Text, TextAnchor.MiddleCenter);
-
-            float rightX = header.x + 10f + BadgeW + 12f;
-            float rightW = header.width - 20f - BadgeW - 12f;
-            // 右侧保留 220px 给「当前职称 + 职业资历」（右上/右下，右对齐）。
-            float rightZoneW = Mathf.Min(220f, rightW * 0.55f);
-            float leftW = rightW - rightZoneW - 8f;
-
-            // 姓名 + 职业规划副标题。
-            string name = (pawn.LabelShort ?? "???").Trim();
-            UIComponents.Label(new Rect(rightX, header.y + 8f, leftW, 24f),
-                UIComponents.TruncateToWidth(name, leftW, UITheme.FontValue),
-                UITheme.FontValue, UITheme.Text);
-
-            string planText = "PersonalChronicle.UI.Career.Header.Plan".Translate();
-            if (!string.IsNullOrEmpty(currentMajorKey))
-            {
-                planText = "PersonalChronicle.UI.Career.Header.PlanSelected".Translate(MajorLabel(currentMajorKey));
-            }
-            UIComponents.Label(new Rect(rightX, header.y + 34f, leftW, 20f),
-                UIComponents.TruncateToWidth(planText, leftW, UITheme.FontLabel),
-                UITheme.FontLabel, UITheme.Muted);
-
-            // 右侧：当前职称（右上）+ 职业资历（右下）。
-            // v4.17 体检：职称行高 22f→28f（Medium 行高 ≥28f，CJK 不裁切）。
-            CareerOverviewView ov = snap != null ? snap.CareerOverview : null;
-            string role = ov != null && !string.IsNullOrEmpty(ov.RoleName)
-                ? ov.RoleName
-                : "PersonalChronicle.UI.Career.Ov.Undefined".Translate().ToString();
-            UIComponents.Label(new Rect(header.x + header.width - 10f - rightZoneW, header.y + 8f, rightZoneW, 28f),
-                UIComponents.TruncateToWidth(role, rightZoneW, UITheme.FontValue),
-                UITheme.FontValue, UITheme.Accent, TextAnchor.UpperRight);
-            UIComponents.Label(new Rect(header.x + header.width - 10f - rightZoneW, header.y + 62f, rightZoneW, 20f),
-                UIComponents.TruncateToWidth(HeaderStageText(snap), rightZoneW, UITheme.FontLabel),
-                UITheme.FontLabel, UITheme.Dim, TextAnchor.UpperRight);
-
-            return y + HeaderH + UITheme.SpaceXs;
+            // 已废弃占位（v1.1.5 删除顶部头像/徽章/姓名/职业规划容器；旧接口保留以免外部调用残留编译报错，不再渲染任何内容）。
+            return y;
         }
 
-        private string HeaderStageText(DetailSnapshot snap)
+        // ================= 4 子页切换条（右侧嵌入 DevMode 齿轮，避免污染首屏）=================
+        private float DrawSubTabs(Rect rect, Pawn pawn, IArchiveService service)
         {
-            PawnObject po = snap != null ? snap.DetailObject as PawnObject : null;
-            if (po == null || po.CareerData == null)
-            {
-                return "PersonalChronicle.UI.Career.Header.NoCareer".Translate().ToString();
-            }
-            long span = CareerSpanTicks(po.CareerData);
-            if (span <= 0L) return "PersonalChronicle.UI.Career.Header.NoCareer".Translate().ToString();
-            int days = (int)(span / 60000L);
-            int hours = (int)(span / 2400L);
-            return "PersonalChronicle.UI.Career.Header.Stage".Translate(days.ToString(), hours.ToString());
-        }
-
-        // ================= 3 子页切换条 =================
-        private float DrawSubTabs(Rect rect)
-        {
-            float tabW = rect.width / SubTabs.Length;
+            // 右侧 DevMode 齿轮：仅开发者模式可见，不占子页内容高度。
+            float gearW = Prefs.DevMode ? 28f : 0f;
+            float tabAreaW = rect.width - gearW;
+            float tabW = tabAreaW / SubTabs.Length;
             Color prevColor = GUI.color;
             GameFont prevFont = Verse.Text.Font;
             TextAnchor prevAnchor = Verse.Text.Anchor;
@@ -297,6 +204,27 @@ namespace PersonalChronicle.Archive
                     Verse.Text.Anchor = TextAnchor.MiddleCenter;
                     GUI.color = active ? UITheme.Text : UITheme.Muted;
                     Widgets.Label(tabRect, SubTabKeys[i].Translate().ToString());
+                }
+
+                // DevMode 齿轮：点击随机职业数据（对齐 HTML randomizeCareerData）。
+                if (Prefs.DevMode)
+                {
+                    Rect gearRect = new Rect(rect.xMax - gearW, rect.y, gearW, rect.height);
+                    UIComponents.TintedBox(gearRect, UITheme.PanelRaised);
+                    UIComponents.Border(gearRect, UITheme.BorderSoft);
+                    Verse.Text.Font = GameFont.Small;
+                    Verse.Text.Anchor = TextAnchor.MiddleCenter;
+                    GUI.color = UITheme.Muted;
+                    Widgets.Label(gearRect, "⚙");
+                    TooltipHandler.TipRegion(gearRect, "PersonalChronicle.UI.Career.DevRandomize".Translate().ToString());
+                    if (Widgets.ButtonInvisible(gearRect))
+                    {
+                        DevTestButtons.CareerRandomize(pawn);
+                        EnsureSnapshot(service, pawn);
+                        EnsureFit(pawn, cachedSnapshot);
+                        subTabIndex = 0;
+                        scroll = Vector2.zero;
+                    }
                 }
             }
             finally

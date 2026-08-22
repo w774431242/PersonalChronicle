@@ -101,36 +101,23 @@ namespace PersonalChronicle.Archive.UI
         }
 
         // ---- Panel: filled surface + soft border ----
-        // v1.1.5: if the active theme ships a panel texture, draw it; otherwise
-        // fall back to the token colour (keeps wuxia/steampunk/gothic intact).
+        // v1.1.5: draw with the UITheme.Panel token colour directly. Texture-backed
+        // panels were dropped because the shipped epic panel.png/card.png are light
+        // parchment assets that read as "white" on the dark window — see frontend
+        // health-check 2026-08-21. Token colour keeps every theme consistent.
         internal static void Panel(Rect rect, Color fill = default)
         {
-            Texture2D tex = UITextureLibrary.Get(UITheme.ActiveThemeId, UITextureLibrary.Panel);
-            if (tex != null)
-            {
-                GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill);
-            }
-            else
-            {
-                Color c = fill == default ? UITheme.Panel : fill;
-                Widgets.DrawBoxSolid(rect, c);
-            }
+            Color c = fill == default ? UITheme.Panel : fill;
+            Widgets.DrawBoxSolid(rect, c);
             Border(rect, UITheme.BorderSoft);
         }
 
         // ---- Card: raised surface + left accent stripe + soft border ----
-        // v1.1.5: card body uses theme texture when available, else token colour.
+        // v1.1.5: card body uses the UITheme.Card token colour directly (texture
+        // backing dropped — see Panel note above re: light parchment assets).
         internal static void Card(Rect rect, Color accent)
         {
-            Texture2D tex = UITextureLibrary.Get(UITheme.ActiveThemeId, UITextureLibrary.Card);
-            if (tex != null)
-            {
-                GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill);
-            }
-            else
-            {
-                Widgets.DrawBoxSolid(rect, UITheme.Card);
-            }
+            Widgets.DrawBoxSolid(rect, UITheme.Card);
             Border(rect, UITheme.BorderSoft);
             Color prev = GUI.color;
             GUI.color = accent;
@@ -148,15 +135,7 @@ namespace PersonalChronicle.Archive.UI
             GameFont keyFont = GameFont.Tiny, GameFont valueFont = GameFont.Small,
             float valueReservedRight = 0f)
         {
-            Texture2D tex = UITextureLibrary.Get(UITheme.ActiveThemeId, UITextureLibrary.Card);
-            if (tex != null)
-            {
-                GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill);
-            }
-            else
-            {
-                Widgets.DrawBoxSolid(rect, UITheme.Card);
-            }
+            Widgets.DrawBoxSolid(rect, UITheme.Card);
             Border(rect, UITheme.BorderSoft);
             Color prev = GUI.color;
             GUI.color = accent;
@@ -308,15 +287,7 @@ namespace PersonalChronicle.Archive.UI
             float padX = 7f;
             float arrowW = 16f; // right-side jump-to arrow region width
 
-            Texture2D tex = UITextureLibrary.Get(UITheme.ActiveThemeId, UITextureLibrary.Card);
-            if (tex != null)
-            {
-                GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill);
-            }
-            else
-            {
-                Widgets.DrawBoxSolid(rect, UITheme.Card);
-            }
+            Widgets.DrawBoxSolid(rect, UITheme.Card);
             Border(rect, UITheme.BorderSoft);
             Widgets.DrawHighlightIfMouseover(rect);
 
@@ -380,10 +351,11 @@ namespace PersonalChronicle.Archive.UI
         // empty-state backgrounds). Keeps the previous GUI.color untouched. ----
         internal static void TintedBox(Rect rect, Color tint)
         {
-            Color prev = GUI.color;
-            GUI.color = tint;
-            Widgets.DrawBoxSolid(rect, Color.white);
-            GUI.color = prev;
+            // v1.1.5 patch6: rimworld 1.6 Widgets.DrawBoxSolid 内部把 GUI.color 重置为
+            // 传入的 Color（如 Color.white），忽略外层 GUI.color tint——导致 TintedBox
+            // 永远画白色。正确做法：直接调 Widgets.DrawBoxSolid(rect, tint)，让 rimworld
+            // 内部把 GUI.color 改为 tint，再绘制 WhiteTex×tint = tint 像素。
+            Widgets.DrawBoxSolid(rect, tint);
         }
 
         // ---- ProgressBar: track + fill by 0..1 share (career bars, intensity) ----
@@ -414,14 +386,10 @@ namespace PersonalChronicle.Archive.UI
             }
         }
 
-        // ---- StatCell background helper: theme texture or token colour ----
+        // ---- StatCell background helper: token colour (texture backing dropped) ----
         private static void DrawStatCellBackground(Rect rect)
         {
-            Texture2D tex = UITextureLibrary.Get(UITheme.ActiveThemeId, UITextureLibrary.StatCell);
-            if (tex != null)
-                GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill);
-            else
-                Widgets.DrawBoxSolid(rect, UITheme.PanelRaised);
+            Widgets.DrawBoxSolid(rect, UITheme.PanelRaised);
         }
 
         // ---- StatCell: KPI cell (label over value, optional sub-label).

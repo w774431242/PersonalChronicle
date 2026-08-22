@@ -738,9 +738,15 @@
   <PersonalChronicle.UI.Career.Qual.Block.Defense>Defense</PersonalChronicle.UI.Career.Qual.Block.Defense>
   <PersonalChronicle.UI.Career.Qual.Block.Titles>Granted Titles</PersonalChronicle.UI.Career.Qual.Block.Titles>
   <!-- Qualification page action texts (hardcoded Chinese → keys, 2026-08-20) -->
-  <PersonalChronicle.UI.Career.Qual.Step.Granted>✓</PersonalChronicle.UI.Career.Qual.Step.Granted>
+  <PersonalChronicle.UI.Career.Qual.Step.Granted>✓ Granted</PersonalChronicle.UI.Career.Qual.Step.Granted>
   <PersonalChronicle.UI.Career.Qual.Step.Applying>Applying</PersonalChronicle.UI.Career.Qual.Step.Applying>
-  <PersonalChronicle.UI.Career.Qual.Step.Locked>·</PersonalChronicle.UI.Career.Qual.Step.Locked>
+  <PersonalChronicle.UI.Career.Qual.Step.Locked>Locked</PersonalChronicle.UI.Career.Qual.Step.Locked>
+  <PersonalChronicle.UI.Career.Qual.Header.Pawn>this colonist</PersonalChronicle.UI.Career.Qual.Header.Pawn>
+  <PersonalChronicle.UI.Career.Qual.Header.Undefined>No direction chosen</PersonalChronicle.UI.Career.Qual.Header.Undefined>
+  <PersonalChronicle.UI.Career.Qual.Header.Maxed>Maxed</PersonalChronicle.UI.Career.Qual.Header.Maxed>
+  <PersonalChronicle.UI.Career.Qual.Header.None>None</PersonalChronicle.UI.Career.Qual.Header.None>
+  <PersonalChronicle.UI.Career.Qual.Header.Granted>Granted: {0}</PersonalChronicle.UI.Career.Qual.Header.Granted>
+  <PersonalChronicle.UI.Career.Qual.Header.Applying>Applying: {0}</PersonalChronicle.UI.Career.Qual.Header.Applying>
   <PersonalChronicle.UI.Career.Qual.Cond.Level>Skill Level</PersonalChronicle.UI.Career.Qual.Cond.Level>
   <PersonalChronicle.UI.Career.Qual.Cond.Level.Note>{0} ≥ {1}</PersonalChronicle.UI.Career.Qual.Cond.Level.Note>
   <PersonalChronicle.UI.Career.Qual.Cond.Time>Tenure</PersonalChronicle.UI.Career.Qual.Cond.Time>
@@ -784,6 +790,27 @@
   <PersonalChronicle.UI.Career.Qual.Task.Failed> · ✗ failed (re-apply allowed)</PersonalChronicle.UI.Career.Qual.Task.Failed>
   <PersonalChronicle.UI.Career.Qual.Task.Active> · in progress (craft matching recipes to gather evidence)</PersonalChronicle.UI.Career.Qual.Task.Active>
   <PersonalChronicle.UI.Career.Qual.Practical.Passed>Practical exam passed (this tier)</PersonalChronicle.UI.Career.Qual.Practical.Passed>
+  <PersonalChronicle.UI.Career.Qual.Practical.Desc>Sign up and complete a batch of specified items by hand. Pass when count and quality are both met; over the cap or out of time = fail (can re-apply). Each tier requires a fresh exam.</PersonalChronicle.UI.Career.Qual.Practical.Desc>
+  <PersonalChronicle.UI.Career.Qual.Practical.ReqCount>Required: {0} items</PersonalChronicle.UI.Career.Qual.Practical.ReqCount>
+  <PersonalChronicle.UI.Career.Qual.Practical.MinQuality>Min quality: {0}</PersonalChronicle.UI.Career.Qual.Practical.MinQuality>
+  <PersonalChronicle.UI.Career.Qual.Practical.MaxCount>Production cap: {0}</PersonalChronicle.UI.Career.Qual.Practical.MaxCount>
+  <PersonalChronicle.UI.Career.Qual.Practical.Current>Progress: {0} / {1} done ({2} meet quality)</PersonalChronicle.UI.Career.Qual.Practical.Current>
+  <PersonalChronicle.UI.Career.Qual.Practical.NotApplied>Status: not signed up (click above to begin)</PersonalChronicle.UI.Career.Qual.Practical.NotApplied>
+  <PersonalChronicle.UI.Career.Qual.Theory.Desc>Accumulate evidence through reading books, completing research, skill growth and theory activities. Submit once all four are ready. Each tier requires a fresh submission.</PersonalChronicle.UI.Career.Qual.Theory.Desc>
+  <PersonalChronicle.UI.Career.Qual.Theory.Book>Books: {0} ({1} on required topics)</PersonalChronicle.UI.Career.Qual.Theory.Book>
+  <PersonalChronicle.UI.Career.Qual.Theory.Research>Research: {0} (need ≥{1})</PersonalChronicle.UI.Career.Qual.Theory.Research>
+  <PersonalChronicle.UI.Career.Qual.Theory.Skill>Skill growth: {0}</PersonalChronicle.UI.Career.Qual.Theory.Skill>
+  <PersonalChronicle.UI.Career.Qual.Theory.Activity>Theory activity: {0}</PersonalChronicle.UI.Career.Qual.Theory.Activity>
+  <PersonalChronicle.UI.Career.Qual.Theory.NotApplied>Status: not submitted (submit when 4 evidence are ready)</PersonalChronicle.UI.Career.Qual.Theory.NotApplied>
+  <PersonalChronicle.UI.Career.Qual.Thesis.Desc>Pick a topic and write the thesis citing read books and research results. Advanced tiers (Lv3+) require an independent thesis and defense per tier.</PersonalChronicle.UI.Career.Qual.Thesis.Desc>
+  <PersonalChronicle.UI.Career.Qual.Thesis.Topic>Topic: {0}</PersonalChronicle.UI.Career.Qual.Thesis.Topic>
+  <PersonalChronicle.UI.Career.Qual.Thesis.NoTopic>Status: no topic chosen (click above to pick one)</PersonalChronicle.UI.Career.Qual.Thesis.NoTopic>
+  <PersonalChronicle.UI.Career.Qual.Thesis.CitedBook>Cited books: {0}</PersonalChronicle.UI.Career.Qual.Thesis.CitedBook>
+  <PersonalChronicle.UI.Career.Qual.Thesis.CitedResearch>Cited research: {0}</PersonalChronicle.UI.Career.Qual.Thesis.CitedResearch>
+  <PersonalChronicle.UI.Career.Qual.Defense.Desc>After the thesis is completed, convene a defense. Senior peers from your faction form a review committee that scores your work. After passing, an evaluation review period begins; title granted after review days.</PersonalChronicle.UI.Career.Qual.Defense.Desc>
+  <PersonalChronicle.UI.Career.Qual.Defense.Committee>Review committee: {0} members</PersonalChronicle.UI.Career.Qual.Defense.Committee>
+  <PersonalChronicle.UI.Career.Qual.Defense.Score>Committee score: {0:0.0}</PersonalChronicle.UI.Career.Qual.Defense.Score>
+  <PersonalChronicle.UI.Career.Qual.Defense.NoDefense>Status: defense not convened</PersonalChronicle.UI.Career.Qual.Defense.NoDefense>
   <!-- Qualification flow dialog texts (hardcoded Chinese → keys, 2026-08-20) -->
   <PersonalChronicle.UI.Career.Flow.Title.Exam>Practical Exam · {0}</PersonalChronicle.UI.Career.Flow.Title.Exam>
   <PersonalChronicle.UI.Career.Flow.Exam.Requirement>Requirement: craft 3 industrial/space components, min quality Excellent (evidence collected from real crafting)</PersonalChronicle.UI.Career.Flow.Exam.Requirement>
@@ -845,7 +872,7 @@
   <PersonalChronicle.UI.Career.Qual.Level>Professional Level</PersonalChronicle.UI.Career.Qual.Level>
   <PersonalChronicle.UI.Career.Qual.Level.Req>Level ≥ {0}</PersonalChronicle.UI.Career.Qual.Level.Req>
   <PersonalChronicle.UI.Career.Qual.Time>Career Time</PersonalChronicle.UI.Career.Qual.Time>
-  <PersonalChronicle.UI.Career.Qual.Time.Req>Career time ≥ {0} ticks</PersonalChronicle.UI.Career.Qual.Time.Req>
+  <PersonalChronicle.UI.Career.Qual.Time.Req>Career time ≥ {0}</PersonalChronicle.UI.Career.Qual.Time.Req>
   <PersonalChronicle.UI.Career.Qual.Score>Composite Score</PersonalChronicle.UI.Career.Qual.Score>
   <PersonalChronicle.UI.Career.Qual.Score.Req>Qualification score ≥ {0}</PersonalChronicle.UI.Career.Qual.Score.Req>
   <PersonalChronicle.UI.Career.Qual.Practical>Practical Exam</PersonalChronicle.UI.Career.Qual.Practical>
@@ -856,6 +883,68 @@
   <PersonalChronicle.UI.Career.Qual.Defense.Req>Thesis and defense passed</PersonalChronicle.UI.Career.Qual.Defense.Req>
   <PersonalChronicle.UI.Career.Qual.Met>Met</PersonalChronicle.UI.Career.Qual.Met>
   <PersonalChronicle.UI.Career.Qual.Unmet>Not met</PersonalChronicle.UI.Career.Qual.Unmet>
+  <PersonalChronicle.UI.Career.Qual.Review>Rating Review</PersonalChronicle.UI.Career.Qual.Review>
+  <PersonalChronicle.UI.Career.Qual.Review.Req>Granted after review answer</PersonalChronicle.UI.Career.Qual.Review.Req>
+  <PersonalChronicle.UI.Career.Qual.Req.Level>{0} ≥ Lv{1}</PersonalChronicle.UI.Career.Qual.Req.Level>
+  <PersonalChronicle.UI.Career.Qual.Req.Time>{0} ≥ {1}</PersonalChronicle.UI.Career.Qual.Req.Time>
+  <PersonalChronicle.UI.Career.Qual.Req.Score>{0} ≥ {1}</PersonalChronicle.UI.Career.Qual.Req.Score>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Level><b>Skill Level</b>
+Current　Lv{2} ({3} XP total, {4} practices)
+Require　≥ Lv{1}
+XP source　{5}
+Gap to next　{6} XP</PersonalChronicle.UI.Career.Qual.Tooltip.Level>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Time><b>Career Time</b>
+Current　{2}
+Require　≥ {1}
+Source by event type:
+• Crafting {4} ({5} h)
+• Construction {6} ({7} h)
+• Research {8} ({9} h)
+• Other {10} ({11} h)
+({3} ticks total)</PersonalChronicle.UI.Career.Qual.Tooltip.Time>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Score><b>Composite Score</b>
+Current　{2}
+Require　≥ {1}
+Breakdown (weight × score = contribution):
+• Level　　{3} × 20% = {4}
+• Practical　{5} × 25% = {6}
+• Theory　　{7} × 20% = {8}
+• Thesis　　{9} × 20% = {10}
+• Defense　{11} × 15% = {12}</PersonalChronicle.UI.Career.Qual.Tooltip.Score>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Practical><b>Practical Exam</b>
+Status　{5}
+Task　craft {1} items · quality ≥ {2} · cap {3} · limit {4}
+Progress　produced {6} / qualified ≥ {7}
+Score　{8}</PersonalChronicle.UI.Career.Qual.Tooltip.Practical>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Theory><b>Theory Exam</b>
+Status　{1}
+Breakdown (weighted):
+• Books × 40%
+• Research × 30%
+• Skill × 20%
+• Activity × 10%
+Score　{2} (bk {3} / rs {4} / sk {5} / ac {6})</PersonalChronicle.UI.Career.Qual.Tooltip.Theory>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Defense><b>Thesis / Defense</b>
+Status　{1}
+Thesis　{4} (books 50% + research 30% + activity 20%)
+Defense　{5} ({6} committee)
+Final　thesis × 50% + committee × 50% = {7}</PersonalChronicle.UI.Career.Qual.Tooltip.Defense>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Review><b>Rating Review</b>
+Status　{1}
+Period　{2} workdays
+Flow　defense passed → review → workday reply → grant</PersonalChronicle.UI.Career.Qual.Tooltip.Review>
+  <PersonalChronicle.UI.Career.Qual.State.NotRequired>Not required</PersonalChronicle.UI.Career.Qual.State.NotRequired>
+  <PersonalChronicle.UI.Career.Qual.State.NotApplied>Not applied</PersonalChronicle.UI.Career.Qual.State.NotApplied>
+  <PersonalChronicle.UI.Career.Qual.State.InProgress>In progress</PersonalChronicle.UI.Career.Qual.State.InProgress>
+  <PersonalChronicle.UI.Career.Qual.State.Passed>Passed ({0} pts)</PersonalChronicle.UI.Career.Qual.State.Passed>
+  <PersonalChronicle.UI.Career.Qual.State.Failed>Failed ({0} pts)</PersonalChronicle.UI.Career.Qual.State.Failed>
+  <PersonalChronicle.UI.Career.Qual.State.Pending>Pending</PersonalChronicle.UI.Career.Qual.State.Pending>
+  <PersonalChronicle.UI.Career.Qual.State.DefensePending>Defense pending</PersonalChronicle.UI.Career.Qual.State.DefensePending>
+  <PersonalChronicle.UI.Career.Qual.State.ThesisDefense>Passed (thesis {0} pts · defense {1} pts)</PersonalChronicle.UI.Career.Qual.State.ThesisDefense>
+  <PersonalChronicle.UI.Career.Qual.State.ReviewPending>Pending settlement</PersonalChronicle.UI.Career.Qual.State.ReviewPending>
+  <PersonalChronicle.UI.Career.Qual.State.ReviewInProgress>In review ({0}/{1} workdays)</PersonalChronicle.UI.Career.Qual.State.ReviewInProgress>
+  <PersonalChronicle.UI.Career.Qual.State.ReviewGranted>Answered (granted)</PersonalChronicle.UI.Career.Qual.State.ReviewGranted>
+  <PersonalChronicle.UI.Career.Qual.SkillSource.None>None (no skill source configured)</PersonalChronicle.UI.Career.Qual.SkillSource.None>
   <PersonalChronicle.UI.Career.Pre.Skill>Core Skill</PersonalChronicle.UI.Career.Pre.Skill>
   <PersonalChronicle.UI.Career.Pre.Resume>Career Resume</PersonalChronicle.UI.Career.Pre.Resume>
   <PersonalChronicle.UI.Career.Pre.Achieve>Achievement Record</PersonalChronicle.UI.Career.Pre.Achieve>
@@ -895,6 +984,107 @@
   <Profession.Direction.Manufacturing_Equipment.Specialization>Material focus: material application and quality control; efficient with materials (material-efficiency mechanic reserved)</Profession.Direction.Manufacturing_Equipment.Specialization>
   <Profession.Direction.Manufacturing_Industrial.Specialization>Volume focus: process knowledge and batch output (recipe-unlock mechanic reserved)</Profession.Direction.Manufacturing_Industrial.Specialization>
 
+  <!-- ===================== Placeholder secondary directions (2026-08-22 front-end placeholder; specialization text TBD by backend) ===================== -->
+  <!-- Engineering -->
+  <Profession.Direction.Engineering_Structure.Label>Structural Engineering</Profession.Direction.Engineering_Structure.Label>
+  <Profession.Direction.Engineering_Structure.Specialization>Placeholder: structural design &amp; construction; skills/spec TBD</Profession.Direction.Engineering_Structure.Specialization>
+  <Profession.Direction.Engineering_Power.Label>Power Engineering</Profession.Direction.Engineering_Power.Label>
+  <Profession.Direction.Engineering_Power.Specialization>Placeholder: power systems &amp; energy; skills/spec TBD</Profession.Direction.Engineering_Power.Specialization>
+  <Profession.Direction.Engineering_Control.Label>Control Engineering</Profession.Direction.Engineering_Control.Label>
+  <Profession.Direction.Engineering_Control.Specialization>Placeholder: automation &amp; control; skills/spec TBD</Profession.Direction.Engineering_Control.Specialization>
+  <Profession.Direction.Engineering_Precision.Label>Precision Engineering</Profession.Direction.Engineering_Precision.Label>
+  <Profession.Direction.Engineering_Precision.Specialization>Placeholder: precision machining &amp; tolerance; skills/spec TBD</Profession.Direction.Engineering_Precision.Specialization>
+  <!-- Agriculture -->
+  <Profession.Direction.Agriculture_Tillage.Label>Tillage</Profession.Direction.Agriculture_Tillage.Label>
+  <Profession.Direction.Agriculture_Tillage.Specialization>Placeholder: soil &amp; tillage; skills/spec TBD</Profession.Direction.Agriculture_Tillage.Specialization>
+  <Profession.Direction.Agriculture_Irrigation.Label>Irrigation</Profession.Direction.Agriculture_Irrigation.Label>
+  <Profession.Direction.Agriculture_Irrigation.Specialization>Placeholder: water &amp; irrigation; skills/spec TBD</Profession.Direction.Agriculture_Irrigation.Specialization>
+  <Profession.Direction.Agriculture_Breeding.Label>Breeding</Profession.Direction.Agriculture_Breeding.Label>
+  <Profession.Direction.Agriculture_Breeding.Specialization>Placeholder: crop breeding; skills/spec TBD</Profession.Direction.Agriculture_Breeding.Specialization>
+  <Profession.Direction.Agriculture_Greenhouse.Label>Greenhouse</Profession.Direction.Agriculture_Greenhouse.Label>
+  <Profession.Direction.Agriculture_Greenhouse.Specialization>Placeholder: protected agriculture; skills/spec TBD</Profession.Direction.Agriculture_Greenhouse.Specialization>
+  <!-- Forestry -->
+  <Profession.Direction.Forestry_Harvest.Label>Harvesting</Profession.Direction.Forestry_Harvest.Label>
+  <Profession.Direction.Forestry_Harvest.Specialization>Placeholder: timber harvesting; skills/spec TBD</Profession.Direction.Forestry_Harvest.Specialization>
+  <Profession.Direction.Forestry_Nursery.Label>Nursery</Profession.Direction.Forestry_Nursery.Label>
+  <Profession.Direction.Forestry_Nursery.Specialization>Placeholder: seedling cultivation; skills/spec TBD</Profession.Direction.Forestry_Nursery.Specialization>
+  <Profession.Direction.Forestry_Lumber.Label>Lumber</Profession.Direction.Forestry_Lumber.Label>
+  <Profession.Direction.Forestry_Lumber.Specialization>Placeholder: wood processing; skills/spec TBD</Profession.Direction.Forestry_Lumber.Specialization>
+  <Profession.Direction.Forestry_Silviculture.Label>Silviculture</Profession.Direction.Forestry_Silviculture.Label>
+  <Profession.Direction.Forestry_Silviculture.Specialization>Placeholder: forest management; skills/spec TBD</Profession.Direction.Forestry_Silviculture.Specialization>
+  <!-- AnimalHusbandry -->
+  <Profession.Direction.AnimalHusbandry_Husbandry.Label>Husbandry</Profession.Direction.AnimalHusbandry_Husbandry.Label>
+  <Profession.Direction.AnimalHusbandry_Husbandry.Specialization>Placeholder: daily animal care; skills/spec TBD</Profession.Direction.AnimalHusbandry_Husbandry.Specialization>
+  <Profession.Direction.AnimalHusbandry_Breeding.Label>Breeding</Profession.Direction.AnimalHusbandry_Breeding.Label>
+  <Profession.Direction.AnimalHusbandry_Breeding.Specialization>Placeholder: animal breeding; skills/spec TBD</Profession.Direction.AnimalHusbandry_Breeding.Specialization>
+  <Profession.Direction.AnimalHusbandry_Veterinary.Label>Veterinary</Profession.Direction.AnimalHusbandry_Veterinary.Label>
+  <Profession.Direction.AnimalHusbandry_Veterinary.Specialization>Placeholder: animal care &amp; treatment; skills/spec TBD</Profession.Direction.AnimalHusbandry_Veterinary.Specialization>
+  <Profession.Direction.AnimalHusbandry_Pasture.Label>Pasture</Profession.Direction.AnimalHusbandry_Pasture.Label>
+  <Profession.Direction.AnimalHusbandry_Pasture.Specialization>Placeholder: pasture management; skills/spec TBD</Profession.Direction.AnimalHusbandry_Pasture.Specialization>
+  <!-- Medicine -->
+  <Profession.Direction.Medicine_Clinical.Label>Clinical</Profession.Direction.Medicine_Clinical.Label>
+  <Profession.Direction.Medicine_Clinical.Specialization>Placeholder: diagnosis &amp; nursing; skills/spec TBD</Profession.Direction.Medicine_Clinical.Specialization>
+  <Profession.Direction.Medicine_Surgery.Label>Surgery</Profession.Direction.Medicine_Surgery.Label>
+  <Profession.Direction.Medicine_Surgery.Specialization>Placeholder: surgical treatment; skills/spec TBD</Profession.Direction.Medicine_Surgery.Specialization>
+  <Profession.Direction.Medicine_Pharmacy.Label>Pharmacy</Profession.Direction.Medicine_Pharmacy.Label>
+  <Profession.Direction.Medicine_Pharmacy.Specialization>Placeholder: drug compounding; skills/spec TBD</Profession.Direction.Medicine_Pharmacy.Specialization>
+  <Profession.Direction.Medicine_Prevention.Label>Prevention</Profession.Direction.Medicine_Prevention.Label>
+  <Profession.Direction.Medicine_Prevention.Specialization>Placeholder: disease prevention; skills/spec TBD</Profession.Direction.Medicine_Prevention.Specialization>
+  <!-- Weapons -->
+  <Profession.Direction.Weapons_Melee.Label>Melee Weapons</Profession.Direction.Weapons_Melee.Label>
+  <Profession.Direction.Weapons_Melee.Specialization>Placeholder: melee weapon crafting; skills/spec TBD</Profession.Direction.Weapons_Melee.Specialization>
+  <Profession.Direction.Weapons_Ranged.Label>Ranged Weapons</Profession.Direction.Weapons_Ranged.Label>
+  <Profession.Direction.Weapons_Ranged.Specialization>Placeholder: ranged weapon crafting; skills/spec TBD</Profession.Direction.Weapons_Ranged.Specialization>
+  <Profession.Direction.Weapons_Heavy.Label>Heavy Weapons</Profession.Direction.Weapons_Heavy.Label>
+  <Profession.Direction.Weapons_Heavy.Specialization>Placeholder: heavy weapon crafting; skills/spec TBD</Profession.Direction.Weapons_Heavy.Specialization>
+  <Profession.Direction.Weapons_Ammo.Label>Ammunition</Profession.Direction.Weapons_Ammo.Label>
+  <Profession.Direction.Weapons_Ammo.Specialization>Placeholder: ammunition &amp; pyrotechnics; skills/spec TBD</Profession.Direction.Weapons_Ammo.Specialization>
+  <!-- Mining -->
+  <Profession.Direction.Mining_Openpit.Label>Open-pit Mining</Profession.Direction.Mining_Openpit.Label>
+  <Profession.Direction.Mining_Openpit.Specialization>Placeholder: surface extraction; skills/spec TBD</Profession.Direction.Mining_Openpit.Specialization>
+  <Profession.Direction.Mining_Underground.Label>Underground Mining</Profession.Direction.Mining_Underground.Label>
+  <Profession.Direction.Mining_Underground.Specialization>Placeholder: subsurface extraction; skills/spec TBD</Profession.Direction.Mining_Underground.Specialization>
+  <Profession.Direction.Mining_Beneficiation.Label>Beneficiation</Profession.Direction.Mining_Beneficiation.Label>
+  <Profession.Direction.Mining_Beneficiation.Specialization>Placeholder: ore sorting &amp; enrichment; skills/spec TBD</Profession.Direction.Mining_Beneficiation.Specialization>
+  <Profession.Direction.Mining_Blasting.Label>Blasting</Profession.Direction.Mining_Blasting.Label>
+  <Profession.Direction.Mining_Blasting.Specialization>Placeholder: blasting engineering; skills/spec TBD</Profession.Direction.Mining_Blasting.Specialization>
+  <!-- Research -->
+  <Profession.Direction.Research_Theory.Label>Theoretical Research</Profession.Direction.Research_Theory.Label>
+  <Profession.Direction.Research_Theory.Specialization>Placeholder: basic theory; skills/spec TBD</Profession.Direction.Research_Theory.Specialization>
+  <Profession.Direction.Research_Experiment.Label>Experimental Research</Profession.Direction.Research_Experiment.Label>
+  <Profession.Direction.Research_Experiment.Specialization>Placeholder: experiments &amp; validation; skills/spec TBD</Profession.Direction.Research_Experiment.Specialization>
+  <Profession.Direction.Research_Applied.Label>Applied Research</Profession.Direction.Research_Applied.Label>
+  <Profession.Direction.Research_Applied.Specialization>Placeholder: tech transfer &amp; application; skills/spec TBD</Profession.Direction.Research_Applied.Specialization>
+  <Profession.Direction.Research_Literature.Label>Literature</Profession.Direction.Research_Literature.Label>
+  <Profession.Direction.Research_Literature.Specialization>Placeholder: literature &amp; knowledge mgmt; skills/spec TBD</Profession.Direction.Research_Literature.Specialization>
+  <!-- Cooking -->
+  <Profession.Direction.Cooking_Staple.Label>Staples</Profession.Direction.Cooking_Staple.Label>
+  <Profession.Direction.Cooking_Staple.Specialization>Placeholder: staple food prep; skills/spec TBD</Profession.Direction.Cooking_Staple.Specialization>
+  <Profession.Direction.Cooking_Cuisine.Label>Cuisine</Profession.Direction.Cooking_Cuisine.Label>
+  <Profession.Direction.Cooking_Cuisine.Specialization>Placeholder: dish cooking; skills/spec TBD</Profession.Direction.Cooking_Cuisine.Specialization>
+  <Profession.Direction.Cooking_Baking.Label>Baking</Profession.Direction.Cooking_Baking.Label>
+  <Profession.Direction.Cooking_Baking.Specialization>Placeholder: baking &amp; pastry; skills/spec TBD</Profession.Direction.Cooking_Baking.Specialization>
+  <Profession.Direction.Cooking_Preservation.Label>Preservation</Profession.Direction.Cooking_Preservation.Label>
+  <Profession.Direction.Cooking_Preservation.Specialization>Placeholder: food preservation; skills/spec TBD</Profession.Direction.Cooking_Preservation.Specialization>
+  <!-- Art -->
+  <Profession.Direction.Art_Painting.Label>Painting</Profession.Direction.Art_Painting.Label>
+  <Profession.Direction.Art_Painting.Specialization>Placeholder: painting; skills/spec TBD</Profession.Direction.Art_Painting.Specialization>
+  <Profession.Direction.Art_Sculpture.Label>Sculpture</Profession.Direction.Art_Sculpture.Label>
+  <Profession.Direction.Art_Sculpture.Specialization>Placeholder: sculpting; skills/spec TBD</Profession.Direction.Art_Sculpture.Specialization>
+  <Profession.Direction.Art_Music.Label>Music</Profession.Direction.Art_Music.Label>
+  <Profession.Direction.Art_Music.Specialization>Placeholder: music composition &amp; performance; skills/spec TBD</Profession.Direction.Art_Music.Specialization>
+  <Profession.Direction.Art_Craft.Label>Craft</Profession.Direction.Art_Craft.Label>
+  <Profession.Direction.Art_Craft.Specialization>Placeholder: handcraft; skills/spec TBD</Profession.Direction.Art_Craft.Specialization>
+  <!-- Management -->
+  <Profession.Direction.Management_Dispatch.Label>Dispatch</Profession.Direction.Management_Dispatch.Label>
+  <Profession.Direction.Management_Dispatch.Specialization>Placeholder: production dispatch; skills/spec TBD</Profession.Direction.Management_Dispatch.Specialization>
+  <Profession.Direction.Management_Logistics.Label>Logistics</Profession.Direction.Management_Logistics.Label>
+  <Profession.Direction.Management_Logistics.Specialization>Placeholder: logistics &amp; supply; skills/spec TBD</Profession.Direction.Management_Logistics.Specialization>
+  <Profession.Direction.Management_Personnel.Label>Personnel</Profession.Direction.Management_Personnel.Label>
+  <Profession.Direction.Management_Personnel.Specialization>Placeholder: personnel management; skills/spec TBD</Profession.Direction.Management_Personnel.Specialization>
+  <Profession.Direction.Management_Diplomacy.Label>Diplomacy</Profession.Direction.Management_Diplomacy.Label>
+  <Profession.Direction.Management_Diplomacy.Specialization>Placeholder: diplomacy &amp; trade; skills/spec TBD</Profession.Direction.Management_Diplomacy.Specialization>
+
   <!-- P2 Primary direction picker (Dialog_SetPrimaryDirection, V2.0 §9 recommend≠force) -->
   <PersonalChronicle.UI.Career.SetDirection.Title>Set Primary Direction</PersonalChronicle.UI.Career.SetDirection.Title>
   <PersonalChronicle.UI.Career.SetDirection.Hint>The planning area shows system recommendations; this is your "final choice" that overrides them and locks the selected direction.</PersonalChronicle.UI.Career.SetDirection.Hint>
@@ -914,6 +1104,51 @@
   <PersonalChronicle.UI.Career.SetDirection.Spec.Throughput>Throughput</PersonalChronicle.UI.Career.SetDirection.Spec.Throughput>
   <PersonalChronicle.UI.Career.SetDirection.Spec.Material>Material</PersonalChronicle.UI.Career.SetDirection.Spec.Material>
   <PersonalChronicle.UI.Career.SetDirection.Spec.Volume>Volume</PersonalChronicle.UI.Career.SetDirection.Spec.Volume>
+  <!-- Placeholder secondary-direction spec badges (2026-08-22; matches Def specializationKey; backend may revise) -->
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Structure>Structure</PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Structure>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Power>Power</PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Power>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Control>Control</PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Control>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Precision>Precision</PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Precision>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Tillage>Tillage</PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Tillage>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Irrigation>Irrigation</PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Irrigation>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Breeding>Breeding</PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Breeding>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Greenhouse>Greenhouse</PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Greenhouse>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Harvest>Harvest</PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Harvest>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Nursery>Nursery</PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Nursery>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Lumber>Lumber</PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Lumber>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Silviculture>Silviculture</PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Silviculture>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Husbandry>Husbandry</PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Husbandry>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Breeding>Breeding</PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Breeding>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Veterinary>Veterinary</PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Veterinary>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Pasture>Pasture</PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Pasture>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Clinical>Clinical</PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Clinical>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Surgery>Surgery</PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Surgery>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Pharmacy>Pharmacy</PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Pharmacy>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Prevention>Prevention</PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Prevention>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Melee>Melee</PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Melee>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Ranged>Ranged</PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Ranged>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Heavy>Heavy</PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Heavy>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Ammo>Ammo</PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Ammo>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Openpit>Open-pit</PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Openpit>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Underground>Underground</PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Underground>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Beneficiation>Beneficiation</PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Beneficiation>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Blasting>Blasting</PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Blasting>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Research_Theory>Theory</PersonalChronicle.UI.Career.SetDirection.Spec.Research_Theory>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Research_Experiment>Experiment</PersonalChronicle.UI.Career.SetDirection.Spec.Research_Experiment>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Research_Applied>Applied</PersonalChronicle.UI.Career.SetDirection.Spec.Research_Applied>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Research_Literature>Literature</PersonalChronicle.UI.Career.SetDirection.Spec.Research_Literature>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Staple>Staple</PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Staple>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Cuisine>Cuisine</PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Cuisine>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Baking>Baking</PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Baking>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Preservation>Preservation</PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Preservation>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Art_Painting>Painting</PersonalChronicle.UI.Career.SetDirection.Spec.Art_Painting>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Art_Sculpture>Sculpture</PersonalChronicle.UI.Career.SetDirection.Spec.Art_Sculpture>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Art_Music>Music</PersonalChronicle.UI.Career.SetDirection.Spec.Art_Music>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Art_Craft>Craft</PersonalChronicle.UI.Career.SetDirection.Spec.Art_Craft>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Management_Dispatch>Dispatch</PersonalChronicle.UI.Career.SetDirection.Spec.Management_Dispatch>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Management_Logistics>Logistics</PersonalChronicle.UI.Career.SetDirection.Spec.Management_Logistics>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Management_Personnel>Personnel</PersonalChronicle.UI.Career.SetDirection.Spec.Management_Personnel>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Management_Diplomacy>Diplomacy</PersonalChronicle.UI.Career.SetDirection.Spec.Management_Diplomacy>
   <PersonalChronicle.UI.Career.SetDirection.Ability.machining>Machining</PersonalChronicle.UI.Career.SetDirection.Ability.machining>
   <PersonalChronicle.UI.Career.SetDirection.Ability.precisionControl>Precision Control</PersonalChronicle.UI.Career.SetDirection.Ability.precisionControl>
   <PersonalChronicle.UI.Career.SetDirection.Ability.processKnowledge>Process Knowledge</PersonalChronicle.UI.Career.SetDirection.Ability.processKnowledge>
@@ -1008,8 +1243,8 @@
   <PersonalChronicle.UI.Career.Honor.Contrib.Medal>Medals</PersonalChronicle.UI.Career.Honor.Contrib.Medal>
   <PersonalChronicle.UI.Career.Honor.Events>Recent Honor Events</PersonalChronicle.UI.Career.Honor.Events>
   <PersonalChronicle.UI.Career.Honor.Events.Empty>No honor events yet.</PersonalChronicle.UI.Career.Honor.Events.Empty>
-  <PersonalChronicle.UI.Career.Honor.Event.Medal>Medal granted: {0}</PersonalChronicle.UI.Career.Honor.Event.Medal>
-  <PersonalChronicle.UI.Career.Honor.Event.Title>Title granted: {0}</PersonalChronicle.UI.Career.Honor.Event.Title>
+  <PersonalChronicle.UI.Career.Honor.Event.Medal>{0}</PersonalChronicle.UI.Career.Honor.Event.Medal>
+  <PersonalChronicle.UI.Career.Honor.Event.Title>{0}</PersonalChronicle.UI.Career.Honor.Event.Title>
   <PersonalChronicle.UI.Career.Honor.Tier.Bronze>Bronze</PersonalChronicle.UI.Career.Honor.Tier.Bronze>
   <PersonalChronicle.UI.Career.Honor.Tier.Silver>Silver</PersonalChronicle.UI.Career.Honor.Tier.Silver>
   <PersonalChronicle.UI.Career.Honor.Tier.Gold>Gold</PersonalChronicle.UI.Career.Honor.Tier.Gold>

@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using HarmonyLib;
 using PersonalChronicle.Api;
@@ -85,12 +86,37 @@ namespace PersonalChronicle
     {
         static ChronicleStartup()
         {
-            Harmony harmony = new Harmony("PersonalChronicle.Archive");
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
-            ValidateEventTypeKeys();
+            // Harmony 注入与 ITab 注入解耦：任一 patch 在 PatchAll 期抛异常，
+            // 都不能阻断 InspectTab 注入（否则全部 ITab 失效）。
+            try
+            {
+                Harmony harmony = new Harmony("PersonalChronicle.Archive");
+                harmony.PatchAll(Assembly.GetExecutingAssembly());
+            }
+            catch (Exception ex)
+            {
+                Log.Error("[PersonalChronicle] Harmony PatchAll failed: " + ex);
+            }
+
+            try
+            {
+                ValidateEventTypeKeys();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("[PersonalChronicle] ValidateEventTypeKeys failed: " + ex);
+            }
+
             // v4.6: add the per-pawn "档案" tab to every humanlike inspect pane.
             // Runs here because the DefDatabase is fully populated at this point.
-            Archive.ChronicleInspectTabInjector.InjectAll();
+            try
+            {
+                Archive.ChronicleInspectTabInjector.InjectAll();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("[PersonalChronicle] InspectTab injection failed: " + ex);
+            }
         }
 
         /// <summary>

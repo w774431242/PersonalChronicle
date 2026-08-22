@@ -71,6 +71,9 @@ namespace PersonalChronicle.Archive
         // DoWindowContents 内检测回车键（IMGUI 对话框惯例回车=确定）。
         public override void DoWindowContents(Rect inRect)
         {
+            // 原生 Window 默认浅色背景——覆盖为 UITheme.Window 深色，统一主题。
+            UIComponents.TintedBox(inRect, UITheme.Window);
+
             if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
             {
                 CommitAndClose();

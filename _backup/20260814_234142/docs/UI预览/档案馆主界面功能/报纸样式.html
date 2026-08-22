@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PersonalChronicle · 殖民地编年报（报纸样式预览）</title>
+<style>
+  /* ===== 配色取自 UITheme.Palette.*（v1.1.5 真实 RGB，epic 默认） ===== */
+  :root{
+    --bg:#0e1322; --paper:#1a2136; --paper-2:#161d33; --ink:#f1ebd8;
+    --ink-soft:#b8b199; --ink-dim:#8a8268; --rule:#8a7740; --rule-soft:#3c4060;
+    --accent:#d4af37; --accent-soft:#2e260e; --blood:#c04732; --alive:#75c57f; --dead:#c04732;
+    --radius:3px;
+  }
+  html[data-theme="gothic"]{
+    --bg:#0a0a0d; --paper:#121216; --paper-2:#0d0d11; --ink:#e8e2d8; --ink-soft:#9a9180; --ink-dim:#6f6a5e;
+    --rule:#5a2424; --rule-soft:#2c2c34; --accent:#a83232; --accent-soft:#2a1010; --blood:#a83232; --alive:#7a9a6a;
+  }
+  html[data-theme="wuxia"]{
+    --bg:#e8e2d0; --paper:#efe9da; --paper-2:#e2dac4; --ink:#2b2620; --ink-soft:#5c5343; --ink-dim:#8a7f68;
+    --rule:#b8a878; --rule-soft:#cabf9e; --accent:#a63a2e; --accent-soft:#f0dcd2; --blood:#a63a2e; --alive:#3f7d4f;
+  }
+  html[data-theme="steampunk"]{
+    --bg:#14120d; --paper:#241f17; --paper-2:#1c1812; --ink:#e6d9b8; --ink-soft:#a89a78; --ink-dim:#7d7152;
+    --rule:#5a4a2a; --rule-soft:#3a3225; --accent:#4a9a7a; --accent-soft:#16302a; --blood:#c06a3a; --alive:#6fae8a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);font-family:"Georgia","Songti SC","SimSun",serif;color:var(--ink);}
+  body{padding:20px;}
+
+  .toolbar{display:flex;align-items:center;gap:14px;padding:10px 18px;background:var(--paper-2);border:1px solid var(--rule);border-radius:6px 6px 0 0;font-size:13px;color:var(--ink-soft);font-family:"Segoe UI","Microsoft YaHei",sans-serif;}
+  .toolbar b{color:var(--accent);}
+  .theme-pick{display:flex;gap:6px;margin-left:auto;}
+  .theme-pick button{background:var(--paper);border:1px solid var(--rule);color:var(--ink-soft);padding:5px 11px;border-radius:var(--radius);cursor:pointer;font-size:12px;}
+  .theme-pick button.active{background:var(--accent-soft);color:var(--ink);border-color:var(--accent);}
+
+  /* ===== 报纸版心 ===== */
+  .newsheet{width:880px;margin:0 auto;background:var(--paper);border:1px solid var(--rule);border-top:none;
+            border-radius:0 0 6px 6px;padding:22px 26px 30px;box-shadow:0 10px 40px rgba(0,0,0,.5);}
+  /* 报头 */
+  .masthead{text-align:center;border-bottom:3px double var(--rule);padding-bottom:10px;margin-bottom:6px;}
+  .masthead .name{font-size:34px;font-weight:700;letter-spacing:3px;color:var(--accent);}
+  .masthead .sub{font-size:11px;color:var(--ink-dim);font-style:italic;margin-top:2px;letter-spacing:1px;}
+  .masthead .meta{display:flex;justify-content:space-between;font-size:10px;color:var(--ink-dim);border-top:1px solid var(--rule-soft);margin-top:8px;padding-top:5px;font-family:"Segoe UI",sans-serif;}
+  .masthead .meta .nav{display:flex;gap:10px;}
+  .masthead .meta button{background:none;border:1px solid var(--rule-soft);color:var(--ink-soft);font-size:10px;padding:2px 8px;border-radius:2px;cursor:pointer;font-family:"Segoe UI",sans-serif;}
+  .masthead .meta button:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* 头版头条 */
+  .lead{margin:14px 0 10px;padding-bottom:12px;border-bottom:1px solid var(--rule-soft);}
+  .lead .kicker{font-size:10px;color:var(--blood);letter-spacing:2px;text-transform:uppercase;font-family:"Segoe UI",sans-serif;}
+  .lead .headline{font-size:26px;font-weight:700;line-height:32px;margin:4px 0;color:var(--ink);}
+  .lead .byline{font-size:10px;color:var(--ink-dim);font-style:italic;margin-bottom:6px;}
+  .lead .standfirst{font-size:13px;line-height:20px;color:var(--ink-soft);}
+
+  /* 多栏正文 */
+  .columns{column-count:2;column-gap:22px;column-rule:1px solid var(--rule-soft);margin-top:10px;}
+  .story{break-inside:avoid;margin-bottom:14px;}
+  .story h3{font-size:15px;font-weight:700;margin:0 0 3px;color:var(--ink);border-bottom:1px solid var(--rule-soft);padding-bottom:3px;}
+  .story .tag{font-size:9px;color:var(--accent);font-family:"Segoe UI",sans-serif;letter-spacing:1px;}
+  .story p{font-size:12px;line-height:18px;margin:4px 0;color:var(--ink-soft);text-align:justify;}
+  .story .stat{font-size:12px;color:var(--ink);font-weight:600;}
+
+  /* 边栏榜单（豆腐块） */
+  .sidebox{break-inside:avoid;border:1px solid var(--rule);border-radius:var(--radius);padding:8px 10px;margin-bottom:14px;background:var(--paper-2);}
+  .sidebox .sb-title{font-size:12px;font-weight:700;color:var(--accent);text-align:center;border-bottom:1px solid var(--rule-soft);padding-bottom:4px;margin-bottom:6px;letter-spacing:1px;}
+  .rank-row{display:flex;align-items:center;font-size:11px;padding:3px 0;border-bottom:1px dotted var(--rule-soft);}
+  .rank-row .rk{width:18px;color:var(--accent);font-weight:700;flex:0 0 18px;}
+  .rank-row .nm{flex:1;color:var(--ink);}
+  .rank-row .vl{color:var(--ink-soft);font-family:"Segoe UI",sans-serif;}
+
+  .colophon{margin-top:16px;border-top:3px double var(--rule);padding-top:8px;font-size:10px;color:var(--ink-dim);text-align:center;font-style:italic;}
+  .footnote{font-size:9px;color:var(--ink-dim);margin-top:14px;font-family:"Segoe UI",sans-serif;border-top:1px solid var(--rule-soft);padding-top:6px;line-height:14px;}
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <span>PersonalChronicle · 报纸样式预览（<b>殖民地编年报</b>）</span>
+    <div class="theme-pick">
+      <button data-th="epic" class="active">史诗</button>
+      <button data-th="gothic">哥特</button>
+      <button data-th="wuxia">水墨</button>
+      <button data-th="steampunk">蒸汽</button>
+    </div>
+  </div>
+
+  <div class="newsheet" id="newsheet"><!-- 由 JS 渲染 --></div>
+
+<script>
+/* ============ 示意数据（同源 Read-Model 快照的不同呈现） ============ */
+const ISSUES = [
+  {
+    no:'第 412 期', season:'冰季 · 寒潮第 3 周', date:'5502.10.14',
+    lead:{
+      kicker:'头版 · 决定性胜利',
+      headline:'边境遭遇战大捷：我方以零阵亡击退赤爪部族',
+      byline:'本报特约记者 · 档案馆',
+      standfirst:'昨夜，殖民地在边境哨站外迎击赤爪部族突袭。依靠 Marcus 的精准猎杀与 Goran 的工事坚守，敌方 12 人悉数溃退，我方无一阵亡。此役被标记为「决定性胜利」，载入史册。'
+    },
+    stories:[
+      {tag:'人物',title:'Marcus 晋升标记·实际',body:'头号猎手 Marcus 累计工时突破 4310 小时，周均收益稳居榜首，正式获评「标记·实际」档位。其机械左臂在历次交火中毫发无伤，堪称传奇。'},
+      {tag:'产出',title:'本周产出估值 1340 银',body:'粮仓再获丰收，米粮与餐食合计 210 件；Ada 锻造的长剑与板甲为殖民地增添 5400 银战备价值。'},
+      {tag:'装备',title:'传奇长剑「破晓」易主',body:'<span class="stat">破晓</span> 完成第三代传承——由 Bjorn 移交 Ada，累计击杀达 27。其锻造者 Kaldor 之名永镌刃背。'},
+      {tag:'社交',title:'Marcus 与 Ada 结为配偶',body:'在丰收祭当晚，二人于主基地宣誓结为配偶。关系网显示，二人共历 48 起事件，为全殖民地最紧密纽带。'}
+    ],
+    labour:[['Marcus','4310 h'],['Ada','4120 h'],['Goran','3760 h'],['Selene','3540 h'],['Lia','3920 h']],
+    relic:[['破晓','27 杀'],['雷霆炮','19 杀'],['守护者','11 杀']]
+  },
+  {
+    no:'第 411 期', season:'冰季 · 寒潮第 2 周', date:'5502.10.07',
+    lead:{
+      kicker:'头版 · 悲讯',
+      headline:'社交家 Lucy 阵亡：一次突袭带走最温和的声音',
+      byline:'本报特约记者 · 档案馆',
+      standfirst:'5502.10.14，Lucy 在抵御袭击时重伤不治。她曾促成与部落停战，设宴款待四方使者。殖民地痛失一位外交纽带，残值档案已归档。'
+    },
+    stories:[
+      {tag:'人物',title:'Goran 机械植入过度',body:'机械师 Goran 近期义体过载导致中枢神经受损，身体完整度降至 60%。档案馆提示：折旧显著，建议节制植入。'},
+      {tag:'产出',title:'工坊产出领跑',body:'Ada 本周产出估值 1180 银，长剑与零件合计 88 件，稳居工坊核心。'},
+      {tag:'战役',title:'虫群围城纪实',body:'5501.07 的虫群围城历时 5 小时，8 人驻防，最终以 5 敌损失逼退虫潮，载入战役档案。'},
+      {tag:'地点',title:'废弃哨站驻扎 23 天',body:'远征队于废弃哨站累计驻扎 23 天，采集稀缺矿物，为主基地补充战略储备。'}
+    ],
+    labour:[['Ada','4050 h'],['Marcus','3980 h'],['Lia','3840 h'],['Goran','3680 h'],['Selene','3480 h']],
+    relic:[['破晓','25 杀'],['雷霆炮','17 杀'],['守护者','9 杀']]
+  }
+];
+
+/* ============ 渲染 ============ */
+let issueIdx=0;
+let theme='epic';
+const THEMES=['epic','gothic','wuxia','steampunk'];
+
+function applyTheme(id){
+  document.documentElement.setAttribute('data-theme', id);
+  document.querySelectorAll('.theme-pick button').forEach(b=>b.classList.toggle('active', b.dataset.th===id));
+}
+
+function render(){
+  const I=ISSUES[issueIdx];
+  const stories=I.stories.map(s=>`<div class="story">
+      <div class="tag">${s.tag}</div>
+      <h3>${s.title}</h3>
+      <p>${s.body}</p>
+    </div>`).join('');
+  const labour=I.labour.map((r,i)=>`<div class="rank-row"><span class="rk">${i+1}</span><span class="nm">${r[0]}</span><span class="vl">${r[1]}</span></div>`).join('');
+  const relic=I.relic.map((r,i)=>`<div class="rank-row"><span class="rk">${i+1}</span><span class="nm">${r[0]}</span><span class="vl">${r[1]}</span></div>`).join('');
+
+  document.getElementById('newsheet').innerHTML = `
+    <div class="masthead">
+      <div class="name">殖民地编年报</div>
+      <div class="sub">The Chronicle of the Rim · 记录每一寸殖民地史</div>
+      <div class="meta">
+        <span>${I.no} · ${I.season}</span>
+        <span>${I.date}</span>
+        <span class="nav">
+          <button id="prev">‹ 上期</button>
+          <button id="next">下期 ›</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="lead">
+      <div class="kicker">${I.lead.kicker}</div>
+      <div class="headline">${I.lead.headline}</div>
+      <div class="byline">${I.lead.byline}</div>
+      <div class="standfirst">${I.lead.standfirst}</div>
+    </div>
+
+    <div class="columns">
+      ${stories}
+      <div class="sidebox">
+        <div class="sb-title">劳模榜</div>
+        ${labour}
+      </div>
+      <div class="sidebox">
+        <div class="sb-title">神器榜</div>
+        ${relic}
+      </div>
+    </div>
+
+    <div class="colophon">殖民地档案馆 · 编年报编辑部 · 落款于主基地档案室</div>
+    <div class="footnote">报纸样式 = 同一份 Read-Model 快照的「纸媒」呈现形态（对比窗口 UI）。版式：报头双线 / 头版头条 / 双栏正文 / 边栏榜单 / 页脚落款。期号翻页切换示意数据，四主题沿用 UITheme.Palette。</div>
+  `;
+
+  document.getElementById('prev').addEventListener('click',()=>{ issueIdx=(issueIdx+1)%ISSUES.length; render(); });
+  document.getElementById('next').addEventListener('click',()=>{ issueIdx=(issueIdx-1+ISSUES.length)%ISSUES.length; render(); });
+}
+
+document.querySelectorAll('.theme-pick button').forEach(b=>{
+  b.addEventListener('click',()=>{ theme=b.dataset.th; applyTheme(theme); });
+});
+applyTheme('epic');
+render();
+</script>
+</body>
+</html>

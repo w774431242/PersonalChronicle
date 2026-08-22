@@ -37,5 +37,20 @@ namespace PersonalChronicle.Domain.Profession
 
         /// <summary>展示排序（升序）。</summary>
         public int order;
+
+        /// <summary>
+        /// 返回 UI 展示用的方向标签键（优先 <see cref="labelKey"/>，缺省回退 <c>defName</c>）。
+        /// 注意：本方法只返回"待翻译的键"，不在 Domain 层执行 <c>.Translate()</c>（ARC-002 纯净边界）；
+        /// 翻译由调用方（UI 层）统一完成。修复 2026-08-22：基类 LabelCap 不会读 <c>labelKey</c>，
+        /// 故暴露此方法让 UI 拿到正确的键而非 defName。
+        /// </summary>
+        public string GetDisplayLabel()
+        {
+            if (!string.IsNullOrEmpty(labelKey))
+            {
+                return labelKey;
+            }
+            return defName;
+        }
     }
 }

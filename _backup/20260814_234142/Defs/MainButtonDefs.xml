@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <MainButtonDef>
+    <defName>PersonalChronicleArchive</defName>
+    <label>档案馆</label>
+    <tabWindowClass>PersonalChronicle.Archive.ArchiveMainTabWindow</tabWindowClass>
+    <order>78</order>
+    <validWithoutMap>true</validWithoutMap>
+    <minimized>false</minimized>
+    <iconPath>UI/ArchiveIcon</iconPath>
+  </MainButtonDef>
+</Defs>

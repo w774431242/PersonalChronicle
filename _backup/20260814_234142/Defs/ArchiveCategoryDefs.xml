@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    ArchiveCategoryDef: data-driven depth/behavior/label for archive categories
+    (Level 1 Def, consumed by P2 rendering).
+    - 1.6: element name must be the FULL namespace (simple name fails to resolve).
+    - defName MUST NOT contain dots (RimWorld constraint: letters/digits/_/- only).
+    - categoryKey MUST match ArchiveCategoryKeys constants (Pawn/Thing/Battle/Location):
+      it is the bridge from data keys to Def-driven display metadata.
+    - label is the display label; per-language overrides live in
+      Languages/<Lang>/DefInjected/ArchiveCategoryDef/ (type-name folder required).
+    - depth is display metadata only; behavior drives semantics (StatOnly/Record/Event).
+    - Adding a category = adding a Def here (plus ArchiveCategoryKeys), zero code.
+  -->
+  <PersonalChronicle.Domain.ArchiveCategoryDef>
+    <defName>PersonalChronicleCategoryPawn</defName>
+    <categoryKey>Pawn</categoryKey>
+    <label>人物</label>
+    <depth>5</depth>
+    <behavior>Event</behavior>
+  </PersonalChronicle.Domain.ArchiveCategoryDef>
+
+  <PersonalChronicle.Domain.ArchiveCategoryDef>
+    <defName>PersonalChronicleCategoryThing</defName>
+    <categoryKey>Thing</categoryKey>
+    <label>物品</label>
+    <depth>4</depth>
+    <behavior>Event</behavior>
+  </PersonalChronicle.Domain.ArchiveCategoryDef>
+
+  <PersonalChronicle.Domain.ArchiveCategoryDef>
+    <defName>PersonalChronicleCategoryBattle</defName>
+    <categoryKey>Battle</categoryKey>
+    <label>战役</label>
+    <depth>5</depth>
+    <behavior>StatOnly</behavior>
+  </PersonalChronicle.Domain.ArchiveCategoryDef>
+
+  <PersonalChronicle.Domain.ArchiveCategoryDef>
+    <defName>PersonalChronicleCategoryLocation</defName>
+    <categoryKey>Location</categoryKey>
+    <label>地点</label>
+    <depth>4</depth>
+    <behavior>Event</behavior>
+  </PersonalChronicle.Domain.ArchiveCategoryDef>
+</Defs>

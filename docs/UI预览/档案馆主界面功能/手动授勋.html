@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PersonalChronicle · 手动授勋（玩家视角预览）</title>
+<style>
+  /* ===== 配色取自 UITheme.Palette.*（v1.1.5 真实 RGB 字段，epic 默认） ===== */
+  :root{
+    --bg:#0e1322; --panel:#151b2e; --panel-2:#101526; --card:#1a2136; --card-hover:#222b45;
+    --text:#f1ebd8; --secondary:#b8b199; --muted:#b8b199; --dim:#a19a7b;
+    --accent:#d4af37; --accent-soft:#2e260e; --alive:#75c57f; --dead:#c04732; --info:#dab457;
+    --border:#8a7740; --border-soft:#3c4060;
+    --bronze:#c08552; --silver:#b8b8c0; --gold:#d4af37;
+    --radius:4px;
+  }
+  html[data-theme="gothic"]{
+    --bg:#0a0a0d; --panel:#121216; --panel-2:#0d0d11; --card:#1a1a20; --card-hover:#24242c;
+    --text:#e8e2d8; --secondary:#9a9180; --muted:#9a9180; --dim:#6f6a5e;
+    --accent:#a83232; --accent-soft:#2a1010; --alive:#7a9a6a; --dead:#c04732; --info:#b06a78;
+    --border:#5a2424; --border-soft:#2c2c3a;
+    --bronze:#8a5a3a; --silver:#8a8a92; --gold:#a83232;
+  }
+  html[data-theme="wuxia"]{
+    --bg:#e8e2d0; --panel:#ded6c0; --panel-2:#d6cdb4; --card:#efe9da; --card-hover:#f5f0e4;
+    --text:#2b2620; --secondary:#5c5343; --muted:#5c5343; --dim:#8a7f68;
+    --accent:#a63a2e; --accent-soft:#f0dcd2; --alive:#3f7d4f; --dead:#a63a2e; --info:#7a6a3a;
+    --border:#b8a878; --border-soft:#cabf9e;
+    --bronze:#9a6a3a; --silver:#8a8a82; --gold:#a63a2e;
+  }
+  html[data-theme="steampunk"]{
+    --bg:#14120d; --panel:#1c1812; --panel-2:#16130d; --card:#241f17; --card-hover:#2e281d;
+    --text:#e6d9b8; --secondary:#a89a78; --muted:#a89a78; --dim:#7d7152;
+    --accent:#4a9a7a; --accent-soft:#16302a; --alive:#6fae8a; --dead:#c06a3a; --info:#b89a5a;
+    --border:#5a4a2a; --border-soft:#3a3225;
+    --bronze:#a07a3a; --silver:#9a9a8a; --gold:#4a9a7a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#070910;font-family:"Segoe UI","Microsoft YaHei",sans-serif;color:var(--text);}
+  body{padding:18px;}
+  .toolbar{display:flex;align-items:center;gap:14px;padding:10px 18px;background:#0b0e18;border:1px solid var(--border);border-radius:6px 6px 0 0;font-size:13px;color:var(--muted);}
+  .toolbar b{color:var(--accent);}
+  .theme-pick{display:flex;gap:6px;margin-left:auto;}
+  .theme-pick button{background:var(--panel);border:1px solid var(--border);color:var(--secondary);padding:5px 11px;border-radius:var(--radius);cursor:pointer;font-size:12px;transition:.12s;}
+  .theme-pick button.active{background:var(--accent-soft);color:var(--text);border-color:var(--accent);}
+  .theme-pick button:hover{border-color:var(--accent);}
+
+  .window{width:1180px;margin:0 auto;border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;overflow:hidden;background:var(--bg);box-shadow:0 10px 40px rgba(0,0,0,.6);user-select:none;}
+  .header{position:relative;height:56px;background:linear-gradient(180deg,#161d33,#0e1322);border-bottom:1px solid var(--border);}
+  .header .title{position:absolute;left:14px;top:17px;font-size:17px;font-weight:600;color:var(--text);}
+  .header .sub{position:absolute;left:14px;top:38px;font-size:10px;color:var(--dim);}
+  .header .theme-btn{position:absolute;right:12px;top:15px;height:26px;padding:0 12px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--text);font-size:12px;border-radius:3px;cursor:pointer;}
+  .header .theme-btn:hover{background:#3a3014;}
+  .header .theme-rule{position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--accent);}
+
+  .body{display:flex;min-height:640px;}
+  .sidebar{width:208px;flex:0 0 208px;background-color:var(--panel);border-right:1px solid var(--border);padding:10px;}
+  .nav-group-label{font-size:10px;color:var(--dim);margin:10px 4px 5px;letter-spacing:.5px;}
+  .nav-group-label:first-child{margin-top:2px;}
+  .nav-item{display:flex;align-items:center;min-height:30px;padding:0 11px;border-radius:3px;font-size:13px;color:var(--secondary);
+            margin-bottom:3px;cursor:pointer;border-left:4px solid transparent;transition:background .1s;}
+  .nav-item:hover{background:rgba(212,175,55,.10);}
+  .nav-item.sel{background:var(--accent-soft);border-left-color:var(--accent);color:var(--text);font-weight:600;}
+  .nav-item .count{margin-left:auto;font-size:11px;color:var(--muted);}
+  .nav-sep{height:1px;background:var(--border-soft);margin:8px 4px;}
+
+  .content{flex:1;background:var(--bg);}
+  .scroll{height:584px;overflow-y:auto;padding:14px 16px;}
+  .scroll::-webkit-scrollbar{width:10px;}
+  .scroll::-webkit-scrollbar-track{background:var(--bg);}
+  .scroll::-webkit-scrollbar-thumb{background:var(--border-soft);border-radius:5px;}
+  .content-inner{max-width:900px;}
+  .page-title{font-size:17px;font-weight:600;color:var(--text);margin:2px 0 2px;}
+  .page-desc{font-size:10px;color:var(--secondary);margin-bottom:14px;line-height:16px;}
+  .tag-soft{color:var(--dim);}
+  .footnote{font-size:9px;color:var(--dim);line-height:15px;margin-top:16px;border-top:1px solid var(--border-soft);padding-top:8px;}
+
+  /* ===== 详情封面（Pawn） ===== */
+  .cover{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;}
+  .cover .port{width:60px;height:75px;background:var(--panel-2);border:1px solid var(--border);border-radius:3px;flex:0 0 60px;}
+  .cover .info{flex:1;}
+  .cover .nm{font-size:18px;font-weight:600;color:var(--text);}
+  .cover .role{font-size:11px;color:var(--secondary);margin-top:2px;}
+  .cover .days{font-size:10px;color:var(--muted);margin-top:3px;}
+
+  /* ===== 勋章墙 ===== */
+  .sec-head{display:flex;align-items:center;gap:8px;margin:14px 0 8px;}
+  .sec-head .marker{width:3px;height:14px;background:var(--accent);border-radius:2px;}
+  .sec-head .h{font-size:13px;color:var(--text);font-weight:600;}
+  .sec-head .rule{flex:1;height:1px;background:var(--border-soft);}
+  .sec-hint{font-size:10px;color:var(--dim);margin:-4px 0 8px;line-height:15px;}
+
+  /* 手动授勋按钮（标题右侧） */
+  .award-btn{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 13px;margin-left:10px;
+             border:1px solid var(--accent);background:var(--accent-soft);color:var(--text);font-size:12px;border-radius:3px;cursor:pointer;transition:.12s;position:relative;}
+  .award-btn:hover{background:#3a3014;border-color:var(--gold);}
+  .award-btn .badge{position:absolute;top:-7px;right:-7px;min-width:16px;height:16px;padding:0 4px;border-radius:9px;
+                    background:var(--alive);color:var(--bg);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 5px var(--alive);}
+  .award-btn .badge.hide{display:none;}
+
+  .medal-grid{display:flex;flex-wrap:wrap;gap:14px;padding:4px 0 2px;}
+  /* 裸勋章图像：仅真实 png + 档位角标，无卡片外壳、无边框 */
+  .medal-ico{position:relative;line-height:0;transition:.12s;cursor:default;}
+  .medal-ico:hover{transform:translateY(-2px);}
+  .medal-ico.locked{opacity:.55;filter:grayscale(.5);}
+  .medal-ico img{width:34px;height:40px;object-fit:contain;image-rendering:auto;display:block;}
+  .medal-ico img.broken{opacity:.2;background:var(--panel-2);border:1px dashed var(--border-soft);}
+  .medal-ico .corner{position:absolute;top:-7px;right:-7px;min-width:15px;height:15px;padding:0 3px;
+                     border-radius:8px;font-size:9px;font-weight:700;color:var(--bg);
+                     display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.5);}
+  .medal-ico.t-bronze .corner{background:var(--bronze);}
+  .medal-ico.t-silver .corner{background:var(--silver);}
+  .medal-ico.t-gold  .corner{background:var(--gold);}
+
+  /* ===== 手动授勋 Dialog（模态） ===== */
+  .mask{position:fixed;inset:0;background:rgba(4,6,12,.62);display:none;align-items:center;justify-content:center;z-index:50;}
+  .mask.show{display:flex;}
+  .dialog{width:560px;max-height:80vh;background:var(--bg);border:1px solid var(--accent);border-radius:6px;
+          box-shadow:0 16px 50px rgba(0,0,0,.7);display:flex;flex-direction:column;overflow:hidden;}
+  .dialog .d-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;}
+  .dialog .d-head .t{font-size:15px;font-weight:600;color:var(--text);}
+  .dialog .d-head .x{margin-left:auto;cursor:pointer;color:var(--muted);font-size:16px;line-height:1;padding:2px 6px;border-radius:3px;}
+  .dialog .d-head .x:hover{background:var(--card-hover);color:var(--text);}
+  .dialog .d-sub{font-size:10px;color:var(--secondary);padding:8px 16px 0;}
+  .dialog .d-body{padding:10px 16px;overflow-y:auto;}
+  .dialog .d-body::-webkit-scrollbar{width:9px;}
+  .dialog .d-body::-webkit-scrollbar-thumb{background:var(--border-soft);border-radius:5px;}
+  .d-card{display:flex;align-items:center;gap:14px;padding:8px 4px;margin-bottom:6px;cursor:pointer;transition:.12s;border-radius:var(--radius);}
+  .d-card:hover{background:var(--accent-soft);}
+  /* 裸勋章图像（真实 png + 档位角标，无边框） */
+  .d-card .badge{position:relative;flex:0 0 auto;line-height:0;}
+  .d-card .badge .medal-img{width:34px;height:40px;display:block;}
+  .d-card .badge .medal-img.broken{opacity:.2;background:var(--panel-2);border:1px dashed var(--border-soft);}
+  .d-card .badge .corner{position:absolute;top:-7px;right:-7px;min-width:15px;height:15px;padding:0 3px;border-radius:8px;
+                         font-size:9px;font-weight:700;color:var(--bg);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.5);}
+  .d-card.t-bronze .badge .corner{background:var(--bronze);}
+  .d-card.t-silver .badge .corner{background:var(--silver);}
+  .d-card.t-gold   .badge .corner{background:var(--gold);}
+  .d-card .mid{flex:1;min-width:0;}
+  .d-card .mid .lab{font-size:14px;font-weight:600;color:var(--text);}
+  .d-card .mid .sub{font-size:10px;color:var(--muted);margin-top:2px;line-height:14px;}
+  .d-card .grant{font-size:11px;padding:4px 12px;border:1px solid var(--accent);border-radius:3px;color:var(--text);background:var(--accent-soft);white-space:nowrap;}
+  .d-card:hover .grant{background:var(--gold);color:var(--bg);}
+  .d-empty{text-align:center;color:var(--dim);font-size:12px;padding:30px 10px;line-height:18px;}
+  .toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:var(--accent-soft);
+         border:1px solid var(--gold);color:var(--text);font-size:12px;padding:9px 18px;border-radius:5px;
+         box-shadow:0 6px 24px rgba(0,0,0,.6);opacity:0;transition:opacity .25s;pointer-events:none;z-index:60;}
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <span>PersonalChronicle · <b>手动授勋</b> · 玩家视角预览（Pawn 详情页勋章墙 + 授勋 Dialog）</span>
+    <div class="theme-pick">
+      <button data-th="epic" class="active">史诗</button>
+      <button data-th="gothic">哥特</button>
+      <button data-th="wuxia">水墨</button>
+      <button data-th="steampunk">蒸汽</button>
+    </div>
+  </div>
+
+  <div class="window">
+    <div class="header">
+      <div class="title">殖民地档案馆</div>
+      <div class="sub">记录殖民地的历史、人物与事件</div>
+      <button class="theme-btn" id="themeBtn">主题</button>
+      <div class="theme-rule"></div>
+    </div>
+
+    <div class="body">
+      <div class="sidebar" id="sidebar">
+        <div class="nav-group-label">导航</div>
+        <div class="nav-item" data-nav="home">首页总览</div>
+        <div class="nav-item" data-nav="overview">全部档案</div>
+        <div class="nav-sep"></div>
+        <div class="nav-group-label">档案分类</div>
+        <div class="nav-item" data-nav="category">殖民者 <span class="count">(12)</span></div>
+        <div class="nav-item" data-nav="category">装备 <span class="count">(38)</span></div>
+        <div class="nav-item" data-nav="category">战役 <span class="count">(7)</span></div>
+        <div class="nav-item" data-nav="category">地点 <span class="count">(5)</span></div>
+        <div class="nav-sep"></div>
+        <div class="nav-group-label">快捷</div>
+        <div class="nav-item" data-nav="tool">劳模代表</div>
+        <div class="nav-item" data-nav="tool">神器榜</div>
+      </div>
+
+      <div class="content">
+        <div class="scroll" id="scroll"><!-- 由 JS 渲染 --></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 手动授勋 Dialog ===== -->
+  <div class="mask" id="mask">
+    <div class="dialog">
+      <div class="d-head">
+        <div class="t" id="dTitle">授予勋章 · Marcus</div>
+        <div class="x" id="dClose">✕</div>
+      </div>
+      <div class="d-sub">仅列出已达标的未授予勋章 · 点击即授予（金质自动送达信件）</div>
+      <div class="d-body" id="dBody"><!-- 由 JS 渲染 --></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+/* ============ 示意勋章数据（对齐 MedalAwardEvaluator 输出） ============
+   key = MedalDef.defName，与 Textures/Medals/<key>.png 同名（真实图像资产）。
+   metric 文案说明条件；current/threshold 驱动进度条；granted=已授予。 */
+const MEDALS = [
+  { key:'Medal_Labor_Model_Bronze',    title:'劳动模范',  tier:'bronze', metric:'累计工时', current:4310, threshold:3000, granted:true },
+  { key:'Medal_Labor_Model_Silver',    title:'劳动模范',  tier:'silver', metric:'累计工时', current:4310, threshold:4000, granted:true },
+  { key:'Medal_Labor_Model_Gold',      title:'劳动模范',  tier:'gold',   metric:'累计工时', current:4310, threshold:5000, granted:false },
+  { key:'Medal_Combat_Enlistee_Bronze',title:'新兵勋章',  tier:'bronze', metric:'累计参战', current:64,   threshold:50,   granted:true },
+  { key:'Medal_Combat_Hero_Silver',    title:'战斗英雄',  tier:'silver', metric:'累计击杀', current:64,   threshold:80,   granted:false },
+  { key:'Medal_Workshop_Famous_Bronze',title:'名家勋章',  tier:'bronze', metric:'累计产出件数', current:120, threshold:100, granted:true },
+  { key:'Medal_Workshop_Glorious_Gold',title:'荣光工匠',  tier:'gold',   metric:'累计产出件数', current:120, threshold:300, granted:false },
+  { key:'Medal_Support_Thrifty_Bronze',title:'节俭卫士',  tier:'bronze', metric:'累计补给', current:12,   threshold:30,   granted:false }
+];
+/* 引用真实 png 资产：相对于本预览文件 ../ = 档案馆主界面功能/，再上两级到 Mod 根 Textures */
+function medalImg(key){
+  return `<img class="medal-img" src="../../../Textures/Medals/${key}.png" alt="${key}" onerror="this.onerror=null; this.classList.add('broken');">`;
+}
+const TIER_LABEL={bronze:'青铜',silver:'白银',gold:'黄金'};
+function tierColorVar(t){ return t==='gold'?'var(--gold)':t==='silver'?'var(--silver)':'var(--bronze)'; }
+function fmt(v){ return v>=10000? (v/1000).toFixed(1)+'K' : v; }
+
+/* ============ 渲染：Pawn 详情页勋章墙 ============ */
+function renderDetail(){
+  const granted = MEDALS.filter(m=>m.granted);
+  const pending = MEDALS.filter(m=>!m.granted);
+  const newAwards = pending.filter(m=>m.current >= m.threshold);
+  const cards = MEDALS.map(m=>{
+    const reached = m.current >= m.threshold;
+    const cls = m.granted ? 'granted' : (reached ? '' : 'locked');
+    const c = tierColorVar(m.tier);
+    return `<div class="medal-ico ${cls} t-${m.tier}" title="${m.title} · ${TIER_LABEL[m.tier]}${reached?'（已达标）':'（未达标 · '+m.metric+' '+fmt(m.current)+' / '+fmt(m.threshold)+'）'}">
+      ${medalImg(m.key)}
+      <span class="corner">${TIER_LABEL[m.tier].charAt(0)}</span>
+    </div>`;
+  }).join('');
+  const badgeHtml = newAwards.length
+    ? `<span class="badge">${newAwards.length}</span>` : `<span class="badge hide">0</span>`;
+  return `<div class="content-inner">
+    <div class="cover">
+      <div class="port"></div>
+      <div class="info">
+        <div class="nm">Marcus</div>
+        <div class="role">头号猎手 · 老兵</div>
+        <div class="days">在册 411 天</div>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <span class="marker"></span><span class="h">勋章墙</span>
+      <button class="award-btn" id="openAward">授予勋章${badgeHtml}</button>
+      <span class="rule"></span>
+    </div>
+    <div class="sec-hint">达标自动授予；也可手动补授。灰色 = 未达标（可见目标与进度）。</div>
+    <div class="medal-grid">${cards}</div>
+
+    <div class="footnote">勋章墙 = Pawn 详情页 MedalWall（DrawMedalWall）。已授勋彩色高亮；未达标灰态但显示进度条与「条件·累计工时」文案，让玩家看见「如何达成」与「还差多少」。
+    标题右侧「授予勋章」按钮带可授予数量角标（newAwards 数），点击打开手动授勋 Dialog。数据来自 MedalAwardEvaluator 示意输出（含 CurrentValue/Threshold/IsMet/IsGranted）。</div>
+  </div>`;
+}
+
+/* ============ 渲染：手动授勋 Dialog ============ */
+function renderDialog(){
+  const pending = MEDALS.filter(m=>!m.granted);
+  const newAwards = pending.filter(m=>m.current >= m.threshold);
+  const body = document.getElementById('dBody');
+  if(newAwards.length===0){
+    body.innerHTML = `<div class="d-empty">当前没有可达标的未授予勋章。<br>继续累积各项指标，达标后会出现在这里。</div>`;
+    return;
+  }
+  body.innerHTML = newAwards.map(m=>{
+    return `<div class="d-card t-${m.tier}" data-key="${m.key}">
+      <div class="badge">${medalImg(m.key)}<span class="corner">${TIER_LABEL[m.tier].charAt(0)}</span></div>
+      <div class="mid">
+        <div class="lab">${m.title} · ${TIER_LABEL[m.tier]}</div>
+        <div class="sub">${m.metric} ${fmt(m.current)} / ${fmt(m.threshold)}（已达标）</div>
+      </div>
+      <div class="grant">授予</div>
+    </div>`;
+  }).join('');
+  body.querySelectorAll('.d-card').forEach(card=>{
+    card.addEventListener('click',()=>{
+      const m = MEDALS.find(x=>x.key===card.dataset.key);
+      if(!m || m.granted) return;
+      m.granted = true;
+      showToast(`已授予：${m.title} · ${TIER_LABEL[m.tier]}`);
+      render();
+      renderDialog();
+      refreshBadge();
+    });
+  });
+}
+function refreshBadge(){
+  const pending = MEDALS.filter(m=>!m.granted);
+  const n = pending.filter(m=>m.current >= m.threshold).length;
+  const b = document.querySelector('#openAward .badge');
+  if(b){ b.textContent = n; b.classList.toggle('hide', n===0); }
+}
+
+/* ============ 交互 ============ */
+function showToast(t){
+  const el=document.getElementById('toast');
+  el.textContent=t; el.classList.add('show');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),1800);
+}
+const mask=document.getElementById('mask');
+document.getElementById('scroll').addEventListener('click',e=>{
+  if(e.target.closest('#openAward')){ mask.classList.add('show'); renderDialog(); }
+});
+document.getElementById('dClose').addEventListener('click',()=>mask.classList.remove('show'));
+mask.addEventListener('click',e=>{ if(e.target===mask) mask.classList.remove('show'); });
+
+/* ============ 侧栏（仅高亮，不切换视图） ============ */
+document.querySelectorAll('#sidebar .nav-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    document.querySelectorAll('#sidebar .nav-item').forEach(x=>x.classList.remove('sel'));
+    item.classList.add('sel');
+  });
+});
+document.querySelector('#sidebar .nav-item[data-nav="category"]').classList.add('sel');
+
+/* ============ 主题切换 ============ */
+const THEME_ORDER=['epic','gothic','wuxia','steampunk'];
+let themeIdx=0; const state={theme:'epic'};
+function applyTheme(id){
+  document.documentElement.setAttribute('data-theme', id||'epic');
+  document.querySelectorAll('.theme-pick button').forEach(b=>b.classList.toggle('active', b.dataset.th===id));
+}
+document.querySelectorAll('.theme-pick button').forEach(b=>{
+  b.addEventListener('click',()=>{ state.theme=b.dataset.th; applyTheme(state.theme); });
+});
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  themeIdx=(themeIdx+1)%THEME_ORDER.length; state.theme=THEME_ORDER[themeIdx]; applyTheme(state.theme);
+});
+
+/* ============ 主渲染 ============ */
+function render(){
+  const sc=document.getElementById('scroll');
+  sc.innerHTML=renderDetail();
+  sc.scrollTop=0;
+  applyTheme(state.theme);
+}
+render();
+</script>
+
+<!-- ===== 透明通道快验：当前 Textures/Medals/ 全部 6 张中文图（GDI+ 逐像素检测，2026-08-15） =====
+     数据：透明占比 / 半透明占比；半透>8% 视为边缘羽化过重（见先进团体金牌）。
+     深底 + 白底对照，直接肉眼确认 RGBA 透明是否正确。 -->
+<div style="position:fixed;right:14px;bottom:14px;z-index:99;max-width:340px;
+            background:rgba(0,0,0,.62);padding:10px 12px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.5);
+            font:12px/1.4 sans-serif;color:#ddd;">
+  <div style="font-weight:700;color:#d4af37;margin-bottom:6px;">透明通道快验 · 6 张中文勋章</div>
+  <div id="alphaProbe" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+  <div style="margin-top:6px;color:#9a9a9a;font-size:11px;">深底(左) / 白底(右) 对照 · 透明像素占比见角标</div>
+</div>
+<script>
+/* 与 medalImg 同路径基准：../../../Textures/Medals/<name>.png
+   alpha 数据来自 GDI+ 逐像素扫描（alpha==0 计透明，0<alpha<255 计半透） */
+const ALPHA_PROBE = [
+  { name:'先进团体银牌.png', t:'60.1%', s:'2.1%' },
+  { name:'先进团体铜牌.png', t:'60.0%', s:'2.1%' },
+  { name:'劳动勋章金牌.png', t:'59.6%', s:'0.9%' },
+  { name:'劳动勋章银牌.png', t:'58.7%', s:'1.5%' },
+  { name:'先进团体金牌.png', t:'56.6%', s:'43.4%' },
+  { name:'劳动勋章铜牌.png', t:'56.2%', s:'7.7%' }
+];
+(function(){
+  const host = document.getElementById('alphaProbe');
+  if(!host) return;
+  host.innerHTML = ALPHA_PROBE.map(m=>{
+    const warn = parseFloat(m.s) > 8 ? 'color:#c04732;' : '';
+    return `<div style="text-align:center;width:74px;">
+      <div style="display:flex;gap:2px;justify-content:center;">
+        <div style="width:34px;height:40px;background:#1E1E1E;display:flex;align-items:center;justify-content:center;border-radius:4px;">
+          <img src="../../../Textures/Medals/${m.name}" style="width:30px;height:34px;object-fit:contain;display:block;" onerror="this.style.background='#c00';this.alt='✗';">
+        </div>
+        <div style="width:34px;height:40px;background:#fff;display:flex;align-items:center;justify-content:center;border-radius:4px;">
+          <img src="../../../Textures/Medals/${m.name}" style="width:30px;height:34px;object-fit:contain;display:block;" onerror="this.style.background='#c00';this.alt='✗';">
+        </div>
+      </div>
+      <div style="margin-top:3px;font-size:10px;">${m.name.replace('.png','')}</div>
+      <div style="font-size:10px;color:#75c57f;">透 ${m.t}</div>
+      <div style="font-size:10px;${warn}">半透 ${m.s}</div>
+    </div>`;
+  }).join('');
+})();
+</script>
+<!-- ===== /透明通道快验 ===== -->
+
+</body>
+</html>

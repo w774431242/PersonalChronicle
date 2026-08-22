@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Per-language overrides for ArchiveCategoryDef labels.
+  Base Def labels in Defs/ArchiveCategoryDefs.xml are Chinese; these inject
+  English so English players keep seeing English UI copy.
+  DefInjected is re-applied on in-game language switch (live, no restart).
+-->
+<LanguageData>
+  <PersonalChronicleCategoryPawn.label>Pawns</PersonalChronicleCategoryPawn.label>
+  <PersonalChronicleCategoryThing.label>Items</PersonalChronicleCategoryThing.label>
+  <PersonalChronicleCategoryBattle.label>Battles</PersonalChronicleCategoryBattle.label>
+  <PersonalChronicleCategoryLocation.label>Locations</PersonalChronicleCategoryLocation.label>
+</LanguageData>

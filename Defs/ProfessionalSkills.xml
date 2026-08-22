@@ -66,6 +66,430 @@
     <order>3</order>
   </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
 
+  <!-- ===================== 占位二级方向：其余 11 个一级专业（2026-08-22 前端占位，待后端垂直切片落地技能/效果）
+       每个专业 4 个方向，defName = <Profession>_<Trait>；labelKey / specializationDescKey 走动态翻译键；
+       specializationKey 为方向特化点语义键（全局唯一，命名 <Profession>_<Trait>）；colorHex 占位调色。
+       暂不挂 skillDefNames —— 前端 SkillsOfDirection 空时显示"待落地"，不阻断 UI。
+  -->
+
+  <!-- 工程 Engineering -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Engineering_Structure</defName>
+    <profession>Engineering</profession>
+    <colorHex>#6f9fd0</colorHex>
+    <labelKey>Profession.Direction.Engineering_Structure.Label</labelKey>
+    <specializationKey>Engineering_Structure</specializationKey>
+    <specializationDescKey>Profession.Direction.Engineering_Structure.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Engineering_Power</defName>
+    <profession>Engineering</profession>
+    <colorHex>#7fb0c8</colorHex>
+    <labelKey>Profession.Direction.Engineering_Power.Label</labelKey>
+    <specializationKey>Engineering_Power</specializationKey>
+    <specializationDescKey>Profession.Direction.Engineering_Power.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Engineering_Control</defName>
+    <profession>Engineering</profession>
+    <colorHex>#8fb8d8</colorHex>
+    <labelKey>Profession.Direction.Engineering_Control.Label</labelKey>
+    <specializationKey>Engineering_Control</specializationKey>
+    <specializationDescKey>Profession.Direction.Engineering_Control.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Engineering_Precision</defName>
+    <profession>Engineering</profession>
+    <colorHex>#9fc4e0</colorHex>
+    <labelKey>Profession.Direction.Engineering_Precision.Label</labelKey>
+    <specializationKey>Engineering_Precision</specializationKey>
+    <specializationDescKey>Profession.Direction.Engineering_Precision.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 农业 Agriculture -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Agriculture_Tillage</defName>
+    <profession>Agriculture</profession>
+    <colorHex>#8bbf6a</colorHex>
+    <labelKey>Profession.Direction.Agriculture_Tillage.Label</labelKey>
+    <specializationKey>Agriculture_Tillage</specializationKey>
+    <specializationDescKey>Profession.Direction.Agriculture_Tillage.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Agriculture_Irrigation</defName>
+    <profession>Agriculture</profession>
+    <colorHex>#9ccb78</colorHex>
+    <labelKey>Profession.Direction.Agriculture_Irrigation.Label</labelKey>
+    <specializationKey>Agriculture_Irrigation</specializationKey>
+    <specializationDescKey>Profession.Direction.Agriculture_Irrigation.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Agriculture_Breeding</defName>
+    <profession>Agriculture</profession>
+    <colorHex>#aad884</colorHex>
+    <labelKey>Profession.Direction.Agriculture_Breeding.Label</labelKey>
+    <specializationKey>Agriculture_Breeding</specializationKey>
+    <specializationDescKey>Profession.Direction.Agriculture_Breeding.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Agriculture_Greenhouse</defName>
+    <profession>Agriculture</profession>
+    <colorHex>#bcdf90</colorHex>
+    <labelKey>Profession.Direction.Agriculture_Greenhouse.Label</labelKey>
+    <specializationKey>Agriculture_Greenhouse</specializationKey>
+    <specializationDescKey>Profession.Direction.Agriculture_Greenhouse.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 林业 Forestry -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Forestry_Harvest</defName>
+    <profession>Forestry</profession>
+    <colorHex>#7a9b5a</colorHex>
+    <labelKey>Profession.Direction.Forestry_Harvest.Label</labelKey>
+    <specializationKey>Forestry_Harvest</specializationKey>
+    <specializationDescKey>Profession.Direction.Forestry_Harvest.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Forestry_Nursery</defName>
+    <profession>Forestry</profession>
+    <colorHex>#8aa868</colorHex>
+    <labelKey>Profession.Direction.Forestry_Nursery.Label</labelKey>
+    <specializationKey>Forestry_Nursery</specializationKey>
+    <specializationDescKey>Profession.Direction.Forestry_Nursery.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Forestry_Lumber</defName>
+    <profession>Forestry</profession>
+    <colorHex>#9ab476</colorHex>
+    <labelKey>Profession.Direction.Forestry_Lumber.Label</labelKey>
+    <specializationKey>Forestry_Lumber</specializationKey>
+    <specializationDescKey>Profession.Direction.Forestry_Lumber.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Forestry_Silviculture</defName>
+    <profession>Forestry</profession>
+    <colorHex>#aac084</colorHex>
+    <labelKey>Profession.Direction.Forestry_Silviculture.Label</labelKey>
+    <specializationKey>Forestry_Silviculture</specializationKey>
+    <specializationDescKey>Profession.Direction.Forestry_Silviculture.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 畜牧 AnimalHusbandry -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>AnimalHusbandry_Husbandry</defName>
+    <profession>AnimalHusbandry</profession>
+    <colorHex>#d09a5a</colorHex>
+    <labelKey>Profession.Direction.AnimalHusbandry_Husbandry.Label</labelKey>
+    <specializationKey>AnimalHusbandry_Husbandry</specializationKey>
+    <specializationDescKey>Profession.Direction.AnimalHusbandry_Husbandry.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>AnimalHusbandry_Breeding</defName>
+    <profession>AnimalHusbandry</profession>
+    <colorHex>#d8a86a</colorHex>
+    <labelKey>Profession.Direction.AnimalHusbandry_Breeding.Label</labelKey>
+    <specializationKey>AnimalHusbandry_Breeding</specializationKey>
+    <specializationDescKey>Profession.Direction.AnimalHusbandry_Breeding.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>AnimalHusbandry_Veterinary</defName>
+    <profession>AnimalHusbandry</profession>
+    <colorHex>#e0b67a</colorHex>
+    <labelKey>Profession.Direction.AnimalHusbandry_Veterinary.Label</labelKey>
+    <specializationKey>AnimalHusbandry_Veterinary</specializationKey>
+    <specializationDescKey>Profession.Direction.AnimalHusbandry_Veterinary.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>AnimalHusbandry_Pasture</defName>
+    <profession>AnimalHusbandry</profession>
+    <colorHex>#e8c48a</colorHex>
+    <labelKey>Profession.Direction.AnimalHusbandry_Pasture.Label</labelKey>
+    <specializationKey>AnimalHusbandry_Pasture</specializationKey>
+    <specializationDescKey>Profession.Direction.AnimalHusbandry_Pasture.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 医学 Medicine -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Medicine_Clinical</defName>
+    <profession>Medicine</profession>
+    <colorHex>#e0e0e0</colorHex>
+    <labelKey>Profession.Direction.Medicine_Clinical.Label</labelKey>
+    <specializationKey>Medicine_Clinical</specializationKey>
+    <specializationDescKey>Profession.Direction.Medicine_Clinical.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Medicine_Surgery</defName>
+    <profession>Medicine</profession>
+    <colorHex>#e8d0d0</colorHex>
+    <labelKey>Profession.Direction.Medicine_Surgery.Label</labelKey>
+    <specializationKey>Medicine_Surgery</specializationKey>
+    <specializationDescKey>Profession.Direction.Medicine_Surgery.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Medicine_Pharmacy</defName>
+    <profession>Medicine</profession>
+    <colorHex>#f0e0e0</colorHex>
+    <labelKey>Profession.Direction.Medicine_Pharmacy.Label</labelKey>
+    <specializationKey>Medicine_Pharmacy</specializationKey>
+    <specializationDescKey>Profession.Direction.Medicine_Pharmacy.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Medicine_Prevention</defName>
+    <profession>Medicine</profession>
+    <colorHex>#f8ecec</colorHex>
+    <labelKey>Profession.Direction.Medicine_Prevention.Label</labelKey>
+    <specializationKey>Medicine_Prevention</specializationKey>
+    <specializationDescKey>Profession.Direction.Medicine_Prevention.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 武器 Weapons -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Weapons_Melee</defName>
+    <profession>Weapons</profession>
+    <colorHex>#d06060</colorHex>
+    <labelKey>Profession.Direction.Weapons_Melee.Label</labelKey>
+    <specializationKey>Weapons_Melee</specializationKey>
+    <specializationDescKey>Profession.Direction.Weapons_Melee.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Weapons_Ranged</defName>
+    <profession>Weapons</profession>
+    <colorHex>#d87878</colorHex>
+    <labelKey>Profession.Direction.Weapons_Ranged.Label</labelKey>
+    <specializationKey>Weapons_Ranged</specializationKey>
+    <specializationDescKey>Profession.Direction.Weapons_Ranged.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Weapons_Heavy</defName>
+    <profession>Weapons</profession>
+    <colorHex>#e09090</colorHex>
+    <labelKey>Profession.Direction.Weapons_Heavy.Label</labelKey>
+    <specializationKey>Weapons_Heavy</specializationKey>
+    <specializationDescKey>Profession.Direction.Weapons_Heavy.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Weapons_Ammo</defName>
+    <profession>Weapons</profession>
+    <colorHex>#e8a8a8</colorHex>
+    <labelKey>Profession.Direction.Weapons_Ammo.Label</labelKey>
+    <specializationKey>Weapons_Ammo</specializationKey>
+    <specializationDescKey>Profession.Direction.Weapons_Ammo.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 采矿 Mining -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Mining_Openpit</defName>
+    <profession>Mining</profession>
+    <colorHex>#9a9a9a</colorHex>
+    <labelKey>Profession.Direction.Mining_Openpit.Label</labelKey>
+    <specializationKey>Mining_Openpit</specializationKey>
+    <specializationDescKey>Profession.Direction.Mining_Openpit.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Mining_Underground</defName>
+    <profession>Mining</profession>
+    <colorHex>#a8a8a8</colorHex>
+    <labelKey>Profession.Direction.Mining_Underground.Label</labelKey>
+    <specializationKey>Mining_Underground</specializationKey>
+    <specializationDescKey>Profession.Direction.Mining_Underground.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Mining_Beneficiation</defName>
+    <profession>Mining</profession>
+    <colorHex>#b6b6b6</colorHex>
+    <labelKey>Profession.Direction.Mining_Beneficiation.Label</labelKey>
+    <specializationKey>Mining_Beneficiation</specializationKey>
+    <specializationDescKey>Profession.Direction.Mining_Beneficiation.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Mining_Blasting</defName>
+    <profession>Mining</profession>
+    <colorHex>#c4c4c4</colorHex>
+    <labelKey>Profession.Direction.Mining_Blasting.Label</labelKey>
+    <specializationKey>Mining_Blasting</specializationKey>
+    <specializationDescKey>Profession.Direction.Mining_Blasting.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 研究 Research -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Research_Theory</defName>
+    <profession>Research</profession>
+    <colorHex>#a078c0</colorHex>
+    <labelKey>Profession.Direction.Research_Theory.Label</labelKey>
+    <specializationKey>Research_Theory</specializationKey>
+    <specializationDescKey>Profession.Direction.Research_Theory.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Research_Experiment</defName>
+    <profession>Research</profession>
+    <colorHex>#b088d0</colorHex>
+    <labelKey>Profession.Direction.Research_Experiment.Label</labelKey>
+    <specializationKey>Research_Experiment</specializationKey>
+    <specializationDescKey>Profession.Direction.Research_Experiment.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Research_Applied</defName>
+    <profession>Research</profession>
+    <colorHex>#c098e0</colorHex>
+    <labelKey>Profession.Direction.Research_Applied.Label</labelKey>
+    <specializationKey>Research_Applied</specializationKey>
+    <specializationDescKey>Profession.Direction.Research_Applied.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Research_Literature</defName>
+    <profession>Research</profession>
+    <colorHex>#d0a8f0</colorHex>
+    <labelKey>Profession.Direction.Research_Literature.Label</labelKey>
+    <specializationKey>Research_Literature</specializationKey>
+    <specializationDescKey>Profession.Direction.Research_Literature.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 烹饪 Cooking -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Cooking_Staple</defName>
+    <profession>Cooking</profession>
+    <colorHex>#e0c060</colorHex>
+    <labelKey>Profession.Direction.Cooking_Staple.Label</labelKey>
+    <specializationKey>Cooking_Staple</specializationKey>
+    <specializationDescKey>Profession.Direction.Cooking_Staple.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Cooking_Cuisine</defName>
+    <profession>Cooking</profession>
+    <colorHex>#e8cc78</colorHex>
+    <labelKey>Profession.Direction.Cooking_Cuisine.Label</labelKey>
+    <specializationKey>Cooking_Cuisine</specializationKey>
+    <specializationDescKey>Profession.Direction.Cooking_Cuisine.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Cooking_Baking</defName>
+    <profession>Cooking</profession>
+    <colorHex>#f0d890</colorHex>
+    <labelKey>Profession.Direction.Cooking_Baking.Label</labelKey>
+    <specializationKey>Cooking_Baking</specializationKey>
+    <specializationDescKey>Profession.Direction.Cooking_Baking.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Cooking_Preservation</defName>
+    <profession>Cooking</profession>
+    <colorHex>#f8e4a8</colorHex>
+    <labelKey>Profession.Direction.Cooking_Preservation.Label</labelKey>
+    <specializationKey>Cooking_Preservation</specializationKey>
+    <specializationDescKey>Profession.Direction.Cooking_Preservation.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 艺术 Art -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Art_Painting</defName>
+    <profession>Art</profession>
+    <colorHex>#e0a0c0</colorHex>
+    <labelKey>Profession.Direction.Art_Painting.Label</labelKey>
+    <specializationKey>Art_Painting</specializationKey>
+    <specializationDescKey>Profession.Direction.Art_Painting.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Art_Sculpture</defName>
+    <profession>Art</profession>
+    <colorHex>#e8b0c8</colorHex>
+    <labelKey>Profession.Direction.Art_Sculpture.Label</labelKey>
+    <specializationKey>Art_Sculpture</specializationKey>
+    <specializationDescKey>Profession.Direction.Art_Sculpture.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Art_Music</defName>
+    <profession>Art</profession>
+    <colorHex>#f0c0d0</colorHex>
+    <labelKey>Profession.Direction.Art_Music.Label</labelKey>
+    <specializationKey>Art_Music</specializationKey>
+    <specializationDescKey>Profession.Direction.Art_Music.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Art_Craft</defName>
+    <profession>Art</profession>
+    <colorHex>#f8d0d8</colorHex>
+    <labelKey>Profession.Direction.Art_Craft.Label</labelKey>
+    <specializationKey>Art_Craft</specializationKey>
+    <specializationDescKey>Profession.Direction.Art_Craft.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
+  <!-- 管理 Management -->
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Management_Dispatch</defName>
+    <profession>Management</profession>
+    <colorHex>#60c0c0</colorHex>
+    <labelKey>Profession.Direction.Management_Dispatch.Label</labelKey>
+    <specializationKey>Management_Dispatch</specializationKey>
+    <specializationDescKey>Profession.Direction.Management_Dispatch.Specialization</specializationDescKey>
+    <order>0</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Management_Logistics</defName>
+    <profession>Management</profession>
+    <colorHex>#78c8c8</colorHex>
+    <labelKey>Profession.Direction.Management_Logistics.Label</labelKey>
+    <specializationKey>Management_Logistics</specializationKey>
+    <specializationDescKey>Profession.Direction.Management_Logistics.Specialization</specializationDescKey>
+    <order>1</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Management_Personnel</defName>
+    <profession>Management</profession>
+    <colorHex>#90d0d0</colorHex>
+    <labelKey>Profession.Direction.Management_Personnel.Label</labelKey>
+    <specializationKey>Management_Personnel</specializationKey>
+    <specializationDescKey>Profession.Direction.Management_Personnel.Specialization</specializationDescKey>
+    <order>2</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+    <defName>Management_Diplomacy</defName>
+    <profession>Management</profession>
+    <colorHex>#a8d8d8</colorHex>
+    <labelKey>Profession.Direction.Management_Diplomacy.Label</labelKey>
+    <specializationKey>Management_Diplomacy</specializationKey>
+    <specializationDescKey>Profession.Direction.Management_Diplomacy.Specialization</specializationDescKey>
+    <order>3</order>
+  </PersonalChronicle.Domain.Profession.ProfessionalDirectionDef>
+
   <!-- ===================== 专业技能：精密制造（首个完整闭环） ===================== -->
   <PersonalChronicle.Domain.Profession.ProfessionalSkillDef>
     <defName>ProfessionalSkill_PrecisionManufacturing</defName>
@@ -180,7 +604,6 @@
   -->
   <PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
     <defName>ProfessionalRating_Proficient</defName>
-    <labelKey>Professional.Rating.Proficient.Label</labelKey>
     <minLevel>10</minLevel>
     <workSpeedWeight>0.03</workSpeedWeight>
     <qualityBiasWeight>0.00</qualityBiasWeight>
@@ -188,7 +611,6 @@
   </PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
   <PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
     <defName>ProfessionalRating_Specialist</defName>
-    <labelKey>Professional.Rating.Specialist.Label</labelKey>
     <minLevel>25</minLevel>
     <workSpeedWeight>0.05</workSpeedWeight>
     <qualityBiasWeight>0.02</qualityBiasWeight>
@@ -196,7 +618,6 @@
   </PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
   <PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
     <defName>ProfessionalRating_Senior</defName>
-    <labelKey>Professional.Rating.Senior.Label</labelKey>
     <minLevel>38</minLevel>
     <workSpeedWeight>0.08</workSpeedWeight>
     <qualityBiasWeight>0.04</qualityBiasWeight>
@@ -204,7 +625,6 @@
   </PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
   <PersonalChronicle.Domain.Profession.ProfessionalRatingDef>
     <defName>ProfessionalRating_Master</defName>
-    <labelKey>Professional.Rating.Master.Label</labelKey>
     <minLevel>45</minLevel>
     <workSpeedWeight>0.10</workSpeedWeight>
     <qualityBiasWeight>0.06</qualityBiasWeight>

@@ -47,7 +47,7 @@ namespace PersonalChronicle.Archive
             }
 
             // 当前申报档 = 已授予最高档 + 1
-            int grantedIdx = HighestGrantedTier(cd);
+            int grantedIdx = QualificationFlowService.GrantedTierIndex(cd, QualTierKeys);
             int applyIdx = grantedIdx + 1;
             bool capped = applyIdx >= QualTierKeys.Length;
 
@@ -55,19 +55,21 @@ namespace PersonalChronicle.Archive
             QualificationDef def = capped ? null
                 : DefDatabase<QualificationDef>.GetNamedSilentFail("Q_Precision_" + QualTierKeys[applyIdx]);
 
-            // 滚动视图容器
+            // 滚动视图容器（原生 BeginScrollView 用法，对齐 ArchiveMainTabWindow：
+            // 不自定义背景，让 rimworld 窗口默认背景生效，避免 TintedBox 干扰造成的白屏）。
             Rect view = new Rect(rect.x, rect.y, rect.width, rect.height);
-            float contentW = view.width - 18f;
+            float contentW = view.width - 16f;
 
             // 计算全部 6 区块高度（封顶时省略 ②③④⑤ 操作区，仅留 ①⑥）
             float totalH = CalcQualHeight(cd, def, capped, contentW);
-            // v4.17 体检：viewRect 起点须与内容坐标一致（x=view.x、y=0）——
-            // 旧 (0,0) 起点 + 内容绝对坐标混合导致整页右移 12px、右缘压滚动条。
-            Widgets.BeginScrollView(rect, ref scroll,
-                new Rect(view.x, 0f, view.width, Mathf.Max(totalH, 1f)));
-            float y = 0f;
+            Rect qualViewRect = new Rect(view.x, view.y, view.width - 16f, Mathf.Max(totalH, view.height, 1f));
+            Widgets.BeginScrollView(rect, ref scroll, qualViewRect);
+            float y = view.y + 4f;
 
-            // 预计算流程态（各区块共享；v4.17 体检：全部子块复用，不再各自扫描事件流）。
+            // 身份头（参考 P9 预览 personbar）：方向 + 当前档 + 已获状态——让玩家初始视图就能直观看到 P9 流程上下文
+            y = DrawQualHeaderBlock(view, contentW, cd, def, grantedIdx, applyIdx, capped, pawn, y);
+
+            // 预计算流程态（各区块共享；全部经 QualificationFlowService 判定，UI 不重复实现业务规则，UI-001）。
             // 封顶/无 Def 时 def==null，① 只画阶梯（条件行省略），这些值不参与绘制。
             int level = 0;
             long spanTicks = 0L;
@@ -79,27 +81,13 @@ namespace PersonalChronicle.Archive
             string gateExam = string.Empty;
             if (def != null)
             {
-                if (cd.Professional != null && !string.IsNullOrEmpty(def.professionalSkillDefName))
-                {
-                    ProfessionalSkillData sd = cd.Professional.GetSkill(def.professionalSkillDefName);
-                    if (sd != null) level = sd.level;
-                }
-                if (cd.Events != null && cd.Events.Count > 0)
-                {
-                    long first = long.MaxValue, last = 0L;
-                    for (int i = 0; i < cd.Events.Count; i++)
-                    {
-                        if (cd.Events[i] == null) continue;
-                        if (cd.Events[i].Tick < first) first = cd.Events[i].Tick;
-                        if (cd.Events[i].Tick > last) last = cd.Events[i].Tick;
-                    }
-                    if (first != long.MaxValue) spanTicks = last - first;
-                }
-                practicalPassed = FlowPassed(cd, def.defName, "practical");
+                level = QualificationFlowService.CalcSkillLevel(cd, def.professionalSkillDefName);
+                spanTicks = QualificationFlowService.CalcCareerSpanTicks(cd);
+                practicalPassed = QualificationFlowService.FlowPassed(cd, def.defName, "practical");
                 theoryPassed = QualificationFlowService.TheoryPassedFor(po, def.defName);
-                thesisDone = FlowPassed(cd, def.defName, "thesis");
-                defenseDone = FlowPassed(cd, def.defName, "defense");
-                hasActiveExam = HasActiveExam(cd, def.defName);
+                thesisDone = QualificationFlowService.FlowPassed(cd, def.defName, "thesis");
+                defenseDone = QualificationFlowService.FlowPassed(cd, def.defName, "defense");
+                hasActiveExam = QualificationFlowService.HasActiveExam(cd, def.defName);
                 gateExam = QualificationFlowService.CanApplyExam(def, level, spanTicks, hasActiveExam);
             }
             bool canApplyExam = gateExam == QualificationFlowService.Ok;
@@ -148,53 +136,43 @@ namespace PersonalChronicle.Archive
             int level, long spanTicks, bool practicalPassed, bool theoryPassed,
             bool thesisDone, bool defenseDone)
         {
-            float pad = UITheme.PanelPadding;
-            // 阶梯 5 档
-            float blockTop = y;
+            // 阶梯 5 档：纵向列表（每档一行），避免窄窗下 5 横卡挤压导致职称名截断（P0）。
             UIComponents.SectionTitle(new Rect(view.x, y, contentW, 24f), y,
                 "PersonalChronicle.UI.Career.Qual.Ladder".Translate());
             y += 28f;
-            float stepW = (contentW - pad * 2f - 4f * 6f) / 5f;
-            float innerX = view.x + pad;
+            float stepH = 24f;
+            float stepGap = 4f;
             for (int i = 0; i < QualTierKeys.Length; i++)
             {
-                Rect step = new Rect(innerX + i * (stepW + 6f), y, stepW, 52f);
-                Color fill = UITheme.Panel;
+                Rect step = new Rect(view.x, y + i * (stepH + stepGap), contentW, stepH);
                 string state = "locked";
                 if (i <= grantedIdx) state = "granted";
                 else if (i == applyIdx && !capped) state = "applying";
-                if (i == applyIdx && !capped)
-                {
-                    fill = UITheme.PanelRaised;
-                    UIComponents.Border(step, UITheme.Accent);
-                }
-                else if (state == "granted")
-                {
-                    fill = UITheme.PanelRaised;
-                    UIComponents.Border(step, UITheme.PillGreen);
-                }
-                else
-                {
-                    UIComponents.Border(step, UITheme.BorderSoft);
-                }
+                // 状态填充色区分：granted/applying 抬升底，locked 平底（边框+文字色三态区分）
+                Color fill = state == "locked" ? UITheme.Panel : UITheme.PanelRaised;
+                Color borderCol = state == "granted" ? UITheme.PillGreen
+                    : (state == "applying" ? UITheme.Accent : UITheme.BorderSoft);
+                Color textCol = state == "granted" ? UITheme.Alive
+                    : (state == "applying" ? UITheme.Accent : UITheme.Dim);
                 UIComponents.TintedBox(step, fill);
-                // v4.17 体检：状态行 12f→18f（CJK「已授予/申请中/未解锁」Tiny 需 ≥18f）；
-                // 门槛行与职称名行相应压缩，阶梯 52f 内恰好容纳。
-                UIComponents.Label(new Rect(step.x + 4f, step.y + 3f, step.width - 8f, 12f),
-                    "Lv" + (i + 1) + " · ≥" + QualTierLevels[i] + " · ≥" + QualTierHours[i] + "h",
-                    UITheme.FontLabel, UITheme.Muted);
-                UIComponents.Label(new Rect(step.x + 4f, step.y + 17f, step.width - 8f, 16f),
-                    UIComponents.TruncateToWidth(QualTierLabel(i), step.width - 8f, UITheme.FontLabel),
-                    UITheme.FontLabel, state == "granted" ? UITheme.PillGreen : (state == "applying" ? UITheme.Accent : UITheme.Dim));
+                UIComponents.Border(step, borderCol);
+                // Lv + 职称名（左）
+                UIComponents.Label(new Rect(step.x + 8f, step.y, step.width * 0.62f, stepH),
+                    "Lv" + (i + 1) + " · " + QualTierLabel(i),
+                    UITheme.FontBody, textCol, TextAnchor.MiddleLeft);
+                // 门槛（中）
+                UIComponents.Label(new Rect(step.x + step.width * 0.62f, step.y, step.width * 0.22f, stepH),
+                    "≥" + QualTierLevels[i] + " · ≥" + QualTierHours[i] + "h",
+                    UITheme.FontLabel, UITheme.Muted, TextAnchor.MiddleLeft);
+                // 状态（右）
                 string stLabel = state == "granted"
                     ? "PersonalChronicle.UI.Career.Qual.Step.Granted".Translate()
                     : (state == "applying" ? "PersonalChronicle.UI.Career.Qual.Step.Applying".Translate()
                         : "PersonalChronicle.UI.Career.Qual.Step.Locked".Translate());
-                UIComponents.Label(new Rect(step.x + 4f, step.y + 33f, step.width - 8f, 18f),
-                    stLabel, UITheme.FontLabel, state == "granted" ? UITheme.PillGreen : (state == "applying" ? UITheme.Accent : UITheme.Dim));
+                UIComponents.Label(new Rect(step.x + step.width * 0.84f, step.y, step.width * 0.16f - 6f, stepH),
+                    stLabel, UITheme.FontLabel, textCol, TextAnchor.MiddleRight);
             }
-            y += 58f;
-            y += UITheme.SpaceMd;
+            y += QualTierKeys.Length * (stepH + stepGap) + UITheme.SpaceMd;
 
             if (def != null)
             {
@@ -204,56 +182,100 @@ namespace PersonalChronicle.Archive
                 y += 28f;
 
                 QualificationProgress progress = cd.Qualification != null ? cd.Qualification.Get(def.defName) : null;
+                // 注：progress/Review 状态读取为展示所需实时数据，业务判定（IsDue）为 Domain 纯函数，与 Overview 页一致。
                 bool reviewing = progress != null && progress.ReviewStartedTick > 0L
                     && !QualificationReview.IsDue(progress.ReviewStartedTick, progress.ReviewDays, Find.TickManager.TicksGame);
                 bool reviewDone = progress != null && progress.ReviewStartedTick > 0L
                     && QualificationReview.IsDue(progress.ReviewStartedTick, progress.ReviewDays, Find.TickManager.TicksGame);
-                float composite = 0.25f * (practicalPassed ? 90f : 0f)
-                    + 0.20f * (practicalPassed ? 85f : 0f)
-                    + 0.20f * (thesisDone && defenseDone ? 88f : 0f)
-                    + 0.15f * (thesisDone && defenseDone ? 90f : 0f)
-                    + 0.20f * (level / 50f * 100f);
-
-                string dirName = !string.IsNullOrEmpty(def.LabelCap) ? def.LabelCap : def.defName;
-                DrawConditionRow(view, ref y, contentW, "PersonalChronicle.UI.Career.Qual.Cond.Level".Translate(),
-                    "PersonalChronicle.UI.Career.Qual.Cond.Level.Note".Translate(dirName, def.requiredMinLevel), level >= def.requiredMinLevel);
-                DrawConditionRow(view, ref y, contentW, "PersonalChronicle.UI.Career.Qual.Cond.Time".Translate(),
-                    "PersonalChronicle.UI.Career.Qual.Cond.Time.Note".Translate(def.requiredCareerTimeTicks), spanTicks >= def.requiredCareerTimeTicks);
-                DrawConditionRow(view, ref y, contentW, "PersonalChronicle.UI.Career.Qual.Cond.Score".Translate(),
-                    "PersonalChronicle.UI.Career.Qual.Cond.Score.Note".Translate(def.minimumScore, composite.ToString("0.0")), composite >= def.minimumScore);
-                DrawConditionRow(view, ref y, contentW, "PersonalChronicle.UI.Career.Qual.Cond.Practical".Translate(),
-                    practicalPassed
-                        ? "PersonalChronicle.UI.Career.Qual.Cond.Practical.Passed".Translate()
-                        : (HasActiveExam(cd, def.defName) ? "PersonalChronicle.UI.Career.Qual.Cond.Practical.Active".Translate()
-                            : "PersonalChronicle.UI.Career.Qual.Cond.Practical.None".Translate()),
-                    practicalPassed);
-                DrawConditionRow(view, ref y, contentW, "PersonalChronicle.UI.Career.Qual.Cond.Theory".Translate(),
-                    theoryPassed ? "PersonalChronicle.UI.Career.Qual.Cond.Theory.Passed".Translate()
-                        : "PersonalChronicle.UI.Career.Qual.Cond.Theory.Todo".Translate(),
-                    theoryPassed);
-                DrawConditionRow(view, ref y, contentW, "PersonalChronicle.UI.Career.Qual.Cond.Paper".Translate(),
-                    defenseDone
-                        ? "PersonalChronicle.UI.Career.Qual.Cond.Paper.Passed".Translate()
-                        : (thesisDone ? "PersonalChronicle.UI.Career.Qual.Cond.Paper.Pending".Translate()
-                            : "PersonalChronicle.UI.Career.Qual.Cond.Paper.Todo".Translate()),
-                    thesisDone && defenseDone);
-                DrawConditionRow(view, ref y, contentW, "PersonalChronicle.UI.Career.Qual.Cond.Review".Translate(),
-                    reviewing
-                        ? "PersonalChronicle.UI.Career.Qual.Cond.Review.Running".Translate()
-                        : (reviewDone ? "PersonalChronicle.UI.Career.Qual.Cond.Review.Done".Translate()
-                            : "PersonalChronicle.UI.Career.Qual.Cond.Review.Todo".Translate()),
-                    reviewDone);
-                y += UITheme.SpaceMd;
+                // 7 行申报条件：复用总览的 BuildQualRows 快照 + DrawQualCell 渲染（v2.0 §14 一致性）
+                // composite 取 QualificationEvaluator.Evaluate 精确值（与 Overview 同口径，不再用粗略公式）
+                float composite = 0f;
+                List<QualificationEvaluator.Eligibility> eligList = QualificationEvaluator.Evaluate(po);
+                for (int ei = 0; ei < eligList.Count; ei++)
+                {
+                    if (eligList[ei] != null && eligList[ei].Def != null
+                        && eligList[ei].Def.defName == def.defName)
+                    {
+                        composite = eligList[ei].CompositeScore;
+                        break;
+                    }
+                }
+                var qualRows = ArchiveUiDataProvider.BuildQualRows(cd, def, composite);
+                if (qualRows != null && qualRows.Count > 0)
+                {
+                    float qRowH = 28f;
+                    float qGap = 6f;
+                    for (int qi = 0; qi < qualRows.Count; qi++)
+                    {
+                        Rect cell = new Rect(view.x, y, contentW, qRowH);
+                        DrawQualCell(cell, qualRows[qi]);
+                        y += qRowH + qGap;
+                    }
+                    y += UITheme.SpaceMd;
+                }
             }
             return y;
         }
 
+        // ============ 身份头（personbar）：方向 + 当前申报档 + 已获最高职称 ============
+        // 参考 P9 资格考试UI预览.html 的 personbar：让玩家初始视图就直观看到 P9 流程上下文。
+        // 当前档名+已获档名都走 UITheme/翻译键，禁止硬编码中文。
+        private float DrawQualHeaderBlock(Rect view, float contentW, CareerData cd, QualificationDef def,
+            int grantedIdx, int applyIdx, bool capped, Pawn pawn, float y)
+        {
+            string pawnName = pawn != null && pawn.LabelCap != null ? pawn.LabelCap : "PersonalChronicle.UI.Career.Qual.Header.Pawn".Translate().ToString();
+            // 方向名：取 def.professionalSkillDefName → ProfessionalSkillDef.LabelCap（走 Def 标准翻译键）
+            string dirName = "PersonalChronicle.UI.Career.Qual.Header.Undefined".Translate().ToString();
+            if (def != null && !string.IsNullOrEmpty(def.professionalSkillDefName))
+            {
+                ProfessionalSkillDef skillDef = DefDatabase<ProfessionalSkillDef>.GetNamedSilentFail(def.professionalSkillDefName);
+                if (skillDef != null) dirName = skillDef.LabelCap.ToString();
+            }
+            string currentTier = capped
+                ? "PersonalChronicle.UI.Career.Qual.Header.Maxed".Translate().ToString()
+                : (applyIdx < QualTierKeys.Length ? QualTierLabel(applyIdx)
+                    : "PersonalChronicle.UI.Career.Qual.Header.Maxed".Translate().ToString());
+            string highestGranted = grantedIdx >= 0
+                ? QualTierLabel(grantedIdx)
+                : "PersonalChronicle.UI.Career.Qual.Header.None".Translate().ToString();
+
+            // 头部面板（36f 高，单行布局：左 = 姓名（小字）+ 方向（强调色）；右 = 已获 + 申报，避免文本被裁切）
+            float padX = UITheme.PanelPadding;
+            float blockH = 36f;
+            Rect block = new Rect(view.x, y, contentW, blockH);
+            UIComponents.Panel(block, UITheme.Panel);
+            UIComponents.Border(block, UITheme.Accent);
+
+            // 左侧：姓名（窄 25% + 方向 25%），固定宽度避免 CalcSize 字体依赖
+            float leftW = contentW * 0.5f;
+            float nameW = leftW * 0.5f;
+            float dirW = leftW * 0.5f;
+            UIComponents.Label(new Rect(block.x + padX, block.y, nameW, blockH),
+                pawnName, UITheme.FontLabel, UITheme.Muted, TextAnchor.MiddleLeft);
+            UIComponents.Label(new Rect(block.x + padX + nameW, block.y, dirW, blockH),
+                dirName, UITheme.FontBody, UITheme.Text, TextAnchor.MiddleLeft);
+
+            // 右侧：已获 + 申报（单行：已获 Alive，申报 Accent）
+            float rx = block.x + contentW * 0.5f;
+            float rw = contentW * 0.5f - padX;
+            string grantedLine = "PersonalChronicle.UI.Career.Qual.Header.Granted".Translate(highestGranted).ToString();
+            string applyingLine = "PersonalChronicle.UI.Career.Qual.Header.Applying".Translate(currentTier).ToString();
+            UIComponents.Label(new Rect(rx, block.y, rw, blockH),
+                grantedLine + "   " + applyingLine,
+                UITheme.FontBody, UITheme.Accent, TextAnchor.MiddleRight);
+
+            return y + blockH + UITheme.SpaceMd;
+        }
+
         // ============ ② 实践考试 ============
+        // v8 体检：始终显示说明 + 要求（件数/最低品质/上限）+ 当前进度，
+        // 不靠占位文字——玩家直观看到「要做多少件 / 当前做了多少」。
         private float DrawPracticalExamBlock(Rect view, float y, float contentW, Pawn pawn, PawnObject po,
             CareerData cd, QualificationDef def, bool canApplyExam, string gateExam, bool hasActiveExam, bool practicalPassed)
         {
             float pad = UITheme.PanelPadding;
-            float blockH = 28f + 30f + 8f + 22f + UITheme.SpaceMd;
+            // 标题28 + 按钮30 + 描述(2行 36) + 要求(3行 54) + 状态(20) + SpaceMd
+            float blockH = 28f + 30f + 36f + 3f * 18f + 20f + UITheme.SpaceMd;
             Rect block = new Rect(view.x, y, contentW, blockH);
             UIComponents.Panel(block, UITheme.Panel);
             UIComponents.Border(block, UITheme.BorderSoft);
@@ -277,40 +299,99 @@ namespace PersonalChronicle.Archive
                 }
             }
 
-            // 任务卡
-            float taskY = btnY + 36f;
-            if (hasActiveExam || practicalPassed)
+            // 说明
+            float descY = btnY + 36f;
+            DrawWrappedDesc(view.x + pad, descY, contentW - pad * 2f,
+                "PersonalChronicle.UI.Career.Qual.Practical.Desc".Translate().ToString(),
+                UITheme.FontLabel, UITheme.Muted, 36f);
+
+            // 当前考试记录（取最新一条匹配档位的）
+            PracticalExamRecord exam = QualificationFlowService.ActiveExam(po != null ? po.CareerData : null, def.defName);
+            // 若已通过但考试记录已被回收，回退到任何 PracticalExamRecord
+            if (exam == null && practicalPassed && cd != null && cd.Exams != null && cd.Exams.Practical != null)
             {
-                PracticalExamRecord exam = ActiveExam(cd, def.defName);
-                if (exam != null)
+                for (int i = cd.Exams.Practical.Count - 1; i >= 0; i--)
                 {
-                    string produced = exam.ProducedQualities != null ? string.Join("、", exam.ProducedQualities.ToArray()) : "";
-                    int maxN = exam.MaxProduced > 0 ? exam.MaxProduced : exam.RequiredCount * 2;
-                    string suffix = exam.Passed
-                        ? "PersonalChronicle.UI.Career.Qual.Task.Passed".Translate(exam.Score.ToString("0.0"))
-                        : (exam.Finished ? "PersonalChronicle.UI.Career.Qual.Task.Failed".Translate()
-                            : "PersonalChronicle.UI.Career.Qual.Task.Active".Translate());
-                    UIComponents.Label(new Rect(view.x + pad, taskY, contentW - pad * 2f, 20f),
-                        "PersonalChronicle.UI.Career.Qual.Task.Label".Translate(
-                            def.defName, exam.RequiredCount, exam.MinQuality, maxN, exam.ProducedCount, produced, suffix),
-                        UITheme.FontLabel, exam.Passed ? UITheme.PillGreen : UITheme.Muted);
+                    if (cd.Exams.Practical[i] != null
+                        && string.Equals(cd.Exams.Practical[i].QualificationDefName, def.defName, System.StringComparison.Ordinal))
+                    {
+                        exam = cd.Exams.Practical[i]; break;
+                    }
+                }
+            }
+
+            float reqY = descY + 40f;
+            if (exam != null)
+            {
+                int maxN = exam.MaxProduced > 0 ? exam.MaxProduced : exam.RequiredCount * 2;
+                DrawCheckRow(view.x + pad, reqY, contentW - pad * 2f,
+                    "PersonalChronicle.UI.Career.Qual.Practical.ReqCount".Translate(exam.RequiredCount.ToString()).ToString(),
+                    exam.RequiredCount > 0);
+                DrawCheckRow(view.x + pad, reqY + 18f, contentW - pad * 2f,
+                    "PersonalChronicle.UI.Career.Qual.Practical.MinQuality".Translate(exam.MinQuality ?? "--").ToString(),
+                    !string.IsNullOrEmpty(exam.MinQuality));
+                DrawCheckRow(view.x + pad, reqY + 36f, contentW - pad * 2f,
+                    "PersonalChronicle.UI.Career.Qual.Practical.MaxCount".Translate(maxN.ToString()).ToString(),
+                    maxN > 0);
+
+                float noteY = reqY + 54f;
+                string noteText;
+                Color noteCol;
+                if (exam.Passed)
+                {
+                    noteText = "PersonalChronicle.UI.Career.Qual.Task.Passed".Translate(exam.Score.ToString("0.0"));
+                    noteCol = UITheme.PillGreen;
+                }
+                else if (exam.Finished)
+                {
+                    noteText = "PersonalChronicle.UI.Career.Qual.Task.Failed".Translate();
+                    noteCol = UITheme.Warn;
                 }
                 else
                 {
-                    UIComponents.Label(new Rect(view.x + pad, taskY, contentW - pad * 2f, 20f),
-                        "PersonalChronicle.UI.Career.Qual.Practical.Passed".Translate(),
-                        UITheme.FontLabel, UITheme.PillGreen);
+                    // 进行中：拼接「当前进度」行
+                    int meetN = 0;
+                    for (int i = 0; i < exam.ProducedQualities.Count; i++)
+                    {
+                        if (!string.IsNullOrEmpty(exam.MinQuality)
+                            && exam.ProducedQualities[i] == exam.MinQuality) meetN++;
+                    }
+                    noteText = "PersonalChronicle.UI.Career.Qual.Practical.Current".Translate(
+                        exam.ProducedCount.ToString(), exam.RequiredCount.ToString(), meetN.ToString());
+                    noteCol = UITheme.Muted;
                 }
+                UIComponents.Label(new Rect(view.x + pad, noteY, contentW - pad * 2f, 20f), noteText,
+                    UITheme.FontLabel, noteCol);
+            }
+            else
+            {
+                // 未报名：仍显示要求（取 Def 默认门槛估算）与状态
+                int reqCount = 3, maxN = 6; // 默认占位（Def 没显式字段，从当前档传统取值）
+                DrawCheckRow(view.x + pad, reqY, contentW - pad * 2f,
+                    "PersonalChronicle.UI.Career.Qual.Practical.ReqCount".Translate(reqCount.ToString()).ToString(), false);
+                DrawCheckRow(view.x + pad, reqY + 18f, contentW - pad * 2f,
+                    "PersonalChronicle.UI.Career.Qual.Practical.MinQuality".Translate("--").ToString(), false);
+                DrawCheckRow(view.x + pad, reqY + 36f, contentW - pad * 2f,
+                    "PersonalChronicle.UI.Career.Qual.Practical.MaxCount".Translate(maxN.ToString()).ToString(), false);
+
+                float noteY = reqY + 54f;
+                UIComponents.Label(new Rect(view.x + pad, noteY, contentW - pad * 2f, 20f),
+                    practicalPassed ? "PersonalChronicle.UI.Career.Qual.Practical.Passed".Translate().ToString()
+                        : "PersonalChronicle.UI.Career.Qual.Practical.NotApplied".Translate().ToString(),
+                    UITheme.FontLabel, practicalPassed ? UITheme.PillGreen : UITheme.Dim);
             }
             return y + blockH;
         }
 
         // ============ ③ 理论考试 ============
+        // v8 体检：始终显示说明 + 4 依据当前评分（Book/Research/Skill/Activity），
+        // 让玩家直观看到 P9 流程进度，不靠占位文字。
         private float DrawTheoryBlock(Rect view, float y, float contentW, Pawn pawn, PawnObject po,
             QualificationDef def, bool practicalPassed, bool theoryPassed, bool canSubmitTheory)
         {
             float pad = UITheme.PanelPadding;
-            float blockH = 28f + 30f + 8f + 20f + UITheme.SpaceMd;
+            // 标题28 + 按钮30 + 描述(2行 36) + 4依据(4×18) + 状态(20) + SpaceMd
+            float blockH = 28f + 30f + 36f + 4f * 18f + 20f + UITheme.SpaceMd;
             Rect block = new Rect(view.x, y, contentW, blockH);
             UIComponents.Panel(block, UITheme.Panel);
             UIComponents.Border(block, UITheme.BorderSoft);
@@ -328,19 +409,72 @@ namespace PersonalChronicle.Archive
                 Messages.Message("PersonalChronicle.UI.Career.Qual.SubmitResult".Translate(r), pawn,
                     r == QualificationFlowService.Ok ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.NeutralEvent);
             }
-            UIComponents.Label(new Rect(view.x + pad, btnY + 36f, contentW - pad * 2f, 20f),
+
+            // 说明（多行 wrap，2 行高）
+            float descY = btnY + 36f;
+            string desc = "PersonalChronicle.UI.Career.Qual.Theory.Desc".Translate().ToString();
+            DrawWrappedDesc(view.x + pad, descY, contentW - pad * 2f, desc, UITheme.FontLabel, UITheme.Muted, 36f);
+
+            // 4 项依据当前评分
+            TheoryExamRecord theoryRec = QualificationFlowService.FindTheoryRecord(po, def.defName);
+            float checkY = descY + 40f;
+            float bookScore = theoryRec != null ? theoryRec.BookScore : 0f;
+            float resScore = theoryRec != null ? theoryRec.ResearchScore : 0f;
+            float skillScore = theoryRec != null ? theoryRec.SkillScore : 0f;
+            float actScore = theoryRec != null ? theoryRec.ActivityScore : 0f;
+            int bookTopics = theoryRec != null && theoryRec.RequiredBookTopics != null ? theoryRec.RequiredBookTopics.Count : 0;
+            int reqResearch = theoryRec != null ? theoryRec.RequiredResearchCount : 0;
+
+            DrawCheckRow(view.x + pad, checkY, contentW - pad * 2f, "PersonalChronicle.UI.Career.Qual.Theory.Book".Translate(bookScore.ToString("0.0"), bookTopics.ToString()).ToString(), bookScore > 0f);
+            DrawCheckRow(view.x + pad, checkY + 18f, contentW - pad * 2f, "PersonalChronicle.UI.Career.Qual.Theory.Research".Translate(resScore.ToString("0.0"), reqResearch.ToString()).ToString(), resScore > 0f);
+            DrawCheckRow(view.x + pad, checkY + 36f, contentW - pad * 2f, "PersonalChronicle.UI.Career.Qual.Theory.Skill".Translate(skillScore.ToString("0.0")).ToString(), skillScore > 0f);
+            DrawCheckRow(view.x + pad, checkY + 54f, contentW - pad * 2f, "PersonalChronicle.UI.Career.Qual.Theory.Activity".Translate(actScore.ToString("0.0")).ToString(), actScore > 0f);
+
+            // 状态
+            float noteY = checkY + 72f;
+            UIComponents.Label(new Rect(view.x + pad, noteY, contentW - pad * 2f, 20f),
                 theoryPassed ? "PersonalChronicle.UI.Career.Qual.Theory.Passed".Translate()
-                    : "PersonalChronicle.UI.Career.Qual.Theory.Todo".Translate(),
+                    : "PersonalChronicle.UI.Career.Qual.Theory.NotApplied".Translate(),
                 UITheme.FontLabel, theoryPassed ? UITheme.PillGreen : UITheme.Dim);
             return y + blockH;
         }
 
+        // ============ helper：绘制 wrap 多行说明（让 Verse.Text 自动 wrap，超高 maxH 不裁剪） ============
+        private static void DrawWrappedDesc(float x, float y, float w, string text, GameFont font, Color col, float maxH)
+        {
+            if (string.IsNullOrEmpty(text)) return;
+            UIComponents.Label(new Rect(x, y, w, maxH), text, font, col);
+        }
+
+        // ============ helper：绘制单行 ✓/○ 进度行 ============
+        private static void DrawCheckRow(float x, float y, float w, string text, bool ok)
+        {
+            Color prevC = GUI.color;
+            GameFont prevF = Verse.Text.Font;
+            try
+            {
+                Rect dot = new Rect(x, y + 4f, 10f, 10f);
+                UIComponents.TintedBox(dot, ok ? UITheme.PillGreen : UITheme.Dim);
+                Rect txt = new Rect(x + 16f, y, w - 16f, 18f);
+                Verse.Text.Font = GameFont.Tiny;
+                GUI.color = ok ? UITheme.Text : UITheme.Muted;
+                Widgets.Label(txt, text);
+            }
+            finally
+            {
+                GUI.color = prevC;
+                Verse.Text.Font = prevF;
+            }
+        }
+
         // ============ ④ 论文 ============
+        // v8 体检：始终显示说明 + 课题 + 引用书籍/研究进度
         private float DrawThesisBlock(Rect view, float y, float contentW, Pawn pawn, PawnObject po,
             QualificationDef def, bool theoryPassed, bool thesisDone, bool canStartThesis, bool canStartDefense)
         {
             float pad = UITheme.PanelPadding;
-            float blockH = 28f + 30f + 8f + 20f + UITheme.SpaceMd;
+            // 标题28 + 按钮30 + 描述(2行 36) + 课题/引用(3×18) + 状态(20) + SpaceMd
+            float blockH = 28f + 30f + 36f + 3f * 18f + 20f + UITheme.SpaceMd;
             Rect block = new Rect(view.x, y, contentW, blockH);
             UIComponents.Panel(block, UITheme.Panel);
             UIComponents.Border(block, UITheme.BorderSoft);
@@ -356,7 +490,35 @@ namespace PersonalChronicle.Archive
             {
                 Find.WindowStack.Add(new Dialog_QualificationFlow(pawn, po, def, "thesis"));
             }
-            UIComponents.Label(new Rect(view.x + pad, btnY + 36f, contentW - pad * 2f, 20f),
+
+            // 说明
+            float descY = btnY + 36f;
+            DrawWrappedDesc(view.x + pad, descY, contentW - pad * 2f,
+                "PersonalChronicle.UI.Career.Qual.Thesis.Desc".Translate().ToString(),
+                UITheme.FontLabel, UITheme.Muted, 36f);
+
+            ThesisEvidence thesis = QualificationFlowService.FindThesisRecord(po, def.defName);
+            float checkY = descY + 40f;
+
+            // 课题行（默认占位）
+            DrawCheckRow(view.x + pad, checkY, contentW - pad * 2f,
+                thesis != null
+                    ? "PersonalChronicle.UI.Career.Qual.Thesis.Topic".Translate(thesis.ThesisId ?? "--").ToString()
+                    : "PersonalChronicle.UI.Career.Qual.Thesis.NoTopic".Translate().ToString(),
+                thesis != null);
+            // 引用书籍
+            DrawCheckRow(view.x + pad, checkY + 18f, contentW - pad * 2f,
+                "PersonalChronicle.UI.Career.Qual.Thesis.CitedBook".Translate(
+                    (thesis != null && thesis.SourceBookIds != null ? thesis.SourceBookIds.Count : 0).ToString()).ToString(),
+                thesis != null && thesis.SourceBookIds != null && thesis.SourceBookIds.Count > 0);
+            // 引用研究
+            DrawCheckRow(view.x + pad, checkY + 36f, contentW - pad * 2f,
+                "PersonalChronicle.UI.Career.Qual.Thesis.CitedResearch".Translate(
+                    (thesis != null && thesis.SourceResearchEventIds != null ? thesis.SourceResearchEventIds.Count : 0).ToString()).ToString(),
+                thesis != null && thesis.SourceResearchEventIds != null && thesis.SourceResearchEventIds.Count > 0);
+
+            float noteY = checkY + 54f;
+            UIComponents.Label(new Rect(view.x + pad, noteY, contentW - pad * 2f, 20f),
                 thesisDone ? "PersonalChronicle.UI.Career.Qual.Thesis.Done".Translate()
                     : "PersonalChronicle.UI.Career.Qual.Thesis.Todo".Translate(),
                 UITheme.FontLabel, thesisDone ? UITheme.PillGreen : UITheme.Dim);
@@ -364,12 +526,13 @@ namespace PersonalChronicle.Archive
         }
 
         // ============ ⑤ 答辩 ============
+        // v8 体检：始终显示说明 + 评审委员会人数 + 评分 + 评级评审期
         private float DrawDefenseBlock(Rect view, float y, float contentW, Pawn pawn, PawnObject po,
             QualificationDef def, bool thesisDone, bool defenseDone, bool canStartDefense, CareerData cd)
         {
             float pad = UITheme.PanelPadding;
-            // 与 CalcQualHeight ⑤ 对齐：标题 28 + 按钮 30 + 间隔 8 + 状态 20 + 评审提示 20 + SpaceMd。
-            float blockH = 28f + 30f + 8f + 20f + 20f + UITheme.SpaceMd;
+            // 标题28 + 按钮30 + 描述(2行 36) + 委员会+评分(2×18) + 评审提示(20) + SpaceMd
+            float blockH = 28f + 30f + 36f + 2f * 18f + 20f + UITheme.SpaceMd;
             Rect block = new Rect(view.x, y, contentW, blockH);
             UIComponents.Panel(block, UITheme.Panel);
             UIComponents.Border(block, UITheme.BorderSoft);
@@ -385,29 +548,41 @@ namespace PersonalChronicle.Archive
             {
                 Find.WindowStack.Add(new Dialog_QualificationFlow(pawn, po, def, "defense"));
             }
-            float noteY = btnY + 36f;
-            if (defenseDone)
-            {
-                UIComponents.Label(new Rect(view.x + pad, noteY, contentW - pad * 2f, 20f),
-                    "PersonalChronicle.UI.Career.Qual.Defense.Passed".Translate(),
-                    UITheme.FontLabel, UITheme.PillGreen);
-            }
-            else
-            {
-                UIComponents.Label(new Rect(view.x + pad, noteY, contentW - pad * 2f, 20f),
-                    "PersonalChronicle.UI.Career.Qual.Defense.Todo".Translate(),
-                    UITheme.FontLabel, UITheme.Dim);
-            }
-            // 评级评审结算提示
+
+            // 说明
+            float descY = btnY + 36f;
+            DrawWrappedDesc(view.x + pad, descY, contentW - pad * 2f,
+                "PersonalChronicle.UI.Career.Qual.Defense.Desc".Translate().ToString(),
+                UITheme.FontLabel, UITheme.Muted, 36f);
+
+            DefenseRecord defRec = QualificationFlowService.FindDefenseRecord(po, def.defName);
+            float checkY = descY + 40f;
+
+            int committeeCount = defRec != null && defRec.CommitteePawnIds != null ? defRec.CommitteePawnIds.Count : 0;
+            DrawCheckRow(view.x + pad, checkY, contentW - pad * 2f,
+                "PersonalChronicle.UI.Career.Qual.Defense.Committee".Translate(committeeCount.ToString()).ToString(),
+                committeeCount > 0);
+            DrawCheckRow(view.x + pad, checkY + 18f, contentW - pad * 2f,
+                "PersonalChronicle.UI.Career.Qual.Defense.Score".Translate(defRec != null ? defRec.CommitteeScore : 0f).ToString(),
+                defRec != null && defRec.Passed);
+
+            // 评级评审结算提示（如果评审已启动）
             QualificationProgress progress = cd.Qualification != null ? cd.Qualification.Get(def.defName) : null;
+            float noteY = checkY + 36f;
+            string statusText = defenseDone
+                ? "PersonalChronicle.UI.Career.Qual.Defense.Passed".Translate()
+                : (defRec != null ? "PersonalChronicle.UI.Career.Qual.Defense.Todo".Translate()
+                    : "PersonalChronicle.UI.Career.Qual.Defense.NoDefense".Translate());
+            Color statusCol = defenseDone ? UITheme.PillGreen : UITheme.Dim;
             if (progress != null && progress.ReviewStartedTick > 0L)
             {
                 bool due = QualificationReview.IsDue(progress.ReviewStartedTick, progress.ReviewDays, Find.TickManager.TicksGame);
-                UIComponents.Label(new Rect(view.x + pad, noteY + 20f, contentW - pad * 2f, 20f),
-                    due ? "PersonalChronicle.UI.Career.Qual.Review.Due".Translate()
-                        : "PersonalChronicle.UI.Career.Qual.Review.Running".Translate(),
-                    UITheme.FontLabel, UITheme.Warn);
+                statusText = due ? "PersonalChronicle.UI.Career.Qual.Review.Due".Translate()
+                    : "PersonalChronicle.UI.Career.Qual.Review.Running".Translate();
+                statusCol = UITheme.Warn;
             }
+            UIComponents.Label(new Rect(view.x + pad, noteY, contentW - pad * 2f, 20f), statusText,
+                UITheme.FontLabel, statusCol);
             return y + blockH;
         }
 
@@ -467,7 +642,8 @@ namespace PersonalChronicle.Archive
         private float CalcQualHeight(CareerData cd, QualificationDef def, bool capped, float contentW)
         {
             float h = 0f;
-            h += 28f + 58f + UITheme.SpaceMd;            // ① 阶梯
+            h += 40f + UITheme.SpaceMd; // 身份头（personbar）
+            h += 28f + QualTierKeys.Length * (24f + 4f) + UITheme.SpaceMd; // ① 阶梯（纵向列表，紧凑行高）
             if (def != null) h += 28f + 7f * 24f + UITheme.SpaceMd; // ① 条件 7 行
             else if (!capped) h += 24f;
             if (capped || def == null)
@@ -478,129 +654,23 @@ namespace PersonalChronicle.Archive
                     * 30f + UITheme.SpaceMd;
                 return h + UITheme.SpaceMd;
             }
-            h += 28f + 30f + 8f + 22f + UITheme.SpaceMd; // ②
-            h += 28f + 30f + 8f + 20f + UITheme.SpaceMd; // ③
-            h += 28f + 30f + 8f + 20f + UITheme.SpaceMd; // ④
-            h += 28f + 30f + 8f + 20f + 20f + UITheme.SpaceMd; // ⑤（含评审提示 2 行）
+            // v8 体检：考试块从「按钮+占位」改为「说明+进度+状态」详细布局，高度统一公式
+            // 标题28 + 按钮30 + 描述36 + 检查项(N×18) + 状态20 + SpaceMd
+            h += 28f + 30f + 36f + 3f * 18f + 20f + UITheme.SpaceMd; // ② 实践（要求3项）
+            h += 28f + 30f + 36f + 4f * 18f + 20f + UITheme.SpaceMd; // ③ 理论（依据4项）
+            h += 28f + 30f + 36f + 3f * 18f + 20f + UITheme.SpaceMd; // ④ 论文（课题/引用/进度3项）
+            h += 28f + 30f + 36f + 2f * 18f + 20f + UITheme.SpaceMd; // ⑤ 答辩（委员会/评分2项 + 评审提示1行）
             h += 28f + Mathf.Max(1, cd != null && cd.GrantedTitles != null ? cd.GrantedTitles.Count : 0)
                 * 30f + UITheme.SpaceMd;                 // ⑥（按记录数）
             return h + UITheme.SpaceMd;
         }
 
         // ── 辅助 ──
-
-        private static int HighestGrantedTier(CareerData cd)
-        {
-            int idx = -1;
-            if (cd.GrantedTitles != null)
-            {
-                for (int i = 0; i < cd.GrantedTitles.Count; i++)
-                {
-                    if (cd.GrantedTitles[i] == null) continue;
-                    for (int t = 0; t < QualTierKeys.Length; t++)
-                    {
-                        if (cd.GrantedTitles[i].TitleDefName != null
-                            && cd.GrantedTitles[i].TitleDefName.EndsWith("_" + QualTierKeys[t], System.StringComparison.OrdinalIgnoreCase)
-                            && t > idx)
-                        {
-                            idx = t;
-                        }
-                    }
-                }
-            }
-            return idx;
-        }
-
-        private static bool FlowPassed(CareerData cd, string qualDefName, string kind)
-        {
-            if (cd == null) return false;
-            if (kind == "practical")
-            {
-                if (cd.Exams == null || cd.Exams.Practical == null) return false;
-                for (int i = 0; i < cd.Exams.Practical.Count; i++)
-                {
-                    if (cd.Exams.Practical[i] != null && cd.Exams.Practical[i].Passed
-                        && string.Equals(cd.Exams.Practical[i].QualificationDefName, qualDefName, System.StringComparison.Ordinal))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            if (kind == "thesis")
-            {
-                if (cd.Thesis == null || cd.Thesis.Theses == null) return false;
-                for (int i = 0; i < cd.Thesis.Theses.Count; i++)
-                {
-                    if (cd.Thesis.Theses[i] != null && cd.Thesis.Theses[i].Completed
-                        && string.Equals(cd.Thesis.Theses[i].QualificationDefName, qualDefName, System.StringComparison.Ordinal))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            if (kind == "defense")
-            {
-                if (cd.Thesis == null || cd.Thesis.Defenses == null) return false;
-                for (int i = 0; i < cd.Thesis.Defenses.Count; i++)
-                {
-                    if (cd.Thesis.Defenses[i] != null && cd.Thesis.Defenses[i].Passed
-                        && string.Equals(cd.Thesis.Defenses[i].QualificationDefName, qualDefName, System.StringComparison.Ordinal))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            return false;
-        }
-
-        private static bool HasActiveExam(CareerData cd, string qualDefName)
-        {
-            if (cd == null || cd.Exams == null || cd.Exams.Practical == null) return false;
-            for (int i = 0; i < cd.Exams.Practical.Count; i++)
-            {
-                PracticalExamRecord r = cd.Exams.Practical[i];
-                if (r != null && !r.Passed && !r.Finished && r.StartedTick > 0L
-                    && string.Equals(r.QualificationDefName, qualDefName, System.StringComparison.Ordinal))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static PracticalExamRecord ActiveExam(CareerData cd, string qualDefName)
-        {
-            if (cd == null || cd.Exams == null || cd.Exams.Practical == null) return null;
-            for (int i = 0; i < cd.Exams.Practical.Count; i++)
-            {
-                PracticalExamRecord r = cd.Exams.Practical[i];
-                if (r != null && string.Equals(r.QualificationDefName, qualDefName, System.StringComparison.Ordinal)
-                    && !r.Passed && !r.Finished && r.StartedTick > 0L)
-                {
-                    return r;
-                }
-            }
-            return null;
-        }
-
-        private void DrawConditionRow(Rect view, ref float y, float contentW, string name, string note, bool ok)
-        {
-            Rect row = new Rect(view.x, y, contentW, 22f);
-            // v4.17 体检：条件名固定 90f 不截断 → 英文长标签换行被裁。
-            UIComponents.Label(new Rect(row.x, row.y, 90f, 20f),
-                UIComponents.TruncateToWidth(name, 90f, UITheme.FontLabel), UITheme.FontLabel, UITheme.Muted);
-            UIComponents.Label(new Rect(row.x + 96f, row.y, row.width - 96f - 56f, 20f),
-                UIComponents.TruncateToWidth(note, row.width - 96f - 56f, UITheme.FontLabel),
-                UITheme.FontLabel, UITheme.Dim);
-            UIComponents.Label(new Rect(row.x + row.width - 56f, row.y, 56f, 20f),
-                ok ? "PersonalChronicle.UI.Career.Qual.Cond.Satisfied".Translate()
-                    : "PersonalChronicle.UI.Career.Qual.Cond.Unsatisfied".Translate(),
-                UITheme.FontLabel, ok ? UITheme.PillGreen : UITheme.Warn);
-            y += 24f;
-        }
+        // 注：资格流程判定（FlowPassed / HasActiveExam / ActiveExam / Find*Record / GrantedTierIndex /
+        // CalcSkillLevel / CalcCareerSpanTicks）已统一上移至 Application.QualificationFlowService，
+        // 本页只调用，不重复实现业务规则（UI-001 治理）。
+        // 注：申报条件 7 行已统一调 ArchiveUiDataProvider.BuildQualRows + DrawQualCell 渲染（与总览一致），
+        // 旧的 DrawConditionRow 已删除（v2.0 §14 一致性：资格状态前端统一管理）。
 
         private bool DrawFlowButton(Rect rect, string label, bool enabled, string tip)
         {

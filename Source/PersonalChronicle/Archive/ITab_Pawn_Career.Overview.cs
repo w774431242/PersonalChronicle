@@ -22,28 +22,27 @@ namespace PersonalChronicle.Archive
         private float DrawOverviewTab(Rect rect, Pawn pawn, DetailSnapshot snap)
         {
             CareerOverviewView ov = snap != null ? snap.CareerOverview : null;
-            // v4.17 体检：滚动内容宽度预留滚动条位（右缘元素不再被滚动条覆盖）。
-            float width = rect.width - UITheme.ScrollbarThickness;
+            // 原生 BeginScrollView 用法（对齐 ArchiveMainTabWindow）：不自定义背景，
+            // 让 rimworld 窗口默认背景生效——避免自定义 TintedBox 干扰造成的白屏。
+            float width = rect.width - 16f;
             float viewH = CalcOverviewHeight(ov, width);
-            Rect view = new Rect(0f, 0f, width, Mathf.Max(viewH, 1f));
-            Widgets.BeginScrollView(rect, ref scroll, view);
-
-            float             y = 0f;
-            if (ov == null || !ov.HasData)
+            float viewHeight = Mathf.Max(rect.height, viewH);
+            Rect viewRect = new Rect(rect.x, rect.y, width, viewHeight);
+            Widgets.BeginScrollView(rect, ref scroll, viewRect);
+            try
             {
-                UIComponents.TintedBox(view, UITheme.Panel);
-                UIComponents.Label(new Rect(view.x + 12f, view.y + 12f, view.width - 24f, 24f),
-                    "PersonalChronicle.UI.Career.Ov.NoData".Translate().ToString(), UITheme.FontBody, UITheme.Muted);
-                Widgets.EndScrollView();
-                return viewH;
+                float y = viewRect.y + 4f;
+                // v1.1.5：删除"暂无职业数据"空态分支——无论 HasData 与否都画全部区块，字段值
+                // 由各 DrawXxx 用 `--` / `0` 占位；UI 不再因数据缺失而出现刺眼白色背景。
+                y = DrawIdentityBlock(viewRect, y, width, ov);
+                y = DrawPlanSection(viewRect, y, width, pawn);
+                y = DrawQualSection(viewRect, y, width, ov);
+                y = DrawNextTitleSection(viewRect, y, width, ov);
             }
-
-            y = DrawIdentityBlock(view, y, width, ov);
-            y = DrawPlanSection(view, y, width, pawn);
-            y = DrawQualSection(view, y, width, ov);
-            y = DrawNextTitleSection(view, y, width, ov);
-
-            Widgets.EndScrollView();
+            finally
+            {
+                Widgets.EndScrollView();
+            }
             return viewH;
         }
 
@@ -55,6 +54,7 @@ namespace PersonalChronicle.Archive
 
             // v4.17 体检：block 高 92f→104f —— MiniStat 值行（Small 22f）+ 标签行（Tiny 18f）
             // 单元需 40f，旧 16f/14f 矩形裁切 Medium 字体且 statY 越过面板底边。
+            // v8.2 体检：删组标签+分隔线后恢复 104f——by+12 起 5 单元底 by+92，+12f 底 padding = 104f。
             Rect block = new Rect(view.x, y, width, 104f);
             UIComponents.Panel(block, UITheme.Panel);
             UIComponents.Border(block, UITheme.BorderSoft);
@@ -83,9 +83,9 @@ namespace PersonalChronicle.Archive
             }
             UIComponents.Label(new Rect(bx, by + 32f, bw, 20f), sub, UITheme.FontLabel, UITheme.Muted);
 
-            // 指标行（制造/建造/研究 三宫格 + 著作 + 成果）
+            // 指标行：制造产出 / 建造 / 研究 / 著作 / 重大成果（5 单元等宽，单元自带标签，无需额外分组标识）
             float statY = by + 52f;
-            float statGap = 10f;
+            float statGap = 8f;
             float statW = (bw - statGap * 4f) / 5f;
             DrawMiniStat(new Rect(bx, statY, statW, 40f), FormatValue(ov.Made), "PersonalChronicle.UI.Career.Ov.Metric.Made".Translate().ToString());
             DrawMiniStat(new Rect(bx + statW + statGap, statY, statW, 40f), FormatValue(ov.Built), "PersonalChronicle.UI.Career.Ov.Metric.Built".Translate().ToString());
@@ -108,11 +108,6 @@ namespace PersonalChronicle.Archive
         {
             y = DrawSectionTitle(view, y, width, "PersonalChronicle.UI.Career.Ov.Plan".Translate());
 
-            float btnH = 30f;
-            Rect btnRect = new Rect(view.x, y, width, btnH);
-            DrawPlanButton(btnRect, pawn);
-            y += btnH + UITheme.SpaceXs;
-
             // 12 专业 chip 网格（4 列 x 3 行），选中小高亮、主方向青色「选」角标、
             // 适配分析 top1/高分 金色「荐」角标（对齐 HTML .plan-chip .rec）。
             int cols = 4;
@@ -125,16 +120,16 @@ namespace PersonalChronicle.Archive
                 int col = i % cols;
                 int row = i / cols;
                 string mkey = MajorKeys[i];
-                bool selected = mkey == currentMajorKey;
+                bool selected = IsMajorChosen(mkey);
                 bool isTop1 = topFit != null && topFit.Major == mkey;
                 Rect chip = new Rect(view.x + col * (chipW + gap), y + row * (chipH + gap), chipW, chipH);
-                DrawPlanChip(chip, mkey, selected, isTop1, FitFor(fitResults, mkey));
+                DrawPlanChip(chip, pawn, mkey, selected, isTop1, FitFor(fitResults, mkey));
             }
             y += 3 * (chipH + gap) + UITheme.SpaceMd;
             return y;
         }
 
-        private void DrawPlanChip(Rect r, string majorKey, bool selected, bool isTop1, ProfessionalFitResult fit)
+        private void DrawPlanChip(Rect r, Pawn pawn, string majorKey, bool selected, bool isTop1, ProfessionalFitResult fit)
         {
             Color prevColor = GUI.color;
             GameFont prevFont = Verse.Text.Font;
@@ -186,6 +181,21 @@ namespace PersonalChronicle.Archive
                         + FitDimText(fit);
                     TooltipHandler.TipRegion(r, new TipSignal(tip));
                 }
+
+                // 点击职业类 chip → 打开该一级专业下的二级方向选择（移除旧「设定主方向」按钮入口）。
+                // ButtonInvisible 必须先于视觉绘制之外的逻辑注册；此处放在 try 内末尾，
+                // 与 DrawDirectionCard 同样遵守 BeginScrollView 内点击铁律（chip 不在 scrollview 内，
+                // 但统一风格避免误判）。
+                if (Widgets.ButtonInvisible(r))
+                {
+                    Find.WindowStack.Add(new Dialog_SetPrimaryDirection(
+                        pawn,
+                        Current.Game != null ? Current.Game.GetComponent<ChronicleGameComponent>() : null,
+                        majorKey,
+                        currentMajorKey,
+                        () => { scroll = Vector2.zero; }));
+                    Event.current.Use();
+                }
             }
             finally
             {
@@ -214,59 +224,43 @@ namespace PersonalChronicle.Archive
                 + "\n" + "PersonalChronicle.UI.Career.Plan.Dim.Growth".Translate() + " " + fit.GrowthScore;
         }
 
-        private void DrawPlanButton(Rect r, Pawn pawn)
-        {
-            Color prevColor = GUI.color;
-            GameFont prevFont = Verse.Text.Font;
-            TextAnchor prevAnchor = Verse.Text.Anchor;
-            try
-            {
-                Verse.Text.Font = GameFont.Small;
-                if (Widgets.ButtonText(r, "PersonalChronicle.UI.Career.Ov.SetPrimary".Translate().ToString()))
-                {
-                    Find.WindowStack.Add(new Dialog_SetPrimaryDirection(
-                        pawn,
-                        Current.Game != null ? Current.Game.GetComponent<ChronicleGameComponent>() : null,
-                        currentMajorKey,
-                        () =>
-                        {
-                            scroll = Vector2.zero;
-                        }));
-                }
-            }
-            finally
-            {
-                GUI.color = prevColor;
-                Verse.Text.Font = prevFont;
-                Verse.Text.Anchor = prevAnchor;
-            }
-        }
-
-        // ================= 当前资格状态（6 条件，图标化 badge）=================
+        // ================= 当前资格状态（6 条件，按资格流程时间线单列）=================
+        // 流程顺序：基础条件（等级/资历/评分）→ 准入（实践/理论）→ 评审（论文/答辩）。
+        // 单列 6 行，每行=条件名（左）+ 状态点 + 值（右），信息流清晰可控。
         private float DrawQualSection(Rect view, float y, float width, CareerOverviewView ov)
         {
             y = DrawSectionTitle(view, y, width, "PersonalChronicle.UI.Career.Ov.Qual".Translate());
-            if (ov.Qual == null || ov.Qual.Count == 0)
+            // v1.1.5：无论数据是否完整都画 7 行占位（label + `--`），不用"NoQual"提示；
+            // ov.Qual 满 7 行 → 直接画；空 → 7 行 `--` 占位。
+            // v9：新增"评级评审"行（v2.0 §14 Review 期），统一化资格状态前端管理。
+            string[] qualLabels =
             {
-                UIComponents.Label(new Rect(view.x, y, width, 20f),
-                    "PersonalChronicle.UI.Career.Ov.NoQual".Translate().ToString(), UITheme.FontLabel, UITheme.Dim);
-                return y + 24f + UITheme.SpaceMd;
-            }
-
+                "PersonalChronicle.UI.Career.Qual.Level",
+                "PersonalChronicle.UI.Career.Qual.Time",
+                "PersonalChronicle.UI.Career.Qual.Score",
+                "PersonalChronicle.UI.Career.Qual.Practical",
+                "PersonalChronicle.UI.Career.Qual.Theory",
+                "PersonalChronicle.UI.Career.Qual.Defense",
+                "PersonalChronicle.UI.Career.Qual.Review"
+            };
             y += UITheme.SpaceXs;
-            float gap = 8f;
-            int cols = 2;
-            float rowH = 30f;
-            float cellW = (width - gap * (cols - 1)) / cols;
-            for (int i = 0; i < ov.Qual.Count; i++)
+            float rowH = 28f;
+            float gap = 6f;
+            int totalCells = qualLabels.Length;
+            for (int i = 0; i < totalCells; i++)
             {
-                int col = i % cols;
-                int row = i / cols;
-                Rect cell = new Rect(view.x + col * (cellW + gap), y + row * (rowH + gap), cellW, rowH);
-                DrawQualCell(cell, ov.Qual[i]);
+                Rect cell = new Rect(view.x, y + i * (rowH + gap), width, rowH);
+                CareerQualView q = (ov.Qual != null && i < ov.Qual.Count) ? ov.Qual[i]
+                    : new CareerQualView
+                    {
+                        Label = qualLabels[i].Translate().ToString(),
+                        Note = "--",
+                        StateKey = "wait",
+                        StateText = "--"
+                    };
+                DrawQualCell(cell, q);
             }
-            int rows = (ov.Qual.Count + cols - 1) / cols;
-            y += rows * (rowH + gap) + UITheme.SpaceMd;
+            y += totalCells * (rowH + gap) + UITheme.SpaceMd;
             return y;
         }
 
@@ -281,14 +275,35 @@ namespace PersonalChronicle.Archive
                 UIComponents.Border(r, UITheme.BorderSoft);
 
                 bool ok = q.StateKey == "ok";
+                // 状态点：满足=绿，未满足=暗红（与配色板一致，未满足不必强警示）。
                 Rect dot = new Rect(r.x + 8f, r.y + (r.height - 12f) / 2f, 12f, 12f);
-                UIComponents.TintedBox(dot, ok ? UITheme.PillGreen : UITheme.PillRed);
+                UIComponents.TintedBox(dot, ok ? UITheme.PillGreen : UITheme.Dead);
 
-                Rect txt = new Rect(dot.xMax + 8f, r.y, r.width - 28f, r.height);
+                // 3 列布局：左条件名（30%） + 中资格要求（40%） + 右状态文本（30%）
+                // 左：条件名
+                Rect labelRect = new Rect(dot.xMax + 8f, r.y, r.width * 0.3f, r.height);
                 Verse.Text.Font = GameFont.Small;
                 Verse.Text.Anchor = TextAnchor.MiddleLeft;
                 GUI.color = ok ? UITheme.Text : UITheme.Muted;
-                Widgets.Label(txt, q.Label + "  " + q.Note);
+                Widgets.Label(labelRect, q.Label);
+
+                // 中：资格要求描述（对齐 P9 HTML：如"Q_Precision_Specialist ≥ 38"、"相关工作 ≥ 1200000 tick"）
+                Rect noteRect = new Rect(r.x + r.width * 0.3f + 16f, r.y, r.width * 0.4f, r.height);
+                Verse.Text.Anchor = TextAnchor.MiddleLeft;
+                GUI.color = ok ? UITheme.Alive : UITheme.Muted;
+                Widgets.Label(noteRect, q.Note);
+
+                // 右：状态文本（"✓ 满足"/"○ 未满足"）
+                Rect stateRect = new Rect(r.x + r.width * 0.7f + 16f, r.y, r.width * 0.3f - 24f, r.height);
+                Verse.Text.Anchor = TextAnchor.MiddleRight;
+                GUI.color = ok ? UITheme.Alive : UITheme.Dead;
+                Widgets.Label(stateRect, (ok ? "✓ " : "○ ") + q.StateText);
+
+                // 悬停：显示结构化透视（多行模板 + <b> 分节，maxWidth 360 防挤压）
+                if (!string.IsNullOrEmpty(q.Tooltip))
+                {
+                    TooltipHandler.TipRegion(r, new TipSignal(q.Tooltip, 360f));
+                }
             }
             finally
             {
@@ -302,16 +317,25 @@ namespace PersonalChronicle.Archive
         private float DrawNextTitleSection(Rect view, float y, float width, CareerOverviewView ov)
         {
             y = DrawSectionTitle(view, y, width, "PersonalChronicle.UI.Career.Ov.NextTitle".Translate());
+            // v1.1.5：空数据 vs 已封顶 区分。无数据（HasData=false）→ 未评定；无 NextTitle 但 HasData=true → 已封顶。
             if (string.IsNullOrEmpty(ov.NextTitle))
             {
+                string emptyLabel = ov != null && !ov.HasData
+                    ? "PersonalChronicle.UI.Career.Ov.Undefined".Translate().ToString()
+                    : "PersonalChronicle.UI.Career.Ov.Maxed".Translate().ToString();
+                Color emptyColor = ov != null && !ov.HasData ? UITheme.Dim : UITheme.PillGold;
                 UIComponents.TintedBox(new Rect(view.x, y, width, 36f), UITheme.Panel);
                 UIComponents.Label(new Rect(view.x + 10f, y, width - 20f, 36f),
-                    "PersonalChronicle.UI.Career.Ov.Maxed".Translate().ToString(), UITheme.FontLabel, UITheme.PillGold, TextAnchor.MiddleLeft);
+                    emptyLabel, UITheme.FontLabel, emptyColor, TextAnchor.MiddleLeft);
                 return y + 36f + UITheme.SpaceMd;
             }
 
             float padX = UITheme.PanelPadding;
-            float blockH = 30f + OvValueRowH * 2f + 8f + 16f;
+            // 缺口 pill 动态高度：每行最多 3 个，自动换行。
+            int gapCount = (ov.NextGaps != null) ? ov.NextGaps.Count : 0;
+            int gapRows = gapCount == 0 ? 0 : Mathf.CeilToInt(gapCount / 3f);
+            float gapsH = gapCount > 0 ? 18f + gapRows * 24f : 0f;
+            float blockH = 8f + 24f + 20f + 14f + gapsH + 8f;
             Rect block = new Rect(view.x, y, width, blockH);
             UIComponents.Panel(block, UITheme.Panel);
             UIComponents.Border(block, UITheme.BorderSoft);
@@ -322,17 +346,46 @@ namespace PersonalChronicle.Archive
             UIComponents.Label(new Rect(bx, by, bw, 24f), ov.NextTitle, UITheme.FontValue, UITheme.Text);
 
             float barY = by + 28f;
-            UIComponents.ProgressBar(new Rect(bx, barY, bw, 14f), Mathf.Clamp01(ov.Progress / 100f),
-                UITheme.PillGold, ov.Progress + "%");
-
-            // 缺口（若有；v4.17 体检：多缺口英文串换行被 18f 行高裁剪 → 截断）
-            float gapY = barY + 20f;
-            if (ov.NextGaps != null && ov.NextGaps.Count > 0)
+            // 进度条：金填充 + 抬升底色（v8 体检：Steampunk 主题的 accent=青绿，与 PanelRaised
+            // 形成明显对比，色相混淆时仍可凭饱和度识别）
+            float share01 = Mathf.Clamp01(ov.Progress / 100f);
+            Rect barRect = new Rect(bx, barY, bw, 14f);
+            Widgets.DrawBoxSolid(barRect, UITheme.PanelRaised);
+            if (share01 > 0f)
             {
-                string gaps = "PersonalChronicle.UI.Career.Ov.Gaps".Translate().ToString()
-                    + " " + string.Join(" / ", ov.NextGaps);
-                string clippedGaps = UIComponents.TruncateToWidth(gaps, bw, UITheme.FontLabel);
-                UIComponents.Label(new Rect(bx, gapY, bw, 18f), clippedGaps, UITheme.FontLabel, UITheme.Dim);
+                Widgets.DrawBoxSolid(new Rect(bx, barY, bw * share01, 14f), UITheme.PillGold);
+            }
+            // 进度文字（居中）
+            UIComponents.Label(new Rect(bx, barY, bw, 14f), ov.Progress + "%", UITheme.FontLabel, UITheme.Text, TextAnchor.MiddleCenter);
+
+            // 缺口（横向 pill 列表，自动换行，避免「/」连写挤一行）
+            float gapY = barY + 20f;
+            if (gapCount > 0)
+            {
+                UIComponents.Label(new Rect(bx, gapY, bw, 18f),
+                    "PersonalChronicle.UI.Career.Ov.Gaps".Translate().ToString(),
+                    UITheme.FontLabel, UITheme.Muted);
+                float pillY = gapY + 20f;
+                float pillX = bx;
+                float pillH = 20f;
+                float pillGap = 6f;
+                for (int i = 0; i < gapCount; i++)
+                {
+                    string g = ov.NextGaps[i];
+                    Verse.Text.Font = GameFont.Tiny;
+                    float pillW = Verse.Text.CalcSize(g).x + 16f;
+                    Verse.Text.Font = GameFont.Small;
+                    if (pillX + pillW > bx + bw)
+                    {
+                        pillX = bx;
+                        pillY += pillH + pillGap;
+                    }
+                    Rect pill = new Rect(pillX, pillY, pillW, pillH);
+                    UIComponents.TintedBox(pill, UITheme.PanelRaised);
+                    UIComponents.Border(pill, UITheme.Warn);
+                    UIComponents.Label(pill, g, UITheme.FontLabel, UITheme.Warn, TextAnchor.MiddleCenter);
+                    pillX += pillW + pillGap;
+                }
             }
 
             return y + block.height + UITheme.SpaceMd;
@@ -349,19 +402,27 @@ namespace PersonalChronicle.Archive
         private float CalcOverviewHeight(CareerOverviewView ov, float width)
         {
             float h = UITheme.SpaceMd;
-            h += 104f + UITheme.SpaceMd;                      // 身份（含 5 指标格）
+            h += 104f + UITheme.SpaceMd;                      // 身份（含 5 指标格 + 底内边距）
             h += 24f + UITheme.SpaceXs;                       // 规划标题
             h += 30f + UITheme.SpaceXs;                       // 设定按钮
             h += 3 * (28f + 8f) + UITheme.SpaceMd;            // 12 chips
             h += 24f + UITheme.SpaceXs;                       // 资格标题
             if (ov != null && ov.Qual != null && ov.Qual.Count > 0)
             {
-                int rows = (ov.Qual.Count + 1) / 2;
-                h += UITheme.SpaceXs + rows * (30f + 8f) + UITheme.SpaceMd;
+                h += UITheme.SpaceXs + ov.Qual.Count * (28f + 6f) + UITheme.SpaceMd;
             }
             else h += 24f + UITheme.SpaceMd;
             h += 24f + UITheme.SpaceXs;                       // 下一职称标题
-            h += (string.IsNullOrEmpty(ov?.NextTitle) ? 36f : (30f + OvValueRowH * 2f + 8f + 16f)) + UITheme.SpaceMd;
+            if (string.IsNullOrEmpty(ov?.NextTitle))
+            {
+                h += 36f + UITheme.SpaceMd;
+            }
+            else
+            {
+                int gc = (ov.NextGaps != null) ? ov.NextGaps.Count : 0;
+                int grow = gc == 0 ? 0 : Mathf.CeilToInt(gc / 3f);
+                h += (8f + 24f + 20f + 14f + (gc > 0 ? 18f + grow * 24f : 0f) + 8f) + UITheme.SpaceMd;
+            }
             h += UITheme.SpaceMd;
             return h;
         }

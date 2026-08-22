@@ -42,14 +42,16 @@ namespace PersonalChronicle.Archive
         // ================= 子页：勋章 =================
         private void DrawHonorTab(Rect rect, Pawn pawn, DetailSnapshot snap)
         {
+            // 原生 BeginScrollView 用法（对齐 ArchiveMainTabWindow）：不自定义背景，
+            // 让 rimworld 窗口默认背景生效——避免自定义 TintedBox 干扰造成的白屏。
             Rect view = new Rect(rect.x, rect.y, rect.width, rect.height);
-            float innerW = view.width - UITheme.ScrollbarThickness;
+            float innerW = view.width - 16f;
             float contentH = EstimateHonorH(snap, innerW);
             contentH = Mathf.Max(contentH, view.height);
             Widgets.BeginScrollView(view, ref scroll, new Rect(view.x, view.y, innerW, contentH));
             try
             {
-                float y = view.y;
+                float y = view.y + 4f;
 
                 // ---- 荣誉勋章墙 ----
                 UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
@@ -122,26 +124,57 @@ namespace PersonalChronicle.Archive
                 }
                 y += wall.height + UITheme.SpaceSm;
 
-                // ---- 荣誉贡献结构（真实事实计数）----
+                // ---- 荣誉贡献结构（分段条可视化，一眼看出主导贡献项）----
                 UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
                     "PersonalChronicle.UI.Career.Honor.Contrib".Translate().ToString());
                 y += UITheme.SectionTitleHeight;
-                Rect contrib = new Rect(view.x, y, innerW, 6f * 26f + 8f);
-                UIComponents.Panel(contrib, UITheme.Panel);
                 PawnObject po = snap != null ? snap.DetailObject as PawnObject : null;
-                // UI-001：事实计数统一消费快照 FactCounts，不再直查 Domain（移除 CountEvents）。
                 CareerFactCounts fc = snap != null ? snap.FactCounts : null;
+                int made = fc != null ? fc.ItemProduced : 0;
+                int built = fc != null ? fc.ConstructionCompleted : 0;
+                int research = fc != null ? fc.ResearchCompleted : 0;
+                int books = po != null && po.CareerData != null && po.CareerData.Books != null ? po.CareerData.Books.Count : 0;
+                int medals = fc != null ? fc.MedalGranted : 0;
+                string[] contribLabels = new string[]
+                {
+                    "PersonalChronicle.UI.Career.Honor.Contrib.Made".Translate().ToString(),
+                    "PersonalChronicle.UI.Career.Honor.Contrib.Built".Translate().ToString(),
+                    "PersonalChronicle.UI.Career.Honor.Contrib.Research".Translate().ToString(),
+                    "PersonalChronicle.UI.Career.Honor.Contrib.Books".Translate().ToString(),
+                    "PersonalChronicle.UI.Career.Honor.Contrib.Medal".Translate().ToString(),
+                };
+                int[] contribVals = new int[] { made, built, research, books, medals };
+                Color[] contribColors = new Color[] { UITheme.PillGold, UITheme.Info, UITheme.Alive, UITheme.Accent, UITheme.PillGreen };
+                int total = made + built + research + books + medals;
+                Rect contrib = new Rect(view.x, y, innerW, 5f * 30f + 8f);
+                UIComponents.Panel(contrib, UITheme.Panel);
                 float cy = contrib.y + 6f;
-                cy = SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Made".Translate().ToString(),
-                    (fc != null ? fc.ItemProduced : 0).ToString());
-                cy = SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Research".Translate().ToString(),
-                    (fc != null ? fc.ResearchCompleted : 0).ToString());
-                cy = SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Built".Translate().ToString(),
-                    (fc != null ? fc.ConstructionCompleted : 0).ToString());
-                cy = SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Books".Translate().ToString(),
-                    (po != null && po.CareerData != null && po.CareerData.Books != null ? po.CareerData.Books.Count : 0).ToString());
-                SnapshotRow(contrib, cy, "PersonalChronicle.UI.Career.Honor.Contrib.Medal".Translate().ToString(),
-                    (fc != null ? fc.MedalGranted : 0).ToString());
+                // 标签 80 + 值 64 + 间隙 8 = 152；bar 严格限宽 + fillW 封顶 80%（避免单项占满）
+                float labelW = 80f, valueW = 64f, sideGap = 8f;
+                float barFullW = contrib.width - 16f - labelW - valueW - sideGap;
+                float fillCap = barFullW * 0.8f;
+                for (int ci = 0; ci < 5; ci++)
+                {
+                    float rowY = cy + ci * 30f;
+                    // 标签
+                    UIComponents.Label(new Rect(contrib.x + 8f, rowY, labelW, 24f),
+                        UIComponents.TruncateToWidth(contribLabels[ci], labelW, UITheme.FontLabel),
+                        UITheme.FontLabel, UITheme.Muted);
+                    // 分段条
+                    float barX = contrib.x + 8f + labelW;
+                    Rect barBg = new Rect(barX, rowY + 4f, barFullW, 16f);
+                    UIComponents.TintedBox(barBg, UITheme.PanelRaised);
+                    // fillW = 占比 × barFullW，封顶 80%（视觉上避免某项"压扁"整行）
+                    float ratio = total > 0 ? contribVals[ci] / (float)total : 0f;
+                    float fillW = Mathf.Min(barFullW * ratio, fillCap);
+                    if (fillW > 1f)
+                    {
+                        UIComponents.TintedBox(new Rect(barX, rowY + 4f, fillW, 16f), contribColors[ci]);
+                    }
+                    // 值
+                    UIComponents.Label(new Rect(barX + barFullW + 4f, rowY, valueW, 24f),
+                        contribVals[ci].ToString(), UITheme.FontBody, UITheme.Text, TextAnchor.MiddleLeft);
+                }
                 y += contrib.height + UITheme.SpaceSm;
 
                 // ---- 最近荣誉事件（真实 TitleGranted/MedalGranted 事实；经缓存）----
@@ -166,9 +199,11 @@ namespace PersonalChronicle.Archive
                     for (int i = 0; i < honorEvents.Count && shown < 8; i++)
                     {
                         CareerEvent ev = honorEvents[i];
+                        string text = HonorEventText(ev, labelMap);
+                        // 死数据过滤：name 缺失的职称/勋章事件（如"获得职称：--"）不渲染，避免污染时间轴。
+                        if (string.IsNullOrEmpty(text)) continue;
                         string date = "PersonalChronicle.UI.Career.Honor.Event.Year".Translate(
                             GenDate.Year(ev.Tick, 0f).ToString()).ToString();
-                        string text = HonorEventText(ev, labelMap);
                         Rect row = new Rect(view.x, y, innerW, 24f);
                         UIComponents.Label(new Rect(row.x, row.y, 70f, 20f), date, UITheme.FontLabel, UITheme.Dim);
                         UIComponents.Label(new Rect(row.x + 70f, row.y, innerW - 70f, 20f),
@@ -201,9 +236,14 @@ namespace PersonalChronicle.Archive
                 UIComponents.Label(new Rect(rect.x, rect.y + 14f, rect.width, 26f),
                     FirstGlyph(m.Label), UITheme.FontBody, tierColor, TextAnchor.MiddleCenter);
             }
-            // 档位角标（首字：铜/白/金，经 TierLabel 翻译键派生）。
-            string tierGlyph = FirstChar(TierLabel(m.Tier));
-            UIComponents.Badge(new Rect(rect.xMax - 16f, rect.y - 4f, 16f, 14f), tierGlyph, tierColor);
+            // 档位角标（完整档位短词：青铜/白银/黄金，深色文字 on 档位色底，确保可读）。
+            string tierLabel = TierLabel(m.Tier);
+            Verse.Text.Font = GameFont.Tiny;
+            float badgeW = Verse.Text.CalcSize(tierLabel).x + 8f;
+            Verse.Text.Font = GameFont.Small;
+            Rect badgeRect = new Rect(rect.xMax - badgeW, rect.y - 2f, badgeW, 14f);
+            UIComponents.TintedBox(badgeRect, tierColor);
+            UIComponents.Label(badgeRect, tierLabel, UITheme.FontLabel, UITheme.Text, TextAnchor.MiddleCenter);
             string nl2 = "\n";
             string tip = (m.Label ?? m.DefName ?? "--") + " · "
                 + TierLabel(m.Tier) + nl2
@@ -258,7 +298,7 @@ namespace PersonalChronicle.Archive
 
         private string HonorEventText(CareerEvent ev, Dictionary<string, string> labelMap)
         {
-            if (ev == null) return "--";
+            if (ev == null) return null;
             if (string.Equals(ev.EventType, CareerEventType.MedalGranted, StringComparison.Ordinal))
             {
                 string name = LookupLabel(labelMap, ev.DefName, () =>
@@ -266,7 +306,8 @@ namespace PersonalChronicle.Archive
                     MedalDef def = DefDatabase<MedalDef>.GetNamedSilentFail(ev.DefName);
                     return def != null ? def.LabelCap : null;
                 });
-                return "PersonalChronicle.UI.Career.Honor.Event.Medal".Translate(name ?? "--");
+                if (string.IsNullOrEmpty(name) || name == "--") return null;
+                return "PersonalChronicle.UI.Career.Honor.Event.Medal".Translate(name);
             }
             if (string.Equals(ev.EventType, CareerEventType.TitleGranted, StringComparison.Ordinal))
             {
@@ -275,9 +316,10 @@ namespace PersonalChronicle.Archive
                     ProfessionalTitleDef def = DefDatabase<ProfessionalTitleDef>.GetNamedSilentFail(ev.DefName);
                     return def != null ? def.LabelCap : null;
                 });
-                return "PersonalChronicle.UI.Career.Honor.Event.Title".Translate(name ?? "--");
+                if (string.IsNullOrEmpty(name) || name == "--") return null;
+                return "PersonalChronicle.UI.Career.Honor.Event.Title".Translate(name);
             }
-            return ev.EventType ?? "--";
+            return null;
         }
 
         /// <summary>勋章/职称 defName → 翻译后中文标签；优先 MedalView.Label，无则回退到 Def.LabelCap。</summary>
@@ -326,7 +368,7 @@ namespace PersonalChronicle.Archive
             int rows = grantedCount == 0 ? 1 : Mathf.CeilToInt(grantedCount / (float)perRow);
             float wallH = MedIconH + 12f + (rows - 1) * (MedIconH + 8f);
             float h = 30f + wallH + 8f;                  // 勋章墙
-            h += 30f + 6f * 26f + 8f;                    // 贡献结构
+            h += 30f + 5f * 30f + 8f;                    // 贡献结构（分段条）
             // 最近荣誉事件：最多 8 行，空则 1 行。
             int honorCount = 0;
             if (snap != null && snap.DetailObject is PawnObject po

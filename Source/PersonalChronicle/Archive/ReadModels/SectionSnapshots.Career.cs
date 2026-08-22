@@ -79,6 +79,8 @@ namespace PersonalChronicle.Archive.ReadModels
         public string StateKey;
         /// <summary>状态文本（满足/未满足/通过/待进行）。</summary>
         public string StateText;
+        /// <summary>悬停详细要求（如 "申报高级技师须等级 ≥ 38、累计工时 ≥ 720 h、优秀品质成果 ≥ 8 件"）。</summary>
+        public string Tooltip;
     }
 
     /// <summary>资格预检单行。</summary>

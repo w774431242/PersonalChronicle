@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <!--
+    v4.9.1 装备归档政策。
+    决定「装备」类别捕捉哪些物品（武器 + 战斗服装）。
+    所有名单/阈值均可被其他 mod 通过 PatchOperation 调整，无需改 C#。
+
+    规则：
+      - 武器：始终捕捉（除非进入 excludeApparelDefNames 黑名单）。
+      - 服装：仅捕捉有足够护甲值的战斗服装；无护甲值的非战斗服装
+        （防尘衣/工作服/时尚衣等）默认排除。
+  -->
+  <PersonalChronicle.Domain.ThingArchivePolicyDef>
+    <defName>PersonalChronicleThingArchivePolicy</defName>
+    <label>装备归档政策</label>
+
+    <!-- 排除无护甲值的非战斗服装 -->
+    <excludeNonCombatApparel>true</excludeNonCombatApparel>
+
+    <!-- Sharp/Blunt 最高单项低于此值视为非战斗服装（防尘衣 ≈0.12 排除，防弹背心 ≈0.36 保留） -->
+    <minCombatArmorForApparel>0.20</minCombatArmorForApparel>
+
+    <!-- 硬黑名单：即使满足护甲条件也永不捕捉（e.g. 特定 mod 特殊物品） -->
+    <excludeApparelDefNames>
+    </excludeApparelDefNames>
+  </PersonalChronicle.Domain.ThingArchivePolicyDef>
+</Defs>

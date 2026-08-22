@@ -261,18 +261,15 @@ namespace PersonalChronicle.Archive
             return "PersonalChronicle.UI.FactionRelUnresolved".Translate().ToString();
         }
 
-        private static readonly Color[] CompositionPalette = new Color[]
-        {
-            ArchiveUiStyle.TimelineBattle,
-            ArchiveUiStyle.Info,
-            ArchiveUiStyle.Alive,
-            ArchiveUiStyle.Muted
-        };
-
-
         private static Color CompositionColor(int index)
         {
-            return CompositionPalette[index % CompositionPalette.Length];
+            switch (index % 4)
+            {
+                case 0: return ArchiveUiStyle.TimelineBattle;
+                case 1: return ArchiveUiStyle.Info;
+                case 2: return ArchiveUiStyle.Alive;
+                default: return ArchiveUiStyle.Muted;
+            }
         }
 
 

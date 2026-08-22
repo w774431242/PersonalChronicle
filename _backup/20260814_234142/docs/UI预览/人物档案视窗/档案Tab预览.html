@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta charset="UTF-8" />
+<title>档案 Tab 浓缩预览 — v1.1.4 主题预设·六宫格统一基准 (2026-08-13)</title>
+<meta name="viewport" content="width=960" />
+<style>
+  /* ---- UITheme tokens (统一取色，禁止散落十六进制) ----
+     v1.1.4：四套主流 RPG 主题预设（对齐 C# UITheme.Palette）。
+     :root = Epic（默认）；html[data-theme=gothic/wuxia/steampunk] 覆盖各令牌。
+     主题只换色（v1.1.4 最终：字体不随主题变化，沿用 Verse 原生字体）。
+     全部 CSS 变量经 --* 引用，切换 data-theme 即整体换肤。 */
+  :root {
+    --window:   #0e1322;   /* 暗紫深蓝底 */
+    --panel:    #151b2e;
+    --panel-2:  #12182a;
+    --avatar-bg: #1f2740;
+    --btn-1:    #1a2138;
+    --btn-2:    #232c48;
+    --card:     #1a2136;
+    --border:   #8a7740;   /* 鎏金描边 */
+    --border-soft: #3c4060;
+    --border-hi:   #a8944f;
+    --text:     #e8e2d0;   /* 暖羊皮纸文字 */
+    --muted:    #9a93a6;
+    --val:      #d8d2be;
+    --dim:      #6a6a82;
+    --accent:   #d4af37;   /* 鎏金 */
+    --accent-soft: rgba(212,175,55,.15);
+    --info:     #7fb2e8;
+    --alive:    #7fd6a0;
+    /* KPI tints — TintForEventKind（RPG 化：金/翠/朱/蓝宝石） */
+    --gold:  #e6c05a;      /* PillGold 鎏金 */
+    --green: #6fce8a;      /* PillGreen 祖母绿 */
+    --red:   #c85a4a;      /* PillRed 暗朱 */
+    --blue:  #6a9fdc;      /* PillBlue 蓝宝石 */
+    /* Timeline node tints — Timeline* */
+    --tl-join:   #6fce8a;
+    --tl-craft:  #c9a860;
+    --tl-death:  #c85a4a;
+    --tl-battle: #d8873a;
+    --tl-social: #8a9fd8;
+    --tl-build:  #7a7f96;
+  }
+
+  /* ---- Theme: Gothic (暗黑哥特，血源/暗黑破坏神风，对齐 C# Palette.Gothic) ---- */
+  html[data-theme="gothic"] {
+    --window:   #0a0a0d;   /* 墨黑 */
+    --panel:    #121216;
+    --panel-2:  #0e0e12;
+    --avatar-bg: #1a141c;
+    --btn-1:    #17171d;
+    --btn-2:    #20202a;
+    --card:     #16161c;
+    --border:   #4a3038;   /* 暗血红边 */
+    --border-soft: #2a2230;
+    --border-hi:   #6a3a3a;
+    --text:     #cfc8d8;   /* 苍白 */
+    --muted:    #84768e;
+    --val:      #bdb4c8;
+    --dim:      #5c5468;
+    --accent:   #a83232;   /* 血红 */
+    --accent-soft: rgba(168,50,50,.18);
+    --info:     #7a7ab0;
+    --alive:    #5f9a6a;
+    --gold:  #b89a4a;
+    --green: #5f9a6a;
+    --red:   #c84040;
+    --blue:  #7a5ac8;
+    --tl-join:   #5f9a6a;
+    --tl-craft:  #9a7a4a;
+    --tl-death:  #c84040;
+    --tl-battle: #a83a3a;
+    --tl-social: #7a6ac8;
+    --tl-build:  #5c5a72;
+  }
+
+  /* ---- Theme: Wuxia (东方武侠水墨，宣纸米白+墨色+朱红，对齐 C# Palette.Wuxia) ----
+     NOTE: 浅色主题；硬编码深色 dot 阴影等视觉在后文已做兼容。 */
+  html[data-theme="wuxia"] {
+    --window:   #e8e2d0;   /* 宣纸米白 */
+    --panel:    #ded6bf;
+    --panel-2:  #e4ddc8;
+    --avatar-bg: #d5ccb2;
+    --btn-1:    #d9d0b6;
+    --btn-2:    #cbbfa0;
+    --card:     #e2dac4;
+    --border:   #3a332b;   /* 墨色 */
+    --border-soft: #6f6657;
+    --border-hi:   #2a2420;
+    --text:     #2b2620;   /* 墨黑 */
+    --muted:    #5f584c;
+    --val:      #3a342c;
+    --dim:      #7a7264;
+    --accent:   #a63a2e;   /* 朱红印章 */
+    --accent-soft: rgba(166,58,46,.14);
+    --info:     #3a6a8a;
+    --alive:    #4f7a55;
+    --gold:  #9a7a2a;
+    --green: #4f7a55;
+    --red:   #8a2f2f;
+    --blue:  #3a6a8a;
+    --tl-join:   #4f7a55;
+    --tl-craft:  #8a6a2a;
+    --tl-death:  #8a2f2f;
+    --tl-battle: #a63a2e;
+    --tl-social: #4a5a7a;
+    --tl-build:  #6a6a5a;
+  }
+
+  /* ---- Theme: Steampunk (蒸汽朋克，黄铜棕+宝石绿，对齐 C# Palette.Steampunk) ---- */
+  html[data-theme="steampunk"] {
+    --window:   #14120d;   /* 深棕底 */
+    --panel:    #1c1a12;
+    --panel-2:  #18160f;
+    --avatar-bg: #2a2415;
+    --btn-1:    #201d12;
+    --btn-2:    #2a2415;
+    --card:     #201d14;
+    --border:   #8a7a3a;   /* 黄铜 */
+    --border-soft: #4a4230;
+    --border-hi:   #a89448;
+    --text:     #e0d6ae;
+    --muted:    #9a9078;
+    --val:      #cec49c;
+    --dim:      #6a6a52;
+    --accent:   #4a9a7a;   /* 宝石绿 */
+    --accent-soft: rgba(74,154,122,.16);
+    --info:     #7aa0d0;
+    --alive:    #7fca8a;
+    --gold:  #c9a848;
+    --green: #7fca8a;
+    --red:   #b85a4a;
+    --blue:  #5a8ad0;
+    --tl-join:   #7fca8a;
+    --tl-craft:  #c9a848;
+    --tl-death:  #b85a4a;
+    --tl-battle: #d8873a;
+    --tl-social: #7a8ad0;
+    --tl-build:  #7a7a5a;
+  }
+
+  /* ---- Reset & base ---- */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--window);
+    color: var(--text);
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px 120px;
+  }
+  .window {
+    width: 680px;
+    background: var(--window);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  /* ---- Header: identity bar ---- */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-soft);
+    background: var(--panel-2);
+  }
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--avatar-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700;
+    color: var(--accent);
+    border: 2px solid var(--border-hi);
+    flex-shrink: 0;
+  }
+  .name { font-size: 15px; font-weight: 700; color: var(--text); }
+  .pills { display: flex; gap: 6px; margin-left: auto; }
+  .pill {
+    padding: 2px 10px; border-radius: 10px;
+    font-size: 11px; font-weight: 600;
+    background: var(--accent-soft); color: var(--accent);
+    border: 1px solid var(--border-hi);
+  }
+  .pill.alive { background: var(--accent-soft); color: var(--alive); border-color: var(--border-hi); }
+  /* v1.1.4：内嵌主题切换按钮（Header 右侧，循环 史诗→暗黑→水墨→朋克） */
+  .theme-toggle {
+    flex-shrink: 0;
+    margin-left: 6px;
+    padding: 3px 12px;
+    font-size: 11px; font-weight: 600;
+    color: var(--accent);
+    background: linear-gradient(180deg, var(--btn-1) 0%, var(--panel) 100%);
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .theme-toggle:hover { border-color: var(--accent); }
+
+  /* ---- 居住与工作（v1.1.4 三卡：房间 / 工坊 / 类型）
+     C# 已落地：每卡主区点击改名，位置副行点击镜头跳转（CameraJumper.TryJump）。 ---- */
+  .residence-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px 14px 0;
+  }
+  .rw-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    padding: 5px 10px;
+    min-width: 0;
+    max-width: 230px;
+    cursor: pointer;
+    transition: border-color .12s ease;
+  }
+  .rw-card:hover { border-color: var(--accent); }
+  .rw-card::before {
+    content: "";
+    width: 3px; height: 20px;
+    border-radius: 2px;
+    background: var(--border-hi);
+    flex-shrink: 0;
+  }
+  .rw-card.rw-home::before { background: var(--alive); }   /* 房间 = 在世绿，呼应「在册」印章 */
+  .rw-card.rw-work::before { background: var(--gold); }   /* 工坊 = 鎏金，呼应「产出」 */
+  .rw-card.rw-type::before { background: var(--accent); } /* 类型 = 主强调色 */
+  .rw-k {
+    font-size: 10px;
+    color: var(--dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .rw-v {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .rw-v.dim { color: var(--dim); font-weight: 400; font-size: 11px; }
+  .rw-pos {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: auto;
+    padding-left: 8px;
+    border-left: 1px solid var(--border-soft);
+  }
+  .rw-pos.clickable { color: var(--accent); cursor: pointer; }
+  .rw-pos.clickable:hover { text-decoration: underline; }
+
+  /* ---- Section title ---- */
+  .section-title {
+    display: flex; align-items: center;
+    padding: 11px 14px 7px;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: "";
+    width: 4px; height: 14px;
+    background: var(--accent);
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+  .section-title span {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    white-space: nowrap;
+  }
+  .section-rule {
+    flex: 1; height: 1px;
+    background: var(--border);
+    margin-left: 4px;
+  }
+
+  /* ---- Six-grid KPI ---- */
+  .grid-wrap { padding: 6px 14px 14px; }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    padding: 8px 10px 8px;
+    position: relative;
+    /* 统一固定高度：所有宫格等高，内容超限截断，不被任一卡撑高挤兑
+       v1.1.4 对齐 C# KpiCardH=250f（220→250，容纳击杀 4 KPI 行 + 3 进度条）
+       v1.1.4 进一步：flex column 让 .kpi-bars-wrap flex:1 撑开剩余空间，等距分布 3 个 bar。 */
+    height: 250px;
+    overflow: hidden;
+    transition: border-color .15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .kpi-card:hover { border-color: var(--border-hi); }
+  .kpi-accent {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; border-radius: 2px 0 0 2px;
+  }
+  .kpi-label {
+    font-size: 11px; color: var(--muted); margin-bottom: 4px;
+    display: flex; align-items: center; justify-content: space-between;
+    white-space: nowrap;
+  }
+  /* v1.1.4：标题右侧小字（如传承锻造者），右对齐，溢出省略 */
+  .kpi-label-side {
+    font-size: 10px;
+    color: var(--dim);
+    max-width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 1 auto;
+  }
+  /* v1.1.4：进度条 caption 右侧 tag（如传承链击杀数），右对齐 */
+  .kpi-bar-tag {
+    margin-left: auto;
+    color: var(--muted);
+    padding-left: 6px;
+    flex: 0 0 auto;
+  }
+  .kpi-value { font-size: 22px; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* 长武器名/长文本自动缩小字号（对齐 C# SixGrid 大值区字体自适应） */
+  .kpi-value.value-sm { font-size: 16px; }
+  .kpi-value.value-xs { font-size: 13px; }
+  .kpi-sub { font-size: 11px; color: var(--dim); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* KPI tone colors — UITheme.TintForEventKind (合并同源：career=work=Gold, home=foot=Info, legacy=kill=Red, health=rel=Alive) */
+  .tone-gold  .kpi-accent, .tone-gold  .kpi-value { color: var(--gold); }
+  .tone-green .kpi-accent, .tone-green .kpi-value { color: var(--green); }
+  .tone-red   .kpi-accent, .tone-red   .kpi-value { color: var(--red); }
+  .tone-blue  .kpi-accent, .tone-blue  .kpi-value { color: var(--blue); }
+  .tone-info  .kpi-accent, .tone-info  .kpi-value { color: var(--info); }
+  .tone-alive .kpi-accent, .tone-alive .kpi-value { color: var(--alive); }
+
+  /* inline unit after value */
+  .kpi-unit { font-size: 12px; font-weight: 400; color: var(--dim); margin-left: 3px; }
+
+  /* ---- 工时宫格：排名 + 工时结构（前3职业 mini 进度条，对齐 UIComponents.ProgressBar） ---- */
+  .kpi-rank {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--val);
+    font-weight: 600;
+  }
+  .kpi-rank .rk-k { color: var(--dim); font-weight: 400; font-size: 10px; }
+  /* 排名与大值同行（右对齐，Tiny 字） */
+  .kpi-value { display: flex; align-items: baseline; }
+  .kpi-rank-inline {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--val);
+  }
+  .kpi-rank-inline.dim {
+    font-weight: 400;
+    font-size: 10px;
+    color: var(--dim);
+  }
+  /* 工时结构标题（对应 C# DrawCareerBars 区块） */
+  .kpi-struct-label {
+    font-size: 10px; color: var(--dim);
+    margin-top: 6px;
+    padding-top: 5px;
+    border-top: 1px solid var(--border-soft);
+  }
+  /* v1.1.4 统一基准：bars 容器等距分布——flex column 每条 flex:1，第 1 条贴近 divider 下方、第 N 条贴底（margin-bottom 6px） */
+  .kpi-bars-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding-bottom: 6px;
+    min-height: 0;
+  }
+  .kpi-bars-wrap > .struct-row {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0;
+  }
+  .kpi-bars-wrap > .struct-row:first-child { justify-content: flex-start; }
+  .kpi-bars-wrap > .struct-row:last-child { justify-content: flex-end; }
+  /* 单条职业进度条：轨道(BorderSoft) + 填充(Accent) + 行内字幕（对齐 ProgressBar 双参版 caption 布局）
+     v1.1.4 caption 固定在 bar 上方（与 C# 绘制顺序一致）
+     v1.1.4 加大：caption↔bar 间距 4px→8px（对齐 C# KpiBarGapY=8f） */
+  .struct-row { margin-top: 8px; }
+  .struct-bar {
+    height: 12px;
+    background: var(--border-soft);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .struct-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px 0 0 2px;
+  }
+  /* 进度条填充色跟随卡片语义色（与 .kpi-value 同源 TintForEventKind） */
+  .tone-gold  .struct-fill { background: var(--gold); }
+  .tone-green .struct-fill { background: var(--green); }
+  .tone-red   .struct-fill { background: var(--red); }
+  .tone-blue  .struct-fill { background: var(--blue); }
+  .tone-info  .struct-fill { background: var(--info); }
+  .tone-alive .struct-fill { background: var(--alive); }
+  .struct-caption {
+    position: relative;
+    /* v1.1.4: caption↔bar 间距 1px→4px，与 bar↔下一 caption 统一（对齐 C# KpiBarGapY） */
+    margin-top: 4px;
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--val);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .struct-caption .pct { color: var(--dim); margin-left: 4px; }
+  .struct-caption .tag-primary { color: var(--gold); }
+  .struct-caption .tag-secondary { color: var(--blue); }
+
+  /* ---- Sub badges (category / per-faction) ---- */
+  .kpi-badges {
+    display: flex; flex-wrap: wrap; gap: 4px;
+    margin-top: 6px;
+  }
+  .kpi-badges-label {
+    font-size: 10px; color: var(--dim);
+    margin-top: 5px;
+    padding-top: 4px;
+    border-top: 1px solid var(--border-soft);
+  }
+  /* 主要产出物列表（复用明细行视觉，单行左键右值） */
+  .prod-list { margin-top: 3px; }
+  .prod-list .row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: 10px;
+    line-height: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .prod-list .k { color: var(--dim); overflow: hidden; text-overflow: ellipsis; }
+  .prod-list .v { color: var(--val); font-weight: 600; flex-shrink: 0; margin-left: 8px; }
+  .badge {
+    font-size: 10px; line-height: 14px;
+    padding: 1px 6px; border-radius: 8px;
+    background: rgba(91,230,176,.10); color: var(--green);
+    border: 1px solid rgba(107,207,143,.30);
+    white-space: nowrap;
+  }
+  .badge.red { background: rgba(220,117,117,.10); color: var(--red); border-color: rgba(220,117,117,.30); }
+  .badge.more { background: rgba(149,208,252,.10); color: var(--info); border-color: rgba(149,208,252,.30); }
+
+  /* ---- Timeline section ---- */
+  .tl-section { padding: 0 14px 14px; }
+  .tl-container {
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 18px 0 22px;
+  }
+  .tl-track {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    min-width: max-content;
+    padding: 0 16px;
+    position: relative;
+  }
+  /* Spine line behind nodes */
+  .tl-spine {
+    position: absolute;
+    left: 16px; right: 16px;
+    top: 28px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--border) 50%, var(--accent) 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--accent-soft);
+  }
+  .tl-node {
+    width: 130px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .tl-dot-wrap {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .tl-glow {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(4px);
+    opacity: .35;
+  }
+  .tl-dot {
+    width: 13px; height: 13px;
+    border-radius: 3px;
+    border: 2px solid rgba(255,255,255,.2);
+    position: relative;
+    z-index: 3;
+    /* v1.1.4：描边色用主题边框令牌，浅色主题（水墨）下自适应 */
+    box-shadow: 0 0 0 3px var(--card);
+  }
+  .tl-stem {
+    width: 1px; height: 14px;
+    margin-top: 4px;
+    border-left: 1px dashed var(--border-hi);
+  }
+  .tl-text {
+    text-align: center;
+    margin-top: 6px;
+    width: 100%;
+  }
+  .tl-title {
+    font-size: 11px; font-weight: 600; color: var(--text);
+    line-height: 1.35;
+  }
+  .tl-sub {
+    font-size: 10px; color: var(--dim);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* Node colors — Timeline* palette (统一到 :root 变量) */
+  .node-join  .tl-dot, .node-join  .tl-glow { background: var(--tl-join); }
+  .node-craft .tl-dot, .node-craft .tl-glow { background: var(--tl-craft); }
+  .node-death .tl-dot, .node-death .tl-glow { background: var(--tl-death); }
+  .node-battle .tl-dot, .node-battle .tl-glow { background: var(--tl-battle); }
+  .node-social .tl-dot, .node-social .tl-glow { background: var(--tl-social); }
+  .node-build  .tl-dot, .node-build  .tl-glow { background: var(--tl-build); }
+
+  /* ---- Footer button ---- */
+  .footer { padding: 10px 14px 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-open {
+    flex: 1 1 auto; min-width: 120px; padding: 10px 0;
+    background: linear-gradient(180deg, var(--btn-1) 0%, var(--panel) 100%);
+    border: 1px solid var(--border-hi);
+    border-radius: 4px;
+    color: var(--accent);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all .15s;
+  }
+  .btn-open:hover {
+    background: linear-gradient(180deg, var(--btn-2) 0%, var(--btn-1) 100%);
+    border-color: var(--accent);
+  }
+
+  /* ---- Scrollbar styling for timeline ---- */
+  .tl-container::-webkit-scrollbar { height: 5px; }
+  .tl-container::-webkit-scrollbar-track { background: transparent; }
+  .tl-container::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 3px; }
+
+  /* ---- Annotation badges ---- */
+  .anno {
+    font-size: 10px; color: var(--dim);
+    border-left: 2px solid var(--border);
+    padding-left: 8px;
+    margin: 4px 14px 0;
+  }
+</style>
+
+<!-- ============================================================ -->
+<!-- WINDOW START                                                -->
+<!-- ============================================================ -->
+<div class="window">
+
+  <!-- ====== HEADER: identity bar ====== -->
+  <div class="header">
+    <div class="avatar">戈</div>
+    <div class="name">戈治钟</div>
+    <div class="pills">
+      <span class="pill">领袖</span>
+      <span class="pill alive">在世</span>
+      <span class="pill">在职</span>
+    </div>
+    <!-- v1.1.4：内嵌主题切换按钮（对齐 C# DrawHeader 右上角按钮，点击循环 工业→磷光→余烬） -->
+    <button class="theme-toggle" id="btnTheme" title="点击切换 UI 主题">主题</button>
+  </div>
+
+  <!-- ====== 居住与工作（v1.1.4 三卡：房间 / 工坊 / 类型） ====== -->
+  <div class="residence-bar" id="residenceBar">
+    <div class="rw-card rw-home"><span class="rw-k">房间</span><span class="rw-v">--</span><span class="rw-pos">--</span></div>
+    <div class="rw-card rw-work"><span class="rw-k">工坊</span><span class="rw-v">--</span><span class="rw-pos">--</span></div>
+    <div class="rw-card rw-type"><span class="rw-k">类型</span><span class="rw-v">--</span><span class="rw-pos">--</span></div>
+  </div>
+
+  <!-- ====== SECTION: KPI 六宫格（3列 × 2行 纯网格，无分组分隔） ====== -->
+  <div class="section-title"><span>生涯概览</span><div class="section-rule"></div></div>
+  <div class="grid-wrap">
+    <div class="kpi-grid" id="kpiGrid"></div>
+  </div>
+
+  <!-- Annotation: data source notes -->
+  <div class="anno">
+    数据来源（v6.8 落地：个人战斗维度归击杀宫格并已持久化；v1.1.4 统一基准=工时宫格；损耗宫格=替换战役宫格，C# 已落地）：工时=累计工时(TotalHours,同排第N/M排名ColonyRank/ColonyPopulation)+周/日均+工时结构(CareerBars前3) · 产出=ProductionSilverValue(真实累加器累计,同排=产量件数·种类数类)+KPI行(周产出=近7天银/净值=近30天银,ComputeProductionWindowValue扫描Craft/Built按Def基价估值)+产值贡献前3(ProductionTypeViews按类目聚合/按产值降序,固定3条不足"--"占位) · 击杀=Kills(大值,同排=猎物种类X种)+参战战役/生涯伤害(DamageDealtTotal持久化,2 KPI行)+击杀构成前3种族(固定3条不足"--"占位) · 损耗=累计消耗银(ConsumptionAccumulator持久化,Thing.Ingested捕获按Def基价计价,不写事件流)+inline日均损耗(近30天按天桶/30)+KPI行(周损耗=近7天SilverByDay求和/日均损耗)+损耗构成前3类目(食物/药品/燃料/成瘾品,固定3条不足"--"占位) · 足迹=PlaceCount(大值,同排HomeDays主驻地天数)+KPI行(主驻地HomePlaceText/远征次数ExpeditionCount)+停留时长前3地点(Stays按DwellTicks降序,Share01=dwell/总dwell,固定3条不足"--"占位) · 神器传承=以当前武器(TitleText)为锚点：历代击杀(TotalKills,同行)+锻造者(CreatedByText,标题右侧)+传承代数(GenCount)/当代击杀(Holders.IsCurrent.KillCount)+传承链进度条(各代击杀占比,Tag=击杀数,固定3条不足"--"占位) · （主驻地/关系/健康残值宫格已移除；里程碑时间轴已移除；战役宫格已移除，colony级 BattleKpis 仍可在完整档案馆「战役」分类查看）· 全部经 DetailSnapshot
+  </div>
+
+  <!-- ====== FOOTER ====== -->
+  <div class="footer">
+    <button class="btn-open" id="btnRandom">🎲 随机化数据（测试）</button>
+    <button class="btn-open" id="btnReset">恢复示例数据</button>
+    <button class="btn-open">打开完整档案</button>
+  </div>
+
+</div>
+<!-- ============================================================ -->
+
+<!-- ====== 随机化测试脚本（仅预览用，不影响 C# 运行逻辑） ====== -->
+<script>
+(function () {
+  "use strict";
+
+  // ---- 工具 ----
+  var R = {
+    ri: function (min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; },
+    pick: function (arr) { return arr[Math.floor(Math.random() * arr.length)]; },
+    chance: function (p) { return Math.random() < p; },
+    maybe: function (emptyP) { return R.chance(emptyP); } // true => 空数据
+  };
+
+  var NAMES = ["戈治钟","孙戈","阿岚","次代持有","霜原旅人","维拉","老钟","卡珊","无名氏","初代铸造者"];
+  var WORKS = ["种植","烹饪","建造","采矿","狩猎","研究","治疗","裁缝","驯兽","伐木"];
+  var ITEMS = ["木制短弓","精细餐","棉布","长剑","板甲","药草茶","银器","石材","零件","毒箭"];
+  var CATS = ["食物","制成品","原材料","零件","武器","衣服","建筑","块堆"];
+  var CONSUME_CATS = ["食物","药品","燃料","成瘾品","衣物","其他"];   // 损耗宫格：消耗品一级类目
+  var RACES = ["机械族","人类","部落","动物","昆虫族","海盗","帝国军","野兽"];
+  var PLACES = ["星岩哨站","霜原商队","翡翠山谷","黑石要塞","盐沼营地","废弃前哨"];
+  // ---- v1.1.4 试验：住所（RoomRoleLabel）+ 工作场所（Building_WorkTable defName/LabelCap）
+  //      方案 A 捕获（Notify_IterationCompleted→billGiver）+ B 定期快照（OwnedRoom）。
+  //      C# 尚未落地，此处为预览示意数据。 ----
+  var HOME_ROLES = ["卧室 · 主屋","卧室 · 东厢","营房 · 工房","单间 · 石屋","无住所"];
+  var WORKBENCHES = ["锻造台 · 工坊","裁缝台 · 制衣间","研究台 · 书房","熔炉 · 铸造间","料理台 · 厨房"];
+
+  // ---- 各宫格数据生成器 ----
+  function genWork(emptyP, fill) {
+    if (R.maybe(emptyP)) return {
+      label:"累计工时 · 工时排名", value:"--", unit:"", rank:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"工时结构 · 前 3 职业"
+    };
+    var total = R.ri(50, 3000);
+    var bars = [];
+    var n = fill ? 3 : R.ri(0, 3);
+    var works = WORKS.slice().sort(function(){return Math.random()-0.5;}).slice(0, n);
+    for (var i=0;i<works.length;i++){
+      var h = R.ri(20, 800); var pct = R.ri(5, 60);
+      var tag = i===0 ? ' <span class="tag-primary">主业</span>' : (i===1 ? ' <span class="tag-secondary">副业</span>' : '');
+      bars.push({ caption: works[i] + " · " + h + "h<span class=\"pct\">" + pct + "%</span>" + tag, pct: pct });
+    }
+    // 固定 3 条进度条（不足 --/0 占位，对齐 C# workBars）
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
+    return {
+      label:"累计工时 · 工时排名",
+      value: total, unit:"h",
+      // 仅工时使用 "排名 " 前缀；其他宫格 inline 是各自语义（主驻地天数/历代击杀等）。
+      rank: "排名 第 " + R.ri(1,20) + " / " + R.ri(5,30),
+      rows: [
+        { k:"周工时", v: R.ri(5,90) + " h" },
+        { k:"日均", v: (R.ri(10,90)/10).toFixed(1) + " h" }
+      ],
+      bars: bars,
+      structLabel:"工时结构 · 前 3 职业"
+    };
+  }
+
+  function genProd(emptyP, fill) {
+    if (R.maybe(emptyP)) return {
+      label:"产出 · 累计产量", value:"--", unit:"", rank:"0 类",
+      rows: [
+        { k:"周产出", v:"0 银" },
+        { k:"净值", v:"0 银" }
+      ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"产值贡献 · 前 3 类目"
+    };
+    var silver = R.ri(10, 5000);
+    var qty = R.ri(1, 200);
+    var kinds = R.ri(1, 8);
+    // v1.1.4 统一基准为工时宫格：大字下方 KPI 行=周产出/净值（近 7 / 30 天滚动窗口银币，
+    // C# ComputeProductionWindowValue 扫描 Craft/Built 事件按 Def.BaseMarketValue 估值）。
+    var weekVal = R.ri(0, 800) + " 银";
+    var monthVal = R.ri(0, 3000) + " 银";
+    // 真实数据源：ProductionTypeViews（按类目聚合、按产值降序）；bar 候选=类目名。
+    // 固定 3 条进度条，不足 3 类目用 "--"/0 占位（对齐 C# prodBars，布局稳定）。
+    var cats = CATS.slice().sort(function(){return Math.random()-0.5;}).slice(0, 3);
+    // 给每个类目随机产值，再按产值降序（对齐 C# Types 排序）。
+    var pairs = cats.map(function(c){ return { c:c, v:R.ri(10, 1500) }; });
+    pairs.sort(function(a,b){ return b.v - a.v; });
+    var total = pairs.reduce(function(s,p){ return s + p.v; }, 0);
+    var bars = pairs.map(function(p){
+      var pct = total > 0 ? Math.round(p.v / total * 100) : 0;
+      return { caption: p.c + "<span class=\"pct\">" + p.v + " 银 · " + pct + "%</span>", pct: pct };
+    });
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
+    return {
+      label:"产出 · 累计产量",
+      value: silver, unit:"银",
+      // inline：维持产量(件) + 新增种类(类)
+      rank: qty + " 件 · " + kinds + " 类",
+      rows: [
+        { k:"周产出", v: weekVal },
+        { k:"净值", v: monthVal }
+      ],
+      bars: bars,
+      structLabel:"产值贡献 · 前 3 类目"
+    };
+  }
+
+  function genKill(emptyP, fill) {
+    if (R.maybe(emptyP)) return {
+      label:"击杀", value:"--", unit:"杀", rank:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"击杀构成 · 前 3 种族"
+    };
+    var total = R.ri(1, 60);
+    var bars = [];
+    // v1.1.4 落地：击杀构成进度条固定 3 条，不足 3 种族用 "--"/0 占位
+    //（与产出宫格一致，布局稳定；原 v6.8 取前 2 已废除）。
+    var races = RACES.slice().sort(function(){return Math.random()-0.5;}).slice(0, 3);
+    for (var i=0;i<races.length;i++){
+      var c = R.ri(1, total); var pct = R.ri(5, 80);
+      bars.push({ caption: races[i] + "<span class=\"pct\">" + c + " · " + pct + "%</span>", pct: pct });
+    }
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
+    // ---- 个人战斗维度（v6.8 落地，绑定单 pawn，C# 已持久化累加） ----
+    var dmgTotal = R.ri(500, 8000);                 // 生涯伤害：PawnObject.DamageDealtTotal（持久化近似累加）
+    var battles = R.ri(0, 20);                       // 参战战役：PawnObject.ParticipatedBattles（持久化累加）
+    return {
+      label:"击杀",
+      value: total, unit:"杀",
+      // inline：猎物种类并入大字同行（对齐产出"件·类"视觉位；战斗风格已移除）
+      rank: R.ri(0,10) + " 种",
+      rows: [
+        { k:"参战战役", v: battles + " 场" },
+        { k:"生涯伤害", v: dmgTotal }
+      ],
+      bars: bars,
+      structLabel:"击杀构成 · 前 3 种族"
+    };
+  }
+
+  function genConsume(emptyP, fill) {
+    if (R.maybe(emptyP)) return {
+      label:"损耗 · 累计消耗", value:"--", unit:"银", rank:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"损耗构成 · 前 3 类目"
+    };
+    // 损耗 = 每日消耗品（食物/药品/成瘾品/燃料）按 Def.BaseMarketValue 计价累计。
+    // v1.1.4 C# 已落地：大值=累计损耗银（ConsumptionAccumulator 持久化累加，
+    // Capture=Thing.Ingested Postfix 每次进食/用药累加基价，不写事件流）；
+    // inline=日均损耗（近 30 天按天桶求和 / 30）；KPI 行=周损耗（近 7 天 SilverByDay 求和）/ 日均损耗；
+    // 进度条=损耗构成前 3 类目（固定 3 条，不足 "--"/0 占位，与产出宫格一致）。
+    var total = R.ri(50, 6000);
+    var daily = R.ri(0, 200) / 10;                          // 日均损耗（银/天，近30天/30）
+    var weekVal = R.ri(0, 700);                              // 周损耗（近 7 天银）
+    var cats = CONSUME_CATS.slice().sort(function(){return Math.random()-0.5;}).slice(0, 3);
+    var pairs = cats.map(function(c){ return { c:c, v:R.ri(5, 900) }; });
+    pairs.sort(function(a,b){ return b.v - a.v; });
+    var totalC = pairs.reduce(function(s,p){ return s + p.v; }, 0);
+    var bars = pairs.map(function(p){
+      var pct = totalC > 0 ? Math.round(p.v / totalC * 100) : 0;
+      return { caption: p.c + "<span class=\"pct\">" + p.v + " 银 · " + pct + "%</span>", pct: pct };
+    });
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
+    return {
+      label:"损耗 · 累计消耗",
+      value: total, unit:"银",
+      // inline：日均损耗（累计 / 服务天数）
+      rank: "日均 " + daily + " 银/天",
+      rows: [
+        { k:"周损耗", v: weekVal + " 银" },
+        { k:"日均损耗", v: daily + " 银" }
+      ],
+      bars: bars,
+      structLabel:"损耗构成 · 前 3 类目"
+    };
+  }
+
+  function genFoot(emptyP, fill) {
+    if (R.maybe(emptyP)) return {
+      label:"足迹 · 主驻地", value:"--", unit:"地", rank:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"停留时长 · 前 3 地点"
+    };
+    // 统一基准（与工时/产出/损耗一致）：大字 + inline + 2 KPI 行 + caption + 固定 3 进度条。
+    // 大值=足迹地点数(Footprint.PlaceCount)；inline=主驻地天数(HomeDays)；
+    // KPI 行=主驻地(HomePlaceText)/远征次数(ExpeditionCount)；
+    // 进度条=停留时长前 3 地点(Footprint.Stays 按 DwellTicks 降序, Share01=dwell/总dwell)，固定 3 条不足 "--"/0 占位。
+    var placeCount = R.ri(1, 40);
+    var homeDays = R.ri(0, 900);
+    var exp = R.ri(0, 20);
+    var pls = PLACES.slice().sort(function(){return Math.random()-0.5;}).slice(0, 3);
+    var dwells = pls.map(function(p){ return { p:p, d:R.ri(3, 900) }; });
+    dwells.sort(function(a,b){ return b.d - a.d; });
+    var totalD = dwells.reduce(function(s,x){ return s + x.d; }, 0);
+    var bars = dwells.map(function(x){
+      var pct = totalD > 0 ? Math.round(x.d / totalD * 100) : 0;
+      return { caption: x.p + "<span class=\"pct\">" + x.d + " 天 · " + pct + "%</span>", pct: pct };
+    });
+    while (bars.length < 3) bars.push({ caption: "--", pct: 0 });
+    return {
+      label:"足迹 · 主驻地",
+      value: placeCount, unit:"地",
+      rank: homeDays + " 天",
+      rows: [
+        { k:"主驻地", v: R.pick(PLACES) },
+        { k:"远征", v: exp + " 次" }
+      ],
+      bars: bars,
+      structLabel:"停留时长 · 前 3 地点"
+    };
+  }
+
+  function genLegacy(emptyP, fill) {
+    if (R.maybe(emptyP)) return {
+      label:"神器传承", value:"--", unit:"", rank:"", side:"",
+      rows: [ { k:"暂无记录", v:"--" } ],
+      bars:[ { caption:"--", pct:0 }, { caption:"--", pct:0 }, { caption:"--", pct:0 } ],
+      structLabel:"传承链（按击杀前 3）"
+    };
+    var holders = [];
+    var n = fill ? 5 : R.ri(0, 5);
+    for (var i=0;i<n;i++){
+      holders.push({ name: R.pick(NAMES), gen: i===0?"第一任":(i===n-1?"当代":"次代"), kills: R.ri(0, 50) });
+    }
+    // 按击杀降序取前 3（对齐 C# 逻辑）
+    holders.sort(function(a,b){ return b.kills - a.kills; });
+    holders = holders.slice(0, 3);
+    var totalKills = holders.reduce(function(s,h){ return s + h.kills; }, 0);
+    // 传承链进度条：各代击杀占比（Share01 = 该代击杀/总击杀），固定 3 条不足 --/0 占位
+    var chainBars = holders.map(function(h, idx){
+      var pct = totalKills > 0 ? Math.round(h.kills / totalKills * 100) : 0;
+      return { caption: "第" + (idx+1) + " · " + h.name + " · " + h.gen + "<span class=\"pct\">" + pct + "%</span>", pct: pct, tag: h.kills + " 杀" };
+    });
+    while (chainBars.length < 3) chainBars.push({ caption:"--", pct:0 });
+    return {
+      label:"神器传承",
+      value: R.pick(["断颅者之弓","碎星之矛","霜火长弓","远古战锤","毒牙匕首"]),
+      rank: "历代 " + totalKills + " 杀",
+      // v1.1.4：锻造者移到「神器传承」标题右侧（side），KPI 行剩 2 行
+      side: "锻 · " + R.pick(NAMES),
+      rows: [
+        { k:"传承代数", v: R.ri(1,8) + " 代" },
+        { k:"当代击杀", v: (holders.length?holders[0].kills:0) + " 杀" }
+      ],
+      bars: chainBars,
+      structLabel:"传承链（按击杀前 3）"
+    };
+  }
+
+  // ---- 渲染 ----
+  function esc(s){ return (s==null) ? "" : String(s); }
+
+  function renderCard(tone, data) {
+    var html = '<div class="kpi-card tone-' + tone + '">';
+    html += '<div class="kpi-accent"></div>';
+    // v1.1.4：side = 标题右侧小字（如传承锻造者），右对齐
+    html += '<div class="kpi-label">' + esc(data.label);
+    if (data.side) html += '<span class="kpi-label-side">' + esc(data.side) + '</span>';
+    html += '</div>';
+    // 大值（长武器名自动缩小字号，对齐 C# SixGrid 字体自适应）
+    var vstr = (data.value !== "--" && data.value !== null && data.value !== undefined) ? String(data.value) : "";
+    var vcls = "kpi-value";
+    if (vstr.length > 7) vcls += " value-xs";
+    else if (vstr.length > 4) vcls += " value-sm";
+    html += '<div class="' + vcls + '">';
+    if (vstr.length > 0) {
+      html += esc(vstr);
+      if (data.unit) html += '<span class="kpi-unit">' + esc(data.unit) + '</span>';
+    } else {
+      html += '--';
+    }
+    if (data.rank) html += '<span class="kpi-rank-inline">' + esc(data.rank) + '</span>';
+    html += '</div>';
+    // KPI 条
+    if (data.rows && data.rows.length) {
+      html += '<div class="prod-list">';
+      data.rows.forEach(function(r){
+        html += '<div class="row"><span class="k">' + esc(r.k) + '</span><span class="v">' + esc(r.v) + '</span></div>';
+      });
+      html += '</div>';
+    }
+    // 结构/贡献/战损/传承链（统一进度条或行列表）
+    // 多区块模式（barBlocks）优先；否则单区块（bars + structLabel）
+    var blocks = data.barBlocks && data.barBlocks.length
+      ? data.barBlocks
+      : (data.bars && data.bars.length ? [{ label: data.structLabel || "明细", bars: data.bars }] : null);
+    if (blocks) {
+      blocks.forEach(function(block){
+        html += '<div class="kpi-struct-label">' + esc(block.label || "明细") + '</div>';
+        // v1.1.4：bars 容器用 flex column，每条 flex:1 等距分布，第 1 条贴近 divider 下方、第 N 条贴底。
+        html += '<div class="kpi-bars-wrap">';
+        block.bars.forEach(function(b){
+          if (b.pct !== undefined && b.pct !== null) {
+            // 进度条（caption 在 bar 上方，flex 居中；可选右对齐 tag 如传承链击杀数）
+            html += '<div class="struct-row">';
+            html += '<div class="struct-caption">' + b.caption;
+            if (b.tag) html += '<span class="kpi-bar-tag">' + esc(b.tag) + '</span>';
+            html += '</div>';
+            html += '<div class="struct-bar"><div class="struct-fill" style="width:' + Math.max(2, b.pct) + '%"></div></div>';
+            html += '</div>';
+          } else {
+            // 行列表（传承链，flex 居中）
+            html += '<div class="struct-row chain-row"><div class="prod-list"><div class="row"><span class="k">' + esc(b.k) + '</span><span class="v">' + esc(b.v) + '</span></div></div></div>';
+          }
+        });
+        html += '</div>';
+      });
+    } else {
+      // 空数据占位（对齐 C# SixGrid 的"暂无记录 --"）
+      html += '<div class="kpi-struct-label">' + esc(data.structLabel || "明细") + '</div>';
+      html += '<div class="prod-list"><div class="row"><span class="k">暂无记录</span><span class="v">--</span></div></div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function renderGrid(data) {
+    var grid = document.getElementById("kpiGrid");
+    if (!grid) return;
+    var tones = ["gold","green","red","blue","info","red"];
+    var html = "";
+    for (var i=0;i<data.length;i++) html += renderCard(tones[i], data[i]);
+    grid.innerHTML = html;
+  }
+
+  // ---- v1.1.4 三卡：房间 / 工坊 / 类型（主区点击改名，位置副行点击定位） ----
+  var RENAME_KEYS = {
+    "房间": "为这间房起一个专属昵称（仅展示）：",
+    "工坊": "为这台工坊起一个专属名称：",
+    "类型": "替换这间房的类型标签（底层 Room.Role 不变）："
+  };
+  function renderResidenceBar(rc) {
+    var bar = document.getElementById("residenceBar");
+    if (!bar) return;
+    rc = rc || {};
+    function cell(cls, key, val, pos, posClick) {
+      var v = (val == null || val === "") ? '<span class="rw-v dim">--</span>' : '<span class="rw-v">' + esc(val) + "</span>";
+      var p = (pos == null || pos === "") ? '<span class="rw-pos">--</span>'
+        : '<span class="rw-pos' + (posClick ? " clickable" : "") + '">' + esc(pos) + "</span>";
+      return '<div class="rw-card ' + cls + '" data-key="' + key + '"><span class="rw-k">' + esc(key)
+        + "</span>" + v + p + "</div>";
+    }
+    var homePos = rc.homePos ? rc.homePos : null;
+    var workPos = rc.workPos ? rc.workPos : null;
+    bar.innerHTML =
+      cell("rw-home", "房间", rc.homeRole, homePos, !!homePos)
+      + cell("rw-work", "工坊", rc.workBench, workPos, !!workPos)
+      + cell("rw-type", "类型", rc.roomType, homePos, !!homePos);
+    bar.querySelectorAll(".rw-card").forEach(function (card) {
+      card.addEventListener("click", function () {
+        var key = card.getAttribute("data-key");
+        if (!RENAME_KEYS[key]) return;
+        var prompt = RENAME_KEYS[key];
+        var cur = card.querySelector(".rw-v").textContent;
+        var name = window.prompt(prompt, (cur === "--" ? "" : cur));
+        if (name === null) return;
+        card.querySelector(".rw-v").textContent = name.trim() === "" ? "--" : name.trim();
+      });
+    });
+    bar.querySelectorAll(".rw-pos.clickable").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.stopPropagation();
+        window.alert("镜头跳转至坐标 " + el.textContent + "（C# 实现用 CameraJumper.TryJump）");
+      });
+    });
+  }
+
+  function genResidenceBar(emptyP) {
+    if (R.maybe(emptyP)) return { homeRole: null, workBench: null, roomType: null, homePos: null, workPos: null };
+    var homeRole = R.pick(HOME_ROLES);
+    var workBench = R.pick(WORKBENCHES);
+    return {
+      homeRole: homeRole,
+      workBench: workBench,
+      roomType: homeRole.split(" · ")[0],
+      homePos: R.pick(["12,8", "24,18", "7,31", "40,5"]),
+      workPos: R.pick(["15,22", "9,14", "33,27", "5,40"])
+    };
+  }
+
+  // ---- 示例（默认）数据 ----
+  function sampleData() {
+    return [
+      genWork(0), genProd(0), genKill(0), genConsume(0), genFoot(0), genLegacy(0)
+    ];
+  }
+
+  // ---- 随机化（六宫格全覆盖 + 数据最大化存在，用于全量测试） ----
+  function randomData() {
+    // emptyP = 0（不空置）；fill = true（工时进度条取满3条 / 停留2条 / 传承链候选5取前3）；
+    // 产出/击杀/损耗 bars 恒固定 3 条（不足 "--"/0 占位，fill 不再参与）
+    return [
+      genWork(0, true), genProd(0, true), genKill(0, true), genConsume(0, true), genFoot(0, true), genLegacy(0, true)
+    ];
+  }
+
+  document.getElementById("btnRandom").addEventListener("click", function(){ renderGrid(randomData()); renderResidenceBar(genResidenceBar(0)); });
+  document.getElementById("btnReset").addEventListener("click", function(){ renderGrid(sampleData()); renderResidenceBar(genResidenceBar(0)); });
+
+  // ---- v1.1.4：主题切换（循环 史诗→暗黑→水墨→朋克，对齐 C# UITheme.NextThemeId） ----
+  var THEMES = [
+    { id: "epic",       label: "史诗奇幻" },
+    { id: "gothic",     label: "暗黑哥特" },
+    { id: "wuxia",      label: "东方水墨" },
+    { id: "steampunk",  label: "蒸汽朋克" }
+  ];
+  var themeBtn = document.getElementById("btnTheme");
+  function applyTheme(themeId) {
+    document.documentElement.setAttribute("data-theme", themeId);
+    for (var i = 0; i < THEMES.length; i++) {
+      if (THEMES[i].id === themeId) { themeBtn.textContent = "主题 · " + THEMES[i].label; return; }
+    }
+  }
+  function nextThemeId(cur) {
+    for (var i = 0; i < THEMES.length; i++) if (THEMES[i].id === cur) return THEMES[(i + 1) % THEMES.length].id;
+    return THEMES[0].id;
+  }
+  if (themeBtn) {
+    var curTheme = document.documentElement.getAttribute("data-theme") || "industrial";
+    applyTheme(curTheme);
+    themeBtn.addEventListener("click", function(){ applyTheme(nextThemeId(document.documentElement.getAttribute("data-theme"))); });
+  }
+
+  // 初始渲染示例数据（三卡：房间/工坊/类型 + 位置副行）
+  renderGrid(sampleData());
+  renderResidenceBar({ homeRole: "卧室 · 主屋", workBench: "锻造台 · 工坊", roomType: "卧室", homePos: "24,18", workPos: "15,22" });
+})();
+</script>
+
+
+<!--
+============================================================
+v6.6 预览更新说明 (2026-08-11) — 相对 v6.5：移除里程碑时间轴；传承击杀深度富化（初代/铸造/当前持有/持有链 Top2/称号评语）；六宫格各卡增补 KPI 行
+
+## 与上一版 (v5) 的差异
+
+### A. KPI 六宫格（3 列 × 2 行纯网格，无分组分隔条，统一前端样式，严格镜像 C# BuildCells 字段 + 预览层富化）
+**第 1 行（工时 / 产出 / 击杀）**
+| 宫格 | 当前 C# 渲染 (BuildCells) | 预览对齐 |
+|------|---------|---------|
+| ① 工时 | `TotalHours`(取整)+"h" 单位；副文=殖民地第N/M(`UI.Kpi.Rank`) | 预览：大值=累计工时 1234 h（`TotalHours`+内联"h"），**同排=工时排名 第3/12**(`ColonyRank/ColonyPopulation`)；KPI 条=周工时(`WeeklyHours`)/日均(`DailyHours`)；工时结构=前 3 职业 mini 进度条（`CareerBars` 按 Ticks 降序前 3，每行 `UIComponents.ProgressBar(Share01,Accent)` + 字幕 + `IsPrimary→主业`/`IsSecondary→副业` 标签） |
+| ② 产出 | `ProductionSilverValue`(取整)+"银" 单位；副文=`ProductionTotal`+"件 · "+种类数+"类"(`ProductionTypeViews.Count`)；**KPI 条=周产出/净值**(`WeeklyProductionSilver`近7天银/`MonthlyProductionSilver`近30天银，`ComputeProductionWindowValue`扫描Craft/Built事件按Def基价估值)；产值贡献前3(固定3条，不足`--`/0占位)=`ProductionTypeViews`(`ProductionAccumulator` 真实累计，按类目聚合、按产值降序) | 预览：大值=累计价值 1850 银(`ProductionSilverValue`)，**同排=累计产量 47 件 · 5 类**(`ProductionTotal`+`ProductionTypeViews.Count`)；KPI 条=周产出 320 银 / 净值 1250 银；**产值贡献前3类目**=统一进度条(`ProductionTypeViews` 按 MarketValue 降序：武器720银·39%/食物540银·29%/衣服310银·17%，不足3条时`--`/0占位)，`Share01=MarketValue/TotalMarketValue` |
+| ③ 击杀 | `Kills>0?Kills:"--"`；副文="击杀"；**v1.1.4 统一基准**：大字=击杀数+同排=猎物种类 X 种(`KillsByFaction` 去重数)+KPI 行=参战战役(`ParticipatedBattles`)/生涯伤害(`DamageDealtTotal`) 2 行+击杀构成前3种族进度条(固定3条不足`--`/0占位)；战斗风格已移除 | 预览：大值=12 杀，**同排=猎物 4 种**；KPI 条=参战战役(`ParticipatedBattles`)+生涯伤害(`DamageDealtTotal`)；**击杀构成前3种族(固定3条，不足`--`/0占位)**=统一进度条(`.struct-*`，填充 PillRed)，`KillsByFaction` 按数量降序 |
+| ④ 损耗 | **v1.1.4 C# 已落地（替换战役宫格）**：大值=累计消耗银（`ConsumptionAccumulator` 持久化，`Thing.Ingested` Postfix 捕获按 `Def.BaseMarketValue` 计价，不写事件流）；同行=日均损耗（近30天按天桶`SilverByDay`求和/30）；KPI 行=周损耗（近7天）/日均损耗；进度条=损耗构成前3类目（固定3条不足`--`/0占位） | 预览：大值=累计消耗 3280 银；**同排=日均 42.5 银/天**；KPI 条=周损耗 350 银 / 日均损耗 42.5 银；**损耗构成前3类目**=统一进度条（食物 1200银·38% / 药品 950银·30% / 燃料 700银·22%，不足3条`--`/0占位），`Share01=CategorySilver/TotalConsumeSilver`。（原战役宫格已移除；colony 级 `BattleKpis` 数据保留，完整档案馆「战役」分类仍可查看） |
+| ⑤ 足迹 | `Footprint.PlaceCount>0?PlaceCount:"--"`+"地点"；**统一基准（v1.1.4）**：大字=地点数+同排=主驻地天数(`HomeDays`)+KPI 行=主驻地(`HomePlaceText`)/远征次数(`ExpeditionCount`)+停留时长前3地点进度条(`Stays` 按 `DwellTicks` 降序，`Share01=dwell/总dwell`，固定3条不足`--`/0占位) | 预览：大值=地点数 12(`PlaceCount`)，**同排=主驻地天数 412 天**(`HomeDays`，`.kpi-rank-inline`)；KPI 条(`.prod-list`)=主驻地(`HomePlaceText`)/远征次数(`ExpeditionCount`)；**停留时长前3地点**=统一进度条（星岩哨站 320天·48% / 翡翠山谷 210天·31% / 黑石要塞 90天·14%，不足3条`--`/0占位），`Share01=DwellTicks/TotalDwellTicks`。主驻地信息原独立格，现并入此卡 |
+
+**组3 神器传承**（注：原「关系」「健康残值」宫格已移除）
+| ⑦ 神器传承 | 以人物**当前武器**为锚点展示传承；`LegacyView`（`TitleText`武器名/`CreatedByText`锻造者/`GenCount`代数/`TotalKills`历代击杀/`Holders`各代）；**v1.1.4**：锻造者移标题右侧(`KpiCell.TitleSide`)、传承链改进度条 | 预览**武器锚点重设计**：大值=武器名 断颅者之弓(`TitleText`)，**同行=历代击杀 37**(`TotalKills`)；**标题右侧=锻 · 戈治钟**(`CreatedByText`)；KPI 条=传承代数(`GenCount`)/当代击杀(`Holders`中`IsCurrent`行的`KillCount`=11)；**传承链进度条**=`Holders` 按击杀降序前3（戈治钟·初代 18杀 49% / 次代 8杀 22% / 孙戈·当代 11杀 30%），`Share01=KillCount/TotalKills`，固定3条不足`--`/0占位。无传承(`IsEmpty`)时回退"--" |
+
+> 注：预览 KPI 现为 **6 格（3 列 × 2 行）纯网格**，无分组分隔条（`.kpi-group-sep` 已移除），统一前端样式。卡片顺序：第1行=工时/产出/击杀，第2行=损耗/足迹/传承击杀。原「主驻地/关系/健康残值/战役」宫格已移除（主驻地并入足迹、关系/健康残值从浓缩 Tab 去除、战役被损耗替换且 colony 级数据保留在完整档案馆）。C# 游戏内 `BuildCells` 仍为独立格，此差异仅为预览层布局取舍，未改运行逻辑。所有卡固定 `height:250px; overflow:hidden` 等高（v1.1.4 对齐 C# `KpiCardH=250f`）；统一组件：`.kpi-label`(标题) / `.kpi-value`+`.kpi-rank-inline`(大值同行) / `.prod-list`(KPI 条) / `.struct-*`(统一进度条)。
+
+### B. 时间轴视觉增强
+- 横轴加渐变色 + box-shadow 发光效果
+- dot 从方框改为圆角方形 (border-radius:3px)
+- dot 外圈加半透明光晕 (blur + opacity)
+- stem 连接线从实线改为虚线 (dashed)
+- 节点间距从 120px 增至 130px，更宽松
+
+### C. 产出分类体系（官方一级 ThingCategoryDef）
+支持的一级分类（来自 RimWorld ThingCategoryDefOf）：
+  食物(Food) ✓ / 制成品(Items) ✓ / 原材料(RawResources) ✓ /
+  物品(Parts) ✓ / 武器(Weapons) ✓ / 衣服(Apparel) ✓ /
+  建筑(Buildings) ✓ / 块堆(Chunks) ✓ / 植物(Plants) ✗ / 尸体(Corpses) ✗
+C# 侧需从 ProductionTypeView.Types 按 thingDef 的 FirstThingCategory 归类。
+
+### D. 战役捕捉已知问题
+Patch_IncidentWorker 通过 IncidentWorker.TryExecute Postfix 捕捉。
+当前 fallback 只覆盖 ThreatBig / ThreatSmall。
+遗漏：任务产生的敌人袭击（如 RaidEnemyFriendly/Quest 子类等非标准 threat category）。
+修复方向：扩展 IncidentBattleExtension 覆盖面 或 增加 category 白名单。
+
+### E. 严格设计参数表（零自由发挥，对齐 UITheme/UIComponents 真实常量）
+
+#### E0. 全局令牌（UITheme 真实值，禁止另取色）
+> **v1.1.4 主题化**：下表为 **Epic（默认）** 的 RGB 值。UITheme 颜色令牌现已可变 static（`UITheme.Apply(themeId)` 覆盖），另三套预设 **Gothic/Wuxia/Steampunk** 的令牌值见本文件顶部 `html[data-theme="gothic"/"wuxia"/"steampunk"]` 块（对齐 C# `UITheme.Palette`）。派生令牌（SecondaryText=Muted、Blood=Dead、AccentSoft/InfoSoft/Pill{Blue,Gold,Red,Green}）随主色自动派生。主题只换色，字体沿用 Verse 原生字体。任何取值仍禁止在窗口内另取色，一律走令牌。
+
+| 用途 | 令牌 | RGB (0-1) |
+|------|------|-----------|
+| 窗口底 | Window | (0.067, 0.094, 0.110) |
+| 区块底 | Panel | (0.094, 0.129, 0.149) |
+| 卡片底 | Card | (0.145, 0.188, 0.212) |
+| 主边框 | Border | (0.270, 0.325, 0.357) |
+| 次边框 | BorderSoft | (0.180, 0.231, 0.255) |
+| 主文字 | Text | (0.914, 0.933, 0.929) |
+| 次文字 | SecondaryText(=Muted) | (0.600, 0.600, 0.600) |
+| 弱文字 | Dim | (0.443, 0.502, 0.525) |
+| 强调金 | Accent | (0.816, 0.608, 0.380) |
+| 强调金透 | AccentSoft | (0.816, 0.608, 0.380, a=0.15) |
+| 信息蓝 | Info | (0.584, 0.816, 0.988) |
+| 在世绿 | Alive | (0.570, 0.900, 0.690) |
+| 警告红 | Warn | (1.000, 0.000, 0.000) |
+| 时间轴轴灰 | TimelineSpine | (0.400, 0.400, 0.400) |
+| TL-加入 | TimelineJoin | (0.400, 0.800, 0.400) |
+| TL-死亡 | TimelineDeath | (0.850, 0.350, 0.350) |
+| TL-战役 | TimelineBattle | (0.900, 0.500, 0.200) |
+| TL-社交 | TimelineSocial | (0.500, 0.600, 0.900) |
+| TL-制造 | TimelineCraft | (0.700, 0.600, 0.300) |
+| TL-建造 | TimelineBuilt | (0.500, 0.500, 0.550) |
+| 六宫格-工时/主业 | PillGold | (0.950, 0.740, 0.260) |
+| 六宫格-产出 | PillGreen | (0.420, 0.810, 0.560) |
+| 六宫格-击杀/传承击杀 | PillRed | (0.860, 0.460, 0.460) |
+| 六宫格-损耗 | PillBlue | (0.360, 0.620, 0.830) |
+| 六宫格-足迹/主驻地 | Info | (0.584, 0.816, 0.988) |
+| 六宫格-关系/健康残值 | Alive | (0.570, 0.900, 0.690) |
+
+#### E1. KPI 宫格（对齐 UIComponents.SixGrid 现有常量；预览按核心/经历/传承与健康分三组）
+| 参数 | 值 | 来源 |
+|------|----|------|
+| 列数 | 3 | `SixGrid` cols=3 |
+| 卡片高 | C# **250f**（`KpiCardH`，v1.1.4 220→250：容纳击杀宫格 4 KPI 行 + 3 进度条=226px，工时/产出仍留呼吸）；预览视觉 **250px 固定等高** | 预览 `.kpi-card height:250px; overflow:hidden`，防内容挤兑 |
+| 卡片间距 | 10f | `KpiGap` |
+| 左强调条宽 | 3f | `SixGrid` bar width |
+| 标题区 y | card.y+8, h=18 | `SixGrid` titleR |
+| 大值区 y | card.y+26, h=40 | `SixGrid` valR |
+| 副文区 y | card.y+KpiCardH-22, h=18 | `SixGrid` subR |
+| 卡片内边距 | 10f | `SixGrid` pad |
+| 标题字 | Tiny + SecondaryText | `SixGrid` |
+| 大值字 | Medium + TintForEventKind | `SixGrid` |
+| 副文字 | Tiny + SecondaryText | `SixGrid` |
+| 卡片底 | Panel | `SixGrid` |
+| 边框 | Border | `SixGrid` |
+| 悬停高亮 | DrawHighlightIfMouseover | `SixGrid` |
+| 进度条间距（v1.1.4 统一） | caption 17f / bar 12f / **gap 4f**（caption↔bar 与 bar↔下一 caption 同距，原 3f/4f 不对称已统一） | `KpiBarCaptionH/KpiBarH/KpiBarGapY`，per-bar 预算 37f |
+
+**工时宫格（v6 精简：仅累计工时 / 工时排名 / 工时结构，对齐 UIComponents.ProgressBar + CareerBars，仅 HTML 预览层，未改 C#）**
+- 大值：`Mathf.RoundToInt(TotalHours)` + 内联单位 "h"（`UI.Kpi.Unit.TotalHours`），字色 PillGold
+- 工时排名：`"第 {Rank}/{Pop}"`（`UI.Kpi.Rank` → "殖民地第 {0}/{1}"，预览缩为"第 3/12"），取 `ColonyRank`/`ColonyPopulation`
+- 工时结构（新增区块，对齐 `ArchiveMainTabWindow.DrawCareerBars` 3390-3411）：
+  - 取 `snap.CareerBars`（已按 Ticks 降序），前 3 项逐行渲染
+  - 每行 = `UIComponents.ProgressBar(Rect, b.Share01, Accent)`（轨道 BorderSoft，填充 Accent，圆角2）+ 行内字幕 `WorkTypeLabel · FormatWorkHours(b.Ticks) + " · " + (int)(b.Share01*100) + "%"`
+  - 标签：`IsPrimary` → "主业"(PillGold) / `IsSecondary` → "副业"(PillBlue)，无标签则不显
+  - `Share01 = (float)w.Ticks / total`（`BuildCareerBars` ArchiveUiDataProvider.cs:636-660）
+- 数据源（全部 Read Model，窗口只消费）：`WorkIntensity.TotalHours/ColonyRank/ColonyPopulation` · `CareerBars[0..2]{WorkTypeLabel,Ticks,Share01,IsPrimary,IsSecondary}`
+- 说明：v6 删除周/日均/月工时·档位·主业/副业独立行（仅 HTML 预览层取舍）。C# 游戏内 `BuildCells` 仍为 10 格独立格，差异仅为预览层布局。
+
+> 产出 / 击杀 / 主驻地 / 传承击杀 各宫格的字段映射与 Badge 规则见上方 **A 表**，此处不重复；布局参数统一见 E1 表格。
+
+**产出宫格（v6.7 重设计 + v1.1.4 统一基准=工时宫格：累计价值 / 产量·种类 inline / 周产出·净值 KPI 行 / 产值贡献前3类目固定3条）**
+- 大值：`Mathf.RoundToInt(ProductionSilverValue)` + 内联 "银"（`UI.Kpi.Unit.Silver`），字色 PillGreen；**同行 inline** = `ProductionTotal`+"件 · "+`ProductionTypeViews.Count`+"类"
+- **KPI 行（v1.1.4 新增，对齐工时宫格"周工时/日均"位置）**：周产出=`Mathf.RoundToInt(WeeklyProductionSilver)`+" 银"（近 7 天窗口）、净值=`Mathf.RoundToInt(MonthlyProductionSilver)`+" 银"（近 30 天窗口）。由 `ArchiveUiDataProvider.ComputeProductionWindowValue` 扫描该 pawn 的 Craft/Built 事件按 `ThingDef.BaseMarketValue` 估值（窗口为 0 时显示 0 银，不显示 `--`）
+- 产值贡献前3类目（**统一进度条** `.struct-*`，填充 PillGreen，真实数据源；**固定 3 条，不足 3 类目用 `--`/0 占位**）：
+  - 从 `DetailSnapshot.ProductionTypeViews`（来自 `ProductionAccumulator` 持久化累计，每次 Craft/Built 捕获时累加 `Def.MarketValue*quantity`；已按类目聚合、按产值降序）取前 3
+  - 每行 = `UIComponents.ProgressBar(rect, share01, PillGreen)` + 行内字幕 `ThingCategoryDef.LabelCap(DefName) + " · " + MarketValue + " 银 · " + (int)(share01*100) + "%"`
+  - `share01 = MarketValue / TotalMarketValue`
+  - 与累计价值口径一致（真实累计，不再重扫事件流估算）
+- 数据源：`ProductionSilverValue` / `ProductionTotal` / `WeeklyProductionSilver` / `MonthlyProductionSilver` / `ProductionTypeViews[0..2]`
+
+**击杀宫格（v6.2 统一进度条 + v6.8 个人战斗维度 + v1.1.4 统一基准：猎物种类 inline / 移除战斗风格，C# 已落地）**
+- 大值：`Kills>0?Kills:"--"` + 内联 "杀"（`UI.Kpi.Unit.Kill`），字色 PillRed；**同行 inline** = 猎物种类 `KillsByFaction.Count`+" 种"（与产出宫格"件·类"同视觉位）
+- KPI 行（`.prod-list`，2 行）：**参战战役**(`ParticipatedBattles`) / **生涯伤害**(`DamageDealtTotal` 持久化累计器)
+- 击杀构成前3种族（用**种族替代阵营**，**统一进度条** `.struct-*`，与工时宫格同款，填充 PillRed；**固定 3 条，不足 3 种族用 `--`/0 占位**，与产出宫格一致布局稳定）：
+  - 从 `snap.KillsByFaction`（`{Label, Count}`）按 `Count` 降序取前 3
+  - 每行 = `UIComponents.ProgressBar(rect, share01, PillRed)` + 行内字幕 `Label + " · " + Count`
+  - `share01 = Count / TotalKills`
+  - 替代原"按阵营 Badge 组"
+- **战斗风格已移除**（v1.1.4）：`MeleeKillRatio/MeleeKills/RangedKills` 持久化字段保留，仅 UI 不再展示。
+- 数据源：`Kills` / `KillsByFaction.Count` / `KillsByFaction[0..2].{Label, Count}` / `PawnObject.{ParticipatedBattles, DamageDealtTotal}`
+
+**损耗宫格（v1.1.4 C# 已落地：替换战役宫格，每日消耗品计价）**
+- 语义：损耗 = 该人物日常消耗品（食物/药品/成瘾品等）按 `Def.BaseMarketValue` 折算银币的累计值，与「产出宫格」构成收支对照。
+- 大值：累计损耗银 `ConsumptionAccumulator.TotalSilver`（持久化累加，与 `ProductionAccumulator` 对称），字色 PillBlue。
+- inline（同排）：日均损耗 `近30天 SilverByDay 求和 / 30`（银/天）。
+- KPI 行（`.prod-list`，2 行）：周损耗（近 7 天 `SilverByDay` 求和）/ 日均损耗。
+- 进度条（**统一进度条** `.struct-*`，填充 PillBlue；**固定 3 条，不足 3 类目用 `--`/0 占位**）：损耗构成前 3 类目（食物/药品/燃料/成瘾品/其他），`Share01 = CategorySilver / TotalConsumeSilver`。
+- 数据源：`DetailSnapshot.{ConsumptionTotalSilver, WeeklyConsumptionSilver, DailyConsumptionSilver, ConsumptionTypeViews}`（来自 `ArchiveService.GetConsumptionSummary` ← `ConsumptionAccumulator`）。
+- 捕获点（已落地）：`Patch_ThingIngested` Harmony Postfix on `Verse.Thing.Ingested(Pawn, float)`（反射核验非 virtual、1.6 存在）——所有可摄入物（食物/饮料/成瘾品/药品）统一消费点；只记录玩家派系、chronicle 相关、humanlike 殖民者；**不写事件流**（高频进食，避免事件膨胀）。衣物磨损归属「折旧」（HealthView 已有），不混入。
+- **原战役宫格已移除**：colony 级 `BattleKpis`/BattleObject 数据不删，完整档案馆「战役」分类仍可查看；击杀宫格「参战战役」KPI 行继续消费 `ParticipatedBattles`。
+
+**足迹宫格（v6.4 富化 + v1.1.4 统一基准：地点数 / 主驻地天数 inline / 2 KPI 行 / 停留时长前3进度条，C# 已落地）**
+- 大值：`Footprint.PlaceCount>0?PlaceCount:"--"` + 内联 "地"；**主驻地天数** `Footprint.HomeDays` 经 `.kpi-rank-inline` 同行右对齐。
+- KPI 行（`.prod-list`，统一基准 2 行）：主驻地 `HomePlaceText` / 远征次数 `ExpeditionCount`。
+- 停留时长前3地点（**统一进度条** `.struct-*`，填充 Info/PillInfo；**固定 3 条，不足 3 地点用 `--`/0 占位**）：
+  - 从 `Footprint.Stays`（`FootstepView{PlaceText,DwellText,DwellTicks}`，已按 `DwellTicks` 降序）取前 3
+  - 每行 = `UIComponents.ProgressBar(rect, share01, tint)` + 行内字幕 `PlaceText + " · " + DwellText + " · " + (int)(share01*100) + "%"`
+  - `share01 = DwellTicks / TotalDwellTicks`
+- 原「主驻地」独立宫格已**并入此卡**（主驻地天数/远征/主驻地名均来自 `Footprint`）。
+- **数据更新机制（自动，零手动）**：`ChronicleGameComponent` 周期性对 live pawn 调 `SamplePlaceVisit`——解析当前位置（地图生物群系 / 商队 tile），与 open visit 比对，换地方即关旧开新（写 `LeaveTick` + 新 `PlaceVisit`）；`PlaceHistory` 上限 **32 条**（超限丢最老）。`BuildFootprint` 每次重建从 `PlaceHistory` 派生全部字段。
+- 数据源：`Footprint.{PlaceCount,HomeDays,HomePlaceText,ExpeditionCount,Stays}`。
+
+**传承击杀宫格（v6.4 富化：全链击杀 / 代数 / 称号，仅 HTML 预览层）**
+- 大值：`LegacyView.TotalKills>0?TotalKills:"--"` + 内联 "杀"（legacy→PillRed）；**代数** `LegacyView.GenCount` 经 `.kpi-rank-inline` 同行右对齐。
+- 副文：传承称号（`LegacyView` 称号字段，如"断颅者之弓 · 传承链"，已本地化或 null 时省略）。
+- 原「关系」「健康残值」宫格已**移除**（从浓缩 Tab 去除）。
+- 数据源：`LegacyView.{TotalKills,GenCount,称号字段}`。C# 当前未渲染该区块；窗口只消费 `LegacyView`，并新增 Keyed。
+
+> **统一进度条约定（v6.1，v1.1.4 扩展）**：工时/产出/击杀/损耗/足迹/传承六宫格的"结构/贡献/构成/传承链"子区块均复用同一套 `.struct-row`/`.struct-bar`/`.struct-fill`/`.struct-caption` 组件，一一映射 `UIComponents.ProgressBar(rect, share01, tint)`；填充色跟随卡片语义色（`.tone-*` → PillGold/PillGreen/PillRed/PillBlue/Info…）；caption 右侧可选 `.kpi-bar-tag` 右对齐 tag。C# 落地时各处均走 `UIComponents.ProgressBar`，不自写绘制。
+
+> **v6.6 宫格清单（6 格 / 3列×2行 纯网格，无分隔条）**：第1行=工时/产出/击杀；第2行=损耗/足迹/传承击杀（主驻地已并入足迹；关系/健康残值已移除；战役已被损耗替换；里程碑时间轴已移除）。统一前端样式：标题 `.kpi-label`、大值 `.kpi-value`+同行 `.kpi-rank-inline`、KPI 条 `.prod-list`、结构/贡献 `.struct-*` 进度条。
+
+#### E2. 里程碑时间轴（已移除，v6.6）
+> 预览 v6.6 起移除「里程碑摘要」时间轴段落（HTML 结构 + 相关 CSS `.tl-*` 保留于样式表但不再引用）。理由：浓缩 Tab 聚焦六宫格 KPI，时间轴信息密度低、与六宫格冗余；如需下钻由底部「打开完整档案」按钮进入完整档案馆。C# 游戏内 `DrawMilestones`/`HorizontalTimeline` 不变。
+
+#### E2b. 神器传承（武器锚点重设计，v6.6 后续 + v1.1.4：锻造者移标题右侧 / 传承链进度条）
+- **设计定位**：以人物**当前持有的武器**为锚点展示传承信息（武器名由 `LegacyView.TitleText` 提供，即传承称号，如"断颅者之弓"）。
+- 大值：`TitleText`（武器名，legacy→PillRed）；**同行=历代击杀** `TotalKills`（经 `.kpi-rank-inline`，如"历代 37 杀"）。
+- **标题右侧（v1.1.4 新增 `KpiCell.TitleSide`）**：锻造者 `CreatedByText`（右对齐小字，如"锻 · 戈治钟"）。
+- KPI 条（`.prod-list`，v1.1.4 剩 2 行）：传承代数 `GenCount` / 当代击杀（`Holders` 中 `IsCurrent==true` 行的 `KillCount`）。
+- **传承链进度条（v1.1.4，原行式改为进度条）**：`LegacyView.Holders` 按 `KillCount` 降序取前 3；每行 = `UIComponents.ProgressBar(rect, share01, PillRed)` + 字幕 `ChainRank · HolderText · 代标签 · (int)(share01*100)%` + Tag 右侧 `KillCount 杀`；`share01 = KillCount / TotalKills`；固定 3 条不足 `--`/0 占位。
+- 无传承（`IsEmpty`）时回退 "--"。
+- 数据源：`LegacyView.{TitleText,TotalKills,CreatedByText,GenCount,Holders,IsEmpty}`（`Holders[].{HolderText,IsCurrent,KillCount,Generation}`）。
+- 说明：相对 v6.6 初版（大值=全链击杀、KPI=初代/铸造/当前持有），本次改为武器锚点五要素（武器名/锻造者/传承代数/当代击杀/历代击杀总数/传承链），更贴合"识别当前武器看传承"的诉求。
+
+#### E2c. 六宫格增补 KPI 行（v6.6，仅 HTML 预览层）
+- 工时：KPI 条增补 周工时(`WeeklyHours`)/日均(`DailyHours`)。
+- 产出：KPI 条增补 单产均值(`SilverValue/TotalQuantity`)/分类数。
+- 击杀（v1.1.4）：猎物种类改**大字同行 inline**（`KillsByFaction.Count`+" 种"），KPI 行收敛为 参战战役/生涯伤害 2 行；战斗风格已移除。
+- 损耗：新增宫格（替换战役）：周损耗/日均损耗 KPI 行 + 损耗构成前 3 类目进度条（固定 3 条）。
+- 足迹：KPI 行收敛为 主驻地/远征次数（2 行），停留 Top2 行式改为**停留时长前 3 地点进度条**（固定 3 条占位，对齐工时/产出/损耗统一基准）。
+| 参数 | 值 | 来源 |
+|------|----|------|
+| 节点宽 TlNodeW | 120f | 常量（预览视觉 130px，C# 维持 120f 不变） |
+| 节点行高 TlRowH | 64f | 常量 |
+| 横向间距 TlGapX | 12f | 常量 |
+| 轴 y 偏移 | rect.y+6, spineY=y+6 | `HorizontalTimeline` |
+| 轴粗细 | 3f | `DrawLine` thickness |
+| 轴色 | Accent | `HorizontalTimeline`（预览渐变仅作示意，C# 用实色 Accent） |
+| dot 尺寸 | 11x11 中心方块 | `HorizontalTimeline` |
+| 光晕尺寸 | 16x16 方块 alpha=0.25 | `HorizontalTimeline` glow |
+| 连接线 | 从 spineY+6 到 spineY+14, BorderSoft 1f | `HorizontalTimeline` |
+| 标题字 | Tiny + Text | `HorizontalTimeline` |
+| 副文字 | Tiny + SecondaryText | `HorizontalTimeline` |
+
+**v5 视觉增强映射到 C#（必须落地，不允许自由发挥）**
+1. 轴发光：在 `DrawLine` 轴下方再叠一条 5f 粗 `AccentSoft` 轴（`WithAlpha(Accent,0.15)`）——模拟 box-shadow 发光
+2. dot 圆角：`Widgets.DrawBoxSolid` 无圆角；改用 `UIComponents` 新增 `RoundedDot(rect,color,radius)` 走 `Widgets.DrawBox`+裁剪不可行 → **维持方块 dot**，仅在边框加 2px `Color.white*0.2` 描边（现有 `DrawBox` 已实现）
+3. 光晕模糊：RimWorld 无 blur；维持 16x16 alpha=0.25 方块（现有实现已正确）
+4. 连接线虚线：`Widgets.DrawLine` 无虚线参数；用 2 段 1f 实线中间空 2f 模拟 dashed（新增 `DashedVLine` helper）
+5. 节点容器背景：新增 `Panel(nodeContainerRect, Panel)` 深色底 + `AccentSoft` 顶高光线 1px（对齐 v4 已落地的 `DrawMilestones` 背景）
+
+#### E3. 身份条（Header）
+| 参数 | 值 |
+|------|----|
+| 高度 | 56f (`UITheme.HeaderHeight`) |
+| 头像圆 | 40x40, 底 Card, 边框 2px Border, 字 Accent Medium |
+| 姓名 | Small + Text, x=头像右边 10f |
+| Pill 组 | 右对齐，每个 `Pill(pillRect, label, color)`：领袖=Accent, 在世=Alive, 在职=Accent |
+
+#### E4. 区块标题（SectionTitle）
+| 参数 | 值 |
+|------|----|
+| 标记条 | 4x14 方块 Accent，y+4 |
+| 标题 | Small + Text, x+10 |
+| 分隔线 | 1px Border，从标题右侧+4 到区块右缘 |
+
+#### E5. 底部按钮（Footer）
+| 参数 | 值 |
+|------|----|
+| 全宽 | rect.width - 28（左右各 14 内边距） |
+| 高 | 38f |
+| 底 | PanelRaised → Card 渐变（C# 用 `PanelRaised` 单色填充 + Border） |
+| 边框 | Border 1px，悬停改 Accent |
+| 字 | Small + Accent 居中 "打开完整档案" |
+
+#### E6. 字体/行高硬约束（中文行高经验值）
+- KPI 卡 ≥ 112f（已满足）
+- 小字行高 ≥ 18f（Tiny LineHeight 实测 ~16-18，满足）
+- 六宫格副文区固定 h=18 不换行（长文本截断用 `Truncate`）
+- 时间轴副文 34f 高度内，超长用 `Truncate`
+
+#### E7. 禁止项（红线）
+- ❌ 不得在窗口内 `new Color(...)` 取色 —— 一律走 UITheme 令牌
+- ❌ 不得使用 `Widgets.DrawCircle`（RimWorld 1.6 不存在）—— 一律方块 dot
+- ❌ 不得手写 `GUI.color=...;DrawBox` —— 一律走 `UIComponents.*`
+- ❌ 不得窗口内做排序/null-guard —— 归属 `ArchiveUiDataProvider`
+- ❌ 文案不得硬编码中文字串 —— 一律 Keyed 翻译键
+
+#### F. UI 主题预设 + 内嵌切换按钮（v1.1.4，C# 已落地 + 本预览同步）
+- **四套主流 RPG 主题**（对齐 C# `UITheme.Palette`，替换早期工业/磷光/余烬）：
+  - `epic` **史诗奇幻**（默认）：暗紫深蓝底 + 鎏金描边（上古卷轴/魔兽风）
+  - `gothic` **暗黑哥特**：墨黑底 + 血红点缀（血源/暗黑破坏神风）
+  - `wuxia` **东方武侠水墨**：宣纸米白底 + 墨色 + 朱红印章（只狼/古剑风，**浅色主题**）
+  - `steampunk` **蒸汽朋克**：黄铜棕 + 宝石绿（羞辱/雾都孤儿风）
+- **仅换色（v1.1.4 最终）**：字体不随主题变化（RimWorld 无法可靠加载任意 TTF，OS 字体换肤脆弱），主题只切换颜色令牌，字体沿用 Verse 原生字体。本预览也移除 `--font`。
+- **机制**：`html[data-theme="..."]` 覆盖 `:root` 全部 `--*` 令牌（Window/Panel/Card/Border/Text/Accent/Timeline/Pill 派生）；切换 `data-theme` 即整体换肤，所有 `var(--*)` 自动跟随。
+- **浅色主题兼容**：`.pill`/`.tl-spine`/`.tl-dot` 等原硬编码深色已改为主题令牌（`--accent-soft`/`--border`/`--card`），水墨浅色下自适应。
+- **内嵌按钮**：Header 身份条右侧「主题 · 当前主题名」按钮（对齐 C# `ArchiveMainTabWindow.DrawHeader` 右上角循环按钮）。点击循环 史诗→暗黑→水墨→朋克。
+- **C# 侧**：`UITheme.Apply(themeId)` 覆盖全部可变 static token + 重同步 `ArchiveUiStyle.RefreshFromTheme()`；`ChronicleSettings.ThemeId` 持久化 `"themeId"`；`UITheme.NextThemeId()` 循环；Header 按钮点击写回 Settings 并 `Write()`。
+- **翻译键**（中英同步）：`Settings.Theme/界面主题`、`UI.Theme.Button/主题`、`UI.Theme.ButtonTip`、`UI.Theme.Epic/史诗奇幻`、`UI.Theme.Gothic/暗黑哥特`、`UI.Theme.Wuxia/东方水墨`、`UI.Theme.Steampunk/蒸汽朋克`。
+-->

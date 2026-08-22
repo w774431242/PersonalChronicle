@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <!--
+    健康残值 · 资产折旧 政策。
+    所有阈值/系数均可被其他 mod 通过 Def 补丁调整，无需改 C#。
+  -->
+  <PersonalChronicle.Domain.HealthValuationPolicyDef>
+    <defName>PersonalChronicleHealthValuationPolicy</defName>
+    <label>健康估值政策</label>
+    <baseSilverValue>1500</baseSilverValue>
+    <ageDepreciationPerYear>0.02</ageDepreciationPerYear>
+    <primeHealthThreshold>85</primeHealthThreshold>
+    <impairedHealthThreshold>60</impairedHealthThreshold>
+    <minSilverValue>50</minSilverValue>
+    <penalties>
+      <li>
+        <defName>PersonalChronicleHealthPenaltyAsthma</defName>
+        <hediffDefName>Asthma</hediffDefName>
+        <penaltyFraction>0.10</penaltyFraction>
+        <labelKey>PersonalChronicle.UI.HealthValuation.Penalty.Asthma</labelKey>
+      </li>
+      <li>
+        <defName>PersonalChronicleHealthPenaltyBadBack</defName>
+        <hediffDefName>BadBack</hediffDefName>
+        <penaltyFraction>0.12</penaltyFraction>
+        <labelKey>PersonalChronicle.UI.HealthValuation.Penalty.BadBack</labelKey>
+      </li>
+      <li>
+        <defName>PersonalChronicleHealthPenaltyCataract</defName>
+        <hediffDefName>Cataract</hediffDefName>
+        <penaltyFraction>0.08</penaltyFraction>
+        <labelKey>PersonalChronicle.UI.HealthValuation.Penalty.Cataract</labelKey>
+      </li>
+      <li>
+        <defName>PersonalChronicleHealthPenaltyFrail</defName>
+        <hediffDefName>Frail</hediffDefName>
+        <penaltyFraction>0.15</penaltyFraction>
+        <labelKey>PersonalChronicle.UI.HealthValuation.Penalty.Frail</labelKey>
+      </li>
+      <li>
+        <defName>PersonalChronicleHealthPenaltyDiabetes</defName>
+        <hediffDefName>Diabetes</hediffDefName>
+        <penaltyFraction>0.10</penaltyFraction>
+        <labelKey>PersonalChronicle.UI.HealthValuation.Penalty.Diabetes</labelKey>
+      </li>
+      <li>
+        <defName>PersonalChronicleHealthPenaltyAlcoholism</defName>
+        <hediffDefName>Alcoholism</hediffDefName>
+        <penaltyFraction>0.10</penaltyFraction>
+        <labelKey>PersonalChronicle.UI.HealthValuation.Penalty.Alcoholism</labelKey>
+      </li>
+      <li>
+        <defName>PersonalChronicleHealthPenaltyChemicalDamage</defName>
+        <hediffDefName>ChemicalDamage</hediffDefName>
+        <penaltyFraction>0.20</penaltyFraction>
+        <labelKey>PersonalChronicle.UI.HealthValuation.Penalty.ChemicalDamage</labelKey>
+      </li>
+    </penalties>
+  </PersonalChronicle.Domain.HealthValuationPolicyDef>
+</Defs>

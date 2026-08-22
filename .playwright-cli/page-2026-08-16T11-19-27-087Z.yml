@@ -1,0 +1,197 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: 职业档案
+      - generic [ref=e5]:
+        - button "🎲 随机职业数据" [ref=e6] [cursor=pointer]
+        - generic [ref=e7]: ×
+    - generic [ref=e8]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: 林舟
+        - generic [ref=e12]: 职业规划：未选择 · 结算周期 5512
+      - generic [ref=e13]:
+        - generic [ref=e14]: 精密制造高级技工
+        - generic [ref=e15]: 职业阶段：成熟期 · 职业资历 8.4 年
+    - generic [ref=e16]:
+      - generic [ref=e17] [cursor=pointer]: 总览
+      - generic [ref=e18] [cursor=pointer]: 履历
+      - generic [ref=e19] [cursor=pointer]: 勋章
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: 职业规划
+          - generic [ref=e26]:
+            - generic [ref=e27] [cursor=pointer]:
+              - generic [ref=e28]: "1"
+              - generic [ref=e29]: 制造类
+              - generic [ref=e30]: "72"
+              - generic: 荐
+            - generic [ref=e31] [cursor=pointer]:
+              - generic [ref=e32]: "2"
+              - generic [ref=e33]: 工程类
+              - generic [ref=e34]: "67"
+            - generic [ref=e35] [cursor=pointer]:
+              - generic [ref=e36]: "3"
+              - generic [ref=e37]: 艺术类
+              - generic [ref=e38]: "55"
+            - generic [ref=e39] [cursor=pointer]:
+              - generic [ref=e40]: "4"
+              - generic [ref=e41]: 林业类
+              - generic [ref=e42]: "53"
+            - generic [ref=e43] [cursor=pointer]:
+              - generic [ref=e44]: "5"
+              - generic [ref=e45]: 矿业类
+              - generic [ref=e46]: "49"
+            - generic [ref=e47] [cursor=pointer]:
+              - generic [ref=e48]: "6"
+              - generic [ref=e49]: 武器类
+              - generic [ref=e50]: "48"
+            - generic [ref=e51] [cursor=pointer]:
+              - generic [ref=e52]: "7"
+              - generic [ref=e53]: 农业类
+              - generic [ref=e54]: "46"
+            - generic [ref=e55] [cursor=pointer]:
+              - generic [ref=e56]: "8"
+              - generic [ref=e57]: 科研类
+              - generic [ref=e58]: "46"
+            - generic [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: "9"
+              - generic [ref=e61]: 烹饪类
+              - generic [ref=e62]: "46"
+            - generic [ref=e63] [cursor=pointer]:
+              - generic [ref=e64]: "10"
+              - generic [ref=e65]: 管理类
+              - generic [ref=e66]: "40"
+            - generic [ref=e67] [cursor=pointer]:
+              - generic [ref=e68]: "11"
+              - generic [ref=e69]: 畜牧类
+              - generic [ref=e70]: "34"
+            - generic [ref=e71] [cursor=pointer]:
+              - generic [ref=e72]: "12"
+              - generic [ref=e73]: 医学类
+              - generic [ref=e74]: "26"
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - generic [ref=e78]: 职业身份
+              - generic [ref=e79]: 当前状态
+            - generic [ref=e80]:
+              - generic [ref=e81]:
+                - generic [ref=e82]:
+                  - generic [ref=e83]: 精密制造高级技工
+                  - generic [ref=e84]: 精密制造 · 机械工程
+                  - generic [ref=e85]: 下一职称：精密制造技师
+                  - generic [ref=e88]: 晋升准备度：74%
+                  - generic [ref=e89]: 口径：基于工时/成果/技能的综合评估
+                - generic [ref=e90]:
+                  - generic [ref=e91]:
+                    - generic [ref=e92]: 专业技能
+                    - strong [ref=e93]: 精密制造 Lv25
+                  - generic [ref=e94]:
+                    - generic [ref=e95]: 相关工时
+                    - strong [ref=e96]: 640 h
+                  - generic [ref=e97]:
+                    - generic [ref=e98]: 重大成果
+                    - strong [ref=e99]: "11"
+                  - generic [ref=e100]:
+                    - generic [ref=e101]: 专业著作
+                    - strong [ref=e102]: "3"
+              - generic [ref=e103]:
+                - generic [ref=e104]:
+                  - generic [ref=e105]: 职业贡献
+                  - generic [ref=e106]: "82"
+                - generic [ref=e107]:
+                  - generic [ref=e108]: 技术贡献
+                  - generic [ref=e109]: "91"
+                - generic [ref=e110]:
+                  - generic [ref=e111]: 科研贡献
+                  - generic [ref=e112]: "63"
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - generic [ref=e115]: 当前资格状态
+              - generic [ref=e116]: 下一节点：精密制造技师
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - generic [ref=e119]: 专业等级
+                - generic [ref=e120]: 精密制造 ≥ 38
+                - generic [ref=e121]: 未满足
+              - generic [ref=e122]:
+                - generic [ref=e123]: 职业资历
+                - generic [ref=e124]: 相关工作 ≥ 1,200,000 tick
+                - generic [ref=e125]: 满足
+              - generic [ref=e126]:
+                - generic [ref=e127]: 综合评分
+                - generic [ref=e128]: 资格评定 ≥ 70
+                - generic [ref=e129]: 满足
+              - generic [ref=e130]:
+                - generic [ref=e131]: 实践考试
+                - generic [ref=e132]: 优秀品质成果 × 2（真实制造）
+                - generic [ref=e133]: 通过
+              - generic [ref=e134]:
+                - generic [ref=e135]: 理论考试
+                - generic [ref=e136]: 专业著作 ≥ 良好
+                - generic [ref=e137]: 待进行
+              - generic [ref=e138]:
+                - generic [ref=e139]: 论文 / 答辩
+                - generic [ref=e140]: 委员会评审
+                - generic [ref=e141]: 待进行
+        - generic [ref=e142]:
+          - generic [ref=e143]:
+            - generic [ref=e144]:
+              - generic [ref=e145]: 资格预检
+              - generic [ref=e146]: 职业状态视角
+            - generic [ref=e147]:
+              - generic [ref=e148]: 精密制造高级技工 · 资格准备度
+              - generic [ref=e149]:
+                - generic [ref=e150]:
+                  - generic [ref=e151]: ○
+                  - generic [ref=e152]: 核心技能
+                  - generic [ref=e153]: 未满足
+                - generic [ref=e154]:
+                  - generic [ref=e155]: ✓
+                  - generic [ref=e156]: 职业履历
+                  - generic [ref=e157]: 已满足
+                - generic [ref=e158]:
+                  - generic [ref=e159]: ✓
+                  - generic [ref=e160]: 成果记录
+                  - generic [ref=e161]: 已满足
+                - generic [ref=e162]:
+                  - generic [ref=e163]: ●
+                  - generic [ref=e164]: 实践考试
+                  - generic [ref=e165]: 准备中
+                - generic [ref=e166]:
+                  - generic [ref=e167]: ○
+                  - generic [ref=e168]: 理论考试
+                  - generic [ref=e169]: 未开始
+                - generic [ref=e170]:
+                  - generic [ref=e171]: ○
+                  - generic [ref=e172]: 论文 / 答辩
+                  - generic [ref=e173]: 未开始
+          - generic [ref=e174]:
+            - generic [ref=e175]: 下一职称
+            - generic [ref=e177]:
+              - generic [ref=e178]: 精密制造技师
+              - generic [ref=e179]:
+                - generic [ref=e180]: 资格完成
+                - generic [ref=e183]: 82%
+              - generic [ref=e184]: 口径：已满足条件数 / 总条件数（与上方综合评估 74% 不同维度）
+              - generic [ref=e185]:
+                - generic [ref=e186]: 当前缺口
+                - generic [ref=e187]:
+                  - generic [ref=e188]: 理论考试
+                  - generic [ref=e189]: 论文
+                  - generic [ref=e190]: 答辩
+              - generic [ref=e191]: 资格依赖：拆解等级 → 职业事件 → 成果阈值 → 已完成资格
+      - generic [ref=e192]:
+        - text: Concept UI：前端仅展示人物职业档案，不直接计算职称资格或授勋条件。 本页为自包含可视化原型（总览/履历/勋章 3 Tab 可切换，右下角「数据契约」标注各区块 C# 字段来源）； P5~P8 资格 / 考试 / 职称 / 勋章 已代码落地（Domain 纯逻辑 + Application 编排 + 数据驱动 Def，附录见 DataMap）； 荣誉墙/授勋/详情为可运行预览，勋章现含「阈值勋章」+「成就勋章（MedalKind.Achievement，依据 AchievementEvaluator 聚合）」两类。 「🎲 随机职业数据」按钮对应 C#
+        - code [ref=e193]: DevTestButtons.CareerRandomize(Pawn)
+        - text: ，仅
+        - code [ref=e194]: Prefs.DevMode
+        - text: 时显示（本预览默认显示以便演示）。 职业规划区现采用第一版职业"宇宙"骨架：12 个一级专业（工程/制造/农业/林业/畜牧/医学/武器/矿业/科研/烹饪/艺术/管理）； 算法为专业适配分析（非"推荐职业"）：五维
+        - code [ref=e195]: ProfessionalFit = 基础能力×0.45 + 实践×0.25 + 兴趣×0.10 + 成果×0.10 + 成长×0.10
+        - text: ， 基础能力经
+        - code [ref=e196]: skillBase
+        - text: 边际递减（18→19 增益远小于 2→3），权重矩阵
+        - code [ref=e197]: MAJOR_WEIGHTS
+        - text: 每专业 12 技能权重和=100%； 专业名单行紧凑排列、悬停弹出五维明细卡片与优势✓/短板△，只提供决策依据，由玩家选择专业。
+  - generic [ref=e198] [cursor=pointer]: 数据契约 ▸

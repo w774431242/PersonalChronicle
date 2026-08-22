@@ -42,6 +42,9 @@ namespace PersonalChronicle.Archive
 
         public override void DoWindowContents(Rect inRect)
         {
+            // 原生 Window 默认浅色背景——覆盖为 UITheme.Window 深色，统一主题。
+            UIComponents.TintedBox(inRect, UITheme.Window);
+
             if (medal == null)
             {
                 return;

@@ -17,17 +17,20 @@ namespace PersonalChronicle.Capture.Effects
     /// 设计依据（探针核验）：RecipeDef.workSpeedStat 为 public；StatDef.parts 为 public
     /// List&lt;StatPart&gt; 可注入；制造上下文（Job.bill.recipe 等）全 public。不 Patch tick 扣减点。
     /// </summary>
+    // ARC-008 受控静态状态声明：本类静态字段为「进程级只读缓存 + 受控可变索引」，属规范允许的
+    // 受控单例（非游戏状态/Save/UI 状态）。生命周期：Def 加载后 [StaticConstructorOnStartup] 构建索引，
+    // Def reload 时由 EnsureInjected()/Clear+重建应对；无界增长风险已通过 Def 数量上限天然约束。
     [StaticConstructorOnStartup]
     public static class ProfessionalEffectRegistry
     {
-        /// <summary>全部 ProfessionalEffectDef 索引（defName → Def），供 Resolver 查询。</summary>
+        /// <summary>全部 ProfessionalEffectDef 索引（defName → Def），供 Resolver 查询。受控静态缓存（ARC-008）。</summary>
         public static readonly Dictionary<string, ProfessionalEffectDef> EffectDefs =
             new Dictionary<string, ProfessionalEffectDef>();
 
-        /// <summary>全部 ProfessionalRatingDef 列表（供 Resolver 评级加权查询）。</summary>
+        /// <summary>全部 ProfessionalRatingDef 列表（供 Resolver 评级加权查询）。受控静态缓存（ARC-008）。</summary>
         public static readonly List<ProfessionalRatingDef> RatingDefs = new List<ProfessionalRatingDef>();
 
-        /// <summary>已注入 StatPart 的 StatDef 集合（防重复注入，reload 安全）。</summary>
+        /// <summary>已注入 StatPart 的 StatDef 集合（防重复注入，reload 安全）。受控静态状态（ARC-008）。</summary>
         private static readonly HashSet<StatDef> InjectedStats = new HashSet<StatDef>();
 
         static ProfessionalEffectRegistry()

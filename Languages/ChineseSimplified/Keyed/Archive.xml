@@ -741,9 +741,15 @@
   <PersonalChronicle.UI.Career.Qual.Block.Defense>答辩</PersonalChronicle.UI.Career.Qual.Block.Defense>
   <PersonalChronicle.UI.Career.Qual.Block.Titles>职称记录</PersonalChronicle.UI.Career.Qual.Block.Titles>
   <!-- 资格页操作文本（Qualification 子页 P2 硬编码收敛 2026-08-20） -->
-  <PersonalChronicle.UI.Career.Qual.Step.Granted>✓</PersonalChronicle.UI.Career.Qual.Step.Granted>
+  <PersonalChronicle.UI.Career.Qual.Step.Granted>✓ 已授予</PersonalChronicle.UI.Career.Qual.Step.Granted>
   <PersonalChronicle.UI.Career.Qual.Step.Applying>申报中</PersonalChronicle.UI.Career.Qual.Step.Applying>
-  <PersonalChronicle.UI.Career.Qual.Step.Locked>·</PersonalChronicle.UI.Career.Qual.Step.Locked>
+  <PersonalChronicle.UI.Career.Qual.Step.Locked>未解锁</PersonalChronicle.UI.Career.Qual.Step.Locked>
+  <PersonalChronicle.UI.Career.Qual.Header.Pawn>该殖民者</PersonalChronicle.UI.Career.Qual.Header.Pawn>
+  <PersonalChronicle.UI.Career.Qual.Header.Undefined>未选定方向</PersonalChronicle.UI.Career.Qual.Header.Undefined>
+  <PersonalChronicle.UI.Career.Qual.Header.Maxed>已封顶</PersonalChronicle.UI.Career.Qual.Header.Maxed>
+  <PersonalChronicle.UI.Career.Qual.Header.None>未评级</PersonalChronicle.UI.Career.Qual.Header.None>
+  <PersonalChronicle.UI.Career.Qual.Header.Granted>已获：{0}</PersonalChronicle.UI.Career.Qual.Header.Granted>
+  <PersonalChronicle.UI.Career.Qual.Header.Applying>申报：{0}</PersonalChronicle.UI.Career.Qual.Header.Applying>
   <PersonalChronicle.UI.Career.Qual.Cond.Level>专业等级</PersonalChronicle.UI.Career.Qual.Cond.Level>
   <PersonalChronicle.UI.Career.Qual.Cond.Level.Note>{0} ≥ {1}</PersonalChronicle.UI.Career.Qual.Cond.Level.Note>
   <PersonalChronicle.UI.Career.Qual.Cond.Time>职业资历</PersonalChronicle.UI.Career.Qual.Cond.Time>
@@ -787,6 +793,27 @@
   <PersonalChronicle.UI.Career.Qual.Task.Failed> · ✗ 未通过（可重新报名）</PersonalChronicle.UI.Career.Qual.Task.Failed>
   <PersonalChronicle.UI.Career.Qual.Task.Active> · 进行中（制造对应配方采集证据）</PersonalChronicle.UI.Career.Qual.Task.Active>
   <PersonalChronicle.UI.Career.Qual.Practical.Passed>实践考试已通过（本档）</PersonalChronicle.UI.Career.Qual.Practical.Passed>
+  <PersonalChronicle.UI.Career.Qual.Practical.Desc>报名后需亲手完成一批指定物品。达标（件数与品质）即通过；超限或超时未达标即失败，可重新报名。每档职称需重新考试。</PersonalChronicle.UI.Career.Qual.Practical.Desc>
+  <PersonalChronicle.UI.Career.Qual.Practical.ReqCount>要求件数：{0}</PersonalChronicle.UI.Career.Qual.Practical.ReqCount>
+  <PersonalChronicle.UI.Career.Qual.Practical.MinQuality>最低品质：{0}</PersonalChronicle.UI.Career.Qual.Practical.MinQuality>
+  <PersonalChronicle.UI.Career.Qual.Practical.MaxCount>制造上限：{0}</PersonalChronicle.UI.Career.Qual.Practical.MaxCount>
+  <PersonalChronicle.UI.Career.Qual.Practical.Current>当前：已制 {0} / 目标 {1}（{2}件达标）</PersonalChronicle.UI.Career.Qual.Practical.Current>
+  <PersonalChronicle.UI.Career.Qual.Practical.NotApplied>当前：未报名（点击上方按钮开始）</PersonalChronicle.UI.Career.Qual.Practical.NotApplied>
+  <PersonalChronicle.UI.Career.Qual.Theory.Desc>通过阅读书籍、完成研究、技能成长与理论学习活动积累考试依据，四方面齐备后提交。每档职称需重新提交。</PersonalChronicle.UI.Career.Qual.Theory.Desc>
+  <PersonalChronicle.UI.Career.Qual.Theory.Book>书籍：{0}（共 {1} 本匹配主题）</PersonalChronicle.UI.Career.Qual.Theory.Book>
+  <PersonalChronicle.UI.Career.Qual.Theory.Research>研究：{0}（完成 ≥{1} 项）</PersonalChronicle.UI.Career.Qual.Theory.Research>
+  <PersonalChronicle.UI.Career.Qual.Theory.Skill>技能：{0}（分项评分）</PersonalChronicle.UI.Career.Qual.Theory.Skill>
+  <PersonalChronicle.UI.Career.Qual.Theory.Activity>理论学习：{0}（分项评分）</PersonalChronicle.UI.Career.Qual.Theory.Activity>
+  <PersonalChronicle.UI.Career.Qual.Theory.NotApplied>当前：未提交（四依据齐备后可提交）</PersonalChronicle.UI.Career.Qual.Theory.NotApplied>
+  <PersonalChronicle.UI.Career.Qual.Thesis.Desc>选定课题后引用已读书籍与研究成果撰写论文。高级档（Lv3+）每档需独立完成论文与答辩。</PersonalChronicle.UI.Career.Qual.Thesis.Desc>
+  <PersonalChronicle.UI.Career.Qual.Thesis.Topic>课题：{0}</PersonalChronicle.UI.Career.Qual.Thesis.Topic>
+  <PersonalChronicle.UI.Career.Qual.Thesis.NoTopic>当前：未选题（点击上方按钮选择课题）</PersonalChronicle.UI.Career.Qual.Thesis.NoTopic>
+  <PersonalChronicle.UI.Career.Qual.Thesis.CitedBook>引用书籍：{0}</PersonalChronicle.UI.Career.Qual.Thesis.CitedBook>
+  <PersonalChronicle.UI.Career.Qual.Thesis.CitedResearch>引用研究：{0}</PersonalChronicle.UI.Career.Qual.Thesis.CitedResearch>
+  <PersonalChronicle.UI.Career.Qual.Defense.Desc>论文完成后召开答辩，同阵营资深同行组成评审委员会为论文打分。通过后进入评级评审期，数个工作日后答复授予。</PersonalChronicle.UI.Career.Qual.Defense.Desc>
+  <PersonalChronicle.UI.Career.Qual.Defense.Committee>评审委员会：{0} 人</PersonalChronicle.UI.Career.Qual.Defense.Committee>
+  <PersonalChronicle.UI.Career.Qual.Defense.Score>委员会评分：{0:0.0}</PersonalChronicle.UI.Career.Qual.Defense.Score>
+  <PersonalChronicle.UI.Career.Qual.Defense.NoDefense>当前：未召开答辩</PersonalChronicle.UI.Career.Qual.Defense.NoDefense>
   <!-- 资格流程对话框文本（Dialog_QualificationFlow P2 硬编码收敛 2026-08-20） -->
   <PersonalChronicle.UI.Career.Flow.Title.Exam>实践考试 · {0}</PersonalChronicle.UI.Career.Flow.Title.Exam>
   <PersonalChronicle.UI.Career.Flow.Exam.Requirement>要求：制造 3 件工业/太空组件，最低品质 Excellent（真实制造采集证据）</PersonalChronicle.UI.Career.Flow.Exam.Requirement>
@@ -848,7 +875,7 @@
   <PersonalChronicle.UI.Career.Qual.Level>专业等级</PersonalChronicle.UI.Career.Qual.Level>
   <PersonalChronicle.UI.Career.Qual.Level.Req>专业等级 ≥ {0}</PersonalChronicle.UI.Career.Qual.Level.Req>
   <PersonalChronicle.UI.Career.Qual.Time>职业资历</PersonalChronicle.UI.Career.Qual.Time>
-  <PersonalChronicle.UI.Career.Qual.Time.Req>职业时长 ≥ {0} tick</PersonalChronicle.UI.Career.Qual.Time.Req>
+  <PersonalChronicle.UI.Career.Qual.Time.Req>职业时长 ≥ {0}</PersonalChronicle.UI.Career.Qual.Time.Req>
   <PersonalChronicle.UI.Career.Qual.Score>综合评分</PersonalChronicle.UI.Career.Qual.Score>
   <PersonalChronicle.UI.Career.Qual.Score.Req>资格评定 ≥ {0}</PersonalChronicle.UI.Career.Qual.Score.Req>
   <PersonalChronicle.UI.Career.Qual.Practical>实践考试</PersonalChronicle.UI.Career.Qual.Practical>
@@ -859,6 +886,68 @@
   <PersonalChronicle.UI.Career.Qual.Defense.Req>论文及答辩通过</PersonalChronicle.UI.Career.Qual.Defense.Req>
   <PersonalChronicle.UI.Career.Qual.Met>满足</PersonalChronicle.UI.Career.Qual.Met>
   <PersonalChronicle.UI.Career.Qual.Unmet>未满足</PersonalChronicle.UI.Career.Qual.Unmet>
+  <PersonalChronicle.UI.Career.Qual.Review>评级评审</PersonalChronicle.UI.Career.Qual.Review>
+  <PersonalChronicle.UI.Career.Qual.Review.Req>评审答复后授予</PersonalChronicle.UI.Career.Qual.Review.Req>
+  <PersonalChronicle.UI.Career.Qual.Req.Level>{0} ≥ Lv{1}</PersonalChronicle.UI.Career.Qual.Req.Level>
+  <PersonalChronicle.UI.Career.Qual.Req.Time>{0} ≥ {1}</PersonalChronicle.UI.Career.Qual.Req.Time>
+  <PersonalChronicle.UI.Career.Qual.Req.Score>{0} ≥ {1}</PersonalChronicle.UI.Career.Qual.Req.Score>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Level><b>专业等级</b>
+当前　Lv{2}（累计 {3} XP，{4} 次实践）
+要求　≥ Lv{1}
+XP来源　{5}
+升级缺口　还差 {6} XP</PersonalChronicle.UI.Career.Qual.Tooltip.Level>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Time><b>职业资历</b>
+当前　{2}
+要求　≥ {1}
+时长来源（按事件类型）：
+• 制造 {4} 次（{5} h）
+• 建造 {6} 次（{7} h）
+• 研究 {8} 次（{9} h）
+• 其他 {10} 次（{11} h）
+（共 {3} tick）</PersonalChronicle.UI.Career.Qual.Tooltip.Time>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Score><b>综合评分</b>
+当前　{2}
+要求　≥ {1}
+评分构成（权重 × 得分 = 贡献）：
+• 专业等级　{3} × 20% = {4}
+• 实践考试　{5} × 25% = {6}
+• 理论考试　{7} × 20% = {8}
+• 论文　　　{9} × 20% = {10}
+• 答辩　　　{11} × 15% = {12}</PersonalChronicle.UI.Career.Qual.Tooltip.Score>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Practical><b>实践考试</b>
+状态　{5}
+任务　制造 {1} 件 · 品质 ≥ {2} · 上限 {3} 件 · 时限 {4}
+进度　已产 {6} 件 / 达标 ≥ {7} 件
+评分　{8} 分</PersonalChronicle.UI.Career.Qual.Tooltip.Practical>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Theory><b>理论考试</b>
+状态　{1}
+评分构成（加权合成）：
+• 书籍依据 × 40%
+• 研究依据 × 30%
+• 技能能力 × 20%
+• 理论活动 × 10%
+本次得分　{2} 分（书 {3} / 研 {4} / 技 {5} / 活 {6}）</PersonalChronicle.UI.Career.Qual.Tooltip.Theory>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Defense><b>论文 / 答辩</b>
+状态　{1}
+论文评分　{4} 分（书籍50% + 研究30% + 活动20%）
+答辩评分　{5} 分（{6} 位委员）
+最终评分　论文 × 50% + 委员 × 50% = {7} 分</PersonalChronicle.UI.Career.Qual.Tooltip.Defense>
+  <PersonalChronicle.UI.Career.Qual.Tooltip.Review><b>评级评审</b>
+状态　{1}
+评审期　{2} 个工作日
+流程　答辩通过 → 进入评审 → 工作日答复 → 授予</PersonalChronicle.UI.Career.Qual.Tooltip.Review>
+  <PersonalChronicle.UI.Career.Qual.State.NotRequired>不要求</PersonalChronicle.UI.Career.Qual.State.NotRequired>
+  <PersonalChronicle.UI.Career.Qual.State.NotApplied>未报名</PersonalChronicle.UI.Career.Qual.State.NotApplied>
+  <PersonalChronicle.UI.Career.Qual.State.InProgress>进行中</PersonalChronicle.UI.Career.Qual.State.InProgress>
+  <PersonalChronicle.UI.Career.Qual.State.Passed>通过（{0} 分）</PersonalChronicle.UI.Career.Qual.State.Passed>
+  <PersonalChronicle.UI.Career.Qual.State.Failed>未通过（{0} 分）</PersonalChronicle.UI.Career.Qual.State.Failed>
+  <PersonalChronicle.UI.Career.Qual.State.Pending>待进行</PersonalChronicle.UI.Career.Qual.State.Pending>
+  <PersonalChronicle.UI.Career.Qual.State.DefensePending>答辩待进行</PersonalChronicle.UI.Career.Qual.State.DefensePending>
+  <PersonalChronicle.UI.Career.Qual.State.ThesisDefense>通过（论文 {0} 分 · 答辩 {1} 分）</PersonalChronicle.UI.Career.Qual.State.ThesisDefense>
+  <PersonalChronicle.UI.Career.Qual.State.ReviewPending>待结算</PersonalChronicle.UI.Career.Qual.State.ReviewPending>
+  <PersonalChronicle.UI.Career.Qual.State.ReviewInProgress>评审中（已 {0}/{1} 个工作日）</PersonalChronicle.UI.Career.Qual.State.ReviewInProgress>
+  <PersonalChronicle.UI.Career.Qual.State.ReviewGranted>已答复（授予）</PersonalChronicle.UI.Career.Qual.State.ReviewGranted>
+  <PersonalChronicle.UI.Career.Qual.SkillSource.None>无（未配置技能来源）</PersonalChronicle.UI.Career.Qual.SkillSource.None>
   <PersonalChronicle.UI.Career.Pre.Skill>核心技能</PersonalChronicle.UI.Career.Pre.Skill>
   <PersonalChronicle.UI.Career.Pre.Resume>职业履历</PersonalChronicle.UI.Career.Pre.Resume>
   <PersonalChronicle.UI.Career.Pre.Achieve>成果记录</PersonalChronicle.UI.Career.Pre.Achieve>
@@ -898,6 +987,107 @@
   <Profession.Direction.Manufacturing_Equipment.Specialization>特化「材料」：材料应用与质控并重，用料精省、成品稳固（材料效率机制预留）</Profession.Direction.Manufacturing_Equipment.Specialization>
   <Profession.Direction.Manufacturing_Industrial.Specialization>特化「批量」：工艺理解与批量产出并重（配方解锁机制预留）</Profession.Direction.Manufacturing_Industrial.Specialization>
 
+  <!-- ===================== 占位二级方向翻译（2026-08-22 前端占位，待后端细化特化说明） ===================== -->
+  <!-- 工程 Engineering -->
+  <Profession.Direction.Engineering_Structure.Label>结构工程</Profession.Direction.Engineering_Structure.Label>
+  <Profession.Direction.Engineering_Structure.Specialization>占位方向：结构设计与建造，待后端落地技能与特化说明</Profession.Direction.Engineering_Structure.Specialization>
+  <Profession.Direction.Engineering_Power.Label>动力工程</Profession.Direction.Engineering_Power.Label>
+  <Profession.Direction.Engineering_Power.Specialization>占位方向：动力系统与能源，待后端落地技能与特化说明</Profession.Direction.Engineering_Power.Specialization>
+  <Profession.Direction.Engineering_Control.Label>电控工程</Profession.Direction.Engineering_Control.Label>
+  <Profession.Direction.Engineering_Control.Specialization>占位方向：自动化与电控，待后端落地技能与特化说明</Profession.Direction.Engineering_Control.Specialization>
+  <Profession.Direction.Engineering_Precision.Label>精密工程</Profession.Direction.Engineering_Precision.Label>
+  <Profession.Direction.Engineering_Precision.Specialization>占位方向：精密加工与公差，待后端落地技能与特化说明</Profession.Direction.Engineering_Precision.Specialization>
+  <!-- 农业 Agriculture -->
+  <Profession.Direction.Agriculture_Tillage.Label>耕作</Profession.Direction.Agriculture_Tillage.Label>
+  <Profession.Direction.Agriculture_Tillage.Specialization>占位方向：土壤与耕作，待后端落地技能与特化说明</Profession.Direction.Agriculture_Tillage.Specialization>
+  <Profession.Direction.Agriculture_Irrigation.Label>灌溉</Profession.Direction.Agriculture_Irrigation.Label>
+  <Profession.Direction.Agriculture_Irrigation.Specialization>占位方向：水利与灌溉，待后端落地技能与特化说明</Profession.Direction.Agriculture_Irrigation.Specialization>
+  <Profession.Direction.Agriculture_Breeding.Label>育种</Profession.Direction.Agriculture_Breeding.Label>
+  <Profession.Direction.Agriculture_Breeding.Specialization>占位方向：作物育种，待后端落地技能与特化说明</Profession.Direction.Agriculture_Breeding.Specialization>
+  <Profession.Direction.Agriculture_Greenhouse.Label>温室</Profession.Direction.Agriculture_Greenhouse.Label>
+  <Profession.Direction.Agriculture_Greenhouse.Specialization>占位方向：设施农业与温室，待后端落地技能与特化说明</Profession.Direction.Agriculture_Greenhouse.Specialization>
+  <!-- 林业 Forestry -->
+  <Profession.Direction.Forestry_Harvest.Label>采伐</Profession.Direction.Forestry_Harvest.Label>
+  <Profession.Direction.Forestry_Harvest.Specialization>占位方向：林木采伐，待后端落地技能与特化说明</Profession.Direction.Forestry_Harvest.Specialization>
+  <Profession.Direction.Forestry_Nursery.Label>育苗</Profession.Direction.Forestry_Nursery.Label>
+  <Profession.Direction.Forestry_Nursery.Specialization>占位方向：苗木培育，待后端落地技能与特化说明</Profession.Direction.Forestry_Nursery.Specialization>
+  <Profession.Direction.Forestry_Lumber.Label>木材加工</Profession.Direction.Forestry_Lumber.Label>
+  <Profession.Direction.Forestry_Lumber.Specialization>占位方向：木材加工与利用，待后端落地技能与特化说明</Profession.Direction.Forestry_Lumber.Specialization>
+  <Profession.Direction.Forestry_Silviculture.Label>护林</Profession.Direction.Forestry_Silviculture.Label>
+  <Profession.Direction.Forestry_Silviculture.Specialization>占位方向：森林经营与保护，待后端落地技能与特化说明</Profession.Direction.Forestry_Silviculture.Specialization>
+  <!-- 畜牧 AnimalHusbandry -->
+  <Profession.Direction.AnimalHusbandry_Husbandry.Label>饲养</Profession.Direction.AnimalHusbandry_Husbandry.Label>
+  <Profession.Direction.AnimalHusbandry_Husbandry.Specialization>占位方向：日常饲养管理，待后端落地技能与特化说明</Profession.Direction.AnimalHusbandry_Husbandry.Specialization>
+  <Profession.Direction.AnimalHusbandry_Breeding.Label>繁育</Profession.Direction.AnimalHusbandry_Breeding.Label>
+  <Profession.Direction.AnimalHusbandry_Breeding.Specialization>占位方向：动物繁育，待后端落地技能与特化说明</Profession.Direction.AnimalHusbandry_Breeding.Specialization>
+  <Profession.Direction.AnimalHusbandry_Veterinary.Label>兽医</Profession.Direction.AnimalHusbandry_Veterinary.Label>
+  <Profession.Direction.AnimalHusbandry_Veterinary.Specialization>占位方向：动物诊疗，待后端落地技能与特化说明</Profession.Direction.AnimalHusbandry_Veterinary.Specialization>
+  <Profession.Direction.AnimalHusbandry_Pasture.Label>牧场</Profession.Direction.AnimalHusbandry_Pasture.Label>
+  <Profession.Direction.AnimalHusbandry_Pasture.Specialization>占位方向：牧场经营，待后端落地技能与特化说明</Profession.Direction.AnimalHusbandry_Pasture.Specialization>
+  <!-- 医学 Medicine -->
+  <Profession.Direction.Medicine_Clinical.Label>临床</Profession.Direction.Medicine_Clinical.Label>
+  <Profession.Direction.Medicine_Clinical.Specialization>占位方向：临床诊断与护理，待后端落地技能与特化说明</Profession.Direction.Medicine_Clinical.Specialization>
+  <Profession.Direction.Medicine_Surgery.Label>外科</Profession.Direction.Medicine_Surgery.Label>
+  <Profession.Direction.Medicine_Surgery.Specialization>占位方向：手术治疗，待后端落地技能与特化说明</Profession.Direction.Medicine_Surgery.Specialization>
+  <Profession.Direction.Medicine_Pharmacy.Label>药理</Profession.Direction.Medicine_Pharmacy.Label>
+  <Profession.Direction.Medicine_Pharmacy.Specialization>占位方向：药物配制，待后端落地技能与特化说明</Profession.Direction.Medicine_Pharmacy.Specialization>
+  <Profession.Direction.Medicine_Prevention.Label>防疫</Profession.Direction.Medicine_Prevention.Label>
+  <Profession.Direction.Medicine_Prevention.Specialization>占位方向：疾病预防与公共卫生，待后端落地技能与特化说明</Profession.Direction.Medicine_Prevention.Specialization>
+  <!-- 武器 Weapons -->
+  <Profession.Direction.Weapons_Melee.Label>近战武器</Profession.Direction.Weapons_Melee.Label>
+  <Profession.Direction.Weapons_Melee.Specialization>占位方向：近战武器制造，待后端落地技能与特化说明</Profession.Direction.Weapons_Melee.Specialization>
+  <Profession.Direction.Weapons_Ranged.Label>远程武器</Profession.Direction.Weapons_Ranged.Label>
+  <Profession.Direction.Weapons_Ranged.Specialization>占位方向：远程武器制造，待后端落地技能与特化说明</Profession.Direction.Weapons_Ranged.Specialization>
+  <Profession.Direction.Weapons_Heavy.Label>重武器</Profession.Direction.Weapons_Heavy.Label>
+  <Profession.Direction.Weapons_Heavy.Specialization>占位方向：重型武器制造，待后端落地技能与特化说明</Profession.Direction.Weapons_Heavy.Specialization>
+  <Profession.Direction.Weapons_Ammo.Label>弹药</Profession.Direction.Weapons_Ammo.Label>
+  <Profession.Direction.Weapons_Ammo.Specialization>占位方向：弹药与火工，待后端落地技能与特化说明</Profession.Direction.Weapons_Ammo.Specialization>
+  <!-- 采矿 Mining -->
+  <Profession.Direction.Mining_Openpit.Label>露天采矿</Profession.Direction.Mining_Openpit.Label>
+  <Profession.Direction.Mining_Openpit.Specialization>占位方向：露天开采，待后端落地技能与特化说明</Profession.Direction.Mining_Openpit.Specialization>
+  <Profession.Direction.Mining_Underground.Label>井下采矿</Profession.Direction.Mining_Underground.Label>
+  <Profession.Direction.Mining_Underground.Specialization>占位方向：地下开采，待后端落地技能与特化说明</Profession.Direction.Mining_Underground.Specialization>
+  <Profession.Direction.Mining_Beneficiation.Label>选矿</Profession.Direction.Mining_Beneficiation.Label>
+  <Profession.Direction.Mining_Beneficiation.Specialization>占位方向：矿石分选与富集，待后端落地技能与特化说明</Profession.Direction.Mining_Beneficiation.Specialization>
+  <Profession.Direction.Mining_Blasting.Label>爆破</Profession.Direction.Mining_Blasting.Label>
+  <Profession.Direction.Mining_Blasting.Specialization>占位方向：爆破工程，待后端落地技能与特化说明</Profession.Direction.Mining_Blasting.Specialization>
+  <!-- 研究 Research -->
+  <Profession.Direction.Research_Theory.Label>理论研究</Profession.Direction.Research_Theory.Label>
+  <Profession.Direction.Research_Theory.Specialization>占位方向：基础理论研究，待后端落地技能与特化说明</Profession.Direction.Research_Theory.Specialization>
+  <Profession.Direction.Research_Experiment.Label>实验研究</Profession.Direction.Research_Experiment.Label>
+  <Profession.Direction.Research_Experiment.Specialization>占位方向：实验与验证，待后端落地技能与特化说明</Profession.Direction.Research_Experiment.Specialization>
+  <Profession.Direction.Research_Applied.Label>应用研究</Profession.Direction.Research_Applied.Label>
+  <Profession.Direction.Research_Applied.Specialization>占位方向：技术转化与应用，待后端落地技能与特化说明</Profession.Direction.Research_Applied.Specialization>
+  <Profession.Direction.Research_Literature.Label>文献</Profession.Direction.Research_Literature.Label>
+  <Profession.Direction.Research_Literature.Specialization>占位方向：文献整理与知识管理，待后端落地技能与特化说明</Profession.Direction.Research_Literature.Specialization>
+  <!-- 烹饪 Cooking -->
+  <Profession.Direction.Cooking_Staple.Label>主食</Profession.Direction.Cooking_Staple.Label>
+  <Profession.Direction.Cooking_Staple.Specialization>占位方向：主食制作，待后端落地技能与特化说明</Profession.Direction.Cooking_Staple.Specialization>
+  <Profession.Direction.Cooking_Cuisine.Label>菜肴</Profession.Direction.Cooking_Cuisine.Label>
+  <Profession.Direction.Cooking_Cuisine.Specialization>占位方向：菜肴烹饪，待后端落地技能与特化说明</Profession.Direction.Cooking_Cuisine.Specialization>
+  <Profession.Direction.Cooking_Baking.Label>烘焙</Profession.Direction.Cooking_Baking.Label>
+  <Profession.Direction.Cooking_Baking.Specialization>占位方向：烘焙与面点，待后端落地技能与特化说明</Profession.Direction.Cooking_Baking.Specialization>
+  <Profession.Direction.Cooking_Preservation.Label>腌制</Profession.Direction.Cooking_Preservation.Label>
+  <Profession.Direction.Cooking_Preservation.Specialization>占位方向：食物保存与腌制，待后端落地技能与特化说明</Profession.Direction.Cooking_Preservation.Specialization>
+  <!-- 艺术 Art -->
+  <Profession.Direction.Art_Painting.Label>绘画</Profession.Direction.Art_Painting.Label>
+  <Profession.Direction.Art_Painting.Specialization>占位方向：绘画创作，待后端落地技能与特化说明</Profession.Direction.Art_Painting.Specialization>
+  <Profession.Direction.Art_Sculpture.Label>雕塑</Profession.Direction.Art_Sculpture.Label>
+  <Profession.Direction.Art_Sculpture.Specialization>占位方向：雕塑造型，待后端落地技能与特化说明</Profession.Direction.Art_Sculpture.Specialization>
+  <Profession.Direction.Art_Music.Label>音乐</Profession.Direction.Art_Music.Label>
+  <Profession.Direction.Art_Music.Specialization>占位方向：音乐创作与演奏，待后端落地技能与特化说明</Profession.Direction.Art_Music.Specialization>
+  <Profession.Direction.Art_Craft.Label>工艺</Profession.Direction.Art_Craft.Label>
+  <Profession.Direction.Art_Craft.Specialization>占位方向：手工艺制作，待后端落地技能与特化说明</Profession.Direction.Art_Craft.Specialization>
+  <!-- 管理 Management -->
+  <Profession.Direction.Management_Dispatch.Label>调度</Profession.Direction.Management_Dispatch.Label>
+  <Profession.Direction.Management_Dispatch.Specialization>占位方向：生产调度，待后端落地技能与特化说明</Profession.Direction.Management_Dispatch.Specialization>
+  <Profession.Direction.Management_Logistics.Label>后勤</Profession.Direction.Management_Logistics.Label>
+  <Profession.Direction.Management_Logistics.Specialization>占位方向：物流与后勤，待后端落地技能与特化说明</Profession.Direction.Management_Logistics.Specialization>
+  <Profession.Direction.Management_Personnel.Label>人事</Profession.Direction.Management_Personnel.Label>
+  <Profession.Direction.Management_Personnel.Specialization>占位方向：人员管理，待后端落地技能与特化说明</Profession.Direction.Management_Personnel.Specialization>
+  <Profession.Direction.Management_Diplomacy.Label>外交</Profession.Direction.Management_Diplomacy.Label>
+  <Profession.Direction.Management_Diplomacy.Specialization>占位方向：外交与贸易，待后端落地技能与特化说明</Profession.Direction.Management_Diplomacy.Specialization>
+
   <!-- P2 主方向选择（Dialog_SetPrimaryDirection，V2.0 §9 推荐≠强制） -->
   <PersonalChronicle.UI.Career.SetDirection.Title>设定主修方向</PersonalChronicle.UI.Career.SetDirection.Title>
   <PersonalChronicle.UI.Career.SetDirection.Hint>规划区给出的是系统推荐；此处为你的「最终选择」，将覆盖推荐并写入选定方向。</PersonalChronicle.UI.Career.SetDirection.Hint>
@@ -917,6 +1107,51 @@
   <PersonalChronicle.UI.Career.SetDirection.Spec.Throughput>产量</PersonalChronicle.UI.Career.SetDirection.Spec.Throughput>
   <PersonalChronicle.UI.Career.SetDirection.Spec.Material>材料</PersonalChronicle.UI.Career.SetDirection.Spec.Material>
   <PersonalChronicle.UI.Career.SetDirection.Spec.Volume>批量</PersonalChronicle.UI.Career.SetDirection.Spec.Volume>
+  <!-- 占位二级方向特化点徽标（2026-08-22 占位，与 Def specializationKey 对应；后端可改） -->
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Structure>结构</PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Structure>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Power>动力</PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Power>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Control>电控</PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Control>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Precision>精密</PersonalChronicle.UI.Career.SetDirection.Spec.Engineering_Precision>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Tillage>耕作</PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Tillage>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Irrigation>灌溉</PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Irrigation>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Breeding>育种</PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Breeding>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Greenhouse>温室</PersonalChronicle.UI.Career.SetDirection.Spec.Agriculture_Greenhouse>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Harvest>采伐</PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Harvest>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Nursery>育苗</PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Nursery>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Lumber>木材</PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Lumber>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Silviculture>护林</PersonalChronicle.UI.Career.SetDirection.Spec.Forestry_Silviculture>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Husbandry>饲养</PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Husbandry>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Breeding>繁育</PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Breeding>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Veterinary>兽医</PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Veterinary>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Pasture>牧场</PersonalChronicle.UI.Career.SetDirection.Spec.AnimalHusbandry_Pasture>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Clinical>临床</PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Clinical>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Surgery>外科</PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Surgery>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Pharmacy>药理</PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Pharmacy>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Prevention>防疫</PersonalChronicle.UI.Career.SetDirection.Spec.Medicine_Prevention>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Melee>近战</PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Melee>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Ranged>远程</PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Ranged>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Heavy>重武</PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Heavy>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Ammo>弹药</PersonalChronicle.UI.Career.SetDirection.Spec.Weapons_Ammo>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Openpit>露天</PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Openpit>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Underground>井下</PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Underground>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Beneficiation>选矿</PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Beneficiation>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Blasting>爆破</PersonalChronicle.UI.Career.SetDirection.Spec.Mining_Blasting>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Research_Theory>理论</PersonalChronicle.UI.Career.SetDirection.Spec.Research_Theory>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Research_Experiment>实验</PersonalChronicle.UI.Career.SetDirection.Spec.Research_Experiment>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Research_Applied>应用</PersonalChronicle.UI.Career.SetDirection.Spec.Research_Applied>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Research_Literature>文献</PersonalChronicle.UI.Career.SetDirection.Spec.Research_Literature>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Staple>主食</PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Staple>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Cuisine>菜肴</PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Cuisine>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Baking>烘焙</PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Baking>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Preservation>腌制</PersonalChronicle.UI.Career.SetDirection.Spec.Cooking_Preservation>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Art_Painting>绘画</PersonalChronicle.UI.Career.SetDirection.Spec.Art_Painting>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Art_Sculpture>雕塑</PersonalChronicle.UI.Career.SetDirection.Spec.Art_Sculpture>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Art_Music>音乐</PersonalChronicle.UI.Career.SetDirection.Spec.Art_Music>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Art_Craft>工艺</PersonalChronicle.UI.Career.SetDirection.Spec.Art_Craft>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Management_Dispatch>调度</PersonalChronicle.UI.Career.SetDirection.Spec.Management_Dispatch>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Management_Logistics>后勤</PersonalChronicle.UI.Career.SetDirection.Spec.Management_Logistics>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Management_Personnel>人事</PersonalChronicle.UI.Career.SetDirection.Spec.Management_Personnel>
+  <PersonalChronicle.UI.Career.SetDirection.Spec.Management_Diplomacy>外交</PersonalChronicle.UI.Career.SetDirection.Spec.Management_Diplomacy>
   <PersonalChronicle.UI.Career.SetDirection.Ability.machining>加工能力</PersonalChronicle.UI.Career.SetDirection.Ability.machining>
   <PersonalChronicle.UI.Career.SetDirection.Ability.precisionControl>精度控制</PersonalChronicle.UI.Career.SetDirection.Ability.precisionControl>
   <PersonalChronicle.UI.Career.SetDirection.Ability.processKnowledge>工艺理解</PersonalChronicle.UI.Career.SetDirection.Ability.processKnowledge>
@@ -1011,8 +1246,8 @@
   <PersonalChronicle.UI.Career.Honor.Contrib.Medal>荣誉贡献</PersonalChronicle.UI.Career.Honor.Contrib.Medal>
   <PersonalChronicle.UI.Career.Honor.Events>最近荣誉事件</PersonalChronicle.UI.Career.Honor.Events>
   <PersonalChronicle.UI.Career.Honor.Events.Empty>暂无荣誉事件。</PersonalChronicle.UI.Career.Honor.Events.Empty>
-  <PersonalChronicle.UI.Career.Honor.Event.Medal>获得勋章：{0}</PersonalChronicle.UI.Career.Honor.Event.Medal>
-  <PersonalChronicle.UI.Career.Honor.Event.Title>获得职称：{0}</PersonalChronicle.UI.Career.Honor.Event.Title>
+  <PersonalChronicle.UI.Career.Honor.Event.Medal>{0}</PersonalChronicle.UI.Career.Honor.Event.Medal>
+  <PersonalChronicle.UI.Career.Honor.Event.Title>{0}</PersonalChronicle.UI.Career.Honor.Event.Title>
   <PersonalChronicle.UI.Career.Honor.Tier.Bronze>青铜</PersonalChronicle.UI.Career.Honor.Tier.Bronze>
   <PersonalChronicle.UI.Career.Honor.Tier.Silver>白银</PersonalChronicle.UI.Career.Honor.Tier.Silver>
   <PersonalChronicle.UI.Career.Honor.Tier.Gold>黄金</PersonalChronicle.UI.Career.Honor.Tier.Gold>

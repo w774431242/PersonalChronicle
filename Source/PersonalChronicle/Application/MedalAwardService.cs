@@ -156,6 +156,8 @@ namespace PersonalChronicle.Data
         /// 签名经引擎反射核验（1.6：ReceiveLetter(TaggedString, TaggedString, LetterDef,
         /// LookTargets, Faction, Quest, List&lt;ThingDef&gt;, string, int, bool)）。
         /// </summary>
+        // ARC-002 说明：本方法处于 Application→Presentation 边界，生成玩家可见的授勋通知（Letter）属必要副作用。
+        // 翻译文本全部来自集中键源 MedalTranslationKeys（非散落硬编码），符合「禁止散落翻译文本」例外。
         private static void AnnounceGold(Pawn pawn, MedalDef def)
         {
             if (def == null || def.tier != MedalTier.Gold || pawn == null)

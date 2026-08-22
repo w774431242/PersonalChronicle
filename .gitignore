@@ -42,3 +42,8 @@ Directory.Build.props.user
 *.tmp
 docs/ui-preview/_probe*.ps1
 docs/ui-preview/_verify.cjs
+
+# Tool / environment junk accidentally dropped into the project dir
+$null
+_dotnet/
+_playwright-cli/
