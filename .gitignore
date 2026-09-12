@@ -47,3 +47,7 @@ docs/ui-preview/_verify.cjs
 $null
 _dotnet/
 _playwright-cli/
+
+# RUIF 已独立成库（见 github.com/w774431242/RUIF）
+RUIF/
+
