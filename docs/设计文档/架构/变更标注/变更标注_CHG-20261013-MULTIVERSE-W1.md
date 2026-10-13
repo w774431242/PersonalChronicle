@@ -42,7 +42,7 @@ files:
     type: M
     symbols: Resolve-RimWorldRoot / Resolve-WorkshopAsm / Resolve-Csc；$outDir = <devRoot>\<GameVersion>\Assemblies
     lines: 1-150
-    note: 移除硬编码旧工程绝对路径与 RUIF 死路径；缺硬依赖时显式 throw；修复 Resolve-Csc 的 $hits[0] 单元素退化取字符 bug
+    note: 移除硬编码旧工程绝对路径与 RUIF 死路径；缺硬依赖时显式 throw；修复 Resolve-Csc 的 $hits[0] 单元素退化取字符 bug；**按用户要求不再自动生成 `.bak` 备份**（回滚改依赖 git：dll 受版本控制跟踪）
   - path: _scripts/deploy-to-game.ps1
     type: M
     symbols: -GameVersion / -RimWorldRoot；$items 与 $checkMap 带版本前缀；首次部署分支
@@ -142,6 +142,14 @@ files:
    1. `Type GameComponent_PawnEconomy probably needs a StaticConstructorOnStartup attribute … field speechTailTexture of type Texture2D` —— 本 mod 触发的官方警告，建议核实并改为主线程预载。
    2. `Translation data for language Simplified Chinese has 2 errors` —— 需生成翻译报告定位（可能属 DLC 或本 mod）。
    3. `[ECON-PERF] planning ticks=1 subjects=2 avgMs=18.236 maxMs=18.236 slow>2ms=1` —— 单次规划 18 ms，建议纳入性能基线。
+
+---
+
+## 七、审核单与仓库
+
+- 仓库：`github.com/w774431242/PersonalChronicle`（分支 `main`，基线提交 `57dafd5`）
+- 本 PR：**https://github.com/w774431242/PersonalChronicle/pull/1**（分支 `chore/1.6-1.7-multiverse-skeleton`，提交 `9bcacf5`）
+- 备份文件处置：按用户要求，工程内 `.bak` / `.bak_*` 备份已全部删除（`1.6/Assemblies` ×2、`About` ×1、`Source` ×1、`_verify_tmp` 夹具 ×1），并由 `compile_with_sdk.ps1` 保证**不再生成**；这些文件均在 `.gitignore` 中，不入版本库，回滚依据为 git 跟踪的主 dll。
 
 ---
 
