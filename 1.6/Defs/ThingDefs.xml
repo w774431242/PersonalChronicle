@@ -1,0 +1,2353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    Exam-book abstract base (aligned with vanilla BookBase).
+    Provides: thingClass=Book, CompQuality, thingCategories=Books, ITab_Book.
+    Child Defs only declare their own CompProperties_Book; comps <li> elements are
+    APPENDED by XmlInheritance, so CompQuality/Forbiddable from this parent survive.
+    Deliberately omits thingSetMakerTags so exam books never leak into vanilla loot/rewards.
+    DeteriorationRate left unset (=0) so stored exam books never rot away mid-thesis.
+  -->
+  <ThingDef Name="PC_ExamBookBase" Abstract="True">
+    <thingClass>Book</thingClass>
+    <category>Item</category>
+    <selectable>true</selectable>
+    <rotatable>True</rotatable>
+    <altitudeLayer>Item</altitudeLayer>
+    <tickerType>Rare</tickerType>
+    <alwaysHaulable>true</alwaysHaulable>
+    <useHitPoints>true</useHitPoints>
+    <healthAffectsPrice>true</healthAffectsPrice>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <neverMultiSelect>true</neverMultiSelect>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <tradeNeverGenerateStacked>true</tradeNeverGenerateStacked>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>Books</li>
+    </thingCategories>
+    <inspectorTabs>
+      <li>ITab_Book</li>
+    </inspectorTabs>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Mass>0.1</Mass>
+      <Flammability>1</Flammability>
+      <Beauty>1</Beauty>
+    </statBases>
+    <possessionCount>1</possessionCount>
+  </ThingDef>
+
+  <!--
+    资格考试产物（P5~P6 实体化，统一命名体系 PC_Exam_*）：
+    全部模型复用原版通用物品贴图（零粉色风险，无自定义纹理依赖），
+    并统一在「手工加工点（CraftingSpot）」经 RecipeDef 制造。
+    分类：
+      PC_Exam_Thesis      论文书卷（CompleteThesis 成功后系统生成）
+      PC_Exam_Diploma    职称文凭（答辩通过后系统生成，绑资格+最终分+外部评审标记）
+      PC_Exam_Practical   实践考核合格证书（实践考试通过后系统发放，亦可批量制造）
+    ── 以下为本次新增的考试道具 / 理论产物固定配方实体 ──
+      PC_Exam_PracticeKit 实践考试工件样件套装（实践考试专属道具）
+      PC_Exam_Textbook    职称考试教科书（理论考试·书籍）
+      PC_Exam_ResearchDoc 技术研究文献（理论考试·科研树）
+      PC_Exam_SkillBook   技能方向专著（理论考试·技能方向书籍）
+      PC_Exam_TheoryBook  理论方向论著（理论考试·理论方向书籍）
+    label 写英文默认值；中文由 Languages/ChineseSimplified/DefInjected/ThingDef/ 注入。Keyed 键仅供 UI Translate，不会驱动 ThingDef.Label。
+  -->
+
+  <!-- 论文书卷：装订成册，作者=申请人，可携带/收藏 -->
+  <ThingDef>
+    <defName>PC_Exam_Thesis</defName>
+    <label>Thesis Scroll</label>
+    <description>A bound thesis recording the holder's research for a qualification.</description>
+    <thingClass>Thing</thingClass>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.1</Mass>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>1</stackLimit>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 职称文凭：答辩通过生成，绑定资格+最终分+外部评审标记 -->
+  <ThingDef>
+    <defName>PC_Exam_Diploma</defName>
+    <label>Diploma</label>
+    <description>A formal diploma certifying the holder passed qualification review and defense; displayable.</description>
+    <thingClass>Thing</thingClass>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Cloth</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(220,210,180)</color>
+      <drawSize>(0.6,0.6)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.05</Mass>
+      <MarketValue>60</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>10</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 实践考核合格证书：实践考试通过后由系统发放，亦可经手工加工点批量制造（固定实践产物） -->
+  <ThingDef>
+    <defName>PC_Exam_Practical</defName>
+    <label>Practical Certificate</label>
+    <description>A nameplate certifying the holder passed the practical exam; issued by the system or hand-pressed.</description>
+    <thingClass>Thing</thingClass>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Steel</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(180,200,210)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.08</Mass>
+      <MarketValue>40</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 实践考试工件样件套装：实践考试专属固定道具，木+钢+布压制的标准工件样本，供考官核验制造水平 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit</defName>
+    <label>Practice Kit</label>
+    <description>Standard practice-exam workpieces pressed from wood, steel and cloth for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Steel</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(200,170,120)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.12</Mass>
+      <MarketValue>35</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 职称考试教科书：理论考试·书籍类，供考生研读对应专业方向主题（匹配 RequiredBookTopics） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook</defName>
+    <label>Exam Textbook</label>
+    <description>Theory-exam textbook on a specialty topic for candidates to study.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>20</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 技术研究文献：理论考试·科研树类，记录已完成的研究课题，对应 RequiredResearchCount -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc</defName>
+    <label>Research Document</label>
+    <description>Technical document recording completed research projects, matching the theory-exam research-count requirement.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>30</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Intellectual 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 技能方向专著：理论考试·技能方向书籍，聚焦单一原版技能（Crafting/Intellectual 等）的成长路径 -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook</defName>
+    <label>Skill Monograph</label>
+    <description>Monograph on a single vanilla skill's growth path, matching the theory-exam skill-score basis.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>22</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 理论方向论著：理论考试·理论方向书籍，阐述专业理论体系（对应 RequiredBookTopics 理论方向条目） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook</defName>
+    <label>Theory Treatise</label>
+    <description>Treatise expounding a specialty's theoretical system, matching the theory-exam theory-book requirement.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>28</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Intellectual 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ───────── 一级专业固定实践产物（12 专业各自专属实践工件样件，全部经手工加工点制造） ───────── -->
+
+  <!-- 工程类实践样件：结构件与机械装配样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Engineering</defName>
+    <label>Engineering Practice Kit</label>
+    <description>Engineering qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Steel</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(190,180,150)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.12</Mass>
+      <MarketValue>35</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 制造类实践样件：精密加工工件样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Manufacturing</defName>
+    <label>Manufacturing Practice Kit</label>
+    <description>Manufacturing qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Steel</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(200,200,205)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.12</Mass>
+      <MarketValue>35</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 农业类实践样件：农具与种植器械样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Agriculture</defName>
+    <label>Agriculture Practice Kit</label>
+    <description>Agriculture qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/WoodLog</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(170,150,110)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.12</Mass>
+      <MarketValue>32</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 林业类实践样件：伐木与林木作业器械样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Forestry</defName>
+    <label>Forestry Practice Kit</label>
+    <description>Forestry qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/WoodLog</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(140,120,90)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.12</Mass>
+      <MarketValue>32</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 畜牧类实践样件：饲养与兽医器械样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_AnimalHusbandry</defName>
+    <label>Animal Husbandry Practice Kit</label>
+    <description>Animal Husbandry qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Leather</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(180,150,120)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.12</Mass>
+      <MarketValue>33</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 医学类实践样件：医疗器械与药品样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Medicine</defName>
+    <label>Medicine Practice Kit</label>
+    <description>Medicine qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Steel</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(210,230,230)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.1</Mass>
+      <MarketValue>40</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 武器类实践样件：武器部件与装配样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Weapons</defName>
+    <label>Weapons Practice Kit</label>
+    <description>Weapons qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Steel</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(160,160,170)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.14</Mass>
+      <MarketValue>38</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 矿业类实践样件：矿料与采掘器械样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Mining</defName>
+    <label>Mining Practice Kit</label>
+    <description>Mining qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Steel</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(130,130,140)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.14</Mass>
+      <MarketValue>34</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 科研类实践样件：实验装置与仪器样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Research</defName>
+    <label>Research Practice Kit</label>
+    <description>Research qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Gold</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(230,210,150)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.1</Mass>
+      <MarketValue>45</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 烹饪类实践样件：炊具与餐食样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Cooking</defName>
+    <label>Cooking Practice Kit</label>
+    <description>Cooking qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Steel</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(200,180,160)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.1</Mass>
+      <MarketValue>30</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 艺术类实践样件：工艺品与雕塑样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Art</defName>
+    <label>Art Practice Kit</label>
+    <description>Art qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Resource/Gold</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(220,200,170)</color>
+      <drawSize>(0.7,0.7)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.1</Mass>
+      <MarketValue>42</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 管理类实践样件：调度文书与规划样本 -->
+  <ThingDef>
+    <defName>PC_Exam_PracticeKit_Management</defName>
+    <label>Management Practice Kit</label>
+    <description>Management qualification practice workpiece samples made at the crafting spot for examiner verification.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.1</Mass>
+      <MarketValue>36</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>25</stackLimit>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+  <!-- 工程考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Engineering</defName>
+    <label>Engineering Exam Textbook</label>
+    <description>Engineering theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 工程技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Engineering</defName>
+    <label>Engineering Research Document</label>
+    <description>Engineering technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 工程技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Engineering</defName>
+    <label>Engineering Skill Monograph</label>
+    <description>Engineering monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 工程理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Engineering</defName>
+    <label>Engineering Theory Treatise</label>
+    <description>Engineering treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 制造考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Manufacturing</defName>
+    <label>Manufacturing Exam Textbook</label>
+    <description>Manufacturing theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 制造技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Manufacturing</defName>
+    <label>Manufacturing Research Document</label>
+    <description>Manufacturing technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 制造技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Manufacturing</defName>
+    <label>Manufacturing Skill Monograph</label>
+    <description>Manufacturing monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 制造理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Manufacturing</defName>
+    <label>Manufacturing Theory Treatise</label>
+    <description>Manufacturing treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 农业考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Agriculture</defName>
+    <label>Agriculture Exam Textbook</label>
+    <description>Agriculture theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Plants 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 农业技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Agriculture</defName>
+    <label>Agriculture Research Document</label>
+    <description>Agriculture technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Plants 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 农业技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Agriculture</defName>
+    <label>Agriculture Skill Monograph</label>
+    <description>Agriculture monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Plants 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 农业理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Agriculture</defName>
+    <label>Agriculture Theory Treatise</label>
+    <description>Agriculture treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Plants 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 林业考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Forestry</defName>
+    <label>Forestry Exam Textbook</label>
+    <description>Forestry theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Plants 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 林业技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Forestry</defName>
+    <label>Forestry Research Document</label>
+    <description>Forestry technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Plants 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 林业技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Forestry</defName>
+    <label>Forestry Skill Monograph</label>
+    <description>Forestry monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Plants 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 林业理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Forestry</defName>
+    <label>Forestry Theory Treatise</label>
+    <description>Forestry treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Plants 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 畜牧考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_AnimalHusbandry</defName>
+    <label>Animal Husbandry Exam Textbook</label>
+    <description>Animal Husbandry theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Animals 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 畜牧技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_AnimalHusbandry</defName>
+    <label>Animal Husbandry Research Document</label>
+    <description>Animal Husbandry technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Animals 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 畜牧技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_AnimalHusbandry</defName>
+    <label>Animal Husbandry Skill Monograph</label>
+    <description>Animal Husbandry monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Animals 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 畜牧理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_AnimalHusbandry</defName>
+    <label>Animal Husbandry Theory Treatise</label>
+    <description>Animal Husbandry treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Animals 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 医学考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Medicine</defName>
+    <label>Medicine Exam Textbook</label>
+    <description>Medicine theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Medicine 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 医学技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Medicine</defName>
+    <label>Medicine Research Document</label>
+    <description>Medicine technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Medicine 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 医学技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Medicine</defName>
+    <label>Medicine Skill Monograph</label>
+    <description>Medicine monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Medicine 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 医学理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Medicine</defName>
+    <label>Medicine Theory Treatise</label>
+    <description>Medicine treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Medicine 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 武器考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Weapons</defName>
+    <label>Weapons Exam Textbook</label>
+    <description>Weapons theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 武器技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Weapons</defName>
+    <label>Weapons Research Document</label>
+    <description>Weapons technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 武器技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Weapons</defName>
+    <label>Weapons Skill Monograph</label>
+    <description>Weapons monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 武器理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Weapons</defName>
+    <label>Weapons Theory Treatise</label>
+    <description>Weapons treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Crafting 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 矿业考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Mining</defName>
+    <label>Mining Exam Textbook</label>
+    <description>Mining theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Mining 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 矿业技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Mining</defName>
+    <label>Mining Research Document</label>
+    <description>Mining technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Mining 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 矿业技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Mining</defName>
+    <label>Mining Skill Monograph</label>
+    <description>Mining monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Mining 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 矿业理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Mining</defName>
+    <label>Mining Theory Treatise</label>
+    <description>Mining treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Mining 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 科研考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Research</defName>
+    <label>Research Exam Textbook</label>
+    <description>Research theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Intellectual 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 科研技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Research</defName>
+    <label>Research Research Document</label>
+    <description>Research technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Intellectual 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 科研技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Research</defName>
+    <label>Research Skill Monograph</label>
+    <description>Research monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Intellectual 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 科研理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Research</defName>
+    <label>Research Theory Treatise</label>
+    <description>Research treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Intellectual 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 烹饪考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Cooking</defName>
+    <label>Cooking Exam Textbook</label>
+    <description>Cooking theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Cooking 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 烹饪技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Cooking</defName>
+    <label>Cooking Research Document</label>
+    <description>Cooking technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Cooking 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 烹饪技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Cooking</defName>
+    <label>Cooking Skill Monograph</label>
+    <description>Cooking monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Cooking 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 烹饪理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Cooking</defName>
+    <label>Cooking Theory Treatise</label>
+    <description>Cooking treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Cooking 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 艺术考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Art</defName>
+    <label>Art Exam Textbook</label>
+    <description>Art theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Artistic 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 艺术技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Art</defName>
+    <label>Art Research Document</label>
+    <description>Art technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Artistic 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 艺术技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Art</defName>
+    <label>Art Skill Monograph</label>
+    <description>Art monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Artistic 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 艺术理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Art</defName>
+    <label>Art Theory Treatise</label>
+    <description>Art treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Artistic 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 管理考试教科书：理论考试·Textbook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_Textbook_Management</defName>
+    <label>Management Exam Textbook</label>
+    <description>Management theory-exam textbook on the specialty topic, bound at the crafting spot.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Social 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 管理技术研究文献：理论考试·ResearchDoc（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_ResearchDoc_Management</defName>
+    <label>Management Research Document</label>
+    <description>Management technical document recording completed research projects for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Schematic</nameMaker>
+        <descriptionMaker>Description_Schematic</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Schematic/Schematic_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Social 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 管理技能方向专著：理论考试·SkillBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_SkillBook_Management</defName>
+    <label>Management Skill Monograph</label>
+    <description>Management monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_Novel</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Social 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 管理理论方向论著：理论考试·TheoryBook（手工加工点制造） -->
+  <ThingDef ParentName="PC_ExamBookBase">
+    <defName>PC_Exam_TheoryBook_Management</defName>
+    <label>Management Theory Treatise</label>
+    <description>Management treatise expounding the specialty theoretical system for the theory exam.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>25</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_TextBook</nameMaker>
+        <descriptionMaker>Description_SkillBook</descriptionMaker>
+        <openGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Textbook/Textbook_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_GainSkillExp" />  <!-- 技能由运行时从 Book 自身 skill 决定，vanilla 亦为空式；原手写值 Social 无法生效，仅存意图 -->
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 论文选题单：阶段0 选题产物（论文骨架），带入选题方向，后续阶段据此消耗对应方向书籍/文献 -->
+  <ThingDef>
+    <defName>PC_Exam_ThesisProposal</defName>
+    <label>Thesis Proposal</label>
+    <description>A thesis skeleton document recording the chosen direction; later book/research/final stages build on it.</description>
+    <thingClass>Thing</thingClass>
+    <category>Item</category>
+    <graphicData>
+      <texPath>Things/Item/Book/Schematic/Schematic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.9,0.9)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.05</Mass>
+      <MarketValue>5</MarketValue>
+    </statBases>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>1</stackLimit>
+    <useHitPoints>false</useHitPoints>
+    <alwaysHaulable>true</alwaysHaulable>
+    <thingCategories>
+      <li>ItemsMisc</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>
+

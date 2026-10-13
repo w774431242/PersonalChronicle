@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    工业员工岗位表（CHG-20261004-STAFF · 玩家口径「车间工作类型改为【员工】，这是一套现代化工业岗位体系」）。
+
+    ★ 定位（2026-10-04 玩家裁决）
+      这不是"某个车间的岗位表"，而是**一套现代化的工业岗位体系**：
+      员工岗位是全公司通用的组织角色，挂在哪个车间、承接哪些工序由排班决定。
+
+    ★ 两个字段必须分清（接管安全的闸门）
+      coveredWorkTypeDefNames      能力声明：这个员工**将来**要承接什么（规划表，可写全）
+      implementedWorkTypeDefNames  已交付：车间里**真的已经有 Job** 在做（接管只认这个）
+      生产岗位现在调度原版工单，其他岗位仍复用原版服务；待命每 300 tick 重查。
+      => 未交付独立替代服务，implemented 仍为空 => 不接管清零原版工作。
+
+    ★ 归属规则（2026-10-04 修正）
+      旧版把操作员写成 Crafting…Construction 的**"全集上界"**，导致 Research 被误覆盖
+      => 能力对等闸门误判 => 科技停滞。现改为**每个原版工作类型只归属一个员工**。
+
+    ★ 硬红线（EXC-2026-016，永不接管）
+      Hauling / Cleaning / Doctor / Firefighter 不归属任何员工：
+      无人搬运=>断料停摆；无人清洁=>脏乱生病；无人医治=>伤亡；无人灭火=>火灾失控。
+
+    ★ 身份类（非工种，不进车间）
+      Patient / PatientBedRest 是"当前身份"；BasicWorker 是原版杂项兜底；Warden 与生产无关。
+
+    兼容：既有 9 个岗位的 defName / postKey 一律不动（存档存的是 postKey），只改 label 与 covered。
+  -->
+
+  <!-- ① 操作员工：生产主力。手工/锻造/烹饪/裁缝/艺术。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_Operator</defName>
+    <label>操作员工</label>
+    <postKey>Operator</postKey>
+    <dutyTaskTypeKey>Production</dutyTaskTypeKey>
+    <coveredWorkTypeDefNames>
+      <li>Crafting</li>
+      <li>Smithing</li>
+      <li>Cooking</li>
+      <li>Tailoring</li>
+      <li>Art</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <skillDefNames>
+      <li>Crafting</li>
+      <li>Smithing</li>
+      <li>Cooking</li>
+      <li>Tailoring</li>
+      <li>Artistic</li>
+    </skillDefNames>
+    <minSkillLevel>0</minSkillLevel>
+    <requiredCapacityDefNames>
+      <li>Manipulation</li>
+    </requiredCapacityDefNames>
+    <deliversOwnService>false</deliversOwnService>
+    <!-- CHG-20261005-DUTYRUNTIME：用户批准岗位实装，操作员工参与原版工作落地。 -->
+    <landingExempt>false</landingExempt>
+    <notes>生产主力岗。**Research / PlantCutting / Construction 已移出本岗**（旧版当"全集上界"写在这里，导致 Research 被误判为车间可独立交付 =&gt; 科技停滞）。生产岗位已接入原版工单，参与岗位落地；仍需人工操作，未交付独立替代服务，因此不接管原版工作。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+
+  <!-- ② 设备技术员工：建造与维修。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_Technician</defName>
+    <label>设备技术员工</label>
+    <postKey>Technician</postKey>
+    <dutyTaskTypeKey>Maintenance</dutyTaskTypeKey>
+    <coveredWorkTypeDefNames>
+      <li>Construction</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <skillDefNames>
+      <li>Construction</li>
+    </skillDefNames>
+    <minSkillLevel>0</minSkillLevel>
+    <requiredCapacityDefNames>
+      <li>Manipulation</li>
+    </requiredCapacityDefNames>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>设备维修保养岗 =&gt; 原版 Construction。Maintenance 已实现并计入工时分档；维修 Job 未实现 ⇒ 暂不接管。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+
+  <!-- ④ 物料员工：Hauling 属硬红线。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_MaterialHandler</defName>
+    <label>物料员工</label>
+    <postKey>MaterialHandler</postKey>
+    <coveredWorkTypeDefNames>
+      <li>Hauling</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <requiredCapacityDefNames>
+      <li>Moving</li>
+    </requiredCapacityDefNames>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>Hauling 是**硬红线**（永不接管）：清零搬运 =&gt; 无人送料 =&gt; 产线停摆。本岗只声明能力。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+
+  <!-- ⑤ 仓储员工：Hauling / Cleaning 均属硬红线。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_WarehouseKeeper</defName>
+    <label>仓储员工</label>
+    <postKey>WarehouseKeeper</postKey>
+    <coveredWorkTypeDefNames>
+      <li>Hauling</li>
+      <li>Cleaning</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <requiredCapacityDefNames>
+      <li>Moving</li>
+    </requiredCapacityDefNames>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>两项均属**硬红线**，永不接管（断料停摆 / 脏乱生病）。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+
+  <!-- ⑥ 研发员工：原版 Research。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_ProcessEngineer</defName>
+    <label>研发员工</label>
+    <postKey>ProcessEngineer</postKey>
+    <coveredWorkTypeDefNames>
+      <li>Research</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <skillDefNames>
+      <li>Research</li>
+    </skillDefNames>
+    <minSkillLevel>0</minSkillLevel>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>研发与工艺优化 =&gt; 原版 Research。车间内研发 Job 未实现 ⇒ implemented 恒空 ⇒ 科技不会被停。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+  <!-- ⑦ 医务员工：Doctor 属硬红线。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_Medic</defName>
+    <label>医务员工</label>
+    <postKey>Medic</postKey>
+    <coveredWorkTypeDefNames>
+      <li>Doctor</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <skillDefNames>
+      <li>Medicine</li>
+    </skillDefNames>
+    <minSkillLevel>0</minSkillLevel>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>Doctor 属**硬红线**，永不接管（无人医治 =&gt; 伤病死亡）。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+
+  <!-- ⑧ 安保员工：Firefighter 属硬红线。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_SafetyOfficer</defName>
+    <label>安保员工</label>
+    <postKey>SafetyOfficer</postKey>
+    <coveredWorkTypeDefNames>
+      <li>Firefighter</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>Firefighter 属**硬红线**，永不接管（火灾失控 =&gt; 全损）。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+
+  <!-- ⑩ 农艺员工（新增）：种植 / 割取 / 狩猎。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_Agronomist</defName>
+    <label>农艺员工</label>
+    <postKey>Agronomist</postKey>
+    <coveredWorkTypeDefNames>
+      <li>Growing</li>
+      <li>PlantCutting</li>
+      <li>Hunting</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <skillDefNames>
+      <li>Plants</li>
+      <li>Shooting</li>
+    </skillDefNames>
+    <minSkillLevel>0</minSkillLevel>
+    <requiredCapacityDefNames>
+      <li>Moving</li>
+    </requiredCapacityDefNames>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>原料类岗位（新增 · CHG-20261004-STAFF）：Growing / PlantCutting / Hunting 此前无人归属。Job 未实现 ⇒ implemented 恒空。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+
+  <!-- ⑪ 采矿员工（新增）：采矿。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_Miner</defName>
+    <label>采矿员工</label>
+    <postKey>Miner</postKey>
+    <coveredWorkTypeDefNames>
+      <li>Mining</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <skillDefNames>
+      <li>Mining</li>
+    </skillDefNames>
+    <minSkillLevel>0</minSkillLevel>
+    <requiredCapacityDefNames>
+      <li>Manipulation</li>
+    </requiredCapacityDefNames>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>采矿岗位（新增）：原版 Mining 此前无人归属。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+
+  <!-- ⑫ 畜牧员工（新增）：驯兽。 -->
+  <PersonalChronicle.Automation.WorkshopPostDef>
+    <defName>WP_Stockman</defName>
+    <label>畜牧员工</label>
+    <postKey>Stockman</postKey>
+    <coveredWorkTypeDefNames>
+      <li>Handling</li>
+    </coveredWorkTypeDefNames>
+    <implementedWorkTypeDefNames/>
+    <skillDefNames>
+      <li>Animals</li>
+    </skillDefNames>
+    <minSkillLevel>0</minSkillLevel>
+    <deliversOwnService>false</deliversOwnService>
+    <notes>畜牧岗位（新增）：原版 Handling（驯兽/挤奶/剪毛/屠宰）此前无人归属。</notes>
+  </PersonalChronicle.Automation.WorkshopPostDef>
+</Defs>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<!--
+doc-id: DOC-PREVIEW-20261010-ECON-COUNTER
+status: new
+supersedes: —
+approved: 2026-10-10 17:23
+author: AI（经济 UI 线）
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>经济机构工作台预览 · PersonalChronicle</title>
+<!--
+  ============================================================================
+  经济机构工作台预览（CHG-20261010-ECON-COUNTER-WORKSPACE · 预览批）
+  ============================================================================
+  【定位】本文件是**落地蓝本**，不是效果图。所有色值 / 间距 / 字号 / 几何
+          均从实现侧同源取证，禁止凭直觉改数（RimWorld组件绘制 skill 红线 1）。
+
+  【同源取证清单】（改任何数值前先回查这些来源）
+    色值   : 11\RUIF\Source\Core\Tokens.cs:72-102          （16 个令牌色，逐值换算）
+    间距   : 11\RUIF\Source\Core\Tokens.cs:16-24,38-58     （SpaceXxs..Lg / CardPad / CardGap / BlockGap …）
+    字号档 : LAND-007（10-12px→Tiny / 13-15px→Small / 18-22px→Medium）
+    行高   : 11\RUIF\Source\Core\Measure.cs:42-58          （RowHeight 转发 Text.LineHeightOf；本预览用基准档 18/22/30，
+                                                              ★ 落地必须调 Measure.RowHeight()，不得写死）
+    卡片   : Source\PersonalChronicle\Economy\PawnEconomy\EconomyUiKit.cs:24-46
+             （CardFrame = Box(Card)+Border(BorderSoft)+左 3px 色条+Inset(12,8)；StatusChip = 14% 底 + 50% 描边）
+    行族   : Source\...\Dialog_PawnEconomy.cs:99,117,153-177,204-259
+             （行区 y=168；卡宽 = 内容宽−12；卡高 = max(22,折行)＋16 且 ≥46；卡间隙 6；按钮宽 = max(文本+32, 96)；按钮高 30）
+    按钮   : 11\RUIF\Source\Components\ButtonAtoms.cs:135-154,244-271
+             （四通道：默认 PanelRaised/BorderSoft/Text；hover CardHover/Accent/Text；按下 Accent@16%/Accent/Accent；禁用 Panel/BorderSoft/Dim）
+    空态   : 11\RUIF\Source\Components\FeedbackAtoms.cs:133-144
+             （28×3 accent 短条 + 6 间距 + 18 高标题(Small/Text) + 14 高副文案(Tiny/Dim)，宽 = min(300, 0.8×rect)）
+    窗口   : Source\...\Dialog_PawnEconomy.cs:39,45（960×720 现状）；Automation\Dialog_WorkshopManage.cs:26-31,58-59（1080×760 + 屏夹取）
+    文案   : Languages\ChineseSimplified\Keyed\PawnEconomy.xml / EconomyMode.xml（键值原文，LAND-013 键↔文案一一对应）
+    贴图   : Textures\Things\Building\PawnEconomy\PC_PEA_*_north.png（Def 的 uiIconPath）
+
+  【降级登记】（LAND §3，本预览**有意**不使用浏览器独有能力）
+    无圆角 / 无阴影 / 无渐变 / 无模糊 / 无 CSS 动画（引擎均不支持 ⇒ 预览也不画）
+    字体为系统字体近似（引擎三档位图字体，字形不同属 B 类降级）
+  ============================================================================
+-->
+<style>
+  /* ── 令牌：逐值来自 RUIF Tokens.cs:72-102（sRGB 0-1 → 8bit 取整）──────────── */
+  :root{
+    --rc-window:rgb(22,24,29);        /* Tokens.Window      0.086,0.094,0.114 */
+    --rc-panel:rgb(29,32,38);         /* Tokens.Panel       0.114,0.125,0.149 */
+    --rc-panel-raised:rgb(36,40,48);  /* Tokens.PanelRaised 0.141,0.157,0.188 */
+    --rc-card:rgb(34,38,46);          /* Tokens.Card        0.133,0.149,0.180 */
+    --rc-card-hover:rgb(44,49,59);    /* Tokens.CardHover   0.173,0.192,0.231 */
+    --rc-border:rgb(69,75,86);        /* Tokens.Border      0.271,0.294,0.337 */
+    --rc-border-soft:rgb(49,54,63);   /* Tokens.BorderSoft  0.192,0.212,0.247 */
+    --rc-border-hair:rgb(42,46,54);   /* Tokens.BorderHair  0.165,0.180,0.212 */
+    --rc-text:rgb(217,221,227);       /* Tokens.Text        0.851,0.867,0.890 */
+    --rc-muted:rgb(143,150,160);      /* Tokens.Muted       0.561,0.588,0.627 */
+    --rc-dim:rgb(110,118,130);        /* Tokens.Dim         0.431,0.463,0.510 */
+    --rc-accent:rgb(78,154,240);      /* Tokens.Accent      0.306,0.604,0.941 */
+    --rc-info:rgb(122,184,232);       /* Tokens.Info        0.478,0.722,0.910 */
+    --rc-alive:rgb(88,179,104);       /* Tokens.Alive       0.345,0.702,0.408 */
+    --rc-dead:rgb(217,83,79);         /* Tokens.Dead        0.851,0.325,0.310 */
+    --rc-warn:rgb(224,160,60);        /* Tokens.Warn        0.878,0.627,0.235 */
+    /* ── 间距：RUIF Tokens.cs:16-24,38-58 ───────────────────────────────── */
+    --sp-xxs:4px; --sp-xs:8px; --sp-sm:12px; --sp-md:16px; --sp-lg:24px;
+    --pad-x:12px; --pad-y:8px;            /* CardPadX / CardPadY */
+    --gap-card:8px;  --gap-block:12px;    /* CardGap / BlockGap */
+    /* ── 字号档：LAND-007 映射 ─────────────────────────────────────────── */
+    --f-tiny:12px; --f-small:14px; --f-medium:18px;
+    /* ── 行高基准（落地须走 Measure.RowHeight；此处为档案基准值）──────── */
+    --h-tiny:18px; --h-small:22px; --h-medium:30px;
+    /* ── 几何（1080×760 窗口；内容宽公式见 §3 基准表）───────────────────── */
+    --win-w:1080px; --win-h:760px; --win-pad:14px;
+    --ctl-h:30px;                         /* ControlHeight(Small) = RowHeight(Small)+8 */
+    --row-card-min:46px; --row-gap:6px;   /* 数据行卡最小高 / 卡间隙（Dialog_PawnEconomy.cs:34,249-251） */
+    --ctl-min-w:96px;                     /* RowButtonWidth 下限 = SpaceLg×4 */
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#0a0c10;color:var(--rc-text);
+       font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;
+       padding:28px 20px 80px;line-height:1.4;}
+  .page{max-width:1180px;margin:0 auto;}
+  h1{font-size:20px;font-weight:600;margin-bottom:6px;}
+  h2{font-size:15px;font-weight:600;margin:34px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--rc-border-hair);}
+  h3{font-size:13px;font-weight:600;color:var(--rc-muted);margin:18px 0 8px;}
+  p.note{font-size:12px;color:var(--rc-muted);margin-bottom:6px;}
+  code{font-family:Consolas,monospace;font-size:12px;color:var(--rc-info);}
+  a{color:var(--rc-accent);text-decoration:none;}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:12px;color:var(--rc-muted);}
+  .legend span b{color:var(--rc-text);font-weight:600;}
+
+  /* ══ 窗口外壳：直角 + 1px 发丝描边（RimWorld Window = 纯矩形）════════════ */
+  .win{width:var(--win-w);height:var(--win-h);background:var(--rc-window);
+       border:1px solid var(--rc-border-hair);position:relative;margin-top:16px;}
+  .win-cap{position:absolute;top:6px;right:8px;font-size:12px;color:var(--rc-muted);
+           width:18px;height:18px;text-align:center;line-height:18px;} /* doCloseX 占位（游戏内为原版贴图） */
+  .win-body{padding:var(--win-pad);height:100%;display:flex;flex-direction:column;}
+
+  /* ── U1 头部（高 56 = Tokens.HeaderHeight；底 Panel + 下描边 形成工具栏层）── */
+  .u1{height:56px;min-height:56px;display:flex;align-items:center;gap:var(--sp-sm);
+      background:var(--rc-panel);border:1px solid var(--rc-border-hair);
+      padding:0 var(--pad-x);}
+  .u1 .icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+            background:var(--rc-panel-raised);border:1px solid var(--rc-border-soft);}
+  .u1 .icon img{max-width:38px;max-height:38px;display:block;}
+  .u1 .icon .ph{font-size:10px;color:var(--rc-dim);}      /* 贴图缺失占位（绝不隐藏断图） */
+  .u1 .txt{flex:1;min-width:0;}
+  .u1 .title{font-size:var(--f-medium);line-height:var(--h-medium);color:var(--rc-text);
+             white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .u1 .sub{display:flex;align-items:center;gap:var(--sp-xs);font-size:var(--f-tiny);
+           line-height:var(--h-tiny);color:var(--rc-muted);}
+  .u1 .spacer{flex:1;}
+
+  /* ── 状态芯片：14% 底 + 50% 描边（EconomyUiKit.StatusChip）────────────── */
+  .chip{display:inline-block;height:18px;line-height:16px;padding:0 6px;font-size:var(--f-tiny);
+        border:1px solid;white-space:nowrap;}
+  .chip.alive{color:var(--rc-alive);background:rgba(88,179,104,.14);border-color:rgba(88,179,104,.5);}
+  .chip.warn {color:var(--rc-warn); background:rgba(224,160,60,.14);border-color:rgba(224,160,60,.5);}
+  .chip.dead {color:var(--rc-dead); background:rgba(217,83,79,.14); border-color:rgba(217,83,79,.5);}
+  .chip.info {color:var(--rc-info); background:rgba(122,184,232,.14);border-color:rgba(122,184,232,.5);}
+  .chip.dim  {color:var(--rc-dim);  background:rgba(110,118,130,.14);border-color:rgba(110,118,130,.5);}
+  .chip.muted{color:var(--rc-muted);background:rgba(143,150,160,.14);border-color:rgba(143,150,160,.5);}
+
+  /* ── 按钮：ButtonFmt.Channels 四态（ButtonAtoms.cs:135-154）──────────── */
+  .btn{display:inline-flex;align-items:center;justify-content:center;height:var(--ctl-h);
+       min-width:var(--ctl-min-w);padding:0 var(--sp-md);font-size:var(--f-small);
+       background:var(--rc-panel-raised);border:1px solid var(--rc-border-soft);
+       color:var(--rc-text);cursor:pointer;white-space:nowrap;}
+  .btn:hover{background:var(--rc-card-hover);border-color:var(--rc-accent);}
+  .btn:active{background:rgba(78,154,240,.16);border-color:var(--rc-accent);color:var(--rc-accent);}
+  .btn.danger:hover{border-color:var(--rc-dead);}
+  .btn.danger:active{background:rgba(217,83,79,.16);border-color:var(--rc-dead);color:var(--rc-dead);}
+  .btn.disabled{background:var(--rc-panel);border-color:var(--rc-border-soft);color:var(--rc-dim);cursor:not-allowed;}
+  .btn.disabled:hover{background:var(--rc-panel);border-color:var(--rc-border-soft);}
+  .btn.ghost{min-width:0;padding:0 var(--sp-sm);}
+
+  /* ── U2 KPI 卡（卡高 52 = LAND §5 宽档；单卡宽 ≥160 见 §3）───────────── */
+  .u2{display:flex;gap:var(--gap-card);margin-top:var(--gap-block);}
+  /* KPI 卡：LAND-006 宽档横向布局 [数值 Medium][标签 Tiny]，卡高 52（内容 30 居中 + padding 11×2） */
+  .kpi{flex:1;min-width:0;height:52px;background:var(--rc-card);border:1px solid var(--rc-border-soft);
+       padding:0 var(--pad-x);display:flex;align-items:center;gap:var(--sp-xs);
+       border-left:3px solid transparent;}
+  .kpi.accent{border-left-color:var(--rc-accent);}
+  .kpi.alive{border-left-color:var(--rc-alive);}
+  .kpi.warn{border-left-color:var(--rc-warn);}
+  .kpi.dim{border-left-color:var(--rc-dim);}
+  .kpi .v{font-size:var(--f-medium);line-height:var(--h-medium);color:var(--rc-text);white-space:nowrap;}
+  .kpi .v .unit{font-size:var(--f-tiny);color:var(--rc-dim);margin-left:4px;}
+  .kpi .l{flex:1;min-width:0;font-size:var(--f-tiny);line-height:var(--h-tiny);color:var(--rc-muted);
+          white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  /* ── U3 行动区 ─────────────────────────────────────────────────────── */
+  .u3{display:flex;align-items:center;gap:var(--sp-xs);margin-top:var(--gap-block);
+      min-height:var(--ctl-h);}
+  .u3 .label{font-size:var(--f-tiny);color:var(--rc-dim);margin-right:2px;}
+  .u3 .empty{font-size:var(--f-small);color:var(--rc-dim);}
+
+  /* ── U4 明细区（行卡几何 = Dialog_PawnEconomy.DrawRows/MeasureRows）─── */
+  /* U4 = 明细面板（Window → Panel → Card 三层：面板底 + 发丝描边，内部才放行卡） */
+  .u4{margin-top:var(--gap-block);flex:1;min-height:0;display:flex;flex-direction:column;
+      gap:var(--row-gap);overflow:hidden;background:var(--rc-panel);
+      border:1px solid var(--rc-border-hair);padding:var(--pad-y) var(--pad-x);}
+  .u4-cap{font-size:var(--f-tiny);color:var(--rc-dim);height:var(--h-tiny);display:flex;
+          align-items:center;justify-content:space-between;}
+  .srcmark{border:1px solid var(--rc-border-soft);color:var(--rc-dim);font-size:10px;padding:0 5px;}
+  .srcmark.ok{color:var(--rc-dim);}
+  .srcmark.need{color:var(--rc-warn);border-color:rgba(224,160,60,.45);}
+  .row{min-height:var(--row-card-min);background:var(--rc-card);border:1px solid var(--rc-border-soft);
+       padding:var(--pad-y) var(--pad-x);display:flex;align-items:center;gap:var(--sp-xs);
+       position:relative;}
+  .row.bar-alive{border-left:3px solid var(--rc-alive);}
+  .row.bar-warn{border-left:3px solid var(--rc-warn);}
+  .row.bar-dim{border-left:3px solid var(--rc-dim);}
+  .row.bar-dead{border-left:3px solid var(--rc-dead);}
+  .row.hover{background:var(--rc-card-hover);border-color:var(--rc-border);}
+  .row .rt{flex:1;min-width:0;font-size:var(--f-small);color:var(--rc-text);
+           white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .row .rt .sub{color:var(--rc-muted);}
+  .row .rt .sep{color:var(--rc-dim);margin:0 6px;}
+  .hint{font-size:var(--f-small);line-height:1.5;color:var(--rc-muted);padding:2px 0;
+        min-height:40px;display:flex;align-items:center;}
+
+  /* ── 空态（FeedbackAtoms.EmptyState 几何）──────────────────────────── */
+  .empty{display:flex;flex-direction:column;align-items:center;
+         justify-content:flex-start;padding-top:26px;}
+  .empty .rule{width:28px;height:3px;background:var(--rc-accent);}
+  .empty .t{margin-top:6px;height:18px;font-size:var(--f-small);color:var(--rc-text);}
+  .empty .s{height:14px;font-size:var(--f-tiny);color:var(--rc-dim);}
+
+  /* ── 令牌面板 / 表格 ───────────────────────────────────────────────── */
+  table{border-collapse:collapse;width:100%;font-size:12px;margin-top:8px;}
+  th,td{border:1px solid var(--rc-border-hair);padding:5px 8px;text-align:left;vertical-align:top;}
+  th{background:var(--rc-panel);color:var(--rc-muted);font-weight:600;}
+  td code{font-size:11px;}
+  .sw{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:6px;
+      border:1px solid var(--rc-border-soft);}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .win-tag{font-size:12px;color:var(--rc-muted);margin-top:18px;}
+  .win-tag b{color:var(--rc-text);}
+  .narrow-note{font-size:12px;color:var(--rc-dim);margin-top:6px;}
+  details.appendix{margin-top:18px;border:1px solid var(--rc-border-hair);background:var(--rc-panel);padding:8px 12px;}
+  details.appendix summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--rc-muted);}
+  details.appendix[open] summary{margin-bottom:8px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>经济机构工作台预览 · 5 柜台独立界面</h1>
+  <p class="note">落地蓝本（非效果图）：色值 / 间距 / 字号 / 几何逐项同源取证，来源见表与文件头；引擎不支持的浏览器能力（圆角 / 阴影 / 渐变 / 动画）本预览一律不画。</p>
+  <div class="legend">
+    <span><b>窗口</b> 1080×760 上限（屏夹取）</span>
+    <span><b>内容宽</b> W_g = 1080 − 2×14 − 18 = <b>1034</b></span>
+    <span><b>KPI 卡</b> 4 卡 / 单卡 (1034−3×8)/4 = <b>252.5</b> ≥ 160 宽档</span>
+    <span><b>行卡</b> 高 ≥ 46 / 间隙 6 / 按钮 高 30 宽 ≥ 96</span>
+    <span><b>字号</b> Tiny 12 / Small 14 / Medium 18</span>
+  </div>
+
+  <details class="appendix">
+  <summary>§0 令牌同源表（同源取证：色 / 间距 / 字号 / 几何 · 点开查看）</summary>
+  <div class="cols">
+    <div>
+      <h3>颜色（11\RUIF\Source\Core\Tokens.cs:72-102）</h3>
+      <table>
+        <tr><th>令牌</th><th>值</th><th>用途</th></tr>
+        <tr><td><span class="sw" style="background:var(--rc-window)"></span>Window</td><td><code>22,24,29</code></td><td>窗口底</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-panel)"></span>Panel</td><td><code>29,32,38</code></td><td>一级容器 / 禁用钮底</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-panel-raised)"></span>PanelRaised</td><td><code>36,40,48</code></td><td>凸起容器 / 按钮默认底</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-card)"></span>Card</td><td><code>34,38,46</code></td><td>卡片 / KPI 卡底</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-card-hover)"></span>CardHover</td><td><code>44,49,59</code></td><td>悬停底</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-border)"></span>Border</td><td><code>69,75,86</code></td><td>强调描边</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-border-soft)"></span>BorderSoft</td><td><code>49,54,63</code></td><td>常规描边</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-border-hair)"></span>BorderHair</td><td><code>42,46,54</code></td><td>发丝描边</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-text)"></span>Text</td><td><code>217,221,227</code></td><td>正文</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-muted)"></span>Muted</td><td><code>143,150,160</code></td><td>次要</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-dim)"></span>Dim</td><td><code>110,118,130</code></td><td>占位 / 禁用</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-accent)"></span>Accent</td><td><code>78,154,240</code></td><td>主操作</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-info)"></span>Info</td><td><code>122,184,232</code></td><td>退出中</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-alive)"></span>Alive</td><td><code>88,179,104</code></td><td>可用 / 运行中</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-warn)"></span>Warn</td><td><code>224,160,60</code></td><td>非营业 / 准备中 / 制度未开放</td></tr>
+        <tr><td><span class="sw" style="background:var(--rc-dead)"></span>Dead</td><td><code>217,83,79</code></td><td>停业 / 故障 / 危险动词</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>间距与几何（Tokens.cs:16-58 / EconomyUiKit.cs:20-30 / Dialog_PawnEconomy.cs:24-34）</h3>
+      <table>
+        <tr><th>项</th><th>值</th><th>来源</th></tr>
+        <tr><td>SpaceXxs / Xs / Sm / Md / Lg</td><td><code>4 / 8 / 12 / 16 / 24</code></td><td>Tokens:16-24</td></tr>
+        <tr><td>CardPadX / CardPadY</td><td><code>12 / 8</code></td><td>Tokens:50-52</td></tr>
+        <tr><td>CardGap / BlockGap</td><td><code>8 / 12</code></td><td>Tokens:42,56</td></tr>
+        <tr><td>HeaderHeight</td><td><code>56</code></td><td>Tokens:34</td></tr>
+        <tr><td>SectionTitleHeight</td><td><code>30</code></td><td>Tokens:44</td></tr>
+        <tr><td>ScrollbarThickness</td><td><code>18</code></td><td>Tokens:48</td></tr>
+        <tr><td>卡片左语义色条</td><td><code>3</code></td><td>EconomyUiKit:20</td></tr>
+        <tr><td>行卡左右外缩进 CardSideInset</td><td><code>6</code></td><td>Dialog_PawnEconomy:32</td></tr>
+        <tr><td>行卡间隙 CardStackGap</td><td><code>6</code></td><td>Dialog_PawnEconomy:34</td></tr>
+        <tr><td>行卡最小高</td><td><code>46</code> = ControlHeight(Small)30 + CardPadY×2 16</td><td>Dialog_PawnEconomy:249-251</td></tr>
+        <tr><td>按钮宽</td><td><code>max(文本宽+32, 96)</code></td><td>Dialog_PawnEconomy:258-259</td></tr>
+        <tr><td>按钮高 / KPI 卡高 / 空态块高</td><td><code>30 / 52 / ≥160</code></td><td>Measure:58 / LAND §5 / Dialog_PawnEconomy:28</td></tr>
+        <tr><td>单页行数上限</td><td><code>100</code></td><td>Dialog_PawnEconomy:24</td></tr>
+      </table>
+      <p class="note" style="margin-top:8px">窗口：<code>InitialSize</code> 仅声明上限 1080×760 + 屏夹取（LAND-003）；无写死常数。</p>
+    </div>
+  </div>
+  </details>
+
+  <h2>§1 五个柜台窗口（1:1 · 1080×760）</h2>
+  <p class="note">统一骨架：<b>U1 头部</b>（图标 + 名称 + 类型/阶段/营业芯片 + 政策按钮）→ <b>U2 KPI 四卡</b> → <b>U3 行动区</b>（仅本柜台真实可用的动词；无为空态）→ <b>U4 明细</b>（行卡 + 空态）。</p>
+
+  <!-- ══════════════════ 1. 劳务站 ══════════════════ -->
+  <div class="win-tag">1 / 5 · <b>劳务站</b>（<code>PC_PEA_LaborOffice</code> · LaborOffice）</div>
+  <div class="win" id="win1">
+    <div class="win-cap">✕</div>
+    <div class="win-body">
+      <div class="u1">
+        <div class="icon"><img src="../../../Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'贴图'}))"></div>
+        <div class="txt">
+          <div class="title">劳务站</div>
+          <div class="sub"><span class="chip alive">运行中</span><span class="chip alive">营业</span><span>劳务站</span><span>·</span><span>06:00–18:00</span></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="btn">机构政策</div>
+      </div>
+
+      <div class="u2">
+        <div class="kpi accent"><div class="v">12</div><div class="l">砍伐</div></div>
+        <div class="kpi accent"><div class="v">7</div><div class="l">采矿</div></div>
+        <div class="kpi alive"><div class="v">2</div><div class="l">承接人</div></div>
+        <div class="kpi warn"><div class="v">24.00<span class="unit">银</span></div><div class="l">未付工资</div></div>
+      </div>
+
+      <div class="u3">
+        <span class="label">主操作</span>
+        <span class="empty">本柜台无独立主操作 —— 岗位动词在行内（撤下并解约 / 解约）</span>
+      </div>
+
+      <div class="u4">
+      <div class="u4-cap"><span>本图待办（玩家已下达的工作动作）</span><span class="srcmark ok">现有读模型</span></div>
+      <div class="row bar-alive">
+        <div class="rt">砍伐<span class="sep">·</span><span class="sub">待办 12 · 工资 12.00</span></div>
+      </div>
+      <div class="row bar-alive">
+        <div class="rt">采矿<span class="sep">·</span><span class="sub">待办 7 · 工资 12.00</span></div>
+      </div>
+      <div class="u4-cap" style="margin-top:4px"><span>承接中的工作合同</span><span class="srcmark ok">现有读模型</span></div>
+      <div class="row">
+        <div class="rt">阿兰<span class="sep">·</span><span class="sub">砍伐 · 3/12 · 工资 12.00</span></div>
+      </div>
+      <div class="row">
+        <div class="rt">小满<span class="sep">·</span><span class="sub">采矿 · 1/7 · 工资 12.00</span></div>
+      </div>
+      <div class="hint">劳务站识别玩家下达的工作动作（砍伐 / 采矿，由地图指定推导），并作为可承接的**工作合同**：求职中的殖民者自动签约，每完成一件由国库计件付酬。旧动词的写入路径已关闭，明细为只读事实。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 2. 工坊管理处 ══════════════════ -->
+  <div class="win-tag">2 / 5 · <b>工坊管理处</b>（<code>PC_PEA_WorkshopOffice</code> · WorkshopOffice）</div>
+  <div class="win">
+    <div class="win-cap">✕</div>
+    <div class="win-body">
+      <div class="u1">
+        <div class="icon"><img src="../../../Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'贴图'}))"></div>
+        <div class="txt">
+          <div class="title">工坊管理处</div>
+          <div class="sub"><span class="chip alive">运行中</span><span class="chip warn">非营业时段</span><span>车间管理所</span><span>·</span><span>08:00–20:00</span></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="btn">机构政策</div>
+      </div>
+
+      <div class="u2">
+        <div class="kpi accent"><div class="v">2</div><div class="l">绑定车间区</div></div>
+        <div class="kpi accent"><div class="v">3</div><div class="l">已发布岗位</div></div>
+        <div class="kpi warn"><div class="v">1</div><div class="l">缺员</div></div>
+        <div class="kpi dim"><div class="v">12.00<span class="unit">银/件</span></div><div class="l">区工资报价</div></div>
+      </div>
+
+      <div class="u3">
+        <span class="label">主操作</span>
+        <div class="btn">机构政策</div>
+        <span class="empty">（发布岗位 / 生产授权 / 撤销授权 都在政策页内）</span>
+      </div>
+
+      <div class="u4">
+        <div class="u4-cap"><span>岗位与生产授权</span><span class="srcmark ok">现有读模型</span></div>
+        <div class="row bar-alive">
+          <div class="rt">裁缝区<span class="sep">·</span><span class="sub">工资 12.00 · 08:00–20:00 · 2/3 · 需体检</span></div>
+          <div class="btn">管理</div>
+        </div>
+        <div class="row bar-warn">
+          <div class="rt">厨务区<span class="sep">·</span><span class="sub">工资 10.00 · 08:00–20:00 · 1/2 · 缺员 1</span></div>
+          <div class="btn">管理</div>
+        </div>
+        <div class="row">
+          <div class="rt">衣物<span class="sep">·</span><span class="sub">已授权 · 已交付 4/10 · 未开工 1</span></div>
+          <div class="btn">撤销授权</div>
+        </div>
+        <div class="row">
+          <div class="rt">食物<span class="sep">·</span><span class="sub">已授权 · 已交付 12/20</span></div>
+          <div class="btn">撤销授权</div>
+        </div>
+        <div class="hint">未绑定车间区的机构不发布任何岗位；授权只在真实交付时核销，不按预估完工。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 3. 工资结算处 ══════════════════ -->
+  <div class="win-tag">3 / 5 · <b>工资结算处</b>（<code>PC_PEA_SettlementOffice</code> · SettlementOffice）</div>
+  <div class="win">
+    <div class="win-cap">✕</div>
+    <div class="win-body">
+      <div class="u1">
+        <div class="icon"><img src="../../../Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'贴图'}))"></div>
+        <div class="txt">
+          <div class="title">工资结算处</div>
+          <div class="sub"><span class="chip alive">运行中</span><span class="chip alive">营业</span><span>结算处</span><span>·</span><span>06:00–18:00</span></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="btn">机构政策</div>
+      </div>
+
+      <div class="u2">
+        <div class="kpi dim"><div class="v">1,000.00<span class="unit">银</span></div><div class="l">公共资金</div></div>
+        <div class="kpi warn"><div class="v">24.00<span class="unit">银</span></div><div class="l">未付工资</div></div>
+        <div class="kpi accent"><div class="v">2</div><div class="l">待补发凭证</div></div>
+        <div class="kpi accent"><div class="v">1,000.00<span class="unit">银</span></div><div class="l">国库可用</div></div>
+      </div>
+
+      <div class="u3">
+        <span class="label">主操作</span>
+        <div class="btn">机构政策</div>
+        <div class="btn">账户/需求</div>
+        <span class="empty">（缴存 / 提取 / 补发欠薪在账户页内，参数由该页构造）</span>
+      </div>
+
+      <div class="u4">
+        <div class="u4-cap"><span>待补发与近期凭证</span><span class="srcmark need">需按机构过滤</span></div>
+        <div class="row bar-warn">
+          <div class="rt">#128<span class="sep">·</span><span class="sub">计件工资 · 阿兰 · 12.00 · 待补发</span></div>
+        </div>
+        <div class="row bar-warn">
+          <div class="rt">#129<span class="sep">·</span><span class="sub">计件工资 · 小满 · 12.00 · 待补发</span></div>
+        </div>
+        <div class="row">
+          <div class="rt">#127<span class="sep">·</span><span class="sub">体检劳务报酬 · 陈医师 · 6.00 · 已支付</span></div>
+        </div>
+        <div class="row">
+          <div class="rt">#126<span class="sep">·</span><span class="sub">启动拨款 · 1,000.00 · 已支付</span></div>
+        </div>
+        <div class="hint">公共余额不足时暂停招聘与合同；补发只针对已产生的真实欠款，不预支未来工资。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 4. 生活用品商店 ══════════════════ -->
+  <div class="win-tag">4 / 5 · <b>生活用品商店</b>（<code>PC_PEA_Shop</code> · Shop）</div>
+  <div class="win">
+    <div class="win-cap">✕</div>
+    <div class="win-body">
+      <div class="u1">
+        <div class="icon"><img src="../../../Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'贴图'}))"></div>
+        <div class="txt">
+          <div class="title">生活用品商店</div>
+          <div class="sub"><span class="chip alive">运行中</span><span class="chip alive">营业</span><span>商店</span><span>·</span><span>08:00–20:00</span></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="btn">机构政策</div>
+      </div>
+
+      <div class="u2">
+        <div class="kpi accent"><div class="v">12<span class="unit">/64</span></div><div class="l">在售件数</div></div>
+        <div class="kpi dim"><div class="v">60.00<span class="unit">银/件</span></div><div class="l">衣物价</div></div>
+        <div class="kpi accent"><div class="v">1</div><div class="l">本店购买订单</div></div>
+        <div class="kpi dim"><div class="v">8</div><div class="l">可上架候选</div></div>
+      </div>
+
+      <div class="u3">
+        <span class="label">主操作</span>
+        <div class="btn">机构政策</div>
+        <span class="empty">（衣物价 / 库存目标在政策页内；入库动词写路径已关闭）</span>
+      </div>
+
+      <div class="u4">
+        <div class="u4-cap"><span>本柜台库存</span><span class="srcmark ok">现有读模型</span></div>
+        <div class="row">
+          <div class="rt">布制衬衣<span class="sep">·</span><span class="sub">普通 · 60.00</span></div>
+        </div>
+        <div class="row">
+          <div class="rt">布制长裤<span class="sep">·</span><span class="sub">良好 · 60.00</span></div>
+        </div>
+        <div class="row hover">
+          <div class="rt">风雪大衣<span class="sep">·</span><span class="sub">良好 · 阿兰名下（hover 态演示；只读事实行，无按钮）</span></div>
+        </div>
+        <div class="row">
+          <div class="rt">牛仔帽<span class="sep">·</span><span class="sub">普通 · 无主</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="narrow-note">↑ 第 4 窗第 4 行演示 <b>hover 六态中的悬停态</b>（底 CardHover + 描边 Border）。</p>
+
+  <!-- ══════════════════ 5. 体检中心 ══════════════════ -->
+  <div class="win-tag">5 / 5 · <b>体检中心</b>（<code>PC_PEA_ExamCenter</code> · ExamCenter）</div>
+  <div class="win">
+    <div class="win-cap">✕</div>
+    <div class="win-body">
+      <div class="u1">
+        <div class="icon"><img src="../../../Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_north.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'贴图'}))"></div>
+        <div class="txt">
+          <div class="title">体检中心</div>
+          <div class="sub"><span class="chip alive">运行中</span><span class="chip alive">营业</span><span>体检中心</span><span>·</span><span>06:00–18:00</span></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="btn">机构政策</div>
+      </div>
+
+      <div class="u2">
+        <div class="kpi alive"><div class="v">陈医师</div><div class="l">体检医生</div></div>
+        <div class="kpi dim"><div class="v">60.00<span class="unit">银/次</span></div><div class="l">服务价</div></div>
+        <div class="kpi accent"><div class="v">120.00<span class="unit">银</span></div><div class="l">本机构账户</div></div>
+        <div class="kpi accent"><div class="v">4</div><div class="l">有效报告</div></div>
+      </div>
+
+      <div class="u3">
+        <span class="label">主操作</span>
+        <div class="btn">机构政策</div>
+        <span class="empty">（服务价在政策页内；指派医生 / 预约体检 的写路径已关闭）</span>
+      </div>
+
+      <div class="u4">
+        <div class="u4-cap"><span>体检报告（本机构）</span><span class="srcmark need">需按机构过滤</span></div>
+        <div class="row bar-alive">
+          <div class="rt">阿兰<span class="sep">·</span><span class="sub">移动 100% · 操作 98% · 意识 100%</span></div>
+          <div class="btn ghost">有效</div>
+        </div>
+        <div class="row bar-alive">
+          <div class="rt">小满<span class="sep">·</span><span class="sub">移动 92% · 操作 100% · 意识 100%</span></div>
+          <div class="btn ghost">有效</div>
+        </div>
+        <div class="row bar-dim">
+          <div class="rt">老王<span class="sep">·</span><span class="sub">移动 71% · 操作 88% · 意识 100%</span></div>
+          <div class="btn ghost disabled">已过期</div>
+        </div>
+        <div class="hint">体检只记录检查时的真实能力与可见健康状态，不治疗、不揭示隐藏疾病；有效期 1 天。</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>§2 状态与降级样例</h2>
+  <div class="cols">
+    <div>
+      <h3>能力门芯片（五档语义色 · EconomyUiKit.CapabilityColor）</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+        <span class="chip alive">可用</span>
+        <span class="chip warn">非营业时段</span>
+        <span class="chip warn">制度未开放</span>
+        <span class="chip dim">未挂牌</span>
+        <span class="chip dim">未配置</span>
+        <span class="chip dead">机构停业</span>
+      </div>
+      <p class="note">「制度未开放」用 Warn 而非 Muted：暗底上 Muted 与 Dim 不可分辨（EconomyUiKit.cs:58-61 实机截图结论）。</p>
+
+      <h3>制度阶段芯片（InstitutionPhase · PhaseColor）</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+        <span class="chip alive">运行中</span>
+        <span class="chip warn">准备中</span>
+        <span class="chip dead">故障</span>
+        <span class="chip info">退出中</span>
+        <span class="chip muted">未开启</span>
+      </div>
+    </div>
+    <div>
+      <h3>按钮四态（ButtonAtoms.cs:135-154）</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+        <div class="btn">默认</div>
+        <div class="btn" style="background:var(--rc-card-hover);border-color:var(--rc-accent)">悬停</div>
+        <div class="btn" style="background:rgba(78,154,240,.16);border-color:var(--rc-accent);color:var(--rc-accent)">按下</div>
+        <div class="btn disabled">禁用</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+        <div class="btn danger">危险·默认</div>
+        <div class="btn danger" style="background:var(--rc-card-hover);border-color:var(--rc-dead)">危险·悬停</div>
+        <div class="btn danger" style="background:rgba(217,83,79,.16);border-color:var(--rc-dead);color:var(--rc-dead)">危险·按下</div>
+        <div class="btn danger disabled">危险·禁用（剥红）</div>
+      </div>
+      <p class="note">危险色调只改<b>描边与文字</b>，不改填充（ButtonAtoms.cs:131-133）；禁用态剥除色调。</p>
+
+      <h3>空态（FeedbackAtoms.EmptyState）</h3>
+      <div class="empty" style="height:160px;border:1px solid var(--rc-border-hair)">
+        <div class="rule"></div>
+        <div class="t">暂无数据</div>
+        <div class="s">当前没有可显示的内容；完成对应操作后会自动出现在这里。</div>
+      </div>
+      <p class="note">空态块按视口高度铺开（<code>max(160, body.height−SpaceLg)</code>，Dialog_PawnEconomy.cs:106）。</p>
+    </div>
+  </div>
+
+  <h3>窄窗降级（Tier-S：880×620 · 屏夹取后的低 UI 缩放档）</h3>
+  <p class="note">降级阶梯（组件绘制规范 D0–D6，顺序固定）：文本省略 → 减少条目 → 收窄内边距 → 换档 → 裁剪 → 省略该件。以下为「劳务站」在 880 宽下的同一骨架：KPI 4 卡降为 2×2（单卡 ≥160 仍成立），行卡文本走省略号 + tooltip。</p>
+  <div class="win" style="width:880px;height:620px">
+    <div class="win-cap">✕</div>
+    <div class="win-body">
+      <div class="u1">
+        <div class="icon"><img src="../../../Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'贴图'}))"></div>
+        <div class="txt">
+          <div class="title">劳务站</div>
+          <div class="sub"><span class="chip alive">运行中</span><span class="chip alive">营业</span></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="btn">政策</div>
+      </div>
+      <div class="u2" style="flex-wrap:wrap">
+        <div class="kpi accent" style="flex:1 1 calc(50% - 4px)"><div class="v">3</div><div class="l">在招岗位</div></div>
+        <div class="kpi accent" style="flex:1 1 calc(50% - 4px)"><div class="v">5</div><div class="l">在签合同</div></div>
+        <div class="kpi warn" style="flex:1 1 calc(50% - 4px)"><div class="v">24.00<span class="unit">银</span></div><div class="l">未付工资</div></div>
+        <div class="kpi dim" style="flex:1 1 calc(50% - 4px)"><div class="v">1,000.00<span class="unit">银</span></div><div class="l">公共资金</div></div>
+      </div>
+      <div class="u3"><span class="label">主操作</span><span class="empty">本柜台无独立主操作</span></div>
+      <div class="u4">
+        <div class="u4-cap"><span>岗位与合同</span><span class="srcmark need">需 scoped 查询</span></div>
+        <div class="row bar-alive">
+          <div class="rt">锻造车间<span class="sep">·</span><span class="sub">12.00 · 2/3…</span></div>
+          <div class="btn danger">撤下并解约</div>
+        </div>
+        <div class="row bar-alive">
+          <div class="rt">缝纫区<span class="sep">·</span><span class="sub">10.00 · 3/3…</span></div>
+          <div class="btn danger">撤下并解约</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>§3 落地基准表（LAND-001/002）与缺口登记（LAND-009）</h2>
+  <table>
+    <tr><th>项</th><th>预览值（同源）</th><th>落地映射</th><th>依据</th></tr>
+    <tr><td>窗口上限</td><td><code>1080×760</code></td><td>只声明上限 + <code>Mathf.Clamp(UI.screenWidth−80, …)</code> 屏夹取；<code>resizeable=false</code></td><td>Dialog_WorkshopManage.cs:26-31,58-59 / LAND-003</td></tr>
+    <tr><td>内容宽 W_g</td><td><code>1080 − 2×14 − 18 = 1034</code></td><td>行区内容宽；卡片宽 = 1034 − CardSideInset×2</td><td>LAND-004 / Dialog_PawnEconomy.cs:215-217</td></tr>
+    <tr><td>KPI 卡</td><td>4 卡 · 单卡 <code>252.5</code> · 卡高 <code>52</code></td><td>宽档卡型（≥160）；窄窗降 2×2 仍为宽档</td><td>LAND-006 / §5 常量表</td></tr>
+    <tr><td>行卡</td><td>高 <code>≥46</code> · 间隙 <code>6</code> · 按钮 <code>30×≥96</code></td><td>沿用 DrawRows/MeasureRows 既有公式</td><td>Dialog_PawnEconomy.cs:249-259</td></tr>
+    <tr><td>字号</td><td><code>12 / 14 / 18 px</code></td><td>Tiny / Small / Medium（LAND-007 固定映射）</td><td>LAND-007</td></tr>
+    <tr><td>行长文本</td><td>折行 + 悬停全文</td><td>折行高由 <code>Text.CalcHeight</code> 测量期缓存；tooltip 构建期拼好</td><td>LAND-008 / Dialog_PawnEconomy.cs:238,176</td></tr>
+    <tr><td>行数上限</td><td>1 页 = 100 行</td><td>沿用 <code>RowsPageSize=100</code>；>100 出现分页栏</td><td>Dialog_PawnEconomy.cs:24,186-203</td></tr>
+  </table>
+
+  <h3>缺口与必需的最小改动（登记，不得静默补齐）</h3>
+  <table>
+    <tr><th>#</th><th>缺口</th><th>处置</th></tr>
+    <tr><td>1</td><td>岗位 / 凭证 / 报告**未按机构过滤**（<code>BuildJobs/BuildLedger/BuildReports</code> 返回全量）</td><td><b>实装结论</b>：岗位改按**政策绑定的车间区**（<code>InstitutionPolicy.ZoneId</code> ↔ <code>EconomyPosition.ZoneId</code>）归属 —— 这是新体系唯一的机构↔岗位关联（旧 <code>InstitutionId</code> 指向已停用的旧模型）；凭证与报告**没有机构字段**，如实标注为全殖民口径（<code>PC_PEA.Workspace.NoInstitutionField</code>），不伪归属</td></tr>
+    <tr><td>2</td><td>行高真值依赖引擎（<code>Text.LineHeightOf</code>；Tiny 在「禁用小字体」时静默降级为 Small）</td><td>落地一律调 <code>Measure.RowHeight()</code>，**不得写死 18/22/30**（Measure.cs:14-18,42-43）</td></tr>
+    <tr><td>3</td><td>凭证（<code>EconomyReceipt</code>）**无机构字段**</td><td>工资结算处窗口的「凭证」只能按「与结算相关」语义取，无法真正按机构归属（EconomyModel.cs:74-81）——如实标注，不伪造成机构流水</td></tr>
+    <tr><td>4</td><td>术语双源：Def label（劳务站/工坊管理处/工资结算处）vs <code>Policy.Kind.*</code>（劳务所/车间管理所/结算处）</td><td>按已批准决策统一为 Def label；改 10 条键值（「劳务所/车间管理所/结算处/商店」→ 与 Def 同词），zh/en 同批</td></tr>
+    <tr><td>5</td><td>字体与贴图</td><td>网页用系统字体近似（B 类降级）；图标用 Def 既有 <code>uiIconPath</code>（<code>PC_PEA_*_north.png</code> 已存在），缺图显示占位而非隐藏</td></tr>
+  </table>
+
+  <h3>未做项（实装后如实登记）</h3>
+  <p class="note">① 聚合窗口**保留**（Needs / Care / Overview / 账户 / 账本 / 报告页仍在其内，柜台窗口以深链进入对应页）；② 深链已实现（政策页会定位到该柜台的卡片）；③ **Tier-S（窄窗 KPI 降 2×2）未实现**：窗口下限 760 ⇒ 单卡 (760−28−24)/4 ≈ 177 ≥ LAND-006 阈值 160，4×1 在全部可达尺寸内恒为宽档，因此无档位分支（此偏差已登记，非遗漏）；④ 多语言最长标签的实机校验仍待执行。</p>
+
+</div>
+<script>
+  /* 仅供自动化视觉自检：URL 带 #win1 时把该窗口滚到视口顶部（正常浏览无影响） */
+  (function () { var h = location.hash; if (!h) return; var el = document.querySelector(h); if (el) el.scrollIntoView({ block: 'start' }); })();
+</script>
+</body>
+</html>

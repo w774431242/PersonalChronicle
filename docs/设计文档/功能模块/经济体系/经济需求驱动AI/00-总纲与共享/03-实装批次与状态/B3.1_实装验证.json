@@ -1,0 +1,127 @@
+{
+  "changeId": "CHG-20261008-ECON-B3-SHADOW",
+  "batch": "B3.1",
+  "verifiedUtc": "2026-10-08T12:25:02.1042780Z",
+  "buildObserved": "Release command completed with 0 warnings and 0 errors",
+  "buildStamp": "namespace PersonalChronicle\r\n{\r\n    internal static class BuildInfo\r\n    {\r\n        internal const string BuildTimeUtc = \"2026-10-08 12:24\";\r\n    }\r\n}",
+  "modSha256": "F33335D5C7542E16B87896A18FD9E01C68FC35AD8E9E7D2E58FD2DD0BEABDA08",
+  "gameSha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+  "tests": {
+    "path": "Tests/TestResults/EconomyLanding-B3-Full.trx",
+    "sha256": "3DA4D7496CEC0371F559810E6406BFC305DCBE2210F7CD80CE5B2D0CEAC585CD",
+    "passed": 962,
+    "failed": 0,
+    "skippedResults": 1,
+    "newPlanningTests": 54,
+    "binding": "_verify_tmp/Economy-B3-tested-build.json",
+    "bindingSha256": "AFD4588660818858291AAC79AB1801AC789F2339031DAE173A65AA21C6ABD26D"
+  },
+  "domainDependenciesVerified": true,
+  "translationsVerified": true,
+  "translationKeys": 142,
+  "sourceFiles": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Planning/LifePolicy.cs",
+      "bytes": 3821,
+      "sha256": "12C552AB334FDE9E71E4BFBBF2F64002E1375599019A48BA4536FAA19196D688"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Planning/ShadowPlan.cs",
+      "bytes": 11336,
+      "sha256": "D1FE56C772ED98703DE40FB877E13E4A74183CBDF280BDAEB4122B909B206FAB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Budget/LifeBudget.cs",
+      "bytes": 7976,
+      "sha256": "4F3870D56B45F819080D33E77B44CF073112F24045068F73390B6817EB507BBB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Planning/ShadowPlanningCoordinator.cs",
+      "bytes": 5727,
+      "sha256": "BE78D4089A072F51E12D61202227AC24B0E5A721A728420A6E534E821AA0FF57"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/NeedDashboard.cs",
+      "bytes": 7327,
+      "sha256": "A382B431F57979BB18E0E532A131BFCE0DFC4BCC6CC38306CEB96BBCB92A0B30"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyShadowPlanning.cs",
+      "bytes": 5009,
+      "sha256": "83CB6E21ED98C027F86842A7F3F7D4648AA38AB4019E62097E14F4C7542F256D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/ShadowPlanPresenter.cs",
+      "bytes": 3355,
+      "sha256": "065E68A2446601CCEE04DABCF81A73DC4857B2FA785EB013F23ED6C7E71355DA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedDashboard.cs",
+      "bytes": 3470,
+      "sha256": "7F78BD49DA579A213F6E489C75FAB25034BC1CD0D95637ACAE646EB63C8289CF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyPerception.cs",
+      "bytes": 5161,
+      "sha256": "781727C234F25825EB3B777C02C5A0A730E712C27FBEBA98D2C28D5778A33926"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "bytes": 29030,
+      "sha256": "FB8B98F5407489A1094B9E9DEE1F8E39867A7DBA96F3266CC346A7A831676212"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaPawnFactCapture.cs",
+      "bytes": 13724,
+      "sha256": "FAC599A8967CD71A966A04C7CC0814AE7DE759F79D91507F634392F851ACA9B9"
+    },
+    {
+      "path": "Source/PersonalChronicle/BuildStamp.g.cs",
+      "bytes": 150,
+      "sha256": "F6A337B16889396CA1B3A0F4DF6261FCE0E14BB9318767AB890FF21F504325AF"
+    },
+    {
+      "path": "Tests/PawnLifeBudgetTests.cs",
+      "bytes": 8281,
+      "sha256": "5896E17CD3C4AF49DAF42698C9950CA959EE1EAC7BD336E0842D4BCE21490D6B"
+    },
+    {
+      "path": "Tests/PawnShadowPlanningTests.cs",
+      "bytes": 18467,
+      "sha256": "781C18B026BEF6AC6D304F4E988B359A4548520D579B2DE8D98C31846C88E243"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+      "bytes": 5962,
+      "sha256": "EF04153E14FDA5A7E3AF37FF01EC22681D679938C399305AA39CA40726DC950A"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyNeeds.xml",
+      "bytes": 6039,
+      "sha256": "5B7378350B9F630C63F69139D1E107E31383D56732CD0A1E1DD10FE73BA9EB50"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyPlanning.xml",
+      "bytes": 7453,
+      "sha256": "226B1B06EB04EC6670273C85D9E387EBFAA77F9133934214659B39512E6C66EE"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyPlanning.xml",
+      "bytes": 7710,
+      "sha256": "F09FDA6B5172664A4810240A1666F8311C720E2BAC0B9A5164FF52CDC7C1593B"
+    }
+  ],
+  "runtimeWired": true,
+  "uiWired": true,
+  "shadowOnly": true,
+  "persistedDecisionState": false,
+  "pricedConsumptionProvider": false,
+  "executableMarketProvider": false,
+  "automaticEmploymentFixed": false,
+  "generalFeeRuntimeWired": false,
+  "activeAvailableInGame": false,
+  "gameVerified": false,
+  "gameplayPerformanceVerified": false,
+  "fullModelImplemented": false,
+  "globalGateAvailable": false
+}

@@ -1,0 +1,19 @@
+{
+  "checked_assets": 40,
+  "checks": {
+    "source_40_hashes_unchanged": true,
+    "original_archive_40_hashes_match": true,
+    "runtime_backup_40_hashes_match_previous": true,
+    "development_40_hashes_match_revisions": true,
+    "mods_40_hashes_unchanged": true,
+    "all_north_baselines_byte_identical": true,
+    "png_40_full_rgba_and_dimensions_valid": true
+  },
+  "runtime_texture_backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\T1-textures_20261005_214056_591",
+  "input_manifest_backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\T1-direction-inputs_20261005_214056_424",
+  "image_models_called": false,
+  "gameplay_verified": false,
+  "deployed_to_mods": false,
+  "visual_review": "逐台查看实际四向前后对照图及两张总览；固定组件和操作方向已复核。",
+  "lighting": "采用用户已认可的整体转向方案，未独立重绘光照与投影。"
+}

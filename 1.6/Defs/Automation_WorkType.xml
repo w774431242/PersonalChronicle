@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    车间岗位工作类型（参考文档 §3.1，按 1.6 权威字段修正）。
+
+    ⚠️ 1.6 无需任何 ThinkTree XML Patch：原版 JobGiver_Work 会遍历全部
+    WorkTypeDef，新增的 WorkTypeDef 自动进入工作链（参考文档 §7 应废弃）。
+
+    naturalPriority 取 350（2026-09-11 语义修正）：**低于 Crafting(400)/Smithing(470)/
+    Tailoring(450)/Art(430)/Research(100)/Construction(900)/Mining(600)/Growing(700)，
+    高于 Hauling(300)/Cleaning(200)**。
+
+    为什么从 980 降下来：980 会压过制造/锻造/裁缝/艺术/科研/搬运/清洁 ——
+    被排班的成员会**一直站着值勤、不去干活**，而产出类加成又要求"干活的那位在车间里"
+    ⇒ 整条产出加成链在正常玩法下不可达（2026-09-11 体检 P0）。
+    降低后语义回到设计本意：**先做本职工作（在车间内即在加成环境里），
+    没有本职工作时才回车间值勤/看护产线**。加成判定同步改为
+    "在岗缓存 ∪ 物理位于车间内"（见 MapComponent_WorkshopManager.WorkingBonusOf）。
+
+    alwaysStartActive=false：默认关闭，玩家在工作面板手动开启（与排班联动）。
+  -->
+  <WorkTypeDef>
+    <defName>PC_WorkshopOperation</defName>
+    <labelShort>workshop</labelShort>
+    <pawnLabel>workshop operator</pawnLabel>
+    <gerundLabel>standing workshop duty</gerundLabel>
+    <description>Stand duty in an assigned workshop: operate, watch over and maintain the automated production line.</description>
+    <verb>Work the workshop</verb>
+    <naturalPriority>350</naturalPriority>
+    <alwaysStartActive>false</alwaysStartActive>
+    <requireCapableColonist>true</requireCapableColonist>
+    <workTags>
+      <li>ManualSkilled</li>
+      <li>Commoner</li>
+      <li>AllWork</li>
+    </workTags>
+  </WorkTypeDef>
+
+  <!--
+    ⚠️ 以下 3 个是「工时分档标签」，不是可指派的工作类型：
+    - visible=false ⇒ 不出现在工作标签页（不占列、玩家无法设优先级，也不会被 JobGiver_Work 排班）；
+    - 无对应 WorkGiverDef ⇒ 不会有任何 Job 走它们（WorkTypeDef.ConfigErrors 不要求 giver，已核实）；
+    - 唯一用途：车间岗位收工时按 WorkshopTaskType 上报工时时，作为归档侧的工时分类键
+      （WorkTimeAccumulator 以 workTypeDefName 分组统计）。
+    - 岗位本身仍由 PC_WorkshopOperation 的 WorkGiver 下发，开关也在该类型上，语义不变。
+  -->
+  <WorkTypeDef>
+    <defName>PC_WorkshopMaintenance</defName>
+    <labelShort>workshop maint.</labelShort>
+    <pawnLabel>workshop maintainer</pawnLabel>
+    <gerundLabel>maintaining the workshop</gerundLabel>
+    <description>Workshop duty tagged as maintenance (work-time accounting label only).</description>
+    <verb>Maintain the workshop</verb>
+    <naturalPriority>980</naturalPriority>
+    <alwaysStartActive>false</alwaysStartActive>
+    <visible>false</visible>
+    <requireCapableColonist>true</requireCapableColonist>
+    <workTags>
+      <li>ManualSkilled</li>
+      <li>Commoner</li>
+      <li>AllWork</li>
+    </workTags>
+  </WorkTypeDef>
+
+  <WorkTypeDef>
+    <defName>PC_WorkshopQualityCheck</defName>
+    <labelShort>workshop QC</labelShort>
+    <pawnLabel>workshop inspector</pawnLabel>
+    <gerundLabel>inspecting workshop output</gerundLabel>
+    <description>Workshop duty tagged as quality check (work-time accounting label only).</description>
+    <verb>Inspect workshop output</verb>
+    <naturalPriority>980</naturalPriority>
+    <alwaysStartActive>false</alwaysStartActive>
+    <visible>false</visible>
+    <requireCapableColonist>true</requireCapableColonist>
+    <workTags>
+      <li>ManualSkilled</li>
+      <li>Commoner</li>
+      <li>AllWork</li>
+    </workTags>
+  </WorkTypeDef>
+
+  <WorkTypeDef>
+    <defName>PC_WorkshopStandby</defName>
+    <labelShort>workshop standby</labelShort>
+    <pawnLabel>workshop standby</pawnLabel>
+    <gerundLabel>standing by in the workshop</gerundLabel>
+    <description>Workshop duty tagged as standby (work-time accounting label only).</description>
+    <verb>Stand by in the workshop</verb>
+    <naturalPriority>980</naturalPriority>
+    <alwaysStartActive>false</alwaysStartActive>
+    <visible>false</visible>
+    <requireCapableColonist>true</requireCapableColonist>
+    <workTags>
+      <li>ManualSkilled</li>
+      <li>Commoner</li>
+      <li>AllWork</li>
+    </workTags>
+  </WorkTypeDef>
+
+  <!--
+    CHG-20261004-MEALSCHEDULE · 三餐作息工作类型（"到点去吃饭"）。
+
+    ⚠ 显示机制（2026-10-04 更正，IL 实证）：
+      1.6 工作优先级面板是「行 = pawn、列 = WorkType」结构，而**工作类型列不是写在
+      PawnTableDef 的 XML 里**，而是由 RimWorld.PawnColumnDefGenerator.ImpliedPawnColumnDefs
+      在启动时**隐式生成**并插入 Work 表的 CopyPasteWorkPriorities 列之后：
+
+        foreach (var d in WorkTypeDefsUtility.WorkTypeDefsInPriorityOrder.Where(d => d.visible).Reverse())
+            workTable.columns.Insert(indexOf(CopyPasteWorkPriorities) + 1,
+                new PawnColumnDef { defName = "WorkPriority_" + d.defName,
+                                    workType = d,
+                                    workerClass = typeof(PawnColumnWorker_WorkPriority), ... });
+
+      过滤谓词 <ImpliedPawnColumnDefs>b__0_2 的 IL 就是 `ldfld WorkTypeDef::visible; ret`
+      ⇒ **`visible` 就是显示判据**（默认值 true，见 Verse.WorkTypeDef..ctor 的
+      `ldc.i4.1; stfld visible`）。
+      ⇒ 本类型不写 <visible> ⇒ 默认可见 ⇒ 会自动获得 `WorkPriority_PC_MealBreak` 列，
+        玩家可在作息表里为每个人排「用餐」档位与时段。
+      （前一轮标注里"不新增 PawnColumnDef ⇒ 新类型不产生任何列"的结论是错的：
+        漏查了 PawnColumnDefGenerator，refs VisibleNow 零引用也不代表字段无消费点。）
+
+      本文件里 3 个工时分档标签写了 <visible>false</visible> ⇒ 被该谓词过滤 ⇒ 不生成列、
+      不出现在面板上 —— 这才是"隐藏工作类型"的正确做法。
+
+    ⚠ 生效链路（全部原版扩展点，零 Harmony）：
+      Pawn_WorkSettings.SetPriority(PC_MealBreak, 档位) > 0
+        → WorkTypeDef.workGiversByPriority 里的 WorkGiverDef.Worker 进入工作链
+        → RimWorld.JobGiver_Work::TryIssueJobPackage 调用
+        → WorkGiver_Meal.NonScanJob → JobMaker.MakeJob(JobDefOf.Ingest, food)
+      （以上均由 Cecil 读 IL 确认，见 Domain/Meal 与 Automation/MealFoodSearch 注释）
+
+    naturalPriority=100：档位每差 1 就是 100000 的权重差（排序键
+      naturalPriority + (4 - 档位) × 100000，Cecil 读 Pawn_WorkSettings.CacheWorkGiversInOrder
+      的比较器 b__32_0），而原版 naturalPriority 全域集中在 0~400
+      ⇒ 同档位内 100 处于末位，档位才是唯一有效旋钮（故 UI 只暴露 3/4 两档）。
+  -->
+  <WorkTypeDef>
+    <defName>PC_MealBreak</defName>
+    <labelShort>meal</labelShort>
+    <pawnLabel>Meal Break</pawnLabel>
+    <gerundLabel>having a meal</gerundLabel>
+    <description>Go to a meal at the configured time. Outside meal times this work type does nothing; hunger is still handled by the vanilla needs system.</description>
+    <verb>Eat at</verb>
+    <naturalPriority>100</naturalPriority>
+    <alwaysStartActive>false</alwaysStartActive>
+    <!--
+      visible=false（2026-10-04 玩家决策）：「用餐」只作为**内部驱动类型**存在，
+      不在【工作】优先级面板里占列 —— 玩家的排班入口是【管制】表的「用餐」时段。
+
+      机制（Cecil 实证）：原版 PawnColumnDefGenerator.ImpliedPawnColumnDefs 的过滤谓词
+      <ImpliedPawnColumnDefs>b__0_2 就是 `ldfld WorkTypeDef::visible; ret`
+      ⇒ visible=false ⇒ 不生成 WorkPriority_PC_MealBreak 列 ⇒ 工作面板看不到它。
+
+      ⚠ visible 只影响"显不显示"，**不影响生效**：
+      Pawn_WorkSettings.SetPriority / GetPriority 都不检查 visible，
+      MapComponent_MealSchedule 照常写档位，WorkGiver_Meal 照常读档位发 Job。
+
+      ⚠ Def 安全性：WorkTypeDef.ConfigErrors 的 IL 只校验 naturalPriority ∈ [0, 10000]，
+      不校验「visible=false 却带 workGivers」的组合 ⇒ 本写法不会产生 XML 报错。
+    -->
+    <visible>false</visible>
+    <requireCapableColonist>true</requireCapableColonist>
+    <workTags>
+      <li>Commoner</li>
+      <li>AllWork</li>
+    </workTags>
+  </WorkTypeDef>
+</Defs>

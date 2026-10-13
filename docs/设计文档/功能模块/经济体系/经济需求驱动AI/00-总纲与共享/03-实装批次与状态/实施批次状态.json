@@ -1,0 +1,573 @@
+{
+  "changeId": "CHG-20261008-ECON-LANDING",
+  "lastChangeId": "CHG-20261009-ECON-A6-ZONEWAGE",
+  "currentUnit": "U6-A6（进行中，**修复期不部署**）：机构工具模板 + 旧账对账 + 事件驱动感知失效 + 车间区工资报价 已接线（**审计第五条 5 项已清 4 项**）；仅余 ShadowTransactionKernel（待 PM 架构裁定）；全部修完后**统一部署一次**并更新验收清单 §0 哈希",
+  "updatedDate": "2026-10-09",
+  "planVersion": "1.0",
+  "acceptanceStrategy": {
+    "mode": "implement-all-modules-then-accept",
+    "registeredBy": "user-directive-2026-10-08",
+    "registration": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/13-实装口径变更_先全实装后统一验收_2026-10-08.md",
+    "implementationPhaseDoes": [
+      "code",
+      "offline-tests",
+      "release-build",
+      "deployment-record",
+      "change-annotation",
+      "gate-review"
+    ],
+    "deferredToAcceptanceUnit": [
+      "B2.4.3-save-acceptance",
+      "B3.1-SH-01..14",
+      "ECON-AUTOEMPLOY-001 EMP-01..10",
+      "performance-profiling",
+      "release-and-changelog"
+    ],
+    "acceptanceChangeId": "CHG-20261008-ECON-ACCEPT"
+  },
+  "fullModelImplemented": false,
+  "deployedThisChange": true,
+  "deployedThisChangeNote": "已部署的最近一版 = U6-A5（SHA 44F1A1BD…，发布区当前值）。⚠ 自 U6-A6 起按用户指令改为**修复期不部署**：U6-A6 已编译/测试/标注但**未部署**；全部缺口修复完成后统一同步一次 DLL，届时才更新本字段与验收清单 §0 的哈希",
+  "deployedBuildSha256": "44F1A1BD169A7C95448F17BC47A036B1EA17D7D3ECC536297C07980A9DA0D1FD",
+  "gameVerifiedThisChange": false,
+  "allowedStates": [
+    "Planned",
+    "InProgress",
+    "CodeVerified",
+    "GameVerified",
+    "Released"
+  ],
+  "currentSubBatch": "U5-B6B7",
+  "nextSubBatch": "CHG-20261008-ECON-ACCEPT（验收工程）",
+  "parallelAcceptancePending": [
+    "B2.4.3"
+  ],
+  "artSupplement": {
+    "changeId": "CHG-20261008-ECON-ART",
+    "directionalPngCount": 20,
+    "imageAndDefVerified": true,
+    "generatedImageVisualReview": true,
+    "deployed": true,
+    "gameVerified": false,
+    "logicDllChanged": false
+  },
+  "knownFunctionalGaps": [
+    {
+      "id": "ECON-AUTOEMPLOY-001",
+      "state": "Open",
+      "userReported": true,
+      "runtimeFixed": false,
+      "codeComplete": false,
+      "affectedBatches": [
+        "B3",
+        "B4"
+      ],
+      "summary": "全部原版工作优先级为 0 时，尚无需求驱动求职与签约后的工作类型接管闭环",
+      "partialProgress": "CHG-20261009-ECON-M6-EXIT（2026-10-09）：合同『合理退出』已实装 —— ContractExitRules.ShouldExit（到期/计件上限/制度关闭/岗位不可用，幂等，自然结束优先）+ EconomyEmployment.MaintainContract（结束合同并按所有权释放工作类型），且复查**先于制度门**调用，修复了『制度关闭后已签合同永久占用工作类型』这一真实缺陷（EMP-07）。该条仍 Open 的理由：EMP-01 实机未验且受 NewCommitmentsAllowed 制度门限制、能力禁用与玩家改写的**逐类型**退出需 EconomyWorkOwnership 暴露逐类型状态、退出原因可见需 UI 接通、EMP-05 跨 Pawn 争用规则未建模。",
+      "evidence": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/10-全工作关闭后自主求职_缺口核查_2026-10-08.md"
+    },
+    {
+      "id": "ECON-M7-CONSUMPTION-002",
+      "state": "PartiallyImplemented",
+      "userReported": false,
+      "runtimeFixed": true,
+      "codeComplete": false,
+      "affectedBatches": [
+        "B4"
+      ],
+      "summary": "M7 消费与服务：购买已接通并按真实报价如实上报可行性；『预约』『部分服务结算』『区分已付费与生活已满足』仍未实装",
+      "partialProgress": "CHG-20261009-ECON-M7-PURCHASE（2026-10-09）：购买方案可行性由硬编码 false 改为真实判据（ShadowPlanBuilder.PricedConsumptionFeasible = 存在已定价必要消费 + 自有现金扣除覆盖后足以支付），修复了『有现金、机构有报价却永远显示购买不可行』这一用户可见缺陷；不可行原因码三态化（CostEstimateUnavailable / NoPricedConsumption / ConsumptionUnaffordable），Service 由借用的岗位市场码 OpportunityNotPublished 改为专属码 ServiceNotImplemented。仍缺：预约（尚无『预约什么』的概念）、部分服务结算（InstitutionPolicySaveData.ServicePricePerUnitMinor 至今零消费方，无服务供给机制）、区分已付费与生活已满足（现仅为运行时守卫 food.CurLevelPercentage >= FoodNativeYield，未作为可上报状态，需扩展 View 契约）。",
+      "evidence": "变更标注_CHG-20261009-ECON-M7-PURCHASE.md"
+    },
+    {
+      "id": "ECON-M8-CARE-003",
+      "state": "PartiallyImplemented",
+      "userReported": false,
+      "runtimeFixed": true,
+      "codeComplete": false,
+      "affectedBatches": [
+        "B4"
+      ],
+      "summary": "M8 家庭与照护协作：四角色与付款授权门已完整，签发侧防重与执行者门已补齐；『安排喂养/照护/学习』『服务供给机制』『家庭参与度』仍未实装",
+      "partialProgress": "CHG-20261009-ECON-M8-CARE（2026-10-09）：修复签发侧无防重（扣费侧 EconomyCare 靠 ReadGrant 取第一份授权，签发侧却可重复签字，多签授权成为幽灵额度且第一份过期后扣费对象静默换人）—— 新增纯函数 CareRules.CanIssue（同受益人同服务类型活跃授权唯一，到期不占名额，不同类型/受益人互不占位）与 CareRules.CanExecute（受益者不得兼任执行者；未指派执行者不算不可用），CareService.Create 接入两道门，CareCode 追加 AlreadyAuthorized（追加在末尾以保既有序号）。仍缺：安排喂养/照护/学习（AcceptCareAct 只记证据不驱动安排）、服务供给机制（ServiceReadiness 七门中 DeliveryEvidence/Settlement/InterruptionRecovery/UiExplanation 无证据源 ⇒ 能力恒停 PublicVanilla 不报价）、家庭参与度（LifePolicy.FamilyParticipation 仍为 .5f 常量占位）。⚠ 两处更正（2026-10-09 U6-B1）：①`SettlementUnavailable` 的**产生者确实存在**（`EconomyCare.cs:73/:76`，详见 `ECON-AUDIT-5MOD`），旧文「无产生者」作废；②`FamilyParticipation` 的 `.5f` 是**显式中性默认**（非占位缺陷，M9 学习通道已开），真实缺口是**零消费方**。U6-B1 已把七门改为具名事实并上屏证据三态；**四类服务的摄取仍属 U6-B2**。",
+      "evidence": "变更标注_CHG-20261009-ECON-M8-CARE.md"
+    },
+    {
+      "id": "ECON-AUDIT-5MOD-004",
+      "state": "PartiallyFixed",
+      "userReported": false,
+      "runtimeFixed": false,
+      "codeComplete": false,
+      "affectedBatches": [
+        "B3",
+        "B4"
+      ],
+      "summary": "五个模块（M3/M4/M5/M6/M7/M8）自审：M3 双阈值与 M5 储备阶梯零单测（已补不变量测试）；M5 应急储备算出但零消费方（未修）；LifePolicy 仍有 6 个 .5f 常量占位；一处既有结论更正",
+      "partialProgress": "CHG-20261009-ECON-AUDIT-5MOD（2026-10-09）：逐符号查消费方与产生者，结论 —— M6 ContractExitRules/MaintainContract、M7 PricedConsumptionFeasible、M8 CanIssue/CanExecute/ReadActiveGrant/AlreadyAuthorized 全部有生产环境消费点（无死代码）；本轮新增的 6 个语言键全部有代码引用（无死键）。已修：新增 Tests/PolicyThresholdInvariantTests.cs 钉住 M3「进入阈值必须高于原生自给线」与 M5「应急储备 < 下水位 < 全额」等不变量（此前这些常量零单测，调错不报警）。已修（CHG-20261009-ECON-FIX-M5POLICY）：LifeBudget.EmergencyReserveMinor 接入预算卡下水位一行（T('LowWaterWithEmergency')，中英各 +1 键），不再零消费方。更正两处早前误判：① 称 CareCode.SettlementUnavailable『零产生者』有误 —— 它在 EconomyCare.cs:73/:76 有两个真实产生点（源于一次被截断的检索输出未复核）；② 称 LifePolicy 六个 => .5f 为『常量占位缺陷』有误 —— 02-长期生活规划_代码设计方案 §3 明定为『显式中性默认』，且首批特质映射表只批准 4 条并**明确排除 Greedy**，故 4 条映射即完整实现；已在代码注释写明出处以防再次误判。",
+      "evidence": "变更标注_CHG-20261009-ECON-AUDIT-5MOD.md"
+    },
+    {
+      "id": "ECON-M9-LEARNING-005",
+      "state": "PartiallyImplemented",
+      "userReported": false,
+      "runtimeFixed": true,
+      "codeComplete": false,
+      "affectedBatches": [
+        "B4"
+      ],
+      "summary": "M9 经验反馈与失败恢复：有界慢速学习通道（learnedOffset）已实装；ReliabilityPreference 消费、退避、中断清理仍未实装",
+      "partialProgress": "CHG-20261009-ECON-M9-STYLE（2026-10-09）：按 02-长期生活规划_代码设计方案 §3 原文实装 StyleLearningRules —— Plan（判决+幅度：维度未校准/摘要已处理/时间回退/当日额度耗尽一律拒绝且变化量为 0）、ApplyOffset（钳制作用在合成结果上，人格向量永不越界）、Effective（p = clamp01(base + offset)）。参数照抄权威值：每日上限 0.03、融合系数 0.10，并有专测钉住 0.03 < 0.10 这一大小关系。类不持有状态，额度和摘要去重由调用方持久化。CHG-20261009-ECON-M9-RELIABILITY（2026-10-09）续：ReliabilityPreference 已接通 —— 新增 Learning/ReliabilityChoiceRules（Avoid / ShouldSwitchToAlternative），三条边界各有用例：证据不足不算不可靠、中性偏好不改选择、无替代时不放弃收入；EconomyShadowPlanning 把 WageCredibility.IsLowConfidence 的机构映射为候选 id 集合（同层解析 id 格式，Domain 不解析字符串）喂入 ShadowPlanningInput.LowConfidenceOpportunities，ShadowPlan 选岗时**只避一次**并以新原因码 FundedOpportunityUnderKnownRisk 标明已知风险（中英各 +1 键）。CHG-20261009-ECON-M9-LEDGER（2026-10-09）修复批：① StyleLearning.cs 已归位 Learning/ 域（旧路径已删，编译错误已修）；② 新增 Learning/StyleLedger 作为 StyleLearningRules 的持账方（每维 offset、按维度计的当日额度、按 id **全局**去重的已处理摘要；被拒摘要不消耗唯一性，否则该证据将永久失效）；③ LifePolicy 打开学习输入面 —— 八维统一走 p = clamp01(base + learnedOffset)，无账本时保持显式中性默认；④ 接线：组件持 styleLedgers，RecordSettlementOutcome（真实结算结果）投递摘要（按时足额⇒敏感度下调，失败/延误⇒上调），EconomyShadowPlanning 把 Offsets 喂进 LifePolicy；端到端用例 TheLedgerActuallyFeedsThePolicyDimensions 钉住接线真的通。至此本会话新增的规则符号全部有生产消费点。CHG-20261009-ECON-M9-BACKOFF（2026-10-09）续：有界退避按《09-经验反馈与失败恢复》§4 原文实装 —— RetryBackoffRules.BackoffTicks 照抄 min(6000,150×2^min(n−1,6))（失败数至少 1）；JitterTicks 用 FNV-1a 确定性哈希（文档要求稳定抖动，随机数会致读档相位跳变）；NextRetryTick 在第 5 次同指纹失败后转 PersistentBlocked 并用平坦 6000 兜底；Fingerprint 入参结构性不含 Tick（防呆）；IsBackoffFailure 白名单式只认供应/资金类失败（依据 §6『无货无钱⇒退避』、『供应方未知⇒不记失败』）；MayRetry 中紧急保护与真实相关变化均可提前放行，但不清零失败数。接入点：OnPlanPublished 的购买尝试（EconomyEmployment 退避账 MayAttempt/RecordAttemptFailure）。CHG-20261009-ECON-M9-FULL（2026-10-09）收口批：① 新增 FailureClassification（§4 七类失败 FailureClass + FailureDisposition：退避/服务失败/结构性/交对账/等事件 + Classify/DispositionOf/IsBackoff/IsServiceFailure），未知原因一律归 GetterError（宁少记不错记），只有 ActualDefault 计入服务失败，结构性受阻与『等事件』分开；并入并删除上批自拟的 RetryBackoffRules.IsBackoffFailure，判据统一到权威表。② 新增 RecoveryRules：InterruptionRules（§5 中断阶段定格：取最靠后为真的一档，已结算不算失败，落实『不能一个中断同时记三份相同失败』）+ HistoryEntry/BoundedHistoryRules（§6 64/16 上限，先终态后年龄裁剪，持有未清对账义务者一律不裁 —— 宁可超限也不丢凭据）；退避账经 TrimRetryLedger 接入 16 条上限。自查不合格项（如实登记）：InterruptionRules **目前仅测试消费**，其消费方是 M4 的中断/租约证据面（§5 第 2 步），该面尚未接通，故该规则集当前与死代码在行为上无差别，不作通过处理。CHG-20261009-ECON-M9-BETA（2026-10-09）：§3 显式先验 Beta(1,1) 已实装并对齐 —— 新增 Learning/CredibilityEstimate（mean=(1+onTime)/(2+knownOutcomes)、PriorWeight、BasisPoints）+ DurationSmoothing（alpha=0.20；只有显式投递入口、无按时间自动衰减通道；IsLowEvidence 门槛由调用方给，不发明数值）；ExperienceSummary.ReliabilityBasisPoints 改由 Beta 导出（无样本 = 5000 中性，不再是 0），并暴露 Credibility/PriorWeight 落实『显示先验/样本数』；WageCredibility.HasClaim 仍是不构成主张的唯一判据。迁移一条旧口径断言（EconomyProductionTests：empty.ReliabilityBasisPoints 0→5000，『不构成主张』改由 HasClaim 钉住）。**三态更正（重要）**：早前把三项写成『未实装』易被读作做不到，重启取证后 —— ① 『M4 中断/租约证据面不存在』是**错误推断**：Interrupt 20 处、Lease 25 处，MapComponent_WorkshopManager.Runtime 已有 Interrupt/JobCondition/EndCurrentJob，ShadowTransactionKernel/WorkTakeover 已有 Lease；② 『Beta 输入不齐』是**错误**：ExperienceSummary.Successes/Samples 正是 onTime/knownOutcomes；③ 落盘需 Save schema 变更是属实但**非阻塞**。**真正做不到的项：0**；未做项（M9-S5 更新：InterruptionRules 消费方已接通，移出未做清单）：§6 落盘（退避账+StyleLedger+64 条动作结果）、RecoveryCase 与生命周期恢复、车间复核结果接原版派工门。CHG-20261009-ECON-M9-S5 收口：① Domain 新增 InterruptionProtocolRules + InterruptionVerdict（§5 定格 × §4 处置合成判决：已结算/让路/适配未知零记录，否则至多一条）；② FailureClassRules 增生产方引用原因码常量（防字面量漂移）；③ 购买链改结构化 PurchaseAttempt 证据面并接入唯一判决入口 ResolvePurchaseAttempt（全工程仅两处 RecordAttemptFailure 写入、均在判决之后；不可回收货记一条 TransactionUnknown 对账类，不自行补钱删货）；④ 车间中断面（MapComponent_WorkshopManager.Runtime 两处 EndCurrentJob）经有界事实队列上报、经济层 Tick 取走定格（ProtectedTimetable 零记录 / ReservationLost 一条+有界复核；冷却内不重复记）；⑤ Tests/InterruptionProtocolTests 8 用例（全量 1140 通过 / 0 失败 / 1 跳过）；verify PASS（110 双语键）。此后报告一律按『阻塞/未做/做不到』三态分开写。CHG-20261009-ECON-M9-S6（2026-10-09）：**§6 落盘已实装** —— 新增 Data/PawnEconomy/LearningSaveData（IExposable 容器：Version + LedgerRow{PawnKey/DayStamp/偏移/当日额度/去重水位} + RetryRow{键/失败数/NextTick/指纹} + 上界常量）与 Economy/PawnEconomy/EconomyLearningPersistence（导入导出桥；导出在 Scribe_Deep 之前、恢复在 PostLoadInit，否则写的是上一次的快照）；EconomyRuntime 注册节点 pawnEconomicLearning。**StyleLedger.BeginDay 由无参改为 BeginDay(int day)**：只有游戏日序号真的前进才清当日额度，同日/回退/负值一律不清；载入走 Restore 而非 BeginDay ⇒ **读档不等于新的一天**（否则反复读档可无限刷学习额度 —— 这是『有界』挡不住的路径）；调用点挂在计划发布（now / PlanningPolicy.DayTicks）。SAVE-001~008 逐条结论见 CHG-20261009-ECON-M9-S6 标注：纯加法、无显式迁移、旧档可直接加载、载入幂等且损坏行在 PostLoadInit 被剔除、零原版对象引用/零全量路径。全量 1148 通过 / 0 失败 / 1 跳过；verify PASS。仍缺：① RecoveryCase 案例库与生命周期恢复；② 跨版本真实存档往返测试（需实机，NOT EXECUTED）；③ 载入后未主动按指纹变化提前解除退避（靠下次失败带入新指纹）。**改判（VERIFY-20261009-ECON-M9-RC，只读核实，零代码改动）**：原『仍缺①RecoveryCase 案例库与生命周期恢复』经源码级核实**无缺口，属重复建模，不应实装** —— §2 六字段已由既有面承担（CaseId=SettlementIntent.CommandId；关联事务/阶段=SettlementEntry.Intent+Phase；差异=Reason/DeficitMinor/LegacyReconciliationIssue；负责者=单写者结构；步骤状态**不另存**，设计原文『按持久阶段幂等执行』；结果=ReconciliationRequired+审计+治理入口），新造将形成第二事实源、违反 §5 与 §2『经验不是账本』。**新增登记**：FailureDisposition 的 `Structural` 与 `AwaitsEvent` 经复核确认**无任何消费者**（仅定义+测试）；同批复核纠正另一项假警报 —— `RouteToReconciliation`/`CountsAsServiceFailure` **经 InterruptionVerdict.Resolve（RecoveryRules.cs:68-70）间接被生产消费**，故不是零消费方。教训：判定零消费方必须追间接链（字段→构造的中间类型→生产消费点）。",
+      "evidence": "变更标注_CHG-20261009-ECON-M9-STYLE.md"
+    },
+    {
+      "id": "ECON-WIRING-AUDIT-006",
+      "state": "Open",
+      "userReported": false,
+      "runtimeFixed": false,
+      "codeComplete": false,
+      "affectedBatches": [
+        "B3",
+        "B4",
+        "B6"
+      ],
+      "summary": "全模块接线审计（2026-10-09 code-explorer 只读）：一处本轮自曝缺陷（已修）+ 多处符号零生产消费方/半接线",
+      "partialProgress": "①**已修并重新部署**：U6-A2 政策页第四行按钮**从未绘制** ⇒ `OpenStockTargetMenu` 不可达、`StockTargets` 恒空、读数恒 Unknown；修复构建 DLL SHA `C9C746B3…`（变更标注 CHG-20261009-ECON-M10-TARGET §6.1 勘误）。②**读数消费面断头（下一个自然单元）**：`EvaluateRestock` 生产零调用方 ⇒ 授权账与库存目标的读数**不上屏、不进决策**（需一轮「补货评估接总览/治理面 + 数值上屏」）。③`ShadowTransactionKernel`（M11 真实转账内核）零消费，实盘走 `FundedSettlementLedger`/`SettlementIntent` 老路径。④服务能力仅由 Treatment 的 tend 事件触发（其余 4 类 capability 永不推进；照护页证据条读的是探针，与能力评估不同源）。⑤零消费符号：`InstitutionToolCatalogue`、`QueryZoneWagePolicy`、`QueryLegacyReconciliation`、`QueryFoodPricesPublished`、`QueryRestockReceipts`、`OwnershipCount`、`MarkPerceptionDirty`。⑥照护授权无周期到期清理（仅惰性判定）；`QueryServiceCapability` 每帧读、无 60 tick 门控。⑦注释过期：`EconomyEmployment.cs:45-46` 称学习账『落盘未接通』，实际已接通。",
+      "evidence": "本轮只读审计（code-explorer，未落盘）+ 变更标注_CHG-20261009-ECON-M10-TARGET §6.1"
+    }
+  ],
+  "batches": [
+    {
+      "id": "B0",
+      "name": "基线与追踪",
+      "state": "CodeVerified",
+      "dependsOn": [],
+      "modules": []
+    },
+    {
+      "id": "B1",
+      "name": "需求可见",
+      "state": "CodeVerified",
+      "gameVerified": false,
+      "dependsOn": [
+        "B0"
+      ],
+      "modules": [
+        "M1",
+        "M12"
+      ],
+      "children": [
+        {
+          "id": "B1.1",
+          "name": "纯事实与缺口内核",
+          "state": "CodeVerified",
+          "dependsOn": [
+            "B0"
+          ],
+          "runtimeWired": true
+        },
+        {
+          "id": "B1.2",
+          "name": "人口采集与年龄查询",
+          "state": "CodeVerified",
+          "dependsOn": [
+            "B1.1"
+          ],
+          "runtimeWired": true,
+          "gameVerified": false
+        },
+        {
+          "id": "B1.3",
+          "name": "RUIF 只读页面",
+          "state": "CodeVerified",
+          "dependsOn": [
+            "B1.2"
+          ],
+          "runtimeWired": true,
+          "gameVerified": false
+        }
+      ]
+    },
+    {
+      "id": "B2",
+      "name": "实资与制度基础",
+      "state": "InProgress",
+      "dependsOn": [
+        "B0",
+        "B1.1"
+      ],
+      "modules": [
+        "M11",
+        "M9"
+      ],
+      "children": [
+        {
+          "id": "B2.1",
+          "name": "影子事务内核与旧账只读对账",
+          "state": "CodeVerified",
+          "runtimeWired": false,
+          "readOnlyReportQueryWired": true,
+          "backingVerified": false,
+          "gameVerified": false
+        },
+        {
+          "id": "B2.2",
+          "name": "真实银币储备与隔离原型",
+          "state": "CodeVerified",
+          "dependsOn": [
+            "B2.1"
+          ],
+          "runtimeWired": false,
+          "standaloneScribeVerified": true,
+          "gameSaveWired": false,
+          "backingVerified": false,
+          "gameVerified": false
+        },
+        {
+          "id": "B2.3",
+          "name": "持久事务恢复与旧账迁移",
+          "state": "CodeVerified",
+          "dependsOn": [
+            "B2.2"
+          ],
+          "gameSaveWired": true,
+          "offlineHostScribeVerified": true,
+          "rawLegacyBeforeRecoveryVerified": true,
+          "fundedExplicitCashAllocationVerified": true,
+          "paymentRuntimeWired": false,
+          "finalLegacyCutoverComplete": false,
+          "backingVerified": false,
+          "gameVerified": false
+        },
+        {
+          "id": "B2.4",
+          "name": "制度设置与互斥接管",
+          "state": "InProgress",
+          "dependsOn": [
+            "B2.2",
+            "B2.3"
+          ],
+          "activeAvailableInGame": false,
+          "gameVerified": false,
+          "children": [
+            {
+              "id": "B2.4.1",
+              "name": "制度设置与互斥门禁",
+              "state": "CodeVerified",
+              "modeSaveWired": true,
+              "legacyFeeRouteClosed": true,
+              "legacyLoadCancellationRetired": true,
+              "latestLegacyFreezeWired": true,
+              "offlineModeScribeVerified": true,
+              "physicalPaymentRuntimeWired": false,
+              "legacyRightsFullyAssumed": false,
+              "deployed": false,
+              "gameVerified": false
+            },
+            {
+              "id": "B2.4.2",
+              "name": "真实交付授权与最终权益承接",
+              "state": "CodeVerified",
+              "dependsOn": [
+                "B2.4.1"
+              ],
+              "preparatoryPhysicalRuntimeWired": true,
+              "oldRightsAdoptionWired": true,
+              "offlineCutoverScribeVerified": true,
+              "generalFeeRuntimeWired": false,
+              "activeAvailableInGame": false,
+              "deployed": true,
+              "gameVerified": false
+            },
+            {
+              "id": "B2.4.3",
+              "name": "完整游戏存档与制度能力验收",
+              "state": "Planned",
+              "dependsOn": [
+                "B2.4.2"
+              ],
+              "acceptanceChecklistPrepared": true,
+              "deferredToAcceptanceUnit": true,
+              "gameVerified": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B3",
+      "name": "规划与影子决策",
+      "state": "InProgress",
+      "dependsOn": [
+        "B1",
+        "B2"
+      ],
+      "modules": [
+        "M2",
+        "M5",
+        "M3",
+        "M4"
+      ],
+      "emergencyReserveWired": true,
+      "emergencyReserveNote": "CHG-20261009-ECON-M5-EMERGENCY：M5 内核（不重复预算/去重/硬预留背书/有限储备/提前触发/避免无止境赚钱/三分配/账户与报价降级）经复核**本已完整**；本批只补 v0.5 §40 应急储备 —— 触发线 = 下水位 + 应急额（储备目标 8%），以储备目标为上界。触发线 936（target 1200 时）已用边界用例钉住。M5 仍未做：合同-工资-消费全链（跨 M6/M7）、v0.5 §53 的溢价上限/风险与通勤范围/住房舒适目标（均缺数据源）、LifePolicy 六个 .5f 常量占位的配置化（需 UI+Save）。",
+      "goalStarvationGuardWired": true,
+      "goalStarvationGuardNote": "CHG-20261009-ECON-M3-WAIT：§9 等待加权（上限 MaximumWaitWeightTicks）只在同级排先后、不突破等级、受阻/冻结项不累计；§9 不可持续反馈（BasicNeedStreakTicks + 决策页行）；§6 风险时限（差分估算消耗速率）与 slack（帮助时刻只取成本切片 RequiredByTick），不可估时如实返回 -1；排序抽为 ShadowPlanBuilder.RankGoals 纯函数 + 8 个单测。§7 前置链与环检测（依赖边取真实成本切片；劳动通道不可用且必要项有资金缺口时标制度性受阻，不递归建子目标）。§6 帮助时刻多源合并（成本切片时限 ∪ 已发布可行岗位的最早到账时刻，取最小；都缺则不可估）。仍未做：§6 的『路程/排队/服务时长』三段（须由接入层新端口读原版位置与服务队列后给**区间**，明确不填经验常量以免制造伪精度，需单独一轮含原版移速参数的 API 核实）、§5 P3 长期改善（无目标源，待 M5）、§10 的时间与服务容量共同仲裁。",
+      "children": [
+        {
+          "id": "B3.1",
+          "name": "只读生活目标、预算内核与影子收入仲裁",
+          "state": "CodeVerified",
+          "runtimeWired": true,
+          "uiWired": true,
+          "shadowOnly": true,
+          "budgetKernelVerified": true,
+          "priorityZeroEligibilityVerified": true,
+          "pricedConsumptionProvider": false,
+          "executableMarketProvider": false,
+          "persistentDecisionState": false,
+          "automaticEmploymentFixed": false,
+          "deployed": true,
+          "deployedBuildSha256": "F33335D5C7542E16B87896A18FD9E01C68FC35AD8E9E7D2E58FD2DD0BEABDA08",
+          "deployedUtc": "2026-10-08T12:25:47Z",
+          "deploymentEvidence": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B3.1_部署验证.json",
+          "gameVerified": false
+        },
+        {
+          "id": "B3.2",
+          "name": "生活费用与真实岗位供给、完整目标仲裁及持久滞回",
+          "state": "CodeVerified",
+          "dependsOn": [
+            "B3.1"
+          ],
+          "changeId": "CHG-20261008-ECON-B32B4",
+          "wave": "2-of-2-code-complete",
+          "planningSourcePortsWired": true,
+          "pricedConsumptionProviderWired": true,
+          "institutionWorkProviderWired": true,
+          "institutionPolicyPersistenceWired": true,
+          "persistentHysteresisWired": true,
+          "workOwnershipChannelWired": true,
+          "policyUiWired": true,
+          "invariantBOnlyOffline": true,
+          "deployed": true,
+          "deployedBuildSha256": "7F23D049792FFBEF6C4FCEB9A331B5E804E923B295C8D5B123CDF48E914C2C96",
+          "deployedUtc": "2026-10-08T15:04:42Z",
+          "contractWageConsumptionWired": false,
+          "gameVerified": false,
+          "evidence": {
+            "record": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/14-B3.2_实装记录.md",
+            "verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B3.2_实装验证.json",
+            "ports": "Source/PersonalChronicle/Application/PawnEconomy/Planning/PlanningSourcePorts.cs",
+            "foodCosts": "Source/PersonalChronicle/Economy/PawnEconomy/Planning/EconomyFoodCostSource.cs",
+            "workOpportunities": "Source/PersonalChronicle/Economy/PawnEconomy/Planning/EconomyInstitutionWorkSource.cs",
+            "policyDomain": "Source/PersonalChronicle/Domain/PawnEconomy/Governance/InstitutionPolicy.cs",
+            "policySave": "Source/PersonalChronicle/Data/PawnEconomy/InstitutionPolicySaveData.cs",
+            "policyUi": "Source/PersonalChronicle/Economy/PawnEconomy/Dialog_PawnEconomy.Policy.cs",
+            "hysteresis": [
+              "Source/PersonalChronicle/Domain/PawnEconomy/Planning/ShadowPlanLatch.cs",
+              "Source/PersonalChronicle/Data/PawnEconomy/ShadowPlanningSaveData.cs"
+            ],
+            "workOwnership": [
+              "Source/PersonalChronicle/Domain/PawnEconomy/Employment/WorkOwnershipRules.cs",
+              "Source/PersonalChronicle/Data/PawnEconomy/WorkOwnershipSaveData.cs",
+              "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorkOwnership.cs"
+            ],
+            "exc": "docs/设计文档/架构/EXC-2026-028.md",
+            "tests": [
+              "Tests/PlanningSourcePortsTests.cs",
+              "Tests/InstitutionPolicyTests.cs",
+              "Tests/ShadowPlanningLatchTests.cs",
+              "Tests/EconomyWorkOwnershipTests.cs"
+            ],
+            "testRun": "Tests/TestResults/EconomyU1-Full.trx"
+          },
+          "contractWired": true,
+          "labourEvidenceWired": true,
+          "wageTransferWired": true,
+          "consumptionWired": "food-only",
+          "record2": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/15-B4_实装记录.md",
+          "gateRecord": ".codebuddy/audit/gate-records/GR-CHG-20261008-ECON-B32B4.md",
+          "changeAnnotation": "变更标注_CHG-20261008-ECON-B32B4.md",
+          "gates": {
+            "arch": "PASS WITH EXCEPTION (P1 fixed)",
+            "loc": "BLOCKED-then-fixed",
+            "test": "PASS",
+            "delta": "PASS",
+            "data": "PASS",
+            "save": "PASS-unit-only",
+            "perf": "BLOCKED-no-runtime-metrics",
+            "ui": "BLOCKED-then-fixed",
+            "comp": "N/A"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B4",
+      "name": "第一条自主经济闭环",
+      "state": "CodeVerified",
+      "dependsOn": [
+        "B2",
+        "B3"
+      ],
+      "modules": [
+        "M6",
+        "M7",
+        "M4",
+        "M10"
+      ],
+      "changeId": "CHG-20261008-ECON-B32B4",
+      "contractWired": true,
+      "evidenceSinkWired": true,
+      "wageSettlementWired": true,
+      "consumptionWired": "food-only",
+      "gameVerified": false,
+      "note": "代码完成待 Gate 与验收工程；游戏内闭环需制度 Active（验收单元）",
+      "uiWired": false,
+      "planOptionsWired": true,
+      "planOptionsNote": "CHG-20261009-ECON-M4-OPTIONS：四类方案（免费自救/劳动/购买/服务）的可行性与不可行原因已上屏（决策页「可选方案」行）；顺序固定免费优先。购买与服务**如实为不可行**（尚无价格/服务供给来源，不假装可选）。M4 仍未做：购买方案数据源（属 M7 价格）、服务方案数据源（属 M10/M11）、协作方案（属 M8）、影子模式下的真实 Job 执行（有意不做）。",
+      "gateRecord": ".codebuddy/audit/gate-records/GR-CHG-20261008-ECON-B32B4.md"
+    },
+    {
+      "id": "B5",
+      "name": "家庭与逐类服务",
+      "state": "InProgress",
+      "dependsOn": [
+        "B4"
+      ],
+      "modules": [
+        "M8",
+        "M7",
+        "M6"
+      ],
+      "changeId": "CHG-20261008-ECON-B5",
+      "careAuthorizationsWired": true,
+      "payerGateWired": true,
+      "serviceCapabilityGateWired": true,
+      "careUiWired": true,
+      "serviceKindsReadyPaid": [
+        "Treatment"
+      ],
+      "record": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/16-B5_实装记录.md",
+      "gameVerified": false,
+      "capabilityStripWired": true,
+      "deployed": true,
+      "deployedBuildSha256": "117E6B7C23A94BB5388BFE0B34EF1BEC9CB33E2D75944C68C3D0073EBBCDAFF5",
+      "deployedUtc": "2026-10-08T15:37:00Z",
+      "deliveryEvidenceHookWired": true,
+      "exc": "docs/设计文档/架构/EXC-2026-029.md",
+      "serviceKindsPreparing": [
+        "Examination",
+        "Bed",
+        "Childcare",
+        "Education"
+      ],
+      "servicePriceSurfaceWired": true,
+      "priceGateWired": true,
+      "settlementGateWired": true,
+      "settlementPath": "EconomyCare.TrySettleCareAct",
+      "readyPaidNote": "代码级七门齐全（价格需玩家发布服务单价）；实机未验证",
+      "deliveryEvidenceAttribution": "tend=Treatment (corrected 2026-10-08; Examination has no vanilla process)",
+      "changeAnnotation": "变更标注_CHG-20261008-ECON-B5.md",
+      "deltaGate": "PASS (19 files, 2026-10-08)",
+      "defaultGrantKind": "Treatment"
+    },
+    {
+      "id": "B6",
+      "name": "机构再生产与有限学习",
+      "state": "InProgress",
+      "dependsOn": [
+        "B4",
+        "B5"
+      ],
+      "modules": [
+        "M10",
+        "M9"
+      ],
+      "changeId": "CHG-20261009-ECON-B6B7",
+      "restockPlannerWired": true,
+      "boundedLearningWired": true,
+      "institutionToolTemplates": true,
+      "realReadoutsWired": "stock + completable WIP + authorised-not-started + free-stock target (map level single projection; institution binding not wired)",
+      "authorisedNotStartedWired": true,
+      "authorisedNotStartedChangeId": "CHG-20261009-ECON-M10-AUTH",
+      "authorisedNotStartedNote": "U6-A：授权账（上限 16、确定性回执、落盘、250 tick 年龄裁剪）+ 与观察在制的品类级收敛（例外 EXC-2026-030）",
+      "freeStockTargetWired": true,
+      "freeStockTargetChangeId": "CHG-20261009-ECON-M10-TARGET",
+      "freeStockTargetNote": "U6-A2：机构政策每品类目标声明（Entry 内加法列表，无新节点）+ 单一确定性投影（最低 anchorKey 胜出）+ 政策页两级菜单；无发布者仍 Unknown",
+      "readoutInputsUnwired": [
+        "confirmedUndeliveredDemand",
+        "authorisedUndeliveredExports"
+      ],
+      "executorContractWired": "capacity read-only + bookkeeping proposals (no second runner, zero write)",
+      "wageCredibilityWired": "recorded from real settlements; not persisted; not used in decisions",
+      "deployed": true,
+      "buildSha256": "0813A24BF89567E31809640A153D8C90BACAB234CEC9E28D097FBD2370E0E43E",
+      "deployedBuildSha256": "0813A24BF89567E31809640A153D8C90BACAB234CEC9E28D097FBD2370E0E43E",
+      "deployedUtc": "2026-10-09T10:11:36Z",
+      "record2": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/17-B6B7_收口_实装记录.md",
+      "gameVerified": false
+    },
+    {
+      "id": "B7",
+      "name": "治理兼容与交付",
+      "state": "InProgress",
+      "dependsOn": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6"
+      ],
+      "modules": [
+        "M12"
+      ],
+      "changeId": "CHG-20261009-ECON-B6B7",
+      "overviewPageWired": true,
+      "overviewProductionRows": true,
+      "performanceInstrumentation": true,
+      "releasePrep": false,
+      "releasePrepChecklist": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/18-B7_发布准备清单.md",
+      "policyDraftAndTrendPending": true,
+      "deployed": true,
+      "deployedBuildSha256": "0813A24BF89567E31809640A153D8C90BACAB234CEC9E28D097FBD2370E0E43E",
+      "deployedUtc": "2026-10-09T10:11:36Z",
+      "perfMetric": "ECON-PERF planning ticks/subjects/avgMs/maxMs/slow>2ms/sourceErrors"
+    }
+  ],
+  "evidence": {
+    "b31FullTests": "Tests/TestResults/EconomyLanding-B3-Full.trx",
+    "b31Verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B3.1_实装验证.json",
+    "b31Deployment": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B3.1_部署验证.json",
+    "b31AcceptanceChecklist": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/12-B3.1_只读规划验收清单.md",
+    "caliberChange": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/13-实装口径变更_先全实装后统一验收_2026-10-08.md",
+    "u1FullTests": "Tests/TestResults/EconomyU1-Full.trx",
+    "baselineTests": "Tests/TestResults/EconomyLanding-Baseline.trx",
+    "perceptionTests": "Tests/TestResults/EconomyLanding-Perception.trx",
+    "fullTests": "Tests/TestResults/EconomyLanding-Full.trx",
+    "verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实装验证.json",
+    "b12FullTests": "Tests/TestResults/EconomyLanding-B12-Full.trx",
+    "b12Verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B1.2_实装验证.json",
+    "b13FullTests": "Tests/TestResults/EconomyLanding-B13-Full.trx",
+    "b13Verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B1.3_实装验证.json",
+    "b21FullTests": "Tests/TestResults/EconomyLanding-B21-Full.trx",
+    "b21Verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B2.1_实装验证.json",
+    "b22FullTests": "Tests/TestResults/EconomyLanding-B22-Full.trx",
+    "b22Verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B2.2_实装验证.json",
+    "b23FullTests": "Tests/TestResults/EconomyLanding-B23-Full.trx",
+    "b23Verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B2.3_实装验证.json",
+    "b241FullTests": "Tests/TestResults/EconomyLanding-B241-Full.trx",
+    "b241Verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B2.4.1_实装验证.json",
+    "b242FullTests": "Tests/TestResults/EconomyLanding-B242-Full.trx",
+    "b242Verification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B2.4.2_实装验证.json",
+    "b242UiVerification": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B2.4.2_UI复验.json",
+    "b242Deployment": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B2.4.2_部署验证_2026-10-08.json",
+    "b242AcceptanceChecklist": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/09-B2.4.2_实机验收清单_2026-10-08.md",
+    "b242AcceptanceResults": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B2.4.2_验收结果填写.csv",
+    "artDeployment": "docs/设计文档/功能模块/资产规范/05-经济机构_2026-10-08/部署验证.json",
+    "artAcceptanceChecklist": "docs/设计文档/功能模块/资产规范/05-经济机构_2026-10-08/四向验收清单.md",
+    "artAcceptanceResults": "docs/设计文档/功能模块/资产规范/05-经济机构_2026-10-08/四向实机结果.csv",
+    "u6AcceptanceChecklist": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/19-U6_实机验收清单_2026-10-09.md",
+    "u6AcceptanceNote": "U6 批实机验收清单（U6-A/A2/B1/A3/A4/A5）：每条含可证伪期望值；其中 U6-A2「库存目标入口曾缺失」与 U6-A3「补货评估预期全为无法评估」为最易误判的两项。验收需重启游戏；本轮全部实机项仍 NOT EXECUTED"
+  }
+}

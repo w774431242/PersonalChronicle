@@ -1,0 +1,138 @@
+{
+  "checkedUtc": "2026-10-08T04:23:16.165478+00:00",
+  "passed": true,
+  "scope": "Design documentation, current assembly fingerprint cross-check, selected RUIF signatures, hypothetical arithmetic, PNG bounds and Chinese glyph coverage. Not runtime, simulation or in-game acceptance.",
+  "documentCount": 6,
+  "localLinksChecked": 49,
+  "selectedRuifMethods": [
+    "System.Void RUIF.PanelAtoms::StatRow(UnityEngine.Rect,System.String,System.String,System.Nullable`1<System.Single>,System.Nullable`1<UnityEngine.Color>)",
+    "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single)",
+    "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single,RUIF.StatCol[],System.Int32,System.Single,System.Single[],System.String[])",
+    "System.Void RUIF.ProgressAtoms::CapacityBar(UnityEngine.Rect,System.Single,System.Single,System.Nullable`1<UnityEngine.Color>)",
+    "System.Boolean RUIF.ButtonAtoms::PrimaryButton(UnityEngine.Rect,System.String,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)",
+    "System.Void RUIF.NavAtomsB::LayerSwitch(UnityEngine.Rect,System.String[],System.Int32&)",
+    "System.Boolean RUIF.FeedbackAtoms::AlertBanner(UnityEngine.Rect,RUIF.AlertPriority,System.String,System.String)",
+    "System.Boolean RUIF.InputAtoms::Segmented(UnityEngine.Rect,System.String[],System.Int32&)",
+    "System.Boolean RUIF.InputAtoms::Segmented(UnityEngine.Rect,System.String[],System.Int32&,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)"
+  ],
+  "fingerprints": [
+    {
+      "role": "game",
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\RimWorldWin64_Data\\Managed\\Assembly-CSharp.dll",
+      "sha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A"
+    },
+    {
+      "role": "ruif",
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\RUIF\\Assemblies\\RUIF.dll",
+      "sha256": "E9C0ED7C4B027F3F6C3F656C0737311DBCD21603FA94138D38C7105842C0ACAC"
+    },
+    {
+      "role": "Current RUIF source, not runtime execution",
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\ProgressAtoms.cs",
+      "sha256": "baaafa9e1577ddbefcfdca59282d0acc52252d1197f8695f4c1cb0c1e1ed7e8e"
+    },
+    {
+      "role": "Current RUIF source, not runtime execution",
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\PanelAtoms.cs",
+      "sha256": "ce5ee3b8ad40a8fae1158f07e50c033b47e7b6bea294fa2d2c7abec3e8356597"
+    },
+    {
+      "role": "Current RUIF source, not runtime execution",
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\DataAtoms.cs",
+      "sha256": "64947523e20d868a53620321349bcc60f8ed2bdffa788b667a3a56e84c1fe055"
+    },
+    {
+      "role": "Current RUIF source, not runtime execution",
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\InputAtoms.cs",
+      "sha256": "49111701a273a13a7fe54a562119733e5b95db295d714498449f7f571f93bc4d"
+    }
+  ],
+  "priorReferenceSourceFingerprintsUnchanged": 10,
+  "documents": [
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\经济学优化与需求可视化_方案_v0.8.md",
+      "sha256": "bf58e333526e36dc887651c375a46afc24d4a9d28f0f8c384cd786c831af5fe0"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\模块化实装指导手册\\07-需求驾驶舱与政策反馈.md",
+      "sha256": "21a6c4bc63cbbae592a7ac5feff912afc38c23c227848ea80d304153910afd13"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\公有机构与外贸循环_优化方案_v0.7.md",
+      "sha256": "483dbc95b3667360c76a853677593511c95fdadd3c6931ad2b34a92a7bab06a0"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\模块化实装指导手册\\00-总册与实施路线.md",
+      "sha256": "6719ea3194c15d10dc81b01fc0a68f74b592b25b87d898a46d976e73e9f1cece"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\模块化实装指导手册\\03-RUIF前端实装.md",
+      "sha256": "a6c5193df5c65dbc72da36a11dbf4947855d7abe692778a5f1968fdbb90e0201"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\游戏代码设计\\00-公有经济第一批代码设计.md",
+      "sha256": "f1d47e5f5a210e31efbd3e5211b9adff92e4a93c4557c4acd0b1a04af98797da"
+    }
+  ],
+  "hypotheticalChecks": {
+    "baselineIntent": 18,
+    "nextWindowNewOrderIntentAtPrice2": 19,
+    "moneyBlockedPeople": 5,
+    "unfundedQuantity": 12,
+    "publicPurchaseCost": 18,
+    "paidCandidateCoverageAfterPublicPurchase": 24,
+    "totalLifeCoverageAfterPublicPurchase": 30,
+    "cashScenarios": [
+      54,
+      38
+    ],
+    "isEconomicSimulation": false
+  },
+  "preview": {
+    "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\可视化\\需求驾驶舱_布局预览.png",
+    "resolution": [
+      3200,
+      2140
+    ],
+    "textsBoundsChecked": 88,
+    "fontCoverage": "Not available; manually inspected rendered Chinese text",
+    "visuallyInspected": true,
+    "isGameScreenshot": false
+  },
+  "publicSources": [
+    {
+      "id": "E01",
+      "title": "OpenStax Principles of Economics 3e: Demand, Supply, and Equilibrium",
+      "url": "https://openstax.org/books/principles-economics-3e/pages/3-1-demand-supply-and-equilibrium-in-markets-for-goods-and-services",
+      "use": "Willingness and ability to pay; separates market demand from broader life needs."
+    },
+    {
+      "id": "E02",
+      "title": "OpenStax: Budget Constraint",
+      "url": "https://openstax.org/books/principles-economics-3e/pages/2-1-how-individuals-make-choices-based-on-their-budget-constraint",
+      "use": "Budget constraint and opportunity cost; game time/cash algorithms are proposed design."
+    },
+    {
+      "id": "E03",
+      "title": "Christopher D. Carroll: Theoretical Foundations of Buffer Stock Saving",
+      "url": "https://www.econ2.jhu.edu/people/ccarroll/papers/BufferStockTheory/BufferStockTheory.html",
+      "use": "Target/precautionary saving direction only; paper equilibrium assumptions not applied to game."
+    },
+    {
+      "id": "E04",
+      "title": "Lee, Padmanabhan, Whang (1997): Information Distortion in a Supply Chain",
+      "url": "https://pubsonline.informs.org/doi/abs/10.1287/mnsc.43.4.546",
+      "use": "Public publisher abstract on amplified order signals; no claim to full-text reproduction or tested mitigation."
+    },
+    {
+      "id": "E05",
+      "title": "OpenStax: Public Goods",
+      "url": "https://openstax.org/books/principles-economics-3e/pages/13-3-public-goods",
+      "use": "Nonrival/nonexcludable definition differs from public ownership; game resource policy remains user decision."
+    }
+  ],
+  "runtimeModified": false,
+  "buildRun": false,
+  "deployed": false,
+  "gameplayVerified": false
+}

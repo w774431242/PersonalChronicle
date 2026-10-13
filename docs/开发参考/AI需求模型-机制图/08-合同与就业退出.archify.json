@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "机制 08 · 合同与就业退出",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [940, 570]
+  },
+  "lanes": [
+    { "id": "main", "label": "合同生命周期" },
+    { "id": "hold", "label": "不清退与供给侧" },
+    { "id": "term", "label": "工作类型释放" }
+  ],
+  "states": [
+    { "id": "active", "type": "start", "label": "履约中", "sublabel": "ContractState.Active", "lane": "main", "col": 0, "step": "01", "tag": "唯一可退出" },
+    { "id": "review", "type": "decision", "label": "退出复查", "sublabel": "EvaluateContractExit", "lane": "main", "col": 1, "step": "02", "tag": "每 tick" },
+    { "id": "natural", "type": "failure", "label": "自然结束", "sublabel": "Expired / JobCapReached", "lane": "main", "col": 2, "step": "03", "tag": "先判" },
+    { "id": "terminate", "type": "success", "label": "终止 + 释放", "sublabel": "Terminate", "lane": "main", "col": 4, "step": "05", "tag": "幂等" },
+    { "id": "idle", "type": "waiting", "label": "制度未就绪", "sublabel": "AllReady=false", "lane": "hold", "col": 0, "tag": "只挡新签" },
+    { "id": "supply", "type": "failure", "label": "供给侧消失", "sublabel": "机构关 / 岗位无", "lane": "hold", "col": 1, "tag": "后判" },
+    { "id": "restore", "type": "neutral", "label": "工作类型释放", "sublabel": "仅当仍等于我方值", "lane": "term", "col": 2, "yOffset": 96, "tag": "玩家改写则保留" }
+  ],
+  "transitions": [
+    { "id": "t1", "from": "active", "to": "review" },
+    { "id": "t2", "from": "review", "to": "natural", "labelDy": 55 },
+    { "id": "t3", "from": "review", "to": "idle", "label": "未就绪", "variant": "security", "route": "drop" },
+    { "id": "t4", "from": "idle", "to": "active", "label": "就绪", "variant": "emphasis", "route": "drop" },
+    { "id": "t5", "from": "supply", "to": "terminate", "label": "结束", "route": "drop" },
+    { "id": "t6", "from": "natural", "to": "terminate", "label": "结束", "variant": "emphasis", "labelDy": 55 },
+    { "id": "t7", "from": "terminate", "to": "restore", "label": "释放工作类型", "variant": "emphasis", "route": "bottom-channel" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "四条退出码（顺序即优先级）",
+      "items": [
+        "Expired（now > ExpiresTick）→ JobCapReached → InstitutionClosed → PositionUnavailable",
+        "自然结束优先于供给侧消失；到期判据用严格大于，与取证边界一致",
+        "已非 Active 恒返回 None：复查幂等，不会重复终止"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "谁不算退出",
+      "items": [
+        "制度未就绪（AllReady=false）不清退存量合同，只挡新签",
+        "只有玩家主动关闭（Desired=false）才清退存量 ⇒ 机构关闭",
+        "原版合同分支同规则：锚点未毁未燃 + 持约人仍可工作"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "释放规则（EMP-06）",
+      "items": [
+        "仅当当前工作优先级仍等于我方写入值才还原原值",
+        "玩家改写过的优先级保留，但所有权记录同样丢弃",
+        "释放入口唯一：Terminate 后按记录逐类型处理"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1073 @@
+{
+  "changeId": "CHG-20261008-ECON-ART",
+  "files": [
+    {
+      "kind": "LaborOffice",
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-6b323ba3-a691-405c-9c1d-caaa01082ab2.png",
+      "sha256": "3bbf71ed3ad9336e915f5bbef9d433e5750649853392cb80d9b349e0b437ae50",
+      "promptFile": "PC_PEA_LaborOffice_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "externalPixelEditsPerformed": false,
+      "generationMode": "north master generation",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 742787,
+      "opaqueBounds": [
+        388,
+        100,
+        866,
+        1156
+      ],
+      "silhouetteRatio": 0.4527,
+      "mapSilhouetteSize": [
+        0.7624,
+        1.6842
+      ],
+      "zeroAlphaFraction": 0.6802,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 11729,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "LaborOffice",
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "east",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_east.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-7f72aa3e-72db-49ee-bfec-0903e22a6270.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png",
+      "northReferenceSha256": "3BBF71ED3AD9336E915F5BBEF9D433E5750649853392CB80D9B349E0B437AE50",
+      "promptFile": "PC_PEA_LaborOffice_east.prompt.txt",
+      "sha256": "083a2c732e5b241aea78f739b3c98e82150bb69aa68323410816a6b88af3454e",
+      "generator": "built-in image_gen",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 819137,
+      "opaqueBounds": [
+        47,
+        366,
+        1207,
+        888
+      ],
+      "silhouetteRatio": 2.2222,
+      "mapSilhouetteSize": [
+        1.8501,
+        0.8325
+      ],
+      "zeroAlphaFraction": 0.6189,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 5166,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "LaborOffice",
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "south",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_south.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-dd0d917a-575d-40a4-bcbc-c0938fbd8254.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png",
+      "northReferenceSha256": "3BBF71ED3AD9336E915F5BBEF9D433E5750649853392CB80D9B349E0B437AE50",
+      "promptFile": "PC_PEA_LaborOffice_south.prompt.txt",
+      "sha256": "6b635147cf11627a5274101bb652e5940f9e51ff0db2386f0fae184c8efa9ef3",
+      "generator": "built-in image_gen",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 720443,
+      "opaqueBounds": [
+        386,
+        97,
+        869,
+        1158
+      ],
+      "silhouetteRatio": 0.4552,
+      "mapSilhouetteSize": [
+        0.7703,
+        1.6922
+      ],
+      "zeroAlphaFraction": 0.6759,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 9423,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "LaborOffice",
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "west",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_west.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-d12688d5-1171-4c08-9bd0-73bb0ea5c243.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png",
+      "northReferenceSha256": "3BBF71ED3AD9336E915F5BBEF9D433E5750649853392CB80D9B349E0B437AE50",
+      "promptFile": "PC_PEA_LaborOffice_west.prompt.txt",
+      "sha256": "6be89ce929b7ef57fd78b642f41ddb59da32c19a77dea772b21808d1773690b4",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "inputReferences": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-e16cb0e6-04a1-48af-b492-006203b89293.png",
+        "E:/SteamLibrary/steamapps/common/RimWorld/11/殖民地综合管理系统/Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png"
+      ],
+      "repairTargetSha256": "740e70a24e8b35f3a713349ed82214d7ab32f13199e8937bce8a077f1ac98206",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 709479,
+      "opaqueBounds": [
+        78,
+        402,
+        1177,
+        866
+      ],
+      "silhouetteRatio": 2.3685,
+      "mapSilhouetteSize": [
+        1.7528,
+        0.74
+      ],
+      "zeroAlphaFraction": 0.6812,
+      "borderMaxAlpha": 0,
+      "strictZeroAlphaBorder": true,
+      "lowAlphaNoisePixels": 9730,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "WorkshopOffice",
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-125286c0-edd2-4c57-bd3d-5573b935959d.png",
+      "sha256": "e61a7326d5561de0638e2d4baa9079c097eaab5fa7ec53c3147704d411dc06a8",
+      "promptFile": "PC_PEA_WorkshopOffice_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "externalPixelEditsPerformed": false,
+      "generationMode": "north master generation",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 823779,
+      "opaqueBounds": [
+        391,
+        103,
+        863,
+        1154
+      ],
+      "silhouetteRatio": 0.4491,
+      "mapSilhouetteSize": [
+        0.7528,
+        1.6762
+      ],
+      "zeroAlphaFraction": 0.683,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 13404,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "WorkshopOffice",
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "east",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_east.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-6ca15d5b-0cf7-40ff-b160-06ecc72dccdc.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north.png",
+      "northReferenceSha256": "E61A7326D5561DE0638E2D4BAA9079C097EAAB5FA7EC53C3147704D411DC06A8",
+      "promptFile": "PC_PEA_WorkshopOffice_east.prompt.txt",
+      "sha256": "e4f4e7546280104cb7b80f7c475ccefa8ed058f5172a06667c925274eee1601f",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 864132,
+      "opaqueBounds": [
+        53,
+        364,
+        1202,
+        874
+      ],
+      "silhouetteRatio": 2.2529,
+      "mapSilhouetteSize": [
+        1.8325,
+        0.8134
+      ],
+      "zeroAlphaFraction": 0.6317,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 6237,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "WorkshopOffice",
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "south",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_south.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-c503b4da-a23e-4ae5-a613-b07661f4277c.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north.png",
+      "northReferenceSha256": "E61A7326D5561DE0638E2D4BAA9079C097EAAB5FA7EC53C3147704D411DC06A8",
+      "promptFile": "PC_PEA_WorkshopOffice_south.prompt.txt",
+      "sha256": "e558f5becc6e8243ab53bc91e17f1decdb8146a836fd3d5d905aea1881aaf97a",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 763378,
+      "opaqueBounds": [
+        389,
+        100,
+        865,
+        1156
+      ],
+      "silhouetteRatio": 0.4508,
+      "mapSilhouetteSize": [
+        0.7592,
+        1.6842
+      ],
+      "zeroAlphaFraction": 0.6797,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 12245,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "west",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_west.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-9c43ef92-c692-4874-ad2b-e58e03d66681.png",
+      "generator": "built-in image_gen",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north.png",
+      "northReferenceSha256": "E61A7326D5561DE0638E2D4BAA9079C097EAAB5FA7EC53C3147704D411DC06A8",
+      "promptFile": "PC_PEA_WorkshopOffice_west.prompt.txt",
+      "sha256": "34e432c1967cc3f712213070d7056d22d9593fd0c739ec4b1781bd53c5af32a5",
+      "kind": "WorkshopOffice",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 856715,
+      "opaqueBounds": [
+        65,
+        389,
+        1190,
+        868
+      ],
+      "silhouetteRatio": 2.3486,
+      "mapSilhouetteSize": [
+        1.7943,
+        0.764
+      ],
+      "zeroAlphaFraction": 0.6579,
+      "borderMaxAlpha": 0,
+      "strictZeroAlphaBorder": true,
+      "lowAlphaNoisePixels": 5975,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "SettlementOffice",
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-3c28675b-1ae0-4441-98f9-eed52468e6f6.png",
+      "sha256": "09c05a7b35f445d9579d3344cd8aa39d28722cd2e470610b2b565f6a3cf12dd2",
+      "promptFile": "PC_PEA_SettlementOffice_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "externalPixelEditsPerformed": false,
+      "generationMode": "north master generation",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 845764,
+      "opaqueBounds": [
+        386,
+        99,
+        868,
+        1157
+      ],
+      "silhouetteRatio": 0.4556,
+      "mapSilhouetteSize": [
+        0.7687,
+        1.6874
+      ],
+      "zeroAlphaFraction": 0.6797,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 7184,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "SettlementOffice",
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "east",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_east.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-08821ac8-b5b4-4eee-ba4a-10c9eb526dde.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png",
+      "northReferenceSha256": "09C05A7B35F445D9579D3344CD8AA39D28722CD2E470610B2B565F6A3CF12DD2",
+      "promptFile": "PC_PEA_SettlementOffice_east.prompt.txt",
+      "sha256": "cd3d15ce12407a7128a40487ef1597d02f680f98ffd26807eaed5cb2996a2fed",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "inputReferences": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-3a16c75d-4fb4-4657-8565-203d4cb1cda0.png",
+        "E:/SteamLibrary/steamapps/common/RimWorld/11/殖民地综合管理系统/Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png"
+      ],
+      "repairTargetSha256": "d793faa2f158962abb828079523953e0f1eb970294db914a73636b74edd8c5e9",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 777312,
+      "opaqueBounds": [
+        73,
+        397,
+        1180,
+        860
+      ],
+      "silhouetteRatio": 2.3909,
+      "mapSilhouetteSize": [
+        1.7656,
+        0.7384
+      ],
+      "zeroAlphaFraction": 0.6813,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 5333,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "SettlementOffice",
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "south",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_south.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-c9118b03-29ef-40f9-a221-dcb522721220.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png",
+      "northReferenceSha256": "09C05A7B35F445D9579D3344CD8AA39D28722CD2E470610B2B565F6A3CF12DD2",
+      "promptFile": "PC_PEA_SettlementOffice_south.prompt.txt",
+      "sha256": "17014e94e77b2e210bf6b26886cf0aa90d6cc51e84b9b13008fce479a81fff29",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 824325,
+      "opaqueBounds": [
+        383,
+        96,
+        871,
+        1159
+      ],
+      "silhouetteRatio": 0.4591,
+      "mapSilhouetteSize": [
+        0.7783,
+        1.6954
+      ],
+      "zeroAlphaFraction": 0.6744,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 8049,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "SettlementOffice",
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "west",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_west.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-a54c310e-4923-42b4-97be-4146a40234c8.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png",
+      "northReferenceSha256": "09C05A7B35F445D9579D3344CD8AA39D28722CD2E470610B2B565F6A3CF12DD2",
+      "promptFile": "PC_PEA_SettlementOffice_west.prompt.txt",
+      "sha256": "5e71778e9ebb2c105d105ea60408b32075434d6611353578737fedbd5280e0c5",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "inputReferences": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-1cfd1373-c5bb-4281-a650-c60b3b1f296a.png",
+        "E:/SteamLibrary/steamapps/common/RimWorld/11/殖民地综合管理系统/Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png"
+      ],
+      "repairTargetSha256": "a6050c696d27cacb8b44c62e5517b9607bbbe64d06c1b2ef7771aeba84160877",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 878256,
+      "opaqueBounds": [
+        71,
+        361,
+        1183,
+        862
+      ],
+      "silhouetteRatio": 2.2196,
+      "mapSilhouetteSize": [
+        1.7735,
+        0.799
+      ],
+      "zeroAlphaFraction": 0.6511,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 10202,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "Shop",
+      "defName": "PC_PEA_Shop",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-82b162ee-d6bc-4c3c-a8ce-75401c347578.png",
+      "sha256": "372343f4d2333ce5c05d68cab0c36abc0674feed966eca05563653f2d6021d01",
+      "promptFile": "PC_PEA_Shop_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "externalPixelEditsPerformed": false,
+      "generationMode": "north master generation",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 820848,
+      "opaqueBounds": [
+        389,
+        100,
+        865,
+        1156
+      ],
+      "silhouetteRatio": 0.4508,
+      "mapSilhouetteSize": [
+        0.7592,
+        1.6842
+      ],
+      "zeroAlphaFraction": 0.6827,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 8972,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "Shop",
+      "defName": "PC_PEA_Shop",
+      "direction": "east",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_east.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-f0df20c3-7f63-4eb3-9160-884d386f1f3b.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png",
+      "northReferenceSha256": "372343F4D2333CE5C05D68CAB0C36ABC0674FEED966ECA05563653F2D6021D01",
+      "promptFile": "PC_PEA_Shop_east.prompt.txt",
+      "sha256": "e82c0505ca628c28e775f6b8c2c83d52ce73b0606f2aec7c0ef6f71d14503d29",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "inputReferences": [
+        "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-4f280a38-7f00-4151-880b-1f6ec4d9c7f7.png",
+        "E:/SteamLibrary/steamapps/common/RimWorld/11/殖民地综合管理系统/Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png"
+      ],
+      "repairTargetSha256": "4c9d7ece280505bcdacf5131edf472941f3b2f263fcc66f44cfc255dba22d8eb",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 716961,
+      "opaqueBounds": [
+        95,
+        413,
+        1160,
+        849
+      ],
+      "silhouetteRatio": 2.4427,
+      "mapSilhouetteSize": [
+        1.6986,
+        0.6954
+      ],
+      "zeroAlphaFraction": 0.7092,
+      "borderMaxAlpha": 0,
+      "strictZeroAlphaBorder": true,
+      "lowAlphaNoisePixels": 7906,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "Shop",
+      "defName": "PC_PEA_Shop",
+      "direction": "south",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_south.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-9e49d707-d0ec-4184-ad34-f5edb464ea74.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png",
+      "northReferenceSha256": "372343F4D2333CE5C05D68CAB0C36ABC0674FEED966ECA05563653F2D6021D01",
+      "promptFile": "PC_PEA_Shop_south.prompt.txt",
+      "sha256": "21220e7c1be3f11fef63358c8bb651958f8d06158bea09367abb5b9bb7382525",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 784081,
+      "opaqueBounds": [
+        389,
+        101,
+        866,
+        1156
+      ],
+      "silhouetteRatio": 0.4521,
+      "mapSilhouetteSize": [
+        0.7608,
+        1.6826
+      ],
+      "zeroAlphaFraction": 0.6819,
+      "borderMaxAlpha": 0,
+      "strictZeroAlphaBorder": true,
+      "lowAlphaNoisePixels": 9908,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "Shop",
+      "defName": "PC_PEA_Shop",
+      "direction": "west",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_west.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-98dfbf08-659a-4381-ae84-b8c81aa2562f.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png",
+      "northReferenceSha256": "372343F4D2333CE5C05D68CAB0C36ABC0674FEED966ECA05563653F2D6021D01",
+      "promptFile": "PC_PEA_Shop_west.prompt.txt",
+      "sha256": "0ab2746f602f1c2f75f2091508170dadd7a4b85a25818849f529c6545c152596",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 739162,
+      "opaqueBounds": [
+        91,
+        410,
+        1161,
+        850
+      ],
+      "silhouetteRatio": 2.4318,
+      "mapSilhouetteSize": [
+        1.7065,
+        0.7018
+      ],
+      "zeroAlphaFraction": 0.7038,
+      "borderMaxAlpha": 0,
+      "strictZeroAlphaBorder": true,
+      "lowAlphaNoisePixels": 7760,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "ExamCenter",
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_north.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-0d9c18f3-b0ce-466b-8d9f-97bf156a5dd1.png",
+      "sha256": "d54e73e4203cdfe8dca1251f4f28ae81bd8f1c2ce5dbba750b571231e3f92eed",
+      "promptFile": "PC_PEA_ExamCenter_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "externalPixelEditsPerformed": false,
+      "generationMode": "north master generation",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 871407,
+      "opaqueBounds": [
+        389,
+        98,
+        866,
+        1158
+      ],
+      "silhouetteRatio": 0.45,
+      "mapSilhouetteSize": [
+        0.7608,
+        1.6906
+      ],
+      "zeroAlphaFraction": 0.6781,
+      "borderMaxAlpha": 0,
+      "strictZeroAlphaBorder": true,
+      "lowAlphaNoisePixels": 10782,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "ExamCenter",
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "east",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_east.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-3c790ea9-c618-4fdb-ba02-3dab9f4400e0.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_north.png",
+      "northReferenceSha256": "D54E73E4203CDFE8DCA1251F4F28AE81BD8F1C2CE5DBBA750B571231E3F92EED",
+      "promptFile": "PC_PEA_ExamCenter_east.prompt.txt",
+      "sha256": "db656b2f07ee25efa6ea9e312f26518a8db39b0076aa6baf03491e8df9f143cb",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 906012,
+      "opaqueBounds": [
+        55,
+        378,
+        1200,
+        883
+      ],
+      "silhouetteRatio": 2.2673,
+      "mapSilhouetteSize": [
+        1.8262,
+        0.8054
+      ],
+      "zeroAlphaFraction": 0.6376,
+      "borderMaxAlpha": 1,
+      "strictZeroAlphaBorder": false,
+      "lowAlphaNoisePixels": 6600,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "ExamCenter",
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "south",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_south.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-a0e71147-fde8-46a7-9b56-ab795381b2b5.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_north.png",
+      "northReferenceSha256": "D54E73E4203CDFE8DCA1251F4F28AE81BD8F1C2CE5DBBA750B571231E3F92EED",
+      "promptFile": "PC_PEA_ExamCenter_south.prompt.txt",
+      "sha256": "6259e54d2935e598919837481affdf6d1f0785d23f8dae6a13f5d0b35c12d250",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 778984,
+      "opaqueBounds": [
+        391,
+        96,
+        863,
+        1122
+      ],
+      "silhouetteRatio": 0.46,
+      "mapSilhouetteSize": [
+        0.7528,
+        1.6364
+      ],
+      "zeroAlphaFraction": 0.6961,
+      "borderMaxAlpha": 0,
+      "strictZeroAlphaBorder": true,
+      "lowAlphaNoisePixels": 9172,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    },
+    {
+      "kind": "ExamCenter",
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "west",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_west.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-1e4ebe7c-e687-4968-b7a1-52cef0b8a684.png",
+      "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_north.png",
+      "northReferenceSha256": "D54E73E4203CDFE8DCA1251F4F28AE81BD8F1C2CE5DBBA750B571231E3F92EED",
+      "promptFile": "PC_PEA_ExamCenter_west.prompt.txt",
+      "sha256": "8c474070e383f373a0f5eca6304c89ddb622c7c2081526093abe69ba2a910df0",
+      "generator": "built-in image_gen",
+      "generationMode": "north-reference generation or targeted reference edit",
+      "externalPixelEditsPerformed": false,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 834744,
+      "opaqueBounds": [
+        63,
+        412,
+        1192,
+        856
+      ],
+      "silhouetteRatio": 2.5428,
+      "mapSilhouetteSize": [
+        1.8006,
+        0.7081
+      ],
+      "zeroAlphaFraction": 0.6876,
+      "borderMaxAlpha": 0,
+      "strictZeroAlphaBorder": true,
+      "lowAlphaNoisePixels": 5789,
+      "checks": {
+        "squareCanvas": true,
+        "sufficientResolution": true,
+        "nearZeroTransparentBorder": true,
+        "substantialTransparency": true,
+        "notBlankWhitePlaceholder": true,
+        "centered": true,
+        "directionalCounterRatio": true,
+        "insideOneByTwoFootprint": true,
+        "margin": true
+      },
+      "checksPassed": true
+    }
+  ],
+  "groups": [
+    {
+      "defName": "PC_PEA_ExamCenter",
+      "fourUniqueDirections": true,
+      "comparisons": [
+        {
+          "direction": "north",
+          "shortScaleVsNorth": 1.0,
+          "longScaleVsNorth": 1.0,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "east",
+          "shortScaleVsNorth": 1.0586,
+          "longScaleVsNorth": 1.0802,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "south",
+          "shortScaleVsNorth": 0.9895,
+          "longScaleVsNorth": 0.9679,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "west",
+          "shortScaleVsNorth": 0.9307,
+          "longScaleVsNorth": 1.0651,
+          "withinTenPercent": true
+        }
+      ],
+      "scaleStable": true
+    },
+    {
+      "defName": "PC_PEA_LaborOffice",
+      "fourUniqueDirections": true,
+      "comparisons": [
+        {
+          "direction": "north",
+          "shortScaleVsNorth": 1.0,
+          "longScaleVsNorth": 1.0,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "east",
+          "shortScaleVsNorth": 1.0919,
+          "longScaleVsNorth": 1.0985,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "south",
+          "shortScaleVsNorth": 1.0104,
+          "longScaleVsNorth": 1.0048,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "west",
+          "shortScaleVsNorth": 0.9706,
+          "longScaleVsNorth": 1.0407,
+          "withinTenPercent": true
+        }
+      ],
+      "scaleStable": true
+    },
+    {
+      "defName": "PC_PEA_SettlementOffice",
+      "fourUniqueDirections": true,
+      "comparisons": [
+        {
+          "direction": "north",
+          "shortScaleVsNorth": 1.0,
+          "longScaleVsNorth": 1.0,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "east",
+          "shortScaleVsNorth": 0.9606,
+          "longScaleVsNorth": 1.0463,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "south",
+          "shortScaleVsNorth": 1.0125,
+          "longScaleVsNorth": 1.0047,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "west",
+          "shortScaleVsNorth": 1.0394,
+          "longScaleVsNorth": 1.051,
+          "withinTenPercent": true
+        }
+      ],
+      "scaleStable": true
+    },
+    {
+      "defName": "PC_PEA_Shop",
+      "fourUniqueDirections": true,
+      "comparisons": [
+        {
+          "direction": "north",
+          "shortScaleVsNorth": 1.0,
+          "longScaleVsNorth": 1.0,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "east",
+          "shortScaleVsNorth": 0.916,
+          "longScaleVsNorth": 1.0086,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "south",
+          "shortScaleVsNorth": 1.0021,
+          "longScaleVsNorth": 0.999,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "west",
+          "shortScaleVsNorth": 0.9244,
+          "longScaleVsNorth": 1.0132,
+          "withinTenPercent": true
+        }
+      ],
+      "scaleStable": true
+    },
+    {
+      "defName": "PC_PEA_WorkshopOffice",
+      "fourUniqueDirections": true,
+      "comparisons": [
+        {
+          "direction": "north",
+          "shortScaleVsNorth": 1.0,
+          "longScaleVsNorth": 1.0,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "east",
+          "shortScaleVsNorth": 1.0805,
+          "longScaleVsNorth": 1.0932,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "south",
+          "shortScaleVsNorth": 1.0085,
+          "longScaleVsNorth": 1.0048,
+          "withinTenPercent": true
+        },
+        {
+          "direction": "west",
+          "shortScaleVsNorth": 1.0149,
+          "longScaleVsNorth": 1.0705,
+          "withinTenPercent": true
+        }
+      ],
+      "scaleStable": true
+    }
+  ],
+  "checksPassed": true,
+  "pixelEditsPerformed": false,
+  "note": "Meaningful bounds use alpha > 128. Border gate allows only 0/255 or 1/255; strict zero status and low-alpha speckles are reported separately and not erased. No opaque background or clipped silhouette is accepted. Visual review and actual Cutout rendering remain separate.",
+  "gameVerified": false
+}

@@ -1,0 +1,60 @@
+{
+  "changeId": "CHG-20261008-ECON-ART",
+  "assets": [
+    {
+      "kind": "LaborOffice",
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-6b323ba3-a691-405c-9c1d-caaa01082ab2.png",
+      "sha256": "3BBF71ED3AD9336E915F5BBEF9D433E5750649853392CB80D9B349E0B437AE50",
+      "promptFile": "PC_PEA_LaborOffice_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "imageEditsPerformed": false
+    },
+    {
+      "kind": "WorkshopOffice",
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-125286c0-edd2-4c57-bd3d-5573b935959d.png",
+      "sha256": "E61A7326D5561DE0638E2D4BAA9079C097EAAB5FA7EC53C3147704D411DC06A8",
+      "promptFile": "PC_PEA_WorkshopOffice_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "imageEditsPerformed": false
+    },
+    {
+      "kind": "SettlementOffice",
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-3c28675b-1ae0-4441-98f9-eed52468e6f6.png",
+      "sha256": "09C05A7B35F445D9579D3344CD8AA39D28722CD2E470610B2B565F6A3CF12DD2",
+      "promptFile": "PC_PEA_SettlementOffice_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "imageEditsPerformed": false
+    },
+    {
+      "kind": "Shop",
+      "defName": "PC_PEA_Shop",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-82b162ee-d6bc-4c3c-a8ce-75401c347578.png",
+      "sha256": "372343F4D2333CE5C05D68CAB0C36ABC0674FEED966ECA05563653F2D6021D01",
+      "promptFile": "PC_PEA_Shop_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "imageEditsPerformed": false
+    },
+    {
+      "kind": "ExamCenter",
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "north",
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_north.png",
+      "generatedSource": "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-0d9c18f3-b0ce-466b-8d9f-97bf156a5dd1.png",
+      "sha256": "D54E73E4203CDFE8DCA1251F4F28AE81BD8F1C2CE5DBBA750B571231E3F92EED",
+      "promptFile": "PC_PEA_ExamCenter_north.prompt.txt",
+      "generator": "built-in image_gen",
+      "imageEditsPerformed": false
+    }
+  ]
+}

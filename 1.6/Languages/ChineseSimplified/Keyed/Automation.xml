@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- 自动农场设备配置（互动键 + 弹窗） -->
+  <PersonalChronicle.Automation.Farm.Configure>配置农场</PersonalChronicle.Automation.Farm.Configure>
+  <PersonalChronicle.Automation.Farm.ConfigureDesc>选择作物，然后整片覆盖区建区或在范围内画笔圈地。农机将自动耕犁并播种。</PersonalChronicle.Automation.Farm.ConfigureDesc>
+  <PersonalChronicle.Automation.Farm.DialogTitle>自动农场配置</PersonalChronicle.Automation.Farm.DialogTitle>
+  <!-- 步骤化改版（PM 2026-09-07：玩家不知道操作顺序） -->
+  <PersonalChronicle.Automation.Farm.Step1Crop>选择作物</PersonalChronicle.Automation.Farm.Step1Crop>
+  <PersonalChronicle.Automation.Farm.Step2Zone>划定种植区</PersonalChronicle.Automation.Farm.Step2Zone>
+  <PersonalChronicle.Automation.Farm.Step3Manage>管理种植区</PersonalChronicle.Automation.Farm.Step3Manage>
+  <PersonalChronicle.Automation.Farm.StepNeedCrop>请先在步骤 ① 选择作物，才能划定种植区</PersonalChronicle.Automation.Farm.StepNeedCrop>
+  <PersonalChronicle.Automation.Farm.ConfigSummary>覆盖 {0} 格 · 产物：{1}</PersonalChronicle.Automation.Farm.ConfigSummary>
+  <!-- 详情页规格条目（PM 2026-09-07：把详细规格写入原版详情界面） -->
+  <PersonalChronicle.Automation.Farm.Spec.Coverage>覆盖范围</PersonalChronicle.Automation.Farm.Spec.Coverage>
+  <PersonalChronicle.Automation.Farm.Spec.CoverageDesc>以设备为中心的正方形作业区：自动耕犁、播种、收割与生长驱动都在此范围内进行。选中设备时格子高亮显示。</PersonalChronicle.Automation.Farm.Spec.CoverageDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Fertilize>土壤改良</PersonalChronicle.Automation.Farm.Spec.Fertilize>
+  <PersonalChronicle.Automation.Farm.Spec.FertilizeValue>+40% 生长速度</PersonalChronicle.Automation.Farm.Spec.FertilizeValue>
+  <PersonalChronicle.Automation.Farm.Spec.FertilizeDesc>种植区内的贫瘠自然地面会被改良为沃土（目标地形可经「改造地形」互动键更换）。玩家自己铺的地砖绝不会被改动；设备拆除、摧毁或搬迁时，地面自动还原为划区前的原始样子。</PersonalChronicle.Automation.Farm.Spec.FertilizeDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Collect>掉落物收集</PersonalChronicle.Automation.Farm.Spec.Collect>
+  <PersonalChronicle.Automation.Farm.Spec.CollectValue>自动入仓</PersonalChronicle.Automation.Farm.Spec.CollectValue>
+  <PersonalChronicle.Automation.Farm.Spec.CollectDesc>覆盖区种植区内当前作物的掉落物自动收入内置仓储（带向心收敛动画）。只收当前选定作物的产物，其它物品一律不碰。</PersonalChronicle.Automation.Farm.Spec.CollectDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Storage>产出仓储</PersonalChronicle.Automation.Farm.Spec.Storage>
+  <PersonalChronicle.Automation.Farm.Spec.StorageValue>先进缓冲</PersonalChronicle.Automation.Farm.Spec.StorageValue>
+  <PersonalChronicle.Automation.Farm.Spec.StorageDesc>收获产物先进内置仓储，可通过「设定输出目标」接物流管道定向输出到任意存储；仓满后产物落地，由搬运工或传送带接管。</PersonalChronicle.Automation.Farm.Spec.StorageDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Power>光伏与功耗</PersonalChronicle.Automation.Farm.Spec.Power>
+  <PersonalChronicle.Automation.Farm.Spec.PowerValue>白天光伏 {0}W（抵扣）· 本体功耗 {1}W</PersonalChronicle.Automation.Farm.Spec.PowerValue>
+  <PersonalChronicle.Automation.Farm.Spec.PowerDesc>内置光伏板白天发电抵扣部分功耗（发电恒小于功耗，夜间归零），差额由电网或应急电池补足。设备自身也是电网传导节点。</PersonalChronicle.Automation.Farm.Spec.PowerDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Battery>应急电池</PersonalChronicle.Automation.Farm.Spec.Battery>
+  <PersonalChronicle.Automation.Farm.Spec.BatteryValue>{0} Wd 储能</PersonalChronicle.Automation.Farm.Spec.BatteryValue>
+  <PersonalChronicle.Automation.Farm.Spec.BatteryDesc>并网时自动充电储能；电网断供时反向放电维持运转。与原版蓄电池同机制：满电状态下淋雨/起火可能短路爆炸，建议铺在室内。</PersonalChronicle.Automation.Farm.Spec.BatteryDesc>
+  <PersonalChronicle.Automation.Farm.NeedPowerHint>未接电：把电缆铺到设备相邻格即自动并网</PersonalChronicle.Automation.Farm.NeedPowerHint>
+  <PersonalChronicle.Automation.Farm.NoGrid>未接入电网：把电缆铺到设备相邻格</PersonalChronicle.Automation.Farm.NoGrid>
+  <PersonalChronicle.Automation.Farm.PowerShortage>电网供电不足：发电量低于本机功耗，请增建发电机</PersonalChronicle.Automation.Farm.PowerShortage>
+  <PersonalChronicle.Automation.Farm.CurrentCrop>当前作物：{0}</PersonalChronicle.Automation.Farm.CurrentCrop>
+  <PersonalChronicle.Automation.Farm.NoCrop>无</PersonalChronicle.Automation.Farm.NoCrop>
+  <!-- 检视 / 悬停提示（汇总进 Thing.GetInspectString） -->
+  <PersonalChronicle.Automation.Farm.Inspect.State>状态：{0}</PersonalChronicle.Automation.Farm.Inspect.State>
+  <PersonalChronicle.Automation.Farm.Inspect.Running>运行中</PersonalChronicle.Automation.Farm.Inspect.Running>
+  <PersonalChronicle.Automation.Farm.Idle.NoPower>无电</PersonalChronicle.Automation.Farm.Idle.NoPower>
+  <PersonalChronicle.Automation.Farm.Idle.NoFuel>缺燃料</PersonalChronicle.Automation.Farm.Idle.NoFuel>
+  <PersonalChronicle.Automation.Farm.Idle.Off>已关闭</PersonalChronicle.Automation.Farm.Idle.Off>
+  <PersonalChronicle.Automation.Farm.Inspect.Crop>作物：{0}</PersonalChronicle.Automation.Farm.Inspect.Crop>
+  <PersonalChronicle.Automation.Farm.Inspect.CropNone>未配置（用「配置农场」选择）</PersonalChronicle.Automation.Farm.Inspect.CropNone>
+  <PersonalChronicle.Automation.Farm.Inspect.Coverage>覆盖：{0} 格</PersonalChronicle.Automation.Farm.Inspect.Coverage>
+  <PersonalChronicle.Automation.Farm.Inspect.Work>覆盖 {0} 格 · 已播 {1} · 可收 {2}</PersonalChronicle.Automation.Farm.Inspect.Work>
+  <PersonalChronicle.Automation.Farm.WholeCoverage>整片覆盖区建区</PersonalChronicle.Automation.Farm.WholeCoverage>
+  <PersonalChronicle.Automation.Farm.PaintZone>画笔圈地</PersonalChronicle.Automation.Farm.PaintZone>
+  <PersonalChronicle.Automation.Farm.Clear>清除种植区</PersonalChronicle.Automation.Farm.Clear>
+  <!-- 作物选择窗口（搜索框 + 图标网格 + 右侧详情） -->
+  <PersonalChronicle.Automation.Farm.ChooseCrop>选择作物…</PersonalChronicle.Automation.Farm.ChooseCrop>
+  <PersonalChronicle.Automation.Farm.SearchCrop>选择作物</PersonalChronicle.Automation.Farm.SearchCrop>
+  <PersonalChronicle.Automation.Farm.NoMatch>没有匹配的作物</PersonalChronicle.Automation.Farm.NoMatch>
+  <PersonalChronicle.Automation.Farm.CropHint>把鼠标移到作物上，这里显示属性与说明</PersonalChronicle.Automation.Farm.CropHint>
+  <PersonalChronicle.Automation.Farm.GrowDays>生长天数</PersonalChronicle.Automation.Farm.GrowDays>
+  <PersonalChronicle.Automation.Farm.FertilityMin>最低肥力</PersonalChronicle.Automation.Farm.FertilityMin>
+  <PersonalChronicle.Automation.Farm.FertilitySens>肥力敏感度</PersonalChronicle.Automation.Farm.FertilitySens>
+  <PersonalChronicle.Automation.Farm.MinGlow>光照需求</PersonalChronicle.Automation.Farm.MinGlow>
+  <PersonalChronicle.Automation.Farm.Harvest>收获产出</PersonalChronicle.Automation.Farm.Harvest>
+  <PersonalChronicle.Automation.Farm.SowSkill>播种技能</PersonalChronicle.Automation.Farm.SowSkill>
+  <PersonalChronicle.Automation.Farm.TempRange>适宜温度</PersonalChronicle.Automation.Farm.TempRange>
+  <PersonalChronicle.Automation.Farm.StatDays>{0} 天</PersonalChronicle.Automation.Farm.StatDays>
+  <PersonalChronicle.Automation.Farm.StatPercent>{0}%</PersonalChronicle.Automation.Farm.StatPercent>
+  <PersonalChronicle.Automation.Farm.StatYield>{0} × {1}</PersonalChronicle.Automation.Farm.StatYield>
+  <PersonalChronicle.Automation.Farm.StatSkill>{0} 级</PersonalChronicle.Automation.Farm.StatSkill>
+  <PersonalChronicle.Automation.Farm.StatTemp>{0}°C ~ {1}°C</PersonalChronicle.Automation.Farm.StatTemp>
+  <PersonalChronicle.Automation.Farm.StatNone>无</PersonalChronicle.Automation.Farm.StatNone>
+  <!-- 改造地形互动键 + 地形选择窗口 -->
+  <PersonalChronicle.Automation.Farm.Terrain>改造地形：{0}</PersonalChronicle.Automation.Farm.Terrain>
+  <PersonalChronicle.Automation.Farm.TerrainDesc>选择农机把种植区改造成的地形，兼容第三方地形 mod。可随时无限更换：每次更换后，改造会从设备中心一圈圈重新铺开。撤机时还原为划区前的原始地面（玩家后来自己铺的除外）。</PersonalChronicle.Automation.Farm.TerrainDesc>
+  <PersonalChronicle.Automation.Farm.TerrainTitle>选择地形</PersonalChronicle.Automation.Farm.TerrainTitle>
+  <PersonalChronicle.Automation.Farm.TerrainHint>把鼠标移到地形上，这里显示属性与说明</PersonalChronicle.Automation.Farm.TerrainHint>
+  <PersonalChronicle.Automation.Farm.TerrainNoMatch>没有匹配的地形</PersonalChronicle.Automation.Farm.TerrainNoMatch>
+  <PersonalChronicle.Automation.Farm.StatFertility>肥力</PersonalChronicle.Automation.Farm.StatFertility>
+  <PersonalChronicle.Automation.Farm.StatBeauty>美观</PersonalChronicle.Automation.Farm.StatBeauty>
+  <PersonalChronicle.Automation.Farm.StatPathCost>移动成本</PersonalChronicle.Automation.Farm.StatPathCost>
+  <PersonalChronicle.Automation.Farm.StatCost>造价</PersonalChronicle.Automation.Farm.StatCost>
+  <!-- 物品储物仓（管道运输预留接口的玩家侧入口） -->
+  <PersonalChronicle.Automation.Farm.Storage.Unload>取出全部（{0}）</PersonalChronicle.Automation.Farm.Storage.Unload>
+  <PersonalChronicle.Automation.Farm.Storage.UnloadDesc>把储物仓里的全部产物落地到设备附近，交给搬运工或传送带。</PersonalChronicle.Automation.Farm.Storage.UnloadDesc>
+  <PersonalChronicle.Automation.Farm.Storage.Empty>仓储：空</PersonalChronicle.Automation.Farm.Storage.Empty>
+  <PersonalChronicle.Automation.Farm.Storage.Inspect>仓储：{0}</PersonalChronicle.Automation.Farm.Storage.Inspect>
+  <PersonalChronicle.Automation.Farm.Storage.Full>（已满）</PersonalChronicle.Automation.Farm.Storage.Full>
+  <PersonalChronicle.Automation.Zone.Workshop>车间区</PersonalChronicle.Automation.Zone.Workshop>
+  <PersonalChronicle.Automation.Zone.WorkshopDesc>划定一片车间区。区内可放置自动化加工设备与传送带，设备将归属于该车间。</PersonalChronicle.Automation.Zone.WorkshopDesc>
+  <PersonalChronicle.Automation.Zone.Inspect>车间区 · 格数 {0}</PersonalChronicle.Automation.Zone.Inspect>
+  <!-- 车间管理键与管理面板 -->
+  <PersonalChronicle.Automation.Zone.Manage>车间管理</PersonalChronicle.Automation.Zone.Manage>
+  <PersonalChronicle.Automation.Zone.ManageDesc>打开车间管理面板：查看车间规模、可用空地与设备清单。</PersonalChronicle.Automation.Zone.ManageDesc>
+  <!-- 车间管理面板（大型弹窗，内容层共享） -->
+  <PersonalChronicle.Automation.Tab.HeaderDevices>{0} 台设备</PersonalChronicle.Automation.Tab.HeaderDevices>
+  <PersonalChronicle.Automation.Tab.HeaderSub>格数 {0} · 可用空地 {1} · 设备 {2}</PersonalChronicle.Automation.Tab.HeaderSub>
+  <PersonalChronicle.Automation.Tab.Overview>概览</PersonalChronicle.Automation.Tab.Overview>
+  <PersonalChronicle.Automation.Tab.Devices>设备</PersonalChronicle.Automation.Tab.Devices>
+  <PersonalChronicle.Automation.Tab.Settings>设置</PersonalChronicle.Automation.Tab.Settings>
+  <PersonalChronicle.Automation.Tab.ColName>设备名称</PersonalChronicle.Automation.Tab.ColName>
+  <PersonalChronicle.Automation.Tab.ColPos>位置</PersonalChronicle.Automation.Tab.ColPos>
+  <PersonalChronicle.Automation.Tab.ColState>状态</PersonalChronicle.Automation.Tab.ColState>
+  <PersonalChronicle.Automation.Tab.NoDevices>尚未接入设备</PersonalChronicle.Automation.Tab.NoDevices>
+  <PersonalChronicle.Automation.Tab.DevicesEmptySub>把加工设备放进车间区，它会出现在这里</PersonalChronicle.Automation.Tab.DevicesEmptySub>
+  <!-- CHG-20261005-DEVRENAME · 车间设备重命名（唯一写口 MapComponent_WorkshopManager.TryRenameDevice） -->
+  <PersonalChronicle.Automation.Tab.DeviceRename.Button>改名</PersonalChronicle.Automation.Tab.DeviceRename.Button>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ButtonTip>点击设备名称可为它改名（原版界面也会显示）</PersonalChronicle.Automation.Tab.DeviceRename.ButtonTip>
+  <PersonalChronicle.Automation.Tab.DeviceRename.Title>设备重命名</PersonalChronicle.Automation.Tab.DeviceRename.Title>
+  <PersonalChronicle.Automation.Tab.DeviceRename.Hint>留空即恢复默认名「{0}」。名字需与同图其它车间设备不同。</PersonalChronicle.Automation.Tab.DeviceRename.Hint>
+  <PersonalChronicle.Automation.Tab.DeviceRename.Done>已重命名为「{0}」</PersonalChronicle.Automation.Tab.DeviceRename.Done>
+  <PersonalChronicle.Automation.Tab.DeviceRename.Cleared>已恢复默认名</PersonalChronicle.Automation.Tab.DeviceRename.Cleared>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrTooLong>名字太长（上限 {0} 字）</PersonalChronicle.Automation.Tab.DeviceRename.ErrTooLong>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrDuplicate>已有同名设备：{0}</PersonalChronicle.Automation.Tab.DeviceRename.ErrDuplicate>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrDuplicateGeneric>已有同名设备，请换一个名字</PersonalChronicle.Automation.Tab.DeviceRename.ErrDuplicateGeneric>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrNotTracked>该设备不在车间追踪范围内，无法改名</PersonalChronicle.Automation.Tab.DeviceRename.ErrNotTracked>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrGone>该设备已被拆除</PersonalChronicle.Automation.Tab.DeviceRename.ErrGone>
+  <PersonalChronicle.Automation.Tab.Members>人员</PersonalChronicle.Automation.Tab.Members>
+  <PersonalChronicle.Automation.Tab.AgRunning>运行中</PersonalChronicle.Automation.Tab.AgRunning>
+  <PersonalChronicle.Automation.Tab.AgNoPower>缺电</PersonalChronicle.Automation.Tab.AgNoPower>
+  <PersonalChronicle.Automation.Tab.AgNoFuel>缺燃料</PersonalChronicle.Automation.Tab.AgNoFuel>
+  <PersonalChronicle.Automation.Tab.AgOff>已关闭</PersonalChronicle.Automation.Tab.AgOff>
+  <PersonalChronicle.Automation.Tab.ColMemberName>姓名</PersonalChronicle.Automation.Tab.ColMemberName>
+  <PersonalChronicle.Automation.Tab.ColActivity>当前活动</PersonalChronicle.Automation.Tab.ColActivity>
+  <!-- CHG-20261004-IDLE：冗余员工（无设备可用）在班次内去做娱乐，明确标注"摸鱼中…" -->
+  <PersonalChronicle.Automation.Tab.ColActivityIdle>摸鱼中…（本班次无工位，已安排娱乐）</PersonalChronicle.Automation.Tab.ColActivityIdle>
+  <!-- CHG-20261004-POSTGUIDE：岗位页（未指定车间类型时）的醒目引导 -->
+  <PersonalChronicle.Automation.Tab.PostsNeedWorkshopType>⚠ 本车间尚未指定类型：成员现在只会在车间站岗。请到「设置」页选一个车间类型（可点「刷新」后向上滚动），并开启原版「手动优先级」。</PersonalChronicle.Automation.Tab.PostsNeedWorkshopType>
+  <PersonalChronicle.Automation.Tab.PostsNeedWorkshopType2>右侧「规划中·未接管」只表示该岗位暂不获准接管（禁用）你的原版工作，与员工能否干活无关。</PersonalChronicle.Automation.Tab.PostsNeedWorkshopType2>
+  <!-- CHG-20261004-POSTGUIDE：预设班次菜单披露"会自动组建班组并轮流编入全体成员" -->
+  <PersonalChronicle.Automation.Tab.PatternAutoCrewHint>（无班组时会自动建 {0} 个班组并轮流编入全体成员）</PersonalChronicle.Automation.Tab.PatternAutoCrewHint>
+  <PersonalChronicle.Automation.Tab.NoMembers>还没有指派人员</PersonalChronicle.Automation.Tab.NoMembers>
+  <PersonalChronicle.Automation.Tab.MembersEmptySub>点击「添加人员」，手动指派在车间工作的人员</PersonalChronicle.Automation.Tab.MembersEmptySub>
+  <PersonalChronicle.Automation.Tab.MembersHint>人员名单由玩家手动指派</PersonalChronicle.Automation.Tab.MembersHint>
+  <!-- CHG-20261004-POSTOVERRIDE 手动岗位覆盖（先自动分配，玩家可逐人覆盖） -->
+  <PersonalChronicle.Automation.Tab.SetPost>设置岗位</PersonalChronicle.Automation.Tab.SetPost>
+  <PersonalChronicle.Automation.Tab.PostFollowAuto>跟随自动分配（清除手动指定）</PersonalChronicle.Automation.Tab.PostFollowAuto>
+  <PersonalChronicle.Automation.Tab.AddMember>添加人员</PersonalChronicle.Automation.Tab.AddMember>
+  <PersonalChronicle.Automation.Tab.NoCandidates>没有可指派的殖民者</PersonalChronicle.Automation.Tab.NoCandidates>
+  <!-- 排班页（固定班 + 轮岗班） -->
+  <PersonalChronicle.Automation.Tab.Schedule>排班</PersonalChronicle.Automation.Tab.Schedule>
+  <PersonalChronicle.Automation.Tab.ScheduleHint>从人员名单中排定班次；班次结束时小人会自动收工</PersonalChronicle.Automation.Tab.ScheduleHint>
+  <PersonalChronicle.Automation.Tab.AddShift>添加班次</PersonalChronicle.Automation.Tab.AddShift>
+  <PersonalChronicle.Automation.Tab.AddRotation>添加轮岗</PersonalChronicle.Automation.Tab.AddRotation>
+  <PersonalChronicle.Automation.Tab.RotateNow>立即轮岗</PersonalChronicle.Automation.Tab.RotateNow>
+  <!-- 2026-09-25 排班页语义修正：班组 / 班次 / 值勤日历，移除固定班/轮岗 -->
+  <PersonalChronicle.Automation.Tab.SectionCrews>班组</PersonalChronicle.Automation.Tab.SectionCrews>
+  <PersonalChronicle.Automation.Tab.SectionShifts>班次</PersonalChronicle.Automation.Tab.SectionShifts>
+  <PersonalChronicle.Automation.Tab.SectionCalendar>值勤日历</PersonalChronicle.Automation.Tab.SectionCalendar>
+  <PersonalChronicle.Automation.Tab.CrewAdd>添加班组</PersonalChronicle.Automation.Tab.CrewAdd>
+  <PersonalChronicle.Automation.Tab.CrewHeadcount>在编 {0} 人</PersonalChronicle.Automation.Tab.CrewHeadcount>
+  <PersonalChronicle.Automation.Tab.CrewEmptyTitle>还没有班组</PersonalChronicle.Automation.Tab.CrewEmptyTitle>
+  <PersonalChronicle.Automation.Tab.CrewEmptySub>点击「添加班组」按甲乙丙丁自动建组，或用「预设班次」一键铺开两班倒/三班倒并自动编入成员</PersonalChronicle.Automation.Tab.CrewEmptySub>
+  <!-- 2026-09-25 班组编辑弹窗 -->
+  <PersonalChronicle.Automation.Tab.CrewEditorTitle>班组设置</PersonalChronicle.Automation.Tab.CrewEditorTitle>
+  <PersonalChronicle.Automation.Tab.CrewNameLabel>班组名称</PersonalChronicle.Automation.Tab.CrewNameLabel>
+  <PersonalChronicle.Automation.Tab.CrewMembersLabel>人员安排（从车间名单挑成员入编）</PersonalChronicle.Automation.Tab.CrewMembersLabel>
+  <PersonalChronicle.Automation.Tab.CrewShiftsLabel>班次安排（勾选本班组负责的班次）</PersonalChronicle.Automation.Tab.CrewShiftsLabel>
+  <PersonalChronicle.Automation.Tab.CrewAddMember>加入</PersonalChronicle.Automation.Tab.CrewAddMember>
+  <PersonalChronicle.Automation.Tab.CrewRemoveMember>移出</PersonalChronicle.Automation.Tab.CrewRemoveMember>
+  <PersonalChronicle.Automation.Tab.CrewMoveMember>移入本组</PersonalChronicle.Automation.Tab.CrewMoveMember>
+  <PersonalChronicle.Automation.Tab.CrewAssignShift>负责</PersonalChronicle.Automation.Tab.CrewAssignShift>
+  <PersonalChronicle.Automation.Tab.CrewUnassignShift>移除</PersonalChronicle.Automation.Tab.CrewUnassignShift>
+  <!-- CHG-20261004-WORKTAB-SHIFT 单元 B：班次行改为勾选框后的悬停说明 -->
+  <PersonalChronicle.Automation.Tab.CrewShiftAssignTip>勾选＝本班组负责该班次，班组成员并入该班次候选池；取消勾选＝从该班次候选池移出（不影响已在岗成员）。</PersonalChronicle.Automation.Tab.CrewShiftAssignTip>
+  <PersonalChronicle.Automation.Tab.CrewNoShifts>还没有班次，去「预设班次」添加</PersonalChronicle.Automation.Tab.CrewNoShifts>
+  <PersonalChronicle.Automation.Tab.CrewEditorOk>确定</PersonalChronicle.Automation.Tab.CrewEditorOk>
+  <!-- 2026-09-25 排班页第三区块：绩效（替代旧值勤日历） -->
+  <PersonalChronicle.Automation.Tab.PerfTitle>绩效</PersonalChronicle.Automation.Tab.PerfTitle>
+  <PersonalChronicle.Automation.Tab.PerfTarget>人均日目标产量 {0}</PersonalChronicle.Automation.Tab.PerfTarget>
+  <PersonalChronicle.Automation.Tab.PerfAttendance>出勤率</PersonalChronicle.Automation.Tab.PerfAttendance>
+  <PersonalChronicle.Automation.Tab.PerfProduction>生产率</PersonalChronicle.Automation.Tab.PerfProduction>
+  <PersonalChronicle.Automation.Tab.PerfProduced>今日产量 {0}</PersonalChronicle.Automation.Tab.PerfProduced>
+  <PersonalChronicle.Automation.Tab.PerfNoData>暂无绩效数据</PersonalChronicle.Automation.Tab.PerfNoData>
+  <PersonalChronicle.Automation.Tab.PerfNoDataSub>添加班组并安排班次后，小人在岗生产的情况会按日出勤率、生产率在这里统计</PersonalChronicle.Automation.Tab.PerfNoDataSub>
+  <!-- 2026-09-25 设备页增强：当前制作 / 累计运行 / 产出 -->
+  <PersonalChronicle.Automation.Tab.ColBill>当前制作</PersonalChronicle.Automation.Tab.ColBill>
+  <PersonalChronicle.Automation.Tab.ColRuntime>累计运行</PersonalChronicle.Automation.Tab.ColRuntime>
+  <!-- 产出口径：最近 N 天滑动窗口（2026-10-02 用户要求「设备栏产出计算周期为 5 day」） -->
+  <PersonalChronicle.Automation.Tab.ColOutputWindow>产出（每日/每周）</PersonalChronicle.Automation.Tab.ColOutputWindow>
+  <PersonalChronicle.Automation.Tab.DeviceBillsSuspended>工单已暂停</PersonalChronicle.Automation.Tab.DeviceBillsSuspended>
+  <PersonalChronicle.Automation.Tab.ConfirmCreate>创建（白班 6:00–18:00）</PersonalChronicle.Automation.Tab.ConfirmCreate>
+
+  <PersonalChronicle.Automation.Tab.RotEditorTitle>轮岗规则</PersonalChronicle.Automation.Tab.RotEditorTitle>
+  <PersonalChronicle.Automation.Tab.RotInterval>换班间隔</PersonalChronicle.Automation.Tab.RotInterval>
+  <PersonalChronicle.Automation.Tab.RotIntervalHours>{0} 小时</PersonalChronicle.Automation.Tab.RotIntervalHours>
+  <PersonalChronicle.Automation.Tab.RotReset>重置轮换</PersonalChronicle.Automation.Tab.RotReset>
+  <PersonalChronicle.Automation.Tab.Mode>轮换方式</PersonalChronicle.Automation.Tab.Mode>
+  <PersonalChronicle.Automation.Tab.ViewList>列表</PersonalChronicle.Automation.Tab.ViewList>
+  <PersonalChronicle.Automation.Tab.ViewChart>图表</PersonalChronicle.Automation.Tab.ViewChart>
+  <PersonalChronicle.Automation.Tab.ChartManHours>日均人时 {0}</PersonalChronicle.Automation.Tab.ChartManHours>
+  <PersonalChronicle.Automation.Tab.ChartEmptyHours>空档 {0} 小时</PersonalChronicle.Automation.Tab.ChartEmptyHours>
+  <PersonalChronicle.Automation.Tab.ChartEntries>岗位 {0}</PersonalChronicle.Automation.Tab.ChartEntries>
+  <PersonalChronicle.Automation.Tab.ChartLegendEmpty>空档</PersonalChronicle.Automation.Tab.ChartLegendEmpty>
+  <PersonalChronicle.Automation.Tab.ChartLegendSome>有人</PersonalChronicle.Automation.Tab.ChartLegendSome>
+  <PersonalChronicle.Automation.Tab.ChartLegendPeak>峰值</PersonalChronicle.Automation.Tab.ChartLegendPeak>
+  <PersonalChronicle.Automation.Tab.ChartCoverage>每小时在岗</PersonalChronicle.Automation.Tab.ChartCoverage>
+  <PersonalChronicle.Automation.Tab.ChartUnitPawn>人</PersonalChronicle.Automation.Tab.ChartUnitPawn>
+  <PersonalChronicle.Automation.Tab.ChartNote>排班按天循环，覆盖人数不随日期变化（轮岗只换当班人选）</PersonalChronicle.Automation.Tab.ChartNote>
+  <PersonalChronicle.Automation.Tab.ChartQuadrumTitle>本季 {0} 天 · 每日人时</PersonalChronicle.Automation.Tab.ChartQuadrumTitle>
+  <PersonalChronicle.Automation.Tab.ChartToday>（高亮列 = 今天）</PersonalChronicle.Automation.Tab.ChartToday>
+  <PersonalChronicle.Automation.Tab.ChartEmptyHint>有 {0} 小时无人值守 —— 可用「套用班制」铺两班倒 / 三班倒</PersonalChronicle.Automation.Tab.ChartEmptyHint>
+  <PersonalChronicle.Automation.Tab.ChartEmptySub>还没有排班。先用「套用班制」铺两班倒 / 三班倒，或手动添加班组</PersonalChronicle.Automation.Tab.ChartEmptySub>
+  <PersonalChronicle.Automation.Tab.PatternApply>预设班次</PersonalChronicle.Automation.Tab.PatternApply>
+  <PersonalChronicle.Automation.Tab.PatternTargetCrew>生成班组（按人数均分名额）</PersonalChronicle.Automation.Tab.PatternTargetCrew>
+  <PersonalChronicle.Automation.Tab.PatternTargetRotation>生成轮岗（每班 1 岗，同批人轮换）</PersonalChronicle.Automation.Tab.PatternTargetRotation>
+  <PersonalChronicle.Automation.Tab.PatternShifts>{0} 班</PersonalChronicle.Automation.Tab.PatternShifts>
+  <PersonalChronicle.Automation.Tab.PatternDayShift>常白班 08–16</PersonalChronicle.Automation.Tab.PatternDayShift>
+  <PersonalChronicle.Automation.Tab.PatternTwoShift>两班倒 08–20 / 20–08</PersonalChronicle.Automation.Tab.PatternTwoShift>
+  <PersonalChronicle.Automation.Tab.PatternThreeShift6>三班倒 06–14 / 14–22 / 22–06</PersonalChronicle.Automation.Tab.PatternThreeShift6>
+  <PersonalChronicle.Automation.Tab.PatternThreeShift8>三班倒 08–16 / 16–00 / 00–08</PersonalChronicle.Automation.Tab.PatternThreeShift8>
+  <PersonalChronicle.Automation.Tab.ViewRoster>倒班表</PersonalChronicle.Automation.Tab.ViewRoster>
+  <PersonalChronicle.Automation.Tab.CrewBoardTitle>班组倒班表</PersonalChronicle.Automation.Tab.CrewBoardTitle>
+  <PersonalChronicle.Automation.Tab.CrewCycleDays>周期 {0} 天</PersonalChronicle.Automation.Tab.CrewCycleDays>
+  <PersonalChronicle.Automation.Tab.CrewShiftCount>{0} 班制</PersonalChronicle.Automation.Tab.CrewShiftCount>
+  <PersonalChronicle.Automation.Tab.CrewRestPerDay>每日休息 {0} 组</PersonalChronicle.Automation.Tab.CrewRestPerDay>
+  <PersonalChronicle.Automation.Tab.CrewHint>点击班组行首可加人 / 清空 / 删除</PersonalChronicle.Automation.Tab.CrewHint>
+  <PersonalChronicle.Automation.Tab.CrewColumn>班组 · 编制</PersonalChronicle.Automation.Tab.CrewColumn>
+  <PersonalChronicle.Automation.Tab.CrewMembers>{0} 人</PersonalChronicle.Automation.Tab.CrewMembers>
+  <PersonalChronicle.Automation.Tab.CrewRest>休</PersonalChronicle.Automation.Tab.CrewRest>
+  <PersonalChronicle.Automation.Tab.CrewTodayStaffing>今日定员</PersonalChronicle.Automation.Tab.CrewTodayStaffing>
+  <PersonalChronicle.Automation.Tab.CrewSlotEarly>早</PersonalChronicle.Automation.Tab.CrewSlotEarly>
+  <PersonalChronicle.Automation.Tab.CrewSlotMiddle>中</PersonalChronicle.Automation.Tab.CrewSlotMiddle>
+  <PersonalChronicle.Automation.Tab.CrewSlotNight>夜</PersonalChronicle.Automation.Tab.CrewSlotNight>
+  <PersonalChronicle.Automation.Tab.CrewSlotN>第{0}班</PersonalChronicle.Automation.Tab.CrewSlotN>
+  <PersonalChronicle.Automation.Tab.CrewAddMemberMenu>添加成员</PersonalChronicle.Automation.Tab.CrewAddMemberMenu>
+  <PersonalChronicle.Automation.Tab.CrewClearMembers>清空成员</PersonalChronicle.Automation.Tab.CrewClearMembers>
+  <PersonalChronicle.Automation.Tab.CrewDelete>删除班组</PersonalChronicle.Automation.Tab.CrewDelete>
+  <PersonalChronicle.Automation.Tab.CrewManage>班组管理</PersonalChronicle.Automation.Tab.CrewManage>
+  <PersonalChronicle.Automation.Tab.ViewHandover>交接·点检</PersonalChronicle.Automation.Tab.ViewHandover>
+  <PersonalChronicle.Automation.Tab.CrewTodayMark>今</PersonalChronicle.Automation.Tab.CrewTodayMark>
+  <PersonalChronicle.Automation.Tab.PhaseDays>相位 {0} 天</PersonalChronicle.Automation.Tab.PhaseDays>
+  <PersonalChronicle.Automation.Tab.ExcHint>点击格子切换：正常 → 请假 → 顶班</PersonalChronicle.Automation.Tab.ExcHint>
+  <PersonalChronicle.Automation.Tab.ExcClickHint>点击切换 正常/请假/顶班</PersonalChronicle.Automation.Tab.ExcClickHint>
+  <PersonalChronicle.Automation.Tab.ExcLeave>请假</PersonalChronicle.Automation.Tab.ExcLeave>
+  <PersonalChronicle.Automation.Tab.ExcExtra>顶班</PersonalChronicle.Automation.Tab.ExcExtra>
+  <PersonalChronicle.Automation.Tab.KpiAttendance>出勤率</PersonalChronicle.Automation.Tab.KpiAttendance>
+  <PersonalChronicle.Automation.Tab.KpiOvertime>加班</PersonalChronicle.Automation.Tab.KpiOvertime>
+  <PersonalChronicle.Automation.Tab.KpiUtilization>工时利用率</PersonalChronicle.Automation.Tab.KpiUtilization>
+  <PersonalChronicle.Automation.Tab.KpiAvailability>稼动率</PersonalChronicle.Automation.Tab.KpiAvailability>
+  <PersonalChronicle.Automation.Tab.KpiHours>{0} 时</PersonalChronicle.Automation.Tab.KpiHours>
+  <PersonalChronicle.Automation.Tab.HandoverTitle>交接班</PersonalChronicle.Automation.Tab.HandoverTitle>
+  <PersonalChronicle.Automation.Tab.HandoverCurrentShift>当前班次</PersonalChronicle.Automation.Tab.HandoverCurrentShift>
+  <PersonalChronicle.Automation.Tab.HandoverNoCrew>无人当班</PersonalChronicle.Automation.Tab.HandoverNoCrew>
+  <PersonalChronicle.Automation.Tab.HandoverOnDuty>{0} 人在岗</PersonalChronicle.Automation.Tab.HandoverOnDuty>
+  <PersonalChronicle.Automation.Tab.HandoverNoShift>当前不在倒班时段</PersonalChronicle.Automation.Tab.HandoverNoShift>
+  <PersonalChronicle.Automation.Tab.HandoverNextChange>下次交接约</PersonalChronicle.Automation.Tab.HandoverNextChange>
+  <PersonalChronicle.Automation.Tab.HandoverInHours>{0} 小时后</PersonalChronicle.Automation.Tab.HandoverInHours>
+  <PersonalChronicle.Automation.Tab.HandoverOpenBills>待加工工单 {0} 项</PersonalChronicle.Automation.Tab.HandoverOpenBills>
+  <PersonalChronicle.Automation.Tab.HandoverFaults>异常设备 {0} 台</PersonalChronicle.Automation.Tab.HandoverFaults>
+  <PersonalChronicle.Automation.Tab.InspectionTitle>设备点检</PersonalChronicle.Automation.Tab.InspectionTitle>
+  <PersonalChronicle.Automation.Tab.InspectionColDevice>设备</PersonalChronicle.Automation.Tab.InspectionColDevice>
+  <PersonalChronicle.Automation.Tab.InspectionColState>状态</PersonalChronicle.Automation.Tab.InspectionColState>
+  <PersonalChronicle.Automation.Tab.InspectionColBills>工单</PersonalChronicle.Automation.Tab.InspectionColBills>
+  <PersonalChronicle.Automation.Tab.InspectionColKeeper>当班责任班组</PersonalChronicle.Automation.Tab.InspectionColKeeper>
+  <PersonalChronicle.Automation.Tab.ColHours>时段</PersonalChronicle.Automation.Tab.ColHours>
+  <PersonalChronicle.Automation.Tab.ColTask>岗位</PersonalChronicle.Automation.Tab.ColTask>
+  <PersonalChronicle.Automation.Tab.ColGate>技能门槛</PersonalChronicle.Automation.Tab.ColGate>
+  <PersonalChronicle.Automation.Tab.ColPriority>优先</PersonalChronicle.Automation.Tab.ColPriority>
+  <PersonalChronicle.Automation.Tab.ColPool>轮换池 {0} 人</PersonalChronicle.Automation.Tab.ColPool>
+  <PersonalChronicle.Automation.Tab.GateClear>清除门槛</PersonalChronicle.Automation.Tab.GateClear>
+  <!-- 时段编辑器 -->
+  <PersonalChronicle.Automation.Tab.TimeRangeTitle>时段设置</PersonalChronicle.Automation.Tab.TimeRangeTitle>
+  <PersonalChronicle.Automation.Tab.TimeStart>开始</PersonalChronicle.Automation.Tab.TimeStart>
+  <PersonalChronicle.Automation.Tab.TimeEnd>结束</PersonalChronicle.Automation.Tab.TimeEnd>
+  <PersonalChronicle.Automation.Tab.ColHeadcount>上岗名额</PersonalChronicle.Automation.Tab.ColHeadcount>
+  <PersonalChronicle.Automation.Tab.HeadcountDefault>缺省 {0} 人</PersonalChronicle.Automation.Tab.HeadcountDefault>
+  <PersonalChronicle.Automation.Tab.HeadcountUnlimited>不限</PersonalChronicle.Automation.Tab.HeadcountUnlimited>
+  <PersonalChronicle.Automation.Tab.HeadcountTip>这个班次派几个人上岗。减到最左再减一次 = 「不限」（该班次所有合格者都会上岗，通常不是你想要的）。未设置时按缺省 1 人处理——一个班次一个人，三班倒才不会互相顶班。</PersonalChronicle.Automation.Tab.HeadcountTip>
+  <PersonalChronicle.Automation.Tab.TimeAllDay>全天</PersonalChronicle.Automation.Tab.TimeAllDay>
+  <PersonalChronicle.Automation.Tab.TimeAllDayTip>开始 = 结束 表示「全天班」：该班次覆盖 0–23 时，命中它的成员将永远不会下班（也不会回床睡觉）。若只想排夜班，请把时段设成例如 20:00 – 08:00。</PersonalChronicle.Automation.Tab.TimeAllDayTip>
+  <PersonalChronicle.Automation.Tab.TimeWrap>跨午夜</PersonalChronicle.Automation.Tab.TimeWrap>
+  <PersonalChronicle.Automation.Tab.DutyNow>当班 {0}</PersonalChronicle.Automation.Tab.DutyNow>
+  <PersonalChronicle.Automation.Tab.DutyOff>下班 {0}</PersonalChronicle.Automation.Tab.DutyOff>
+  <PersonalChronicle.Automation.Tab.DutyRoster>在岗 {0} / 应到岗 {1}</PersonalChronicle.Automation.Tab.DutyRoster>
+  <PersonalChronicle.Automation.Tab.DutyOnDuty>在岗 {0}</PersonalChronicle.Automation.Tab.DutyOnDuty>
+  <PersonalChronicle.Automation.Tab.DutyExpected>应到岗 {0}</PersonalChronicle.Automation.Tab.DutyExpected>
+  <PersonalChronicle.Automation.Tab.DutyGhost>幽灵在岗 {0}（已自动注销）</PersonalChronicle.Automation.Tab.DutyGhost>
+  <PersonalChronicle.Automation.Tab.RestBroken>作息异常 {0} 人</PersonalChronicle.Automation.Tab.RestBroken>
+  <PersonalChronicle.Automation.Tab.RestMaxHours>最长 Work {0} 小时</PersonalChronicle.Automation.Tab.RestMaxHours>
+  <PersonalChronicle.Automation.Tab.PresetDay>白班</PersonalChronicle.Automation.Tab.PresetDay>
+  <PersonalChronicle.Automation.Tab.PresetNight>夜班</PersonalChronicle.Automation.Tab.PresetNight>
+  <PersonalChronicle.Automation.Tab.PresetAll>全天</PersonalChronicle.Automation.Tab.PresetAll>
+  <PersonalChronicle.Automation.Tab.Ok>确定</PersonalChronicle.Automation.Tab.Ok>
+  <PersonalChronicle.Automation.Tab.Cancel>取消</PersonalChronicle.Automation.Tab.Cancel>
+  <!-- 班组班次（名额制：自定义人数 + 时段 + 候选池） -->
+  <PersonalChronicle.Automation.Tab.ShiftAdd>添加班组</PersonalChronicle.Automation.Tab.ShiftAdd>
+  <PersonalChronicle.Automation.Tab.ShiftEditorTitle>班次设置</PersonalChronicle.Automation.Tab.ShiftEditorTitle>
+  <PersonalChronicle.Automation.Tab.ShiftSection>班组（名额制）</PersonalChronicle.Automation.Tab.ShiftSection>
+  <PersonalChronicle.Automation.Tab.ShiftCount>{0} 人</PersonalChronicle.Automation.Tab.ShiftCount>
+  <PersonalChronicle.Automation.Tab.ShiftCountLabel>名额</PersonalChronicle.Automation.Tab.ShiftCountLabel>
+  <PersonalChronicle.Automation.Tab.ShiftCountUnlimited>不限</PersonalChronicle.Automation.Tab.ShiftCountUnlimited>
+  <PersonalChronicle.Automation.Tab.ShiftHit>命中 {0} 人</PersonalChronicle.Automation.Tab.ShiftHit>
+  <PersonalChronicle.Automation.Tab.ShiftPool>候选池</PersonalChronicle.Automation.Tab.ShiftPool>
+  <PersonalChronicle.Automation.Tab.ShiftPoolFallback>使用车间人员名单（{0} 人）</PersonalChronicle.Automation.Tab.ShiftPoolFallback>
+  <PersonalChronicle.Automation.Tab.ShiftPoolAdd>添加成员</PersonalChronicle.Automation.Tab.ShiftPoolAdd>
+  <PersonalChronicle.Automation.Tab.ShiftPoolClear>改用车间人员名单</PersonalChronicle.Automation.Tab.ShiftPoolClear>
+  <PersonalChronicle.Automation.Tab.ShiftDelete>删除班次</PersonalChronicle.Automation.Tab.ShiftDelete>
+  <!-- 班次表页（2026-10-02 新增）：集中查看 / 编辑 / 删除本车间全部班次 -->
+  <PersonalChronicle.Automation.Tab.ShiftTable>班次表</PersonalChronicle.Automation.Tab.ShiftTable>
+  <PersonalChronicle.Automation.Tab.ShiftTableHint>点击任意行可查看或修改；行尾「删除」移除该班次。</PersonalChronicle.Automation.Tab.ShiftTableHint>
+  <PersonalChronicle.Automation.Tab.ShiftTableSummary>共 {0} 个班次</PersonalChronicle.Automation.Tab.ShiftTableSummary>
+  <PersonalChronicle.Automation.Tab.ShiftTableEmptyTitle>还没有班次</PersonalChronicle.Automation.Tab.ShiftTableEmptyTitle>
+  <PersonalChronicle.Automation.Tab.ShiftTableEmptySub>点右上角「添加班次」新建；也可用「预设班次」一键铺两班倒 / 三班倒。</PersonalChronicle.Automation.Tab.ShiftTableEmptySub>
+  <PersonalChronicle.Automation.Tab.ShiftDeleteConfirm>确定删除班次「{0}」？已指派它的班组会同时解除指派。</PersonalChronicle.Automation.Tab.ShiftDeleteConfirm>
+  <PersonalChronicle.Automation.Tab.ShiftNotAssigned>按倒班轮转</PersonalChronicle.Automation.Tab.ShiftNotAssigned>
+  <PersonalChronicle.Automation.Tab.ShiftSlotLabel>倒班序位 {0}</PersonalChronicle.Automation.Tab.ShiftSlotLabel>
+  <PersonalChronicle.Automation.Tab.ShiftRowDelete>删除</PersonalChronicle.Automation.Tab.ShiftRowDelete>
+  <PersonalChronicle.Automation.Tab.ColFilled>命中</PersonalChronicle.Automation.Tab.ColFilled>
+  <PersonalChronicle.Automation.Tab.ColCrews>指派班组</PersonalChronicle.Automation.Tab.ColCrews>
+  <PersonalChronicle.Automation.Tab.ColActions>操作</PersonalChronicle.Automation.Tab.ColActions>
+  <PersonalChronicle.Automation.Tab.ScheduleEmptyTitle>还没有排班</PersonalChronicle.Automation.Tab.ScheduleEmptyTitle>
+  <PersonalChronicle.Automation.Tab.ScheduleEmptySub>先在「人员」页指派成员，再点击「添加班次」或「添加轮岗」</PersonalChronicle.Automation.Tab.ScheduleEmptySub>
+  <PersonalChronicle.Automation.Tab.TaskProduction>生产</PersonalChronicle.Automation.Tab.TaskProduction>
+  <PersonalChronicle.Automation.Tab.TaskMaintenance>维护</PersonalChronicle.Automation.Tab.TaskMaintenance>
+  <PersonalChronicle.Automation.Tab.TaskQualityCheck>质检</PersonalChronicle.Automation.Tab.TaskQualityCheck>
+  <PersonalChronicle.Automation.Tab.TaskStandby>待命</PersonalChronicle.Automation.Tab.TaskStandby>
+  <!-- 岗位 ⇄ 原版工作面板联动（2026-10-02）：提示行 + 菜单项副文本（{0} = 原版工作名，运行时取 LabelCap） -->
+  <PersonalChronicle.Automation.Tab.TaskSyncHint>自动勾选原版「工作」面板对应项（不改已设优先级）</PersonalChronicle.Automation.Tab.TaskSyncHint>
+  <PersonalChronicle.Automation.Tab.TaskSyncTo>原版工作：{0}</PersonalChronicle.Automation.Tab.TaskSyncTo>
+
+  <!--
+    CHG-20261004-SHIFTMEAL · 班中餐（班次编辑器）。
+    玩家诉求：「班次设置表优化，添加用餐时间段设置」「标准三餐，七点、十二点、五点」。
+    倒班制下白班与夜班的餐点本就不同 ⇒ 每条班次可配自己的一日三餐；
+    **未设置**（未点过）的餐点沿用设置页「三餐作息」的全局时间。
+  -->
+  <PersonalChronicle.Automation.Tab.MealBreakfast>班中早餐</PersonalChronicle.Automation.Tab.MealBreakfast>
+  <PersonalChronicle.Automation.Tab.MealLunch>班中午餐</PersonalChronicle.Automation.Tab.MealLunch>
+  <PersonalChronicle.Automation.Tab.MealDinner>班中晚餐</PersonalChronicle.Automation.Tab.MealDinner>
+  <!-- CHG-20261005-MEALHOUR：全局三餐设置已删除 ⇒ 「跟随全局」相关文案全部作废（ShiftMealFollowGlobal 已成孤儿键，保留无害） -->
+  <PersonalChronicle.Automation.Tab.ShiftMealHint>三餐各是一个时刻（如 07:00）；配好即写入成员的管制表</PersonalChronicle.Automation.Tab.ShiftMealHint>
+  <PersonalChronicle.Automation.Tab.ShiftMealClearAll>全部清空</PersonalChronicle.Automation.Tab.ShiftMealClearAll>
+  <PersonalChronicle.Automation.Tab.ModeRoundRobin>轮流</PersonalChronicle.Automation.Tab.ModeRoundRobin>
+  <PersonalChronicle.Automation.Tab.ModeSkillBased>技能优先</PersonalChronicle.Automation.Tab.ModeSkillBased>
+  <PersonalChronicle.Automation.Tab.ModePriorityBased>固定优先</PersonalChronicle.Automation.Tab.ModePriorityBased>
+  <PersonalChronicle.Automation.Tab.Cells>格数</PersonalChronicle.Automation.Tab.Cells>
+  <PersonalChronicle.Automation.Tab.CellsSub>车间区覆盖总面积</PersonalChronicle.Automation.Tab.CellsSub>
+  <PersonalChronicle.Automation.Tab.FreeCells>可用空地</PersonalChronicle.Automation.Tab.FreeCells>
+  <PersonalChronicle.Automation.Tab.FreeCellsSub>可放置设备的空地</PersonalChronicle.Automation.Tab.FreeCellsSub>
+  <PersonalChronicle.Automation.Tab.DevicesSub>待接入</PersonalChronicle.Automation.Tab.DevicesSub>
+  <PersonalChronicle.Automation.Tab.OccupancyTitle>空间占用</PersonalChronicle.Automation.Tab.OccupancyTitle>
+  <!-- 设备匹配度（车间类型声明的期望设备 vs 区内实际设备） -->
+  <PersonalChronicle.Automation.Tab.FitTitle>工序设备匹配</PersonalChronicle.Automation.Tab.FitTitle>
+  <PersonalChronicle.Automation.Tab.FitUnspecified>本工序未声明期望设备（该类型暂无原生设备锚点）</PersonalChronicle.Automation.Tab.FitUnspecified>
+  <PersonalChronicle.Automation.Tab.FitMatched>匹配 {0}</PersonalChronicle.Automation.Tab.FitMatched>
+  <PersonalChronicle.Automation.Tab.FitExtra>多余 {0}</PersonalChronicle.Automation.Tab.FitExtra>
+  <PersonalChronicle.Automation.Tab.FitMissing>缺失 {0}：{1}</PersonalChronicle.Automation.Tab.FitMissing>
+  <PersonalChronicle.Automation.Tab.FitNoMissing>无缺失</PersonalChronicle.Automation.Tab.FitNoMissing>
+  <PersonalChronicle.Automation.Tab.OverviewHint>把工作台（原版加工台）或本模组的自动化设备放进车间区，即可自动接入本车间。</PersonalChronicle.Automation.Tab.OverviewHint>
+  <PersonalChronicle.Automation.Tab.SettingsPlaceholder>车间设置将在设备体系落地后开放</PersonalChronicle.Automation.Tab.SettingsPlaceholder>
+  <PersonalChronicle.Automation.Tab.SettingsEmptyTitle>设置功能建设中</PersonalChronicle.Automation.Tab.SettingsEmptyTitle>
+  <PersonalChronicle.Automation.Tab.FooterHint>共 {0} 台设备 · 打开时统计一次，改动后点「刷新」</PersonalChronicle.Automation.Tab.FooterHint>
+  <PersonalChronicle.Automation.Tab.Refresh>刷新</PersonalChronicle.Automation.Tab.Refresh>
+  <PersonalChronicle.Automation.Tab.Close>关闭</PersonalChronicle.Automation.Tab.Close>
+  <PersonalChronicle.Automation.Tab.Gone>车间已被删除</PersonalChronicle.Automation.Tab.Gone>
+  <!-- 物品输出端口（管线运输 v0.2：输出端 + 管道即闭环） -->
+  <PersonalChronicle.Automation.Port.Bind>设定输出目标…</PersonalChronicle.Automation.Port.Bind>
+  <PersonalChronicle.Automation.Port.BindDesc>点击后在地图上选择输出目标：点储物格（仓库、货架、存货区等任意存储，含第三方 mod 存储）定向输出到该格；点本 mod 的储物设备则直接送入其仓储。同一时间只绑定一个目标。</PersonalChronicle.Automation.Port.BindDesc>
+  <PersonalChronicle.Automation.Port.Unbind>解除输出目标</PersonalChronicle.Automation.Port.Unbind>
+  <PersonalChronicle.Automation.Port.UnbindDesc>取消当前的定向输出绑定，端口停止发送。</PersonalChronicle.Automation.Port.UnbindDesc>
+  <PersonalChronicle.Automation.Port.Inspect.None>输出端口：未绑定目标（点击「设定输出目标…」开始）</PersonalChronicle.Automation.Port.Inspect.None>
+  <PersonalChronicle.Automation.Port.Inspect.Target>定向输出：{0}</PersonalChronicle.Automation.Port.Inspect.Target>
+  <PersonalChronicle.Automation.Port.Inspect.NoPipe>未连接管道：把管道铺到设备旁</PersonalChronicle.Automation.Port.Inspect.NoPipe>
+  <!-- ⭐ 检视面板宽度固定（原版 UI），长文案被截断（PM 2026-09-07 实机图证）——
+       端口/管道提示精简为单行短语，细节留在互动键描述里。 -->
+  <PersonalChronicle.Automation.Port.Inspect.Unreachable>管道未连通：把管道铺到输出目标相邻格</PersonalChronicle.Automation.Port.Inspect.Unreachable>
+  <PersonalChronicle.Automation.Port.Inspect.Stopped>端口停用：需通电、燃料且开关开启</PersonalChronicle.Automation.Port.Inspect.Stopped>
+  <PersonalChronicle.Automation.Port.Inspect.Empty>端口待命：产出入库后自动发送</PersonalChronicle.Automation.Port.Inspect.Empty>
+  <PersonalChronicle.Automation.Port.Inspect.Rejected>目标不收或已满 {0}：请调整筛选或腾出空间（端口已停取）</PersonalChronicle.Automation.Port.Inspect.Rejected>
+  <PersonalChronicle.Automation.Pipe.AlreadyThere>该格已有物流管道</PersonalChronicle.Automation.Pipe.AlreadyThere>
+  <PersonalChronicle.Automation.Pipe.ConduitConflict>该格已有电缆或电力传导物，不可同格铺设</PersonalChronicle.Automation.Pipe.ConduitConflict>
+  <!-- 拆除物流管道设计器（隐藏式管道全透明，激活时全图高亮显示） -->
+  <PersonalChronicle.Automation.Pipe.Deconstruct>拆除物流管道</PersonalChronicle.Automation.Pipe.Deconstruct>
+  <PersonalChronicle.Automation.Pipe.DeconstructDesc>拆除物流管道（含隐藏式）。设计器激活期间，地图上全部管道段会以金黄色高亮显示——隐藏式管道也清晰可见。点击或拖拽即可标记拆除。</PersonalChronicle.Automation.Pipe.DeconstructDesc>
+  <!-- 管道段检视 -->
+  <PersonalChronicle.Automation.Pipe.Inspect.Cargo>管内货物：{0} ×{1} → {2}</PersonalChronicle.Automation.Pipe.Inspect.Cargo>
+  <PersonalChronicle.Automation.Pipe.Inspect.DestLost>目的地已失效：货物滞留中，拆除本段可取回</PersonalChronicle.Automation.Pipe.Inspect.DestLost>
+  <PersonalChronicle.Automation.Port.BindRejected>无法绑定「{0}」：它不是能接收物品的存储。请点仓库/存货区格子、货架，或本 mod 的储物设备。</PersonalChronicle.Automation.Port.BindRejected>
+  <!-- 物流管理（PM 2026-09-07：设定/解除/阈值三合一） -->
+  <PersonalChronicle.Automation.Port.Manage>物流管理</PersonalChronicle.Automation.Port.Manage>
+  <PersonalChronicle.Automation.Port.ManageDesc>打开物流管理面板：设定或解除输出目标、调整输出阈值（攒批输出）。</PersonalChronicle.Automation.Port.ManageDesc>
+  <PersonalChronicle.Automation.Port.ManageTitle>物流管理</PersonalChronicle.Automation.Port.ManageTitle>
+  <PersonalChronicle.Automation.Port.ManageTarget>输出目标</PersonalChronicle.Automation.Port.ManageTarget>
+  <PersonalChronicle.Automation.Port.Manage.SetTarget>设定输出目标…</PersonalChronicle.Automation.Port.Manage.SetTarget>
+  <PersonalChronicle.Automation.Port.Manage.ClearTarget>解除绑定</PersonalChronicle.Automation.Port.Manage.ClearTarget>
+  <PersonalChronicle.Automation.Port.ManageThreshold>输出阈值</PersonalChronicle.Automation.Port.ManageThreshold>
+  <PersonalChronicle.Automation.Port.ManageStatus>推送状态</PersonalChronicle.Automation.Port.ManageStatus>
+  <!-- 阈值数值显示单位（2026-09-21 CHG-SHOP-AUDIT-001 · L-3：原为硬编码「 件」） -->
+  <PersonalChronicle.Automation.Port.UnitPieces>{0} 件</PersonalChronicle.Automation.Port.UnitPieces>
+  <PersonalChronicle.Automation.Port.Manage.Ready>仓储 {0} 件 ≥ 阈值 {1}：输出中</PersonalChronicle.Automation.Port.Manage.Ready>
+  <PersonalChronicle.Automation.Port.Manage.Waiting>仓储 {0} / 阈值 {1}：攒批中</PersonalChronicle.Automation.Port.Manage.Waiting>
+  <PersonalChronicle.Automation.Port.Inspect.BelowThreshold>攒批中：{0} / 阈值 {1}（达到后开始输出）</PersonalChronicle.Automation.Port.Inspect.BelowThreshold>
+  <!-- 车间类型加成（落地管线：工作速度 StatPart）。{0}=车间类型，{1}=百分比 -->
+  <PersonalChronicle.Workshop.WorkSpeed.StatPart>{0}：工作速度 +{1}%</PersonalChronicle.Workshop.WorkSpeed.StatPart>
+  <PersonalChronicle.Workshop.Product.Hp.StatPart>车间生产：耐久 +{0}%</PersonalChronicle.Workshop.Product.Hp.StatPart>
+  <PersonalChronicle.Workshop.Product.Accuracy.StatPart>车间生产：精度 +{0}%</PersonalChronicle.Workshop.Product.Accuracy.StatPart>
+  <PersonalChronicle.Workshop.ResearchSpeed.StatPart>{0}：研究速度 +{1}%</PersonalChronicle.Workshop.ResearchSpeed.StatPart>
+  <!-- 车间类型选择（设置页；类型决定本车间提供哪些加成） -->
+  <PersonalChronicle.Automation.Tab.TypeCurrent>车间类型：</PersonalChronicle.Automation.Tab.TypeCurrent>
+  <PersonalChronicle.Automation.Tab.TypeBuffWork>工作速度 +{0}%</PersonalChronicle.Automation.Tab.TypeBuffWork>
+  <PersonalChronicle.Automation.Tab.TypeBuffQuality>品质 +{0}</PersonalChronicle.Automation.Tab.TypeBuffQuality>
+  <PersonalChronicle.Automation.Tab.TypeBuffResearch>研究速度 +{0}%</PersonalChronicle.Automation.Tab.TypeBuffResearch>
+  <PersonalChronicle.Automation.Tab.OverviewEmptyTitle>暂无车间数据</PersonalChronicle.Automation.Tab.OverviewEmptyTitle>
+  <PersonalChronicle.Automation.Tab.OverviewEmptySub>车间已被删除或尚未完成扫描，关闭本窗后重新打开即可</PersonalChronicle.Automation.Tab.OverviewEmptySub>
+  <PersonalChronicle.Automation.Tab.OccupancyEmpty>车间还没有圈定格位 —— 先用「圈定车间」划出区域</PersonalChronicle.Automation.Tab.OccupancyEmpty>
+  <PersonalChronicle.Automation.Tab.RuntimeHours>{0} 小时</PersonalChronicle.Automation.Tab.RuntimeHours>
+  <PersonalChronicle.Automation.Tab.RuntimeDaysHours>{0} 天 {1} 小时</PersonalChronicle.Automation.Tab.RuntimeDaysHours>
+  <PersonalChronicle.Automation.Tab.PerfRate>{0}%</PersonalChronicle.Automation.Tab.PerfRate>
+  <PersonalChronicle.Automation.Tab.PerfNA>—</PersonalChronicle.Automation.Tab.PerfNA>
+  <PersonalChronicle.Automation.Tab.PerfSummary>今日 · 出勤 {0}/{1} 小时 · 产量 {2}</PersonalChronicle.Automation.Tab.PerfSummary>
+  <PersonalChronicle.Automation.Tab.MembersMore>+{0}</PersonalChronicle.Automation.Tab.MembersMore>
+  <PersonalChronicle.Automation.Tab.CrewNoMembers>空编 —— 点卡片添加成员</PersonalChronicle.Automation.Tab.CrewNoMembers>
+  <PersonalChronicle.Automation.Tab.CardNoShifts>尚无班次</PersonalChronicle.Automation.Tab.CardNoShifts>
+  <!-- 班次 chip 悬停提示的「本车间全部班次」行（2026-10-02：卡面固定只显示一个班次） -->
+  <PersonalChronicle.Automation.Tab.CardShiftAll>车间班次：{0}</PersonalChronicle.Automation.Tab.CardShiftAll>
+  <!-- 班次空岗提示（2026-10-02）：多班次车间若没有任何班组勾选该班次 ⇒ 无人上岗，悬停提示里明示修法 -->
+  <PersonalChronicle.Automation.Tab.ShiftNoPool>⚠ 本班次没有可用人员 —— 请在「班组」设置里把某个班组指派给该班次</PersonalChronicle.Automation.Tab.ShiftNoPool>
+  <!-- 班组卡 chip 的指派入口（2026-10-02）：卡片上直接切换"这个班组上哪个班" -->
+  <PersonalChronicle.Automation.Tab.ChipClickAssignHint>点击选择本班组负责的班次</PersonalChronicle.Automation.Tab.ChipClickAssignHint>
+  <PersonalChronicle.Automation.Tab.CrewAssignShort>指派</PersonalChronicle.Automation.Tab.CrewAssignShort>
+  <PersonalChronicle.Automation.Tab.CrewNoShiftsToAssign>本车间还没有班次 —— 请先在「班次表」页添加</PersonalChronicle.Automation.Tab.CrewNoShiftsToAssign>
+  <!-- 删除班组二次确认（2026-10-02 审计 P1-I）：{0} = 班组名 -->
+  <PersonalChronicle.Automation.Tab.ConfirmRemoveCrew>确定要删除班组「{0}」吗？\n其成员编制与班次指派将一并丢失，且无法撤销。</PersonalChronicle.Automation.Tab.ConfirmRemoveCrew>
+  <!-- 人员页新增两列（2026-10-02）：今日岗位 / 主技能；Refresh 期预构建，绘制零计算 -->
+  <PersonalChronicle.Automation.Tab.ColDuty>今日岗位</PersonalChronicle.Automation.Tab.ColDuty>
+  <PersonalChronicle.Automation.Tab.ColSkill>主技能</PersonalChronicle.Automation.Tab.ColSkill>
+  <PersonalChronicle.Automation.Tab.Unassigned>未分组</PersonalChronicle.Automation.Tab.Unassigned>
+  <PersonalChronicle.Automation.Tab.NoSkill>—</PersonalChronicle.Automation.Tab.NoSkill>
+  <!-- 优先级短标记（2026-10-02 减法审计）：取代代码里硬编码的 "P" + 数字（LOC-001） -->
+  <PersonalChronicle.Automation.Tab.PriorityMark>P{0}</PersonalChronicle.Automation.Tab.PriorityMark>
+  <!-- 「不限」短标记（2026-10-02 减法审计）：取代代码里硬编码的 "∞"（LOC-001） -->
+  <PersonalChronicle.Automation.Tab.UnlimitedMark>∞</PersonalChronicle.Automation.Tab.UnlimitedMark>
+  <!-- 移除按钮标记（2026-10-02 减法审计）：取代代码里硬编码的 "X"（LOC-001 + 可读性） -->
+  <PersonalChronicle.Automation.Tab.RemoveMark>✕</PersonalChronicle.Automation.Tab.RemoveMark>
+  <PersonalChronicle.Automation.Tab.MembersHoverHint>悬停卡片底部查看全部成员明细</PersonalChronicle.Automation.Tab.MembersHoverHint>
+  <PersonalChronicle.Automation.Tab.KpiRunning>运行中</PersonalChronicle.Automation.Tab.KpiRunning>
+  <PersonalChronicle.Automation.Tab.KpiFaulted>故障</PersonalChronicle.Automation.Tab.KpiFaulted>
+  <PersonalChronicle.Automation.Tab.KpiProducedWindow>本周产量</PersonalChronicle.Automation.Tab.KpiProducedWindow>
+  <PersonalChronicle.Automation.Tab.UnassignedHint>{0} 名成员未编入班组</PersonalChronicle.Automation.Tab.UnassignedHint>
+  <PersonalChronicle.Automation.Tab.UnassignedAssign>平均编入</PersonalChronicle.Automation.Tab.UnassignedAssign>
+  <PersonalChronicle.Automation.Tab.TypeNone>未设置（无加成）</PersonalChronicle.Automation.Tab.TypeNone>
+  <PersonalChronicle.Automation.Tab.TypeClear>清除类型</PersonalChronicle.Automation.Tab.TypeClear>
+  <!-- 原版工作优先级联动披露（2026-10-02 · EXC-2026-012 + EXC-2026-013） -->
+  <!-- CHG-20261005-TAKEOVERUI：文案精简（玩家要求"尽可能简单明了，减少阅读成本"） -->
+  <PersonalChronicle.Automation.Tab.WorkPrioManualOn>工作优先级：手动模式 · 车间工作已提为最高档</PersonalChronicle.Automation.Tab.WorkPrioManualOn>
+  <PersonalChronicle.Automation.Tab.WorkPrioManualOff>工作优先级：简单模式 · 车间提权不生效</PersonalChronicle.Automation.Tab.WorkPrioManualOff>
+  <PersonalChronicle.Automation.Tab.WorkPrioEnable>开启手动优先级</PersonalChronicle.Automation.Tab.WorkPrioEnable>
+  <PersonalChronicle.Automation.Tab.WorkPrioHint>原版只在「手动优先级」下读优先级。开启后车间工作提为最高档（1），殖民者优先做车间的活；之后仍可在原版【工作】面板调整。</PersonalChronicle.Automation.Tab.WorkPrioHint>
+  <!-- 2026-09-25 车间类型专向 buff 显示 -->
+  <!-- CHG-20261003-WORKSTATION 车间专属工位（L4 状态行 + 一键全解除）-->
+  <PersonalChronicle.Automation.Tab.WorkSyncAligned>已对齐 {0} 人</PersonalChronicle.Automation.Tab.WorkSyncAligned>
+  <PersonalChronicle.Automation.Tab.WorkSyncSkipped>跳过 {0} 人</PersonalChronicle.Automation.Tab.WorkSyncSkipped>
+  <PersonalChronicle.Automation.Tab.WorkSyncScope>在册 {0} 人</PersonalChronicle.Automation.Tab.WorkSyncScope>
+  <PersonalChronicle.Automation.Tab.WorkSyncNoManager>车间专属工位：调度器不可用</PersonalChronicle.Automation.Tab.WorkSyncNoManager>
+  <PersonalChronicle.Automation.Tab.WorkSyncHint>排班或派工后，车间相关工作提到最高档（1），殖民者优先做车间的活；其余工作保持你原来的档位。「跳过」指该殖民者有工作因技能不足或背景限制被原版禁用，无法调整。</PersonalChronicle.Automation.Tab.WorkSyncHint>
+  <PersonalChronicle.Automation.Tab.Posts>岗位</PersonalChronicle.Automation.Tab.Posts>
+  <PersonalChronicle.Automation.Tab.PostsTitle>岗位标准表 · 现实工厂分工</PersonalChronicle.Automation.Tab.PostsTitle>
+  <PersonalChronicle.Automation.Tab.PostsNoticePhase1>按岗位与车间工种安排原版工作。生产员工执行设备工单，无活短暂待命；其他员工执行对应原版任务。用餐、休息与下班按管制作息生效。</PersonalChronicle.Automation.Tab.PostsNoticePhase1>
+  <PersonalChronicle.Automation.Tab.PostCoversNone>（纯内部岗，不承接原版工作）</PersonalChronicle.Automation.Tab.PostCoversNone>
+  <PersonalChronicle.Automation.Tab.PostMissingSuffix>（1.6 无此工作）</PersonalChronicle.Automation.Tab.PostMissingSuffix>
+  <PersonalChronicle.Automation.Tab.PostDelivers>车间可独立交付</PersonalChronicle.Automation.Tab.PostDelivers>
+  <!-- CHG-20261005-POSTTIP：岗位标签悬停说明（消除"无可接管"与"未接管"看着矛盾的观感） -->
+  <PersonalChronicle.Automation.Tab.PostDeliversTip>该岗位已声明「可独立交付」：车间实现了对应的工作类型，点「接管原版工作」时它会被取消勾选（成员专注车间）。</PersonalChronicle.Automation.Tab.PostDeliversTip>
+  <PersonalChronicle.Automation.Tab.PostNotDeliversTip>该岗位尚未声明「可独立交付」：本车间还没实现对应的工作类型，所以它不参与接管（不会改动你的原版工作面板），也不影响员工干活 —— 岗位表只做派活建议。设置页「接管原版工作」提示"无可接管"，正是因为所有岗位都处于这个状态。</PersonalChronicle.Automation.Tab.PostNotDeliversTip>
+  <PersonalChronicle.Automation.Tab.PostNotDelivers>规划中·未接管</PersonalChronicle.Automation.Tab.PostNotDelivers>
+
+  <!-- CHG-20261005-POSTLAND：岗位落地（按岗位勾选优先，不清零、不接管） -->
+  <PersonalChronicle.Automation.Tab.PostLandButton>按岗位落地</PersonalChronicle.Automation.Tab.PostLandButton>
+  <PersonalChronicle.Automation.Tab.PostLandTip>把每个岗位对应的工作写进成员的原版工作优先级：勾选并按技能提档。只动「该岗位承接的那一项工作」，其它工作一律不动。不清零、不接管 —— 右侧「未接管」标记说的是"PC 独立交付 Job"，与本操作是两件事。</PersonalChronicle.Automation.Tab.PostLandTip>
+  <!-- {0} = 已落地人数；{1} = 无岗位人数；{2} = 挑不出工作的人数 -->
+  <PersonalChronicle.Automation.Tab.PostLandDone>已落地 {0} 人（无岗位 {1} · 无可用工作 {2}）</PersonalChronicle.Automation.Tab.PostLandDone>
+  <PersonalChronicle.Automation.Tab.TakeoverIdle>默认开启：成员编入车间即取消勾选「车间类」原版工作（搬运 / 清洁 / 医疗 / 灭火不受影响）。</PersonalChronicle.Automation.Tab.TakeoverIdle>
+  <PersonalChronicle.Automation.Tab.TakeoverDo>接管原版工作</PersonalChronicle.Automation.Tab.TakeoverDo>
+  <PersonalChronicle.Automation.Tab.TakeoverDoTip>取消勾选成员的「车间类」原版工作，让他们专注车间。可随时「解除接管」。</PersonalChronicle.Automation.Tab.TakeoverDoTip>
+  <PersonalChronicle.Automation.Tab.TakeoverRelease>解除接管</PersonalChronicle.Automation.Tab.TakeoverRelease>
+  <PersonalChronicle.Automation.Tab.TakeoverReleaseTip>只还原 PC 改过、且未被你手动改回的项。</PersonalChronicle.Automation.Tab.TakeoverReleaseTip>
+  <PersonalChronicle.Automation.Tab.TakeoverDone>已处理 {0} 项 · </PersonalChronicle.Automation.Tab.TakeoverDone>
+  <PersonalChronicle.Automation.Tab.TakeoverOk>接管完成</PersonalChronicle.Automation.Tab.TakeoverOk>
+  <PersonalChronicle.Automation.Tab.TakeoverReleased>已还原</PersonalChronicle.Automation.Tab.TakeoverReleased>
+  <PersonalChronicle.Automation.Tab.TakeoverReleaseNone>没有可还原的项</PersonalChronicle.Automation.Tab.TakeoverReleaseNone>
+  <PersonalChronicle.Automation.Tab.Takeover_no_free_worker_warn>提示：全员都在车间、没有自由工人了。搬运 / 清洁 / 医疗 / 灭火按硬红线始终保留，所以不会出现没人可用，但建议至少留一名机动人手。</PersonalChronicle.Automation.Tab.Takeover_no_free_worker_warn>
+  <PersonalChronicle.Automation.Tab.Takeover_no_crew_member>未执行：该车间没有在编班组成员</PersonalChronicle.Automation.Tab.Takeover_no_crew_member>
+  <PersonalChronicle.Automation.Tab.Takeover_no_takeoverable_work>无可接管的工作：所有岗位都还是「规划中·未接管」—— 车间尚未声明"可独立交付"的工作类型（本版车间只实现值勤，没有生产 Job）。这与员工能否干活无关：岗位表只做派活建议，不改你的原版工作面板。</PersonalChronicle.Automation.Tab.Takeover_no_takeoverable_work>
+  <PersonalChronicle.Automation.Tab.Takeover_nothing_to_take_over>未执行：这些工作当前都未被勾选，无需接管</PersonalChronicle.Automation.Tab.Takeover_nothing_to_take_over>
+  <PersonalChronicle.Automation.Tab.Takeover_zone_missing>未执行：车间无效</PersonalChronicle.Automation.Tab.Takeover_zone_missing>  <PersonalChronicle.Automation.Tab.PostNoHolder>（暂无合适人选）</PersonalChronicle.Automation.Tab.PostNoHolder>  <PersonalChronicle.Automation.Tab.ColPost>岗位</PersonalChronicle.Automation.Tab.ColPost>
+  <PersonalChronicle.Automation.Tab.RestPolicy>作息策略</PersonalChronicle.Automation.Tab.RestPolicy>
+  <PersonalChronicle.Automation.Tab.RestPolicyRotateWarning>警告：该策略按每日轮换改写作息表，工人的工作时长会在日与日之间翻转约 12 小时，睡眠节律被严重打乱。仅建议作对照使用。</PersonalChronicle.Automation.Tab.RestPolicyRotateWarning>
+
+  <!--
+    CHG-20261005-OVERVIEW-IND · 概览页工业化改造（玩家口径：「这是单个车间区的概览，
+    不需要太宏观，以工业化、数字化、智能化视角去优化」）。
+    ★ 仪表台的一张表 = 一个工厂级问题；数值行给精确计数（表盘给比例）。
+  -->
+  <PersonalChronicle.Automation.Tab.GaugeOccupancy>空间占用</PersonalChronicle.Automation.Tab.GaugeOccupancy>
+  <PersonalChronicle.Automation.Tab.GaugeDeviceRun>设备运转率</PersonalChronicle.Automation.Tab.GaugeDeviceRun>
+  <PersonalChronicle.Automation.Tab.GaugeDeviceManned>工作台有人率</PersonalChronicle.Automation.Tab.GaugeDeviceManned>
+  <PersonalChronicle.Automation.Tab.LedTitle>设备状态灯阵</PersonalChronicle.Automation.Tab.LedTitle>
+  <!-- 灯色语义（与 RUIF Industrial.LedColor 一一对应：0 熄 / 1 正常 / 2 警告 / 3 故障） -->
+  <PersonalChronicle.Automation.Tab.LedIdle>停机</PersonalChronicle.Automation.Tab.LedIdle>
+  <PersonalChronicle.Automation.Tab.LedRun>运转</PersonalChronicle.Automation.Tab.LedRun>
+  <PersonalChronicle.Automation.Tab.LedWarn>告警</PersonalChronicle.Automation.Tab.LedWarn>
+  <PersonalChronicle.Automation.Tab.LedFault>故障</PersonalChronicle.Automation.Tab.LedFault>
+  <PersonalChronicle.Automation.Tab.LedNoDevice>本区还没有设备 —— 放进设备后这里会逐台亮灯。</PersonalChronicle.Automation.Tab.LedNoDevice>
+  <!-- {0} = 缺失设备名（/ 分隔）。单独成行显示：旧实现把名字挤在正文里，缺口为 0 时玩家看不到有这项。 -->
+  <PersonalChronicle.Automation.Tab.FitMissingNames>缺少：{0}</PersonalChronicle.Automation.Tab.FitMissingNames>
+
+  <!-- CHG-20261005-OVERVIEW-IND B 批：产出达成仪表 + 瓶颈带 -->
+  <PersonalChronicle.Automation.Tab.GaugeProduce>今日产出</PersonalChronicle.Automation.Tab.GaugeProduce>
+  <PersonalChronicle.Automation.Tab.BottleneckTitle>设备负载（累计运行时长的占比）</PersonalChronicle.Automation.Tab.BottleneckTitle>
+  <PersonalChronicle.Automation.Tab.BottleneckNoData>暂无运行数据 —— 设备运转 1 秒后开始采样。</PersonalChronicle.Automation.Tab.BottleneckNoData>
+
+  <!-- CHG-20261005-OVERVIEW-IND C 批：近 5 日产出趋势（走 RUIF Charts.BarChartV） -->
+  <PersonalChronicle.Automation.Tab.TrendTitle>近 5 日产出趋势</PersonalChronicle.Automation.Tab.TrendTitle>
+  <!-- {0} = 近 5 日合计件数 -->
+  <PersonalChronicle.Automation.Tab.TrendTotal>合计 {0} 件</PersonalChronicle.Automation.Tab.TrendTotal>
+  <PersonalChronicle.Automation.Tab.TrendNoData>暂无产出记录 —— 本区设备产出后会在这里显示趋势。</PersonalChronicle.Automation.Tab.TrendNoData>
+  <PersonalChronicle.Automation.Tab.TrendToday>今天</PersonalChronicle.Automation.Tab.TrendToday>
+  <!-- {0} = 距今天数 -->
+  <PersonalChronicle.Automation.Tab.TrendDaysAgo>{0} 天前</PersonalChronicle.Automation.Tab.TrendDaysAgo>
+
+  <!-- CHG-20261005-TRENDBOARD：概览页大组件区（玩家 2026-10-05 批准候选 1 / 3 / 4） -->
+  <!-- 候选 1：设备使用波峰（7 日 × 24 小时热力网格，走 RUIF Charts.HeatmapGrid） -->
+  <PersonalChronicle.Automation.Tab.PeakTitle>设备使用波峰（近 7 日 · 按小时）</PersonalChronicle.Automation.Tab.PeakTitle>
+  <PersonalChronicle.Automation.Tab.PeakNoData>暂无运行采样 —— 设备运转后开始逐小时累计。</PersonalChronicle.Automation.Tab.PeakNoData>
+  <!-- 热力色阶两端标签（左少右多） -->
+  <PersonalChronicle.Automation.Tab.PeakLegendLess>少</PersonalChronicle.Automation.Tab.PeakLegendLess>
+  <PersonalChronicle.Automation.Tab.PeakLegendMore>多</PersonalChronicle.Automation.Tab.PeakLegendMore>
+  <!-- {0} = 机时最高的小时（0-23） -->
+  <PersonalChronicle.Automation.Tab.PeakBest>最忙时段 {0}:00</PersonalChronicle.Automation.Tab.PeakBest>
+  <!-- {0} = 该时段合计机时（一位小数） -->
+  <PersonalChronicle.Automation.Tab.PeakBestHours>合计 {0} 机时</PersonalChronicle.Automation.Tab.PeakBestHours>
+  <PersonalChronicle.Automation.Tab.PeakFooter>列 = 小时（0-23） · 行 = 天数（上旧下新）</PersonalChronicle.Automation.Tab.PeakFooter>
+
+  <!-- 候选 3：稼动 vs 产出（归一化双序列折线，走 RUIF Charts.LineChart 多系列） -->
+  <PersonalChronicle.Automation.Tab.EffTitle>稼动 vs 产出（各自峰值 = 100%）</PersonalChronicle.Automation.Tab.EffTitle>
+  <PersonalChronicle.Automation.Tab.EffNoData>暂无运行记录 —— 设备运转后在这里显示 7 日对比。</PersonalChronicle.Automation.Tab.EffNoData>
+  <PersonalChronicle.Automation.Tab.EffLegendProduced>产出</PersonalChronicle.Automation.Tab.EffLegendProduced>
+  <PersonalChronicle.Automation.Tab.EffLegendRun>机时</PersonalChronicle.Automation.Tab.EffLegendRun>
+  <!-- 脚注：必须够短（右半面板宽度有限；过长会溢出压住左侧标题，2026-10-05 COMPFIX） -->
+  <PersonalChronicle.Automation.Tab.EffFooter>左旧 → 右新（6 天）</PersonalChronicle.Automation.Tab.EffFooter>
+  <!-- CHG-20261005-COMPFIX2：瓶颈带注脚回归组件自画（取 stageLabels[bottleneck]）——
+       本页不再另画，原先的 BottleneckFoot key 已随之删除。 -->
+
+  <!-- 候选 4：瓶颈演变（近 7 日各设备机时堆叠柱，走 RUIF Charts.StackedBarChartV） -->
+  <PersonalChronicle.Automation.Tab.BottleTrendTitle>瓶颈演变（近 7 日 · 各设备机时）</PersonalChronicle.Automation.Tab.BottleTrendTitle>
+  <PersonalChronicle.Automation.Tab.BottleTrendNoData>暂无运行采样 —— 设备运转后开始逐日累计。</PersonalChronicle.Automation.Tab.BottleTrendNoData>
+  <PersonalChronicle.Automation.Tab.BottleTrendOther>其它</PersonalChronicle.Automation.Tab.BottleTrendOther>
+
+  <!-- CHG-20261005-DEVCOLS：设备页新增列（玩家 2026-10-05 指定 3 列 + 建议 1 列） -->
+  <PersonalChronicle.Automation.Tab.ColWorker>操作员</PersonalChronicle.Automation.Tab.ColWorker>
+  <PersonalChronicle.Automation.Tab.ColValue>累计产值</PersonalChronicle.Automation.Tab.ColValue>
+  <PersonalChronicle.Automation.Tab.ColBorn>建立时间</PersonalChronicle.Automation.Tab.ColBorn>
+  <PersonalChronicle.Automation.Tab.ColEfficiency>效率（件/机时）</PersonalChronicle.Automation.Tab.ColEfficiency>
+  <!-- {0} = 台账首次看到该设备时的游戏天数 -->
+  <PersonalChronicle.Automation.Tab.ColBornDay>第 {0} 天</PersonalChronicle.Automation.Tab.ColBornDay>
+  <!-- CHG-20261005-DURCOL：耐久列（HP%，零成本"维护"列） -->
+  <PersonalChronicle.Automation.Tab.ColDurability>耐久</PersonalChronicle.Automation.Tab.ColDurability>
+
+  <!-- CHG-20261005-MEALBYSHIFT：班中餐未设置（旧文案是"跟随全局"，全局三餐已删除） -->
+  <PersonalChronicle.Automation.Tab.ShiftMealUnset>未设置</PersonalChronicle.Automation.Tab.ShiftMealUnset>
+
+  <!-- CHG-20261005-MEALHOUR：单点时间选择器（三餐由"起止段"改为"单个时间"） -->
+  <PersonalChronicle.Automation.Tab.HourPickTitle>选择时间</PersonalChronicle.Automation.Tab.HourPickTitle>
+  <!-- {0} = 选中的时刻（如 07:00） -->
+  <PersonalChronicle.Automation.Tab.HourPickHint>这一餐安排在 {0}（只在该班次的时段内才会生效）</PersonalChronicle.Automation.Tab.HourPickHint>
+  <PersonalChronicle.Automation.Tab.HourPickClose>关闭该餐</PersonalChronicle.Automation.Tab.HourPickClose>
+
+  <!-- CHG-20261005-TIMERANGE：时段弹窗的语义提示（同一弹窗、两套"起==止"含义） -->
+  <PersonalChronicle.Automation.Tab.TimeClosedMeal>起 == 止 = 关闭该餐</PersonalChronicle.Automation.Tab.TimeClosedMeal>
+  <PersonalChronicle.Automation.Tab.PresetMealOff>关闭该餐</PersonalChronicle.Automation.Tab.PresetMealOff>
+  <PersonalChronicle.Automation.RestPolicy.Fixed.Label>固定班次</PersonalChronicle.Automation.RestPolicy.Fixed.Label>
+  <PersonalChronicle.Automation.RestPolicy.Fixed.Desc>岗位永久绑定一个班次，不按天翻转，睡眠节律稳定。</PersonalChronicle.Automation.RestPolicy.Fixed.Desc>
+  <PersonalChronicle.Automation.RestPolicy.Natural.Label>自然休息</PersonalChronicle.Automation.RestPolicy.Natural.Label>
+  <PersonalChronicle.Automation.RestPolicy.Natural.Desc>完全不写原版作息表：工人按休息需求自行休息，由值勤工作控制上下工。</PersonalChronicle.Automation.RestPolicy.Natural.Desc>
+  <PersonalChronicle.Automation.RestPolicy.Rotate.Label>每日轮换</PersonalChronicle.Automation.RestPolicy.Rotate.Label>
+  <PersonalChronicle.Automation.RestPolicy.Rotate.Desc>旧行为：作息表跟随班组当日轮到的班次变化。</PersonalChronicle.Automation.RestPolicy.Rotate.Desc>
+  <PersonalChronicle.Automation.RestPolicy.Rotate.Warning>警告：每日轮换会让每位工人的工作时长在日与日之间翻转约 12 小时，严重打乱睡眠节律。</PersonalChronicle.Automation.RestPolicy.Rotate.Warning>
+  <PersonalChronicle.Automation.Tab.PostUnassigned>（未分配）</PersonalChronicle.Automation.Tab.PostUnassigned></LanguageData>

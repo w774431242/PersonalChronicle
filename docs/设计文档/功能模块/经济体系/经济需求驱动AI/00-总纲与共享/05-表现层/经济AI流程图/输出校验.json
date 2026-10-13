@@ -1,0 +1,18 @@
+{
+  "result": "Passed",
+  "pngPixels": [
+    6600,
+    6680
+  ],
+  "pngDpi": [
+    299.9994,
+    299.9994
+  ],
+  "svgPathCount": 123,
+  "svgTextCount": 0,
+  "chineseRendering": "outlined glyphs; preview visually inspected",
+  "files": {
+    "Pawn经济AI_闭环流程图_高清.png": "d8cf5dabe788cdd387d3fd678c8a8a104d52a4c165fd5ee34a3078b7623364c9",
+    "Pawn经济AI_闭环流程图_矢量.svg": "c5d491991f226024489861a8e101b767de7a0540e6205fa1a0781903cce84904"
+  }
+}

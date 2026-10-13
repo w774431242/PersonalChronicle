@@ -37,6 +37,10 @@ namespace PersonalChronicle.Domain.Qualification
     {
         public string ThesisId;
         public string QualificationDefName;
+        /// <summary>选题方向（一级专业键，如 "Manufacturing"），用于按方向消耗书籍/文献与殖民地加成。</summary>
+        public string Topic;
+        /// <summary>分阶段流水线进度：0 未选题 / 1 已选题(论文骨架) / 2 已引用(书籍+研究) / 3 已完成。</summary>
+        public int Stage;
         public List<string> SourceBookIds = new List<string>();
         public List<string> SourceResearchEventIds = new List<string>();
         /// <summary>由书籍/研究聚合的基础质量 0~100。</summary>
@@ -50,6 +54,8 @@ namespace PersonalChronicle.Domain.Qualification
         {
             Scribe_Values.Look(ref ThesisId, "thesisId");
             Scribe_Values.Look(ref QualificationDefName, "qualificationDefName");
+            Scribe_Values.Look(ref Topic, "topic");
+            Scribe_Values.Look(ref Stage, "stage", 0);
             Scribe_Collections.Look(ref SourceBookIds, "sourceBookIds", LookMode.Value);
             Scribe_Collections.Look(ref SourceResearchEventIds, "sourceResearchEventIds", LookMode.Value);
             Scribe_Values.Look(ref BaseQuality, "baseQuality", 0f);
@@ -72,11 +78,15 @@ namespace PersonalChronicle.Domain.Qualification
         /// <summary>关联 QualificationDef.defName（答辩归属的资格；新数据必填）。</summary>
         public string QualificationDefName;
         public List<string> CommitteePawnIds = new List<string>();
-        /// <summary>委员平均评分 0~100。</summary>
+        /// <summary>委员平均评分 0~100（StartDefense 时按委员 Crafting 派生快照，评分锁定不可刷）。</summary>
         public float CommitteeScore;
         /// <summary>最终评分 = ThesisQuality*0.5 + CommitteeScore*0.5。</summary>
         public float FinalScore;
         public bool Passed;
+        /// <summary>外部函评标记：本殖民地无「高一级职称」委员时，答辩转外部评审（committeeScore 取保守基线）。</summary>
+        public bool ExternalReviewed;
+        /// <summary>是否已评分（首次 GradeDefense 后置 true；Passed=true 后锁定禁重评）。</summary>
+        public bool Finished;
         public long HeldTick;
 
         public void ExposeData()
@@ -87,6 +97,8 @@ namespace PersonalChronicle.Domain.Qualification
             Scribe_Values.Look(ref CommitteeScore, "committeeScore", 0f);
             Scribe_Values.Look(ref FinalScore, "finalScore", 0f);
             Scribe_Values.Look(ref Passed, "passed", false);
+            Scribe_Values.Look(ref ExternalReviewed, "externalReviewed", false);
+            Scribe_Values.Look(ref Finished, "finished", false);
             Scribe_Values.Look(ref HeldTick, "heldTick", 0L);
             if (CommitteePawnIds == null) CommitteePawnIds = new List<string>();
         }

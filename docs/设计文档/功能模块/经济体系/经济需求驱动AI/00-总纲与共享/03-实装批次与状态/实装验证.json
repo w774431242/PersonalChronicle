@@ -1,0 +1,312 @@
+{
+  "changeId": "CHG-20261008-ECON-LANDING",
+  "checkedUtc": "2026-10-08T06:27:50.1147881Z",
+  "scope": "B0 rollout plan and B1.1 pure facts/gap kernel only; no Pawn capture, UI, money migration, Job integration, deployment or gameplay verification.",
+  "planValidation": {
+    "batches": 8,
+    "nodesIncludingChildren": 11,
+    "modules": [
+      "M1",
+      "M12",
+      "M11",
+      "M9",
+      "M2",
+      "M5",
+      "M3",
+      "M4",
+      "M6",
+      "M7",
+      "M10",
+      "M8"
+    ],
+    "dependenciesAcyclic": true,
+    "statusClaimsConsistent": true
+  },
+  "build": {
+    "command": "dotnet build Source/PersonalChronicle.csproj -c Release --no-restore -v minimal",
+    "exitCode": 0,
+    "warnings": 0,
+    "errors": 0,
+    "modAssemblySha256": "55B511985C81948CEA3426FAD718F0C238F3B9196F759ACFDF68E96E2E9308A6",
+    "buildStamp": "namespace PersonalChronicle\r\n{\r\n    internal static class BuildInfo\r\n    {\r\n        internal const string BuildTimeUtc = \"2026-10-08 06:24\";\r\n    }\r\n}\r\n"
+  },
+  "environment": {
+    "gameVersion": "1.6.4871 rev590",
+    "gameAssemblySha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "ruifAssemblySha256": "E9C0ED7C4B027F3F6C3F656C0737311DBCD21603FA94138D38C7105842C0ACAC"
+  },
+  "testReports": [
+    {
+      "kind": "Baseline",
+      "path": "Tests/TestResults/EconomyLanding-Baseline.trx",
+      "total": 30,
+      "passed": 30,
+      "failed": 0,
+      "notExecuted": 0,
+      "skippedNames": [],
+      "sha256": "9747E463F321492DED6C591436E3F17E181C95C6E29D884D491861BD8606A659",
+      "executed": 30,
+      "skipped": 0
+    },
+    {
+      "kind": "Perception",
+      "path": "Tests/TestResults/EconomyLanding-Perception.trx",
+      "total": 47,
+      "passed": 47,
+      "failed": 0,
+      "notExecuted": 0,
+      "skippedNames": [],
+      "sha256": "B1EB9E4ABB7AF0B475EEDB84D0A27898A6474F79958CA0C275E434E19B3DA610",
+      "executed": 47,
+      "skipped": 0
+    },
+    {
+      "kind": "Full",
+      "path": "Tests/TestResults/EconomyLanding-Full.trx",
+      "total": 626,
+      "passed": 625,
+      "failed": 0,
+      "notExecuted": 0,
+      "skippedNames": [
+        "Measure_Content_vs_Viewport"
+      ],
+      "sha256": "BA62893F20A7DDF5432DA88CDDB3F609B3157CB0E38286C0FB9D67D2E2C6EC3F",
+      "executed": 625,
+      "skipped": 1
+    }
+  ],
+  "files": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/Fact.cs",
+      "sha256": "7FB45A2BA3162AC5E87F2D94C352FCEEA8CDFFDEB2BCB6E1D1CEA92F6E68D70C",
+      "lines": 75,
+      "anchors": [
+        {
+          "line": 5,
+          "text": "internal enum FactState"
+        },
+        {
+          "line": 16,
+          "text": "internal readonly struct Fact<T>"
+        },
+        {
+          "line": 59,
+          "text": "internal static class PerceptionReasons"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/NeedObservation.cs",
+      "sha256": "99477CE08CD43472F73B98407615A6B223202D00F29E599986171A1702FCC557",
+      "lines": 115,
+      "anchors": [
+        {
+          "line": 6,
+          "text": "internal enum TargetState { Unknown = 0, Enabled = 1, Disabled = 2, NotApplicable = 3 }"
+        },
+        {
+          "line": 8,
+          "text": "internal static class RequirementIdentity"
+        },
+        {
+          "line": 27,
+          "text": "internal sealed class NumericNeedFact"
+        },
+        {
+          "line": 62,
+          "text": "internal readonly struct NeedTarget"
+        },
+        {
+          "line": 79,
+          "text": "internal sealed class CurrentNeedGap"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/CurrentNeedProjector.cs",
+      "sha256": "C496B6DB6EC10CE3F6A5422E7CA9D80DF722A97025A3BC6770B66F73B60C0F54",
+      "lines": 74,
+      "anchors": [
+        {
+          "line": 5,
+          "text": "internal static class CurrentNeedProjector"
+        },
+        {
+          "line": 10,
+          "text": "public static CurrentNeedGap Project(string beneficiaryId, NumericNeedFact reading, NeedTarget target)"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnNeedPerceptionTests.cs",
+      "sha256": "EB8CFBC5304DF971B8021F4CAD2D466EA19C751B1F1C4AABF809FEF2BA04B7E9",
+      "lines": 234,
+      "anchors": [
+        {
+          "line": 8,
+          "text": "public sealed class PawnNeedPerceptionTests"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/00-实装落地计划_v1.0.md",
+      "sha256": "C7B6ADAA89D626A20B24E9EB56439D1DEE94C837C4E1915835DBE220E9BC2DA4",
+      "lines": 182,
+      "anchors": [
+        {
+          "line": 7,
+          "text": "## 1. 目标、范围与交付纪律"
+        },
+        {
+          "line": 15,
+          "text": "## 2. 当前代码基线及迁移差异"
+        },
+        {
+          "line": 34,
+          "text": "## 3. 架构决策与数据边界"
+        },
+        {
+          "line": 46,
+          "text": "## 4. 批次总览与依赖"
+        },
+        {
+          "line": 63,
+          "text": "## 5. B1：需求感知与 RUIF 最小闭环"
+        },
+        {
+          "line": 65,
+          "text": "### B1.1 纯事实与缺口内核（本轮启动）"
+        },
+        {
+          "line": 76,
+          "text": "### B1.2 人口、采集与查询"
+        },
+        {
+          "line": 85,
+          "text": "### B1.3 RUIF 只读界面"
+        },
+        {
+          "line": 91,
+          "text": "## 6. B2：实资、迁移与制度开关"
+        },
+        {
+          "line": 105,
+          "text": "## 7. B3：生活规划、储蓄与影子决策"
+        },
+        {
+          "line": 113,
+          "text": "## 8. B4：第一条自主经济闭环"
+        },
+        {
+          "line": 127,
+          "text": "## 9. B5：家庭与服务分项落地"
+        },
+        {
+          "line": 137,
+          "text": "## 10. B6：机构再生产与有限学习"
+        },
+        {
+          "line": 147,
+          "text": "## 11. B7：RUIF 治理与综合验收"
+        },
+        {
+          "line": 155,
+          "text": "## 12. 每批证据与检查命令"
+        },
+        {
+          "line": 171,
+          "text": "## 13. 迁移与回滚纪律"
+        },
+        {
+          "line": 177,
+          "text": "## 14. 完成定义与下一步"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实施批次状态.json",
+      "sha256": "21EA174CE971D701AB8FB2DC839CC43BFDC44F35EDFE770F75A6988F60ADEC80",
+      "lines": 34,
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/01-B1.1事实与缺口内核_实装记录.md",
+      "sha256": "EDBDD10C8AE9FA19AFFEDC90DD69FD8C1B617AE066C785259A0C125E17E9C780",
+      "lines": 61,
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. 已完成行为"
+        },
+        {
+          "line": 17,
+          "text": "## 2. 尚未接入"
+        },
+        {
+          "line": 23,
+          "text": "## 3. 验证结果"
+        },
+        {
+          "line": 39,
+          "text": "## 4. 变更标注与回滚定位"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/04-实装指导手册/00-总册与实施路线.md",
+      "sha256": "083FBD3912267AADE8546F195454987B27205B6781011BEF300D43E6668A1411",
+      "lines": 145,
+      "anchors": [
+        {
+          "line": 9,
+          "text": "## 1. 本手册回答什么"
+        },
+        {
+          "line": 18,
+          "text": "## 2. 阅读与交付索引"
+        },
+        {
+          "line": 50,
+          "text": "## 3. 当前核验基线"
+        },
+        {
+          "line": 63,
+          "text": "## 4. 模块划分"
+        },
+        {
+          "line": 82,
+          "text": "## 5. 架构和数据流"
+        },
+        {
+          "line": 110,
+          "text": "## 6. 首版具体闭环"
+        },
+        {
+          "line": 128,
+          "text": "## 7. 实施里程碑和退出条件"
+        },
+        {
+          "line": 140,
+          "text": "## 8. 开发工作包写法"
+        }
+      ]
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI实装启动.md",
+      "sha256": "0789967D69A2E2765D2E556F392A07F2B23B4E24A5CFAB95DD3A7599C3E26CA0",
+      "lines": 10,
+      "anchors": []
+    }
+  ],
+  "gates": {
+    "architectureScoped": "PASS",
+    "build": "PASS",
+    "offlineTests": "PASS",
+    "save": "N/A: no persistence change",
+    "localizationUiCompatibilityPerformance": "N/A: no new visible UI, adapter or hot path",
+    "fullRepositoryGateDelta": "NOT EXECUTED: scripts/gate-runner.ps1 absent; pre-existing dirty workspace",
+    "gameplay": "NOT EXECUTED",
+    "deployment": "NOT EXECUTED",
+    "release": "NOT EXECUTED"
+  }
+}

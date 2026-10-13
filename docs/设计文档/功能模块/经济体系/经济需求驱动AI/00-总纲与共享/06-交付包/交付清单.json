@@ -1,0 +1,384 @@
+{
+  "version": "1.0",
+  "stage": "design_only",
+  "moduleCount": 12,
+  "createdUtc": "2026-10-08T05:44:20.6745864Z",
+  "archive": "经济需求驱动AI_全部模块方案_v1.0_20261008.zip",
+  "mergedSha256": "C7579765B35F70BED13263A97BAC5EAA2CF07C8345ABF2509141E9F5B6AC4798",
+  "files": [
+    {
+      "entry": "当前方案复评与AI模块摘要_v0.9.md",
+      "sha256": "374924EF60C1874CE448269868A0F2732E6CD1A56E44953C9D7A33973E986992"
+    },
+    {
+      "entry": "多需求并发仲裁_设计补充_v0.4.md",
+      "sha256": "C3183798E136BC3A012150E3131CBA7F17D87DB9D761DC4DD3267800F14C41C8"
+    },
+    {
+      "entry": "公有机构与外贸循环_优化方案_v0.7.md",
+      "sha256": "483DBC95B3667360C76A853677593511C95FDADD3C6931AD2B34A92A7BAB06A0"
+    },
+    {
+      "entry": "经济机构首版_操作与验收.md",
+      "sha256": "DC92E17C906AA00629D137517DD1477F62AD095835C3C3B59E97C437682EB9F9"
+    },
+    {
+      "entry": "经济需求驱动殖民者AI_可行性调研_2026-10-07.md",
+      "sha256": "41183B26BB64CD29FFEA9F809CA1CAF88AAB4F860A25AC5608EB8340EBB33470"
+    },
+    {
+      "entry": "经济学优化与需求可视化_方案_v0.8.md",
+      "sha256": "BF58E333526E36DC887651C375A46AFC24D4A9D28F0F8C384CD786C831AF5FE0"
+    },
+    {
+      "entry": "经济AI流程图/简明版_逻辑校验.json",
+      "sha256": "4849D5FCA3AE7273739A56A191E2821D1E71C624374B6E1E621AD04ADDB1D90D"
+    },
+    {
+      "entry": "经济AI流程图/简明版_预览.png",
+      "sha256": "4768943EBB6EF7799730C553F8D5AA230BBF5CF77FAF5A68BD7D697EAE0D736E"
+    },
+    {
+      "entry": "经济AI流程图/逻辑校验.json",
+      "sha256": "344915E3982E62DE0C6D280C622848AE771A0DD3402AF09C822707BA0F428A75"
+    },
+    {
+      "entry": "经济AI流程图/输出校验.json",
+      "sha256": "74EE6F8FF6A9EC37711FE5B73B195CC54C40521960D1D1B29C6C1A6F5F05F196"
+    },
+    {
+      "entry": "经济AI流程图/校对_就业分支.png",
+      "sha256": "0BBD95FDF3B99336CBD8093684D320513851C52E7A46D8B783065B170E7C114E"
+    },
+    {
+      "entry": "经济AI流程图/预览.png",
+      "sha256": "B504923EADE22346D6E3ECD5B9EDC5467363B0E77A3B411AA56378BCD92B7DEB"
+    },
+    {
+      "entry": "经济AI流程图/build_flow.py",
+      "sha256": "4F375262A5FB3915C10B2551383BC855ACC8680EF681B5DAD293C75C85AC414A"
+    },
+    {
+      "entry": "经济AI流程图/build_simple.py",
+      "sha256": "6DD19DE6403078C68EF967B33B8A83373A914C1A041E56440B66EFD4B3114D90"
+    },
+    {
+      "entry": "经济AI流程图/flow_model.json",
+      "sha256": "3683626B7E8143FF286712F609E8F8BEA4458F38483A74CB3EB6DB4D18230BC3"
+    },
+    {
+      "entry": "经济AI流程图/Pawn经济AI_闭环流程图_高清.png",
+      "sha256": "D8CF5DABE788CDD387D3FD678C8A8A104D52A4C165FD5EE34A3078B7623364C9"
+    },
+    {
+      "entry": "经济AI流程图/Pawn经济AI_闭环流程图_矢量.svg",
+      "sha256": "C5D491991F226024489861A8E101B767DE7A0540E6205FA1A0781903CCE84904"
+    },
+    {
+      "entry": "经济AI流程图/Pawn经济AI_简明闭环_高清.png",
+      "sha256": "5772E53B31FAE990A7553A4B33037F2246F6791D6E77C4B80C102BBCC70DAB54"
+    },
+    {
+      "entry": "经济AI流程图/Pawn经济AI_简明闭环_矢量.svg",
+      "sha256": "C99D3AE4F03D99E887507DDCFD266A61B4A4CBA00C350653257F9FF180081214"
+    },
+    {
+      "entry": "经济AI流程图/README.md",
+      "sha256": "4BA5C8C76469B3F649FE7081165D40BA4F694718034CE7EFF24D4BDC77A12774"
+    },
+    {
+      "entry": "经济AI流程图/render_flow.ps1",
+      "sha256": "03DAF671FDEE38D70DB58A1F1FBBE875A9AA16FC2728CAF67CFC8CEBBD30E96D"
+    },
+    {
+      "entry": "经济AI流程图/render_simple.ps1",
+      "sha256": "95B8AC9B41669D32659DAD016C13A2316C8447FF7C99812AE9D99D4592604A13"
+    },
+    {
+      "entry": "经济AI流程图/simple_model.json",
+      "sha256": "F283F3D77348E8F6C24308847DDC6947908C696A53508D66EF3A8CBE5F1A4CD1"
+    },
+    {
+      "entry": "可视化/生成需求驾驶舱预览.py",
+      "sha256": "B1242137AFC7FB11C154187E11DA9AB71E9AA0426C48AC09B8D41BF057541746"
+    },
+    {
+      "entry": "可视化/需求驾驶舱_布局预览.png",
+      "sha256": "76BCA76C1A480E97A846364C311028EEB0E7432DB2FB80777AA0BF214817AA48"
+    },
+    {
+      "entry": "可视化/需求驾驶舱_假设数据.json",
+      "sha256": "54491DC23C62F69D3BBB91B51CDDF21DD11D59F06A75D515C0CC108361ECA214"
+    },
+    {
+      "entry": "可视化/需求驾驶舱_排版记录.json",
+      "sha256": "6018AFD7A3A764524F8FBDF4A7F5DC2D27C49A0A76D2777B72B96D01D98C1E5C"
+    },
+    {
+      "entry": "模块化实装指导手册/00-总册与实施路线.md",
+      "sha256": "EF30301A03EC5F50BD396F6E5C0FD4634DE9420EFF0D088772DCE446F001C14C"
+    },
+    {
+      "entry": "模块化实装指导手册/01-数据模型与源码依据.md",
+      "sha256": "79CAF06D4AB470404949667D741C169C37D4D97F535E96DB010ECCB913C16F15"
+    },
+    {
+      "entry": "模块化实装指导手册/02-业务模块实装细则.md",
+      "sha256": "FA391DE8A3FEF4782C293BD1705AB41153B268B44B509C28DDFE3BF1CC1991E9"
+    },
+    {
+      "entry": "模块化实装指导手册/03-RUIF前端实装.md",
+      "sha256": "A6C5193DF5C65DBC72DA36A11DBF4947855D7ABE692778A5F1968FDBB90E0201"
+    },
+    {
+      "entry": "模块化实装指导手册/04-接入分期与验收.md",
+      "sha256": "D70987DF4EF29CFB6FE46AF17A0F7DF3EBD42ACC1756BD437C407D25C3B0F79C"
+    },
+    {
+      "entry": "模块化实装指导手册/05-证据索引与验证记录.md",
+      "sha256": "CE56E3038BDF36C068CC1FCB49344A3EDD0CC9DDCBF1D2647B0555FF2D09A2BB"
+    },
+    {
+      "entry": "模块化实装指导手册/06-微观机构与场所工具.md",
+      "sha256": "BA08B6D3BC0E0EB16D158BD2BBFB953E60B20B872B27332862EE994AFEF64F9A"
+    },
+    {
+      "entry": "模块化实装指导手册/07-需求驾驶舱与政策反馈.md",
+      "sha256": "21A6C4BC63CBBAE592A7AC5FEFF912AFC38C23C227848EA80D304153910AFD13"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/本机接口证据.json",
+      "sha256": "ACD456BA0242E8BE2D38C12B173CDC529345069BA5C61843A4756B568EFCBA57"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/多需求仲裁方案_文档校验.json",
+      "sha256": "CE2C050FC81A9CA05526662093EBF9E636379B06E3CA2C071D14C6F0093B251C"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/公有制度优化_文档校验.json",
+      "sha256": "7B0F2A27B6E9F5727B8620C2AAA49600AB5EC3A26D4A1CA336CAC5FE4F6FC5BE"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/公有制度与外贸_接口证据.json",
+      "sha256": "F2E9ABEE8DF86A619209C63F869A6E1BC46E9EF00AB62C2FF15B143377687269"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/经济学与需求可视化_校验.json",
+      "sha256": "A2B2CAA7B27A389DA5998A9340D4C000730E6DCAFB903F90A68E9384096F6F40"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/模块二_参数设计样例.json",
+      "sha256": "0D96ACE5BE84CDDE52EE9933EC499FA8496069D0FB00360F6A7E4F291366BFEA"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/模块二_长期生活规划_接口证据.json",
+      "sha256": "28F0D48250C855579A1BC02D26DF6C57A1AD4EB9DE66F8F70A231A51A68024CE"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/模块一_方案评审_证据.json",
+      "sha256": "7421C1584FD0F389FE6CF518F4E3FAEF6617B5688123172F93DE6C4DF495B296"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/模块一_状态需求感知_接口证据.json",
+      "sha256": "BD333839CC13BBF67E79681D94FAFFAEA31A5ADFC85E0CADFB139EA1F47AD687"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/模块一_状态需求感知_设计校验.json",
+      "sha256": "A76FBBDB3F96ADDB0C4EF26F486070B064DE8AE126F7E3200C1087217603C7C4"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/模块一优化与模块二_设计校验.json",
+      "sha256": "6F7F8B166C06FFFFDA53FCFAC5EF675D8FC7A271BD1F439F583B5F67BC53B56B"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/全模块_接口证据.json",
+      "sha256": "5A18E3FB2CA9479152B95C879876872D62D8833AE8AB5904F3899F0B5D399089"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/全模块_设计清单.json",
+      "sha256": "8EC4A26361B5C95B8CA29BB54728879848F510C72A83F5575A72D782F5AEAEB5"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/全模块_设计校验.json",
+      "sha256": "D179FA588C3DC558515FB88FF31DE5B65EE7D2ABDEBDA450B82F7377B0847039"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/示例编译日志.txt",
+      "sha256": "C84AA378A8D8F294B364472049F533A93FAEA15B95DA11F6D7A71830E23831AC"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/玩法完整度_反例演算.json",
+      "sha256": "569420DCEAD378732CA2B2188BE82FB94D9C48833E4CFB8A62E0565CD095D9E0"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/玩法完整度_审计证据.json",
+      "sha256": "379B83EC5C700678E7DD20A1817455B65F2649E52357A35654C93E0B7532B2AD"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/玩法完整度_文档校验.json",
+      "sha256": "3CBDAEBE9B7103EACD00EA5B74158BFF13C7ABF3EB6758F644C1E101A0747CD1"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/验证结果.json",
+      "sha256": "E299308CA72EC59EB499546DCB35CCD98DB3436B7AD7BF8E896A83C2F7DC86DB"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/原版需求方案_文档校验.json",
+      "sha256": "8D5D5D35D4E4031BF538C2719D3A41A33294189C65576F1D51BDAECABF19B5DB"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/原版需求与家庭机制_证据.json",
+      "sha256": "0E14868B1D3F2F73B31B7A3BAD4A09C5E3178DBAAB0BE9DBD38B16EBE08480F2"
+    },
+    {
+      "entry": "模块化实装指导手册/evidence/自主经济社会方案_文档校验.json",
+      "sha256": "25B034D5EC5534CF5E773F59E8212E9BA80D81CCDA1FE33983C40928FED70FD5"
+    },
+    {
+      "entry": "模块化实装指导手册/examples/EconomyRuifExample.cs",
+      "sha256": "E134E4A92511598341A4CC434F99EEF658792FE73DF63B3154C1EB710FA83219"
+    },
+    {
+      "entry": "模块化实装指导手册/examples/EconomySaveExample.cs",
+      "sha256": "093D86F7B31E64D6B33AEED9D1FCA4392E7C936BE8A33CFD1249E649C2E7584E"
+    },
+    {
+      "entry": "模块化实装指导手册/examples/EconomyStockExample.cs",
+      "sha256": "9B1E8C3BE7A80F2ECB193480A7F0019F207C0003B8AC3530CE265D525DCA698E"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Collect-AllModulesEvidence.ps1",
+      "sha256": "1B88F488792AB2A7C01A63ED61AC918DE2B559BC091DE39E8C6AC55A8015183F"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Collect-Evidence.ps1",
+      "sha256": "2332A415FE9704ACB902F31AA5C208974292C62FE7EFB676DFC9FCFAAAFB361C"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Collect-LifePlanningEvidence.ps1",
+      "sha256": "A749D9B53BD99130B4781F029AACF00385E9F53580CC2B33F2EE02902462960C"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Collect-NeedEvidence.ps1",
+      "sha256": "539054611DE8DC8BBF198858EB68057C85AF14F34BAC5B0B0A99C285C00C8EF6"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Collect-PerceptionEvidence.ps1",
+      "sha256": "B35D3E9A449D333ADCB4BA36A9DA100C4314E9C3E09756D07253AA5099B6C333"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Collect-PublicEconomyEvidence.ps1",
+      "sha256": "F624A9893EA323935F5F4A1FEEC06D16FB395534A845DED007E479ADD1EF7D33"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Export-AllModulesDesign.ps1",
+      "sha256": "561480B7BE46EA3E85A3F70D81A188ECCA3CC5A26A3BC3AC07C5891DE11587FE"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Validate-AllModulesDesign.ps1",
+      "sha256": "B3A4A5572D415F2D7F1BD8CC9659AA31FA26662A38AB8D461CBD2F169656D0C9"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Validate-LifePlanningDesign.ps1",
+      "sha256": "EDE8632BA423D230694EC045222005853A6B48565E2ACAD845871DEA5DBCCA80"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Validate-PerceptionDesign.ps1",
+      "sha256": "99BE0648ED363255696782B1A4475AA9A4193EAC4A32F1B5E93CA1C4CFA0CDA7"
+    },
+    {
+      "entry": "模块化实装指导手册/tools/Verify-Handbook.ps1",
+      "sha256": "848D90A4C51DD283FBCDB3D27E3DD785642FE888A2A994A7DF562AD758E91A95"
+    },
+    {
+      "entry": "玩法完整度评估与设计准入_v0.6.md",
+      "sha256": "E85A243DF3925DE846DD5ACBFF32FB693F33A43358ACA8BF62FFE2B9F7EBB122"
+    },
+    {
+      "entry": "用户核心方案_参考对照与补充_2026-10-07.md",
+      "sha256": "AE6B4D60BB93CD05F6B40987D5AD99B54E2C4774F5C535D02A1629CA806BC0B8"
+    },
+    {
+      "entry": "游戏代码设计/00-公有经济第一批代码设计.md",
+      "sha256": "E070465989E23CDBBF2B739412AFD1595D9DC703CA59D15A74CB63747BA203CD"
+    },
+    {
+      "entry": "游戏代码设计/00-全部模块方案_合订本.md",
+      "sha256": "C7579765B35F70BED13263A97BAC5EAA2CF07C8345ABF2509141E9F5B6AC4798"
+    },
+    {
+      "entry": "游戏代码设计/00-全部模块方案_总册.md",
+      "sha256": "AFB86D6D9E933A3A961C493762E741B2492F2EB295844FE0794B490DCD28B2CF"
+    },
+    {
+      "entry": "游戏代码设计/01-状态与需求感知_代码设计方案.md",
+      "sha256": "DBA95AD6EA561401C591272946BA9B8EC370EFF51489B52E9D94989FA3F737DF"
+    },
+    {
+      "entry": "游戏代码设计/01-状态与需求感知_方案评审.md",
+      "sha256": "946115DE4CB19FE9DD26DDEF6450D72DD4B687F5F02433A7101B3581B248580E"
+    },
+    {
+      "entry": "游戏代码设计/02-长期生活规划_代码设计方案.md",
+      "sha256": "5B25C9C3E0B15C18AA0FF930C8C93E5F8688C7E404706A63FEB301FFF3D830D6"
+    },
+    {
+      "entry": "游戏代码设计/03-目标与多需求仲裁_代码设计方案.md",
+      "sha256": "AA4B19A7DE3CBC7E270F226DCE1ABED7643A99B89CB593791880192B6B3AB07E"
+    },
+    {
+      "entry": "游戏代码设计/04-方案比较与行动调度_代码设计方案.md",
+      "sha256": "1E937EBC3817DA8D1C3422D7BCED6552AA593E28F59169E55430D11BF631CB0B"
+    },
+    {
+      "entry": "游戏代码设计/05-生活预算与储蓄_代码设计方案.md",
+      "sha256": "E60A959CE9B0F9428BB48386DB052D5F76962141B8F4B9D80664BD93CFF307D7"
+    },
+    {
+      "entry": "游戏代码设计/06-就业与劳动合同_代码设计方案.md",
+      "sha256": "D94F44DA04E8772A829E9A0BBC05D57932A5D3FF78A2017391D170EF30CA11B7"
+    },
+    {
+      "entry": "游戏代码设计/07-消费与服务_代码设计方案.md",
+      "sha256": "AE87692B2D68B78D608D6FC3F8DDFA12E71F8E81919F518E6A1B06DA3DAAE70A"
+    },
+    {
+      "entry": "游戏代码设计/08-家庭与照护协作_代码设计方案.md",
+      "sha256": "ABAF3B37404D7BEA2C853D0DAA78052886A288FA85B3746C0731DBCF07F53265"
+    },
+    {
+      "entry": "游戏代码设计/09-经验反馈与失败恢复_代码设计方案.md",
+      "sha256": "4596D38CC520FF99682EB5E9CF63850E37A0CF50C3F9C9F10A35F837CFF16931"
+    },
+    {
+      "entry": "游戏代码设计/10-再生产与公有机构运行_代码设计方案.md",
+      "sha256": "A36F044B8101DBC3FE46F66E7863810ACB7EF28FAD5D3DA68FF8F4810D8CB626"
+    },
+    {
+      "entry": "游戏代码设计/11-资金资源权利与制度协调_代码设计方案.md",
+      "sha256": "D32FE35E1C4356F307667F43771CD2E25E5960D8CE6B64FCCB877C8A4F06EFFA"
+    },
+    {
+      "entry": "游戏代码设计/12-需求可视化与治理反馈_代码设计方案.md",
+      "sha256": "7A59FC68EF53E33801817FAB7903F6EDD4C22D9C64D9296D467A0A7D7FB51CAE"
+    },
+    {
+      "entry": "原版需求缺口驱动经济AI_设计方案_v0.3.md",
+      "sha256": "D09BC4913E9E562ED1C10B144CC91FB17299B16971B2B2F307AE6B7E3DDAC7DA"
+    },
+    {
+      "entry": "自主经济社会与玩家角色_总体设计_v0.5.md",
+      "sha256": "F801AB9CEF798179AE6CD1B1763EB260C4CED55EE8BA36C884F556899B9FAD96"
+    },
+    {
+      "entry": "Pawn经济AI核心方案-1.md",
+      "sha256": "EF6923F904F7998698CAADF8C7F3E7A46591F0A5EF84973A0927D6D705C71881"
+    },
+    {
+      "entry": "交付说明.md",
+      "sha256": "A80D92BA54393B76E164F69247A1952DCD2979A0DF03F22CC45F3CD24726ABBB"
+    }
+  ],
+  "runtimeCompiled": false,
+  "gameValidated": false
+}

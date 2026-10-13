@@ -1,0 +1,447 @@
+{
+  "collectedUtc": "2026-10-08T04:11:30.1488324Z",
+  "gameVersion": "1.6.4871 rev590",
+  "method": "Read-only current game DLL metadata and selected TradeDeal.TryExecute IL calls; decompiled-source and current-project source hashes. No game assembly execution, runtime modification or gameplay verification.",
+  "assembly": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\RimWorldWin64_Data\\Managed\\Assembly-CSharp.dll",
+    "sha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "mvid": "61e41735-6189-4da4-9d21-0260257b5097"
+  },
+  "types": [
+    {
+      "type": "RimWorld.TradeDeal",
+      "baseType": "System.Object",
+      "properties": [
+        "System.Int32 RimWorld.TradeDeal::TradeableCount()",
+        "RimWorld.Tradeable RimWorld.TradeDeal::CurrencyTradeable()",
+        "System.Collections.Generic.List`1<RimWorld.Tradeable> RimWorld.TradeDeal::AllTradeables()"
+      ],
+      "methods": [
+        "System.Int32 RimWorld.TradeDeal::get_TradeableCount()",
+        "RimWorld.Tradeable RimWorld.TradeDeal::get_CurrencyTradeable()",
+        "System.Collections.Generic.List`1<RimWorld.Tradeable> RimWorld.TradeDeal::get_AllTradeables()",
+        "System.Void RimWorld.TradeDeal::.ctor()",
+        "System.Void RimWorld.TradeDeal::Reset()",
+        "System.Void RimWorld.TradeDeal::UpdateCurrencyCount()",
+        "System.Boolean RimWorld.TradeDeal::TryExecute(System.Boolean&)",
+        "System.Boolean RimWorld.TradeDeal::DoesTraderHaveEnoughSilver()"
+      ]
+    },
+    {
+      "type": "RimWorld.TradeSession",
+      "baseType": "System.Object",
+      "properties": [
+        "System.Boolean RimWorld.TradeSession::Active()",
+        "RimWorld.TradeCurrency RimWorld.TradeSession::TradeCurrency()"
+      ],
+      "methods": [
+        "System.Boolean RimWorld.TradeSession::get_Active()",
+        "RimWorld.TradeCurrency RimWorld.TradeSession::get_TradeCurrency()",
+        "System.Void RimWorld.TradeSession::SetupWith(RimWorld.ITrader,Verse.Pawn,System.Boolean)",
+        "System.Void RimWorld.TradeSession::Close()"
+      ]
+    },
+    {
+      "type": "RimWorld.Tradeable",
+      "baseType": "RimWorld.Transferable",
+      "properties": [
+        "System.Int32 RimWorld.Tradeable::CountToTransfer()",
+        "Verse.Thing RimWorld.Tradeable::FirstThingColony()",
+        "Verse.Thing RimWorld.Tradeable::FirstThingTrader()",
+        "System.String RimWorld.Tradeable::Label()",
+        "System.Single RimWorld.Tradeable::BaseMarketValue()",
+        "System.Boolean RimWorld.Tradeable::Interactive()",
+        "System.Boolean RimWorld.Tradeable::TraderWillTrade()",
+        "System.Boolean RimWorld.Tradeable::HasAnyThing()",
+        "Verse.Thing RimWorld.Tradeable::AnyThing()",
+        "Verse.ThingDef RimWorld.Tradeable::ThingDef()",
+        "Verse.ThingDef RimWorld.Tradeable::StuffDef()",
+        "System.String RimWorld.Tradeable::TipDescription()",
+        "RimWorld.TradeAction RimWorld.Tradeable::ActionToDo()",
+        "System.Boolean RimWorld.Tradeable::IsCurrency()",
+        "System.Boolean RimWorld.Tradeable::IsFavor()",
+        "RimWorld.TransferablePositiveCountDirection RimWorld.Tradeable::PositiveCountDirection()",
+        "System.Single RimWorld.Tradeable::CurTotalCurrencyCostForSource()",
+        "System.Single RimWorld.Tradeable::CurTotalCurrencyCostForDestination()",
+        "Verse.Window RimWorld.Tradeable::NewInfoDialog()",
+        "System.Boolean RimWorld.Tradeable::Bugged()"
+      ],
+      "methods": [
+        "System.Int32 RimWorld.Tradeable::get_CountToTransfer()",
+        "System.Void RimWorld.Tradeable::set_CountToTransfer(System.Int32)",
+        "Verse.Thing RimWorld.Tradeable::get_FirstThingColony()",
+        "Verse.Thing RimWorld.Tradeable::get_FirstThingTrader()",
+        "System.String RimWorld.Tradeable::get_Label()",
+        "System.Single RimWorld.Tradeable::get_BaseMarketValue()",
+        "System.Boolean RimWorld.Tradeable::get_Interactive()",
+        "System.Boolean RimWorld.Tradeable::get_TraderWillTrade()",
+        "System.Boolean RimWorld.Tradeable::get_HasAnyThing()",
+        "Verse.Thing RimWorld.Tradeable::get_AnyThing()",
+        "Verse.ThingDef RimWorld.Tradeable::get_ThingDef()",
+        "Verse.ThingDef RimWorld.Tradeable::get_StuffDef()",
+        "System.String RimWorld.Tradeable::get_TipDescription()",
+        "RimWorld.TradeAction RimWorld.Tradeable::get_ActionToDo()",
+        "System.Boolean RimWorld.Tradeable::get_IsCurrency()",
+        "System.Boolean RimWorld.Tradeable::get_IsFavor()",
+        "System.Int32 RimWorld.Tradeable::CostToInt(System.Single)",
+        "RimWorld.TransferablePositiveCountDirection RimWorld.Tradeable::get_PositiveCountDirection()",
+        "System.Single RimWorld.Tradeable::get_CurTotalCurrencyCostForSource()",
+        "System.Single RimWorld.Tradeable::get_CurTotalCurrencyCostForDestination()",
+        "Verse.Window RimWorld.Tradeable::get_NewInfoDialog()",
+        "System.Void RimWorld.Tradeable::.ctor()",
+        "System.Void RimWorld.Tradeable::.ctor(Verse.Thing,Verse.Thing)",
+        "System.Void RimWorld.Tradeable::AddThing(Verse.Thing,RimWorld.Transactor)",
+        "RimWorld.PriceType RimWorld.Tradeable::PriceTypeFor(RimWorld.TradeAction)",
+        "System.String RimWorld.Tradeable::GetPriceTooltip(RimWorld.TradeAction)",
+        "System.Single RimWorld.Tradeable::GetPriceFor(RimWorld.TradeAction)",
+        "System.Int32 RimWorld.Tradeable::GetMinimumToTransfer()",
+        "System.Int32 RimWorld.Tradeable::GetMaximumToTransfer()",
+        "Verse.AcceptanceReport RimWorld.Tradeable::UnderflowReport()",
+        "Verse.AcceptanceReport RimWorld.Tradeable::OverflowReport()",
+        "System.Int32 RimWorld.Tradeable::CountHeldBy(RimWorld.Transactor)",
+        "System.Int32 RimWorld.Tradeable::CountPostDealFor(RimWorld.Transactor)",
+        "System.Void RimWorld.Tradeable::ResolveTrade()",
+        "System.String RimWorld.Tradeable::ToString()",
+        "System.Int32 RimWorld.Tradeable::GetHashCode()",
+        "System.Void RimWorld.Tradeable::ExposeData()"
+      ]
+    },
+    {
+      "type": "RimWorld.TradeCurrency",
+      "baseType": "System.Enum",
+      "properties": [],
+      "methods": []
+    },
+    {
+      "type": "Verse.ModSettings",
+      "baseType": "System.Object",
+      "properties": [
+        "Verse.Mod Verse.ModSettings::Mod()"
+      ],
+      "methods": [
+        "Verse.Mod Verse.ModSettings::get_Mod()",
+        "System.Void Verse.ModSettings::ExposeData()",
+        "System.Void Verse.ModSettings::Write()",
+        "System.Void Verse.ModSettings::.ctor()"
+      ]
+    },
+    {
+      "type": "Verse.GameComponent",
+      "baseType": "System.Object",
+      "properties": [],
+      "methods": [
+        "System.Void Verse.GameComponent::GameComponentUpdate()",
+        "System.Void Verse.GameComponent::GameComponentTick()",
+        "System.Void Verse.GameComponent::GameComponentOnGUI()",
+        "System.Void Verse.GameComponent::ExposeData()",
+        "System.Void Verse.GameComponent::FinalizeInit()",
+        "System.Void Verse.GameComponent::StartedNewGame()",
+        "System.Void Verse.GameComponent::LoadedGame()",
+        "System.Void Verse.GameComponent::AppendDebugString(System.Text.StringBuilder)",
+        "System.Void Verse.GameComponent::.ctor()"
+      ]
+    },
+    {
+      "type": "Verse.ThingOwner",
+      "baseType": "System.Object",
+      "properties": [
+        "Verse.IThingHolder Verse.ThingOwner::Owner()",
+        "System.Int32 Verse.ThingOwner::Count()",
+        "Verse.Thing Verse.ThingOwner::Item(System.Int32)",
+        "System.Boolean Verse.ThingOwner::Any()",
+        "System.Int32 Verse.ThingOwner::TotalStackCount()",
+        "System.String Verse.ThingOwner::ContentsString()",
+        "Verse.Thing Verse.ThingOwner::System.Collections.Generic.IList<Verse.Thing>.Item(System.Int32)",
+        "System.Boolean Verse.ThingOwner::System.Collections.Generic.ICollection<Verse.Thing>.IsReadOnly()"
+      ],
+      "methods": [
+        "Verse.IThingHolder Verse.ThingOwner::get_Owner()",
+        "System.Int32 Verse.ThingOwner::get_Count()",
+        "Verse.Thing Verse.ThingOwner::get_Item(System.Int32)",
+        "System.Boolean Verse.ThingOwner::get_Any()",
+        "System.Void Verse.ThingOwner::add_OnContentsChanged(System.Action)",
+        "System.Void Verse.ThingOwner::remove_OnContentsChanged(System.Action)",
+        "System.Int32 Verse.ThingOwner::get_TotalStackCount()",
+        "System.String Verse.ThingOwner::get_ContentsString()",
+        "System.Void Verse.ThingOwner::.ctor()",
+        "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder)",
+        "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder,Verse.LookMode,System.Boolean)",
+        "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder,System.Boolean,Verse.LookMode,System.Boolean)",
+        "System.Void Verse.ThingOwner::ExposeData()",
+        "System.Void Verse.ThingOwner::DoTick()",
+        "System.Void Verse.ThingOwner::Clear()",
+        "System.Void Verse.ThingOwner::ClearAndDestroyContents(Verse.DestroyMode)",
+        "System.Void Verse.ThingOwner::ClearAndDestroyContentsOrPassToWorld(Verse.DestroyMode)",
+        "System.Boolean Verse.ThingOwner::CanAcceptAnyOf(Verse.Thing,System.Boolean)",
+        "System.Int32 Verse.ThingOwner::GetCountCanAccept(Verse.Thing,System.Boolean)",
+        "System.Int32 Verse.ThingOwner::TryAdd(Verse.Thing,System.Int32,System.Boolean)",
+        "System.Boolean Verse.ThingOwner::TryAdd(Verse.Thing,System.Boolean)",
+        "System.Int32 Verse.ThingOwner::IndexOf(Verse.Thing)",
+        "System.Boolean Verse.ThingOwner::Remove(Verse.Thing)",
+        "Verse.Thing Verse.ThingOwner::GetAt(System.Int32)",
+        "System.Boolean Verse.ThingOwner::Contains(Verse.Thing)",
+        "System.Void Verse.ThingOwner::RemoveAt(System.Int32)",
+        "System.Int32 Verse.ThingOwner::TryAddOrTransfer(Verse.Thing,System.Int32,System.Boolean)",
+        "System.Boolean Verse.ThingOwner::TryAddOrTransfer(Verse.Thing,System.Boolean)",
+        "System.Void Verse.ThingOwner::TryAddRangeOrTransfer(System.Collections.Generic.IEnumerable`1<Verse.Thing>,System.Boolean,System.Boolean)",
+        "System.Int32 Verse.ThingOwner::RemoveAll(System.Predicate`1<Verse.Thing>)",
+        "System.Boolean Verse.ThingOwner::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Boolean)",
+        "System.Int32 Verse.ThingOwner::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Int32,System.Boolean)",
+        "System.Int32 Verse.ThingOwner::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Int32,Verse.Thing&,System.Boolean)",
+        "System.Void Verse.ThingOwner::TryTransferAllToContainer(Verse.ThingOwner,System.Boolean)",
+        "Verse.Thing Verse.ThingOwner::Take(Verse.Thing,System.Int32)",
+        "Verse.Thing Verse.ThingOwner::Take(Verse.Thing)",
+        "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.ThingPlaceMode,System.Int32,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+        "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,System.Int32,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+        "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+        "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>,System.Boolean)",
+        "System.Boolean Verse.ThingOwner::TryDropAll(Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>,System.Boolean)",
+        "System.Boolean Verse.ThingOwner::Contains(Verse.ThingDef)",
+        "System.Boolean Verse.ThingOwner::Contains(Verse.ThingDef,System.Int32)",
+        "System.Int32 Verse.ThingOwner::TotalStackCountOfDef(Verse.ThingDef)",
+        "System.Void Verse.ThingOwner::Notify_ContainedItemDestroyed(Verse.Thing)",
+        "System.Void Verse.ThingOwner::NotifyAdded(Verse.Thing)",
+        "System.Void Verse.ThingOwner::NotifyAddedAndMergedWith(Verse.Thing,System.Int32)",
+        "System.Void Verse.ThingOwner::NotifyRemoved(Verse.Thing)"
+      ]
+    }
+  ],
+  "tradeExecution": {
+    "signature": "System.Boolean RimWorld.TradeDeal::TryExecute(System.Boolean&)",
+    "calls": [
+      {
+        "offset": 8,
+        "target": "System.Void RimWorld.TradeDeal::UpdateCurrencyCount()"
+      },
+      {
+        "offset": 14,
+        "target": "System.Void RimWorld.TradeDeal::LimitCurrencyCountToFunds()"
+      },
+      {
+        "offset": 30,
+        "target": "RimWorld.Faction RimWorld.ITrader::get_Faction()"
+      },
+      {
+        "offset": 35,
+        "target": "System.Int32 RimWorld.Planet.FactionGiftUtility::GetGoodwillChange(System.Collections.Generic.List`1<RimWorld.Tradeable>,RimWorld.Faction)"
+      },
+      {
+        "offset": 52,
+        "target": "RimWorld.Faction RimWorld.ITrader::get_Faction()"
+      },
+      {
+        "offset": 62,
+        "target": "RimWorld.Planet.GlobalTargetInfo RimWorld.Planet.GlobalTargetInfo::op_Implicit(Verse.Thing)"
+      },
+      {
+        "offset": 67,
+        "target": "System.Void RimWorld.Planet.FactionGiftUtility::GiveGift(System.Collections.Generic.List`1<RimWorld.Tradeable>,RimWorld.Faction,RimWorld.Planet.GlobalTargetInfo)"
+      },
+      {
+        "offset": 86,
+        "target": "RimWorld.Tradeable RimWorld.TradeDeal::get_CurrencyTradeable()"
+      },
+      {
+        "offset": 94,
+        "target": "RimWorld.Tradeable RimWorld.TradeDeal::get_CurrencyTradeable()"
+      },
+      {
+        "offset": 100,
+        "target": "System.Int32 RimWorld.Tradeable::CountPostDealFor(RimWorld.Transactor)"
+      },
+      {
+        "offset": 108,
+        "target": "Verse.WindowStack Verse.Find::get_WindowStack()"
+      },
+      {
+        "offset": 113,
+        "target": "WindowType Verse.WindowStack::WindowOfType<RimWorld.Dialog_Trade>()"
+      },
+      {
+        "offset": 118,
+        "target": "System.Void RimWorld.Dialog_Trade::FlashSilver()"
+      },
+      {
+        "offset": 128,
+        "target": "Verse.TaggedString Verse.Translator::Translate(System.String)"
+      },
+      {
+        "offset": 133,
+        "target": "System.String Verse.TaggedString::op_Implicit(Verse.TaggedString)"
+      },
+      {
+        "offset": 144,
+        "target": "System.Void Verse.Messages::Message(System.String,Verse.MessageTypeDef,System.Boolean)"
+      },
+      {
+        "offset": 154,
+        "target": "System.Boolean Verse.ModsConfig::get_IdeologyActive()"
+      },
+      {
+        "offset": 201,
+        "target": "System.Boolean Verse.GenCollection::Any<RimWorld.Tradeable>(System.Collections.Generic.List`1<T>,System.Predicate`1<T>)"
+      },
+      {
+        "offset": 225,
+        "target": "Verse.NamedArgument Verse.NamedArgumentUtility::Named(System.Object,System.String)"
+      },
+      {
+        "offset": 230,
+        "target": "System.Void RimWorld.HistoryEvent::.ctor(RimWorld.HistoryEventDef,Verse.NamedArgument)"
+      },
+      {
+        "offset": 241,
+        "target": "System.Boolean RimWorld.IdeoUtility::Notify_PawnAboutToDo(RimWorld.HistoryEvent,System.String)"
+      },
+      {
+        "offset": 253,
+        "target": "RimWorld.HistoryEventsManager Verse.Find::get_HistoryEventsManager()"
+      },
+      {
+        "offset": 260,
+        "target": "System.Void RimWorld.HistoryEventsManager::RecordEvent(RimWorld.HistoryEvent,System.Boolean)"
+      },
+      {
+        "offset": 302,
+        "target": "System.Boolean Verse.GenCollection::Any<RimWorld.Tradeable>(System.Collections.Generic.List`1<T>,System.Predicate`1<T>)"
+      },
+      {
+        "offset": 326,
+        "target": "Verse.NamedArgument Verse.NamedArgumentUtility::Named(System.Object,System.String)"
+      },
+      {
+        "offset": 331,
+        "target": "System.Void RimWorld.HistoryEvent::.ctor(RimWorld.HistoryEventDef,Verse.NamedArgument)"
+      },
+      {
+        "offset": 343,
+        "target": "System.Boolean RimWorld.IdeoUtility::Notify_PawnAboutToDo(RimWorld.HistoryEvent,System.String)"
+      },
+      {
+        "offset": 355,
+        "target": "RimWorld.HistoryEventsManager Verse.Find::get_HistoryEventsManager()"
+      },
+      {
+        "offset": 363,
+        "target": "System.Void RimWorld.HistoryEventsManager::RecordEvent(RimWorld.HistoryEvent,System.Boolean)"
+      },
+      {
+        "offset": 369,
+        "target": "System.Void RimWorld.TradeDeal::UpdateCurrencyCount()"
+      },
+      {
+        "offset": 375,
+        "target": "System.Void RimWorld.TradeDeal::LimitCurrencyCountToFunds()"
+      },
+      {
+        "offset": 395,
+        "target": "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<RimWorld.Tradeable>::GetEnumerator()"
+      },
+      {
+        "offset": 406,
+        "target": "!0 System.Collections.Generic.List`1/Enumerator<RimWorld.Tradeable>::get_Current()"
+      },
+      {
+        "offset": 415,
+        "target": "RimWorld.TradeAction RimWorld.Tradeable::get_ActionToDo()"
+      },
+      {
+        "offset": 427,
+        "target": "RimWorld.TradeAction RimWorld.Tradeable::get_ActionToDo()"
+      },
+      {
+        "offset": 438,
+        "target": "System.Single RimWorld.Tradeable::get_CurTotalCurrencyCostForDestination()"
+      },
+      {
+        "offset": 447,
+        "target": "System.Void RimWorld.Tradeable::ResolveTrade()"
+      },
+      {
+        "offset": 454,
+        "target": "System.Boolean System.Collections.Generic.List`1/Enumerator<RimWorld.Tradeable>::MoveNext()"
+      },
+      {
+        "offset": 471,
+        "target": "System.Void System.IDisposable::Dispose()"
+      },
+      {
+        "offset": 478,
+        "target": "System.Void RimWorld.TradeDeal::Reset()"
+      },
+      {
+        "offset": 488,
+        "target": "RimWorld.Faction RimWorld.ITrader::get_Faction()"
+      },
+      {
+        "offset": 500,
+        "target": "RimWorld.Faction RimWorld.ITrader::get_Faction()"
+      },
+      {
+        "offset": 511,
+        "target": "System.Void RimWorld.Faction::Notify_PlayerTraded(System.Single,Verse.Pawn)"
+      },
+      {
+        "offset": 553,
+        "target": "RimWorld.Tale RimWorld.TaleRecorder::RecordTale(RimWorld.TaleDef,System.Object[])"
+      },
+      {
+        "offset": 583,
+        "target": "System.Void RimWorld.InspirationHandler::EndInspiration(RimWorld.InspirationDef)"
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\TradeDeal.cs",
+      "sha256": "793757519F82F708B855D0CF7B0345E43E4D8B163EB4CF68BF3C6E0A3574B3CF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\TradeSession.cs",
+      "sha256": "5F763E07999DFE2B841C45AF70306A2503DAB9EA06E3FE443950FEDB7ED186F5"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Tradeable.cs",
+      "sha256": "773CA5795DEA0060A22BE8C474581ECCDADE7C64A449A4D28E6410378604C3BE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\ChronicleSettings.cs",
+      "sha256": "E70A1D3491393B3E2FD856D3AEAFFA0E5E2BC0246635CC9133B642EC09798F88"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Settings\\SettingsCatalog.cs",
+      "sha256": "9E9B36F308F2E861753789B8C0ACE01DF74982C3DEC0C91C0FA66E1B262480CE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Settings\\SettingsDrawer.cs",
+      "sha256": "BE6EFFDEA18424E1D4A5806A04FA98D0BACCBB4E721666BCD56642A916A2500D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Settings\\SettingsText.cs",
+      "sha256": "446E523A3C1BB857056A551CE95FED623A5A63B8ACF8F9A36D55892E5F36CA33"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\EconomyModel.cs",
+      "sha256": "F4C8FE6748B7FBE98741C722389541FF3BF4F4CC151E08F8332885B40E4D3123"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyService.cs",
+      "sha256": "B70313BD863639CA9C4C19D0BC8FBC47092D361692F4752A283EFE76D13AAD6C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyRuntime.cs",
+      "sha256": "83CDDF5000215CB251D82C7E9EC4F6E6111DAE47B95DDB5C88F073528B687182"
+    }
+  ],
+  "limits": [
+    "No verified complete net-income callback exists in this evidence.",
+    "Prefix quote quantities may be normalized inside execution; success does not prove settlement custody.",
+    "Decompiled source may differ from current DLL; exact transfer/delivery hooks need a prototype.",
+    "New design names and currency rules are proposed mod contracts, not vanilla APIs."
+  ],
+  "publicSources": [
+    "https://harmony.pardeike.net/v2/articles/patching-prefix.html",
+    "https://harmony.pardeike.net/v2/articles/patching-postfix.html",
+    "https://spdskatr.github.io/RWModdingResources/saving-guide"
+  ]
+}

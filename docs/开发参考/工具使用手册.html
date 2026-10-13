@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PersonalChronicle · 工具全量使用手册</title>
+<style>
+  :root{
+    --bg:#0f1419; --panel:#1a2029; --panel2:#222b36; --ink:#e6edf3; --sub:#9aa7b4;
+    --acc:#3da9fc; --acc2:#27c2a0; --warn:#ffb454; --bad:#ff6b6b; --ok:#5fd38d;
+    --line:#2c3642; --code:#0b0f14;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,"Segoe UI",Roboto,"Microsoft YaHei",sans-serif}
+  header{background:linear-gradient(135deg,#16202c,#0f1419);padding:26px 34px;border-bottom:1px solid var(--line)}
+  header h1{margin:0;font-size:22px;letter-spacing:.5px}
+  header .meta{color:var(--sub);font-size:13px;margin-top:6px}
+  .wrap{display:flex;min-height:calc(100vh - 96px)}
+  nav{width:248px;flex:none;background:var(--panel);border-right:1px solid var(--line);padding:18px 0;position:sticky;top:0;align-self:flex-start;height:100vh;overflow:auto}
+  nav a{display:block;color:var(--sub);text-decoration:none;padding:9px 22px;font-size:14px;border-left:3px solid transparent}
+  nav a:hover{color:var(--ink);background:var(--panel2)}
+  nav a.active{color:var(--acc);border-left-color:var(--acc);background:var(--panel2)}
+  nav .grp{color:var(--acc2);font-size:12px;padding:14px 22px 4px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  main{flex:1;padding:30px 40px;max-width:1080px}
+  section{margin-bottom:46px;scroll-margin-top:14px}
+  h2{font-size:19px;border-bottom:2px solid var(--line);padding-bottom:8px;margin:0 0 18px}
+  h3{font-size:16px;color:var(--acc);margin:22px 0 10px}
+  p{color:var(--ink)} .muted{color:var(--sub)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+  .card h3{margin-top:0}
+  code{background:var(--code);color:#cfe8ff;padding:2px 7px;border-radius:5px;font-family:"Cascadia Code",Consolas,monospace;font-size:13px}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow:auto;font-size:12.5px;line-height:1.55;color:#d7e6f5}
+  pre .c{color:#6b7c8c}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--acc);font-weight:600}
+  tr:nth-child(even){background:#161d26}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;margin:0 3px 3px 0}
+  .t-core{background:#13352b;color:var(--ok)} .t-ai{background:#1b2c44;color:var(--acc)}
+  .t-script{background:#33261a;color:var(--warn)} .t-sys{background:#2a2a2a;color:var(--sub)}
+  .badge{font-size:11px;padding:2px 9px;border-radius:10px;font-weight:700}
+  .b-ok{background:#13352b;color:var(--ok)} .b-warn{background:#3a2f12;color:var(--warn)}
+  .note{border-left:3px solid var(--warn);background:#241d10;padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;color:#f0d9b0;font-size:13.5px}
+  .note.ok{border-color:var(--ok);background:#14241a;color:#cdeed6}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi .n{font-size:24px;font-weight:700;color:var(--acc)}
+  .kpi .l{color:var(--sub);font-size:12.5px;margin-top:3px}
+  ul.tight{margin:8px 0;padding-left:20px} ul.tight li{margin:4px 0}
+  .path{color:var(--sub);font-size:12px}
+  footer{padding:24px 40px;color:var(--sub);font-size:12px;border-top:1px solid var(--line)}
+  a.inline{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <h1>PersonalChronicle · 工具全量使用手册</h1>
+  <div class="meta">RimWorld 1.6 编年史 Mod · 开发工具生态总览 · 生成于 2026-09-07 · 更新于 2026-09-10（新增 §4 C# 运行时调试工具）· 面向 CodeBuddy 开发流</div>
+</header>
+<div class="wrap">
+<nav>
+  <div class="grp">总览</div>
+  <a href="#overview">1. 工具总览</a>
+  <a href="#runtime">2. 运行环境</a>
+  <div class="grp">AI / CodeBuddy 工具</div>
+  <a href="#knowledge">3.1 知识库 skill</a>
+  <a href="#archify">3.2 archify</a>
+  <a href="#devtools">3.3 chrome-devtools MCP</a>
+  <a href="#crawl4ai">3.4 crawl4ai</a>
+  <a href="#skillspector">3.5 SkillSpector</a>
+  <a href="#aux">3.6 其他预置 skill</a>
+  <div class="grp">C# 运行时调试（DevTools 对标）</div>
+  <a href="#dnspy">4.1 dnSpyEx 断点调试</a>
+  <a href="#roslynator">4.2 Roslynator CLI 静态审计</a>
+  <a href="#dpa">4.3 Dubs 性能剖析</a>
+  <div class="grp">工程脚本</div>
+  <a href="#scripts">5. _scripts 工具库</a>
+  <div class="grp">集成与维护</div>
+  <a href="#workflow">6. 标准工作流</a>
+  <a href="#maintain">7. 维护约定</a>
+</nav>
+<main>
+
+<section id="overview">
+  <h2>1. 工具总览</h2>
+  <div class="grid">
+    <div class="kpi"><div class="n">5</div><div class="l">CodeBuddy AI 工具（skill / MCP / CLI）</div></div>
+    <div class="kpi"><div class="n">3</div><div class="l">C# 运行时调试工具（断点 / 审计 / 性能）</div></div>
+    <div class="kpi"><div class="n">3</div><div class="l">环境预置辅助 skill</div></div>
+    <div class="kpi"><div class="n">50+</div><div class="l">_scripts 工程脚本</div></div>
+    <div class="kpi"><div class="n">3</div><div class="l">运行时依赖（node / py / uv）</div></div>
+  </div>
+  <table>
+    <tr><th>工具</th><th>类别</th><th>接入位置</th><th>触发 / 调用方式</th><th>状态</th></tr>
+    <tr><td><b>RimWorld模组开发知识库</b></td><td><span class="tag t-core">核心</span></td><td><code>~\.codebuddy\skills\RimWorld模组开发知识库</code></td><td>对话提及 RimWorld API/Def/Harmony/贴图/音效等自动触发</td><td><span class="badge b-ok">已装</span></td></tr>
+    <tr><td><b>archify</b></td><td><span class="tag t-ai">AI</span></td><td><code>~\.codebuddy\skills\archify</code></td><td>对话提及"画架构图/时序图/数据流图"自动触发</td><td><span class="badge b-ok">已装</span></td></tr>
+    <tr><td><b>chrome-devtools MCP</b></td><td><span class="tag t-ai">MCP</span></td><td>全局 <code>mcp.json</code>（ID: chrome-devtools）</td><td>CodeBuddy 自动调用，调试 UI 预览页</td><td><span class="badge b-ok">已配</span></td></tr>
+    <tr><td><b>crawl4ai</b></td><td><span class="tag t-ai">CLI</span></td><td><code>D:\toolbox\python</code>（Scripts 下）</td><td><code>crawl4ai-setup</code> / <code>crawl4ai-doctor</code>；Python 包</td><td><span class="badge b-ok">已装</span></td></tr>
+    <tr><td><b>SkillSpector</b></td><td><span class="tag t-ai">CLI</span></td><td><code>C:\Users\Administrator\.local\bin</code></td><td><code>skillspector scan &lt;url|dir&gt; --no-llm</code></td><td><span class="badge b-ok">已装</span></td></tr>
+    <tr><td><b>dnSpyEx</b></td><td><span class="tag t-script">调试</span></td><td><code>D:\toolbox\dnSpyEx</code>（系统 PATH）</td><td>附加 <code>RimWorldWin64.exe</code> → 断点 / 变量 / 即时求值 / IL 热改</td><td><span class="badge b-ok">已装</span></td></tr>
+    <tr><td><b>Roslynator CLI</b></td><td><span class="tag t-script">审计</span></td><td><code>D:\toolbox\bin\roslynator.exe</code> + 分析器包 <code>D:\toolbox\roslynator-analyzers\4.16.1</code></td><td><code>roslynator analyze | lloc | spellcheck</code> 对 csproj 出静态诊断</td><td><span class="badge b-ok">已装</span></td></tr>
+    <tr><td><b>Dubs Performance Analyzer</b></td><td><span class="tag t-sys">游戏内</span></td><td>Steam Workshop <code>2038874626</code></td><td>DevMode 下的补丁耗时 / Tick 分项 / GC 归因面板</td><td><span class="badge b-warn">待订阅</span></td></tr>
+    <tr><td>impeccable / ui-ux-pro-max / unity-game-dev</td><td><span class="tag t-sys">预置</span></td><td><code>~\.codebuddy\skills\</code></td><td>各自 SKILL.md 触发条件</td><td><span class="badge b-warn">环境预置</span></td></tr>
+    <tr><td><b>_scripts 工程脚本</b></td><td><span class="tag t-script">本地</span></td><td><code>项目\_scripts\</code></td><td>PowerShell / Python / Node 直接运行</td><td><span class="badge b-ok">在用</span></td></tr>
+  </table>
+  <div class="note ok">红线原则：所有 AI 工具只进<b>开发流</b>（CodeBuddy 配置 / <code>_scripts</code> / 知识库），<b>不进 mod 运行时</b>（<code>Assemblies/</code> 与发布区）。本 Mod 是离线 C# 游戏 Mod，无任何 LLM 运行时依赖。</div>
+</section>
+
+<section id="runtime">
+  <h2>2. 运行环境（前提条件）</h2>
+  <table>
+    <tr><th>组件</th><th>版本 / 路径</th><th>用途</th></tr>
+    <tr><td>Node.js</td><td><code>D:\toolbox\node-v26.8.1</code>（node v26.8.1 / npx 11.19.0）</td><td>chrome-devtools-mcp 经 <code>npx</code> 启动</td></tr>
+    <tr><td>Python</td><td><code>D:\toolbox\python</code>（3.11.9，pip 24.0）</td><td>crawl4ai、skillspector 运行底座</td></tr>
+    <tr><td>uv</td><td><code>D:\toolbox\python\Scripts\uv.exe</code>（0.12.10，PATH 已就绪）</td><td>安装 SkillSpector 等工具</td></tr>
+    <tr><td>Git</td><td>系统 PATH</td><td>SkillSpector 源码安装、仓库克隆</td></tr>
+    <tr><td>.NET SDK</td><td><code>C:\dotnet8</code>（8.0.424，另有 <code>D:\toolbox\dotnet</code> 同名版本）</td><td>Mod 权威编译 / 单测 / 作为 dotnet tool 宿主</td></tr>
+    <tr><td>dnSpyEx</td><td><code>D:\toolbox\dnSpyEx</code>（v6.6.0 win-x64 自包含，已入机器 PATH）</td><td>附加 <code>RimWorldWin64.exe</code> 做运行时断点调试</td></tr>
+  </table>
+  <div class="note">新开 shell 若找不到 toolbox 工具，先重载机器 PATH：<code>$env:Path=[Environment]::GetEnvironmentVariable('Path','Machine')</code>。CodeBuddy 子进程继承机器级 PATH，新会话通常无需手动处理。</div>
+</section>
+
+<section id="knowledge">
+  <h2>3.1 RimWorld 模组开发知识库（核心 Skill）</h2>
+  <div class="card">
+    <h3>定位</h3>
+    <p>由 <code>docs\参考清单</code>（22 个 md，约 270KB）整理而成的<b>用户级渐进式披露知识库</b>，覆盖 RimWorld 1.6 mod 开发的 Def/XML、Harmony、Comp、Scribe、本地化、版本迁移、资源与实操等全部官方 Vetted 主题。与官方 Wiki 互补（官方强教程、本库强 API 深查）。</p>
+    <p class="path">位置：<code>C:\Users\Administrator\.codebuddy\skills\RimWorld模组开发知识库\</code> · 含 <code>SKILL.md</code> + <code>references/</code>（21 文档 + 分册索引）</p>
+  </div>
+  <h3>使用规则（强制）</h3>
+  <ul class="tight">
+    <li><b>先路由后读取</b>：按任务类型在路由表选 1~2 个分册，用 <code>read_file</code> 读取，禁止批量读入全部文档。</li>
+    <li><b>大文件禁整读</b>：API 总库（86KB）、机制参考（55KB）只用 <code>search_content</code> 提目录（<code>^#{1,3} </code>）后按行号区间读。</li>
+    <li><b>API 最终权威</b>：RimWorld 无官方 SDK，文档不符时以目标 Build 程序集（反射核实）+ Core/DLC Def 实例为准，并注明核实方法。</li>
+    <li>两个项目专属文档（<code>架构/工程约定/开发手册.md</code>、<code>架构/工程约定/发布区与开发区路径约定.md</code>）仅适用于 PersonalChronicle，勿套其他项目。</li>
+  </ul>
+  <h3>触发关键词</h3>
+  <p class="muted">RimWorld mod 编码 / Def XML / Harmony / StatDef·ThingDef·Comp / Scribe / 本地化 / XML Patch XPath / Mod 文件结构 / 版本演化 / 贴图 Textures / 音效 Sounds / 植物渲染 / 研究项目 / JobDef·WorkGiver / AssetBundle / Workshop 发布 / 调试校验 / 「RimWorld API」「1.6 版本变更」「原版机制」「属性字段清单」。</p>
+  <div class="note">生效需<b>新会话</b>加载（会话启动扫描 skills 目录）。当前会话不可用，下次对话提及上述关键词即自动触发。</div>
+</section>
+
+<section id="archify">
+  <h2>3.2 archify（架构图生成 Skill）</h2>
+  <div class="card">
+    <p>为 AI 智能体生成<b>架构 / 时序 / 数据流 / 状态机</b>等可探索的独立 HTML（内联 SVG，支持明暗主题、导出 PNG/SVG/WebM）。由 <code>npx skills add tt-a1i/archify</code> 安装，经 SkillSpector 静态扫描（Score 0/100 / LOW）后复制入 CodeBuddy。</p>
+    <p class="path">位置：<code>C:\Users\Administrator\.codebuddy\skills\archify\</code>（194 文件，含 SKILL.md + 生成引擎）</p>
+  </div>
+  <h3>使用方式</h3>
+  <p>对话中要求"画/美化/转换架构图"时触发。输入支持：自然语言需求，或已有的 Mermaid <code>flowchart/sequenceDiagram/stateDiagram</code> 文本。输出自包含 HTML，可直接交付。</p>
+  <pre><span class="c"># 典型对话示例</span>
+"把 PersonalChronicle 的分层架构（UI → Application → Domain ← Capture）
+ 画成一张可探索的架构图，输出独立 HTML。"</pre>
+  <div class="note ok">契合本项目：可用于补 <code>docs/设计文档/架构/工程约定/开发手册.md</code> 的分层架构图、Capture 事件链路图（目前纯文字），产物形态与现有 <code>docs/UI预览/*.html</code> 一致。</div>
+</section>
+
+<section id="devtools">
+  <h2>3.3 chrome-devtools MCP</h2>
+  <div class="card">
+    <p>通过 <code>npx -y chrome-devtools-mcp@latest --no-usage-statistics</code> 启动的 MCP 服务器，提供浏览器 DevTools 能力（控制台日志、网络请求、DOM 快照、截图）。直接服务 <b>UI 预览页调试</b>。</p>
+    <p class="path">配置：<code>C:\Users\Administrator\.codebuddy\mcp.json</code> 的 <code>chrome-devtools</code> 条目（已禁用遥测，回读校验 3 服务器在册）</p>
+  </div>
+  <h3>使用方式</h3>
+  <ul class="tight">
+    <li>配置后<b>重启 CodeBuddy</b>，Settings → MCP 显示绿灯即生效。</li>
+    <li>让 CodeBuddy 打开 <code>docs/UI预览/*.html</code> 并读取 console / 网络请求——精准捕获此前手动才发现的"勋章路径 404""资源 404"类问题。</li>
+  </ul>
+  <pre><span class="c"># mcp.json 关键片段</span>
+"chrome-devtools": {
+  "command": "npx",
+  "args": ["-y","chrome-devtools-mcp@latest","--no-usage-statistics"],
+  "type": "stdio", "disabled": false
+}</pre>
+  <div class="note">收益确定：UI 预览验收时自动定位 404 / 控制台报错，免去人工逐个排查请求。</div>
+</section>
+
+<section id="crawl4ai">
+  <h2>3.4 crawl4ai（网页抓取 / 知识库同步）</h2>
+  <div class="card">
+    <p>LLM 友好的网页爬虫 Python 库（Python 3.10+，本项目 3.11.9 满足）。<code>crawl4ai-setup</code> 已跑完（Playwright Chromium + 数据库初始化就绪）。用于把官方 Wiki / 社区资料<b>结构化抓取</b>进知识库分册，自动化"Wiki → 分册"维护。</p>
+    <p class="path">位置：<code>D:\toolbox\python</code> · CLI：<code>D:\toolbox\python\Scripts\crawl4ai-setup.exe</code> / <code>crawl4ai-doctor.exe</code></p>
+  </div>
+  <h3>使用方式</h3>
+  <pre><span class="c"># 健康检查</span>
+crawl4ai-doctor
+<span class="c"># 抓取并转为 Markdown（供分册更新参考）</span>
+python -m crawl4ai <span class="c"># 或编写脚本调用 crawl4ai 异步 API</span></pre>
+  <div class="note">用途建议：监控官方 Wiki 页面 <code>oldid</code> 变更 → 提醒更新对应分册（如 1.6 迁移页修订时比对）。勿让其产物进入 mod 运行时。</div>
+</section>
+
+<section id="skillspector">
+  <h2>3.5 SkillSpector（第三方 skill 安全扫描）</h2>
+  <div class="card">
+    <p>NVIDIA 出品的 AI agent skill 安全扫描器，检测注入 / 供应链 / 恶意模式。经 <code>uv tool install git+https://github.com/NVIDIA/skillspector.git</code> 安装。</p>
+    <p class="path">位置：<code>C:\Users\Administrator\.local\bin\skillspector.exe</code>（PATH 已就绪）</p>
+  </div>
+  <h3>使用方式（约定强制）</h3>
+  <pre><span class="c"># 安装任何第三方 skill 前，先做静态扫描</span>
+skillspector scan https://github.com/OWNER/REPO --no-llm --format markdown
+<span class="c"># 也可扫描本地目录</span>
+skillspector scan ./some-skill-folder --no-llm</pre>
+  <ul class="tight">
+    <li>退出码 <code>0</code> = 可安装，<code>1</code> = 强烈不建议安装（风险分 >50）。</li>
+    <li><b>无 LLM key 时务必加 <code>--no-llm</code></b>：否则语义分析器会跳过并提示缺 key，仅静态规则生效。</li>
+    <li>archify 扫描记录：Score 0/100 / Severity LOW / Recommendation CAUTION（干净，准予安装）。</li>
+  </ul>
+</section>
+
+<section id="aux">
+  <h2>3.6 其他环境预置 Skill（非本次会话安装）</h2>
+  <p class="muted">以下 skill 已存在于 <code>~\.codebuddy\skills\</code>，为环境预置，详细触发见各自 SKILL.md。其中与本项目 UI 工作相关的可酌情使用。</p>
+  <table>
+    <tr><th>Skill</th><th>定位</th><th>与本项目的关联</th></tr>
+    <tr><td><b>impeccable</b></td><td>前端设计工具集（生成高质量 Web UI、动效、设计系统）</td><td>Mod 自定义 IMGUI UI 的 HTML 原型 / 预览页美化</td></tr>
+    <tr><td><b>ui-ux-pro-max__skillhub</b></td><td>UI/UX 设计智能与实现指引</td><td>UI 预览页与交互打磨</td></tr>
+    <tr><td><b>unity-game-dev__skillhub</b></td><td>Unity 游戏开发 skill 集</td><td>引擎语义不直接对应 RimWorld modding，参考价值有限</td></tr>
+  </table>
+  <div class="note">注意：本项目另有一份工程级 UI 规范 skill（<code>rimworld-ui-standards</code>，location: project），编写 Mod 窗口/组件时优先遵循其设计令牌与两层级约束。</div>
+</section>
+
+<section id="dnspy">
+  <h2>4.1 dnSpyEx（C# 运行时断点调试 · 对标 DevTools Sources）</h2>
+  <div class="card">
+    <p><b>核心用途</b>：在<b>游戏运行中</b>直接对 Mod 代码下断点、单步、查看局部变量与调用栈，用 Immediate 窗口执行任意表达式，并可临时改写方法体（IL）后<b>立即生效、免重启</b>验证假设。这是本项目唯一可用的「运行时源码级调试」能力，补齐 <code>Verse.Log</code> 只能事后翻日志的缺口。</p>
+    <p class="path">位置：<code>D:\toolbox\dnSpyEx</code>（v6.6.0 x64 自包含版，已写入系统 PATH）· GUI <code>dnSpy.exe</code> + 命令行 <code>dnSpy.Console.exe</code></p>
+    <p>关键组件：<code>dnSpy.Debugger.DotNet.Mono.x.dll</code>——RimWorld 跑在 Unity/<b>Mono</b> 后端，附加调试必须依赖此 Mono 调试引擎（已随包提供，无需另装）。</p>
+  </div>
+  <h3>使用方式</h3>
+  <ol class="tight">
+    <li>启动 RimWorld 并<b>进入存档</b>（别在空载主菜单就附加，易在加载期断到无关代码、拖慢排查）。</li>
+    <li><code>dnSpy.exe</code> → <b>Debug ▸ Attach to Process</b> → 选 <code>RimWorldWin64.exe</code> → 调试引擎选 <b>Unity / Mono</b>。</li>
+    <li><b>File ▸ Open</b> 打开 <code>Assemblies\PersonalChronicle.dll</code>（或发布区那份，与游戏实际加载的一致），在方法上按 F9 下断点。</li>
+    <li>命中后可查看 <code>this</code>、局部变量、调用栈；Immediate 窗口直接调静态方法验证逻辑（如 <code>ProfessionalEffectResolver.ResolveContributions(...)</code>）。</li>
+  </ol>
+  <pre><span class="c"># 反编译留证（本项目既有做法，产物落 %TEMP%\rw_spy）</span>
+ilspycmd -p -o out_dir Source\PersonalChronicle\bin\Release\PersonalChronicle.dll
+<span class="c"># dnSpy 命令行用法</span>
+dnSpy.Console.exe --help</pre>
+  <div class="note">注意：dnSpy 里的 IL 改动<b>只在内存中</b>，不落盘。用于快速证伪/证实，确认结论后仍须改源码重编译，并走「dll 同步发布区 + 哈希校验」正常流程。</div>
+</section>
+
+<section id="roslynator">
+  <h2>4.2 Roslynator CLI（静态审计 · 对标 DevTools Lighthouse / Issues）</h2>
+  <div class="card">
+    <p><b>核心用途</b>：不启动游戏、不跑 Unity，直接对 <code>Source\PersonalChronicle.csproj</code> 做一次静态诊断扫描——死代码、可空性、多余分配、可简化表达式、拼写等，产出「问题清单」。把代码门槛从「编译 0 错 0 警」提升到「性能陷阱与坏味道可见」。</p>
+    <p class="path">位置：<code>D:\toolbox\bin\roslynator.exe</code>（v1.0.0.0，Roslyn 5.0，dotnet tool 安装，随 <code>D:\toolbox\bin</code> 已在系统 PATH）</p>
+  </div>
+  <h3>常用命令（已实测）</h3>
+  <pre><span class="c"># ① 全量诊断 —— 必须显式给 --analyzer-assemblies，否则报 "No analyzers found" / 0 diagnostics</span>
+roslynator analyze Source\PersonalChronicle.csproj --analyzer-assemblies "D:\toolbox\roslynator-analyzers\4.16.1\analyzers\dotnet\roslyn4.7\cs" > _verify_tmp\roslynator_analyze.txt
+<span class="c"># ② 代码规模统计（实测 783ms；27,837 逻辑行 / 61,612 总行）</span>
+roslynator lloc Source\PersonalChronicle.csproj
+<span class="c"># ③ 拼写检查（注释 / 本地化键 / 标识符）</span>
+roslynator spellcheck Source\PersonalChronicle.csproj</pre>
+  <div class="note">关键坑（首次踩到）：<code>roslynator analyze</code> <b>只跑「项目自身引用的分析器」</b>，本项目 csproj 未引任何分析器包 → 直接跑会输出 <code>No analyzers found</code> / 0 条诊断。解决方式二选一：<br>
+  ① 用 <code>--analyzer-assemblies</code>（简写 <code>-a</code>）指向已落盘的 Roslynator 分析器包（推荐，<b>不动构建门禁</b>）；<br>
+  ② 在 csproj 加 <code>Roslynator.Analyzers</code> 的 <code>PackageReference</code>（会让诊断随 <code>dotnet build</code> 一起输出，需按警告量分阶段收紧，否则淹没「0 错 0 警」门禁）。<br>
+  分析器包选 <b>4.16.1 的 <code>roslyn4.7</code> 变体</b>：Roslynator CLI 1.0.0 自带 Roslyn 5.0，可向后兼容加载 Roslyn 4.x 分析器（<code>roslyn3.8</code> 变体亦可，但 <code>roslyn4.7</code> 更贴近）。</div>
+  <div class="note ok"><b>首次审计基线（2026-09-10）</b>：1702 条诊断（1691 info / <b>11 warning</b>），产物 <code>_verify_tmp\roslynator_analyze.txt</code>。规则集中在风格类：RCS1146、RCS1123(412) 加括号、RCS1206(207) 条件访问、RCS1226(178) 文档段落、RCS1118(168) 局部变量可 const、RCS1163(120) 未用参数。热点文件：<code>ITab_Pawn_Career.Qualification.cs</code>(105)、<code>OverviewFieldRegistry.cs</code>(80)、<code>ITab_Pawn_Career.Overview.cs</code>(69)。</div>
+  <div class="note"><b>值得优先处理的 11 条 warning</b>：<b>3 × RCS1075 空 catch 吞 <code>System.Exception</code></b>（<code>Capture\Patch_BuildingLabel.cs:43</code>、<code>Capture\Patch_PawnTitleBadge.cs:132</code>、<code>Capture\Patch_RoomRoleLabel.cs:107</code>）；<b>2 × RCS1263 文档注释参数名不存在</b>（<code>Data\ChronicleGameComponent.cs:743</code> 注释里的 <code>force</code>、<code>Application\MedalAwardService.cs:102</code> 注释里的 <code>component</code>）；6 × RCS1139 缺 summary。<code>lloc</code> 亦可为「<code>ITab_Pawn_Career.Overview.cs</code> 破 800 行」这类拆分提供量化依据，替代人肉估算。</div>
+</section>
+
+<section id="dpa">
+  <h2>4.3 Dubs Performance Analyzer（游戏内性能剖析 · 对标 DevTools Performance）</h2>
+  <div class="card">
+    <p><b>核心用途</b>：游戏内逐项归因 CPU 开销——Harmony 补丁耗时排行、Tick/Update/AI/渲染分项、GC 分配量与分配热点。直接回答「Capture 补丁每 tick 花多少 ms、GC 是不是被我拉高」，是验证本项目两条性能红线（<b>每帧入口禁 new/GetComponent/Find.*</b>、<b><code>CacheRefreshInterval</code> 唯一刷新门控</b>）的唯一实测手段。</p>
+    <p class="path">来源：Steam Workshop 本体 ID <code>2038874626</code>（作者 Dubwise，支持 1.6）· 汉化可选 <code>3525634104</code> 或 <code>3547165458</code>（任选一个，勿叠加）</p>
+  </div>
+  <h3>接入约定（重要）</h3>
+  <ul class="tight">
+    <li><b>仅调试档启用</b>：这是开发者工具，<b>不得</b>写入本项目 <code>About.xml</code> 的 <code>modDependencies</code>——玩家不需要它。</li>
+    <li>需在游戏 <code>选项 ▸ 开发者模式</code> 打开后使用其面板；数据可导出供离线分析。</li>
+    <li>与自研 <code>PerfProbe</code>（<code>Start/End("key",t0)</code>，Settings 内 <code>EnablePerfProbe</code> 默认关）配合：<b>DPA 给全局归因，PerfProbe 给自定义代码段计时</b>。</li>
+    <li>前置依赖：<b>Harmony</b>（本机已订阅 <code>2009463077</code>）。</li>
+  </ul>
+  <div class="note">对照：Unity Profiler 对本项目<b>不可用</b>——RimWorld 是 release 构建，不含开发符号与 Profiler 端口。</div>
+</section>
+
+<section id="scripts">
+  <h2>5. _scripts 工程脚本库</h2>
+  <p class="muted">位于 <code>项目根\_scripts\</code>，约 50+ 个 PowerShell / Python / Node 脚本，覆盖编译、审计、资产、落地、恢复五类。下表为全量分类清单（临时探针类不逐一展开）。</p>
+
+  <h3>编译 / 构建</h3>
+  <table>
+    <tr><th>脚本</th><th>用途</th></tr>
+    <tr><td><code>compile_with_sdk.ps1</code></td><td>调用 SDK 编译 Mod 程序集</td></tr>
+    <tr><td><code>compile.rsp</code></td><td>编译响应文件（传入 csc 的参数集）</td></tr>
+  </table>
+
+  <h3>健康审计 / Def 校验</h3>
+  <table>
+    <tr><th>脚本</th><th>用途</th></tr>
+    <tr><td><code>daily_health_check.ps1</code> · <code>audit_full_health.ps1</code></td><td>每日 / 全量健康审计</td></tr>
+    <tr><td><code>audit_all_defs.ps1</code></td><td>审计全部 Def 一致性</td></tr>
+    <tr><td><code>audit_automation.ps1</code> · <code>audit_capture_and_xml.ps1</code></td><td>自动化（管道/自动农业）/ Capture 事件与 XML 审计</td></tr>
+    <tr><td><code>audit_effect_kinds.ps1</code> · <code>audit_professional_effects.ps1</code> · <code>audit_professional_guide.ps1</code></td><td>效果类型 / 职业效果 / 职业指南审计</td></tr>
+    <tr><td><code>audit_thingdef_contract.ps1</code></td><td>ThingDef 契约审计</td></tr>
+    <tr><td><code>comment_audit.ps1</code> · <code>xml_comment_audit.ps1</code></td><td>注释 / XML 注释审计</td></tr>
+    <tr><td><code>verify_book_defs.ps1</code></td><td>校验书籍 Def</td></tr>
+    <tr><td><code>fix_health_violations.ps1</code></td><td>修复健康违例</td></tr>
+  </table>
+
+  <h3>资产 / 精灵处理（贴图管线）</h3>
+  <table>
+    <tr><th>脚本</th><th>用途</th></tr>
+    <tr><td><code>split_sprite_columns.ps1</code></td><td><b>核心</b>：按列分割联图精灵（含 alpha bbox + 缩放；<code>-Boundaries</code> 支持非等距布局）</td></tr>
+    <tr><td><code>slice_pipe_atlas*.ps1</code> · <code>slice_pipe_sprites.ps1</code></td><td>管道图集 / 精灵切片（v1/v2/v3e 多版本）</td></tr>
+    <tr><td><code>rotate_conveyor_sprites.ps1</code> · <code>process_autofarm_textures.ps1</code></td><td>传送带旋转 / 自动农业贴图处理</td></tr>
+    <tr><td><code>gen_pipe_trench_sprites.ps1</code> · <code>fit_pipe_tile_fill.ps1</code></td><td>管道沟槽精灵生成 / 贴图填充适配</td></tr>
+    <tr><td><code>regen_pipe_hidden_sprite.ps1</code> · <code>copy_pipe_hidden_from_visible.ps1</code></td><td>重新生成 / 复制隐藏版管道精灵</td></tr>
+    <tr><td><code>verify_pipe_atlas.ps1</code> · <code>verify_split*.ps1</code></td><td>管道图集 / 分割结果校验</td></tr>
+    <tr><td><code>make_sheets_v2.ps1</code> · <code>montage_old_vs_new_v3.ps1</code></td><td>生成精灵表 / 新旧对比拼图</td></tr>
+  </table>
+
+  <h3>数据落地 / 代码生成（Career / ReadModel）</h3>
+  <table>
+    <tr><th>脚本</th><th>用途</th></tr>
+    <tr><td><code>land_career_slice.ps1</code> · <code>land_career_slice.py</code> · <code>write_landing.ps1</code> · <code>run_land_from_py.mjs</code></td><td>职业数据切片落地（PowerShell/Python/Node 多实现）</td></tr>
+    <tr><td><code>add_readmodels_using.ps1</code> · <code>migrate_readmodels_ns.ps1</code></td><td>ReadModel using 注入 / 命名空间迁移</td></tr>
+    <tr><td><code>write_skill_inject.ps1</code></td><td>技能注入代码生成</td></tr>
+  </table>
+
+  <h3>恢复 / 快照 / 反向同步</h3>
+  <table>
+    <tr><th>脚本</th><th>用途</th></tr>
+    <tr><td><code>snapshot_restore.ps1</code> · <code>reset_recovery.ps1</code> · <code>reverse_sync.ps1</code></td><td>快照恢复 / 重置恢复 / 反向同步</td></tr>
+  </table>
+
+  <h3>诊断探针（临时 / 调试用）</h3>
+  <p class="muted"><code>probe_api.ps1</code> · <code>probe_ghost_api*.ps1</code> · <code>probe_ghost_il.ps1</code> · <code>probe_research.ps1</code> · <code>ensure_ps1_bom.ps1</code> —— 多为定位特定 bug 的一次性探针，按需查阅，不纳入常规流程。</p>
+
+  <h3>子工具目录</h3>
+  <table>
+    <tr><th>目录</th><th>内容</th></tr>
+    <tr><td><code>RenameMedalsApp/</code></td><td>勋章重命名 C# 小工具（解决勋章命名问题）</td></tr>
+    <tr><td><code>ilscan/</code></td><td>IL 字节码扫描工具（4 exe + 8 dll）</td></tr>
+    <tr><td><code>_mod_audit/</code> · <code>bin/</code> · <code>obj/</code></td><td>mod 审计 / 构建产物</td></tr>
+  </table>
+  <div class="note">资产管线经验坑：GDI+ <code>FromFile</code> 会锁文件导致原地 <code>Save</code> 报 generic error，正解为 <code>ReadAllBytes → MemoryStream → FromStream</code>。</div>
+</section>
+
+<section id="workflow">
+  <h2>6. 标准工作流（集成示例）</h2>
+  <h3>① 安装第三方 skill 的安全闭环</h3>
+  <pre>skillspector scan &lt;repo-url&gt; --no-llm     <span class="c"># 退出码 0/1 决定可否装</span>
+npx skills add &lt;owner/repo&gt; --agent claude-code --global --copy --yes
+Copy-Item 到 ~\.codebuddy\skills\&lt;name&gt;    <span class="c"># 适配 CodeBuddy</span></pre>
+  <h3>② 知识库维护（Wiki → 分册）</h3>
+  <pre>crawl4ai-doctor                       <span class="c"># 确认爬虫就绪</span>
+<span class="c"># 抓取官方页 → 比对分册索引 oldid → 有修订则更新 references/ 对应分册</span>
+<span class="c"># 三步走同步（见 §6）</span></pre>
+  <h3>③ UI 预览验收</h3>
+  <pre><span class="c"># 重启 CodeBuddy 后，让 chrome-devtools MCP 打开 docs/UI预览/*.html</span>
+<span class="c"># 自动读 console + 网络请求，定位 404 / 报错</span></pre>
+  <h3>④ 架构图交付</h3>
+  <pre><span class="c"># 对话要求 archify 画分层/链路图 → 输出独立 HTML 入 docs</span></pre>
+  <h3>⑤ Mod 编码（知识库触发）</h3>
+  <pre><span class="c"># 提及 "RimWorld API / Def / Harmony / 贴图 / 音效 ..." → 知识库 skill 自动路由分册</span>
+<span class="c"># 大文件只 grep 后按区间读，结论以目标 Build 程序集复核为准</span></pre>
+</section>
+
+<section id="maintain">
+  <h2>7. 维护约定 & 故障排查</h2>
+  <h3>新增分册/工具的三步走（防"内容在、触发不到"）</h3>
+  <ol class="tight">
+    <li>真源写入 <code>docs\参考清单</code>（知识库的权威源）；</li>
+    <li><code>Copy-Item</code> + <b>哈希校验</b>到 <code>~\.codebuddy\skills\...\references</code>；</li>
+    <li>同步 <code>SKILL.md</code> 路由表 + <code>description</code> <b>触发关键词</b>（漏第三步则新内容触发不到）。</li>
+  </ol>
+  <h3>常见问题</h3>
+  <table>
+    <tr><th>现象</th><th>原因 / 处理</th></tr>
+    <tr><td>skill 配置/工具改完不生效</td><td>需<b>重启 CodeBuddy</b>（MCP、skill 均在会话启动扫描）</td></tr>
+    <tr><td>shell 找不到 node/python/uv</td><td>重载机器 PATH：<code>$env:Path=[Environment]::GetEnvironmentVariable('Path','Machine')</code></td></tr>
+    <tr><td>SkillSpector 报 "API key missing"</td><td>无 LLM key，加 <code>--no-llm</code> 走纯静态扫描</td></tr>
+    <tr><td>chrome-devtools 控制台读不到</td><td>确认 <code>mcp.json</code> 中 <code>disabled:false</code> 且已重启；Settings→MCP 绿灯</td></tr>
+    <tr><td>replace_in_file 改工作区外文件超时</td><td>改用 PowerShell <code>ConvertFrom-Json</code> + <code>Add-Member</code> + 备份回写（如改 mcp.json）</td></tr>
+    <tr><td>dnSpy 附加 <code>RimWorldWin64.exe</code> 失败 / 列表里看不到</td><td>确认游戏已<b>进入存档</b>再附加；引擎必须选 Unity / Mono（非 .NET）；位宽须匹配 x64（本包为 win64 自包含版）</td></tr>
+    <tr><td>dnSpy 断点显示空心「不会命中」</td><td>打开的程序集与游戏实际加载的不是同一份（开发区 vs 发布区混淆）→ 改开发布区/已被加载的那份 dll</td></tr>
+    <tr><td><code>roslynator</code> 命令找不到</td><td><code>D:\toolbox\bin</code> 已在机器 PATH；新 shell 先重载 PATH，或直接用全路径 <code>D:\toolbox\bin\roslynator.exe</code></td></tr>
+  </table>
+  <div class="note ok">版本约束备忘：AssetBundle 打包须用 <b>Unity 2022.3.35f1</b>；crawl4ai 需 Python ≥3.10；node 环境为 v26.8.1。</div>
+</section>
+
+</main>
+</div>
+<footer>
+  PersonalChronicle 工具全量使用手册 · 自包含 HTML · 与 <code>docs\参考清单</code> 知识库、<code>MEMORY.md</code> 工程契约互补 ·
+  所有 AI 工具仅用于开发流，红线：不进 Mod 运行时。
+</footer>
+<script>
+  const links=[...document.querySelectorAll('nav a')];
+  const secs=[...document.querySelectorAll('section')];
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));
+    }});
+  },{rootMargin:'-20% 0px -70% 0px'});
+  secs.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

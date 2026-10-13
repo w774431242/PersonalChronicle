@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <!-- 品质档 → 代表值权重（铁律 6.5 迁移）。键 qualityCategory = QualityCategory 名。 -->
+  <PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+    <defName>QualityWeight_Normal</defName>
+    <qualityCategory>Normal</qualityCategory>
+    <weight>40</weight>
+  </PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+    <defName>QualityWeight_Good</defName>
+    <qualityCategory>Good</qualityCategory>
+    <weight>60</weight>
+  </PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+    <defName>QualityWeight_Excellent</defName>
+    <qualityCategory>Excellent</qualityCategory>
+    <weight>80</weight>
+  </PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+    <defName>QualityWeight_Masterwork</defName>
+    <qualityCategory>Masterwork</qualityCategory>
+    <weight>95</weight>
+  </PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+  <PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+    <defName>QualityWeight_Legendary</defName>
+    <qualityCategory>Legendary</qualityCategory>
+    <weight>100</weight>
+  </PersonalChronicle.Domain.Profession.ProfessionalQualityWeightDef>
+</Defs>

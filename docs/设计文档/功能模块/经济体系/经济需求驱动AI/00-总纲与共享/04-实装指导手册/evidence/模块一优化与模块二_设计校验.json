@@ -1,0 +1,258 @@
+{
+  "checkedUtc": "2026-10-08T05:44:20.4051084Z",
+  "scope": "Design documents, current evidence fingerprints, contract text markers and hypothetical arithmetic only.",
+  "documents": [
+    {
+      "path": "游戏代码设计/01-状态与需求感知_代码设计方案.md",
+      "sha256": "DBA95AD6EA561401C591272946BA9B8EC370EFF51489B52E9D94989FA3F737DF",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 8
+    },
+    {
+      "path": "游戏代码设计/02-长期生活规划_代码设计方案.md",
+      "sha256": "5B25C9C3E0B15C18AA0FF930C8C93E5F8688C7E404706A63FEB301FFF3D830D6",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 11
+    },
+    {
+      "path": "游戏代码设计/01-状态与需求感知_方案评审.md",
+      "sha256": "946115DE4CB19FE9DD26DDEF6450D72DD4B687F5F02433A7101B3581B248580E",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 3
+    },
+    {
+      "path": "游戏代码设计/00-公有经济第一批代码设计.md",
+      "sha256": "E070465989E23CDBBF2B739412AFD1595D9DC703CA59D15A74CB63747BA203CD",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 9
+    },
+    {
+      "path": "模块化实装指导手册/00-总册与实施路线.md",
+      "sha256": "EF30301A03EC5F50BD396F6E5C0FD4634DE9420EFF0D088772DCE446F001C14C",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 29
+    }
+  ],
+  "evidence": [
+    {
+      "path": "模块一_状态需求感知_接口证据.json",
+      "types": 25,
+      "sourceFingerprints": 20,
+      "assemblyAndSourceHashesMatched": true
+    },
+    {
+      "path": "模块二_长期生活规划_接口证据.json",
+      "types": 12,
+      "sourceFingerprints": 22,
+      "assemblyAndSourceHashesMatched": true
+    }
+  ],
+  "parameterBandsValid": true,
+  "defaultUnknownContractTextPresent": true,
+  "arithmeticChecks": [
+    {
+      "case": "M1 raw to ratio",
+      "actual": 0.4,
+      "expected": 0.4
+    },
+    {
+      "case": "M1 relative deficit",
+      "actual": 0.5,
+      "expected": 0.5
+    },
+    {
+      "case": "M1 absolute ratio deficit",
+      "actual": 0.4,
+      "expected": 0.4
+    },
+    {
+      "case": "M1 raw level shortfall",
+      "actual": 0.8,
+      "expected": 0.8
+    },
+    {
+      "case": "same relative deficit, smaller absolute amount",
+      "actual": 0.5,
+      "expected": 0.5
+    },
+    {
+      "case": "work style 0",
+      "actual": 6.0,
+      "expected": 6.0
+    },
+    {
+      "case": "reserve style 0",
+      "actual": 1.0,
+      "expected": 1.0
+    },
+    {
+      "case": "saving style 0",
+      "actual": 0.00,
+      "expected": 0.0
+    },
+    {
+      "case": "premium style 0",
+      "actual": 0.00,
+      "expected": 0.0
+    },
+    {
+      "case": "leisure style 0",
+      "actual": 1.0,
+      "expected": 1.0
+    },
+    {
+      "case": "food target style 0",
+      "actual": 0.80,
+      "expected": 0.8
+    },
+    {
+      "case": "joy target style 0",
+      "actual": 0.60,
+      "expected": 0.6
+    },
+    {
+      "case": "work style 1",
+      "actual": 8.0,
+      "expected": 8.0
+    },
+    {
+      "case": "reserve style 1",
+      "actual": 2.0,
+      "expected": 2.0
+    },
+    {
+      "case": "saving style 1",
+      "actual": 0.20,
+      "expected": 0.2
+    },
+    {
+      "case": "premium style 1",
+      "actual": 0.25,
+      "expected": 0.25
+    },
+    {
+      "case": "leisure style 1",
+      "actual": 2.0,
+      "expected": 2.0
+    },
+    {
+      "case": "food target style 1",
+      "actual": 0.85,
+      "expected": 0.85
+    },
+    {
+      "case": "joy target style 1",
+      "actual": 0.70,
+      "expected": 0.7
+    },
+    {
+      "case": "work style 2",
+      "actual": 10.0,
+      "expected": 10.0
+    },
+    {
+      "case": "reserve style 2",
+      "actual": 3.0,
+      "expected": 3.0
+    },
+    {
+      "case": "saving style 2",
+      "actual": 0.40,
+      "expected": 0.4
+    },
+    {
+      "case": "premium style 2",
+      "actual": 0.50,
+      "expected": 0.5
+    },
+    {
+      "case": "leisure style 2",
+      "actual": 3.0,
+      "expected": 3.0
+    },
+    {
+      "case": "food target style 2",
+      "actual": 0.90,
+      "expected": 0.9
+    },
+    {
+      "case": "joy target style 2",
+      "actual": 0.80,
+      "expected": 0.8
+    },
+    {
+      "case": "care 2h leaves maximum 8h ordinary work",
+      "actual": 8.0,
+      "expected": 8.0
+    },
+    {
+      "case": "care 6h leaves maximum 4h ordinary work",
+      "actual": 4.0,
+      "expected": 4.0
+    },
+    {
+      "case": "existing work counted once, original care",
+      "actual": 4.0,
+      "expected": 4.0
+    },
+    {
+      "case": "existing work counted once, increased care",
+      "actual": 0.0,
+      "expected": 0.0
+    },
+    {
+      "case": "game day to hours",
+      "actual": 24.0,
+      "expected": 24.0
+    },
+    {
+      "case": "reserve target in minor units",
+      "actual": 1200.0,
+      "expected": 1200.0
+    },
+    {
+      "case": "refill low water in minor units",
+      "actual": 840.0,
+      "expected": 840.0
+    },
+    {
+      "case": "conditional end cash, 8h wages after work",
+      "actual": 1500.0,
+      "expected": 1500.0
+    },
+    {
+      "case": "conditional end cash, care limits work to 4h",
+      "actual": 700.0,
+      "expected": 700.0
+    },
+    {
+      "case": "food due before wage requires immediate extra cash",
+      "actual": 100.0,
+      "expected": 100.0
+    },
+    {
+      "case": "surplus saving is not gross-wage withholding",
+      "actual": 20.0,
+      "expected": 20.0
+    },
+    {
+      "case": "zero surplus means no extra saving",
+      "actual": 0.0,
+      "expected": 0.0
+    }
+  ],
+  "runtimeCompiled": false,
+  "runtimeTestsExecuted": false,
+  "performanceMeasured": false,
+  "gameValidated": false,
+  "limits": [
+    "Text markers do not prove a Fact or query implementation is correct.",
+    "Arithmetic examples do not simulate future demand, wages, service capacity or real gameplay.",
+    "Trait rules and parameter defaults require implementation and playtesting; budget, cooperation and arbitration remain separate modules."
+  ]
+}

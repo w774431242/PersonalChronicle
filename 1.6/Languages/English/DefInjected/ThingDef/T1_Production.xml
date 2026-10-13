@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PC_T1_Smelter.label>smart smelter (T1)</PC_T1_Smelter.label>
+  <PC_T1_Smelter.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Smelter.description>
+  <PC_T1_Machining.label>smart machining table (T1)</PC_T1_Machining.label>
+  <PC_T1_Machining.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Machining.description>
+  <PC_T1_Tailoring.label>smart tailor bench (T1)</PC_T1_Tailoring.label>
+  <PC_T1_Tailoring.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Tailoring.description>
+  <PC_T1_Smithy.label>smart smithy (T1)</PC_T1_Smithy.label>
+  <PC_T1_Smithy.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Smithy.description>
+  <PC_T1_Cooking.label>smart stove (T1)</PC_T1_Cooking.label>
+  <PC_T1_Cooking.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Cooking.description>
+  <PC_T1_DrugLab.label>smart drug lab (T1)</PC_T1_DrugLab.label>
+  <PC_T1_DrugLab.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_DrugLab.description>
+  <PC_T1_Stonecutting.label>smart stonecutting table (T1)</PC_T1_Stonecutting.label>
+  <PC_T1_Stonecutting.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Stonecutting.description>
+  <PC_T1_Sculpting.label>smart art bench (T1)</PC_T1_Sculpting.label>
+  <PC_T1_Sculpting.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Sculpting.description>
+  <PC_T1_Butchery.label>smart butcher table (T1)</PC_T1_Butchery.label>
+  <PC_T1_Butchery.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Butchery.description>
+  <PC_T1_Crafting.label>smart crafting table (T1)</PC_T1_Crafting.label>
+  <PC_T1_Crafting.description>A T1 powered bench operated by a colonist. Retains prototype recipes, skill and research requirements, and ingredient costs. Stops without power. No additional quality floor. Uses original artwork until custom four-direction textures are installed.</PC_T1_Crafting.description>
+</LanguageData>

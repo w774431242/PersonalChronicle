@@ -69,6 +69,12 @@ namespace PersonalChronicle.Capture
                 // snapshot, consistent with ThingObject.WeakId semantics).
                 string builtStableId = builtDef.defName + ":" + __instance.thingIDNumber;
                 service.OnThingBuilt(builtDef, builtStableId, worker);
+                // REQ-MVS-013：物品级产消读数（建造产物 = 1 件；建造耗材在蓝图阶段消耗、不经本钩子）。
+                service.RecordItemFlow(builtDef.defName, 1, true);
+
+                // P1 CAREER-005 建造职业事实：ConstructionCompleted 事件（仅武器/护甲之外的
+                // 全部建筑也记——职业事实 ledger 与装备归档是两条独立线）。
+                service.RecordCareerConstruction(worker, builtDef, builtStableId, Find.TickManager.TicksGame);
             }
             catch (Exception ex)
             {

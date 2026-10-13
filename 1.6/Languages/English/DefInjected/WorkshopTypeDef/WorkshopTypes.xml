@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  English overrides for WorkshopTypeDef (2026-09-25, CHG-20260925-WT-VANILLA).
+  Base Def text in Defs/WorkshopTypes.xml is Chinese; defNames redefined to vanilla
+  production-device styles. Bonus factors removed — types are now classification only.
+-->
+<LanguageData>
+  <WT_Logging.label>Logging Shop</WT_Logging.label>
+  <WT_Logging.description>Wood harvesting and rough processing. Anchored to vanilla crafting-spot / sawing-style work; Plants skill drives duty priority.</WT_Logging.description>
+
+  <WT_Crafting.label>Crafting Shop</WT_Crafting.label>
+  <WT_Crafting.description>General manufacturing. Anchored to vanilla crafting table / crafting spot, covering most basic recipes.</WT_Crafting.description>
+
+  <WT_Smithing.label>Smithing Shop</WT_Smithing.label>
+  <WT_Smithing.description>Metal smithing. Anchored to vanilla fueled / electric smithy, for metal blanks and forgings.</WT_Smithing.description>
+
+  <WT_Machining.label>Machining Shop</WT_Machining.label>
+  <WT_Machining.description>Precision machining. Anchored to vanilla machining table, for parts and components.</WT_Machining.description>
+
+  <WT_Cooking.label>Cooking Shop</WT_Cooking.label>
+  <WT_Cooking.description>Food cooking. Anchored to vanilla electric stove, for meals and food processing.</WT_Cooking.description>
+
+  <WT_Tailoring.label>Tailoring Shop</WT_Tailoring.label>
+  <WT_Tailoring.description>Clothing tailoring. Anchored to vanilla tailoring bench, for apparel and textile goods.</WT_Tailoring.description>
+
+  <WT_DrugCrafting.label>Drug Lab</WT_DrugCrafting.label>
+  <WT_DrugCrafting.description>Medicine production. Anchored to vanilla drug lab, for medicine and chemicals.</WT_DrugCrafting.description>
+
+  <WT_Stonecutting.label>Stonecutting Shop</WT_Stonecutting.label>
+  <WT_Stonecutting.description>Stone cutting. Anchored to vanilla stonecutter's table, for blocks and stone goods.</WT_Stonecutting.description>
+
+  <WT_Sculpting.label>Sculpting Shop</WT_Sculpting.label>
+  <WT_Sculpting.description>Art sculpting. Anchored to vanilla sculpting bench, for sculptures and artwork.</WT_Sculpting.description>
+
+  <WT_Research.label>Research Shop</WT_Research.label>
+  <WT_Research.description>Technology research. Anchored to vanilla simple / hi-tech research bench, for project research.</WT_Research.description>
+</LanguageData>

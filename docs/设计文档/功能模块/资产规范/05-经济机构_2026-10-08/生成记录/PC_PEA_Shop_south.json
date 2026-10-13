@@ -1,0 +1,14 @@
+{
+  "kind": "Shop",
+  "defName": "PC_PEA_Shop",
+  "direction": "south",
+  "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_south.png",
+  "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-9e49d707-d0ec-4184-ad34-f5edb464ea74.png",
+  "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png",
+  "northReferenceSha256": "372343F4D2333CE5C05D68CAB0C36ABC0674FEED966ECA05563653F2D6021D01",
+  "promptFile": "PC_PEA_Shop_south.prompt.txt",
+  "sha256": "21220e7c1be3f11fef63358c8bb651958f8d06158bea09367abb5b9bb7382525",
+  "generator": "built-in image_gen",
+  "generationMode": "north-reference generation or targeted reference edit",
+  "externalPixelEditsPerformed": false
+}

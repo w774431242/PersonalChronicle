@@ -1,0 +1,4 @@
+interface:
+  display_name: "工程总控与闭环验证"
+  short_description: "以调用链、依赖图和单写者组织跨模块任务，并用真实端到端证据验收交付"
+  default_prompt: "使用 $engineering-orchestrator 处理当前任务，按真实依赖组织并行工作并验证最终闭环。"

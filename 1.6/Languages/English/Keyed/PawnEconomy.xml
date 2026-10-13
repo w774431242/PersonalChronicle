@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Enable>Re-enable economy</PC_PEA.Enable>
+  <PC_PEA.Open>Economic institutions</PC_PEA.Open>
+  <PC_PEA.OpenDesc>Manage accounts, employment, shop stock and physical examinations.</PC_PEA.OpenDesc>
+  <PC_PEA.Enabled>Enabled</PC_PEA.Enabled>
+  <PC_PEA.Disabled>Disabled</PC_PEA.Disabled>
+  <PC_PEA.Fault>Protected data</PC_PEA.Fault>
+  <PC_PEA.FaultHint>Unsupported or invalid ledger. Original payload is preserved; economic commands are stopped.</PC_PEA.FaultHint>
+  <PC_PEA.AllocationHint>First activation allocates 1000.00 public credits once. Credits are internal, not silver. Disabling terminates economic contracts and releases reservations.</PC_PEA.AllocationHint>
+  <PC_PEA.OpenState>Open</PC_PEA.OpenState>
+  <PC_PEA.ClosedState>Closed</PC_PEA.ClosedState>
+  <PC_PEA.Configure>Manage</PC_PEA.Configure>
+  <PC_PEA.Hours>Hours for service / new offers</PC_PEA.Hours>
+  <PC_PEA.Cycle>Cycle</PC_PEA.Cycle>
+  <PC_PEA.Toggle>Toggle</PC_PEA.Toggle>
+  <PC_PEA.Price>Price per garment / examination</PC_PEA.Price>
+  <PC_PEA.Wage>Wage per completed production iteration</PC_PEA.Wage>
+  <PC_PEA.Capacity>New position capacity</PC_PEA.Capacity>
+  <PC_PEA.RequireExam>Examination required</PC_PEA.RequireExam>
+  <PC_PEA.PublishHint>Publish with current terms</PC_PEA.PublishHint>
+  <PC_PEA.Publish>Publish</PC_PEA.Publish>
+  <PC_PEA.Doctor>Examiner</PC_PEA.Doctor>
+  <PC_PEA.AssignSelected>Assign selected colonist</PC_PEA.AssignSelected>
+  <PC_PEA.ExamHint>Personal exams are self-paid; recruitment exams are publicly funded. Examiner needs Medicine 4+ and Doctor work enabled.</PC_PEA.ExamHint>
+  <PC_PEA.RequestExam>Request personal exam</PC_PEA.RequestExam>
+  <PC_PEA.SettleHint>Settle accrued production wages. Insufficient public funds suspend offers and contracts.</PC_PEA.SettleHint>
+  <PC_PEA.Settle>Settle wages</PC_PEA.Settle>
+  <PC_PEA.MissingZone>Workshop removed</PC_PEA.MissingZone>
+  <PC_PEA.Withdraw>Withdraw and terminate</PC_PEA.Withdraw>
+  <PC_PEA.Contract>Economic contract</PC_PEA.Contract>
+  <PC_PEA.Terminate>Terminate</PC_PEA.Terminate>
+  <PC_PEA.StockHint>Select a hauler and stock a real garment. Each shop holds up to 64 items, preserving quality, durability and identity. Removing the counter drops its stock.</PC_PEA.StockHint>
+  <PC_PEA.StockSelected>Stock with selected hauler</PC_PEA.StockSelected>
+  <PC_PEA.SelectShop>Select a shop in Institutions.</PC_PEA.SelectShop>
+  <PC_PEA.PublicFunds>Public credits</PC_PEA.PublicFunds>
+  <PC_PEA.Paid>Paid</PC_PEA.Paid>
+  <PC_PEA.Unpaid>Payable</PC_PEA.Unpaid>
+  <PC_PEA.Cancel>Cancel / release funds</PC_PEA.Cancel>
+  <PC_PEA.Capabilities>Moving / Manipulation / Consciousness</PC_PEA.Capabilities>
+  <PC_PEA.Valid>Valid</PC_PEA.Valid>
+  <PC_PEA.Expired>Expired</PC_PEA.Expired>
+  <PC_PEA.ReportHint>Reports snapshot real capacities and visible conditions, without healing or revealing hidden illness. Valid for one day; live work and health restrictions still apply.</PC_PEA.ReportHint>
+  <PC_PEA.NoFocus>Select an institution</PC_PEA.NoFocus>
+  <PC_PEA.Disable>Disable economy</PC_PEA.Disable>
+  <PC_PEA.EnableAllocation>Enable · initial 1000.00 allocation</PC_PEA.EnableAllocation>
+  <PC_PEA.SelectedActor>Selected colonist (click to cycle)</PC_PEA.SelectedActor>
+  <PC_PEA.NoActor>No available adult colonist</PC_PEA.NoActor>
+  <PC_PEA.Rejected>Action rejected: stale view or unmet requirements. Check funds, hours, examiner, work settings and access.</PC_PEA.Rejected>
+  <PC_PEA.AutoOn>Autonomy on</PC_PEA.AutoOn>
+  <PC_PEA.AutoOff>Autonomy off</PC_PEA.AutoOff>
+  <PC_PEA.Tab.Institutions>Institutions</PC_PEA.Tab.Institutions>
+  <PC_PEA.Tab.Jobs>Jobs / contracts</PC_PEA.Tab.Jobs>
+  <PC_PEA.Tab.Stock>Shop</PC_PEA.Tab.Stock>
+  <PC_PEA.Tab.Accounts>Accounts / needs</PC_PEA.Tab.Accounts>
+  <PC_PEA.Tab.Ledger>Ledger / orders</PC_PEA.Tab.Ledger>
+  <PC_PEA.Tab.Reports>Exam reports</PC_PEA.Tab.Reports>
+  <PC_PEA.Tab.Empty>No data</PC_PEA.Tab.Empty>
+  <PC_PEA.Tab.EmptyHint>Nothing to show here yet; it appears once the corresponding action is done.</PC_PEA.Tab.EmptyHint>
+  <PC_PEA.Goal.None>Pending evaluation</PC_PEA.Goal.None>
+  <PC_PEA.Goal.WaitingIncome>Waiting for income</PC_PEA.Goal.WaitingIncome>
+  <PC_PEA.Goal.WaitingSupply>Waiting for apparel</PC_PEA.Goal.WaitingSupply>
+  <PC_PEA.Goal.WaitingExamination>Waiting for examination</PC_PEA.Goal.WaitingExamination>
+  <PC_PEA.Goal.Executing>Receiving service</PC_PEA.Goal.Executing>
+  <PC_PEA.Goal.AcquiredPendingUse>Purchased; awaiting wear</PC_PEA.Goal.AcquiredPendingUse>
+  <PC_PEA.Goal.Satisfied>Worn</PC_PEA.Goal.Satisfied>
+  <PC_PEA.Goal.Blocked>Service blocked</PC_PEA.Goal.Blocked>
+  <PC_PEA.Receipt.OpeningAllocation>Opening allocation</PC_PEA.Receipt.OpeningAllocation>
+  <PC_PEA.Receipt.Wage>Production wage</PC_PEA.Receipt.Wage>
+  <PC_PEA.Receipt.ServiceWage>Examiner wage</PC_PEA.Receipt.ServiceWage>
+  <PC_PEA.Receipt.Employment>Employment</PC_PEA.Receipt.Employment>
+  <PC_PEA.Receipt.Purchase>Apparel purchase</PC_PEA.Receipt.Purchase>
+  <PC_PEA.Receipt.Examination>Exam fee</PC_PEA.Receipt.Examination>
+  <!-- B3.2 institution policy (M10): declared quotes. Zero means unpublished, never a zero price. -->
+  <PC_PEA.Policy.Title>Institution policy (wage and food quotes)</PC_PEA.Policy.Title>
+  <PC_PEA.Policy.Hint>The public owner declares what each institution publishes: bound workshop zone, wage per job, price per nutrition point, opening hours, open state and a free-stock target per product category. Zero means unpublished — never a zero price or a zero target; an institution without a bound zone publishes no position at all; every change is submitted with the revision it was read at, and a stale change is rejected.</PC_PEA.Policy.Hint>
+  <PC_PEA.Policy.None>No institution available</PC_PEA.Policy.None>
+  <PC_PEA.Policy.Wage>Wage per job</PC_PEA.Policy.Wage>
+  <PC_PEA.Policy.Hours>Hours</PC_PEA.Policy.Hours>
+  <PC_PEA.Policy.Revision>Revision</PC_PEA.Policy.Revision>
+  <PC_PEA.Policy.Close>Close</PC_PEA.Policy.Close>
+  <PC_PEA.Policy.StartHour>Start +1h</PC_PEA.Policy.StartHour>
+  <PC_PEA.Policy.EndHour>End +1h</PC_PEA.Policy.EndHour>
+  <PC_PEA.Policy.Rejected>Change rejected</PC_PEA.Policy.Rejected>
+  <!-- Terminology unified 2026-10-10 (user-approved): institution kinds use the Def label wording verbatim. -->
+  <PC_PEA.Policy.Kind.LaborOffice>labor office</PC_PEA.Policy.Kind.LaborOffice>
+  <PC_PEA.Policy.Kind.WorkshopOffice>workshop office</PC_PEA.Policy.Kind.WorkshopOffice>
+  <PC_PEA.Policy.Kind.SettlementOffice>payroll office</PC_PEA.Policy.Kind.SettlementOffice>
+  <PC_PEA.Policy.Kind.Shop>apparel shop</PC_PEA.Policy.Kind.Shop>
+  <PC_PEA.Policy.Kind.ExamCenter>examination center</PC_PEA.Policy.Kind.ExamCenter>
+  <PC_PEA.Care.Title>Family and care (four-identity grants and service capability)</PC_PEA.Care.Title>
+  <PC_PEA.Care.Hint>Beneficiary, guardian, executor and payer are four separate identities: a family relation never authorises a charge, only the explicitly recorded payer can be charged, and every charge stays inside the granted cap and validity window. A service may only take money once all seven gates are proven (vanilla access, delivery evidence, capacity and hours, price cap, settlement, interruption recovery, interface explanation); anything unproven keeps running on the vanilla public path and quotes no price.</PC_PEA.Care.Hint>
+  <PC_PEA.Care.None>No care authorization yet</PC_PEA.Care.None>
+  <PC_PEA.Care.Missing>unproven</PC_PEA.Care.Missing>
+  <PC_PEA.Care.Beneficiary>Beneficiary</PC_PEA.Care.Beneficiary>
+  <PC_PEA.Care.Guardian>Guardian</PC_PEA.Care.Guardian>
+  <PC_PEA.Care.Payer>Payer</PC_PEA.Care.Payer>
+  <PC_PEA.Care.Executor>Executor</PC_PEA.Care.Executor>
+  <PC_PEA.Care.GrantAnyExecutor>Any capable executor</PC_PEA.Care.GrantAnyExecutor>
+  <PC_PEA.Care.GrantExecutor>Assign executor</PC_PEA.Care.GrantExecutor>
+  <PC_PEA.Care.Charged>Charged / cap</PC_PEA.Care.Charged>
+  <PC_PEA.Care.Expires>Expires</PC_PEA.Care.Expires>
+  <PC_PEA.Care.Revoke>Revoke</PC_PEA.Care.Revoke>
+  <PC_PEA.Care.Grant>Grant treatment care</PC_PEA.Care.Grant>
+  <PC_PEA.Care.GrantRejected>Authorization rejected</PC_PEA.Care.GrantRejected>
+  <PC_PEA.Care.Service.Examination>Examination</PC_PEA.Care.Service.Examination>
+  <PC_PEA.Care.Service.Bed>Bed</PC_PEA.Care.Service.Bed>
+  <PC_PEA.Care.Service.Treatment>Treatment</PC_PEA.Care.Service.Treatment>
+  <PC_PEA.Care.Service.Childcare>Childcare</PC_PEA.Care.Service.Childcare>
+  <PC_PEA.Care.Service.Education>Education / recreation</PC_PEA.Care.Service.Education>
+  <PC_PEA.Care.Capability.PublicVanilla>Vanilla public</PC_PEA.Care.Capability.PublicVanilla>
+  <PC_PEA.Care.Capability.Preparing>Proving evidence</PC_PEA.Care.Capability.Preparing>
+  <PC_PEA.Care.Capability.ReadyPaid>Chargeable</PC_PEA.Care.Capability.ReadyPaid>
+  <PC_PEA.Care.Capability.Suspended>Suspended</PC_PEA.Care.Capability.Suspended>  <PC_PEA.Policy.ServicePrice>Service price/act</PC_PEA.Policy.ServicePrice>
+  <PC_PEA.Policy.ServicePriceUp>Service +</PC_PEA.Policy.ServicePriceUp>
+  <PC_PEA.Policy.ServicePriceDown>Service -</PC_PEA.Policy.ServicePriceDown>
+  <PC_PEA.Workspace.Pay.Frozen>Temporarily unavailable</PC_PEA.Workspace.Pay.Frozen>
+  <PC_PEA.Policy.ServicePriceChanged>Service price: {0} silver per act</PC_PEA.Policy.ServicePriceChanged>
+  <PC_PEA.Policy.ServicePriceClear>Clear service price (not offered)</PC_PEA.Policy.ServicePriceClear>
+  <PC_PEA.Policy.ServicePriceHelp>Currently {0} silver per act. 0 means not offered (no charge, no settlement).</PC_PEA.Policy.ServicePriceHelp>
+  <PC_PEA.Overview.Title>Economy overview (governance view)</PC_PEA.Overview.Title>
+  <PC_PEA.Overview.Institutions>Institutions</PC_PEA.Overview.Institutions>
+  <PC_PEA.Overview.Treasury>Treasury available</PC_PEA.Overview.Treasury>
+  <PC_PEA.Overview.Unknown>unknown</PC_PEA.Overview.Unknown>
+  <PC_PEA.Overview.Contracts>Contracts</PC_PEA.Overview.Contracts>
+  <PC_PEA.Overview.CareGrants>Care grants</PC_PEA.Overview.CareGrants>
+  <PC_PEA.Overview.Services>Service capability</PC_PEA.Overview.Services>
+  <PC_PEA.Overview.Unproven>unproven</PC_PEA.Overview.Unproven>
+  <PC_PEA.Overview.Note>This page reads published read models only: an unpublished quote stays "unpublished" and an unproven service stays "proving evidence" — nothing is filled in to look complete.</PC_PEA.Overview.Note>
+  <PC_PEA.Overview.Production>Production readout</PC_PEA.Overview.Production>
+  <PC_PEA.Overview.Categories>categories</PC_PEA.Overview.Categories>
+  <PC_PEA.Overview.Stock>stock</PC_PEA.Overview.Stock>
+  <PC_PEA.Overview.Wip>WIP</PC_PEA.Overview.Wip>
+  <PC_PEA.Overview.ProductionInputs>Restock inputs</PC_PEA.Overview.ProductionInputs>
+  <PC_PEA.Overview.Wired>wired</PC_PEA.Overview.Wired>
+  <PC_PEA.Overview.NotWired>not wired</PC_PEA.Overview.NotWired>
+  <PC_PEA.Overview.Authorised>authorised, not started</PC_PEA.Overview.Authorised>
+  <PC_PEA.Overview.StockTarget>stock target</PC_PEA.Overview.StockTarget>
+  <PC_PEA.Overview.Reconciliation>Legacy reconciliation</PC_PEA.Overview.Reconciliation>
+  <PC_PEA.Overview.RecordCount>records</PC_PEA.Overview.RecordCount>
+  <PC_PEA.Overview.Diagnostics>diagnostics</PC_PEA.Overview.Diagnostics>
+  <PC_PEA.Overview.Passed>passed</PC_PEA.Overview.Passed>
+  <PC_PEA.Overview.Issues>issues</PC_PEA.Overview.Issues>
+  <PC_PEA.Overview.UnpaidWages>unpaid wages</PC_PEA.Overview.UnpaidWages>
+  <PC_PEA.Overview.BackingUnverified>backing unverified</PC_PEA.Overview.BackingUnverified>
+  <PC_PEA.Overview.Ownership>owned work types</PC_PEA.Overview.Ownership>
+  <PC_PEA.Overview.Restock>Restock evaluation</PC_PEA.Overview.Restock>
+  <PC_PEA.Overview.RestockBlocked>cannot evaluate</PC_PEA.Overview.RestockBlocked>
+  <PC_PEA.Overview.RestockShown>shown</PC_PEA.Overview.RestockShown>
+  <PC_PEA.Overview.RestockUnavailable>readout unavailable</PC_PEA.Overview.RestockUnavailable>
+  <PC_PEA.Policy.Reason.DemandDomainNotWired>demand domain not wired</PC_PEA.Policy.Reason.DemandDomainNotWired>
+  <PC_PEA.Policy.Reason.ReadoutUnavailable>readout unavailable</PC_PEA.Policy.Reason.ReadoutUnavailable>
+  <PC_PEA.Policy.Reason.CategoryUnknown>unknown category</PC_PEA.Policy.Reason.CategoryUnknown>
+  <PC_PEA.Policy.Reason.StockTargetNotWired>no institution published a stock target</PC_PEA.Policy.Reason.StockTargetNotWired>
+  <PC_PEA.Policy.Reason.TradeDomainNotWired>trade domain not wired</PC_PEA.Policy.Reason.TradeDomainNotWired>
+  <PC_PEA.Policy.Reason.ProductionAuthorisationNotWired>production authorisation not wired</PC_PEA.Policy.Reason.ProductionAuthorisationNotWired>
+  <PC_PEA.Overview.NotWiredInputs>demand, exports</PC_PEA.Overview.NotWiredInputs>
+  <PC_PEA.Overview.WorkshopCapacity>Workshop</PC_PEA.Overview.WorkshopCapacity>
+  <PC_PEA.Overview.Shifts>shifts</PC_PEA.Overview.Shifts>
+  <PC_PEA.Overview.StaffingGap>gaps</PC_PEA.Overview.StaffingGap>
+  <PC_PEA.Overview.OpenBills>bills</PC_PEA.Overview.OpenBills>
+  <PC_PEA.Overview.Proposals>authorisations</PC_PEA.Overview.Proposals>
+  <PC_PEA.Overview.Credibility>Wage credibility</PC_PEA.Overview.Credibility>
+  <PC_PEA.Overview.CredibilityTracked>tracked</PC_PEA.Overview.CredibilityTracked>
+  <PC_PEA.Overview.CredibilityStrong>strong</PC_PEA.Overview.CredibilityStrong>
+  <PC_PEA.Overview.CredibilityWeak>weak</PC_PEA.Overview.CredibilityWeak>
+  <PC_PEA.Policy.Revoke>Revoke authorisation</PC_PEA.Policy.Revoke>
+  <PC_PEA.Policy.Authorised>Authorised</PC_PEA.Policy.Authorised>
+  <PC_PEA.Diag.Open>Diagnostics</PC_PEA.Diag.Open>
+  <PC_PEA.Diag.Title>Economy diagnostics (read-only)</PC_PEA.Diag.Title>
+  <PC_PEA.Diag.WriteLog>Write to log</PC_PEA.Diag.WriteLog>
+  <PC_PEA.Diag.Written>Diagnostics written to Player.log</PC_PEA.Diag.Written>
+  <PC_PEA.Diag.RuntimeNull>economy component not ready</PC_PEA.Diag.RuntimeNull>
+  <PC_PEA.Diag.Section.Perception>Perception</PC_PEA.Diag.Section.Perception>
+  <PC_PEA.Diag.PerceptionUnavailable>perception not initialised or failed to initialise - all planning stalls at waiting for facts</PC_PEA.Diag.PerceptionUnavailable>
+  <PC_PEA.Diag.Population>population snapshot</PC_PEA.Diag.Population>
+  <PC_PEA.Diag.PopulationComplete>complete</PC_PEA.Diag.PopulationComplete>
+  <PC_PEA.Diag.OldestDueNote>past the 300-tick threshold (planning reports facts unavailable)</PC_PEA.Diag.OldestDueNote>
+  <PC_PEA.Diag.Section.Institution>Institution</PC_PEA.Diag.Section.Institution>
+  <PC_PEA.Diag.None>(none)</PC_PEA.Diag.None>
+  <PC_PEA.Diag.Section.PawnPlans>Pawn plans</PC_PEA.Diag.Section.PawnPlans>
+  <PC_PEA.Diag.NoColonists>no free colonists on this map</PC_PEA.Diag.NoColonists>
+  <PC_PEA.Diag.PlanMissing>not planned in this session</PC_PEA.Diag.PlanMissing>
+  <PC_PEA.Diag.WillFailFacts>planning will report facts unavailable</PC_PEA.Diag.WillFailFacts>
+  <PC_PEA.Policy.Tool>Tool</PC_PEA.Policy.Tool>
+  <PC_PEA.Policy.Tool.LabourBoard>labour board</PC_PEA.Policy.Tool.LabourBoard>
+  <PC_PEA.Policy.Tool.WorkshopBench>workshop bench</PC_PEA.Policy.Tool.WorkshopBench>
+  <PC_PEA.Policy.Tool.SettlementDesk>settlement desk</PC_PEA.Policy.Tool.SettlementDesk>
+  <PC_PEA.Policy.Tool.ShopCounter>shop counter</PC_PEA.Policy.Tool.ShopCounter>
+  <PC_PEA.Policy.Tool.ExamRoom>exam room</PC_PEA.Policy.Tool.ExamRoom>
+  <PC_PEA.Policy.Tool.BedWard>bed ward</PC_PEA.Policy.Tool.BedWard>
+  <PC_PEA.Policy.Tool.Kitchen>kitchen</PC_PEA.Policy.Tool.Kitchen>
+  <PC_PEA.Policy.Tool.TailorBench>tailor bench</PC_PEA.Policy.Tool.TailorBench>
+  <PC_PEA.Policy.Tool.Clinic>clinic</PC_PEA.Policy.Tool.Clinic>
+  <PC_PEA.Policy.Tool.Nursery>nursery</PC_PEA.Policy.Tool.Nursery>
+  <PC_PEA.Policy.Tool.School>school</PC_PEA.Policy.Tool.School>
+  <PC_PEA.Policy.Tool.Warehouse>warehouse</PC_PEA.Policy.Tool.Warehouse>
+  <PC_PEA.Policy.StockTarget>Stock target</PC_PEA.Policy.StockTarget>
+  <PC_PEA.Care.Evidence>Delivery process</PC_PEA.Care.Evidence>
+  <PC_PEA.Care.Evidence.NotDeliverable>no vanilla process</PC_PEA.Care.Evidence.NotDeliverable>
+  <PC_PEA.Care.Evidence.ProcessExistsCaptureNotWired>process exists, capture not wired</PC_PEA.Care.Evidence.ProcessExistsCaptureNotWired>
+  <PC_PEA.Care.Evidence.CaptureWired>capture wired</PC_PEA.Care.Evidence.CaptureWired>
+  <PC_PEA.Care.Gate.VanillaAccess>vanilla access</PC_PEA.Care.Gate.VanillaAccess>
+  <PC_PEA.Care.Gate.DeliveryEvidence>delivery evidence</PC_PEA.Care.Gate.DeliveryEvidence>
+  <PC_PEA.Care.Gate.CapacityAndHours>capacity and hours</PC_PEA.Care.Gate.CapacityAndHours>
+  <PC_PEA.Care.Gate.PriceCap>price cap</PC_PEA.Care.Gate.PriceCap>
+  <PC_PEA.Care.Gate.Settlement>settlement</PC_PEA.Care.Gate.Settlement>
+  <PC_PEA.Care.Gate.InterruptionRecovery>interruption recovery</PC_PEA.Care.Gate.InterruptionRecovery>
+  <PC_PEA.Care.Gate.UiExplanation>interface explanation</PC_PEA.Care.Gate.UiExplanation>
+  <PC_PEA.Care.Kind.LaborOffice>labor office</PC_PEA.Care.Kind.LaborOffice>
+  <PC_PEA.Care.Kind.WorkshopOffice>workshop office</PC_PEA.Care.Kind.WorkshopOffice>
+  <PC_PEA.Care.Kind.SettlementOffice>payroll office</PC_PEA.Care.Kind.SettlementOffice>
+  <PC_PEA.Care.Kind.Shop>apparel shop</PC_PEA.Care.Kind.Shop>
+  <PC_PEA.Care.Kind.ExamCenter>examination center</PC_PEA.Care.Kind.ExamCenter>
+  <PC_PEA.Care.Cap.Name.Work>Jobs</PC_PEA.Care.Cap.Name.Work>
+  <PC_PEA.Care.Cap.Name.Food>Food</PC_PEA.Care.Cap.Name.Food>
+  <PC_PEA.Care.Cap.Name.Apparel>Apparel</PC_PEA.Care.Cap.Name.Apparel>
+  <PC_PEA.Care.Cap.Name.Service>Care and services</PC_PEA.Care.Cap.Name.Service>
+  <PC_PEA.Care.Cap.Reason.Unset>not configured</PC_PEA.Care.Cap.Reason.Unset>
+  <PC_PEA.Care.Cap.Reason.NotPublished>no quote published</PC_PEA.Care.Cap.Reason.NotPublished>
+  <PC_PEA.Care.Cap.Reason.Closed>institution closed</PC_PEA.Care.Cap.Reason.Closed>
+  <PC_PEA.Care.Cap.Reason.OutOfHours>outside hours</PC_PEA.Care.Cap.Reason.OutOfHours>
+  <PC_PEA.Care.Cap.Reason.ModeNotOpen>institution phase not open</PC_PEA.Care.Cap.Reason.ModeNotOpen>
+  <PC_PEA.Policy.Reason.ProposalCapacityReached>authorisation ledger is full</PC_PEA.Policy.Reason.ProposalCapacityReached>
+  <PC_PEA.Policy.Reason.ProposalInvalid>invalid authorisation</PC_PEA.Policy.Reason.ProposalInvalid>
+  <PC_PEA.Policy.Reason.ExecutorSinkNotWired>executor not wired</PC_PEA.Policy.Reason.ExecutorSinkNotWired>
+  <PC_PEA.Policy.Reason.ExecutorFailure>executor read failed</PC_PEA.Policy.Reason.ExecutorFailure>
+  <!-- Counter workspace (CHG-20261010-ECON-COUNTER-WORKSPACE): per-institution window KPI / sections / notes -->
+  <PC_PEA.Workspace.Kpi.Zones>bound workshop zones</PC_PEA.Workspace.Kpi.Zones>
+  <PC_PEA.Workspace.Kpi.Positions>published jobs</PC_PEA.Workspace.Kpi.Positions>
+  <PC_PEA.Workspace.Kpi.StaffingGap>staffing gap</PC_PEA.Workspace.Kpi.StaffingGap>
+  <PC_PEA.Workspace.Kpi.Authorisations>production authorisations</PC_PEA.Workspace.Kpi.Authorisations>
+  <PC_PEA.Workspace.Kpi.UnpaidWages>unpaid wages</PC_PEA.Workspace.Kpi.UnpaidWages>
+  <PC_PEA.Workspace.Kpi.TreasuryAvailable>treasury available</PC_PEA.Workspace.Kpi.TreasuryAvailable>
+  <PC_PEA.Workspace.Kpi.Receipts>receipts</PC_PEA.Workspace.Kpi.Receipts>
+  <PC_PEA.Workspace.Kpi.StockCount>items on sale</PC_PEA.Workspace.Kpi.StockCount>
+  <PC_PEA.Workspace.Kpi.ServicePrice>service price</PC_PEA.Workspace.Kpi.ServicePrice>
+  <PC_PEA.Workspace.Kpi.ClinicAccount>institution account</PC_PEA.Workspace.Kpi.ClinicAccount>
+  <PC_PEA.Workspace.Kpi.Reports>examination reports</PC_PEA.Workspace.Kpi.Reports>
+  <PC_PEA.Workspace.Kpi.ReportsValid>valid reports</PC_PEA.Workspace.Kpi.ReportsValid>
+  <PC_PEA.Workspace.Section.Positions>Jobs on this map (map-wide: every position here and the live contracts on them)</PC_PEA.Workspace.Section.Positions>
+  <PC_PEA.Workspace.Section.Stock>This counter's stock</PC_PEA.Workspace.Section.Stock>
+  <PC_PEA.Workspace.Section.Receipts>Receipts (colony-wide)</PC_PEA.Workspace.Section.Receipts>
+  <PC_PEA.Workspace.Section.Reports>Examination reports (colony-wide)</PC_PEA.Workspace.Section.Reports>
+  <PC_PEA.Workspace.NoInstitutionField>Receipts and reports carry no institution field: this section is colony-wide and is not this institution's ledger.</PC_PEA.Workspace.NoInstitutionField>
+  <PC_PEA.Workspace.PositionsNone>No workshop zone is bound yet, or the bound zone has no published job.</PC_PEA.Workspace.PositionsNone>
+  <PC_PEA.Workspace.ContractsHint>active contracts</PC_PEA.Workspace.ContractsHint>
+  <PC_PEA.Workspace.StockEmpty>Nothing is on sale in this counter; stocking needs a hauling colonist and available apparel.</PC_PEA.Workspace.StockEmpty>
+  <PC_PEA.Workspace.NoActions>No local write action is currently enabled for this counter (hosted pages such as accounts live in this window's tabs).</PC_PEA.Workspace.NoActions>
+  <!-- Vanilla work contracts (CHG-20261010-VANILLA-JOBS): the labor office recognises player-issued work actions
+       UI pass (2026-10-10): Workspace.Hint.OldVerbsClosed removed — it explained why some buttons are absent,
+       which is developer-facing noise; the F4 rule is already visible as "the action bar lists only what works". -->
+  <PC_PEA.Workspace.Kpi.VanillaContracts>contractors</PC_PEA.Workspace.Kpi.VanillaContracts>
+  <PC_PEA.Workspace.VanillaHint>Recognises the chopping / cutting / mining actions you issued and pays per completed piece from the treasury (names come from the vanilla work definitions, so same-source third-party content is covered too). Use the size buttons above to set how many pieces each contract covers: several job-seekers sign one contract each and work in parallel. Markers that already existed in older saves are not retroactive — issue them once more.</PC_PEA.Workspace.VanillaHint>
+  <PC_PEA.Workspace.Section.VanillaWork>Open work on this map (chopping / cutting / mining tasks **you issued yourself**; cancelling one removes it at once. Automatic clearing — such as wind-turbine auto-cut — is not counted)</PC_PEA.Workspace.Section.VanillaWork>
+  <PC_PEA.Workspace.VanillaBacklog>open</PC_PEA.Workspace.VanillaBacklog>
+  <PC_PEA.Workspace.VanillaCommitted>committed</PC_PEA.Workspace.VanillaCommitted>
+  <PC_PEA.Workspace.VanillaAvailable>available</PC_PEA.Workspace.VanillaAvailable>
+  <PC_PEA.Workspace.VanillaPerContract>per contract</PC_PEA.Workspace.VanillaPerContract>
+  <PC_PEA.Workspace.VanillaStatsDone>completed</PC_PEA.Workspace.VanillaStatsDone>
+  <PC_PEA.Workspace.VanillaStatsPaid>paid</PC_PEA.Workspace.VanillaStatsPaid>
+  <PC_PEA.Workspace.ContractWage>signed wage</PC_PEA.Workspace.ContractWage>
+  <PC_PEA.Workspace.Chain.Blocked>Chain blocked</PC_PEA.Workspace.Chain.Blocked>
+  <PC_PEA.Workspace.Chain.Ready>Chain ready: open work, wage, treasury and work motivation are all in place.</PC_PEA.Workspace.Chain.Ready>
+  <PC_PEA.Workspace.Chain.NoBacklog>no open work (issue it with the chop / cut / mine designators)</PC_PEA.Workspace.Chain.NoBacklog>
+  <PC_PEA.Workspace.Chain.TreasuryEmpty>treasury empty (deposit silver at the settlement office)</PC_PEA.Workspace.Chain.TreasuryEmpty>
+  <PC_PEA.Workspace.Chain.TreasuryUnknown>treasury reading unavailable (ledger not ready)</PC_PEA.Workspace.Chain.TreasuryUnknown>
+  <PC_PEA.Workspace.Detail.Primary>This counter</PC_PEA.Workspace.Detail.Primary>
+  <PC_PEA.KindMissing>This economic institution declares no kind (EconomyInstitutionExtension.kind), so its counter cannot open; check the building's Def.</PC_PEA.KindMissing>
+  <PC_PEA.Order.Mine>Mine</PC_PEA.Order.Mine>
+  <PC_PEA.Order.ChopWood>Chop wood</PC_PEA.Order.ChopWood>
+  <PC_PEA.Order.CutPlants>Cut plants</PC_PEA.Order.CutPlants>
+  <PC_PEA.Order.Harvest>Harvest</PC_PEA.Order.Harvest>
+  <PC_PEA.Order.Hunt>Hunt</PC_PEA.Order.Hunt>
+  <PC_PEA.Order.Slaughter>Slaughter</PC_PEA.Order.Slaughter>
+  <PC_PEA.Order.Tame>Tame</PC_PEA.Order.Tame>
+  <PC_PEA.Order.Haul>Haul</PC_PEA.Order.Haul>
+  <PC_PEA.Workspace.OrderList>orders</PC_PEA.Workspace.OrderList>
+  <PC_PEA.Workspace.Pay.Wired>payable</PC_PEA.Workspace.Pay.Wired>
+  <PC_PEA.Workspace.Pay.NotWired>⚠ not wired (no completion signal yet, unpaid)</PC_PEA.Workspace.Pay.NotWired>
+  <PC_PEA.Workspace.Section.ModPosts>Mod work posts (workshop zones)</PC_PEA.Workspace.Section.ModPosts>
+  <PC_PEA.Workspace.NoModPosts>No open workshop posts on this map</PC_PEA.Workspace.NoModPosts>
+  <PC_PEA.Workspace.Kpi.PayableBacklog>payable open</PC_PEA.Workspace.Kpi.PayableBacklog>
+  <PC_PEA.Workspace.Kpi.UnwiredBacklog>unwired open</PC_PEA.Workspace.Kpi.UnwiredBacklog>
+  <PC_PEA.Workspace.Col.Work>work</PC_PEA.Workspace.Col.Work>
+  <PC_PEA.Workspace.Col.Orders>orders</PC_PEA.Workspace.Col.Orders>
+  <PersonalChronicle.Storage.PublicMarketPriced>Public storage: billed at item market price</PersonalChronicle.Storage.PublicMarketPriced>
+  <PC_PEA.Dialog.WorkContract.Title>Work contract</PC_PEA.Dialog.WorkContract.Title>
+  <PC_PEA.Dialog.WorkContract.Jobs>jobs</PC_PEA.Dialog.WorkContract.Jobs>
+  <PC_PEA.Dialog.WorkContract.StartHour>from</PC_PEA.Dialog.WorkContract.StartHour>
+  <PC_PEA.Dialog.WorkContract.EndHour>to</PC_PEA.Dialog.WorkContract.EndHour>
+  <PC_PEA.Dialog.WorkContract.Wage>wage per job</PC_PEA.Dialog.WorkContract.Wage>
+  <PC_PEA.Dialog.WorkContract.Recommended>suggested market price:</PC_PEA.Dialog.WorkContract.Recommended>
+  <PC_PEA.Dialog.WorkContract.Baseline>suggested baseline (no output priced):</PC_PEA.Dialog.WorkContract.Baseline>
+  <PC_PEA.Dialog.WorkContract.Confirm>Post contract</PC_PEA.Dialog.WorkContract.Confirm>
+  <PC_PEA.Dialog.WorkContract.Cancel>Cancel</PC_PEA.Dialog.WorkContract.Cancel>
+  <PC_PEA.Dialog.WorkContract.Midnight>all day</PC_PEA.Dialog.WorkContract.Midnight>
+  <PC_PEA.Dialog.WorkContract.Reason.NoDemand>no posted demand available for this work</PC_PEA.Dialog.WorkContract.Reason.NoDemand>
+  <PC_PEA.Dialog.WorkContract.Reason.JobsOutOfRange>jobs out of the available range</PC_PEA.Dialog.WorkContract.Reason.JobsOutOfRange>
+  <PC_PEA.Dialog.WorkContract.Reason.WageOutOfRange>wage out of the allowed range</PC_PEA.Dialog.WorkContract.Reason.WageOutOfRange>
+  <PC_PEA.Dialog.WorkContract.Reason.WindowOutOfRange>working window out of range</PC_PEA.Dialog.WorkContract.Reason.WindowOutOfRange>
+  <PC_PEA.Dialog.WorkContract.Reason.InsufficientBacking>treasury cannot back this wage</PC_PEA.Dialog.WorkContract.Reason.InsufficientBacking>
+  <PC_PEA.Dialog.WorkContract.Reason.ContractAlreadyTaken>the contract was just taken by someone else</PC_PEA.Dialog.WorkContract.Reason.ContractAlreadyTaken>
+  <PC_PEA.Workspace.Col.WorkType>work type</PC_PEA.Workspace.Col.WorkType>
+  <PC_PEA.Workspace.Col.Position>position</PC_PEA.Workspace.Col.Position>
+  <PC_PEA.Workspace.Col.Demand>demand</PC_PEA.Workspace.Col.Demand>
+  <PC_PEA.Workspace.Col.Posted>posted</PC_PEA.Workspace.Col.Posted>
+  <PC_PEA.Workspace.Col.Employment>filled</PC_PEA.Workspace.Col.Employment>
+  <PC_PEA.Workspace.ModPosition>workshop post</PC_PEA.Workspace.ModPosition>
+  <PC_PEA.Workspace.Col.Wage>wage</PC_PEA.Workspace.Col.Wage>
+  <PC_PEA.Workspace.Col.Pay>payment</PC_PEA.Workspace.Col.Pay>
+  <PC_PEA.Workspace.Table.All>all</PC_PEA.Workspace.Table.All>
+  <PC_PEA.Workspace.Table.Catalogue>work catalogue</PC_PEA.Workspace.Table.Catalogue>
+  <PC_PEA.Workspace.Table.Contracts>work contracts</PC_PEA.Workspace.Table.Contracts>
+  <PC_PEA.Workspace.Table.Search>search contractor / contract no.</PC_PEA.Workspace.Table.Search>
+  <PC_PEA.Workspace.Contract.Col.Pawn>Held by</PC_PEA.Workspace.Contract.Col.Pawn>
+  <PC_PEA.Workspace.Contract.Col.Done>Done</PC_PEA.Workspace.Contract.Col.Done>
+  <PC_PEA.Workspace.Contract.Col.Total>Jobs</PC_PEA.Workspace.Contract.Col.Total>
+  <PC_PEA.Workspace.Contract.Col.Unpaid>unpaid</PC_PEA.Workspace.Contract.Col.Unpaid>
+  <PC_PEA.Workspace.Contract.Paid>paid</PC_PEA.Workspace.Contract.Paid>
+  <PC_PEA.Workspace.Contract.Detail.Id>contract no.</PC_PEA.Workspace.Contract.Detail.Id>
+  <PC_PEA.Workspace.Contract.Detail.Signed>signed</PC_PEA.Workspace.Contract.Detail.Signed>
+  <PC_PEA.Workspace.Contract.Detail.Expires>expires</PC_PEA.Workspace.Contract.Detail.Expires>
+  <PC_PEA.Workspace.Contract.Detail.Position>position key</PC_PEA.Workspace.Contract.Detail.Position>
+  <PC_PEA.Workspace.Col.Action>action</PC_PEA.Workspace.Col.Action>
+  <PC_PEA.Workspace.Contract.Posted>unclaimed</PC_PEA.Workspace.Contract.Posted>
+  <PC_PEA.Workspace.Contract.Revoke>revoke</PC_PEA.Workspace.Contract.Revoke>
+  <PC_PEA.Workspace.Contract.RevokeConfirm>Revoke this posted work contract? Its jobs and reserved funds are released right away.</PC_PEA.Workspace.Contract.RevokeConfirm>
+  <PC_PEA.Workspace.Contract.Detail.Window>work hours</PC_PEA.Workspace.Contract.Detail.Window>
+  <PC_PEA.Workspace.Contract.AllDay>all day</PC_PEA.Workspace.Contract.AllDay>
+  <PC_PEA.Workspace.Contract.Revoke.Reason.ContractUnknown>revoke failed: contract not found</PC_PEA.Workspace.Contract.Revoke.Reason.ContractUnknown>
+  <PC_PEA.Workspace.Contract.Revoke.Reason.NotPosted>revoke failed: contract already taken or closed</PC_PEA.Workspace.Contract.Revoke.Reason.NotPosted>
+  <PC_PEA.Workspace.Contract.Revoke.Reason.Replay>revoke failed: contract already revoked</PC_PEA.Workspace.Contract.Revoke.Reason.Replay>
+  <PC_PEA.Workspace.WorkPrices>Work prices</PC_PEA.Workspace.WorkPrices>
+  <PC_PEA.WorkPrices.Title>Work prices: work defaults and order overrides</PC_PEA.WorkPrices.Title>
+  <PC_PEA.WorkPrices.Hint>Enter silver amounts with a decimal point and up to two decimal places. Zero or Clear restores the work default or recommendation. Only new contracts use changed prices. Hauling pays per delivered trip; taming per success; other orders per completed target.</PC_PEA.WorkPrices.Hint>
+  <PC_PEA.WorkPrices.Default>Work default</PC_PEA.WorkPrices.Default>
+  <PC_PEA.WorkPrices.Override>Order override</PC_PEA.WorkPrices.Override>
+  <PC_PEA.WorkPrices.Inherit>No configured price: inherit the work default or recommendation</PC_PEA.WorkPrices.Inherit>
+  <PC_PEA.WorkPrices.Save>Save</PC_PEA.WorkPrices.Save>
+  <PC_PEA.WorkPrices.Clear>Clear</PC_PEA.WorkPrices.Clear>
+  <PC_PEA.WorkPrices.Invalid>Enter 0 to 1000.00 silver, with up to two decimal places</PC_PEA.WorkPrices.Invalid>
+  <PC_PEA.WorkPrices.Failed>Save failed: institution unavailable, unsupported data version, or quote limit reached</PC_PEA.WorkPrices.Failed>
+  <PC_PEA.WorkPrices.Saved>Saved (applies to new contracts only)</PC_PEA.WorkPrices.Saved>
+  <PC_PEA.WorkPrices.Applied>Configured quote:</PC_PEA.WorkPrices.Applied>
+  <PC_PEA.Dialog.WorkContract.Reason.OrderUnavailable>Order unavailable or work type does not match</PC_PEA.Dialog.WorkContract.Reason.OrderUnavailable>
+  <PC_PEA.Dialog.WorkContract.Reason.PriceUnavailable>Price data is unreadable (unsupported version or damage); restore a compatible save before drafting</PC_PEA.Dialog.WorkContract.Reason.PriceUnavailable>
+
+  <PC_PEA.LaborVisual.Stage.None>not in progress</PC_PEA.LaborVisual.Stage.None>
+  <PC_PEA.LaborVisual.Stage.IntentReady>ready to go to the labor office</PC_PEA.LaborVisual.Stage.IntentReady>
+  <PC_PEA.LaborVisual.Stage.GoingToLaborOffice>heading to the labor office</PC_PEA.LaborVisual.Stage.GoingToLaborOffice>
+  <PC_PEA.LaborVisual.Stage.QueuedAtLaborOffice>queued at the counter</PC_PEA.LaborVisual.Stage.QueuedAtLaborOffice>
+  <PC_PEA.LaborVisual.Stage.Negotiating>negotiating</PC_PEA.LaborVisual.Stage.Negotiating>
+  <PC_PEA.LaborVisual.Stage.IssuingDocument>collecting the contract</PC_PEA.LaborVisual.Stage.IssuingDocument>
+  <PC_PEA.LaborVisual.Stage.Working>working under contract</PC_PEA.LaborVisual.Stage.Working>
+  <PC_PEA.LaborVisual.Stage.CollectingOutputs>collecting the produce</PC_PEA.LaborVisual.Stage.CollectingOutputs>
+  <PC_PEA.LaborVisual.Stage.GoingToSettlement>heading to the settlement office</PC_PEA.LaborVisual.Stage.GoingToSettlement>
+  <PC_PEA.LaborVisual.Stage.VerifyingSubmission>verifying the delivery</PC_PEA.LaborVisual.Stage.VerifyingSubmission>
+  <PC_PEA.LaborVisual.Stage.AwaitingPayment>delivered, awaiting payment</PC_PEA.LaborVisual.Stage.AwaitingPayment>
+  <PC_PEA.LaborVisual.Stage.PaymentConfirmed>wage received</PC_PEA.LaborVisual.Stage.PaymentConfirmed>
+  <PC_PEA.LaborVisual.Stage.Archived>settled and archived</PC_PEA.LaborVisual.Stage.Archived>
+
+  <PC_PEA.LaborVisual.Hold.None>in progress</PC_PEA.LaborVisual.Hold.None>
+  <PC_PEA.LaborVisual.Hold.Paused>paused</PC_PEA.LaborVisual.Hold.Paused>
+  <PC_PEA.LaborVisual.Hold.Blocked>blocked</PC_PEA.LaborVisual.Hold.Blocked>
+  <PC_PEA.LaborVisual.Hold.Reconciliation>goods need reconciling</PC_PEA.LaborVisual.Hold.Reconciliation>
+
+  <PC_PEA.LaborVisual.Reason.None>nothing to do</PC_PEA.LaborVisual.Reason.None>
+  <PC_PEA.LaborVisual.Reason.ContractAlreadyTaken>the posting was taken by someone else</PC_PEA.LaborVisual.Reason.ContractAlreadyTaken>
+  <PC_PEA.LaborVisual.Reason.InsufficientBacking>not enough funds to back this wage</PC_PEA.LaborVisual.Reason.InsufficientBacking>
+  <PC_PEA.LaborVisual.Reason.JobCapReached>this contract is already completed</PC_PEA.LaborVisual.Reason.JobCapReached>
+  <PC_PEA.LaborVisual.Reason.JobsAlreadyCommitted>the remaining work is already reserved by other contracts</PC_PEA.LaborVisual.Reason.JobsAlreadyCommitted>
+  <PC_PEA.LaborVisual.Reason.WorkTypeUnavailable>this work type is unavailable for the colonist</PC_PEA.LaborVisual.Reason.WorkTypeUnavailable>
+  <PC_PEA.LaborVisual.Reason.ZoneUnavailable>the labor office is unavailable (destroyed or burning)</PC_PEA.LaborVisual.Reason.ZoneUnavailable>
+  <PC_PEA.LaborVisual.Reason.CannotReach>cannot safely reach the labor office</PC_PEA.LaborVisual.Reason.CannotReach>
+  <PC_PEA.LaborVisual.Reason.DeliveryUnsupported>this work cannot be delivered physically yet, so a physical-submission contract cannot be signed</PC_PEA.LaborVisual.Reason.DeliveryUnsupported>
+  <PC_PEA.LaborVisual.Reason.AlreadyContracted>already holding a contract</PC_PEA.LaborVisual.Reason.AlreadyContracted>
+  <PC_PEA.LaborVisual.Reason.InstitutionNotReady>the institution has not opened new commitments</PC_PEA.LaborVisual.Reason.InstitutionNotReady>
+  <PC_PEA.LaborVisual.Reason.PriceUnavailable>price data is unreadable</PC_PEA.LaborVisual.Reason.PriceUnavailable>
+  <PC_PEA.LaborVisual.Reason.ProductNotCarried>the produce is not being carried to the counter yet</PC_PEA.LaborVisual.Reason.ProductNotCarried>
+  <PC_PEA.LaborVisual.Reason.SignedButContractMissing>the signing was committed but the contract record is missing; needs diagnosis</PC_PEA.LaborVisual.Reason.SignedButContractMissing>
+  <PC_PEA.LaborVisual.Reason.DocumentIdentityConflict>the contract paper identity conflicts; needs diagnosis</PC_PEA.LaborVisual.Reason.DocumentIdentityConflict>
+  <PC_PEA.LaborVisual.Reason.DocumentReissueLimit>reissue limit reached; needs a manual decision</PC_PEA.LaborVisual.Reason.DocumentReissueLimit>
+  <PC_PEA.LaborVisual.Reason.SubmissionUnknown>the delivered amount cannot be reconciled; needs reconciliation</PC_PEA.LaborVisual.Reason.SubmissionUnknown>
+  <PC_PEA.LaborVisual.Reason.SignRejected>the on-site re-check failed</PC_PEA.LaborVisual.Reason.SignRejected>
+  <PC_PEA.LaborVisual.Reason.PayloadBlocked>the save data is from a newer version; uncertain writes are stopped</PC_PEA.LaborVisual.Reason.PayloadBlocked>
+
+  <PC_PEA.LaborVisual.Next.GotoLaborOffice>go to the labor office to sign</PC_PEA.LaborVisual.Next.GotoLaborOffice>
+  <PC_PEA.LaborVisual.Next.Queue>wait in the queue</PC_PEA.LaborVisual.Next.Queue>
+  <PC_PEA.LaborVisual.Next.Negotiate>negotiate at the counter</PC_PEA.LaborVisual.Next.Negotiate>
+  <PC_PEA.LaborVisual.Next.IssueDocument>collect the contract copy</PC_PEA.LaborVisual.Next.IssueDocument>
+  <PC_PEA.LaborVisual.Next.Work>do the vanilla work</PC_PEA.LaborVisual.Next.Work>
+  <PC_PEA.LaborVisual.Next.BringProducts>haul the produce back to the settlement office</PC_PEA.LaborVisual.Next.BringProducts>
+  <PC_PEA.LaborVisual.Next.AwaitPayment>wait for funding</PC_PEA.LaborVisual.Next.AwaitPayment>
+  <PC_PEA.LaborVisual.Next.RetryLater>retry later</PC_PEA.LaborVisual.Next.RetryLater>
+  <PC_PEA.LaborVisual.Next.Diagnose>open diagnostics</PC_PEA.LaborVisual.Next.Diagnose>
+  <!-- CA-15: runtime action/block/reason keys (missing keys fell back to raw stable IDs) -->
+  <PC_PEA.LaborVisual.Next.Verify>verify the submission at the counter</PC_PEA.LaborVisual.Next.Verify>
+  <PC_PEA.LaborVisual.Next.Replan>replan the route</PC_PEA.LaborVisual.Next.Replan>
+  <PC_PEA.LaborVisual.Next.ReissueContract>get a reissued contract at the labor office</PC_PEA.LaborVisual.Next.ReissueContract>
+  <PC_PEA.LaborVisual.Next.CollectOutputs>haul the deliverables you produced</PC_PEA.LaborVisual.Next.CollectOutputs>
+  <PC_PEA.LaborVisual.Next.GoToSettlement>carry the goods to the settlement office</PC_PEA.LaborVisual.Next.GoToSettlement>
+  <PC_PEA.LaborVisual.Next.SubmitWork>submit at the settlement office</PC_PEA.LaborVisual.Next.SubmitWork>
+  <PC_PEA.LaborVisual.Reason.WrongStation>wrong station type; use the matching institution</PC_PEA.LaborVisual.Reason.WrongStation>
+  <PC_PEA.LaborVisual.Reason.Interrupted>handling interrupted (drafted/downed/left)</PC_PEA.LaborVisual.Reason.Interrupted>
+  <PC_PEA.LaborVisual.Reason.DeliveryRoomFull>delivery area is full; free space first</PC_PEA.LaborVisual.Reason.DeliveryRoomFull>
+  <PC_PEA.LaborVisual.Reason.PartialDelivery>only part was delivered this trip; bring the rest later</PC_PEA.LaborVisual.Reason.PartialDelivery>
+  <PC_PEA.LaborVisual.Reason.NoRegisteredOutput>this output has no registered source; needs manual review</PC_PEA.LaborVisual.Reason.NoRegisteredOutput>
+  <PC_PEA.LaborVisual.Reason.DocumentMissing>no valid contract original on hand; a reissue is needed</PC_PEA.LaborVisual.Reason.DocumentMissing>
+  <PC_PEA.LaborVisual.Reason.ReceiptUnverifiable>no verifiable receipt of goods; automatic payout stopped</PC_PEA.LaborVisual.Reason.ReceiptUnverifiable>
+  <PC_PEA.LaborVisual.Reason.DocumentAbilityMissing>contract document def is missing; issuing paused</PC_PEA.LaborVisual.Reason.DocumentAbilityMissing>
+  <PC_PEA.LaborVisual.Reason.BatchUnknown>contract batch does not match; manual review needed</PC_PEA.LaborVisual.Reason.BatchUnknown>
+  <PC_PEA.LaborVisual.Reason.SampleNotCovered>claimed quantity exceeds the batch remainder; rejected</PC_PEA.LaborVisual.Reason.SampleNotCovered>
+  <PC_PEA.LaborVisual.Reason.BatchWriteBlocked>batch write-off was blocked; nothing changed</PC_PEA.LaborVisual.Reason.BatchWriteBlocked>
+  <PC_PEA.LaborVisual.Reason.SubmissionWriteBlocked>receipt write was blocked; nothing changed</PC_PEA.LaborVisual.Reason.SubmissionWriteBlocked>
+  <PC_PEA.LaborVisual.Reason.SubmissionCapacityReached>receipt table is full; clear or rotate the save first</PC_PEA.LaborVisual.Reason.SubmissionCapacityReached>
+  <PC_PEA.LaborVisual.Reason.BatchNotConserved>batch quantity not conserved; processing stopped</PC_PEA.LaborVisual.Reason.BatchNotConserved>
+  <PC_PEA.LaborVisual.Reason.AlreadySubmitted>this submission was already recorded (duplicate)</PC_PEA.LaborVisual.Reason.AlreadySubmitted>
+  <PC_PEA.LaborVisual.Reason.NoReconciliation>this flow does not need reconciliation</PC_PEA.LaborVisual.Reason.NoReconciliation>
+  <PC_PEA.LaborVisual.Reason.WorkflowUnknown>this labor flow cannot be found</PC_PEA.LaborVisual.Reason.WorkflowUnknown>
+  <PC_PEA.LaborVisual.Reason.WriteOffBlocked>loss write-off was blocked; no batch was changed</PC_PEA.LaborVisual.Reason.WriteOffBlocked>
+  <PC_PEA.LaborVisual.Reason.ContractMissing>this flow has no linked contract; cannot write off</PC_PEA.LaborVisual.Reason.ContractMissing>
+  <PC_PEA.LaborVisual.Reason.WorkflowWriteBlocked>flow write was blocked; check diagnostics</PC_PEA.LaborVisual.Reason.WorkflowWriteBlocked>
+  <PC_PEA.LaborVisual.Reconcile.Label>Resolve reconciliation flows</PC_PEA.LaborVisual.Reconcile.Label>
+  <PC_PEA.LaborVisual.Reconcile.Desc>Check the physical facts (delivery area, your inventory, batch ledger), then either resume handling or write off the remainder that truly cannot be delivered as a loss. Neither changes any amount or claim.</PC_PEA.LaborVisual.Reconcile.Desc>
+  <PC_PEA.LaborVisual.Reconcile.Title>Reconciliation</PC_PEA.LaborVisual.Reconcile.Title>
+  <PC_PEA.LaborVisual.Reconcile.Resume>Facts verified: resume handling</PC_PEA.LaborVisual.Reconcile.Resume>
+  <PC_PEA.LaborVisual.Reconcile.WriteOff>Remainder undeliverable: write off as loss</PC_PEA.LaborVisual.Reconcile.WriteOff>
+  <!-- CA-14/REQ-003: negotiation and queuing bubbles (fired by real stage events) -->
+  <PC_PEA.LaborVisual.Speech.Negotiating>At the office; contract negotiation started.</PC_PEA.LaborVisual.Speech.Negotiating>
+  <PC_PEA.LaborVisual.Speech.Waiting>Joined the counter service queue.</PC_PEA.LaborVisual.Speech.Waiting>
+  <!-- CA-13/REQ-017: institution building shows its own open labor flows (same source as the account page / contract paper) -->
+  <PC_PEA.LaborVisual.Station.OpenCount>open labor flows at this station</PC_PEA.LaborVisual.Station.OpenCount>
+  <!-- CA-14 full-lifecycle events (collecting/verifying/missing paper) and the REQ-021 diagnostic snapshot -->
+  <PC_PEA.LaborVisual.Speech.CollectingOutputs>Collection of registered deliverables started.</PC_PEA.LaborVisual.Speech.CollectingOutputs>
+  <PC_PEA.LaborVisual.Speech.Verifying>Submission accepted for verification.</PC_PEA.LaborVisual.Speech.Verifying>
+  <PC_PEA.LaborVisual.Speech.DocumentMissing>the contract original is missing; get a reissue at the labor office</PC_PEA.LaborVisual.Speech.DocumentMissing>
+  <PC_PEA.LaborVisual.Speech.SignRejected>the job was not signed; try again later</PC_PEA.LaborVisual.Speech.SignRejected>
+  <PC_PEA.LaborVisual.Speech.Reissued>a new contract original was reissued</PC_PEA.LaborVisual.Speech.Reissued>
+  <PC_PEA.LaborVisual.Diag.Label>labor diagnostics snapshot</PC_PEA.LaborVisual.Diag.Label>
+  <PC_PEA.LaborVisual.Diag.Desc>Exports the current open labor flows as copyable facts (flow id / stage / hold / reason / next / batch remainder / receipt count) and logs them for bug reports.</PC_PEA.LaborVisual.Diag.Desc>
+  <PC_PEA.LaborVisual.Diag.Title>labor diagnostics snapshot</PC_PEA.LaborVisual.Diag.Title>
+  <PC_PEA.LaborVisual.Diag.Close>Close</PC_PEA.LaborVisual.Diag.Close>
+
+  <PC_PEA.LaborVisual.Capability.CarryToCounter>physical delivery: haul the produce to the counter</PC_PEA.LaborVisual.Capability.CarryToCounter>
+  <PC_PEA.LaborVisual.Capability.AlreadyAccepted>submit an authoritative receiving or delivery receipt</PC_PEA.LaborVisual.Capability.AlreadyAccepted>
+  <PC_PEA.LaborVisual.Capability.EvidenceOnly>no physical goods needed; submit the completion proof</PC_PEA.LaborVisual.Capability.EvidenceOnly>
+  <PC_PEA.LaborVisual.Capability.Unsupported>physical delivery not supported yet</PC_PEA.LaborVisual.Capability.Unsupported>
+
+  <PC_PEA.LaborVisual.Mode.PhysicalSubmission>paid after on-site submission</PC_PEA.LaborVisual.Mode.PhysicalSubmission>
+  <PC_PEA.LaborVisual.Mode.LegacyImmediate>paid on completion</PC_PEA.LaborVisual.Mode.LegacyImmediate>
+  <PC_PEA.LaborVisual.Mode.Unknown>payment mode unrecognized (settlement stopped)</PC_PEA.LaborVisual.Mode.Unknown>
+
+  <PC_PEA.LaborVisual.Eligibility.Immediate>payable</PC_PEA.LaborVisual.Eligibility.Immediate>
+  <PC_PEA.LaborVisual.Eligibility.PendingSubmission>earned, awaiting submission</PC_PEA.LaborVisual.Eligibility.PendingSubmission>
+  <PC_PEA.LaborVisual.Eligibility.Submitted>submitted, awaiting payment</PC_PEA.LaborVisual.Eligibility.Submitted>
+  <PC_PEA.LaborVisual.Eligibility.Blocked>credential check failed</PC_PEA.LaborVisual.Eligibility.Blocked>
+  <PC_PEA.LaborVisual.Eligibility.Unknown>payment eligibility unrecognized (settlement stopped)</PC_PEA.LaborVisual.Eligibility.Unknown>
+
+  <PC_PEA.LaborVisual.Doc.ShortCode>contract code</PC_PEA.LaborVisual.Doc.ShortCode>
+  <PC_PEA.LaborVisual.Doc.Corrupt>This contract paper is incomplete, so its contract identity cannot be read.</PC_PEA.LaborVisual.Doc.Corrupt>
+  <PC_PEA.LaborVisual.Doc.ContractMissing>No matching record exists in the contract ledger; this paper cannot be submitted.</PC_PEA.LaborVisual.Doc.ContractMissing>
+  <PC_PEA.LaborVisual.Doc.Generation>generation</PC_PEA.LaborVisual.Doc.Generation>
+  <PC_PEA.LaborVisual.Doc.Superseded>voided by a reissue</PC_PEA.LaborVisual.Doc.Superseded>
+  <PC_PEA.LaborVisual.Doc.Holder>holder</PC_PEA.LaborVisual.Doc.Holder>
+  <PC_PEA.LaborVisual.Doc.NoHolder>not taken yet</PC_PEA.LaborVisual.Doc.NoHolder>
+  <PC_PEA.LaborVisual.Doc.WorkType>work</PC_PEA.LaborVisual.Doc.WorkType>
+  <PC_PEA.LaborVisual.Doc.Wage>unit wage</PC_PEA.LaborVisual.Doc.Wage>
+  <PC_PEA.LaborVisual.Doc.Progress>completed</PC_PEA.LaborVisual.Doc.Progress>
+  <PC_PEA.LaborVisual.Doc.Stage>current stage</PC_PEA.LaborVisual.Doc.Stage>
+  <PC_PEA.LaborVisual.Doc.Paid>paid</PC_PEA.LaborVisual.Doc.Paid>
+  <PC_PEA.LaborVisual.Doc.Unpaid>unpaid</PC_PEA.LaborVisual.Doc.Unpaid>
+  <PC_PEA.LaborVisual.Doc.LastSubmission>last submission</PC_PEA.LaborVisual.Doc.LastSubmission>
+  <PC_PEA.LaborVisual.Doc.Valid>This paper is the current valid copy and can be submitted.</PC_PEA.LaborVisual.Doc.Valid>
+  <PC_PEA.LaborVisual.Doc.InvalidNoRights>This paper is not the valid copy: it cannot be submitted and grants no right to any wage.</PC_PEA.LaborVisual.Doc.InvalidNoRights>
+  <PC_PEA.LaborVisual.Doc.Locate>locate contract</PC_PEA.LaborVisual.Doc.Locate>
+  <PC_PEA.LaborVisual.Doc.LocateDesc>Jump the camera to wherever this contract currently is.</PC_PEA.LaborVisual.Doc.LocateDesc>
+  <PC_PEA.LaborVisual.Doc.LocateFailed>This contract's current carrier cannot be found.</PC_PEA.LaborVisual.Doc.LocateFailed>
+  <PC_PEA.LaborVisual.Doc.DroppedAtCounter>There is no room in the inventory for {0}'s contract copy, so it was left beside the labor office counter.</PC_PEA.LaborVisual.Doc.DroppedAtCounter>
+
+  <PC_PEA.LaborVisual.Speech.SignedDocument>I got the contract.</PC_PEA.LaborVisual.Speech.SignedDocument>
+  <PC_PEA.LaborVisual.Speech.SubmittedProducts>Inspection passed, {0} item(s) handed over.</PC_PEA.LaborVisual.Speech.SubmittedProducts>
+  <PC_PEA.LaborVisual.Speech.SubmittedProof>The completion proof was verified.</PC_PEA.LaborVisual.Speech.SubmittedProof>
+
+  <PC_PEA.LaborVisual.Row.Stage>labour fulfilment</PC_PEA.LaborVisual.Row.Stage>
+  <PC_PEA.LaborVisual.Row.Next>next step</PC_PEA.LaborVisual.Row.Next>
+  <PC_PEA.LaborVisual.Contract.Stage>stage</PC_PEA.LaborVisual.Contract.Stage>
+  <PC_PEA.LaborVisual.Contract.Next>next step</PC_PEA.LaborVisual.Contract.Next>
+
+  <!-- CHG-20261011-LABOR-VISUAL: player fulfilment feedback and compact read models. -->
+  <PC_PEA.LaborVisual.Next.Paid>Review payment; continue life or remaining contract work</PC_PEA.LaborVisual.Next.Paid>
+  <PC_PEA.LaborVisual.Next.Archived>Contract archived; review fulfilment history</PC_PEA.LaborVisual.Next.Archived>
+  <PC_PEA.LaborVisual.UI.Delivered>Delivered</PC_PEA.LaborVisual.UI.Delivered>
+  <PC_PEA.LaborVisual.UI.Remaining>Remaining</PC_PEA.LaborVisual.UI.Remaining>
+  <PC_PEA.LaborVisual.UI.Stage>Fulfilment</PC_PEA.LaborVisual.UI.Stage>
+  <PC_PEA.LaborVisual.UI.NextStation>Next station</PC_PEA.LaborVisual.UI.NextStation>
+  <PC_PEA.LaborVisual.UI.WageDue>Wages due</PC_PEA.LaborVisual.UI.WageDue>
+  <PC_PEA.LaborVisual.UI.NoStation>Not selected</PC_PEA.LaborVisual.UI.NoStation>
+  <PC_PEA.LaborVisual.UI.DeliveryValue>Delivered {0} · Remaining {1}</PC_PEA.LaborVisual.UI.DeliveryValue>
+  <PC_PEA.LaborVisual.UI.WageValue>Due {0} · Paid {1}</PC_PEA.LaborVisual.UI.WageValue>
+  <PC_PEA.LaborVisual.UI.MapScope>Workers on this map; station ownership in details</PC_PEA.LaborVisual.UI.MapScope>
+  <PC_PEA.LaborVisual.UI.Group.PendingSubmission>Awaiting verification</PC_PEA.LaborVisual.UI.Group.PendingSubmission>
+  <PC_PEA.LaborVisual.UI.Group.PendingPayment>Awaiting payment</PC_PEA.LaborVisual.UI.Group.PendingPayment>
+  <PC_PEA.LaborVisual.UI.Group.Arrears>Arrears</PC_PEA.LaborVisual.UI.Group.Arrears>
+  <PC_PEA.LaborVisual.UI.Group.Paid>Paid</PC_PEA.LaborVisual.UI.Group.Paid>
+  <PC_PEA.LaborVisual.UI.Empty>No records</PC_PEA.LaborVisual.UI.Empty>
+  <PC_PEA.LaborVisual.UI.Contract>Contract</PC_PEA.LaborVisual.UI.Contract>
+  <PC_PEA.LaborVisual.UI.History>Fulfilment history</PC_PEA.LaborVisual.UI.History>
+  <PC_PEA.LaborVisual.UI.HistoryEmpty>No recorded events</PC_PEA.LaborVisual.UI.HistoryEmpty>
+  <PC_PEA.LaborVisual.UI.HistoryTick>Tick {0}</PC_PEA.LaborVisual.UI.HistoryTick>
+  <PC_PEA.LaborVisual.UI.HistoryValue>{0} · {1} · Product {2} · Qty {3} · Amount {4} · {5}</PC_PEA.LaborVisual.UI.HistoryValue>
+  <PC_PEA.LaborVisual.UI.NoProduct>No product</PC_PEA.LaborVisual.UI.NoProduct>
+  <PC_PEA.LaborVisual.UI.Result.None>Not recorded</PC_PEA.LaborVisual.UI.Result.None>
+  <PC_PEA.LaborVisual.UI.Reconciliation>Reconciliation required</PC_PEA.LaborVisual.UI.Reconciliation>
+  <PC_PEA.LaborVisual.UI.Station>Service station</PC_PEA.LaborVisual.UI.Station>
+  <PC_PEA.LaborVisual.Speech.Paid>Wages received: +{0} silver.</PC_PEA.LaborVisual.Speech.Paid>
+  <PC_PEA.LaborVisual.Speech.NoFunds>The institution lacks funds; service is on hold.</PC_PEA.LaborVisual.Speech.NoFunds>
+  <PC_PEA.LaborVisual.Speech.AwaitingPayment>Verified; awaiting payment.</PC_PEA.LaborVisual.Speech.AwaitingPayment>
+
+  <PC_PEA.LaborVisual.Interact.Unavailable>Institution unavailable</PC_PEA.LaborVisual.Interact.Unavailable>
+  <PC_PEA.LaborVisual.Interact.Reissue>Reissue contract document</PC_PEA.LaborVisual.Interact.Reissue>
+  <PC_PEA.LaborVisual.Interact.Continue>Continue current contract</PC_PEA.LaborVisual.Interact.Continue>
+  <PC_PEA.LaborVisual.Interact.Accept>Accept labor contract</PC_PEA.LaborVisual.Interact.Accept>
+  <PC_PEA.LaborVisual.Interact.NoOffers>No eligible contract offers</PC_PEA.LaborVisual.Interact.NoOffers>
+  <PC_PEA.LaborVisual.Interact.AlreadyContracted>Already contracted</PC_PEA.LaborVisual.Interact.AlreadyContracted>
+  <PC_PEA.LaborVisual.Interact.Submit>Submit contract and deliverables</PC_PEA.LaborVisual.Interact.Submit>
+  <PC_PEA.LaborVisual.Interact.NoSubmission>Nothing ready for submission</PC_PEA.LaborVisual.Interact.NoSubmission>
+  <PC_PEA.LaborVisual.Reason.Drafted>Drafted; labor service paused</PC_PEA.LaborVisual.Reason.Drafted>
+  <PC_PEA.LaborVisual.Reason.Hungry>Needs food first</PC_PEA.LaborVisual.Reason.Hungry>
+  <PC_PEA.LaborVisual.Reason.Tired>Needs rest first</PC_PEA.LaborVisual.Reason.Tired>
+  <PC_PEA.LaborVisual.Reason.Downed>Downed; unable to continue</PC_PEA.LaborVisual.Reason.Downed>
+  <PC_PEA.LaborVisual.Reason.MentalState>Mental state prevents service</PC_PEA.LaborVisual.Reason.MentalState>
+  <PC_PEA.LaborVisual.Reason.StationUnavailable>Service institution unavailable</PC_PEA.LaborVisual.Reason.StationUnavailable>
+  <PC_PEA.LaborVisual.Reason.Forbidden>Institution or deliverables forbidden</PC_PEA.LaborVisual.Reason.Forbidden>
+  <PC_PEA.LaborVisual.Reason.NoActionAvailable>No service action currently available</PC_PEA.LaborVisual.Reason.NoActionAvailable>
+  <PC_PEA.LaborVisual.Reason.CounterBusy>Counter busy; waiting for service</PC_PEA.LaborVisual.Reason.CounterBusy>
+  <PC_PEA.LaborVisual.Report.Verifying>verifying contract and deliverables at the settlement office</PC_PEA.LaborVisual.Report.Verifying>
+  <PC_PEA.LaborVisual.Report.Negotiating>negotiating a contract at the labor office</PC_PEA.LaborVisual.Report.Negotiating>
+  <PC_PEA.LaborVisual.Report.Queued>waiting for counter service</PC_PEA.LaborVisual.Report.Queued>
+  <PC_PEA.LaborVisual.Report.GoingSettlement>taking contract and deliverables to the settlement office</PC_PEA.LaborVisual.Report.GoingSettlement>
+  <PC_PEA.LaborVisual.Report.GoingOffice>going to the labor office for contract service</PC_PEA.LaborVisual.Report.GoingOffice>
+  <PC_PEA.LaborVisual.Report.Issuing>collecting the signed contract at the labor office</PC_PEA.LaborVisual.Report.Issuing>
+  <PC_PEA.LaborVisual.Report.Reissuing>collecting a replacement contract at the labor office</PC_PEA.LaborVisual.Report.Reissuing>
+  <PC_PEA.LaborVisual.Report.Collecting>collecting registered contract deliverables</PC_PEA.LaborVisual.Report.Collecting>
+  <PC_PEA.LaborVisual.Doc.Delivery>Delivered</PC_PEA.LaborVisual.Doc.Delivery>
+  <PC_PEA.LaborVisual.Doc.Remaining>Remaining</PC_PEA.LaborVisual.Doc.Remaining>
+  <PC_PEA.LaborVisual.Doc.Due>Wages due</PC_PEA.LaborVisual.Doc.Due>
+  <PC_PEA.LaborVisual.Doc.NextStation>Next service institution</PC_PEA.LaborVisual.Doc.NextStation>
+  <PC_PEA.LaborVisual.Reconcile.NoRows>No reconciliation workflows at this institution</PC_PEA.LaborVisual.Reconcile.NoRows>
+
+  <PC_PEA.LaborVisual.Reconcile.Row>{0} · Contract {1} · Delivered {2} · Remaining {3} · {4}</PC_PEA.LaborVisual.Reconcile.Row>
+  <PC_PEA.LaborVisual.Reconcile.Confirm>Only this workflow: {0}. Quantity to reconcile: {1}. Resuming or writing off the remainder will not affect other workflows.</PC_PEA.LaborVisual.Reconcile.Confirm>
+  <PC_PEA.LaborVisual.Reconcile.Result>{0} · {1}</PC_PEA.LaborVisual.Reconcile.Result>
+
+  <PC_PEA.LaborVisual.UI.Record>Fulfilment record</PC_PEA.LaborVisual.UI.Record>
+  <PC_PEA.LaborVisual.UI.OpenRecord>Full record</PC_PEA.LaborVisual.UI.OpenRecord>
+  <PC_PEA.LaborVisual.History.Action.StationChanged>Service station changed</PC_PEA.LaborVisual.History.Action.StationChanged>
+  <PC_PEA.LaborVisual.History.Action.DocumentIssued>Contract document issued</PC_PEA.LaborVisual.History.Action.DocumentIssued>
+  <PC_PEA.LaborVisual.History.Action.ContractAttached>Contract linked</PC_PEA.LaborVisual.History.Action.ContractAttached>
+
+  <PC_PEA.LaborVisual.Speech.PaymentUnavailable>Wages have not arrived; waiting for payment conditions to recover.</PC_PEA.LaborVisual.Speech.PaymentUnavailable>
+  <PC_PEA.LaborVisual.Reason.PaymentUnavailable>Payment has not succeeded; waiting for payment conditions to recover</PC_PEA.LaborVisual.Reason.PaymentUnavailable>
+  <PC_PEA.LaborVisual.History.Action.PaymentUnavailable>Payment held</PC_PEA.LaborVisual.History.Action.PaymentUnavailable>
+  <PC_PEA.LaborVisual.History.Result.PaymentUnavailable>Payment not completed</PC_PEA.LaborVisual.History.Result.PaymentUnavailable>
+  <PC_PEA.LaborVisual.History.Action.IntentReady>Employment intent formed</PC_PEA.LaborVisual.History.Action.IntentReady>
+  <PC_PEA.LaborVisual.History.Action.StageChanged>Stage changed</PC_PEA.LaborVisual.History.Action.StageChanged>
+  <PC_PEA.LaborVisual.History.Action.Held>Service held</PC_PEA.LaborVisual.History.Action.Held>
+  <PC_PEA.LaborVisual.History.Action.Resumed>Service resumed</PC_PEA.LaborVisual.History.Action.Resumed>
+  <PC_PEA.LaborVisual.History.Action.DocumentReissued>Contract document reissued</PC_PEA.LaborVisual.History.Action.DocumentReissued>
+  <PC_PEA.LaborVisual.History.Action.SubmissionAccepted>Submission accepted</PC_PEA.LaborVisual.History.Action.SubmissionAccepted>
+  <PC_PEA.LaborVisual.History.Action.PaymentConfirmed>Payment confirmed</PC_PEA.LaborVisual.History.Action.PaymentConfirmed>
+  <PC_PEA.LaborVisual.History.Result.Applied>Committed</PC_PEA.LaborVisual.History.Result.Applied>
+  <PC_PEA.LaborVisual.History.Result.Replay>Already processed; no duplicate changes</PC_PEA.LaborVisual.History.Result.Replay>
+  <PC_PEA.LaborVisual.History.Result.Blocked>Blocked</PC_PEA.LaborVisual.History.Result.Blocked>
+  <PC_PEA.LaborVisual.History.Result.Unknown>Unknown; verification required</PC_PEA.LaborVisual.History.Result.Unknown>
+  <PC_PEA.LaborVisual.History.Result.InvalidCommand>Invalid parameters</PC_PEA.LaborVisual.History.Result.InvalidCommand>
+  <PC_PEA.LaborVisual.History.Result.Finalized>Settlement finalized</PC_PEA.LaborVisual.History.Result.Finalized>
+
+  <PC_PEA.LaborVisual.History.Action.OutputsCollected>Deliverables collected into inventory</PC_PEA.LaborVisual.History.Action.OutputsCollected>
+  <PC_PEA.LaborVisual.Reason.DocumentIssuanceFailed>The contract document could not be handed over; collect it or inspect diagnostics</PC_PEA.LaborVisual.Reason.DocumentIssuanceFailed>
+  <PC_PEA.LaborVisual.Next.CollectDocument>Collect the issued contract document</PC_PEA.LaborVisual.Next.CollectDocument>
+
+  <PC_PEA.LaborVisual.Report.CollectDocument>collecting the issued contract document</PC_PEA.LaborVisual.Report.CollectDocument>
+
+  <PC_PEA.LaborVisual.Speech.ReissueChecking>At the office to verify a contract replacement.</PC_PEA.LaborVisual.Speech.ReissueChecking>
+  <PC_PEA.LaborVisual.UI.ProductSeeEvidence>Products: see submission details</PC_PEA.LaborVisual.UI.ProductSeeEvidence>
+</LanguageData>
+
+
+
+
+

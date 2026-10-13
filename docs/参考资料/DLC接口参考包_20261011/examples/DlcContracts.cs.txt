@@ -1,0 +1,101 @@
+// Proposal only. Not part of PersonalChronicle production compilation.
+// Implementation must copy collections, enforce main-thread reads and validate pagination.
+using System;
+using System.Collections.Generic;
+
+namespace DlcReference.Proposed
+{
+    public enum ProbeState { Unknown, No, Yes }
+    public enum QueryStatus
+    {
+        NotReady, Ready, NotInstalled, Inactive, Unknown, Unsupported,
+        InvalidQuery, StaleSnapshot, Error
+    }
+
+    public sealed class DlcPackageInfo
+    {
+        public string PackageId { get; }
+        public string DisplayName { get; }
+        public ProbeState Official { get; }
+        public ProbeState IsCore { get; }
+        public ProbeState Installed { get; }
+        public ProbeState Active { get; }
+        public ProbeState Loaded { get; }
+        public int? LoadOrder { get; }
+        public DlcPackageInfo(string id, string name, ProbeState official, ProbeState core,
+            ProbeState installed, ProbeState active, ProbeState loaded, int? order)
+        {
+            PackageId = id; DisplayName = name; Official = official; IsCore = core;
+            Installed = installed; Active = active; Loaded = loaded; LoadOrder = order;
+        }
+    }
+
+    public sealed class QueryResult<T>
+    {
+        public QueryStatus Status { get; }
+        public string Reason { get; }
+        public string SnapshotId { get; }
+        public IReadOnlyList<T> Items { get; }
+        public int? Total { get; } // null means unknown, never silently zero
+        public bool HasMore { get; }
+        public QueryResult(QueryStatus status, string reason, string snapshotId,
+            IEnumerable<T> items, int? total, bool hasMore)
+        {
+            Status = status; Reason = reason; SnapshotId = snapshotId;
+            Items = Array.AsReadOnly(new List<T>(items ?? Array.Empty<T>()).ToArray());
+            Total = total; HasMore = hasMore;
+        }
+    }
+
+    public sealed class DefinitionQuery
+    {
+        public string DefTypeKey { get; }
+        public string OriginPackageId { get; }
+        public string ExpectedSnapshotId { get; }
+        public int Offset { get; }
+        public int Limit { get; }
+        public DefinitionQuery(string type, string origin, string snapshot, int offset, int limit)
+        {
+            DefTypeKey = type; OriginPackageId = origin; ExpectedSnapshotId = snapshot;
+            Offset = offset; Limit = limit;
+        }
+    }
+
+    public sealed class DefinitionInfo
+    {
+        public string DefTypeKey { get; }
+        public string DefName { get; }
+        public string Label { get; }
+        public string RuntimeOriginPackageId { get; }
+        public QueryStatus ModificationTraceStatus { get; }
+        public DefinitionInfo(string type, string name, string label, string origin,
+            QueryStatus trace = QueryStatus.Unsupported)
+        {
+            DefTypeKey = type; DefName = name; Label = label;
+            RuntimeOriginPackageId = origin; ModificationTraceStatus = trace;
+        }
+    }
+
+    public sealed class CapabilityInfo
+    {
+        public string Key { get; }
+        public string PackageId { get; }
+        public QueryStatus Status { get; }
+        public string Reason { get; }
+        public CapabilityInfo(string key, string packageId, QueryStatus status, string reason)
+        { Key = key; PackageId = packageId; Status = status; Reason = reason; }
+    }
+
+    public interface IDlcCatalog
+    {
+        QueryResult<DlcPackageInfo> ReadPackages(bool includeCore);
+    }
+    public interface IDlcDefinitionReader
+    {
+        QueryResult<DefinitionInfo> Query(DefinitionQuery query);
+    }
+    public interface IDlcCapabilityRegistry
+    {
+        QueryResult<CapabilityInfo> ReadCapabilities(string expectedSnapshotId);
+    }
+}

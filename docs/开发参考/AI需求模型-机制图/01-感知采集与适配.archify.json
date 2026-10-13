@@ -1,0 +1,79 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "机制 01 · 感知采集与适配",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" }
+  },
+  "lanes": [
+    { "id": "flow", "label": "采集主链" },
+    { "id": "table", "label": "适配表" },
+    { "id": "class", "label": "分类与截断", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "p1", "label": "入口", "fromCol": 0, "toCol": 1 },
+    { "id": "p2", "label": "逐项适配", "fromCol": 2, "toCol": 2, "variant": "emphasis" },
+    { "id": "p3", "label": "取值与分流", "fromCol": 3, "toCol": 4 },
+    { "id": "p4", "label": "出口", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["req", "allneeds", "match", "read", "mood", "out"],
+  "semanticChecks": { "allowedRoots": ["req", "table", "dlc", "cond"], "allowedTerminals": ["out", "unsup", "err", "cut"] },
+  "nodes": [
+    { "id": "req", "lane": "flow", "col": 0, "type": "frontend", "label": "需求请求", "sublabel": "分组标志", "tag": "Needs / Body" },
+    { "id": "allneeds", "lane": "flow", "col": 1, "type": "external", "label": "AllNeeds", "sublabel": "原版需求列表", "tag": "只读" },
+    { "id": "match", "lane": "flow", "col": 2, "type": "security", "label": "适配 Match", "sublabel": "三道校验", "tag": "失败即未适配", "height": 64 },
+    { "id": "read", "lane": "flow", "col": 3, "type": "backend", "label": "取值", "sublabel": "CurLevel / MaxLevel" },
+    { "id": "mood", "lane": "flow", "col": 4, "type": "backend", "label": "Mood 摘出", "sublabel": "不入需求清单" },
+    { "id": "out", "lane": "flow", "col": 5, "type": "database", "label": "分组出口", "sublabel": "观测事实集" },
+    { "id": "table", "lane": "table", "col": 2, "type": "database", "label": "适配表 9 项", "sublabel": "defName ↔ 类型", "tag": "硬编码" },
+    { "id": "dlc", "lane": "table", "col": 3, "type": "external", "label": "Biotech +2", "sublabel": "Play · Learning", "tag": "DLC 激活" },
+    { "id": "cond", "lane": "table", "col": 4, "type": "backend", "label": "条件类 3 项", "sublabel": "CurInstantLevel", "tag": "Body 组出口" },
+    { "id": "unsup", "lane": "class", "col": 3, "type": "security", "label": "unsupported", "sublabel": "未适配 / 越界" },
+    { "id": "err", "lane": "class", "col": 4, "type": "security", "label": "errors", "sublabel": "getter 失败 / Max≤0" },
+    { "id": "cut", "lane": "class", "col": 5, "type": "security", "label": "截断 64", "sublabel": "任一非零 = Partial" }
+  ],
+  "edges": [
+    { "from": "req", "to": "allneeds", "label": "按组读取" },
+    { "from": "allneeds", "to": "match", "label": "逐项" },
+    { "from": "match", "to": "read", "label": "适配项" },
+    { "from": "read", "to": "mood", "label": "投影比率" },
+    { "from": "mood", "to": "out", "label": "其余入清单" },
+    { "from": "table", "to": "match", "label": "查表", "role": "branch" },
+    { "from": "dlc", "to": "table", "label": "注册", "role": "branch" },
+    { "from": "cond", "to": "read", "label": "条件口径", "role": "branch" },
+    { "from": "read", "to": "unsup", "label": "不支持", "role": "error", "variant": "security" },
+    { "from": "read", "to": "err", "label": "读取失败", "role": "error", "variant": "security" },
+    { "from": "allneeds", "to": "cut", "label": "超限", "role": "error", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "主链口径",
+      "items": [
+        "数值只读 CurLevel / MaxLevel（不是 CurInstantLevel）",
+        "Mood 摘出后不入需求清单，但仍计入分类",
+        "适配失败不丢弃：回落 special 域并标 unsupported"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "适配事实",
+      "items": [
+        "Match 三道校验：defName + DefinitionVerified + 运行期类型严格相等",
+        "Biotech 激活追加 Play / Learning ⇒ 实为 10–11 项，非 9 项封死",
+        "条件类 3 项（Comfort / Beauty / RoomSize）走 CurInstantLevel"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "实装陷阱",
+      "items": [
+        "IsFrozen 恒 Unknown（无冻结适配）⇒ 计划侧 frozen 恒为 false",
+        "截断上限 64 项；重复 id 注册直接抛异常",
+        "采集侧不按 ShowOnNeedList 过滤，只原样透传给消费方"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "PersonalChronicle 每轮工程流水线（AI-001 → AI-016）",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" }
+  },
+  "lanes": [
+    { "id": "pm", "label": "需求方（你 / PM）" },
+    { "id": "orch", "label": "总控 pc-orchestrator" },
+    { "id": "gate", "label": "Gate 席 + 收尾承载" }
+  ],
+  "phases": [
+    { "id": "prepare", "label": "需求与准备", "fromCol": 0, "toCol": 0 },
+    { "id": "preflight", "label": "派发前自审", "fromCol": 1, "toCol": 1 },
+    { "id": "gate-run", "label": "Gate 执行", "fromCol": 2, "toCol": 2, "variant": "emphasis" },
+    { "id": "close-out", "label": "终检与收尾", "fromCol": 3, "toCol": 4, "variant": "emphasis" },
+    { "id": "ship", "label": "交付与验收", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["intake", "prep", "selfcheck", "dispatch", "gates", "delta", "closure", "deliver", "accept"],
+  "semanticChecks": {
+    "allowedRoots": ["intake"],
+    "allowedTerminals": ["accept"]
+  },
+  "nodes": [
+    { "id": "intake", "lane": "pm", "col": 0, "type": "frontend", "label": "需求", "sublabel": "目标 / 非目标" },
+    { "id": "prep", "lane": "orch", "col": 0, "type": "backend", "label": "开工准备报告", "sublabel": "①–⑦ 可视化排版", "tag": "AI-015 · 新增", "height": 56 },
+    { "id": "selfcheck", "lane": "orch", "col": 1, "width": 128, "type": "security", "label": "集群自审", "sublabel": "audit-subagents + verify-cluster", "tag": "派发前置", "height": 56 },
+    { "id": "dispatch", "lane": "orch", "col": 2, "type": "backend", "label": "派发 Gate 席", "sublabel": "6 席并行" },
+    { "id": "gates", "lane": "gate", "col": 2, "type": "security", "label": "专项 Gate", "sublabel": "四态 + Evidence", "tag": "10 道", "height": 56 },
+    { "id": "delta", "lane": "gate", "col": 3, "width": 116, "type": "security", "label": "GATE-DELTA 终检", "sublabel": "标注 ⟷ diff", "tag": "gate-runner", "height": 56 },
+    { "id": "closure", "lane": "gate", "col": 4, "type": "security", "label": "收尾齐备性校验", "sublabel": "M1–M8 · R1–R8", "tag": "AI-016 · 新增", "height": 56 },
+    { "id": "deliver", "lane": "orch", "col": 5, "type": "messagebus", "label": "交付", "sublabel": "R1–R8 + 署名" },
+    { "id": "accept", "lane": "pm", "col": 5, "type": "frontend", "label": "实机验收", "sublabel": "期望值可证伪", "height": 52 }
+  ],
+  "edges": [
+    { "from": "intake", "to": "prep", "label": "先报后做" },
+    { "from": "prep", "to": "selfcheck" },
+    { "from": "selfcheck", "to": "dispatch", "label": "审计 PASS" },
+    { "from": "dispatch", "to": "gates", "label": "并行" },
+    { "from": "gates", "to": "delta", "label": "四态" },
+    { "from": "delta", "to": "closure", "label": "标注 PASS" },
+    { "from": "closure", "to": "deliver", "label": "R1–R8 齐备" },
+    { "from": "deliver", "to": "accept", "label": "你验收" }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "红线与阻断",
+      "items": [
+        "缺标注 / 缺项 ⇒ BLOCKED，不得交付；补齐后重跑",
+        "无 Evidence 不得 PASS，不得伪造（GOV-012）",
+        "两道硬门不判业务 Gate：AI-015 · AI-016（10 道归属不变）"
+      ]
+    }
+  ]
+}

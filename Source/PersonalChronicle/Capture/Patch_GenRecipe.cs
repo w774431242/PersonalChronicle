@@ -2,7 +2,7 @@ using System;
 using HarmonyLib;
 using PersonalChronicle.Application;
 using PersonalChronicle.Application.Effects;
-using PersonalChronicle.Domain.Profession;
+using PersonalChronicle.Application.Workshop;
 using RimWorld;
 using Verse;
 
@@ -13,6 +13,12 @@ namespace PersonalChronicle.Capture
     /// GenRecipe.PostProcessProduct — the per-product finishing step of
     /// production, called for every product that passes through
     /// MakeRecipeProducts (quality/art/style assignment).
+    ///
+    /// <para><b>归位（2026-09-21 审计修复 · CHG-SHOP-AUDIT-001 · A-2）</b>：本 Patch 原内联
+    /// 约 200 行产出业务（品质偏置 / 额外产出 / 退料 / 回炉 / 加成登记）—— 违反归位铁律
+    /// 「Capture 只做钩子 → 调 Application，不放业务」。业务已整体下沉到
+    /// <see cref="WorkshopProductionEffects"/>（Application，概率判定走 Domain 纯规则），
+    /// 本类只保留：null/派系守卫 + 转调（履历、物品流、产出效果）。行为逐项等价。</para>
     ///
     /// 1.6 target verification (decompiled Assembly-CSharp):
     ///   Verse.GenRecipe::PostProcessProduct(Verse.Thing product,
@@ -32,7 +38,8 @@ namespace PersonalChronicle.Capture
     ///                       Pawn, Precept_ThingStyle, ThingStyleDef, int?)
     ///   Patch Type        : Postfix (read-only, never skips the original)
     ///   Reason            : record a Crafted event (PersonalChronicleEventCrafted)
-    ///                       with the finished thing as Primary
+    ///                       with the finished thing as Primary; plus delegation of
+    ///                       workshop/profession production effects
     ///   Alternative       : Bill_Production.Notify_IterationCompleted (rejected:
     ///                       virtual, no product argument; loses the thing edge);
     ///                       GenRecipe.MakeRecipeProducts (rejected: iterator
@@ -108,52 +115,22 @@ namespace PersonalChronicle.Capture
                 }
                 // P1 CAREER-001：制造事实写入职业 ledger（BE-005）。带 recipe 可派生技能。
                 service.RecordCareerProduced(product, recipeDef, worker);
-                // P3 专业效果：成品品质偏置（精密制造能力 → 真实品质档位偏移）。
+                // REQ-MVS-013（CHG-MVS-ITEMFLOW-001）：物品级产消读数（市场面板展开行「生产」列）。
+                // 与职业 ledger 的 prodQty 同口径（Max(1, stackCount)）；每件成品只记一次。
+                service.RecordItemFlow(product.def.defName, Math.Max(1, product.stackCount), true);
+                // 车间 + 专业产出效果（品质偏置 / 耐久精度登记 / 额外产出 / 退料 / 回炉）。
                 // 复用本 Postfix 挂载点（原版已 SetQuality，此处事后覆盖），零新增 Patch。
-                TryApplyQualityBias(product, recipeDef, worker);
+                WorkshopProductionEffects.Apply(product, recipeDef, worker);
+                // 车间绩效台账（2026-09-25）：在岗期间的产出计入其车间的按人台账（生产率分子）。
+                // 2026-10-02 审计修复（P1-C）：改走 Application 契约（WorkshopBonusAccess.NotifyProductMade，
+                // 实现由 WorkshopBonusAccessBinder 注入），消除 Capture → Automation 直读（跨层红线）。
+                // CHG-20261005-DEVCOLS：把成品一并传下去（设备台账「累计产值」用它取 MarketValue）——
+                // 不在归账侧从 worker.CurJob 反推：Postfix 时刻 job 可能已清/已切换。
+                WorkshopBonusAccess.NotifyProductMade(worker, product);
             }
             catch (Exception ex)
             {
                 ChronicleLog.Warning(ChronicleLog.Category.Capture, "GenRecipe.PostProcessProduct patch failed: " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// P3 专业效果：成品品质偏置（V2.0 §11 适配层，品质效果挂载点）。
-        /// 原版 PostProcessProduct 内部已按 GenerateQualityCreatedByPawn 设好品质；
-        /// 本方法在其后（Postfix）按 pawn 的专业能力重算并覆盖品质档位。
-        /// 范围精确（仅制造产物），非玩家派系/无品质物品/无职业效果均零影响。
-        /// </summary>
-        private static void TryApplyQualityBias(Thing product, RecipeDef recipeDef, Pawn worker)
-        {
-            if (product == null || worker == null)
-            {
-                return;
-            }
-            CompQuality compQuality = product.TryGetComp<CompQuality>();
-            if (compQuality == null)
-            {
-                return;
-            }
-            int levels = ProfessionalEffectService.GetQualityBiasLevels(worker, recipeDef);
-            if (levels == 0)
-            {
-                return;
-            }
-            QualityCategory current = compQuality.Quality;
-            int targetIndex = ProfessionalEffectResolver.ClampQuality((int)current, levels);
-            QualityCategory target = (QualityCategory)targetIndex;
-            if (target == current)
-            {
-                return;
-            }
-            compQuality.SetQuality(target, null);
-            if (Prefs.DevMode)
-            {
-                ChronicleLog.Info(ChronicleLog.Category.Capture,
-                    "[CAREER] QualityBias applied: pawn=" + worker.GetUniqueLoadID()
-                    + " recipe=" + (recipeDef != null ? recipeDef.defName : "null")
-                    + " " + current + " -> " + target + " (levels=" + levels + ")");
             }
         }
     }

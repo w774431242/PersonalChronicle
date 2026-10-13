@@ -1,3 +1,4 @@
+using PersonalChronicle.MasterControl.Population;
 using UnityEngine;
 using RimWorld;
 using Verse;
@@ -13,7 +14,7 @@ namespace PersonalChronicle.Archive
     /// All presentational primitives now live in <see cref="UITheme"/> (tokens)
     /// and <see cref="UIComponents"/> (components). This class forwards the
     /// historical <c>ArchiveUiStyle.*</c> surface to those layers so the ~120
-    /// existing call sites in <c>ArchiveMainTabWindow</c> stay valid with zero
+    /// existing call sites in <c>PersonnelArchivePanel</c> stay valid with zero
     /// behavioural change, while new code targets <c>UITheme</c>/<c>UIComponents</c>
     /// directly. Archive-specific concerns (faction codex kinds, selection
     /// navigation, card accent) remain here because they are not generic tokens.
@@ -30,6 +31,20 @@ namespace PersonalChronicle.Archive
         internal const float SidebarWidth = UITheme.SidebarWidth;
         internal const float Gap = UITheme.Gap;
         internal const float PanelPadding = UITheme.PanelPadding;
+
+        // ---- 承载 / 嵌入式布局预算（**唯一来源**：既驱动原版标签页，也驱动总控中心嵌入档）----
+        /// <summary>设计基准宽（= 原版标签页 RequestedTabSize.x）。</summary>
+        internal const float DesignWidth = 1100f;
+        /// <summary>设计基准高（= 原版标签页 RequestedTabSize.y）。</summary>
+        internal const float DesignHeight = 720f;
+        /// <summary>低于此宽度：左侧导航折叠为顶部横条（LAND-006 降级档 1）。</summary>
+        internal const float CompactLayoutWidth = 900f;
+        /// <summary>绝对最小可渲染宽（不足则如实提示，不硬挤、不重叠、不越界）。</summary>
+        internal const float MinLayoutWidth = 640f;
+        /// <summary>绝对最小可渲染高。</summary>
+        internal const float MinLayoutHeight = 360f;
+        /// <summary>折叠态顶部导航条高（= 左侧栏被压平后的一行）。</summary>
+        internal const float CompactNavHeight = 30f;
         internal const float CardGap = UITheme.CardGap;
 
         internal static Color Window;

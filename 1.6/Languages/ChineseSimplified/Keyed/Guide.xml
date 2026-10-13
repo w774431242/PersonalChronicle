@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- ============================================================
+       新手教程（CHG-20261006-GUIDE / TOUR / TOUR2）
+       入口 = 总控中心页头右侧「新手教程」按钮
+         → 确认弹窗 Window_NewcomerGuide（询问 + 提示可随时退出）
+         → 「开始引导」压入全屏引导层 Window_TourOverlay（13 步，含游戏内建厂全链路）
+       ⚠ 写注释的硬性要求：XML 注释内**不得出现连续两个短横**（曾导致整文件解析失败、
+         界面显示成 key 名）。分隔线请用「===」「~~~」。
+       ⚠ 正文只写**已落地**的玩法事实，且用实机界面的词条（LAND-009）：
+         主按钮 =「总控中心」；建造菜单 =「建筑规划」；划区 =「区域」；职业入口 =「职业规划」
+       ============================================================ -->
+  <PersonalChronicle.UI.Guide.Button>新手教程</PersonalChronicle.UI.Guide.Button>
+  <PersonalChronicle.UI.Guide.ButtonTip>打开新手教程：13 步全链路引导（建车间 → 放设备 → 加工单 → 看板）</PersonalChronicle.UI.Guide.ButtonTip>
+
+  <!-- 确认弹窗（Window_NewcomerGuide） -->
+  <PersonalChronicle.UI.Guide.Ask.Title>开启新手教程？</PersonalChronicle.UI.Guide.Ask.Title>
+  <PersonalChronicle.UI.Guide.Ask.Body>全链路分步引导：从划车间、放设备、加工单，到看懂制造中心的两侧轨道。约两三分钟，随时可以停下，不会改动任何数据。</PersonalChronicle.UI.Guide.Ask.Body>
+  <PersonalChronicle.UI.Guide.Ask.EscHint>引导过程中，随时按 ESC 或点「跳过本步」即可退出。</PersonalChronicle.UI.Guide.Ask.EscHint>
+  <PersonalChronicle.UI.Guide.Ask.Later>以后再说</PersonalChronicle.UI.Guide.Ask.Later>
+  <PersonalChronicle.UI.Guide.Tour.Start>开始引导</PersonalChronicle.UI.Guide.Tour.Start>
+
+  <!-- 引导本体（Tour2 · 13 步）：按钮 / 退出提示 / 条件提示 -->
+  <PersonalChronicle.UI.Guide.Tour2.Next>下一步</PersonalChronicle.UI.Guide.Tour2.Next>
+  <PersonalChronicle.UI.Guide.Tour2.Prev>上一步</PersonalChronicle.UI.Guide.Tour2.Prev>
+  <PersonalChronicle.UI.Guide.Tour2.Skip>跳过本步</PersonalChronicle.UI.Guide.Tour2.Skip>
+  <PersonalChronicle.UI.Guide.Tour2.Finish>完成引导</PersonalChronicle.UI.Guide.Tour2.Finish>
+  <PersonalChronicle.UI.Guide.Tour2.EscHint>ESC 退出</PersonalChronicle.UI.Guide.Tour2.EscHint>
+  <PersonalChronicle.UI.Guide.Tour2.Gate.Workshop>划出车间后会自动继续（也可点「跳过本步」）</PersonalChronicle.UI.Guide.Tour2.Gate.Workshop>
+  <PersonalChronicle.UI.Guide.Tour2.Gate.Device>建造任意工作台后自动继续</PersonalChronicle.UI.Guide.Tour2.Gate.Device>
+  <PersonalChronicle.UI.Guide.Tour2.Gate.Bill>添加带配料的工单后自动继续</PersonalChronicle.UI.Guide.Tour2.Gate.Bill>
+  <PersonalChronicle.UI.Guide.Tour2.Gate.OpenCenter>打开制造中心详情页后自动继续</PersonalChronicle.UI.Guide.Tour2.Gate.OpenCenter>
+
+  <!-- 步骤 0：注册表总览 -->
+  <PersonalChronicle.UI.Guide.Tour2.S0.Title>这里是系统中心总览</PersonalChronicle.UI.Guide.Tour2.S0.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S0.Body>每张卡片 = 一个系统中心。初始中心（制造 / 人员 / 经济）已有真实数据；标「预留 · 未接入」的只有职责与依赖清单，那是登记凭据，不是坏掉的页面。</PersonalChronicle.UI.Guide.Tour2.S0.Body>
+  <!-- 步骤 1：入口按钮 -->
+  <PersonalChronicle.UI.Guide.Tour2.S1.Title>随时回看这份引导</PersonalChronicle.UI.Guide.Tour2.S1.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S1.Body>右上角这个按钮随时能重新开始。引导中：按 ESC 或「跳过本步」退出，点「上一步」回退；气泡会一直跟着你要看的地方。</PersonalChronicle.UI.Guide.Tour2.S1.Body>
+  <!-- 步骤 2：主题 -->
+  <PersonalChronicle.UI.Guide.Tour2.S2.Title>一键换肤</PersonalChronicle.UI.Guide.Tour2.S2.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S2.Body>「主题」切换整套配色，本 Mod 的全部界面都会跟随（设置页里每项设置都写明来源与代价）。</PersonalChronicle.UI.Guide.Tour2.S2.Body>
+  <!-- 步骤 3：划车间 -->
+  <PersonalChronicle.UI.Guide.Tour2.S3.Title>第一步：划一块「车间」</PersonalChronicle.UI.Guide.Tour2.S3.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S3.Body>建造菜单已经替你打开了：点「区域」→「车间区」，在你想生产的位置拖出一个矩形（本窗口可以直接关掉，点它右上角的 ×）。\n顺序很重要：先划区、再放东西 —— 车间格有抗占位保护，先放建筑再划区会划不进去。</PersonalChronicle.UI.Guide.Tour2.S3.Body>
+  <!-- 步骤 4：设备 -->
+  <PersonalChronicle.UI.Guide.Tour2.S4.Title>第二步：在车间里放设备</PersonalChronicle.UI.Guide.Tour2.S4.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S4.Body>相机已经对准你的车间（屏幕正中就是）—— 在它里面建造工作台：研究台、炉灶、裁缝台、熔炉等任意生产设施都会自动归入所在车间。</PersonalChronicle.UI.Guide.Tour2.S4.Body>
+  <!-- 步骤 5：工单 -->
+  <PersonalChronicle.UI.Guide.Tour2.S5.Title>第三步：加工单（要消耗原料）</PersonalChronicle.UI.Guide.Tour2.S5.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S5.Body>相机已经对准车间里的工作台（屏幕正中就是）—— 点它 →「添加工作」→ 选一个会消耗原料的配方（做简单食物、缝衣物都行）。只有存在带配料的工单，制造中心左侧「原料库」才有东西可列。</PersonalChronicle.UI.Guide.Tour2.S5.Body>
+  <!-- 步骤 6：回到总控中心 -->
+  <PersonalChronicle.UI.Guide.Tour2.S6.Title>回头看结果</PersonalChronicle.UI.Guide.Tour2.S6.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S6.Body>总控中心已经替你打开了：点「制造系统中心」卡片进入详情页。刚刚划的车间、放的设备、加的工单，都会在这里变成可读的数字。</PersonalChronicle.UI.Guide.Tour2.S6.Body>
+  <!-- 步骤 7：左轨 -->
+  <PersonalChronicle.UI.Guide.Tour2.S7.Title>左轨：原料库（按工单需求）</PersonalChronicle.UI.Guide.Tour2.S7.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S7.Body>左侧轨道列出**当前工单**需要的原料：数字 = 全地图库存；不足一单会标红，悬停能看到「单次开单需 N」。它列的是"要什么"，不是"仓库有什么"。</PersonalChronicle.UI.Guide.Tour2.S7.Body>
+  <!-- 步骤 8：右轨 -->
+  <PersonalChronicle.UI.Guide.Tour2.S8.Title>右轨：成品库（按车间范围）</PersonalChronicle.UI.Guide.Tour2.S8.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S8.Body>右侧轨道统计**落在车间范围内**的带品质成品，并按原版品质档分列。东西放在车间外不会计入。</PersonalChronicle.UI.Guide.Tour2.S8.Body>
+  <!-- 步骤 9：页签与画布 -->
+  <PersonalChronicle.UI.Guide.Tour2.S9.Title>顶部页签：查看 / 编排</PersonalChronicle.UI.Guide.Tour2.S9.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S9.Body>「编排」是自由摆放视图：把左侧设备库里的设备拖到画布上排位置；摆放结果随存档保存，点设备卡能打开该设备的详情弹窗。「查看」是只读俯视。</PersonalChronicle.UI.Guide.Tour2.S9.Body>
+  <!-- 步骤 10：其它中心 -->
+  <PersonalChronicle.UI.Guide.Tour2.S10.Title>其它中心看什么</PersonalChronicle.UI.Guide.Tour2.S10.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S10.Body>人员中心：逐人档案 —— 事件、里程碑、勋章与「职业规划」（推荐方向 ≠ 强制）。经济中心：库存市值与行情走势。其余中心仍标「预留 · 未接入」。</PersonalChronicle.UI.Guide.Tour2.S10.Body>
+  <!-- 步骤 11：回注册表 -->
+  <PersonalChronicle.UI.Guide.Tour2.S11.Title>回到总览</PersonalChronicle.UI.Guide.Tour2.S11.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S11.Body>点右上角「← 返回」回到总览页 —— 也就是最开始的这一屏。</PersonalChronicle.UI.Guide.Tour2.S11.Body>
+  <!-- 步骤 12：收尾 -->
+  <PersonalChronicle.UI.Guide.Tour2.S12.Title>完成，开始探索</PersonalChronicle.UI.Guide.Tour2.S12.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S12.Body>两条要记住的规则：读不到的数据一律显示「—」（本 Mod 不画假值）；任何界面右上角都有「新手教程」，随时能重看这份引导。</PersonalChronicle.UI.Guide.Tour2.S12.Body>
+</LanguageData>

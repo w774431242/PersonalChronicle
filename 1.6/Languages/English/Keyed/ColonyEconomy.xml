@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Colony economy center (CHG-LCE-001 rebuild skeleton). Key prefix: PersonalChronicle.Economy.* -->
+<LanguageData>
+  <PersonalChronicle.Economy.Kpi.Wealth>Total wealth</PersonalChronicle.Economy.Kpi.Wealth>
+  <PersonalChronicle.Economy.Kpi.Wealth.Note>Vanilla WealthWatcher: items / buildings / pawns combined</PersonalChronicle.Economy.Kpi.Wealth.Note>
+  <PersonalChronicle.Economy.Kpi.Silver>Silver</PersonalChronicle.Economy.Kpi.Silver>
+  <PersonalChronicle.Economy.Kpi.Silver.Note>Map-wide silver count (vanilla ResourceCounter)</PersonalChronicle.Economy.Kpi.Silver.Note>
+  <PersonalChronicle.Economy.Kpi.StockValue>Stock value</PersonalChronicle.Economy.Kpi.StockValue>
+  <PersonalChronicle.Economy.Kpi.StockValue.Note>Stored item count × vanilla unit price (BaseMarketValue)</PersonalChronicle.Economy.Kpi.StockValue.Note>
+
+  <PersonalChronicle.Economy.Page.Title>Colony Economy</PersonalChronicle.Economy.Page.Title>
+  <PersonalChronicle.Economy.Page.Rebuilding1>This center is being rebuilt: the market simulation has been removed; only the local colony economy remains.</PersonalChronicle.Economy.Page.Rebuilding1>
+  <PersonalChronicle.Economy.Page.Rebuilding2>Coming next: inventory and value / production-consumption ledger (with days-remaining) / labor and output.</PersonalChronicle.Economy.Page.Rebuilding2>
+  <PersonalChronicle.Economy.Page.Rebuilding3>The KPI strip shows vanilla real readings: total wealth / silver / stock value.</PersonalChronicle.Economy.Page.Rebuilding3>
+
+  <!-- Stage 3 landing (SDD-LCE-003): stock K-line + treemap heatmap -->
+  <PersonalChronicle.Economy.Stock.Title>Commodity K-Line</PersonalChronicle.Economy.Stock.Title>
+  <PersonalChronicle.Economy.Stock.HeatTitle>Heatmap</PersonalChronicle.Economy.Stock.HeatTitle>
+  <PersonalChronicle.Economy.Stock.SwitchToHeat>◧ Heatmap</PersonalChronicle.Economy.Stock.SwitchToHeat>
+  <PersonalChronicle.Economy.Stock.SwitchToKline>◨ K-Line</PersonalChronicle.Economy.Stock.SwitchToKline>
+  <PersonalChronicle.Economy.Stock.Source>② measured · stock quantity</PersonalChronicle.Economy.Stock.Source>
+  <PersonalChronicle.Economy.Stock.Empty>Sampling… no records yet (stock quantity sampled every 250 ticks)</PersonalChronicle.Economy.Stock.Empty>
+  <PersonalChronicle.Economy.Stock.Error>Read failed · degraded to empty view (see log)</PersonalChronicle.Economy.Stock.Error>
+  <PersonalChronicle.Economy.Stock.NoStock>No stock quantities right now (all listed items count 0)</PersonalChronicle.Economy.Stock.NoStock>
+  <PersonalChronicle.Economy.Stock.PickItem>Items</PersonalChronicle.Economy.Stock.PickItem>
+  <PersonalChronicle.Economy.Stock.More>…{0} more (top {1} by stock value)</PersonalChronicle.Economy.Stock.More>
+  <PersonalChronicle.Economy.Stock.Value>Value</PersonalChronicle.Economy.Stock.Value>
+  <PersonalChronicle.Economy.Stock.Delta>Δ</PersonalChronicle.Economy.Stock.Delta>
+  <PersonalChronicle.Economy.Stock.Last>Last</PersonalChronicle.Economy.Stock.Last>
+  <PersonalChronicle.Economy.Stock.Hover>Cursor</PersonalChronicle.Economy.Stock.Hover>
+  <PersonalChronicle.Economy.Stock.Other>Other</PersonalChronicle.Economy.Stock.Other>
+  <PersonalChronicle.Economy.Stock.Ohlc.Open>O</PersonalChronicle.Economy.Stock.Ohlc.Open>
+  <PersonalChronicle.Economy.Stock.Ohlc.High>H</PersonalChronicle.Economy.Stock.Ohlc.High>
+  <PersonalChronicle.Economy.Stock.Ohlc.Low>L</PersonalChronicle.Economy.Stock.Ohlc.Low>
+  <PersonalChronicle.Economy.Stock.Ohlc.Close>C</PersonalChronicle.Economy.Stock.Ohlc.Close>
+  <!-- Five tiers = unified period basis (Domain/EconomyPeriodTier, single source of truth).
+       60m tier retired 2026-09-21 (slot kept for save-shape compatibility; key removed = zero orphans) -->
+  <PersonalChronicle.Economy.Stock.Tier.d>D</PersonalChronicle.Economy.Stock.Tier.d>
+  <PersonalChronicle.Economy.Stock.Tier.w>W</PersonalChronicle.Economy.Stock.Tier.w>
+  <PersonalChronicle.Economy.Stock.Tier.mo>M</PersonalChronicle.Economy.Stock.Tier.mo>
+  <PersonalChronicle.Economy.Stock.Tier.q>Q</PersonalChronicle.Economy.Stock.Tier.q>
+  <PersonalChronicle.Economy.Stock.Tier.y>Y</PersonalChronicle.Economy.Stock.Tier.y>
+</LanguageData>

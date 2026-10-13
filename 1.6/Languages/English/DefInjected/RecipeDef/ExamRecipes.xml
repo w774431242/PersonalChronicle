@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_MakeExamThesis.label>Bind Thesis Scroll</PC_MakeExamThesis.label>
+  <PC_MakeExamThesis.description>Bind a thesis scroll from cloth, leather and wood at the crafting spot.</PC_MakeExamThesis.description>
+  <PC_MakeExamThesis.jobString>Binding thesis scroll</PC_MakeExamThesis.jobString>
+  <PC_MakeExamDiploma.label>Craft Diploma</PC_MakeExamDiploma.label>
+  <PC_MakeExamDiploma.description>Craft a formal diploma from fine cloth, leather and gold at the crafting spot.</PC_MakeExamDiploma.description>
+  <PC_MakeExamDiploma.jobString>Crafting diploma</PC_MakeExamDiploma.jobString>
+  <PC_MakeExamPractical.label>Press Practical Certificate</PC_MakeExamPractical.label>
+  <PC_MakeExamPractical.description>Press a practical-exam nameplate from wood, steel and cloth at the crafting spot; 3 per batch.</PC_MakeExamPractical.description>
+  <PC_MakeExamPractical.jobString>Pressing practical certificate</PC_MakeExamPractical.jobString>
+  <PC_MakeExamPracticeKit.label>Make Practice Kit</PC_MakeExamPracticeKit.label>
+  <PC_MakeExamPracticeKit.description>Press standard practice-exam workpieces from wood, steel and cloth at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit.description>
+  <PC_MakeExamPracticeKit.jobString>Making practice kit</PC_MakeExamPracticeKit.jobString>
+  <PC_MakeExamTextbook.label>Bind Exam Textbook</PC_MakeExamTextbook.label>
+  <PC_MakeExamTextbook.description>Bind an exam textbook from cloth and wood at the crafting spot; 2 per batch.</PC_MakeExamTextbook.description>
+  <PC_MakeExamTextbook.jobString>Binding exam textbook</PC_MakeExamTextbook.jobString>
+  <PC_MakeExamResearchDoc.label>Bind Research Document</PC_MakeExamResearchDoc.label>
+  <PC_MakeExamResearchDoc.description>Bind a technical research document from leather, wood and gold at the crafting spot.</PC_MakeExamResearchDoc.description>
+  <PC_MakeExamResearchDoc.jobString>Binding research document</PC_MakeExamResearchDoc.jobString>
+  <PC_MakeExamSkillBook.label>Bind Skill Monograph</PC_MakeExamSkillBook.label>
+  <PC_MakeExamSkillBook.description>Bind a skill monograph from cloth and wood at the crafting spot; 2 per batch.</PC_MakeExamSkillBook.description>
+  <PC_MakeExamSkillBook.jobString>Binding skill monograph</PC_MakeExamSkillBook.jobString>
+  <PC_MakeExamTheoryBook.label>Bind Theory Treatise</PC_MakeExamTheoryBook.label>
+  <PC_MakeExamTheoryBook.description>Bind a theory treatise from leather, wood and cloth at the crafting spot.</PC_MakeExamTheoryBook.description>
+  <PC_MakeExamTheoryBook.jobString>Binding theory treatise</PC_MakeExamTheoryBook.jobString>
+  <PC_MakeExamPracticeKit_Engineering.label>Make Engineering Practice Kit</PC_MakeExamPracticeKit_Engineering.label>
+  <PC_MakeExamPracticeKit_Engineering.description>Make engineering practice workpieces from steel, wood and cloth at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Engineering.description>
+  <PC_MakeExamPracticeKit_Engineering.jobString>Making engineering practice kit</PC_MakeExamPracticeKit_Engineering.jobString>
+  <PC_MakeExamPracticeKit_Manufacturing.label>Make Manufacturing Practice Kit</PC_MakeExamPracticeKit_Manufacturing.label>
+  <PC_MakeExamPracticeKit_Manufacturing.description>Make manufacturing practice workpieces from steel and cloth at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Manufacturing.description>
+  <PC_MakeExamPracticeKit_Manufacturing.jobString>Making manufacturing practice kit</PC_MakeExamPracticeKit_Manufacturing.jobString>
+  <PC_MakeExamPracticeKit_Agriculture.label>Make Agriculture Practice Kit</PC_MakeExamPracticeKit_Agriculture.label>
+  <PC_MakeExamPracticeKit_Agriculture.description>Make agriculture practice workpieces from wood, steel and cloth at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Agriculture.description>
+  <PC_MakeExamPracticeKit_Agriculture.jobString>Making agriculture practice kit</PC_MakeExamPracticeKit_Agriculture.jobString>
+  <PC_MakeExamPracticeKit_Forestry.label>Make Forestry Practice Kit</PC_MakeExamPracticeKit_Forestry.label>
+  <PC_MakeExamPracticeKit_Forestry.description>Make forestry practice workpieces from wood and steel at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Forestry.description>
+  <PC_MakeExamPracticeKit_Forestry.jobString>Making forestry practice kit</PC_MakeExamPracticeKit_Forestry.jobString>
+  <PC_MakeExamPracticeKit_AnimalHusbandry.label>Make Animal Husbandry Practice Kit</PC_MakeExamPracticeKit_AnimalHusbandry.label>
+  <PC_MakeExamPracticeKit_AnimalHusbandry.description>Make animal husbandry practice workpieces from leather, wood and steel at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_AnimalHusbandry.description>
+  <PC_MakeExamPracticeKit_AnimalHusbandry.jobString>Making animal husbandry practice kit</PC_MakeExamPracticeKit_AnimalHusbandry.jobString>
+  <PC_MakeExamPracticeKit_Medicine.label>Make Medicine Practice Kit</PC_MakeExamPracticeKit_Medicine.label>
+  <PC_MakeExamPracticeKit_Medicine.description>Make medicine practice workpieces from steel, cloth and gold at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Medicine.description>
+  <PC_MakeExamPracticeKit_Medicine.jobString>Making medicine practice kit</PC_MakeExamPracticeKit_Medicine.jobString>
+  <PC_MakeExamPracticeKit_Weapons.label>Make Weapons Practice Kit</PC_MakeExamPracticeKit_Weapons.label>
+  <PC_MakeExamPracticeKit_Weapons.description>Make weapons practice workpieces from steel and wood at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Weapons.description>
+  <PC_MakeExamPracticeKit_Weapons.jobString>Making weapons practice kit</PC_MakeExamPracticeKit_Weapons.jobString>
+  <PC_MakeExamPracticeKit_Mining.label>Make Mining Practice Kit</PC_MakeExamPracticeKit_Mining.label>
+  <PC_MakeExamPracticeKit_Mining.description>Make mining practice workpieces from steel and wood at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Mining.description>
+  <PC_MakeExamPracticeKit_Mining.jobString>Making mining practice kit</PC_MakeExamPracticeKit_Mining.jobString>
+  <PC_MakeExamPracticeKit_Research.label>Make Research Practice Kit</PC_MakeExamPracticeKit_Research.label>
+  <PC_MakeExamPracticeKit_Research.description>Make research practice workpieces from gold, steel and wood at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Research.description>
+  <PC_MakeExamPracticeKit_Research.jobString>Making research practice kit</PC_MakeExamPracticeKit_Research.jobString>
+  <PC_MakeExamPracticeKit_Cooking.label>Make Cooking Practice Kit</PC_MakeExamPracticeKit_Cooking.label>
+  <PC_MakeExamPracticeKit_Cooking.description>Make cooking practice workpieces from steel, wood and cloth at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Cooking.description>
+  <PC_MakeExamPracticeKit_Cooking.jobString>Making cooking practice kit</PC_MakeExamPracticeKit_Cooking.jobString>
+  <PC_MakeExamPracticeKit_Art.label>Make Art Practice Kit</PC_MakeExamPracticeKit_Art.label>
+  <PC_MakeExamPracticeKit_Art.description>Make art practice workpieces from gold, wood and cloth at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Art.description>
+  <PC_MakeExamPracticeKit_Art.jobString>Making art practice kit</PC_MakeExamPracticeKit_Art.jobString>
+  <PC_MakeExamPracticeKit_Management.label>Make Management Practice Kit</PC_MakeExamPracticeKit_Management.label>
+  <PC_MakeExamPracticeKit_Management.description>Make management practice workpieces from cloth, wood and gold at the crafting spot; 2 per batch.</PC_MakeExamPracticeKit_Management.description>
+  <PC_MakeExamPracticeKit_Management.jobString>Making management practice kit</PC_MakeExamPracticeKit_Management.jobString>
+  <PC_MakeExamTextbook_Engineering.label>Make Textbook Engineering</PC_MakeExamTextbook_Engineering.label>
+  <PC_MakeExamTextbook_Engineering.description>Make Textbook Engineering at the crafting spot.</PC_MakeExamTextbook_Engineering.description>
+  <PC_MakeExamTextbook_Engineering.jobString>Making Textbook Engineering</PC_MakeExamTextbook_Engineering.jobString>
+  <PC_MakeExamResearchDoc_Engineering.label>Make ResearchDoc Engineering</PC_MakeExamResearchDoc_Engineering.label>
+  <PC_MakeExamResearchDoc_Engineering.description>Make ResearchDoc Engineering at the crafting spot.</PC_MakeExamResearchDoc_Engineering.description>
+  <PC_MakeExamResearchDoc_Engineering.jobString>Making ResearchDoc Engineering</PC_MakeExamResearchDoc_Engineering.jobString>
+  <PC_MakeExamSkillBook_Engineering.label>Make SkillBook Engineering</PC_MakeExamSkillBook_Engineering.label>
+  <PC_MakeExamSkillBook_Engineering.description>Make SkillBook Engineering at the crafting spot.</PC_MakeExamSkillBook_Engineering.description>
+  <PC_MakeExamSkillBook_Engineering.jobString>Making SkillBook Engineering</PC_MakeExamSkillBook_Engineering.jobString>
+  <PC_MakeExamTheoryBook_Engineering.label>Make TheoryBook Engineering</PC_MakeExamTheoryBook_Engineering.label>
+  <PC_MakeExamTheoryBook_Engineering.description>Make TheoryBook Engineering at the crafting spot.</PC_MakeExamTheoryBook_Engineering.description>
+  <PC_MakeExamTheoryBook_Engineering.jobString>Making TheoryBook Engineering</PC_MakeExamTheoryBook_Engineering.jobString>
+  <PC_MakeExamTextbook_Manufacturing.label>Make Textbook Manufacturing</PC_MakeExamTextbook_Manufacturing.label>
+  <PC_MakeExamTextbook_Manufacturing.description>Make Textbook Manufacturing at the crafting spot.</PC_MakeExamTextbook_Manufacturing.description>
+  <PC_MakeExamTextbook_Manufacturing.jobString>Making Textbook Manufacturing</PC_MakeExamTextbook_Manufacturing.jobString>
+  <PC_MakeExamResearchDoc_Manufacturing.label>Make ResearchDoc Manufacturing</PC_MakeExamResearchDoc_Manufacturing.label>
+  <PC_MakeExamResearchDoc_Manufacturing.description>Make ResearchDoc Manufacturing at the crafting spot.</PC_MakeExamResearchDoc_Manufacturing.description>
+  <PC_MakeExamResearchDoc_Manufacturing.jobString>Making ResearchDoc Manufacturing</PC_MakeExamResearchDoc_Manufacturing.jobString>
+  <PC_MakeExamSkillBook_Manufacturing.label>Make SkillBook Manufacturing</PC_MakeExamSkillBook_Manufacturing.label>
+  <PC_MakeExamSkillBook_Manufacturing.description>Make SkillBook Manufacturing at the crafting spot.</PC_MakeExamSkillBook_Manufacturing.description>
+  <PC_MakeExamSkillBook_Manufacturing.jobString>Making SkillBook Manufacturing</PC_MakeExamSkillBook_Manufacturing.jobString>
+  <PC_MakeExamTheoryBook_Manufacturing.label>Make TheoryBook Manufacturing</PC_MakeExamTheoryBook_Manufacturing.label>
+  <PC_MakeExamTheoryBook_Manufacturing.description>Make TheoryBook Manufacturing at the crafting spot.</PC_MakeExamTheoryBook_Manufacturing.description>
+  <PC_MakeExamTheoryBook_Manufacturing.jobString>Making TheoryBook Manufacturing</PC_MakeExamTheoryBook_Manufacturing.jobString>
+  <PC_MakeExamTextbook_Agriculture.label>Make Textbook Agriculture</PC_MakeExamTextbook_Agriculture.label>
+  <PC_MakeExamTextbook_Agriculture.description>Make Textbook Agriculture at the crafting spot.</PC_MakeExamTextbook_Agriculture.description>
+  <PC_MakeExamTextbook_Agriculture.jobString>Making Textbook Agriculture</PC_MakeExamTextbook_Agriculture.jobString>
+  <PC_MakeExamResearchDoc_Agriculture.label>Make ResearchDoc Agriculture</PC_MakeExamResearchDoc_Agriculture.label>
+  <PC_MakeExamResearchDoc_Agriculture.description>Make ResearchDoc Agriculture at the crafting spot.</PC_MakeExamResearchDoc_Agriculture.description>
+  <PC_MakeExamResearchDoc_Agriculture.jobString>Making ResearchDoc Agriculture</PC_MakeExamResearchDoc_Agriculture.jobString>
+  <PC_MakeExamSkillBook_Agriculture.label>Make SkillBook Agriculture</PC_MakeExamSkillBook_Agriculture.label>
+  <PC_MakeExamSkillBook_Agriculture.description>Make SkillBook Agriculture at the crafting spot.</PC_MakeExamSkillBook_Agriculture.description>
+  <PC_MakeExamSkillBook_Agriculture.jobString>Making SkillBook Agriculture</PC_MakeExamSkillBook_Agriculture.jobString>
+  <PC_MakeExamTheoryBook_Agriculture.label>Make TheoryBook Agriculture</PC_MakeExamTheoryBook_Agriculture.label>
+  <PC_MakeExamTheoryBook_Agriculture.description>Make TheoryBook Agriculture at the crafting spot.</PC_MakeExamTheoryBook_Agriculture.description>
+  <PC_MakeExamTheoryBook_Agriculture.jobString>Making TheoryBook Agriculture</PC_MakeExamTheoryBook_Agriculture.jobString>
+  <PC_MakeExamTextbook_Forestry.label>Make Textbook Forestry</PC_MakeExamTextbook_Forestry.label>
+  <PC_MakeExamTextbook_Forestry.description>Make Textbook Forestry at the crafting spot.</PC_MakeExamTextbook_Forestry.description>
+  <PC_MakeExamTextbook_Forestry.jobString>Making Textbook Forestry</PC_MakeExamTextbook_Forestry.jobString>
+  <PC_MakeExamResearchDoc_Forestry.label>Make ResearchDoc Forestry</PC_MakeExamResearchDoc_Forestry.label>
+  <PC_MakeExamResearchDoc_Forestry.description>Make ResearchDoc Forestry at the crafting spot.</PC_MakeExamResearchDoc_Forestry.description>
+  <PC_MakeExamResearchDoc_Forestry.jobString>Making ResearchDoc Forestry</PC_MakeExamResearchDoc_Forestry.jobString>
+  <PC_MakeExamSkillBook_Forestry.label>Make SkillBook Forestry</PC_MakeExamSkillBook_Forestry.label>
+  <PC_MakeExamSkillBook_Forestry.description>Make SkillBook Forestry at the crafting spot.</PC_MakeExamSkillBook_Forestry.description>
+  <PC_MakeExamSkillBook_Forestry.jobString>Making SkillBook Forestry</PC_MakeExamSkillBook_Forestry.jobString>
+  <PC_MakeExamTheoryBook_Forestry.label>Make TheoryBook Forestry</PC_MakeExamTheoryBook_Forestry.label>
+  <PC_MakeExamTheoryBook_Forestry.description>Make TheoryBook Forestry at the crafting spot.</PC_MakeExamTheoryBook_Forestry.description>
+  <PC_MakeExamTheoryBook_Forestry.jobString>Making TheoryBook Forestry</PC_MakeExamTheoryBook_Forestry.jobString>
+  <PC_MakeExamTextbook_AnimalHusbandry.label>Make Textbook AnimalHusbandry</PC_MakeExamTextbook_AnimalHusbandry.label>
+  <PC_MakeExamTextbook_AnimalHusbandry.description>Make Textbook AnimalHusbandry at the crafting spot.</PC_MakeExamTextbook_AnimalHusbandry.description>
+  <PC_MakeExamTextbook_AnimalHusbandry.jobString>Making Textbook AnimalHusbandry</PC_MakeExamTextbook_AnimalHusbandry.jobString>
+  <PC_MakeExamResearchDoc_AnimalHusbandry.label>Make ResearchDoc AnimalHusbandry</PC_MakeExamResearchDoc_AnimalHusbandry.label>
+  <PC_MakeExamResearchDoc_AnimalHusbandry.description>Make ResearchDoc AnimalHusbandry at the crafting spot.</PC_MakeExamResearchDoc_AnimalHusbandry.description>
+  <PC_MakeExamResearchDoc_AnimalHusbandry.jobString>Making ResearchDoc AnimalHusbandry</PC_MakeExamResearchDoc_AnimalHusbandry.jobString>
+  <PC_MakeExamSkillBook_AnimalHusbandry.label>Make SkillBook AnimalHusbandry</PC_MakeExamSkillBook_AnimalHusbandry.label>
+  <PC_MakeExamSkillBook_AnimalHusbandry.description>Make SkillBook AnimalHusbandry at the crafting spot.</PC_MakeExamSkillBook_AnimalHusbandry.description>
+  <PC_MakeExamSkillBook_AnimalHusbandry.jobString>Making SkillBook AnimalHusbandry</PC_MakeExamSkillBook_AnimalHusbandry.jobString>
+  <PC_MakeExamTheoryBook_AnimalHusbandry.label>Make TheoryBook AnimalHusbandry</PC_MakeExamTheoryBook_AnimalHusbandry.label>
+  <PC_MakeExamTheoryBook_AnimalHusbandry.description>Make TheoryBook AnimalHusbandry at the crafting spot.</PC_MakeExamTheoryBook_AnimalHusbandry.description>
+  <PC_MakeExamTheoryBook_AnimalHusbandry.jobString>Making TheoryBook AnimalHusbandry</PC_MakeExamTheoryBook_AnimalHusbandry.jobString>
+  <PC_MakeExamTextbook_Medicine.label>Make Textbook Medicine</PC_MakeExamTextbook_Medicine.label>
+  <PC_MakeExamTextbook_Medicine.description>Make Textbook Medicine at the crafting spot.</PC_MakeExamTextbook_Medicine.description>
+  <PC_MakeExamTextbook_Medicine.jobString>Making Textbook Medicine</PC_MakeExamTextbook_Medicine.jobString>
+  <PC_MakeExamResearchDoc_Medicine.label>Make ResearchDoc Medicine</PC_MakeExamResearchDoc_Medicine.label>
+  <PC_MakeExamResearchDoc_Medicine.description>Make ResearchDoc Medicine at the crafting spot.</PC_MakeExamResearchDoc_Medicine.description>
+  <PC_MakeExamResearchDoc_Medicine.jobString>Making ResearchDoc Medicine</PC_MakeExamResearchDoc_Medicine.jobString>
+  <PC_MakeExamSkillBook_Medicine.label>Make SkillBook Medicine</PC_MakeExamSkillBook_Medicine.label>
+  <PC_MakeExamSkillBook_Medicine.description>Make SkillBook Medicine at the crafting spot.</PC_MakeExamSkillBook_Medicine.description>
+  <PC_MakeExamSkillBook_Medicine.jobString>Making SkillBook Medicine</PC_MakeExamSkillBook_Medicine.jobString>
+  <PC_MakeExamTheoryBook_Medicine.label>Make TheoryBook Medicine</PC_MakeExamTheoryBook_Medicine.label>
+  <PC_MakeExamTheoryBook_Medicine.description>Make TheoryBook Medicine at the crafting spot.</PC_MakeExamTheoryBook_Medicine.description>
+  <PC_MakeExamTheoryBook_Medicine.jobString>Making TheoryBook Medicine</PC_MakeExamTheoryBook_Medicine.jobString>
+  <PC_MakeExamTextbook_Weapons.label>Make Textbook Weapons</PC_MakeExamTextbook_Weapons.label>
+  <PC_MakeExamTextbook_Weapons.description>Make Textbook Weapons at the crafting spot.</PC_MakeExamTextbook_Weapons.description>
+  <PC_MakeExamTextbook_Weapons.jobString>Making Textbook Weapons</PC_MakeExamTextbook_Weapons.jobString>
+  <PC_MakeExamResearchDoc_Weapons.label>Make ResearchDoc Weapons</PC_MakeExamResearchDoc_Weapons.label>
+  <PC_MakeExamResearchDoc_Weapons.description>Make ResearchDoc Weapons at the crafting spot.</PC_MakeExamResearchDoc_Weapons.description>
+  <PC_MakeExamResearchDoc_Weapons.jobString>Making ResearchDoc Weapons</PC_MakeExamResearchDoc_Weapons.jobString>
+  <PC_MakeExamSkillBook_Weapons.label>Make SkillBook Weapons</PC_MakeExamSkillBook_Weapons.label>
+  <PC_MakeExamSkillBook_Weapons.description>Make SkillBook Weapons at the crafting spot.</PC_MakeExamSkillBook_Weapons.description>
+  <PC_MakeExamSkillBook_Weapons.jobString>Making SkillBook Weapons</PC_MakeExamSkillBook_Weapons.jobString>
+  <PC_MakeExamTheoryBook_Weapons.label>Make TheoryBook Weapons</PC_MakeExamTheoryBook_Weapons.label>
+  <PC_MakeExamTheoryBook_Weapons.description>Make TheoryBook Weapons at the crafting spot.</PC_MakeExamTheoryBook_Weapons.description>
+  <PC_MakeExamTheoryBook_Weapons.jobString>Making TheoryBook Weapons</PC_MakeExamTheoryBook_Weapons.jobString>
+  <PC_MakeExamTextbook_Mining.label>Make Textbook Mining</PC_MakeExamTextbook_Mining.label>
+  <PC_MakeExamTextbook_Mining.description>Make Textbook Mining at the crafting spot.</PC_MakeExamTextbook_Mining.description>
+  <PC_MakeExamTextbook_Mining.jobString>Making Textbook Mining</PC_MakeExamTextbook_Mining.jobString>
+  <PC_MakeExamResearchDoc_Mining.label>Make ResearchDoc Mining</PC_MakeExamResearchDoc_Mining.label>
+  <PC_MakeExamResearchDoc_Mining.description>Make ResearchDoc Mining at the crafting spot.</PC_MakeExamResearchDoc_Mining.description>
+  <PC_MakeExamResearchDoc_Mining.jobString>Making ResearchDoc Mining</PC_MakeExamResearchDoc_Mining.jobString>
+  <PC_MakeExamSkillBook_Mining.label>Make SkillBook Mining</PC_MakeExamSkillBook_Mining.label>
+  <PC_MakeExamSkillBook_Mining.description>Make SkillBook Mining at the crafting spot.</PC_MakeExamSkillBook_Mining.description>
+  <PC_MakeExamSkillBook_Mining.jobString>Making SkillBook Mining</PC_MakeExamSkillBook_Mining.jobString>
+  <PC_MakeExamTheoryBook_Mining.label>Make TheoryBook Mining</PC_MakeExamTheoryBook_Mining.label>
+  <PC_MakeExamTheoryBook_Mining.description>Make TheoryBook Mining at the crafting spot.</PC_MakeExamTheoryBook_Mining.description>
+  <PC_MakeExamTheoryBook_Mining.jobString>Making TheoryBook Mining</PC_MakeExamTheoryBook_Mining.jobString>
+  <PC_MakeExamTextbook_Research.label>Make Textbook Research</PC_MakeExamTextbook_Research.label>
+  <PC_MakeExamTextbook_Research.description>Make Textbook Research at the crafting spot.</PC_MakeExamTextbook_Research.description>
+  <PC_MakeExamTextbook_Research.jobString>Making Textbook Research</PC_MakeExamTextbook_Research.jobString>
+  <PC_MakeExamResearchDoc_Research.label>Make ResearchDoc Research</PC_MakeExamResearchDoc_Research.label>
+  <PC_MakeExamResearchDoc_Research.description>Make ResearchDoc Research at the crafting spot.</PC_MakeExamResearchDoc_Research.description>
+  <PC_MakeExamResearchDoc_Research.jobString>Making ResearchDoc Research</PC_MakeExamResearchDoc_Research.jobString>
+  <PC_MakeExamSkillBook_Research.label>Make SkillBook Research</PC_MakeExamSkillBook_Research.label>
+  <PC_MakeExamSkillBook_Research.description>Make SkillBook Research at the crafting spot.</PC_MakeExamSkillBook_Research.description>
+  <PC_MakeExamSkillBook_Research.jobString>Making SkillBook Research</PC_MakeExamSkillBook_Research.jobString>
+  <PC_MakeExamTheoryBook_Research.label>Make TheoryBook Research</PC_MakeExamTheoryBook_Research.label>
+  <PC_MakeExamTheoryBook_Research.description>Make TheoryBook Research at the crafting spot.</PC_MakeExamTheoryBook_Research.description>
+  <PC_MakeExamTheoryBook_Research.jobString>Making TheoryBook Research</PC_MakeExamTheoryBook_Research.jobString>
+  <PC_MakeExamTextbook_Cooking.label>Make Textbook Cooking</PC_MakeExamTextbook_Cooking.label>
+  <PC_MakeExamTextbook_Cooking.description>Make Textbook Cooking at the crafting spot.</PC_MakeExamTextbook_Cooking.description>
+  <PC_MakeExamTextbook_Cooking.jobString>Making Textbook Cooking</PC_MakeExamTextbook_Cooking.jobString>
+  <PC_MakeExamResearchDoc_Cooking.label>Make ResearchDoc Cooking</PC_MakeExamResearchDoc_Cooking.label>
+  <PC_MakeExamResearchDoc_Cooking.description>Make ResearchDoc Cooking at the crafting spot.</PC_MakeExamResearchDoc_Cooking.description>
+  <PC_MakeExamResearchDoc_Cooking.jobString>Making ResearchDoc Cooking</PC_MakeExamResearchDoc_Cooking.jobString>
+  <PC_MakeExamSkillBook_Cooking.label>Make SkillBook Cooking</PC_MakeExamSkillBook_Cooking.label>
+  <PC_MakeExamSkillBook_Cooking.description>Make SkillBook Cooking at the crafting spot.</PC_MakeExamSkillBook_Cooking.description>
+  <PC_MakeExamSkillBook_Cooking.jobString>Making SkillBook Cooking</PC_MakeExamSkillBook_Cooking.jobString>
+  <PC_MakeExamTheoryBook_Cooking.label>Make TheoryBook Cooking</PC_MakeExamTheoryBook_Cooking.label>
+  <PC_MakeExamTheoryBook_Cooking.description>Make TheoryBook Cooking at the crafting spot.</PC_MakeExamTheoryBook_Cooking.description>
+  <PC_MakeExamTheoryBook_Cooking.jobString>Making TheoryBook Cooking</PC_MakeExamTheoryBook_Cooking.jobString>
+  <PC_MakeExamTextbook_Art.label>Make Textbook Art</PC_MakeExamTextbook_Art.label>
+  <PC_MakeExamTextbook_Art.description>Make Textbook Art at the crafting spot.</PC_MakeExamTextbook_Art.description>
+  <PC_MakeExamTextbook_Art.jobString>Making Textbook Art</PC_MakeExamTextbook_Art.jobString>
+  <PC_MakeExamResearchDoc_Art.label>Make ResearchDoc Art</PC_MakeExamResearchDoc_Art.label>
+  <PC_MakeExamResearchDoc_Art.description>Make ResearchDoc Art at the crafting spot.</PC_MakeExamResearchDoc_Art.description>
+  <PC_MakeExamResearchDoc_Art.jobString>Making ResearchDoc Art</PC_MakeExamResearchDoc_Art.jobString>
+  <PC_MakeExamSkillBook_Art.label>Make SkillBook Art</PC_MakeExamSkillBook_Art.label>
+  <PC_MakeExamSkillBook_Art.description>Make SkillBook Art at the crafting spot.</PC_MakeExamSkillBook_Art.description>
+  <PC_MakeExamSkillBook_Art.jobString>Making SkillBook Art</PC_MakeExamSkillBook_Art.jobString>
+  <PC_MakeExamTheoryBook_Art.label>Make TheoryBook Art</PC_MakeExamTheoryBook_Art.label>
+  <PC_MakeExamTheoryBook_Art.description>Make TheoryBook Art at the crafting spot.</PC_MakeExamTheoryBook_Art.description>
+  <PC_MakeExamTheoryBook_Art.jobString>Making TheoryBook Art</PC_MakeExamTheoryBook_Art.jobString>
+  <PC_MakeExamTextbook_Management.label>Make Textbook Management</PC_MakeExamTextbook_Management.label>
+  <PC_MakeExamTextbook_Management.description>Make Textbook Management at the crafting spot.</PC_MakeExamTextbook_Management.description>
+  <PC_MakeExamTextbook_Management.jobString>Making Textbook Management</PC_MakeExamTextbook_Management.jobString>
+  <PC_MakeExamResearchDoc_Management.label>Make ResearchDoc Management</PC_MakeExamResearchDoc_Management.label>
+  <PC_MakeExamResearchDoc_Management.description>Make ResearchDoc Management at the crafting spot.</PC_MakeExamResearchDoc_Management.description>
+  <PC_MakeExamResearchDoc_Management.jobString>Making ResearchDoc Management</PC_MakeExamResearchDoc_Management.jobString>
+  <PC_MakeExamSkillBook_Management.label>Make SkillBook Management</PC_MakeExamSkillBook_Management.label>
+  <PC_MakeExamSkillBook_Management.description>Make SkillBook Management at the crafting spot.</PC_MakeExamSkillBook_Management.description>
+  <PC_MakeExamSkillBook_Management.jobString>Making SkillBook Management</PC_MakeExamSkillBook_Management.jobString>
+  <PC_MakeExamTheoryBook_Management.label>Make TheoryBook Management</PC_MakeExamTheoryBook_Management.label>
+  <PC_MakeExamTheoryBook_Management.description>Make TheoryBook Management at the crafting spot.</PC_MakeExamTheoryBook_Management.description>
+  <PC_MakeExamTheoryBook_Management.jobString>Making TheoryBook Management</PC_MakeExamTheoryBook_Management.jobString>
+  <PC_MakeExamThesis_Proposal.label>Make Thesis Proposal</PC_MakeExamThesis_Proposal.label>
+  <PC_MakeExamThesis_Proposal.description>Make Thesis Proposal at the crafting spot.</PC_MakeExamThesis_Proposal.description>
+  <PC_MakeExamThesis_Proposal.jobString>Making Thesis Proposal</PC_MakeExamThesis_Proposal.jobString>
+  <PC_MakeExamThesis_CiteBooks.label>Make Thesis CiteBooks</PC_MakeExamThesis_CiteBooks.label>
+  <PC_MakeExamThesis_CiteBooks.description>Make Thesis CiteBooks at the crafting spot.</PC_MakeExamThesis_CiteBooks.description>
+  <PC_MakeExamThesis_CiteBooks.jobString>Making Thesis CiteBooks</PC_MakeExamThesis_CiteBooks.jobString>
+  <PC_MakeExamThesis_CiteResearch.label>Make Thesis CiteResearch</PC_MakeExamThesis_CiteResearch.label>
+  <PC_MakeExamThesis_CiteResearch.description>Make Thesis CiteResearch at the crafting spot.</PC_MakeExamThesis_CiteResearch.description>
+  <PC_MakeExamThesis_CiteResearch.jobString>Making Thesis CiteResearch</PC_MakeExamThesis_CiteResearch.jobString>
+  <PC_MakeExamThesis_Final.label>Make Thesis Final</PC_MakeExamThesis_Final.label>
+  <PC_MakeExamThesis_Final.description>Make Thesis Final at the crafting spot.</PC_MakeExamThesis_Final.description>
+  <PC_MakeExamThesis_Final.jobString>Making Thesis Final</PC_MakeExamThesis_Final.jobString>
+</LanguageData>

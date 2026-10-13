@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Needs.Planning.Mode>Economic planning stage</PC_PEA.Needs.Planning.Mode>
+  <PC_PEA.Needs.Planning.ShadowOnly>Read-only proposal; no contracts, work assignments or fees</PC_PEA.Needs.Planning.ShadowOnly>
+  <PC_PEA.Needs.Planning.Decision>Proposed action</PC_PEA.Needs.Planning.Decision>
+  <PC_PEA.Needs.Planning.Waiting>Waiting for planning sample</PC_PEA.Needs.Planning.Waiting>
+  <PC_PEA.Needs.Planning.Stale>Historical plan is stale; awaiting reassessment</PC_PEA.Needs.Planning.Stale>
+  <PC_PEA.Needs.Planning.Age>Plan age</PC_PEA.Needs.Planning.Age>
+  <PC_PEA.Needs.Planning.AgeTicks>{0} ticks</PC_PEA.Needs.Planning.AgeTicks>
+  <PC_PEA.Needs.Planning.Reason>Reason</PC_PEA.Needs.Planning.Reason>
+  <PC_PEA.Needs.Planning.Policy.WorkHours>Work hours</PC_PEA.Needs.Planning.Policy.WorkHours>
+  <PC_PEA.Needs.Planning.Policy.Leisure>Retained leisure</PC_PEA.Needs.Planning.Policy.Leisure>
+  <PC_PEA.Needs.Planning.Policy.Reserve>Reserve horizon</PC_PEA.Needs.Planning.Policy.Reserve>
+  <PC_PEA.Needs.Planning.Policy.Saving>Surplus saving</PC_PEA.Needs.Planning.Policy.Saving>
+  <PC_PEA.Needs.Planning.HoursPerDay>{0} h/day</PC_PEA.Needs.Planning.HoursPerDay>
+  <PC_PEA.Needs.Planning.Days>{0} days</PC_PEA.Needs.Planning.Days>
+  <PC_PEA.Needs.Planning.Percent>{0}%</PC_PEA.Needs.Planning.Percent>
+  <PC_PEA.Needs.Planning.Sustainability>Life plan sustainability</PC_PEA.Needs.Planning.Sustainability>
+  <PC_PEA.Needs.Planning.Sustainable>Sustainable</PC_PEA.Needs.Planning.Sustainable>
+  <PC_PEA.Needs.Planning.Unsustainable>Unsustainable: basic needs keep filling the timetable; consider cutting optional spending or savings, adjusting work hours, or sharing care duties</PC_PEA.Needs.Planning.Unsustainable>
+  <PC_PEA.Needs.Planning.Deadline>Risk deadline</PC_PEA.Needs.Planning.Deadline>
+  <PC_PEA.Needs.Planning.DeadlineTicks>{0} tick</PC_PEA.Needs.Planning.DeadlineTicks>
+  <PC_PEA.Needs.Planning.DeadlineUnknown>Not estimable (no baseline or not draining)</PC_PEA.Needs.Planning.DeadlineUnknown>
+  <PC_PEA.Needs.Planning.Slack>Slack</PC_PEA.Needs.Planning.Slack>
+  <PC_PEA.Needs.Planning.Blocked>Institutionally blocked</PC_PEA.Needs.Planning.Blocked>
+  <PC_PEA.Needs.Planning.BlockedCount>{0} necessary item(s) lack funds and cannot be covered by labour (dependency cycle; not requested again)</PC_PEA.Needs.Planning.BlockedCount>
+  <PC_PEA.Needs.Planning.Options>Candidate options</PC_PEA.Needs.Planning.Options>
+  <PC_PEA.Needs.Planning.Reason.SelfHelpNotNeeded>Not yet past the vanilla self-help line</PC_PEA.Needs.Planning.Reason.SelfHelpNotNeeded>
+  <PC_PEA.Needs.Planning.Option.NativeSelfHelp>Free self-help</PC_PEA.Needs.Planning.Option.NativeSelfHelp>
+  <PC_PEA.Needs.Planning.Option.SeekWork>Labour</PC_PEA.Needs.Planning.Option.SeekWork>
+  <PC_PEA.Needs.Planning.Option.Purchase>Purchase</PC_PEA.Needs.Planning.Option.Purchase>
+  <PC_PEA.Needs.Planning.Option.Service>Service</PC_PEA.Needs.Planning.Option.Service>
+  <PC_PEA.Needs.Planning.Sources>Preference sources</PC_PEA.Needs.Planning.Sources>
+  <PC_PEA.Needs.Planning.Source.NeutralBaseline>Neutral default (not measured personality)</PC_PEA.Needs.Planning.Source.NeutralBaseline>
+  <PC_PEA.Needs.Planning.Source.Industriousness>Industriousness mapping</PC_PEA.Needs.Planning.Source.Industriousness>
+  <PC_PEA.Needs.Planning.Source.Ascetic>Ascetic mapping</PC_PEA.Needs.Planning.Source.Ascetic>
+  <PC_PEA.Needs.Planning.Source.Gourmand>Food preference mapping</PC_PEA.Needs.Planning.Source.Gourmand>
+  <PC_PEA.Needs.Planning.Source.NightOwl>Night preference mapping</PC_PEA.Needs.Planning.Source.NightOwl>
+  <PC_PEA.Needs.Planning.Budget>Budget estimate</PC_PEA.Needs.Planning.Budget>
+  <PC_PEA.Needs.Planning.Cash>Unreserved cash (funded ledger)</PC_PEA.Needs.Planning.Cash>
+  <PC_PEA.Needs.Planning.Target>Finite reserve target</PC_PEA.Needs.Planning.Target>
+  <PC_PEA.Needs.Planning.LowWater>Refill low water</PC_PEA.Needs.Planning.LowWater>
+  <PC_PEA.Needs.Planning.Income>Current income shortfall limit</PC_PEA.Needs.Planning.Income>
+  <PC_PEA.Needs.Planning.Refill>Refill active</PC_PEA.Needs.Planning.Refill>
+  <PC_PEA.Needs.Planning.Unknown>Unknown</PC_PEA.Needs.Planning.Unknown>
+  <PC_PEA.Needs.Planning.NotApplicable>N/A</PC_PEA.Needs.Planning.NotApplicable>
+  <PC_PEA.Needs.Planning.Money>{0} silver</PC_PEA.Needs.Planning.Money>
+  <PC_PEA.Needs.Planning.Yes>Yes</PC_PEA.Needs.Planning.Yes>
+  <PC_PEA.Needs.Planning.No>No</PC_PEA.Needs.Planning.No>
+  <PC_PEA.Needs.Planning.Goals>Active need order</PC_PEA.Needs.Planning.Goals>
+  <PC_PEA.Needs.Planning.NoActiveGoals>No confirmed active goals; unknown does not mean satisfied</PC_PEA.Needs.Planning.NoActiveGoals>
+  <PC_PEA.Needs.Planning.Opportunity>Proposed job ID (no contract yet)</PC_PEA.Needs.Planning.Opportunity>
+  <PC_PEA.Needs.Planning.Decision.WaitingFacts>Waiting for fresh need facts</PC_PEA.Needs.Planning.Decision.WaitingFacts>
+  <PC_PEA.Needs.Planning.Decision.NativeYield>Yield to native control and safety behavior</PC_PEA.Needs.Planning.Decision.NativeYield>
+  <PC_PEA.Needs.Planning.Decision.NativeNeed>Satisfy basic food or rest first</PC_PEA.Needs.Planning.Decision.NativeNeed>
+  <PC_PEA.Needs.Planning.Decision.WaitingBudget>Waiting for actual living cost estimates</PC_PEA.Needs.Planning.Decision.WaitingBudget>
+  <PC_PEA.Needs.Planning.Decision.WaitingOpportunity>Income needed; waiting for feasible work</PC_PEA.Needs.Planning.Decision.WaitingOpportunity>
+  <PC_PEA.Needs.Planning.Decision.SeekWork>Propose applying for valid work (read only)</PC_PEA.Needs.Planning.Decision.SeekWork>
+  <PC_PEA.Needs.Planning.Decision.MaintainReserve>Maintain finite reserves</PC_PEA.Needs.Planning.Decision.MaintainReserve>
+  <PC_PEA.Needs.Planning.Decision.NoIncomeNeeded>No additional reserve work needed now</PC_PEA.Needs.Planning.Decision.NoIncomeNeeded>
+  <PC_PEA.Needs.Planning.Decision.OutOfScope>Outside planning scope</PC_PEA.Needs.Planning.Decision.OutOfScope>
+  <PC_PEA.Needs.Planning.Decision.Error>Planning input failed</PC_PEA.Needs.Planning.Decision.Error>
+  <PC_PEA.Needs.Planning.Budget.Unknown>Unknown</PC_PEA.Needs.Planning.Budget.Unknown>
+  <PC_PEA.Needs.Planning.Budget.Ready>Same-window estimate ready (not payment authority)</PC_PEA.Needs.Planning.Budget.Ready>
+  <PC_PEA.Needs.Planning.Budget.WaitingQuote>Missing living cost or coverage estimates</PC_PEA.Needs.Planning.Budget.WaitingQuote>
+  <PC_PEA.Needs.Planning.Budget.WaitingAccount>Missing verified personal account</PC_PEA.Needs.Planning.Budget.WaitingAccount>
+  <PC_PEA.Needs.Planning.Budget.Inconsistent>Budget evidence inconsistent</PC_PEA.Needs.Planning.Budget.Inconsistent>
+  <PC_PEA.Needs.Planning.Reason.FactsUnavailable>Facts missing, stale, or inconsistent with source scope</PC_PEA.Needs.Planning.Reason.FactsUnavailable>
+  <PC_PEA.Needs.Planning.Reason.OutOfScope>Subject left the map or died</PC_PEA.Needs.Planning.Reason.OutOfScope>
+  <PC_PEA.Needs.Planning.Reason.NativeControlOrSafety>Drafted, forced task, incapacity, danger or urgent needs; unknown safety also yields</PC_PEA.Needs.Planning.Reason.NativeControlOrSafety>
+  <PC_PEA.Needs.Planning.Reason.BasicNeedFirst>Basic food or rest goal active; reserve planning must yield</PC_PEA.Needs.Planning.Reason.BasicNeedFirst>
+  <PC_PEA.Needs.Planning.Reason.EmploymentNotPermitted>Age or action eligibility prevents ordinary employment</PC_PEA.Needs.Planning.Reason.EmploymentNotPermitted>
+  <PC_PEA.Needs.Planning.Reason.CostEstimateUnavailable>No same-window living quotes and valid coverage estimates; income amounts cannot be invented</PC_PEA.Needs.Planning.Reason.CostEstimateUnavailable>
+  <PC_PEA.Needs.Planning.Reason.NoPricedConsumption>No published consumption quote (same window, same unit) and no stock evidence</PC_PEA.Needs.Planning.Reason.NoPricedConsumption>
+  <PC_PEA.Needs.Planning.Reason.ConsumptionUnaffordable>A published consumption quote exists, but own cash beyond its coverage is not enough to pay</PC_PEA.Needs.Planning.Reason.ConsumptionUnaffordable>
+  <PC_PEA.Needs.Planning.Reason.ServiceNotImplemented>Service supply is not implemented (the service price field exists but has no consumer)</PC_PEA.Needs.Planning.Reason.ServiceNotImplemented>
+  <PC_PEA.Needs.Planning.LowWaterWithEmergency>{0} (emergency {1})</PC_PEA.Needs.Planning.LowWaterWithEmergency>
+  <PC_PEA.Needs.Planning.Reason.FundedOpportunityUnderKnownRisk>This institution has unpaid or late wages on record; signing anyway and treating it as known risk</PC_PEA.Needs.Planning.Reason.FundedOpportunityUnderKnownRisk>
+  <PC_PEA.Needs.Planning.Reason.AccountUnknown>Personal funded account unverified; old balances and future wages are not cash</PC_PEA.Needs.Planning.Reason.AccountUnknown>
+  <PC_PEA.Needs.Planning.Reason.ReserveSufficient>Reserve reached, or cash has not fallen below refill low water</PC_PEA.Needs.Planning.Reason.ReserveSufficient>
+  <PC_PEA.Needs.Planning.Reason.ProtectedTimetable>Current timetable reserves time for rest, recreation or another assignment</PC_PEA.Needs.Planning.Reason.ProtectedTimetable>
+  <PC_PEA.Needs.Planning.Reason.NoFeasibleOpportunity>Known offers fail funding, ability, execution or payment deadline checks</PC_PEA.Needs.Planning.Reason.NoFeasibleOpportunity>
+  <PC_PEA.Needs.Planning.Reason.OpportunityNotPublished>Funded executable job market not published yet</PC_PEA.Needs.Planning.Reason.OpportunityNotPublished>
+  <PC_PEA.Needs.Planning.Reason.FundedOpportunity>Funded executable candidate can pay in time; no contract submitted</PC_PEA.Needs.Planning.Reason.FundedOpportunity>
+  <PC_PEA.Needs.Planning.Reason.InvalidWindow>Invalid planning window or policy parameters</PC_PEA.Needs.Planning.Reason.InvalidWindow>
+  <PC_PEA.Needs.Planning.Reason.InvalidAmount>Amount limit or arithmetic overflow</PC_PEA.Needs.Planning.Reason.InvalidAmount>
+  <PC_PEA.Needs.Planning.Reason.DuplicateOrMismatchedSlice>Duplicate need costs or mismatched window</PC_PEA.Needs.Planning.Reason.DuplicateOrMismatchedSlice>
+  <PC_PEA.Needs.Planning.Reason.DuplicateCoverage>Same coverage resource used more than once</PC_PEA.Needs.Planning.Reason.DuplicateCoverage>
+  <PC_PEA.Needs.Planning.Reason.CoverageExceedsCost>Coverage exceeds actual cost</PC_PEA.Needs.Planning.Reason.CoverageExceedsCost>
+  <PC_PEA.Needs.Planning.Reason.UnbackedReservation>Cost protection exceeds actual account reservations</PC_PEA.Needs.Planning.Reason.UnbackedReservation>
+  <PC_PEA.Needs.Planning.Reason.PlanningSourceFailed>Capture or planning failed; old success invalidated</PC_PEA.Needs.Planning.Reason.PlanningSourceFailed>  <PC_PEA.Needs.Planning.Thresholds>Enter {0} → target {1}</PC_PEA.Needs.Planning.Thresholds>
+  <PC_PEA.Needs.Planning.Cycle.Instant>Immediate needs</PC_PEA.Needs.Planning.Cycle.Instant>
+  <PC_PEA.Needs.Planning.Cycle.Reserve>Savings buffer</PC_PEA.Needs.Planning.Cycle.Reserve>
+  <PC_PEA.Needs.Planning.Cycle.Labour>Labour income</PC_PEA.Needs.Planning.Cycle.Labour>
+  <PC_PEA.Needs.Planning.Cycle.Consume>Consumption and services</PC_PEA.Needs.Planning.Cycle.Consume>
+  <PC_PEA.Needs.Planning.Cycle.State.Ok>Nominal</PC_PEA.Needs.Planning.Cycle.State.Ok>
+  <PC_PEA.Needs.Planning.Cycle.State.Pending>Waiting on conditions</PC_PEA.Needs.Planning.Cycle.State.Pending>
+  <PC_PEA.Needs.Planning.Cycle.State.Unimplemented>Not wired</PC_PEA.Needs.Planning.Cycle.State.Unimplemented>
+  <PC_PEA.Needs.Planning.Cycle.State.Unknown>Unknown</PC_PEA.Needs.Planning.Cycle.State.Unknown>
+  <PC_PEA.Needs.Planning.Cycle.NoActiveNeed>No active need</PC_PEA.Needs.Planning.Cycle.NoActiveNeed>
+  <PC_PEA.Needs.Planning.Cycle.NoOffer>No candidate job</PC_PEA.Needs.Planning.Cycle.NoOffer>
+  <PC_PEA.Needs.Planning.Offer>Wage {0}; capable {1}; executable {2}; funded {3}; reachable {4}</PC_PEA.Needs.Planning.Offer>
+  <PC_PEA.Needs.Planning.Employment.State.Active>On contract</PC_PEA.Needs.Planning.Employment.State.Active>
+  <PC_PEA.Needs.Planning.Employment.State.None>No contract</PC_PEA.Needs.Planning.Employment.State.None>
+  <PC_PEA.Needs.Planning.Employment.Position>Position</PC_PEA.Needs.Planning.Employment.Position>
+  <PC_PEA.Needs.Planning.Employment.Wage>Wage and jobs</PC_PEA.Needs.Planning.Employment.Wage>
+  <PC_PEA.Needs.Planning.Employment.WageValue>{0} per job · jobs {1} / {2}</PC_PEA.Needs.Planning.Employment.WageValue>
+  <PC_PEA.Needs.Planning.Employment.Term>Contract term</PC_PEA.Needs.Planning.Employment.Term>
+  <PC_PEA.Needs.Planning.Employment.TermValue>{0} ticks left · exit: {1}</PC_PEA.Needs.Planning.Employment.TermValue>
+  <PC_PEA.Needs.Planning.Employment.NoExit>no exit condition</PC_PEA.Needs.Planning.Employment.NoExit>
+  <PC_PEA.Needs.Planning.Employment.Exit.Expired>expired</PC_PEA.Needs.Planning.Employment.Exit.Expired>
+  <PC_PEA.Needs.Planning.Employment.Exit.JobCapReached>job cap reached</PC_PEA.Needs.Planning.Employment.Exit.JobCapReached>
+  <PC_PEA.Needs.Planning.Employment.Exit.InstitutionClosed>institution closed</PC_PEA.Needs.Planning.Employment.Exit.InstitutionClosed>
+  <PC_PEA.Needs.Planning.Employment.Exit.PositionUnavailable>position unavailable</PC_PEA.Needs.Planning.Employment.Exit.PositionUnavailable>
+  <PC_PEA.Needs.Planning.Employment.Payable>Payable wages</PC_PEA.Needs.Planning.Employment.Payable>
+  <PC_PEA.Needs.Planning.Employment.NoPayable>none</PC_PEA.Needs.Planning.Employment.NoPayable>
+  <PC_PEA.Needs.Planning.Employment.PayableValue>{0} ({1} unpaid)</PC_PEA.Needs.Planning.Employment.PayableValue>
+  <PC_PEA.Needs.Planning.Employment.Backoff>Purchase backoff</PC_PEA.Needs.Planning.Employment.Backoff>
+  <PC_PEA.Needs.Planning.Employment.BackoffNone>no failures</PC_PEA.Needs.Planning.Employment.BackoffNone>
+  <PC_PEA.Needs.Planning.Employment.BackoffValue>{0} consecutive failures</PC_PEA.Needs.Planning.Employment.BackoffValue>
+  <PC_PEA.Needs.Planning.Employment.Credibility>Wage credibility</PC_PEA.Needs.Planning.Employment.Credibility>
+  <PC_PEA.Needs.Planning.Employment.CredibilityValue>{0} (samples {1})</PC_PEA.Needs.Planning.Employment.CredibilityValue>
+  <PC_PEA.Needs.Planning.CredibilityBand.Unproven>unproven</PC_PEA.Needs.Planning.CredibilityBand.Unproven>
+  <PC_PEA.Needs.Planning.CredibilityBand.Weak>weak</PC_PEA.Needs.Planning.CredibilityBand.Weak>
+  <PC_PEA.Needs.Planning.CredibilityBand.Mixed>mixed</PC_PEA.Needs.Planning.CredibilityBand.Mixed>
+  <PC_PEA.Needs.Planning.CredibilityBand.Strong>strong</PC_PEA.Needs.Planning.CredibilityBand.Strong>
+  <PC_PEA.Needs.Planning.Care.Summary>{0} care authorisations</PC_PEA.Needs.Planning.Care.Summary>
+  <PC_PEA.Needs.Planning.Care.None>no care authorisation</PC_PEA.Needs.Planning.Care.None>
+  <PC_PEA.Needs.Planning.Care.RowValue>charged {0} / cap {1} · {2} ticks left</PC_PEA.Needs.Planning.Care.RowValue>
+  <PC_PEA.Needs.Planning.Care.Capability>Treatment service</PC_PEA.Needs.Planning.Care.Capability>
+  <PC_PEA.Needs.Planning.Cycle.State.Feasible>available</PC_PEA.Needs.Planning.Cycle.State.Feasible>
+  <PC_PEA.Needs.Planning.Cycle.State.Blocked>blocked</PC_PEA.Needs.Planning.Cycle.State.Blocked>
+  <PC_PEA.Needs.Planning.OptionUnreported>not reported</PC_PEA.Needs.Planning.OptionUnreported>
+  <PC_PEA.Needs.Planning.Cycle.State.NotAssessed>Not assessed</PC_PEA.Needs.Planning.Cycle.State.NotAssessed>
+  <PC_PEA.Needs.Planning.Cycle.NotAssessed>no option comparison in this assessment</PC_PEA.Needs.Planning.Cycle.NotAssessed>
+  <PC_PEA.Needs.Planning.Reason.FundedIncrementalOpportunity>A funded piecework opportunity can earn income toward the reserve; it has not yet covered the full budget or been paid.</PC_PEA.Needs.Planning.Reason.FundedIncrementalOpportunity>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteUnpriced>Public food exists but cannot be priced (market value or nutrition unavailable)</PC_PEA.Needs.Planning.Reason.FoodQuoteUnpriced>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteFoodUnreachable>All public food is out of reach</PC_PEA.Needs.Planning.Reason.FoodQuoteFoodUnreachable>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteFoodPendingTrade>Public food is tied up by a pending trade</PC_PEA.Needs.Planning.Reason.FoodQuoteFoodPendingTrade>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteOwnershipNotPublic>The food is not under public ownership</PC_PEA.Needs.Planning.Reason.FoodQuoteOwnershipNotPublic>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteNotEdible>Public food exists, but this colonist cannot eat any of it</PC_PEA.Needs.Planning.Reason.FoodQuoteNotEdible>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteNoFood>Reachable public storage holds no food</PC_PEA.Needs.Planning.Reason.FoodQuoteNoFood>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteSourceUnreachable>All public storage buildings are out of reach</PC_PEA.Needs.Planning.Reason.FoodQuoteSourceUnreachable>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteZoneNotEnabled>Stockpiles are not enabled as a public source</PC_PEA.Needs.Planning.Reason.FoodQuoteZoneNotEnabled>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteNoPublicStorage>No public storage or enabled stockpile to inspect</PC_PEA.Needs.Planning.Reason.FoodQuoteNoPublicStorage>
+  <PC_PEA.Needs.Planning.Account.State.Known>Account established</PC_PEA.Needs.Planning.Account.State.Known>
+  <PC_PEA.Needs.Planning.Account.State.NotEstablished>No personal account yet</PC_PEA.Needs.Planning.Account.State.NotEstablished>
+  <PC_PEA.Needs.Planning.Account.State.Unavailable>Ledger unavailable (saving, loading or recovering)</PC_PEA.Needs.Planning.Account.State.Unavailable>
+  <PC_PEA.Needs.Planning.Account.State.Unsupported>Ledger schema or text encoding unsupported (kept raw)</PC_PEA.Needs.Planning.Account.State.Unsupported>
+  <PC_PEA.Needs.Planning.Account.State.Error>Failed to read the personal account</PC_PEA.Needs.Planning.Account.State.Error>
+  <PC_PEA.Needs.Planning.Account.State.NotApplicable>Not applicable here (no live map)</PC_PEA.Needs.Planning.Account.State.NotApplicable>
+  <PC_PEA.Needs.Planning.Account.NoPlan>plan awaiting refresh</PC_PEA.Needs.Planning.Account.NoPlan>
+  <PC_PEA.Needs.Planning.Account.Income.NoPlan>plan awaiting refresh</PC_PEA.Needs.Planning.Account.Income.NoPlan>
+  <PC_PEA.Needs.Planning.Account.Income.Stale>plan is stale, awaiting re-evaluation</PC_PEA.Needs.Planning.Account.Income.Stale>
+  <PC_PEA.Needs.Planning.Account.Income.WaitingQuote>waiting for living-cost quotes</PC_PEA.Needs.Planning.Account.Income.WaitingQuote>
+  <PC_PEA.Needs.Planning.Account.Income.WaitingAccount>waiting for a verified personal account</PC_PEA.Needs.Planning.Account.Income.WaitingAccount>
+  <PC_PEA.Needs.Planning.Account.Income.Inconsistent>budget evidence inconsistent</PC_PEA.Needs.Planning.Account.Income.Inconsistent>
+  <PC_PEA.Needs.Planning.Account.Income.Unknown>unknown</PC_PEA.Needs.Planning.Account.Income.Unknown>
+  <PC_PEA.Needs.Planning.Account.Income.Sufficient>no top-up needed right now</PC_PEA.Needs.Planning.Account.Income.Sufficient>
+  <PC_PEA.Needs.Planning.Account.Income.NotPermitted>cannot work: age or eligibility forbids ordinary employment</PC_PEA.Needs.Planning.Account.Income.NotPermitted>
+  <PC_PEA.Needs.Planning.Account.Income.Refilling>topping up the reserve</PC_PEA.Needs.Planning.Account.Income.Refilling>
+  <PC_PEA.Needs.Planning.Account.Tip.Subject>Account holder: {0}</PC_PEA.Needs.Planning.Account.Tip.Subject>
+  <PC_PEA.Needs.Planning.Account.Tip.SubjectUnknown>the selected colonist</PC_PEA.Needs.Planning.Account.Tip.SubjectUnknown>
+  <PC_PEA.Needs.Planning.Account.Tip.Formula>Available = account total − reserved. Amounts are integer minor units from the live funded ledger (100 minor = 1 silver), always shown with two decimals.</PC_PEA.Needs.Planning.Account.Tip.Formula>
+  <PC_PEA.Needs.Planning.Account.Tip.Source>Source: the live funded ledger (not a frozen economic account). Unpaid wages, quotes and contract amounts are forecasts and never count as balance; only real settlements move it.</PC_PEA.Needs.Planning.Account.Tip.Source>
+  <PC_PEA.Needs.Planning.Account.Tip.Sampling>Read at this refresh and updated with the page's 60-tick refresh; it is a live figure and may differ from the plan's sampling time.</PC_PEA.Needs.Planning.Account.Tip.Sampling>
+  <PC_PEA.Needs.Planning.Account.Tip.State>Current state: {0}</PC_PEA.Needs.Planning.Account.Tip.State>
+  <PC_PEA.Needs.Planning.Account.Tip.NoPlan>No shadow-plan sample yet: the account numbers still show, while the reserve target and top-up state await planning.</PC_PEA.Needs.Planning.Account.Tip.NoPlan>
+  <PC_PEA.Needs.Planning.Account.Tip.PlanAge>Plan sample age: {0}</PC_PEA.Needs.Planning.Account.Tip.PlanAge>
+  <PC_PEA.Needs.Planning.Account.Tip.Window>Budget window: the next {0} day(s) (not every living item is costed yet).</PC_PEA.Needs.Planning.Account.Tip.Window>
+  <PC_PEA.Needs.Planning.Account.Tip.Objective>Reserve target {0}: necessary living cost minus effective coverage.</PC_PEA.Needs.Planning.Account.Tip.Objective>
+  <PC_PEA.Needs.Planning.Account.Tip.Trigger>Start line {0} = min(reserve target, low water {1} + emergency {2}); top-up begins only below it.</PC_PEA.Needs.Planning.Account.Tip.Trigger>
+  <PC_PEA.Needs.Planning.Account.Tip.Exit>Once started, top-up continues until the reserve target {0}; below the start line a shortfall may remain without seeking work.</PC_PEA.Needs.Planning.Account.Tip.Exit>
+  <PC_PEA.Needs.Planning.Account.Tip.Decision>Current decision: {0} · reason: {1}. Top-up means income is needed; actual job seeking also depends on drafting, eating, sleeping, capabilities, work hours and vacancies.</PC_PEA.Needs.Planning.Account.Tip.Decision>
+  <PC_PEA.Needs.Planning.Account.Income.RefillNeeded>Income needed for reserves</PC_PEA.Needs.Planning.Account.Income.RefillNeeded>
+  <PC_PEA.Needs.Planning.Model.NoPlan>Waiting for observations</PC_PEA.Needs.Planning.Model.NoPlan>
+  <PC_PEA.Needs.Planning.Model.NoReserve>Plan sample: no necessary reserve target</PC_PEA.Needs.Planning.Model.NoReserve>
+  <PC_PEA.Needs.Planning.Model.Coverage>Plan {0} / target {1} · coverage {2} · gap {3}</PC_PEA.Needs.Planning.Model.Coverage>
+  <PC_PEA.Needs.Planning.Model.CoverageUnknown>Plan — · target — · coverage — · {0}</PC_PEA.Needs.Planning.Model.CoverageUnknown>
+  <PC_PEA.Needs.Planning.Model.SampledValue>{0} (stale)</PC_PEA.Needs.Planning.Model.SampledValue>
+  <PC_PEA.Needs.Planning.Model.Threshold>Plan: start below {0} · stop at {1}</PC_PEA.Needs.Planning.Model.Threshold>
+  <PC_PEA.Needs.Planning.Model.ThresholdUnknown>Plan trigger — · target —</PC_PEA.Needs.Planning.Model.ThresholdUnknown>
+  <PC_PEA.Needs.Planning.Model.FocusUnknown>Waiting for target observations</PC_PEA.Needs.Planning.Model.FocusUnknown>
+  <PC_PEA.Needs.Planning.Model.FocusReserve>Living reserves</PC_PEA.Needs.Planning.Model.FocusReserve>
+  <PC_PEA.Needs.Planning.Model.FocusNone>No active planned goal</PC_PEA.Needs.Planning.Model.FocusNone>
+  <PC_PEA.Needs.Planning.Model.Input>Input · account</PC_PEA.Needs.Planning.Model.Input>
+  <PC_PEA.Needs.Planning.Model.AccountSample>Available {0} · account sampled at {1} ticks</PC_PEA.Needs.Planning.Model.AccountSample>
+  <PC_PEA.Needs.Planning.Model.PlanSample>Input · plan</PC_PEA.Needs.Planning.Model.PlanSample>
+  <PC_PEA.Needs.Planning.Model.PlanSampleValue>Sampled cash {0} · plan at {1} ticks · age {2} ticks · {3}</PC_PEA.Needs.Planning.Model.PlanSampleValue>
+  <PC_PEA.Needs.Planning.Model.Fresh>Valid sample</PC_PEA.Needs.Planning.Model.Fresh>
+  <PC_PEA.Needs.Planning.Model.Focus>Current target</PC_PEA.Needs.Planning.Model.Focus>
+  <PC_PEA.Needs.Planning.Model.Gap>Gap · reserves</PC_PEA.Needs.Planning.Model.Gap>
+  <PC_PEA.Needs.Planning.Model.Trigger>Gap · thresholds</PC_PEA.Needs.Planning.Model.Trigger>
+  <PC_PEA.Needs.Planning.Model.Arbitration>Arbitration · decision</PC_PEA.Needs.Planning.Model.Arbitration>
+  <PC_PEA.Needs.Planning.Model.NextLabel>Next condition</PC_PEA.Needs.Planning.Model.NextLabel>
+  <PC_PEA.Needs.Planning.Model.Execution>Execution feedback</PC_PEA.Needs.Planning.Model.Execution>
+  <PC_PEA.Needs.Planning.Model.Job>Current job evidence</PC_PEA.Needs.Planning.Model.Job>
+  <PC_PEA.Needs.Planning.Model.Candidates>Sampled candidates</PC_PEA.Needs.Planning.Model.Candidates>
+  <PC_PEA.Needs.Planning.Model.CandidateCount>{0} candidates assessed; not all positions</PC_PEA.Needs.Planning.Model.CandidateCount>
+  <PC_PEA.Needs.Planning.Model.Candidate>Candidate {0}</PC_PEA.Needs.Planning.Model.Candidate>
+  <PC_PEA.Needs.Planning.Model.CandidatesMore>Other candidates</PC_PEA.Needs.Planning.Model.CandidatesMore>
+  <PC_PEA.Needs.Planning.Model.CandidateMoreCount>{0} more in the candidate list</PC_PEA.Needs.Planning.Model.CandidateMoreCount>
+  <PC_PEA.Needs.Planning.Model.ContractEvidence>Linked contract evidence</PC_PEA.Needs.Planning.Model.ContractEvidence>
+  <PC_PEA.Needs.Planning.Model.ContractValue>{0} · signed {1} · expires {2} ticks · completed {3}/{4}</PC_PEA.Needs.Planning.Model.ContractValue>
+  <PC_PEA.Needs.Planning.Model.RecentContract>Latest contract feedback (history, not current action)</PC_PEA.Needs.Planning.Model.RecentContract>
+  <PC_PEA.Needs.Planning.Model.Execution.Unconfirmed>Execution state unconfirmed</PC_PEA.Needs.Planning.Model.Execution.Unconfirmed>
+  <PC_PEA.Needs.Planning.Model.Execution.Selected>Candidate selected · acceptance pending; no contract evidence</PC_PEA.Needs.Planning.Model.Execution.Selected>
+  <PC_PEA.Needs.Planning.Model.Execution.Contract>Contract active · current job association unconfirmed</PC_PEA.Needs.Planning.Model.Execution.Contract>
+  <PC_PEA.Needs.Planning.Model.Execution.Due>This contract has {0} due</PC_PEA.Needs.Planning.Model.Execution.Due>
+  <PC_PEA.Needs.Planning.Model.Execution.Shortfall>Payment funds insufficient · {0} unpaid</PC_PEA.Needs.Planning.Model.Execution.Shortfall>
+  <PC_PEA.Needs.Planning.Model.Execution.Ended>Contract ended / exit pending: {0}</PC_PEA.Needs.Planning.Model.Execution.Ended>
+  <PC_PEA.Needs.Planning.Model.Execution.Closed>Revoked or expired</PC_PEA.Needs.Planning.Model.Execution.Closed>
+  <PC_PEA.Needs.Planning.Model.Execution.Paid>This contract received {0} (settlement recorded)</PC_PEA.Needs.Planning.Model.Execution.Paid>
+  <PC_PEA.Needs.Planning.Model.SettlementEvidence>Contract settlement evidence</PC_PEA.Needs.Planning.Model.SettlementEvidence>
+  <PC_PEA.Needs.Planning.Model.SettlementValue>Unpaid {0} · settled {1}; only paid obligations with transaction evidence</PC_PEA.Needs.Planning.Model.SettlementValue>
+  <PC_PEA.Needs.Planning.Model.State.NotAssessed>Not assessed</PC_PEA.Needs.Planning.Model.State.NotAssessed>
+  <PC_PEA.Needs.Planning.Model.State.Pending>Pending</PC_PEA.Needs.Planning.Model.State.Pending>
+  <PC_PEA.Needs.Planning.Model.State.WaitingFacts>Waiting for facts</PC_PEA.Needs.Planning.Model.State.WaitingFacts>
+  <PC_PEA.Needs.Planning.Model.State.Blocked>Blocked</PC_PEA.Needs.Planning.Model.State.Blocked>
+  <PC_PEA.Needs.Planning.Model.State.Feasible>Feasible</PC_PEA.Needs.Planning.Model.State.Feasible>
+  <PC_PEA.Needs.Planning.Model.State.Executing>Executing</PC_PEA.Needs.Planning.Model.State.Executing>
+  <PC_PEA.Needs.Planning.Model.State.Satisfied>Completed / satisfied</PC_PEA.Needs.Planning.Model.State.Satisfied>
+  <PC_PEA.Needs.Planning.Model.State.NotApplicable>Not applicable</PC_PEA.Needs.Planning.Model.State.NotApplicable>
+  <PC_PEA.Needs.Planning.Model.State.Stale>Stale</PC_PEA.Needs.Planning.Model.State.Stale>
+  <PC_PEA.Needs.Planning.Model.Decision.WaitingFacts>Waiting for observations</PC_PEA.Needs.Planning.Model.Decision.WaitingFacts>
+  <PC_PEA.Needs.Planning.Model.Next.WaitingFacts>Reassess after valid observations arrive</PC_PEA.Needs.Planning.Model.Next.WaitingFacts>
+  <PC_PEA.Needs.Planning.Model.Decision.NativeYield>Yielding to native control</PC_PEA.Needs.Planning.Model.Decision.NativeYield>
+  <PC_PEA.Needs.Planning.Model.Next.NativeYield>Reassess after native control and safety protection clear</PC_PEA.Needs.Planning.Model.Next.NativeYield>
+  <PC_PEA.Needs.Planning.Model.Decision.NativeNeed>Prioritizing basic needs</PC_PEA.Needs.Planning.Model.Decision.NativeNeed>
+  <PC_PEA.Needs.Planning.Model.Next.NativeNeed>Reassess after the current basic need is addressed</PC_PEA.Needs.Planning.Model.Next.NativeNeed>
+  <PC_PEA.Needs.Planning.Model.Decision.WaitingBudget>Waiting for living budget</PC_PEA.Needs.Planning.Model.Decision.WaitingBudget>
+  <PC_PEA.Needs.Planning.Model.Next.WaitingBudget>Wait for valid quotes, account and budget evidence</PC_PEA.Needs.Planning.Model.Next.WaitingBudget>
+  <PC_PEA.Needs.Planning.Model.Decision.WaitingOpportunity>Waiting for viable income</PC_PEA.Needs.Planning.Model.Decision.WaitingOpportunity>
+  <PC_PEA.Needs.Planning.Model.Next.WaitingOpportunity>Wait for an eligible, timely, funded and reachable opportunity</PC_PEA.Needs.Planning.Model.Next.WaitingOpportunity>
+  <PC_PEA.Needs.Planning.Model.Decision.SeekWork>Income opportunity selected</PC_PEA.Needs.Planning.Model.Decision.SeekWork>
+  <PC_PEA.Needs.Planning.Model.Next.SeekWork>Wait for acceptance; see execution evidence for contract and work</PC_PEA.Needs.Planning.Model.Next.SeekWork>
+  <PC_PEA.Needs.Planning.Model.Decision.MaintainReserve>Maintaining reserves</PC_PEA.Needs.Planning.Model.Decision.MaintainReserve>
+  <PC_PEA.Needs.Planning.Model.Next.MaintainReserve>Reassess when reserves or trigger conditions change</PC_PEA.Needs.Planning.Model.Next.MaintainReserve>
+  <PC_PEA.Needs.Planning.Model.Decision.NoIncomeNeeded>No current income need</PC_PEA.Needs.Planning.Model.Decision.NoIncomeNeeded>
+  <PC_PEA.Needs.Planning.Model.Next.NoIncomeNeeded>Reassess when income needs or living targets change</PC_PEA.Needs.Planning.Model.Next.NoIncomeNeeded>
+  <PC_PEA.Needs.Planning.Model.Decision.OutOfScope>Not applicable</PC_PEA.Needs.Planning.Model.Decision.OutOfScope>
+  <PC_PEA.Needs.Planning.Model.Next.OutOfScope>Wait for a valid observation scope</PC_PEA.Needs.Planning.Model.Next.OutOfScope>
+  <PC_PEA.Needs.Planning.Model.Decision.Error>Planning read error</PC_PEA.Needs.Planning.Model.Decision.Error>
+  <PC_PEA.Needs.Planning.Model.Next.Error>Wait for valid planning data</PC_PEA.Needs.Planning.Model.Next.Error>
+  <PC_PEA.Needs.Planning.Model.Next.Stale>Wait for a fresh planning sample</PC_PEA.Needs.Planning.Model.Next.Stale>
+  <PC_PEA.Needs.Planning.Model.GoalBelowTarget>Target not met; immediate action has not been triggered</PC_PEA.Needs.Planning.Model.GoalBelowTarget>
+  <PC_PEA.Needs.Planning.Model.Next.FoodPublicSource>Check public food storage or enable a stockpile; reassess when supply is available</PC_PEA.Needs.Planning.Model.Next.FoodPublicSource>
+  <PC_PEA.Needs.Planning.Model.Next.FoodAccess>Check food and storage paths, area restrictions and reachability</PC_PEA.Needs.Planning.Model.Next.FoodAccess>
+  <PC_PEA.Needs.Planning.Model.Next.FoodTrade>Reassess after the current food trade completes or is cancelled</PC_PEA.Needs.Planning.Model.Next.FoodTrade>
+  <PC_PEA.Needs.Planning.Model.Next.FoodOwnership>Check that food is held in a valid public storage source</PC_PEA.Needs.Planning.Model.Next.FoodOwnership>
+  <PC_PEA.Needs.Planning.Model.Next.FoodSupply>Provide public food this colonist can eat</PC_PEA.Needs.Planning.Model.Next.FoodSupply>
+  <PC_PEA.Needs.Planning.Model.Next.FoodPricing>Check food market values, nutrition and pricing adapters</PC_PEA.Needs.Planning.Model.Next.FoodPricing>
+  <PC_PEA.Needs.Planning.Model.Next.Account>Wait for personal account and funded-ledger verification</PC_PEA.Needs.Planning.Model.Next.Account>
+  <PC_PEA.Needs.Planning.Model.Next.BudgetConsistency>Reassess when account, cost and coverage evidence agree</PC_PEA.Needs.Planning.Model.Next.BudgetConsistency>
+</LanguageData>

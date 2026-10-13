@@ -1,0 +1,14 @@
+{
+  "kind": "ExamCenter",
+  "defName": "PC_PEA_ExamCenter",
+  "direction": "west",
+  "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_west.png",
+  "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-1e4ebe7c-e687-4968-b7a1-52cef0b8a684.png",
+  "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_north.png",
+  "northReferenceSha256": "D54E73E4203CDFE8DCA1251F4F28AE81BD8F1C2CE5DBBA750B571231E3F92EED",
+  "promptFile": "PC_PEA_ExamCenter_west.prompt.txt",
+  "sha256": "8c474070e383f373a0f5eca6304c89ddb622c7c2081526093abe69ba2a910df0",
+  "generator": "built-in image_gen",
+  "generationMode": "north-reference generation or targeted reference edit",
+  "externalPixelEditsPerformed": false
+}

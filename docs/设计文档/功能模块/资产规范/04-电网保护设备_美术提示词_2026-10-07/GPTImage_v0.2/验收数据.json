@@ -1,0 +1,787 @@
+{
+  "date": "2026-10-07",
+  "delivery_status": "GENERATED_CANDIDATES_GAMEPLAY_PENDING",
+  "assets": 12,
+  "exports": 24,
+  "checks": {
+    "exact_expected_names": true,
+    "ascii_png_names": true,
+    "no_circuit_breaker_off": true,
+    "rgba_and_dimensions": true,
+    "transparent_corners": true,
+    "user_approved_north_masters": true,
+    "four_direction_part_counts": "VISUALLY_REVIEWED",
+    "off_disconnection_gap": "VISUALLY_REVIEWED",
+    "off_static_pixels_identical": "NOT_GUARANTEED",
+    "in_game_placement_and_graphic_switch": "NOT_RUN",
+    "defs_imported": "NO"
+  },
+  "pair_diagnostics": [
+    {
+      "direction": "north",
+      "static_corner_rgb_mean_absolute_difference_0_255": 8.503,
+      "static_corner_sample_pixels": 470,
+      "exact_pixel_identity": false,
+      "interpretation": "Diagnostic only. Model edits are not guaranteed pixel-identical outside the mechanism."
+    },
+    {
+      "direction": "east",
+      "static_corner_rgb_mean_absolute_difference_0_255": 14.776,
+      "static_corner_sample_pixels": 431,
+      "exact_pixel_identity": false,
+      "interpretation": "Diagnostic only. Model edits are not guaranteed pixel-identical outside the mechanism."
+    },
+    {
+      "direction": "south",
+      "static_corner_rgb_mean_absolute_difference_0_255": 18.459,
+      "static_corner_sample_pixels": 475,
+      "exact_pixel_identity": false,
+      "interpretation": "Diagnostic only. Model edits are not guaranteed pixel-identical outside the mechanism."
+    },
+    {
+      "direction": "west",
+      "static_corner_rgb_mean_absolute_difference_0_255": 19.407,
+      "static_corner_sample_pixels": 481,
+      "exact_pixel_identity": false,
+      "interpretation": "Diagnostic only. Model edits are not guaranteed pixel-identical outside the mechanism."
+    }
+  ],
+  "files": [
+    {
+      "file": "母图384/PC_PowerCircuitBreaker_north.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        64,
+        145,
+        319,
+        239
+      ],
+      "source": "原始生成/PC_PowerCircuitBreaker_north.png",
+      "sha256": "366ab4ce508eda3a5230eee010978dfcfcf1c514b6c1f13f7c5b3419f1cf4cdc",
+      "uniform_scale_from_source": 0.22416812609457093,
+      "pair_transform_group": [
+        "PC_PowerCircuitBreaker_north.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerCircuitBreaker_north.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        32,
+        73,
+        160,
+        120
+      ],
+      "source": "原始生成/PC_PowerCircuitBreaker_north.png",
+      "sha256": "1a71330fc3012af13a8bb8e005404bce2f8021a04cff71cfe04aa50a904d487b",
+      "uniform_scale_from_source": 0.11208406304728546,
+      "pair_transform_group": [
+        "PC_PowerCircuitBreaker_north.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerCircuitBreaker_east.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        138,
+        64,
+        246,
+        320
+      ],
+      "source": "原始生成/PC_PowerCircuitBreaker_east.png",
+      "sha256": "7cffe92056b377263208c2972c6e371d17a34415f0b9f83f814ef6990eb42013",
+      "uniform_scale_from_source": 0.2522167487684729,
+      "pair_transform_group": [
+        "PC_PowerCircuitBreaker_east.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerCircuitBreaker_east.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        69,
+        32,
+        123,
+        160
+      ],
+      "source": "原始生成/PC_PowerCircuitBreaker_east.png",
+      "sha256": "fb27d82b37c4c8922839c8689d3762f831e1678e88a3442c647f1d1b42bfe254",
+      "uniform_scale_from_source": 0.12610837438423644,
+      "pair_transform_group": [
+        "PC_PowerCircuitBreaker_east.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerCircuitBreaker_south.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        64,
+        145,
+        319,
+        238
+      ],
+      "source": "原始生成/PC_PowerCircuitBreaker_south.png",
+      "sha256": "c7886e07d340a57028b3c56cde151f1820a85163e20dae31c0d47837f07cafd9",
+      "uniform_scale_from_source": 0.22436459246275198,
+      "pair_transform_group": [
+        "PC_PowerCircuitBreaker_south.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerCircuitBreaker_south.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        32,
+        73,
+        160,
+        119
+      ],
+      "source": "原始生成/PC_PowerCircuitBreaker_south.png",
+      "sha256": "b5bc8402de687ea0945db19142593bab572c114dad14c3d4b4fa8ead3f4f4622",
+      "uniform_scale_from_source": 0.11218229623137599,
+      "pair_transform_group": [
+        "PC_PowerCircuitBreaker_south.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerCircuitBreaker_west.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        139,
+        65,
+        244,
+        321
+      ],
+      "source": "原始生成/PC_PowerCircuitBreaker_west.png",
+      "sha256": "eef927b1d3b765fde76d96cf44a3546cf9ad486a580e9e5ca2c3f6607e3c9ec7",
+      "uniform_scale_from_source": 0.23125564588979222,
+      "pair_transform_group": [
+        "PC_PowerCircuitBreaker_west.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerCircuitBreaker_west.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        70,
+        32,
+        122,
+        160
+      ],
+      "source": "原始生成/PC_PowerCircuitBreaker_west.png",
+      "sha256": "7186f18a6419c9aed6766611cd1e8ad014595e2ceabfa6671784d8d6331fbc49",
+      "uniform_scale_from_source": 0.11562782294489611,
+      "pair_transform_group": [
+        "PC_PowerCircuitBreaker_west.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerIsolator_north.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        64,
+        143,
+        319,
+        241
+      ],
+      "source": "原始生成/PC_PowerIsolator_north.png",
+      "sha256": "7ac7e01aa5d103981aa515e905d35c1ce9f81c80f0c077903f16f51dcf5e3567",
+      "uniform_scale_from_source": 0.2401500938086304,
+      "pair_transform_group": [
+        "PC_PowerIsolator_north.png",
+        "PC_PowerIsolator_Off_north.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerIsolator_north.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        32,
+        72,
+        159,
+        121
+      ],
+      "source": "原始生成/PC_PowerIsolator_north.png",
+      "sha256": "23befc5a70db37bc0fcfa12b82b9c8ac221d51d2e30cdbe5fffb17400714cf66",
+      "uniform_scale_from_source": 0.1200750469043152,
+      "pair_transform_group": [
+        "PC_PowerIsolator_north.png",
+        "PC_PowerIsolator_Off_north.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerIsolator_Off_north.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        63,
+        143,
+        320,
+        241
+      ],
+      "source": "原始生成/PC_PowerIsolator_Off_north.png",
+      "sha256": "3f696dc77fb1a9c7c6ac3ddff5bc26de0c97f58577d62fc9d50ca4f9dc994fb6",
+      "uniform_scale_from_source": 0.2401500938086304,
+      "pair_transform_group": [
+        "PC_PowerIsolator_north.png",
+        "PC_PowerIsolator_Off_north.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerIsolator_Off_north.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        32,
+        72,
+        160,
+        121
+      ],
+      "source": "原始生成/PC_PowerIsolator_Off_north.png",
+      "sha256": "8226d0678d7940e787b7d4f569a03d4a2e4dcef1f9c993f74720aec82d622eb4",
+      "uniform_scale_from_source": 0.1200750469043152,
+      "pair_transform_group": [
+        "PC_PowerIsolator_north.png",
+        "PC_PowerIsolator_Off_north.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerIsolator_east.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        147,
+        64,
+        248,
+        318
+      ],
+      "source": "原始生成/PC_PowerIsolator_east.png",
+      "sha256": "f9bff9244689e4e4fbb3add0f343bcfb423cf6ce90b50b85089aa5d8f39f3f3d",
+      "uniform_scale_from_source": 0.22918531781557744,
+      "pair_transform_group": [
+        "PC_PowerIsolator_east.png",
+        "PC_PowerIsolator_Off_east.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerIsolator_east.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        74,
+        32,
+        124,
+        159
+      ],
+      "source": "原始生成/PC_PowerIsolator_east.png",
+      "sha256": "dc540f71154867c9a778b9d12bc96f080e6c11d5c1fb9fc93806e240d705e59a",
+      "uniform_scale_from_source": 0.11459265890778872,
+      "pair_transform_group": [
+        "PC_PowerIsolator_east.png",
+        "PC_PowerIsolator_Off_east.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerIsolator_Off_east.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        136,
+        64,
+        248,
+        319
+      ],
+      "source": "原始生成/PC_PowerIsolator_Off_east_修正.png",
+      "sha256": "648825e9833554d53c833a38819e8ef647fe14cbab09ddac8229026a0435c31b",
+      "uniform_scale_from_source": 0.22918531781557744,
+      "pair_transform_group": [
+        "PC_PowerIsolator_east.png",
+        "PC_PowerIsolator_Off_east.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerIsolator_Off_east.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        68,
+        32,
+        124,
+        160
+      ],
+      "source": "原始生成/PC_PowerIsolator_Off_east_修正.png",
+      "sha256": "0f3e73d5158776b42fc3c0b8c7c3b4bd7b396c4874a7dc9f345bbe7a2d4df9bc",
+      "uniform_scale_from_source": 0.11459265890778872,
+      "pair_transform_group": [
+        "PC_PowerIsolator_east.png",
+        "PC_PowerIsolator_Off_east.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerIsolator_south.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        64,
+        144,
+        319,
+        241
+      ],
+      "source": "原始生成/PC_PowerIsolator_south.png",
+      "sha256": "455d5a1ac2d4e463b4175b304abf12d71031baef41d83b8d1323c019d73293fd",
+      "uniform_scale_from_source": 0.2385834109972041,
+      "pair_transform_group": [
+        "PC_PowerIsolator_south.png",
+        "PC_PowerIsolator_Off_south.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerIsolator_south.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        32,
+        72,
+        159,
+        120
+      ],
+      "source": "原始生成/PC_PowerIsolator_south.png",
+      "sha256": "9142c9b16f33909905e88cc2a9ee2fc308acdd9ee5decffbff42ab1ad259082d",
+      "uniform_scale_from_source": 0.11929170549860205,
+      "pair_transform_group": [
+        "PC_PowerIsolator_south.png",
+        "PC_PowerIsolator_Off_south.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerIsolator_Off_south.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        64,
+        143,
+        319,
+        241
+      ],
+      "source": "原始生成/PC_PowerIsolator_Off_south_修正.png",
+      "sha256": "4e0edce745349ccc6139751075889de3f85be58ef04ef0c103b8c229f38efa67",
+      "uniform_scale_from_source": 0.2385834109972041,
+      "pair_transform_group": [
+        "PC_PowerIsolator_south.png",
+        "PC_PowerIsolator_Off_south.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerIsolator_Off_south.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        32,
+        72,
+        160,
+        120
+      ],
+      "source": "原始生成/PC_PowerIsolator_Off_south_修正.png",
+      "sha256": "62188f853a54c0fc22b96096748dca488988346242d5da0cbe1ba3d01ec5e47e",
+      "uniform_scale_from_source": 0.11929170549860205,
+      "pair_transform_group": [
+        "PC_PowerIsolator_south.png",
+        "PC_PowerIsolator_Off_south.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerIsolator_west.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        139,
+        65,
+        243,
+        319
+      ],
+      "source": "原始生成/PC_PowerIsolator_west.png",
+      "sha256": "7c385a48be43ef9f191840b8cac6f6a8b91a5942c666eb7e308c76a568d4d101",
+      "uniform_scale_from_source": 0.24544582933844677,
+      "pair_transform_group": [
+        "PC_PowerIsolator_west.png",
+        "PC_PowerIsolator_Off_west.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerIsolator_west.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        70,
+        32,
+        121,
+        160
+      ],
+      "source": "原始生成/PC_PowerIsolator_west.png",
+      "sha256": "d7fecca2d17239d55af95d66a6f227c5626e90123b2d93d0d5a1b7f8f7635152",
+      "uniform_scale_from_source": 0.12272291466922339,
+      "pair_transform_group": [
+        "PC_PowerIsolator_west.png",
+        "PC_PowerIsolator_Off_west.png"
+      ]
+    },
+    {
+      "file": "母图384/PC_PowerIsolator_Off_west.png",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        139,
+        64,
+        244,
+        320
+      ],
+      "source": "原始生成/PC_PowerIsolator_Off_west_修正.png",
+      "sha256": "944e3123741f9b2e03c894e808e09c92a8719a9436d094c9772e7da371d2b8c6",
+      "uniform_scale_from_source": 0.24544582933844677,
+      "pair_transform_group": [
+        "PC_PowerIsolator_west.png",
+        "PC_PowerIsolator_Off_west.png"
+      ]
+    },
+    {
+      "file": "游戏尺寸192/Textures/Things/Building/PC_PowerIsolator_Off_west.png",
+      "size": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_min_max": [
+        0,
+        255
+      ],
+      "solid_bbox": [
+        70,
+        32,
+        122,
+        160
+      ],
+      "source": "原始生成/PC_PowerIsolator_Off_west_修正.png",
+      "sha256": "ec49c43a51a49c9b18cfca2decb39a19363e617038d3a227ff62f0c191c9fe58",
+      "uniform_scale_from_source": 0.12272291466922339,
+      "pair_transform_group": [
+        "PC_PowerIsolator_west.png",
+        "PC_PowerIsolator_Off_west.png"
+      ]
+    }
+  ]
+}

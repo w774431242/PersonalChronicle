@@ -1,0 +1,14 @@
+{
+  "kind": "SettlementOffice",
+  "defName": "PC_PEA_SettlementOffice",
+  "direction": "south",
+  "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_south.png",
+  "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-c9118b03-29ef-40f9-a221-dcb522721220.png",
+  "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png",
+  "northReferenceSha256": "09C05A7B35F445D9579D3344CD8AA39D28722CD2E470610B2B565F6A3CF12DD2",
+  "promptFile": "PC_PEA_SettlementOffice_south.prompt.txt",
+  "sha256": "17014e94e77b2e210bf6b26886cf0aa90d6cc51e84b9b13008fce479a81fff29",
+  "generator": "built-in image_gen",
+  "generationMode": "north-reference generation or targeted reference edit",
+  "externalPixelEditsPerformed": false
+}

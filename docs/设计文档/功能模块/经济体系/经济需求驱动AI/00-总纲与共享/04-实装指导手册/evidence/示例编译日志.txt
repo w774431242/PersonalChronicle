@@ -1,0 +1,9 @@
+  正在确定要还原的项目…
+  所有项目均是最新的，无法还原。
+  HandbookExamples -> E:\SteamLibrary\steamapps\common\RimWorld\11\殖民地综合管理系统\docs\设计文档\功能模块\经济体系\经济需求驱动AI\模块化实装指导手册\_verify_tmp\bin\net48\PawnEconomy.HandbookExamples.dll
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:00.48

@@ -29,6 +29,32 @@ namespace PersonalChronicle.Api
         IReadOnlyList<ChronicleEvent> GetEventsFor(string stableId);
         IReadOnlyList<ChronicleEvent> GetRecentEvents(int count);
         IReadOnlyList<ChronicleEvent> GetAllEvents();
+
+        /// <summary>
+        /// 事件总数（**O(1)**，不复制、不排序）—— 供热路径（中心快照 / 统计带）使用。
+        /// 需要事件内容用 <see cref="GetAllEvents"/>，但那是 O(n) 复制，禁止在节流外的热路径调用。
+        /// </summary>
+        int GetEventCount();
+
+        /// <summary>
+        /// 事件按时间分桶计数（段 0 = 最老 → 段 n-1 = 最近），**O(N) 单次遍历、零排序**。
+        /// 用于以时间序列表达活跃度的读数组（绩效面板的趋势柱）。
+        /// </summary>
+        int[] GetEventBuckets(int bucketCount, long bucketTicks);
+
+        /// <summary>
+        /// 按**事件语义类别**分桶计数（段 0 = 最老 → 段 n−1 = 最近），O(N) 单次遍历。
+        /// 类别经 <c>ChronicleEventDef.kind</c> 判定（不按 TypeKey 文本猜，GOV-009）。
+        /// 用于「每季入档人数」这类分类型历史序列（调用方累计可得存量曲线）。
+        /// </summary>
+        int[] GetEventBucketsByKind(ChronicleEventKind kind, int bucketCount, long bucketTicks);
+
+        /// <summary>
+        /// **分身份存量趋势**（按季回推，段 0 = 最老）：从当前三态人数出发逆向撤销带身份事件，
+        /// 每季末快照一次 ⇒ 三条人数线（自由/奴隶/囚犯）。返回 ``[3][bucketCount]``。
+        /// 只认带身份的事件；历史（本机制上线前）如实缺失。
+        /// </summary>
+        int[][] GetIdentityTrends(int bucketCount, long bucketTicks, int[] currentByRole);
         IReadOnlyList<ChronicleEvent> GetProductionEvents(string stableId);
         ArchiveDepthBehavior GetCategoryBehavior(string categoryKey);
 

@@ -1,0 +1,49 @@
+{
+  "changeId": "CHG-20261009-ECON-B6B7",
+  "verifiedUtc": "2026-10-09T10:11:36Z",
+  "source": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy",
+  "testedBuildSha256": "0813A24BF89567E31809640A153D8C90BACAB234CEC9E28D097FBD2370E0E43E",
+  "deployedBuildSha256": "0813A24BF89567E31809640A153D8C90BACAB234CEC9E28D097FBD2370E0E43E",
+  "deployed": true,
+  "testRun": "Tests/TestResults/EconomyU5-Full.trx",
+  "testResult": "1028 passed / 0 failed / 1 skipped (total 1029)",
+  "buildHistory": [
+    {
+      "buildStampUtc": "2026-10-09 10:03",
+      "sha256": "A7F3E86064DD4A3D7F1A0566EAB40481D48E80F4E894A88863C7E5178B27F117",
+      "deployedUtc": "2026-10-09T10:03:49Z",
+      "note": "首次 U5 构建与部署；其后被并行会话于 10:05 重建、10:06 覆盖部署（同一源，非本批代码漂移）"
+    },
+    {
+      "buildStampUtc": "2026-10-09 10:11",
+      "sha256": "0813A24BF89567E31809640A153D8C90BACAB234CEC9E28D097FBD2370E0E43E",
+      "deployedUtc": "2026-10-09T10:11:36Z",
+      "note": "Gate 复核后的受控修复构建（LOC P1 服务名/能力名回落显示 + DATA P2 提案拒绝原因码），最终部署版"
+    }
+  ],
+  "controlledFixes": [
+    {
+      "gate": "LOC",
+      "level": "P1",
+      "file": "Source/PersonalChronicle/Economy/PawnEconomy/Dialog_PawnEconomy.Policy.cs",
+      "summary": "LocalizedId 只查 PC_PEA.Policy.* 前缀，而服务名/能力名键位于 PC_PEA.Care.*，导致总览与照护页显示英文枚举（Examination=PublicVanilla）。改为按 Care → Policy 顺序回落，最后才显示标识符。"
+    },
+    {
+      "gate": "DATA",
+      "level": "P2",
+      "file": "Source/PersonalChronicle/Application/PawnEconomy/Production/WorkshopExecutorPorts.cs",
+      "summary": "提案账满额拒绝被守卫误报为 SinkNotWired；现契约签名携带原因码，满额报告 ProposalCapacityReached，ExecutorFailure 收入常量表。"
+    }
+  ],
+  "copiedFiles": 233,
+  "gameVerified": false,
+  "automaticEmploymentFixed": false,
+  "notes": [
+    "编译 0 错 0 警（BuildStamp 2026-10-09 10:11）；全量离线 1028 通过 / 0 失败 / 1 既有跳过。",
+    "必须重启 RimWorld 才会载入新程序集；重启前不得声称新 UI 行为已生效。",
+    "ECON-AUTOEMPLOY-001 仍 Open，未修复，不得声称已修。",
+    "已知未修（非本批）：生产读数扫描截断静默无报告（P2，当前不影响缺口数字）。"
+  ]
+}

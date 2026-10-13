@@ -1,0 +1,2187 @@
+{
+  "changeId": "CHG-20261008-ECON-DEPLOY-ACCEPTANCE",
+  "batch": "B2.4.2",
+  "purpose": "Local game acceptance deployment; not Workshop release",
+  "startedUtc": "2026-10-08T10:23:03.7157901Z",
+  "verifiedUtc": "2026-10-08T10:23:06.7028884Z",
+  "source": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\deploy_20261008_182303_758",
+  "initialDeploymentBackup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\deploy_20261008_182156_226",
+  "retiredResourceCleanup": {
+    "archived": 17,
+    "removed": 17,
+    "archive": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\economy-b242-retired-release_20261008_182257_440",
+    "retainedVerified": 212,
+    "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+    "evidence": "变更标注_CHG-20261007-GRID-REMOVE.md",
+    "gameVerified": false
+  },
+  "gameRunningBeforeDeployment": false,
+  "testedBuildSha256": "F72561366C7959388678D27CE4C61DB23EE2E84B87AB365F96885E4E84FF5FEE",
+  "deployedBuildSha256": "F72561366C7959388678D27CE4C61DB23EE2E84B87AB365F96885E4E84FF5FEE",
+  "sourceEvidenceSha256": "64E9784B730429F1D386708BCE6544616B2E8AF9F9E2F0BD18B72AF4ADC83B29",
+  "sourceEvidenceFilesVerified": 26,
+  "existingFullTests": {
+    "path": "Tests/TestResults/EconomyLanding-B242-Full.trx",
+    "sha256": "CEED377CB5D958ADE17C4E4335A7B3614D5697BCF666A8C021DA8C2A27B4614D",
+    "passed": 904,
+    "failed": 0,
+    "skipped": 1,
+    "skippedNames": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "newCases": 38
+  },
+  "testsRerunThisDeployment": false,
+  "buildRerunThisDeployment": false,
+  "reason": "No runtime changes; deployment uses the exact previously tested DLL, TRX and source evidence",
+  "filesVerified": 211,
+  "targetFileCount": 212,
+  "totalBytes": 32833571.0,
+  "backupFileCount": 211,
+  "workshopIdentityPreserved": true,
+  "workshopIdentityBeforeSha256": "7E96A19B0DFFC0D05556012AC7AABBDC342A702593FF944E9E0947825991387F",
+  "workshopIdentityAfterSha256": "7E96A19B0DFFC0D05556012AC7AABBDC342A702593FF944E9E0947825991387F",
+  "unexpectedFiles": [],
+  "forbiddenFiles": [],
+  "xmlParsingPassed": true,
+  "deployed": true,
+  "gameVerified": false,
+  "activeAvailableInGame": false,
+  "fullGlobalGateAvailable": false,
+  "files": [
+    {
+      "path": "Defs/Chronicle_Events.xml",
+      "bytes": 5133,
+      "sha256": "5FAFFEA074F26FBE5743A4A7A7E157E668CD0FC231F4665DA724259F1C376719"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.xml",
+      "bytes": 50774,
+      "sha256": "6EFE21C418C0A0734C09968E4EBC45D5BFD965BF24BF0B864D6832A827795C20"
+    },
+    {
+      "path": "Textures/Things/Building/AutoFarm/PC_AutoFarm_M.png",
+      "bytes": 29808,
+      "sha256": "A10020805984F3885CEE51F4FE1428FC17EB7D5629CC4243F8A5E304D99CFADD"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/DesignatorDropdownGroupDef/Automation.xml",
+      "bytes": 128,
+      "sha256": "5464A75121BB33F8E05010E04FF7C3BFE64E3B061659EF1836ED0036CD10926F"
+    },
+    {
+      "path": "Fonts/Cinzel-Variable.ttf",
+      "bytes": 125468,
+      "sha256": "F4D83D34D1F6C741193E4ACF4B3DFF9531E5A67B6AA65228D00A7DB72A4E0F34"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Machining_west.png",
+      "bytes": 53277,
+      "sha256": "46CB7DDC97ACB7B4B9851664EA02C1B68DA30A139FC5371DCE10B64A262D62C6"
+    },
+    {
+      "path": "Defs/Automation_Jobs.xml",
+      "bytes": 3634,
+      "sha256": "EE9FD3F00FF45876331B9197407D383A89AB68A0023621E797D511B095B6C668"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopProcessDef/WorkshopProcesses.xml",
+      "bytes": 1633,
+      "sha256": "8B1DA3016DE69A025D5817E4E96794CA949C879A7EA636C479CBEE482ADAE293"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkTypeDef/AutomationWork.xml",
+      "bytes": 3269,
+      "sha256": "6AFC6397B825B82C3EB98B953405DE3F77682EFD891BBF57E0F129FD24BC2347"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smithy_north.png",
+      "bytes": 59160,
+      "sha256": "D5ED39A75AE56D44ABABD0C1221BD9B0009FAD9BAD594B3A4D91AB3AC7980BF7"
+    },
+    {
+      "path": "Defs/Automation_Research.xml",
+      "bytes": 2017,
+      "sha256": "FF2AB62677DA3E5FC5AD0BF1AF3389016D566BF70F55FCAA1C1AAF90865C44A8"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Sculpting_north.png",
+      "bytes": 45675,
+      "sha256": "33FBB522CF922D3FCA7CF6B23FF4268D234183EA3B92E8B7D09DC0BD6089EC25"
+    },
+    {
+      "path": "Languages/English/DefInjected/MainButtonDef/MainButtonDefs.xml",
+      "bytes": 274,
+      "sha256": "6012B3609A5C45E0D9899BEFED97F6E514FC6E49788E01D85E5FE49A26C1B6AD"
+    },
+    {
+      "path": "About/Screens/个人档案-总览健康.png",
+      "bytes": 131602,
+      "sha256": "382A50917080470F04A9841153DD683B241C76268EA9AE7469736E37ABCB1E51"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ThingDef/ExamThings.xml",
+      "bytes": 24119,
+      "sha256": "7AB8B20DAF28B9E71FBA22786E42248A870DF3A948EEF811195F1A453D061E80"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Model_Gold.png",
+      "bytes": 1725157,
+      "sha256": "3A95530E212BA54562BA7DE5DB6C0C4003DD251EA721014DC7C9125E17C98A6A"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/TreasuryOperations.xml",
+      "bytes": 4860,
+      "sha256": "C805EBD6F4D69CBEE68B392A7EBE609DA05696FE7F7E3E960A9CED45A6FAC83F"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomy.xml",
+      "bytes": 4963,
+      "sha256": "BDDA34F3461587015E26449EA77E61A20257073A5B9EAE1BA122C279B3CAA81F"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start_south.png",
+      "bytes": 3859,
+      "sha256": "88CFF83513A688242A60BD253D5EA8CBE8B6EC03303CE2D9AF1D039E2FDCE47D"
+    },
+    {
+      "path": "Fonts/IMFELL-OFL.txt",
+      "bytes": 4452,
+      "sha256": "2A3CA501FC4D5EFCAD9798531E3E06962B1E20C60E464F6CBD6C17630112C773"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Sculpting_east.png",
+      "bytes": 47907,
+      "sha256": "BECB3B08DADD90F2A6907800D8570241C3A8CB2723E67347094FB562C337C55F"
+    },
+    {
+      "path": "About/Screens/个人档案-总览.png",
+      "bytes": 115057,
+      "sha256": "C464DAF5E62BD68CD3F2BE8D63A7D03C8FCBF7B4AA090EEBBD2318559353B7B5"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+      "bytes": 5885,
+      "sha256": "E4FCF8ABD63EFA412DCBA5DD79432D2DEF3B1209B3E11831692C06636B886DA9"
+    },
+    {
+      "path": "Patches/IncidentBattleExtensions.xml",
+      "bytes": 884,
+      "sha256": "19E55F36C02B74902256F999825F47992FD0BE446000E68E682045BE67EB094C"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Butchery_south.png",
+      "bytes": 61001,
+      "sha256": "E36F357C027154C4C1F36D3E86008ADD85BC09C5AB67592FB0654D090DB1DEA8"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.Landing.xml",
+      "bytes": 57835,
+      "sha256": "AA84A5C1159E6866BBD2953659282FBA330F3A57044A4DADB3E57A6A2E9E32AE"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_PowerModule.png",
+      "bytes": 10341,
+      "sha256": "675F1439C2BD01A63916A4F9DC5412B03C8681780B43B4A0B980A5DD25EDC52F"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/PawnEconomy.xml",
+      "bytes": 1476,
+      "sha256": "ED31C796220A7B9FC28252FA41005BE93CECDF368A676FBE2BD17B21203E26B6"
+    },
+    {
+      "path": "Languages/English/Keyed/SettingsUi.xml",
+      "bytes": 8830,
+      "sha256": "5A65C2DF270FA5A378D16F2C7D09EB7BD94E41942E11F8CE01C5FC20FE4E6E56"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_SowerModule.png",
+      "bytes": 9222,
+      "sha256": "4D9A7E93C42CEFEBB661B072142561238FB134ABA585F0C23D70D2CDE8C4A4AF"
+    },
+    {
+      "path": "Defs/SystemCenterDefs.xml",
+      "bytes": 12686,
+      "sha256": "30A494A3A2CF5FD563D51ED9D1E6D186F16B1710C2051223244749B4D05E2766"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid_east.png",
+      "bytes": 3458,
+      "sha256": "BE1A8FFB6D6D65E7773EE08255FF7916CF8749F91A376A716EF8706CBA7CA368"
+    },
+    {
+      "path": "Defs/ThingDefs.xml",
+      "bytes": 96700,
+      "sha256": "36A54E6C8707F3BDD292D551032A37E33C5245595F7B88A03A879FC502DE5ACB"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start.png",
+      "bytes": 3741,
+      "sha256": "CB36BA487E0270D87EB49608CFE5A938DBB920FE440C89F746CA7D56AAB8D973"
+    },
+    {
+      "path": "Textures/Medals/先进团体铜牌.png",
+      "bytes": 1091919,
+      "sha256": "0F3A44AD6E13AEF8D0E886C886AAA8B0FB2A9A0F57E6C8753900E0DF24ADD9CF"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_FarmFrame.png",
+      "bytes": 8594,
+      "sha256": "AC66A90D49F8480678AC3AB3BF08AAD41859E1567F2225872CF44EB77F64C598"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End_east.png",
+      "bytes": 4270,
+      "sha256": "B3D8393432DF4A5E0986EC8017A4FE3265BE0399D229D1E3B9994ACDC556FB15"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smithy_west.png",
+      "bytes": 59228,
+      "sha256": "805FD1CBB90E36B44EED38F67CB981EE1731BEED0F0683AEAE678A6C78606664"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End.png",
+      "bytes": 4283,
+      "sha256": "E406254B6E2B8D9DF7C4C83047EA2692DB1C59DDAE22C30C5238DAA2861BE0C2"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/T1_Production.xml",
+      "bytes": 3876,
+      "sha256": "6A0229D027985335758F7D53BA1FBDEFECDFF7EAB7443315211849E26A507CE5"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Stonecutting_north.png",
+      "bytes": 54155,
+      "sha256": "414BA183BA3187B76DCC695BF489870EF1D04F47DE9B4CCB4AA278C5D56147ED"
+    },
+    {
+      "path": "Textures/UI/epic/epic/panel.png",
+      "bytes": 1137416,
+      "sha256": "BB40DFBA828742958166211D05371B741A1E90FA6FC4C1863AC8110755242276"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End_south.png",
+      "bytes": 4391,
+      "sha256": "D3506DD7F137107D2C756A7651CBD6F38E48A2AD00BF7031A64E5F613458C52E"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Tailoring_east.png",
+      "bytes": 63569,
+      "sha256": "3E8FB8F8498F4A778F182E29DB3C82E52B7D7EC8933968B89B6D789E95CD365A"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Worker_Bronze.png",
+      "bytes": 1091919,
+      "sha256": "0F3A44AD6E13AEF8D0E886C886AAA8B0FB2A9A0F57E6C8753900E0DF24ADD9CF"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start_east.png",
+      "bytes": 3728,
+      "sha256": "4A0BAE7C5D76576F567E91F70C3E96C69C491E0C3DCF0BA3A287ECDE30C129CB"
+    },
+    {
+      "path": "Textures/UI/epic/card.png",
+      "bytes": 1533774,
+      "sha256": "C875AAF9BAB5CF41410D7739DD2114EF698FA0A5EFCC099B2BA9E09BC0BBD814"
+    },
+    {
+      "path": "Fonts/CINZEL-OFL.txt",
+      "bytes": 4383,
+      "sha256": "F2B3029ABA64C378BF0963B62945EEE15E564FE4330B934C8F2EB058282B5E83"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smelter_south.png",
+      "bytes": 49410,
+      "sha256": "43CEDE67DB9B79B897A902EE093D87146574F35F0CF008A7F38DE2D64BC3E44B"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopProcessDef/T1_WorkshopProcesses.xml",
+      "bytes": 1181,
+      "sha256": "54E4DDA79786BC32990DDFFDDC069D51AF48621D8A1C9E694CD9CB420AA50B5C"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/DesignationCategoryDef/Automation_Category.xml",
+      "bytes": 252,
+      "sha256": "DF262BC3D9B9C814FFC93D1B7AA70EA401CE669AF5EB51721D0CBEE1F1235EF2"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Machining_south.png",
+      "bytes": 56426,
+      "sha256": "6E7E23A6C712EB73B6CA4B74C7212576A1DCAAE59C004728FF7BEB153744F44B"
+    },
+    {
+      "path": "Defs/SocialRelationPolicy.xml",
+      "bytes": 1527,
+      "sha256": "6D8FC6169DA230843A8DBD73F87B7B4B5CA4F77B6088930C1BE3AE1594E646A2"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_DrugLab_east.png",
+      "bytes": 46090,
+      "sha256": "2B93227FDF6FEB1EF18B53BD10ACA8053895A96E448B416A3923628624B7B592"
+    },
+    {
+      "path": "Textures/UI/epic/epic/statcell.png",
+      "bytes": 1689421,
+      "sha256": "0B627189F07D21BA982436EA2AE36C766D54501EA7D85A4698E8B17ADDCF01D8"
+    },
+    {
+      "path": "Fonts/SPECIALELITE-OFL.txt",
+      "bytes": 11358,
+      "sha256": "CFC7749B96F63BD31C3C42B5C471BF756814053E847C10F3EB003417BC523D30"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+      "bytes": 195,
+      "sha256": "44525148DCA11F10E642BD16F59C857E772426A808472CEB732C67447802EED0"
+    },
+    {
+      "path": "About/Screens/itab.png",
+      "bytes": 125660,
+      "sha256": "9E4D6AA08663F16E1D622D0B1ECC4FB9A2E178B59AA568F17BBABD20B920B9DE"
+    },
+    {
+      "path": "Languages/English/Keyed/T1_Production.xml",
+      "bytes": 939,
+      "sha256": "7C01AC6C04E76D56B5E7D085045BA2CF8EE717999E604D21C8F84FC41312CF13"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/WorkTypeDef/AutomationWork.xml",
+      "bytes": 3644,
+      "sha256": "AF8B96D7B1E218C75684618A64D004682800AEA8492C4BCF796A887DADC40C0C"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Tailoring_north.png",
+      "bytes": 56244,
+      "sha256": "DC15AB62A772530325E17E8D28B73D603FDA02AE9F5D6EC48827A586E59AE481"
+    },
+    {
+      "path": "Defs/ArchiveCategoryDefs.xml",
+      "bytes": 1915,
+      "sha256": "2106209CBDA65D4F70D2B1077E8F3B8778A07187EA5024F5783068782ADC44A3"
+    },
+    {
+      "path": "Languages/English/DefInjected/RecipeDef/ExamRecipes.xml",
+      "bytes": 26271,
+      "sha256": "CC167B96DFC5FCF23731B09944F4A2F0E1FCBC2D6FD0EB502D3B67BE0F0ED2EC"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3027,
+      "sha256": "E9BEBB6B901EE673B8D59BE73D535241C08C7FCE069F9C02628F64180455B994"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/WorkGiverDef/AutomationJobs.xml",
+      "bytes": 308,
+      "sha256": "954F5101FF0FDD22A2A332E2DC7B007BFB87FF903A7C40C8977E9772E67CF0B8"
+    },
+    {
+      "path": "Textures/UI/ManagementIcon.png",
+      "bytes": 5950,
+      "sha256": "45500839375F7CE23EAAC85F92B43023AF210F5DE016BE806FF71CD86701E1E8"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Stonecutting_south.png",
+      "bytes": 55043,
+      "sha256": "E177656ED3F999E5C09572C1EC7B8FAA19CC01672634D00278FCC545D4BD4DB3"
+    },
+    {
+      "path": "Defs/Automation_TimeAssignment.xml",
+      "bytes": 5133,
+      "sha256": "0636CB93968F5AF8B1AB972F675673163B8DDBED0F0D39B3218C23DBF137D4B0"
+    },
+    {
+      "path": "Languages/English/Keyed/Archive.xml",
+      "bytes": 423520,
+      "sha256": "27E8E326233836688BE3BAAAAFF949C9799DEFAD5E1D46E13B7E959B07C23E0F"
+    },
+    {
+      "path": "Languages/English/DefInjected/RouteDef/ManufacturingRoutes.xml",
+      "bytes": 142,
+      "sha256": "811A897F54D8F78E44A60B6291D0C6ABA93B9AB86AB62B60A53BCA43D21D6405"
+    },
+    {
+      "path": "Languages/English/Keyed/EconomyMode.xml",
+      "bytes": 3103,
+      "sha256": "487C4AB388E5F796501EC46FF3A9054CFB390B2E5513CED700013FEEB6340C6B"
+    },
+    {
+      "path": "About/Screens/装备-总览.png",
+      "bytes": 101523,
+      "sha256": "CEF488531CF34A4932A3D9C6848DEB312E9E31AF85999DCBF5EACB5657E8323C"
+    },
+    {
+      "path": "Patches/AutomationZone.xml",
+      "bytes": 519,
+      "sha256": "9F8B66841C2AA47C1D7BA0452A23ECE8D332CCB9506758C4BCEB9FD4643E707D"
+    },
+    {
+      "path": "Textures/UI/epic/epic/card.png",
+      "bytes": 1533774,
+      "sha256": "C875AAF9BAB5CF41410D7739DD2114EF698FA0A5EFCC099B2BA9E09BC0BBD814"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.MajorBonuses.xml",
+      "bytes": 48844,
+      "sha256": "95D06F4AD2CABC352C8011A65B64CDB7F9B0CC88319277ED964EBEEE00FF9DD0"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/RecipeDef/Automation.xml",
+      "bytes": 2313,
+      "sha256": "22720D787588C6821C13F18E4EEABA58E670B100B7BB94EE6A8103418528739A"
+    },
+    {
+      "path": "Patches/PawnEconomy_ThinkTree.xml",
+      "bytes": 346,
+      "sha256": "AC97EFE8093C5D9CAE5FFBB62D17852A6F8A3CB9912AA7F8971E146811367803"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smithy_east.png",
+      "bytes": 58326,
+      "sha256": "F06ED632ACFEB6AF0321286EE7F442C06FD6B128664D2CED46E5935DCFF80983"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Cooking_east.png",
+      "bytes": 48456,
+      "sha256": "925DAF1851C79D9506A2A62D889C784DA2CDD5AD9B618776C901915732903609"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopDeviceEquivalenceDef/WorkshopDeviceEquivalences.xml",
+      "bytes": 1231,
+      "sha256": "9D10459A435DC16EBEC1854F1AAA1DD5A9B12DCBEE51BD8D9D40340E24AD12A7"
+    },
+    {
+      "path": "Defs/Automation_FarmComponents.xml",
+      "bytes": 14872,
+      "sha256": "FFA27BD0D1D6CCF7F4DEEE242B5B112FBDC52F7EAD2BAA4ED6EAB5A7F29FD770"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Crafting_west.png",
+      "bytes": 59007,
+      "sha256": "0FCBDB7E5825A1E0740318C33502ECA243EA3B1228BDAB2C60A99A53D389BD86"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ResearchTabDef/AutomationResearch.xml",
+      "bytes": 398,
+      "sha256": "EB9C015D7E321D74C940A6007720227BF6D29DEBCFFEDFC30B9932678E5E9CA4"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopPostDef/WorkshopPosts.xml",
+      "bytes": 923,
+      "sha256": "834064A4DDD64473443710C57EE6A0E159F39980F7D85774886364CD7DD873CD"
+    },
+    {
+      "path": "About/About.xml",
+      "bytes": 3354,
+      "sha256": "AA2E080F4EEC5D791B69738CD1BCFEC01D72C80BB3FAE9F5688A8A4E265D83EC"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Stonecutting_east.png",
+      "bytes": 57699,
+      "sha256": "786EDE2323BCB0499400992909A2F4EE8D5C8E4E95B8C57B48B14A92FD74C1A0"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_HarvesterModule.png",
+      "bytes": 6756,
+      "sha256": "16396D4706A4329753D80F9B3FC00E1278B2755E0F5A8D42E16B78361C69EAC3"
+    },
+    {
+      "path": "Defs/T1_Production.xml",
+      "bytes": 41899,
+      "sha256": "017BD71C9BEAA3A1EFDF2FA6D6DC6D4B47F0830D1726D4CCC3A98E99984228EA"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/JobDef/AutomationJobs.xml",
+      "bytes": 185,
+      "sha256": "21E97FE3BD508F5914213ECB202B16504D028BF15698B48FB806D0C67F6B3C35"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smelter_east.png",
+      "bytes": 43562,
+      "sha256": "5A7354E8BAB9D6E752B93DB669FAEF5023FC213C8871DA56819AA6F359E16A15"
+    },
+    {
+      "path": "About/Screens/地点.png",
+      "bytes": 130355,
+      "sha256": "7EFCF9F00AA6B0C39F373F24BFB245EAE6EFAF9B2739BB1F29443FE8AA736DAB"
+    },
+    {
+      "path": "Languages/English/Keyed/ColonyEconomy.xml",
+      "bytes": 4245,
+      "sha256": "1B6388F43FD7289428EE8AD949E9B5C7BD1F3D25E6A4E71623BEABE5C0146241"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Crafting_north.png",
+      "bytes": 55202,
+      "sha256": "897A32F6272DD75483C99B4D178BF2DDE36D308DF0491CC28F1C91E03758391B"
+    },
+    {
+      "path": "Defs/Automation_Pipe.xml",
+      "bytes": 5342,
+      "sha256": "7F0E2B8EE865329517FCBB15E4613A6816B33D2993C506E96725800F8BBB3149"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkGiverDef/PawnEconomy.xml",
+      "bytes": 241,
+      "sha256": "6E372025D0A51914174CC94E83D7950E80B3B9FA6FD3D56E7FC50677C4DEC891"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Crafting_south.png",
+      "bytes": 56690,
+      "sha256": "A80A46F00DC22FFBDEC2AC66975C6C3F7397263C047AFAE14FF72AC8939511B1"
+    },
+    {
+      "path": "About/Screens/个人档案-关系.png",
+      "bytes": 80270,
+      "sha256": "2C67D38F8AA79C62944F6C998C46093441B0768D904BA40F3E2C2601BC974F3E"
+    },
+    {
+      "path": "Defs/ManufacturingRoutes.xml",
+      "bytes": 1112,
+      "sha256": "5FB6E54BDBA6015B38943CA1E1A5851820383FE94D0A7F52A608A22ED166EB64"
+    },
+    {
+      "path": "Textures/Medals/劳动勋章金牌.png",
+      "bytes": 1098290,
+      "sha256": "3C4A104C0FB55217877E28E0613DBB3AE952278A06F34D741FB59A7CAFE8673C"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/TimeAssignmentDef/PCMeals.xml",
+      "bytes": 806,
+      "sha256": "974BA7D15A26BE982C9E22E7426EA0AFD31A16CF2A946033808BC6B98DD548B5"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Stonecutting_west.png",
+      "bytes": 57843,
+      "sha256": "1FB68BD383DC5730AE9FF0D6D873D1C5FC5FA2A6ED42A04563B1EE14FC8C48D4"
+    },
+    {
+      "path": "Defs/HealthValuation.xml",
+      "bytes": 2631,
+      "sha256": "B5B2C12A1C149E2027C2E4162D68B0D148F95288D7E0329465EFA25039A0B9B0"
+    },
+    {
+      "path": "Languages/English/Keyed/Automation.xml",
+      "bytes": 70268,
+      "sha256": "6F0F622D89FFF9CFDF084BE919B9F1159655C849351242D5BA20330BC26C6135"
+    },
+    {
+      "path": "Defs/PawnEconomy_Treasury.xml",
+      "bytes": 386,
+      "sha256": "6B509BC58E3AC08D6B4FA6C0694D847A7DA0828D4A3DD07B04DA522797FA74D9"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchTabDef/AutomationResearch.xml",
+      "bytes": 419,
+      "sha256": "A94239154F767C151666C5AD8C780A582D823DAA8711D7ADD27374D235B6B844"
+    },
+    {
+      "path": "About/Preview.png",
+      "bytes": 780210,
+      "sha256": "B908DB35692D24A376D795D3DFDD5B3FD7C67DB29A81D8D043D94E1FAF307276"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Butchery_north.png",
+      "bytes": 59055,
+      "sha256": "15A7D82803B161F0EE681ED8E20C059BEE113111FD1A645860E2CD224E718784"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkGiverDef/AutomationJobs.xml",
+      "bytes": 318,
+      "sha256": "4BD519905FD3805B9DED26E9DBCBE69A5FA6EE8C44DD99D091F7E294174C90BD"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_GrowLightModule.png",
+      "bytes": 6398,
+      "sha256": "D047C5C163457F6965732A5229B71E791A48651E17CCEF8A15DD2D549E8AB80E"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid_north.png",
+      "bytes": 3625,
+      "sha256": "2A1552020C594A56DD624A7499C99F772C46494317D321276526EF5ADA113E14"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Automation.xml",
+      "bytes": 70987,
+      "sha256": "EC6A85C8A16C0DA236FD29AE0D2D150803104820C88F24C56F1CC59C64DD2512"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid_west.png",
+      "bytes": 3459,
+      "sha256": "DF6A798CBB44A0B606EC760EB1D072123A0FE876F6F9960447AA6406BB6646A6"
+    },
+    {
+      "path": "Languages/English/DefInjected/DesignationCategoryDef/Automation_Category.xml",
+      "bytes": 271,
+      "sha256": "165AC83F20C2165B4FF89FB81C8A6B8E972F68A3EAA12B4A22A99C7241F88EAC"
+    },
+    {
+      "path": "Defs/PawnEconomy_Institutions.xml",
+      "bytes": 4570,
+      "sha256": "9BF41FCEB8550B12CB6B004B02E6D6D21918AA929843955A052C56B5FBB56B90"
+    },
+    {
+      "path": "Defs/Automation_Conveyor.xml",
+      "bytes": 2690,
+      "sha256": "8A98E2A6CD084410014F4117B17073EC3F965EC4CC92989E22AD41B316D124C0"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/EconomyMode.xml",
+      "bytes": 2896,
+      "sha256": "27AACB601B9B66500E7EF4CBB98D6E1BA8223DE99985FE6AE1E2278C5DF64AED"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Tailoring_west.png",
+      "bytes": 63743,
+      "sha256": "929FAA2680BFE839F32CD8B5F48584957198D6C9BBB355D15C90B09E5ECEC5EE"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ResearchProjectDef/AutomationResearch.xml",
+      "bytes": 632,
+      "sha256": "9B580DA80375F0D3815DC183B5BC9ECB2189F1EDF6BB794B11497A8B7E8A65AB"
+    },
+    {
+      "path": "Textures/Things/Building/AutoFarm/PC_AutoFarm_L.png",
+      "bytes": 86279,
+      "sha256": "071CFBE7FD1F036A14C2DBECC079A9425CEDD9C946A51E27C9950FB0D8865623"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomy.xml",
+      "bytes": 4901,
+      "sha256": "FA80A3570132DC5C3E08DC742FF297438954A16311AE4AA4832ECC86AE0A3F51"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Model_Silver.png",
+      "bytes": 870907,
+      "sha256": "75614432DD4D41B729DC374F5930FFE0FEDBD2968810D89AE43DD40471E752F2"
+    },
+    {
+      "path": "Defs/WorkIntensity.xml",
+      "bytes": 3205,
+      "sha256": "B1960D4257CC253F4D3D6C09F381408B48746795DE24528DCA403932DE36B757"
+    },
+    {
+      "path": "Defs/ThingArchivePolicy.xml",
+      "bytes": 1215,
+      "sha256": "D85711CE85474A35021AD9543012F3B21360F4EA8C77F9D0D1D95BE58882ACD3"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Worker_Silver.png",
+      "bytes": 1026622,
+      "sha256": "286C7E8564884EB2083F7FF002ADFAD6F55D53DAD47597348580468F60D1E2D5"
+    },
+    {
+      "path": "Textures/Medals/劳动勋章铜牌.png",
+      "bytes": 1173547,
+      "sha256": "F9CBC62B81D17F313EBF1E8084FE48AD652FAEE011928E401A926CD1D0F83EBA"
+    },
+    {
+      "path": "Fonts/SpecialElite-Regular.ttf",
+      "bytes": 166180,
+      "sha256": "A776FCB4CEB8BDF03E2967688EBDAD42680DE5B91A7E62C17E718AE212D14BC4"
+    },
+    {
+      "path": "Fonts/ZCOOL-OFL.txt",
+      "bytes": 4398,
+      "sha256": "538078469839B4A2E7AD22BEF4EBE41681A4E53749BB2A072144024F1D6D703D"
+    },
+    {
+      "path": "Defs/WorkshopTypes.xml",
+      "bytes": 13143,
+      "sha256": "176C78055F9F4D7F0ED7817A70AA01B2590218EC93F94F03E00F1A5725E2CBCB"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Cooking_west.png",
+      "bytes": 50454,
+      "sha256": "A22A3492442841041F05759B5C79CC49FE647444A96BAC2CDD61C12FD272FA86"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Sculpting_south.png",
+      "bytes": 46308,
+      "sha256": "41AF707BD5254FF549E919E0ACDAABF8FDA8581A55B2CF3A2145A46C1FC59180"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Sculpting_west.png",
+      "bytes": 47963,
+      "sha256": "B02D07760433283A11E83FED0C7C4DA5BA78FA5AF7502E8E3995E135CEDC4277"
+    },
+    {
+      "path": "About/Screens/个人档案-生涯.png",
+      "bytes": 116723,
+      "sha256": "3A715F6EE34572791C2A4636386BCAB6A57A187EA8DE78FB65EBB1084F0541A9"
+    },
+    {
+      "path": "Defs/QualificationDefs.xml",
+      "bytes": 8150,
+      "sha256": "86BA260C50745A67B2791C712F5CA5DB580E65D87DF62E16E7DE1E5F367F806B"
+    },
+    {
+      "path": "Languages/English/DefInjected/TimeAssignmentDef/PCMeals.xml",
+      "bytes": 862,
+      "sha256": "EFCAA20A41CAAD196ADAC8A55611F96FBAD922D189EA1978131DF87F171EED22"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_FertilizerModule.png",
+      "bytes": 10810,
+      "sha256": "0717A5CEDF8D40F43D3A9756D68D9055DFC61F2983215E50ED4664A551877535"
+    },
+    {
+      "path": "About/Screens/装备-传承.png",
+      "bytes": 120172,
+      "sha256": "25DAE3776F112F76210782876798333B08745715BE521471D7F5136E1D870DBD"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/ColonyEconomy.xml",
+      "bytes": 4311,
+      "sha256": "DE7A82A00E3FF91072785AACE01ACC8FF916D5CD759575E4F6CA12F9B2764735"
+    },
+    {
+      "path": "Textures/UI/ArchiveIcon.png",
+      "bytes": 520,
+      "sha256": "273A4A86FEE589E544E8C7C9D713DD319256C0BB16A0D47D24F94DBC672443CC"
+    },
+    {
+      "path": "Defs/ProfessionalMajorFit.xml",
+      "bytes": 8216,
+      "sha256": "24859C246BDBA4456D0905826E9644AFDA29019F0BEBA3258ED0521DA5EABCF5"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+      "bytes": 185,
+      "sha256": "4A7FF9BA956B780001F607DBD09033F9B4FF01FA19D4B3B8D59858F8C8DB65C9"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/ExamThings.xml",
+      "bytes": 18807,
+      "sha256": "BD5E31348F1DDB314346E3AE265F352794246FE7FB54A3A65129D67291B4B4A6"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Worker_Gold.png",
+      "bytes": 1385041,
+      "sha256": "963D959AAF6D30FE461F7CF23E6F4F9C616612C04BB71EB8A943AA21DBD36386"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid.png",
+      "bytes": 3471,
+      "sha256": "F8999D641D22B363D9A62CE22B39BA4E47745B65AF9835AFF6C23DEA086CB8C8"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ThingDef/Things_Automation.xml",
+      "bytes": 5038,
+      "sha256": "BB0281422D79D06A2B6B676632B53477103D0D91B977982E07F2A9F89FCEE660"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Archive.xml",
+      "bytes": 422536,
+      "sha256": "70CA4499BFDB33C576BC3448572CE1B939BC6BAFC4FDF87C5783F7288DEC26C6"
+    },
+    {
+      "path": "Languages/English/DefInjected/HealthValuationPolicyDef/HealthValuation.xml",
+      "bytes": 307,
+      "sha256": "F2B065863F4BEED07A212277146CED689EAB53924BD7FA6418A4997775EF8F0F"
+    },
+    {
+      "path": "Textures/Medals/先进团体银牌.png",
+      "bytes": 1026622,
+      "sha256": "286C7E8564884EB2083F7FF002ADFAD6F55D53DAD47597348580468F60D1E2D5"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End_west.png",
+      "bytes": 4244,
+      "sha256": "67803C93E2BC31688B6F3CA9B1661D6C796C87011DB9C2EA81D68EC50ABA5BEF"
+    },
+    {
+      "path": "Defs/MainButtonDefs.xml",
+      "bytes": 510,
+      "sha256": "55E876C147B8815EE9B2FF70693F8AF65719291C4F9E91C1CBB3EAC387436AED"
+    },
+    {
+      "path": "Languages/English/DefInjected/RecipeDef/Automation.xml",
+      "bytes": 2318,
+      "sha256": "19E20BEE701784950B061E09CE285ACBE631B3EFA0C8A7DE678821B0CB5CA875"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Model_Bronze.png",
+      "bytes": 1480103,
+      "sha256": "3A8CB509ECF3562669E95327A8FC252AFE85020833ECAEF7143D00A54E3FF6D6"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Cooking_south.png",
+      "bytes": 48503,
+      "sha256": "EDD95EA1CFC88CEF3025F97A3C1D007FDDD8D320AFB10DBDE8F855B2A5323D19"
+    },
+    {
+      "path": "Textures/Medals/劳动勋章银牌.png",
+      "bytes": 870907,
+      "sha256": "75614432DD4D41B729DC374F5930FFE0FEDBD2968810D89AE43DD40471E752F2"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_IrrigationModule.png",
+      "bytes": 9292,
+      "sha256": "71002FC216B75355A9510DEBE59BE0A6286853A2D97ADB858BA099ADF59E517A"
+    },
+    {
+      "path": "Defs/MedalDefs.xml",
+      "bytes": 14118,
+      "sha256": "4394424802FD807A4EB9E5D6A94B79D37F11E558E4CE61E8F14F9C78C35EF057"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_DrugLab_north.png",
+      "bytes": 43969,
+      "sha256": "3D3703C718AFAC3B72CEC98B74982814962B9BF6636F269D214E97FA28FCD464"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_DrugLab_west.png",
+      "bytes": 46139,
+      "sha256": "1395005B0110823F30C1A5AFE1C742AEEC16C64D518EF09286CC0E46D7774A07"
+    },
+    {
+      "path": "Defs/Automation_AutoFarm.xml",
+      "bytes": 13104,
+      "sha256": "ACDBD51B2250A6EE232AA150695B18A2CA335614E3F4AF8665669B82DA11881F"
+    },
+    {
+      "path": "Fonts/ZCOOLKuaiLe-Regular.ttf",
+      "bytes": 1514968,
+      "sha256": "812A6FC1FE54B6D73A419245C32DFEBA8AA33104D5BE90D1CF6AF082007CB71D"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyNeeds.xml",
+      "bytes": 5919,
+      "sha256": "CD34133BA539548841BEB8C2E35D24327A9F1B98EB5F07E361D0464F9EDF3B45"
+    },
+    {
+      "path": "Languages/English/Keyed/Guide.xml",
+      "bytes": 8160,
+      "sha256": "EB618D62E81A17A0385DCBC05FE6667ECDE5248D8768981F8856730FC9F71DF1"
+    },
+    {
+      "path": "Textures/Things/Building/AutoFarm/PC_AutoFarm_S.png",
+      "bytes": 8914,
+      "sha256": "0D73F714BB6C9C6058A167004A7F482B0880B56B1EF7ADA59E8BA6AFDA1F5544"
+    },
+    {
+      "path": "Defs/WorkshopPosts.xml",
+      "bytes": 9547,
+      "sha256": "57F44FD59F5CC9B8F58B9D574874544A2A746B66C2D32DA89E756DB2104675E3"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchProjectDef/AutomationResearch.xml",
+      "bytes": 691,
+      "sha256": "CC64E79DAC4FAA0EE1786A8064FB695FDACBB7E3F9C3B0ED6A86CB7F4D0B32A8"
+    },
+    {
+      "path": "Textures/UI/epic/statcell.png",
+      "bytes": 1689421,
+      "sha256": "0B627189F07D21BA982436EA2AE36C766D54501EA7D85A4698E8B17ADDCF01D8"
+    },
+    {
+      "path": "Defs/WorkshopRestPolicies.xml",
+      "bytes": 2298,
+      "sha256": "AFD4E60816343448E9558E1434DF073BA5823850170278EBB827A1DF48709517"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/T1_Production.xml",
+      "bytes": 908,
+      "sha256": "5BB7DE9E05C412769E307D064D90695F093AB9A8E7881F5BC61DB2E90F10989C"
+    },
+    {
+      "path": "Defs/ProfessionalQualityWeight.xml",
+      "bytes": 1447,
+      "sha256": "79C066CE8E084EE9AD410EEDE9ACBDD7969DCB31F995107277E304CB200EB5C2"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Crafting_east.png",
+      "bytes": 58996,
+      "sha256": "AA8F5EE6490DF1C78168F9D3CC6DBE817F2D5032070839D8B968A8CBCB18DF5B"
+    },
+    {
+      "path": "Languages/English/DefInjected/ArchiveCategoryDef/ArchiveCategoryDefs.xml",
+      "bytes": 696,
+      "sha256": "B2DFE0938A0A5EF2BBA75276AAFED5AEA95777758549427520DFA67AE017193B"
+    },
+    {
+      "path": "Fonts/IMFellEnglish-Regular.ttf",
+      "bytes": 194992,
+      "sha256": "FE9705BBDE51AF802719246D4608D08D37BDE956AB99D9A590DA996A5221A24C"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Butchery_east.png",
+      "bytes": 62798,
+      "sha256": "0A224BB756A1DAD2830040169D8A7FD7B1220AF1FAA8B7976ABCBAB8C3FE90B3"
+    },
+    {
+      "path": "Textures/UI/epic/panel.png",
+      "bytes": 1137416,
+      "sha256": "BB40DFBA828742958166211D05371B741A1E90FA6FC4C1863AC8110755242276"
+    },
+    {
+      "path": "Defs/T1_WorkshopProcesses.xml",
+      "bytes": 6027,
+      "sha256": "E9B640D748D7DEEEBA0308617F4CE99DAB3C3AECB629524842962582C3F01D2C"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smithy_south.png",
+      "bytes": 60539,
+      "sha256": "68D46C95490EE4F0E5433422FA41BCE762E57F605FC1579B074360C2247C2C1E"
+    },
+    {
+      "path": "Languages/English/DefInjected/SocialRelationPolicyDef/SocialRelationPolicy.xml",
+      "bytes": 312,
+      "sha256": "7073B63BBC20712387B625399B5CCCC7353AD54A116649B2AAAC82DB2E659942"
+    },
+    {
+      "path": "Languages/English/Keyed/TreasuryOperations.xml",
+      "bytes": 5178,
+      "sha256": "DCE7FCD90B3978E31E307C5DD3C65691993B519CFBC0DE33AE3F3AF10DCBD41F"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ProfessionalSkillDef/Skills.xml",
+      "bytes": 12124,
+      "sha256": "7F1859388CE3B4AE2B8650E51B1511EDAFBDA84F10A566ED35ACE328B2B6A89A"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start_west.png",
+      "bytes": 3724,
+      "sha256": "4584BAD15A97470276D99B2AE4FA6E6EC0091755371A6172AAEBAD2962C320B6"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_DrugLab_south.png",
+      "bytes": 45186,
+      "sha256": "6DCB8DCAFE5FCB9BCEB7845FBD063CDE3AF60CB896A0A5814628EB30A1259B99"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End_north.png",
+      "bytes": 4401,
+      "sha256": "F18EEA77FCA07F7CB66D3860065C8A37BBB7817911D46A7B17B0486B5CBAA848"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid_south.png",
+      "bytes": 3633,
+      "sha256": "9D9964A309C686E02AE2EA4D0344D04E5981D3ED66091FFD9DB64B1077DA1FF2"
+    },
+    {
+      "path": "Languages/English/DefInjected/SystemCenterDef/SystemCenterDefs.xml",
+      "bytes": 5758,
+      "sha256": "8676306BFDCE8E716FC3F9282F607FBEDF8D099F1D81580408E799C9F126567F"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/AutomationJobs.xml",
+      "bytes": 166,
+      "sha256": "0299E3561E4559278ACF0DF9087A5A0B7D704C35278A80D267C4E24FE3324EB0"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/Things_Automation.xml",
+      "bytes": 5171,
+      "sha256": "14AD2FC18814A1BD256795DC87439EBCA5B7632B52DC31A3AFB22F369DF2B5E4"
+    },
+    {
+      "path": "Defs/Automation_Category.xml",
+      "bytes": 1251,
+      "sha256": "86FA329FB12191D6B038F2F06B1A6A2C91BD5605E89AF57755F94C13505D191F"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/SettingsUi.xml",
+      "bytes": 9560,
+      "sha256": "D24C86ADE8881762B2174288966ADCB1D69E59002E31027F5E2CA5220CE87071"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smelter_west.png",
+      "bytes": 45517,
+      "sha256": "0EE6D0323CD1C7357407D3A80C84BFA56CB90E6772ABCD59092CCD881EE427C7"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Cooking_north.png",
+      "bytes": 46716,
+      "sha256": "EB2B20958553D959E1DDD3186AA5406A02208C9C2D8B4A957990752AB1F221AB"
+    },
+    {
+      "path": "Textures/Medals/先进团体金牌.png",
+      "bytes": 1385041,
+      "sha256": "963D959AAF6D30FE461F7CF23E6F4F9C616612C04BB71EB8A943AA21DBD36386"
+    },
+    {
+      "path": "Defs/WorkshopDeviceEquivalences.xml",
+      "bytes": 3290,
+      "sha256": "4E47C7006F83F1A5FF0A248817F1E2D1F7D47DC0A59CFEB1CED0B8CED19F01D4"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Guide.xml",
+      "bytes": 8672,
+      "sha256": "7D60B083BAEF931C5DF0E3ECC068101E5FBC265D290C2A03B2F682F795B0A075"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Machining_north.png",
+      "bytes": 51612,
+      "sha256": "71F2AEF59EA241921277E89D25A52C2CE4CF91BEAF172938108CF0C26522D995"
+    },
+    {
+      "path": "Defs/WorkshopProcesses.xml",
+      "bytes": 10375,
+      "sha256": "FBA1C75A945D4AEF2B054E10A88CCC4DDC1B39C6A53BD6A560FC97B86F62AB24"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/RecipeDef/ExamRecipes.xml",
+      "bytes": 27829,
+      "sha256": "1C7CD12322B8005EAED073A69D41ECD9874E33C7855848BE0DC252E592EF3511"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Tailoring_south.png",
+      "bytes": 57511,
+      "sha256": "A7966DE96A49E7651D63DF3E3C25D081A5474C0ABF525999023363E47EA60287"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/PawnEconomy.xml",
+      "bytes": 457,
+      "sha256": "5F59AFB2AA04A9477780695A74474CD7C84970E24F931CE06B815A996A99CE72"
+    },
+    {
+      "path": "Assemblies/PersonalChronicle.dll",
+      "bytes": 1709056,
+      "sha256": "F72561366C7959388678D27CE4C61DB23EE2E84B87AB365F96885E4E84FF5FEE"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start_north.png",
+      "bytes": 3850,
+      "sha256": "78D163C50879F87EAC7D6D53969D61750F73D0353B08ACFBB073BACCBBDD9475"
+    },
+    {
+      "path": "About/Screens/个人档案-生涯产出.png",
+      "bytes": 103731,
+      "sha256": "9700DDBD84A536D2FB0B10B75AC8678B94646814B8CE8A7375CF9D616F2A72C3"
+    },
+    {
+      "path": "About/Screens/战役.png",
+      "bytes": 85724,
+      "sha256": "0F3C53CC91D3F5F88DB26C713BA223A496B713524031CC817CC454658C652D60"
+    },
+    {
+      "path": "Defs/Automation_WorkType.xml",
+      "bytes": 8808,
+      "sha256": "C2B783C45D61E71FDC57A2C9F08DFBBE0014CE43C3CFC37CA68C6E39D95BCD9B"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchProjectDef/T1_Production.xml",
+      "bytes": 378,
+      "sha256": "852BA50E27A0F0F35ED8FC76D9022636066D6D4F5758573E42078A654701409D"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopTypeDef/WorkshopTypes.xml",
+      "bytes": 2410,
+      "sha256": "97576B85DEB73F326D9CF00D5FDE53B940362FEEE72719BE6B84CE65750B4251"
+    },
+    {
+      "path": "About/Screens/个人档案-战斗.png",
+      "bytes": 87623,
+      "sha256": "EEDD5B7C642090670A876B37969369A24C625967737A4659EEE56867ACDAE54F"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smelter_north.png",
+      "bytes": 48889,
+      "sha256": "C4DA3F6BE9A73CD8482E597F01C9B075866F7FD935149080E18996633832A0AA"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Butchery_west.png",
+      "bytes": 62687,
+      "sha256": "D8452403AF68B8F6E3A177526191B5BFD3FEA97568031EABAEDE07F0F7A787A9"
+    },
+    {
+      "path": "Defs/RecipeDefs.xml",
+      "bytes": 66909,
+      "sha256": "B09333FBECBAF145483D90C91A4F8E2C867D3AE64746011ECDAF488C11BD2BF0"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingArchivePolicyDef/ThingArchivePolicy.xml",
+      "bytes": 299,
+      "sha256": "997FFFD4E5FEEA54DD8341525E23828AA3420FFBAA6C04B49CB503BEC4627DE5"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Machining_east.png",
+      "bytes": 62237,
+      "sha256": "36ADF55B5581599F06FE237239CA6F6C8425A4D4A5E3316F5E509C97F29EC272"
+    },
+    {
+      "path": "Languages/English/DefInjected/DesignationCategoryDef/PawnEconomy.xml",
+      "bytes": 149,
+      "sha256": "45F32772AEED0C24C3B3B11AE486FC94D614A0548871A2064AD880D01DE3C126"
+    }
+  ],
+  "targetInventory": [
+    {
+      "path": "README.md",
+      "bytes": 3027,
+      "sha256": "E9BEBB6B901EE673B8D59BE73D535241C08C7FCE069F9C02628F64180455B994"
+    },
+    {
+      "path": "About/About.xml",
+      "bytes": 3354,
+      "sha256": "AA2E080F4EEC5D791B69738CD1BCFEC01D72C80BB3FAE9F5688A8A4E265D83EC"
+    },
+    {
+      "path": "About/Preview.png",
+      "bytes": 780210,
+      "sha256": "B908DB35692D24A376D795D3DFDD5B3FD7C67DB29A81D8D043D94E1FAF307276"
+    },
+    {
+      "path": "About/PublishedFileId.txt",
+      "bytes": 10,
+      "sha256": "7E96A19B0DFFC0D05556012AC7AABBDC342A702593FF944E9E0947825991387F"
+    },
+    {
+      "path": "About/Screens/地点.png",
+      "bytes": 130355,
+      "sha256": "7EFCF9F00AA6B0C39F373F24BFB245EAE6EFAF9B2739BB1F29443FE8AA736DAB"
+    },
+    {
+      "path": "About/Screens/个人档案-关系.png",
+      "bytes": 80270,
+      "sha256": "2C67D38F8AA79C62944F6C998C46093441B0768D904BA40F3E2C2601BC974F3E"
+    },
+    {
+      "path": "About/Screens/个人档案-生涯.png",
+      "bytes": 116723,
+      "sha256": "3A715F6EE34572791C2A4636386BCAB6A57A187EA8DE78FB65EBB1084F0541A9"
+    },
+    {
+      "path": "About/Screens/个人档案-生涯产出.png",
+      "bytes": 103731,
+      "sha256": "9700DDBD84A536D2FB0B10B75AC8678B94646814B8CE8A7375CF9D616F2A72C3"
+    },
+    {
+      "path": "About/Screens/个人档案-战斗.png",
+      "bytes": 87623,
+      "sha256": "EEDD5B7C642090670A876B37969369A24C625967737A4659EEE56867ACDAE54F"
+    },
+    {
+      "path": "About/Screens/个人档案-总览.png",
+      "bytes": 115057,
+      "sha256": "C464DAF5E62BD68CD3F2BE8D63A7D03C8FCBF7B4AA090EEBBD2318559353B7B5"
+    },
+    {
+      "path": "About/Screens/个人档案-总览健康.png",
+      "bytes": 131602,
+      "sha256": "382A50917080470F04A9841153DD683B241C76268EA9AE7469736E37ABCB1E51"
+    },
+    {
+      "path": "About/Screens/战役.png",
+      "bytes": 85724,
+      "sha256": "0F3C53CC91D3F5F88DB26C713BA223A496B713524031CC817CC454658C652D60"
+    },
+    {
+      "path": "About/Screens/装备-传承.png",
+      "bytes": 120172,
+      "sha256": "25DAE3776F112F76210782876798333B08745715BE521471D7F5136E1D870DBD"
+    },
+    {
+      "path": "About/Screens/装备-总览.png",
+      "bytes": 101523,
+      "sha256": "CEF488531CF34A4932A3D9C6848DEB312E9E31AF85999DCBF5EACB5657E8323C"
+    },
+    {
+      "path": "About/Screens/itab.png",
+      "bytes": 125660,
+      "sha256": "9E4D6AA08663F16E1D622D0B1ECC4FB9A2E178B59AA568F17BBABD20B920B9DE"
+    },
+    {
+      "path": "Assemblies/PersonalChronicle.dll",
+      "bytes": 1709056,
+      "sha256": "F72561366C7959388678D27CE4C61DB23EE2E84B87AB365F96885E4E84FF5FEE"
+    },
+    {
+      "path": "Defs/ArchiveCategoryDefs.xml",
+      "bytes": 1915,
+      "sha256": "2106209CBDA65D4F70D2B1077E8F3B8778A07187EA5024F5783068782ADC44A3"
+    },
+    {
+      "path": "Defs/Automation_AutoFarm.xml",
+      "bytes": 13104,
+      "sha256": "ACDBD51B2250A6EE232AA150695B18A2CA335614E3F4AF8665669B82DA11881F"
+    },
+    {
+      "path": "Defs/Automation_Category.xml",
+      "bytes": 1251,
+      "sha256": "86FA329FB12191D6B038F2F06B1A6A2C91BD5605E89AF57755F94C13505D191F"
+    },
+    {
+      "path": "Defs/Automation_Conveyor.xml",
+      "bytes": 2690,
+      "sha256": "8A98E2A6CD084410014F4117B17073EC3F965EC4CC92989E22AD41B316D124C0"
+    },
+    {
+      "path": "Defs/Automation_FarmComponents.xml",
+      "bytes": 14872,
+      "sha256": "FFA27BD0D1D6CCF7F4DEEE242B5B112FBDC52F7EAD2BAA4ED6EAB5A7F29FD770"
+    },
+    {
+      "path": "Defs/Automation_Jobs.xml",
+      "bytes": 3634,
+      "sha256": "EE9FD3F00FF45876331B9197407D383A89AB68A0023621E797D511B095B6C668"
+    },
+    {
+      "path": "Defs/Automation_Pipe.xml",
+      "bytes": 5342,
+      "sha256": "7F0E2B8EE865329517FCBB15E4613A6816B33D2993C506E96725800F8BBB3149"
+    },
+    {
+      "path": "Defs/Automation_Research.xml",
+      "bytes": 2017,
+      "sha256": "FF2AB62677DA3E5FC5AD0BF1AF3389016D566BF70F55FCAA1C1AAF90865C44A8"
+    },
+    {
+      "path": "Defs/Automation_TimeAssignment.xml",
+      "bytes": 5133,
+      "sha256": "0636CB93968F5AF8B1AB972F675673163B8DDBED0F0D39B3218C23DBF137D4B0"
+    },
+    {
+      "path": "Defs/Automation_WorkType.xml",
+      "bytes": 8808,
+      "sha256": "C2B783C45D61E71FDC57A2C9F08DFBBE0014CE43C3CFC37CA68C6E39D95BCD9B"
+    },
+    {
+      "path": "Defs/Chronicle_Events.xml",
+      "bytes": 5133,
+      "sha256": "5FAFFEA074F26FBE5743A4A7A7E157E668CD0FC231F4665DA724259F1C376719"
+    },
+    {
+      "path": "Defs/HealthValuation.xml",
+      "bytes": 2631,
+      "sha256": "B5B2C12A1C149E2027C2E4162D68B0D148F95288D7E0329465EFA25039A0B9B0"
+    },
+    {
+      "path": "Defs/MainButtonDefs.xml",
+      "bytes": 510,
+      "sha256": "55E876C147B8815EE9B2FF70693F8AF65719291C4F9E91C1CBB3EAC387436AED"
+    },
+    {
+      "path": "Defs/ManufacturingRoutes.xml",
+      "bytes": 1112,
+      "sha256": "5FB6E54BDBA6015B38943CA1E1A5851820383FE94D0A7F52A608A22ED166EB64"
+    },
+    {
+      "path": "Defs/MedalDefs.xml",
+      "bytes": 14118,
+      "sha256": "4394424802FD807A4EB9E5D6A94B79D37F11E558E4CE61E8F14F9C78C35EF057"
+    },
+    {
+      "path": "Defs/PawnEconomy_Institutions.xml",
+      "bytes": 4570,
+      "sha256": "9BF41FCEB8550B12CB6B004B02E6D6D21918AA929843955A052C56B5FBB56B90"
+    },
+    {
+      "path": "Defs/PawnEconomy_Treasury.xml",
+      "bytes": 386,
+      "sha256": "6B509BC58E3AC08D6B4FA6C0694D847A7DA0828D4A3DD07B04DA522797FA74D9"
+    },
+    {
+      "path": "Defs/ProfessionalMajorFit.xml",
+      "bytes": 8216,
+      "sha256": "24859C246BDBA4456D0905826E9644AFDA29019F0BEBA3258ED0521DA5EABCF5"
+    },
+    {
+      "path": "Defs/ProfessionalQualityWeight.xml",
+      "bytes": 1447,
+      "sha256": "79C066CE8E084EE9AD410EEDE9ACBDD7969DCB31F995107277E304CB200EB5C2"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.Landing.xml",
+      "bytes": 57835,
+      "sha256": "AA84A5C1159E6866BBD2953659282FBA330F3A57044A4DADB3E57A6A2E9E32AE"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.MajorBonuses.xml",
+      "bytes": 48844,
+      "sha256": "95D06F4AD2CABC352C8011A65B64CDB7F9B0CC88319277ED964EBEEE00FF9DD0"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.xml",
+      "bytes": 50774,
+      "sha256": "6EFE21C418C0A0734C09968E4EBC45D5BFD965BF24BF0B864D6832A827795C20"
+    },
+    {
+      "path": "Defs/QualificationDefs.xml",
+      "bytes": 8150,
+      "sha256": "86BA260C50745A67B2791C712F5CA5DB580E65D87DF62E16E7DE1E5F367F806B"
+    },
+    {
+      "path": "Defs/RecipeDefs.xml",
+      "bytes": 66909,
+      "sha256": "B09333FBECBAF145483D90C91A4F8E2C867D3AE64746011ECDAF488C11BD2BF0"
+    },
+    {
+      "path": "Defs/SocialRelationPolicy.xml",
+      "bytes": 1527,
+      "sha256": "6D8FC6169DA230843A8DBD73F87B7B4B5CA4F77B6088930C1BE3AE1594E646A2"
+    },
+    {
+      "path": "Defs/SystemCenterDefs.xml",
+      "bytes": 12686,
+      "sha256": "30A494A3A2CF5FD563D51ED9D1E6D186F16B1710C2051223244749B4D05E2766"
+    },
+    {
+      "path": "Defs/T1_Production.xml",
+      "bytes": 41899,
+      "sha256": "017BD71C9BEAA3A1EFDF2FA6D6DC6D4B47F0830D1726D4CCC3A98E99984228EA"
+    },
+    {
+      "path": "Defs/T1_WorkshopProcesses.xml",
+      "bytes": 6027,
+      "sha256": "E9B640D748D7DEEEBA0308617F4CE99DAB3C3AECB629524842962582C3F01D2C"
+    },
+    {
+      "path": "Defs/ThingArchivePolicy.xml",
+      "bytes": 1215,
+      "sha256": "D85711CE85474A35021AD9543012F3B21360F4EA8C77F9D0D1D95BE58882ACD3"
+    },
+    {
+      "path": "Defs/ThingDefs.xml",
+      "bytes": 96700,
+      "sha256": "36A54E6C8707F3BDD292D551032A37E33C5245595F7B88A03A879FC502DE5ACB"
+    },
+    {
+      "path": "Defs/WorkIntensity.xml",
+      "bytes": 3205,
+      "sha256": "B1960D4257CC253F4D3D6C09F381408B48746795DE24528DCA403932DE36B757"
+    },
+    {
+      "path": "Defs/WorkshopDeviceEquivalences.xml",
+      "bytes": 3290,
+      "sha256": "4E47C7006F83F1A5FF0A248817F1E2D1F7D47DC0A59CFEB1CED0B8CED19F01D4"
+    },
+    {
+      "path": "Defs/WorkshopPosts.xml",
+      "bytes": 9547,
+      "sha256": "57F44FD59F5CC9B8F58B9D574874544A2A746B66C2D32DA89E756DB2104675E3"
+    },
+    {
+      "path": "Defs/WorkshopProcesses.xml",
+      "bytes": 10375,
+      "sha256": "FBA1C75A945D4AEF2B054E10A88CCC4DDC1B39C6A53BD6A560FC97B86F62AB24"
+    },
+    {
+      "path": "Defs/WorkshopRestPolicies.xml",
+      "bytes": 2298,
+      "sha256": "AFD4E60816343448E9558E1434DF073BA5823850170278EBB827A1DF48709517"
+    },
+    {
+      "path": "Defs/WorkshopTypes.xml",
+      "bytes": 13143,
+      "sha256": "176C78055F9F4D7F0ED7817A70AA01B2590218EC93F94F03E00F1A5725E2CBCB"
+    },
+    {
+      "path": "Fonts/CINZEL-OFL.txt",
+      "bytes": 4383,
+      "sha256": "F2B3029ABA64C378BF0963B62945EEE15E564FE4330B934C8F2EB058282B5E83"
+    },
+    {
+      "path": "Fonts/Cinzel-Variable.ttf",
+      "bytes": 125468,
+      "sha256": "F4D83D34D1F6C741193E4ACF4B3DFF9531E5A67B6AA65228D00A7DB72A4E0F34"
+    },
+    {
+      "path": "Fonts/IMFELL-OFL.txt",
+      "bytes": 4452,
+      "sha256": "2A3CA501FC4D5EFCAD9798531E3E06962B1E20C60E464F6CBD6C17630112C773"
+    },
+    {
+      "path": "Fonts/IMFellEnglish-Regular.ttf",
+      "bytes": 194992,
+      "sha256": "FE9705BBDE51AF802719246D4608D08D37BDE956AB99D9A590DA996A5221A24C"
+    },
+    {
+      "path": "Fonts/SPECIALELITE-OFL.txt",
+      "bytes": 11358,
+      "sha256": "CFC7749B96F63BD31C3C42B5C471BF756814053E847C10F3EB003417BC523D30"
+    },
+    {
+      "path": "Fonts/SpecialElite-Regular.ttf",
+      "bytes": 166180,
+      "sha256": "A776FCB4CEB8BDF03E2967688EBDAD42680DE5B91A7E62C17E718AE212D14BC4"
+    },
+    {
+      "path": "Fonts/ZCOOL-OFL.txt",
+      "bytes": 4398,
+      "sha256": "538078469839B4A2E7AD22BEF4EBE41681A4E53749BB2A072144024F1D6D703D"
+    },
+    {
+      "path": "Fonts/ZCOOLKuaiLe-Regular.ttf",
+      "bytes": 1514968,
+      "sha256": "812A6FC1FE54B6D73A419245C32DFEBA8AA33104D5BE90D1CF6AF082007CB71D"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/DesignationCategoryDef/Automation_Category.xml",
+      "bytes": 252,
+      "sha256": "DF262BC3D9B9C814FFC93D1B7AA70EA401CE669AF5EB51721D0CBEE1F1235EF2"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/DesignatorDropdownGroupDef/Automation.xml",
+      "bytes": 128,
+      "sha256": "5464A75121BB33F8E05010E04FF7C3BFE64E3B061659EF1836ED0036CD10926F"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/JobDef/AutomationJobs.xml",
+      "bytes": 185,
+      "sha256": "21E97FE3BD508F5914213ECB202B16504D028BF15698B48FB806D0C67F6B3C35"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+      "bytes": 185,
+      "sha256": "4A7FF9BA956B780001F607DBD09033F9B4FF01FA19D4B3B8D59858F8C8DB65C9"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ProfessionalSkillDef/Skills.xml",
+      "bytes": 12124,
+      "sha256": "7F1859388CE3B4AE2B8650E51B1511EDAFBDA84F10A566ED35ACE328B2B6A89A"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/RecipeDef/Automation.xml",
+      "bytes": 2313,
+      "sha256": "22720D787588C6821C13F18E4EEABA58E670B100B7BB94EE6A8103418528739A"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/RecipeDef/ExamRecipes.xml",
+      "bytes": 27829,
+      "sha256": "1C7CD12322B8005EAED073A69D41ECD9874E33C7855848BE0DC252E592EF3511"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ResearchProjectDef/AutomationResearch.xml",
+      "bytes": 632,
+      "sha256": "9B580DA80375F0D3815DC183B5BC9ECB2189F1EDF6BB794B11497A8B7E8A65AB"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ResearchTabDef/AutomationResearch.xml",
+      "bytes": 398,
+      "sha256": "EB9C015D7E321D74C940A6007720227BF6D29DEBCFFEDFC30B9932678E5E9CA4"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ThingDef/ExamThings.xml",
+      "bytes": 24119,
+      "sha256": "7AB8B20DAF28B9E71FBA22786E42248A870DF3A948EEF811195F1A453D061E80"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ThingDef/Things_Automation.xml",
+      "bytes": 5038,
+      "sha256": "BB0281422D79D06A2B6B676632B53477103D0D91B977982E07F2A9F89FCEE660"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/TimeAssignmentDef/PCMeals.xml",
+      "bytes": 806,
+      "sha256": "974BA7D15A26BE982C9E22E7426EA0AFD31A16CF2A946033808BC6B98DD548B5"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/WorkGiverDef/AutomationJobs.xml",
+      "bytes": 308,
+      "sha256": "954F5101FF0FDD22A2A332E2DC7B007BFB87FF903A7C40C8977E9772E67CF0B8"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/WorkTypeDef/AutomationWork.xml",
+      "bytes": 3644,
+      "sha256": "AF8B96D7B1E218C75684618A64D004682800AEA8492C4BCF796A887DADC40C0C"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Archive.xml",
+      "bytes": 422536,
+      "sha256": "70CA4499BFDB33C576BC3448572CE1B939BC6BAFC4FDF87C5783F7288DEC26C6"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Automation.xml",
+      "bytes": 70987,
+      "sha256": "EC6A85C8A16C0DA236FD29AE0D2D150803104820C88F24C56F1CC59C64DD2512"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/ColonyEconomy.xml",
+      "bytes": 4311,
+      "sha256": "DE7A82A00E3FF91072785AACE01ACC8FF916D5CD759575E4F6CA12F9B2764735"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/EconomyMode.xml",
+      "bytes": 2896,
+      "sha256": "27AACB601B9B66500E7EF4CBB98D6E1BA8223DE99985FE6AE1E2278C5DF64AED"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Guide.xml",
+      "bytes": 8672,
+      "sha256": "7D60B083BAEF931C5DF0E3ECC068101E5FBC265D290C2A03B2F682F795B0A075"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomy.xml",
+      "bytes": 4901,
+      "sha256": "FA80A3570132DC5C3E08DC742FF297438954A16311AE4AA4832ECC86AE0A3F51"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+      "bytes": 5885,
+      "sha256": "E4FCF8ABD63EFA412DCBA5DD79432D2DEF3B1209B3E11831692C06636B886DA9"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/SettingsUi.xml",
+      "bytes": 9560,
+      "sha256": "D24C86ADE8881762B2174288966ADCB1D69E59002E31027F5E2CA5220CE87071"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/T1_Production.xml",
+      "bytes": 908,
+      "sha256": "5BB7DE9E05C412769E307D064D90695F093AB9A8E7881F5BC61DB2E90F10989C"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/TreasuryOperations.xml",
+      "bytes": 4860,
+      "sha256": "C805EBD6F4D69CBEE68B392A7EBE609DA05696FE7F7E3E960A9CED45A6FAC83F"
+    },
+    {
+      "path": "Languages/English/DefInjected/ArchiveCategoryDef/ArchiveCategoryDefs.xml",
+      "bytes": 696,
+      "sha256": "B2DFE0938A0A5EF2BBA75276AAFED5AEA95777758549427520DFA67AE017193B"
+    },
+    {
+      "path": "Languages/English/DefInjected/DesignationCategoryDef/Automation_Category.xml",
+      "bytes": 271,
+      "sha256": "165AC83F20C2165B4FF89FB81C8A6B8E972F68A3EAA12B4A22A99C7241F88EAC"
+    },
+    {
+      "path": "Languages/English/DefInjected/DesignationCategoryDef/PawnEconomy.xml",
+      "bytes": 149,
+      "sha256": "45F32772AEED0C24C3B3B11AE486FC94D614A0548871A2064AD880D01DE3C126"
+    },
+    {
+      "path": "Languages/English/DefInjected/HealthValuationPolicyDef/HealthValuation.xml",
+      "bytes": 307,
+      "sha256": "F2B065863F4BEED07A212277146CED689EAB53924BD7FA6418A4997775EF8F0F"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/AutomationJobs.xml",
+      "bytes": 166,
+      "sha256": "0299E3561E4559278ACF0DF9087A5A0B7D704C35278A80D267C4E24FE3324EB0"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+      "bytes": 195,
+      "sha256": "44525148DCA11F10E642BD16F59C857E772426A808472CEB732C67447802EED0"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/PawnEconomy.xml",
+      "bytes": 457,
+      "sha256": "5F59AFB2AA04A9477780695A74474CD7C84970E24F931CE06B815A996A99CE72"
+    },
+    {
+      "path": "Languages/English/DefInjected/MainButtonDef/MainButtonDefs.xml",
+      "bytes": 274,
+      "sha256": "6012B3609A5C45E0D9899BEFED97F6E514FC6E49788E01D85E5FE49A26C1B6AD"
+    },
+    {
+      "path": "Languages/English/DefInjected/RecipeDef/Automation.xml",
+      "bytes": 2318,
+      "sha256": "19E20BEE701784950B061E09CE285ACBE631B3EFA0C8A7DE678821B0CB5CA875"
+    },
+    {
+      "path": "Languages/English/DefInjected/RecipeDef/ExamRecipes.xml",
+      "bytes": 26271,
+      "sha256": "CC167B96DFC5FCF23731B09944F4A2F0E1FCBC2D6FD0EB502D3B67BE0F0ED2EC"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchProjectDef/AutomationResearch.xml",
+      "bytes": 691,
+      "sha256": "CC64E79DAC4FAA0EE1786A8064FB695FDACBB7E3F9C3B0ED6A86CB7F4D0B32A8"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchProjectDef/T1_Production.xml",
+      "bytes": 378,
+      "sha256": "852BA50E27A0F0F35ED8FC76D9022636066D6D4F5758573E42078A654701409D"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchTabDef/AutomationResearch.xml",
+      "bytes": 419,
+      "sha256": "A94239154F767C151666C5AD8C780A582D823DAA8711D7ADD27374D235B6B844"
+    },
+    {
+      "path": "Languages/English/DefInjected/RouteDef/ManufacturingRoutes.xml",
+      "bytes": 142,
+      "sha256": "811A897F54D8F78E44A60B6291D0C6ABA93B9AB86AB62B60A53BCA43D21D6405"
+    },
+    {
+      "path": "Languages/English/DefInjected/SocialRelationPolicyDef/SocialRelationPolicy.xml",
+      "bytes": 312,
+      "sha256": "7073B63BBC20712387B625399B5CCCC7353AD54A116649B2AAAC82DB2E659942"
+    },
+    {
+      "path": "Languages/English/DefInjected/SystemCenterDef/SystemCenterDefs.xml",
+      "bytes": 5758,
+      "sha256": "8676306BFDCE8E716FC3F9282F607FBEDF8D099F1D81580408E799C9F126567F"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingArchivePolicyDef/ThingArchivePolicy.xml",
+      "bytes": 299,
+      "sha256": "997FFFD4E5FEEA54DD8341525E23828AA3420FFBAA6C04B49CB503BEC4627DE5"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/ExamThings.xml",
+      "bytes": 18807,
+      "sha256": "BD5E31348F1DDB314346E3AE265F352794246FE7FB54A3A65129D67291B4B4A6"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/PawnEconomy.xml",
+      "bytes": 1476,
+      "sha256": "ED31C796220A7B9FC28252FA41005BE93CECDF368A676FBE2BD17B21203E26B6"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/T1_Production.xml",
+      "bytes": 3876,
+      "sha256": "6A0229D027985335758F7D53BA1FBDEFECDFF7EAB7443315211849E26A507CE5"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/Things_Automation.xml",
+      "bytes": 5171,
+      "sha256": "14AD2FC18814A1BD256795DC87439EBCA5B7632B52DC31A3AFB22F369DF2B5E4"
+    },
+    {
+      "path": "Languages/English/DefInjected/TimeAssignmentDef/PCMeals.xml",
+      "bytes": 862,
+      "sha256": "EFCAA20A41CAAD196ADAC8A55611F96FBAD922D189EA1978131DF87F171EED22"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkGiverDef/AutomationJobs.xml",
+      "bytes": 318,
+      "sha256": "4BD519905FD3805B9DED26E9DBCBE69A5FA6EE8C44DD99D091F7E294174C90BD"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkGiverDef/PawnEconomy.xml",
+      "bytes": 241,
+      "sha256": "6E372025D0A51914174CC94E83D7950E80B3B9FA6FD3D56E7FC50677C4DEC891"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopDeviceEquivalenceDef/WorkshopDeviceEquivalences.xml",
+      "bytes": 1231,
+      "sha256": "9D10459A435DC16EBEC1854F1AAA1DD5A9B12DCBEE51BD8D9D40340E24AD12A7"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopPostDef/WorkshopPosts.xml",
+      "bytes": 923,
+      "sha256": "834064A4DDD64473443710C57EE6A0E159F39980F7D85774886364CD7DD873CD"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopProcessDef/T1_WorkshopProcesses.xml",
+      "bytes": 1181,
+      "sha256": "54E4DDA79786BC32990DDFFDDC069D51AF48621D8A1C9E694CD9CB420AA50B5C"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopProcessDef/WorkshopProcesses.xml",
+      "bytes": 1633,
+      "sha256": "8B1DA3016DE69A025D5817E4E96794CA949C879A7EA636C479CBEE482ADAE293"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopTypeDef/WorkshopTypes.xml",
+      "bytes": 2410,
+      "sha256": "97576B85DEB73F326D9CF00D5FDE53B940362FEEE72719BE6B84CE65750B4251"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkTypeDef/AutomationWork.xml",
+      "bytes": 3269,
+      "sha256": "6AFC6397B825B82C3EB98B953405DE3F77682EFD891BBF57E0F129FD24BC2347"
+    },
+    {
+      "path": "Languages/English/Keyed/Archive.xml",
+      "bytes": 423520,
+      "sha256": "27E8E326233836688BE3BAAAAFF949C9799DEFAD5E1D46E13B7E959B07C23E0F"
+    },
+    {
+      "path": "Languages/English/Keyed/Automation.xml",
+      "bytes": 70268,
+      "sha256": "6F0F622D89FFF9CFDF084BE919B9F1159655C849351242D5BA20330BC26C6135"
+    },
+    {
+      "path": "Languages/English/Keyed/ColonyEconomy.xml",
+      "bytes": 4245,
+      "sha256": "1B6388F43FD7289428EE8AD949E9B5C7BD1F3D25E6A4E71623BEABE5C0146241"
+    },
+    {
+      "path": "Languages/English/Keyed/EconomyMode.xml",
+      "bytes": 3103,
+      "sha256": "487C4AB388E5F796501EC46FF3A9054CFB390B2E5513CED700013FEEB6340C6B"
+    },
+    {
+      "path": "Languages/English/Keyed/Guide.xml",
+      "bytes": 8160,
+      "sha256": "EB618D62E81A17A0385DCBC05FE6667ECDE5248D8768981F8856730FC9F71DF1"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomy.xml",
+      "bytes": 4963,
+      "sha256": "BDDA34F3461587015E26449EA77E61A20257073A5B9EAE1BA122C279B3CAA81F"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyNeeds.xml",
+      "bytes": 5919,
+      "sha256": "CD34133BA539548841BEB8C2E35D24327A9F1B98EB5F07E361D0464F9EDF3B45"
+    },
+    {
+      "path": "Languages/English/Keyed/SettingsUi.xml",
+      "bytes": 8830,
+      "sha256": "5A65C2DF270FA5A378D16F2C7D09EB7BD94E41942E11F8CE01C5FC20FE4E6E56"
+    },
+    {
+      "path": "Languages/English/Keyed/T1_Production.xml",
+      "bytes": 939,
+      "sha256": "7C01AC6C04E76D56B5E7D085045BA2CF8EE717999E604D21C8F84FC41312CF13"
+    },
+    {
+      "path": "Languages/English/Keyed/TreasuryOperations.xml",
+      "bytes": 5178,
+      "sha256": "DCE7FCD90B3978E31E307C5DD3C65691993B519CFBC0DE33AE3F3AF10DCBD41F"
+    },
+    {
+      "path": "Patches/AutomationZone.xml",
+      "bytes": 519,
+      "sha256": "9F8B66841C2AA47C1D7BA0452A23ECE8D332CCB9506758C4BCEB9FD4643E707D"
+    },
+    {
+      "path": "Patches/IncidentBattleExtensions.xml",
+      "bytes": 884,
+      "sha256": "19E55F36C02B74902256F999825F47992FD0BE446000E68E682045BE67EB094C"
+    },
+    {
+      "path": "Patches/PawnEconomy_ThinkTree.xml",
+      "bytes": 346,
+      "sha256": "AC97EFE8093C5D9CAE5FFBB62D17852A6F8A3CB9912AA7F8971E146811367803"
+    },
+    {
+      "path": "Textures/Medals/劳动勋章金牌.png",
+      "bytes": 1098290,
+      "sha256": "3C4A104C0FB55217877E28E0613DBB3AE952278A06F34D741FB59A7CAFE8673C"
+    },
+    {
+      "path": "Textures/Medals/劳动勋章铜牌.png",
+      "bytes": 1173547,
+      "sha256": "F9CBC62B81D17F313EBF1E8084FE48AD652FAEE011928E401A926CD1D0F83EBA"
+    },
+    {
+      "path": "Textures/Medals/劳动勋章银牌.png",
+      "bytes": 870907,
+      "sha256": "75614432DD4D41B729DC374F5930FFE0FEDBD2968810D89AE43DD40471E752F2"
+    },
+    {
+      "path": "Textures/Medals/先进团体金牌.png",
+      "bytes": 1385041,
+      "sha256": "963D959AAF6D30FE461F7CF23E6F4F9C616612C04BB71EB8A943AA21DBD36386"
+    },
+    {
+      "path": "Textures/Medals/先进团体铜牌.png",
+      "bytes": 1091919,
+      "sha256": "0F3A44AD6E13AEF8D0E886C886AAA8B0FB2A9A0F57E6C8753900E0DF24ADD9CF"
+    },
+    {
+      "path": "Textures/Medals/先进团体银牌.png",
+      "bytes": 1026622,
+      "sha256": "286C7E8564884EB2083F7FF002ADFAD6F55D53DAD47597348580468F60D1E2D5"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Model_Bronze.png",
+      "bytes": 1480103,
+      "sha256": "3A8CB509ECF3562669E95327A8FC252AFE85020833ECAEF7143D00A54E3FF6D6"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Model_Gold.png",
+      "bytes": 1725157,
+      "sha256": "3A95530E212BA54562BA7DE5DB6C0C4003DD251EA721014DC7C9125E17C98A6A"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Model_Silver.png",
+      "bytes": 870907,
+      "sha256": "75614432DD4D41B729DC374F5930FFE0FEDBD2968810D89AE43DD40471E752F2"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Worker_Bronze.png",
+      "bytes": 1091919,
+      "sha256": "0F3A44AD6E13AEF8D0E886C886AAA8B0FB2A9A0F57E6C8753900E0DF24ADD9CF"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Worker_Gold.png",
+      "bytes": 1385041,
+      "sha256": "963D959AAF6D30FE461F7CF23E6F4F9C616612C04BB71EB8A943AA21DBD36386"
+    },
+    {
+      "path": "Textures/Medals/Medal_Labor_Worker_Silver.png",
+      "bytes": 1026622,
+      "sha256": "286C7E8564884EB2083F7FF002ADFAD6F55D53DAD47597348580468F60D1E2D5"
+    },
+    {
+      "path": "Textures/Things/Building/AutoFarm/PC_AutoFarm_L.png",
+      "bytes": 86279,
+      "sha256": "071CFBE7FD1F036A14C2DBECC079A9425CEDD9C946A51E27C9950FB0D8865623"
+    },
+    {
+      "path": "Textures/Things/Building/AutoFarm/PC_AutoFarm_M.png",
+      "bytes": 29808,
+      "sha256": "A10020805984F3885CEE51F4FE1428FC17EB7D5629CC4243F8A5E304D99CFADD"
+    },
+    {
+      "path": "Textures/Things/Building/AutoFarm/PC_AutoFarm_S.png",
+      "bytes": 8914,
+      "sha256": "0D73F714BB6C9C6058A167004A7F482B0880B56B1EF7ADA59E8BA6AFDA1F5544"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End_east.png",
+      "bytes": 4270,
+      "sha256": "B3D8393432DF4A5E0986EC8017A4FE3265BE0399D229D1E3B9994ACDC556FB15"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End_north.png",
+      "bytes": 4401,
+      "sha256": "F18EEA77FCA07F7CB66D3860065C8A37BBB7817911D46A7B17B0486B5CBAA848"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End_south.png",
+      "bytes": 4391,
+      "sha256": "D3506DD7F137107D2C756A7651CBD6F38E48A2AD00BF7031A64E5F613458C52E"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End_west.png",
+      "bytes": 4244,
+      "sha256": "67803C93E2BC31688B6F3CA9B1661D6C796C87011DB9C2EA81D68EC50ABA5BEF"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_End.png",
+      "bytes": 4283,
+      "sha256": "E406254B6E2B8D9DF7C4C83047EA2692DB1C59DDAE22C30C5238DAA2861BE0C2"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid_east.png",
+      "bytes": 3458,
+      "sha256": "BE1A8FFB6D6D65E7773EE08255FF7916CF8749F91A376A716EF8706CBA7CA368"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid_north.png",
+      "bytes": 3625,
+      "sha256": "2A1552020C594A56DD624A7499C99F772C46494317D321276526EF5ADA113E14"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid_south.png",
+      "bytes": 3633,
+      "sha256": "9D9964A309C686E02AE2EA4D0344D04E5981D3ED66091FFD9DB64B1077DA1FF2"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid_west.png",
+      "bytes": 3459,
+      "sha256": "DF6A798CBB44A0B606EC760EB1D072123A0FE876F6F9960447AA6406BB6646A6"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Mid.png",
+      "bytes": 3471,
+      "sha256": "F8999D641D22B363D9A62CE22B39BA4E47745B65AF9835AFF6C23DEA086CB8C8"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start_east.png",
+      "bytes": 3728,
+      "sha256": "4A0BAE7C5D76576F567E91F70C3E96C69C491E0C3DCF0BA3A287ECDE30C129CB"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start_north.png",
+      "bytes": 3850,
+      "sha256": "78D163C50879F87EAC7D6D53969D61750F73D0353B08ACFBB073BACCBBDD9475"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start_south.png",
+      "bytes": 3859,
+      "sha256": "88CFF83513A688242A60BD253D5EA8CBE8B6EC03303CE2D9AF1D039E2FDCE47D"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start_west.png",
+      "bytes": 3724,
+      "sha256": "4584BAD15A97470276D99B2AE4FA6E6EC0091755371A6172AAEBAD2962C320B6"
+    },
+    {
+      "path": "Textures/Things/Building/Automation/PC_Conveyor_Start.png",
+      "bytes": 3741,
+      "sha256": "CB36BA487E0270D87EB49608CFE5A938DBB920FE440C89F746CA7D56AAB8D973"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Butchery_east.png",
+      "bytes": 62798,
+      "sha256": "0A224BB756A1DAD2830040169D8A7FD7B1220AF1FAA8B7976ABCBAB8C3FE90B3"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Butchery_north.png",
+      "bytes": 59055,
+      "sha256": "15A7D82803B161F0EE681ED8E20C059BEE113111FD1A645860E2CD224E718784"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Butchery_south.png",
+      "bytes": 61001,
+      "sha256": "E36F357C027154C4C1F36D3E86008ADD85BC09C5AB67592FB0654D090DB1DEA8"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Butchery_west.png",
+      "bytes": 62687,
+      "sha256": "D8452403AF68B8F6E3A177526191B5BFD3FEA97568031EABAEDE07F0F7A787A9"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Cooking_east.png",
+      "bytes": 48456,
+      "sha256": "925DAF1851C79D9506A2A62D889C784DA2CDD5AD9B618776C901915732903609"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Cooking_north.png",
+      "bytes": 46716,
+      "sha256": "EB2B20958553D959E1DDD3186AA5406A02208C9C2D8B4A957990752AB1F221AB"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Cooking_south.png",
+      "bytes": 48503,
+      "sha256": "EDD95EA1CFC88CEF3025F97A3C1D007FDDD8D320AFB10DBDE8F855B2A5323D19"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Cooking_west.png",
+      "bytes": 50454,
+      "sha256": "A22A3492442841041F05759B5C79CC49FE647444A96BAC2CDD61C12FD272FA86"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Crafting_east.png",
+      "bytes": 58996,
+      "sha256": "AA8F5EE6490DF1C78168F9D3CC6DBE817F2D5032070839D8B968A8CBCB18DF5B"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Crafting_north.png",
+      "bytes": 55202,
+      "sha256": "897A32F6272DD75483C99B4D178BF2DDE36D308DF0491CC28F1C91E03758391B"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Crafting_south.png",
+      "bytes": 56690,
+      "sha256": "A80A46F00DC22FFBDEC2AC66975C6C3F7397263C047AFAE14FF72AC8939511B1"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Crafting_west.png",
+      "bytes": 59007,
+      "sha256": "0FCBDB7E5825A1E0740318C33502ECA243EA3B1228BDAB2C60A99A53D389BD86"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_DrugLab_east.png",
+      "bytes": 46090,
+      "sha256": "2B93227FDF6FEB1EF18B53BD10ACA8053895A96E448B416A3923628624B7B592"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_DrugLab_north.png",
+      "bytes": 43969,
+      "sha256": "3D3703C718AFAC3B72CEC98B74982814962B9BF6636F269D214E97FA28FCD464"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_DrugLab_south.png",
+      "bytes": 45186,
+      "sha256": "6DCB8DCAFE5FCB9BCEB7845FBD063CDE3AF60CB896A0A5814628EB30A1259B99"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_DrugLab_west.png",
+      "bytes": 46139,
+      "sha256": "1395005B0110823F30C1A5AFE1C742AEEC16C64D518EF09286CC0E46D7774A07"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Machining_east.png",
+      "bytes": 62237,
+      "sha256": "36ADF55B5581599F06FE237239CA6F6C8425A4D4A5E3316F5E509C97F29EC272"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Machining_north.png",
+      "bytes": 51612,
+      "sha256": "71F2AEF59EA241921277E89D25A52C2CE4CF91BEAF172938108CF0C26522D995"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Machining_south.png",
+      "bytes": 56426,
+      "sha256": "6E7E23A6C712EB73B6CA4B74C7212576A1DCAAE59C004728FF7BEB153744F44B"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Machining_west.png",
+      "bytes": 53277,
+      "sha256": "46CB7DDC97ACB7B4B9851664EA02C1B68DA30A139FC5371DCE10B64A262D62C6"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Sculpting_east.png",
+      "bytes": 47907,
+      "sha256": "BECB3B08DADD90F2A6907800D8570241C3A8CB2723E67347094FB562C337C55F"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Sculpting_north.png",
+      "bytes": 45675,
+      "sha256": "33FBB522CF922D3FCA7CF6B23FF4268D234183EA3B92E8B7D09DC0BD6089EC25"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Sculpting_south.png",
+      "bytes": 46308,
+      "sha256": "41AF707BD5254FF549E919E0ACDAABF8FDA8581A55B2CF3A2145A46C1FC59180"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Sculpting_west.png",
+      "bytes": 47963,
+      "sha256": "B02D07760433283A11E83FED0C7C4DA5BA78FA5AF7502E8E3995E135CEDC4277"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smelter_east.png",
+      "bytes": 43562,
+      "sha256": "5A7354E8BAB9D6E752B93DB669FAEF5023FC213C8871DA56819AA6F359E16A15"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smelter_north.png",
+      "bytes": 48889,
+      "sha256": "C4DA3F6BE9A73CD8482E597F01C9B075866F7FD935149080E18996633832A0AA"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smelter_south.png",
+      "bytes": 49410,
+      "sha256": "43CEDE67DB9B79B897A902EE093D87146574F35F0CF008A7F38DE2D64BC3E44B"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smelter_west.png",
+      "bytes": 45517,
+      "sha256": "0EE6D0323CD1C7357407D3A80C84BFA56CB90E6772ABCD59092CCD881EE427C7"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smithy_east.png",
+      "bytes": 58326,
+      "sha256": "F06ED632ACFEB6AF0321286EE7F442C06FD6B128664D2CED46E5935DCFF80983"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smithy_north.png",
+      "bytes": 59160,
+      "sha256": "D5ED39A75AE56D44ABABD0C1221BD9B0009FAD9BAD594B3A4D91AB3AC7980BF7"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smithy_south.png",
+      "bytes": 60539,
+      "sha256": "68D46C95490EE4F0E5433422FA41BCE762E57F605FC1579B074360C2247C2C1E"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Smithy_west.png",
+      "bytes": 59228,
+      "sha256": "805FD1CBB90E36B44EED38F67CB981EE1731BEED0F0683AEAE678A6C78606664"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Stonecutting_east.png",
+      "bytes": 57699,
+      "sha256": "786EDE2323BCB0499400992909A2F4EE8D5C8E4E95B8C57B48B14A92FD74C1A0"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Stonecutting_north.png",
+      "bytes": 54155,
+      "sha256": "414BA183BA3187B76DCC695BF489870EF1D04F47DE9B4CCB4AA278C5D56147ED"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Stonecutting_south.png",
+      "bytes": 55043,
+      "sha256": "E177656ED3F999E5C09572C1EC7B8FAA19CC01672634D00278FCC545D4BD4DB3"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Stonecutting_west.png",
+      "bytes": 57843,
+      "sha256": "1FB68BD383DC5730AE9FF0D6D873D1C5FC5FA2A6ED42A04563B1EE14FC8C48D4"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Tailoring_east.png",
+      "bytes": 63569,
+      "sha256": "3E8FB8F8498F4A778F182E29DB3C82E52B7D7EC8933968B89B6D789E95CD365A"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Tailoring_north.png",
+      "bytes": 56244,
+      "sha256": "DC15AB62A772530325E17E8D28B73D603FDA02AE9F5D6EC48827A586E59AE481"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Tailoring_south.png",
+      "bytes": 57511,
+      "sha256": "A7966DE96A49E7651D63DF3E3C25D081A5474C0ABF525999023363E47EA60287"
+    },
+    {
+      "path": "Textures/Things/Building/T1Production/PC_T1_Tailoring_west.png",
+      "bytes": 63743,
+      "sha256": "929FAA2680BFE839F32CD8B5F48584957198D6C9BBB355D15C90B09E5ECEC5EE"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_FarmFrame.png",
+      "bytes": 8594,
+      "sha256": "AC66A90D49F8480678AC3AB3BF08AAD41859E1567F2225872CF44EB77F64C598"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_FertilizerModule.png",
+      "bytes": 10810,
+      "sha256": "0717A5CEDF8D40F43D3A9756D68D9055DFC61F2983215E50ED4664A551877535"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_GrowLightModule.png",
+      "bytes": 6398,
+      "sha256": "D047C5C163457F6965732A5229B71E791A48651E17CCEF8A15DD2D549E8AB80E"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_HarvesterModule.png",
+      "bytes": 6756,
+      "sha256": "16396D4706A4329753D80F9B3FC00E1278B2755E0F5A8D42E16B78361C69EAC3"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_IrrigationModule.png",
+      "bytes": 9292,
+      "sha256": "71002FC216B75355A9510DEBE59BE0A6286853A2D97ADB858BA099ADF59E517A"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_PowerModule.png",
+      "bytes": 10341,
+      "sha256": "675F1439C2BD01A63916A4F9DC5412B03C8681780B43B4A0B980A5DD25EDC52F"
+    },
+    {
+      "path": "Textures/Things/Item/AutoFarm/PC_SowerModule.png",
+      "bytes": 9222,
+      "sha256": "4D9A7E93C42CEFEBB661B072142561238FB134ABA585F0C23D70D2CDE8C4A4AF"
+    },
+    {
+      "path": "Textures/UI/ArchiveIcon.png",
+      "bytes": 520,
+      "sha256": "273A4A86FEE589E544E8C7C9D713DD319256C0BB16A0D47D24F94DBC672443CC"
+    },
+    {
+      "path": "Textures/UI/ManagementIcon.png",
+      "bytes": 5950,
+      "sha256": "45500839375F7CE23EAAC85F92B43023AF210F5DE016BE806FF71CD86701E1E8"
+    },
+    {
+      "path": "Textures/UI/epic/card.png",
+      "bytes": 1533774,
+      "sha256": "C875AAF9BAB5CF41410D7739DD2114EF698FA0A5EFCC099B2BA9E09BC0BBD814"
+    },
+    {
+      "path": "Textures/UI/epic/panel.png",
+      "bytes": 1137416,
+      "sha256": "BB40DFBA828742958166211D05371B741A1E90FA6FC4C1863AC8110755242276"
+    },
+    {
+      "path": "Textures/UI/epic/statcell.png",
+      "bytes": 1689421,
+      "sha256": "0B627189F07D21BA982436EA2AE36C766D54501EA7D85A4698E8B17ADDCF01D8"
+    },
+    {
+      "path": "Textures/UI/epic/epic/card.png",
+      "bytes": 1533774,
+      "sha256": "C875AAF9BAB5CF41410D7739DD2114EF698FA0A5EFCC099B2BA9E09BC0BBD814"
+    },
+    {
+      "path": "Textures/UI/epic/epic/panel.png",
+      "bytes": 1137416,
+      "sha256": "BB40DFBA828742958166211D05371B741A1E90FA6FC4C1863AC8110755242276"
+    },
+    {
+      "path": "Textures/UI/epic/epic/statcell.png",
+      "bytes": 1689421,
+      "sha256": "0B627189F07D21BA982436EA2AE36C766D54501EA7D85A4698E8B17ADDCF01D8"
+    }
+  ],
+  "newlyAddedFiles": [
+    "Languages/ChineseSimplified/Keyed/TreasuryOperations.xml",
+    "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+    "Languages/English/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+    "Languages/English/Keyed/EconomyMode.xml",
+    "Defs/PawnEconomy_Treasury.xml",
+    "Languages/ChineseSimplified/Keyed/EconomyMode.xml",
+    "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+    "Languages/English/Keyed/PawnEconomyNeeds.xml",
+    "Languages/English/Keyed/TreasuryOperations.xml"
+  ],
+  "initialBackupManifest": "_verify_tmp/Economy-B242-initial-backup-manifest.json",
+  "acceptanceCasesPrepared": 80,
+  "acceptanceCasesExecutedByAgent": 0,
+  "documentationUpdatedAfterDeployment": true
+}

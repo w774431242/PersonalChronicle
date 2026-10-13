@@ -1,0 +1,647 @@
+{
+  "date": "2026-10-10",
+  "scope": "Manager read-only audit; sequential end-of-audit hashes, not atomic frozen snapshot",
+  "runtimeEdited": false,
+  "testsRunByAuditor": false,
+  "deployedByAuditor": false,
+  "files": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Defs\\PawnEconomy_Institutions.xml",
+      "lastWriteTime": "2026-10-08T18:52:34.5166529+08:00",
+      "sha256": "642761DE9E45E5CB8E43D85FDBD33C89C4F9F1CC2CE0A095458ED2243857C751"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Patches\\PawnEconomy_ThinkTree.xml",
+      "lastWriteTime": "2026-10-08T09:00:00.1982831+08:00",
+      "sha256": "AC97EFE8093C5D9CAE5FFBB62D17852A6F8A3CB9912AA7F8971E146811367803"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Care\\CareService.cs",
+      "lastWriteTime": "2026-10-09T23:27:18.2877906+08:00",
+      "sha256": "9A15109850B506F15128492760F5C12C5E4B42F9509F5FE8F9C05AD6FB949DB6"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyReadQueries.cs",
+      "lastWriteTime": "2026-10-08T14:43:12.6296472+08:00",
+      "sha256": "3CCB8B155B35426450EB1FB82429148162ADA38ADD49DC15EDE5A9161FC489FC"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyService.cs",
+      "lastWriteTime": "2026-10-08T09:06:26.4640973+08:00",
+      "sha256": "B70313BD863639CA9C4C19D0BC8FBC47092D361692F4752A283EFE76D13AAD6C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyView.cs",
+      "lastWriteTime": "2026-10-08T09:09:51.5289457+08:00",
+      "sha256": "90B3D9BB14531194736D0D51991461E9A8A24ACD09A2B168F16702D39538DACE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Employment\\EmploymentService.cs",
+      "lastWriteTime": "2026-10-10T00:18:49.9768691+08:00",
+      "sha256": "FD1FE46FEF11B74768BE3919BE16FE71759B18990554BDF71DF767794B8BE0F7"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Finance\\FundedSettlementLedger.cs",
+      "lastWriteTime": "2026-10-08T22:14:44.7130537+08:00",
+      "sha256": "DF6AA8BB24015C3B1538B7B86C5DF46D4A43F40C603998C9BF144EC9153A740C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Finance\\LegacyCutoverPlan.cs",
+      "lastWriteTime": "2026-10-08T18:13:32.5169973+08:00",
+      "sha256": "77E066D9FF07E045483DFDE12FA04D4B45BDF6BB2D0E5956DAA95A94312E93CD"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Finance\\LegacyReconciliation.cs",
+      "lastWriteTime": "2026-10-08T15:59:15.0800548+08:00",
+      "sha256": "07EA6D1AE3992CE3C36D025CC8D981F1A59EF4913A52A9067EAE6FA41EA9D50D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Finance\\ShadowTransactionKernel.cs",
+      "lastWriteTime": "2026-10-08T15:59:15.0795242+08:00",
+      "sha256": "FAADDBA719B9FE1D00981AABA08CADAAA6218C413AC05F49DDC0EE94C85DD704"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Governance\\InstitutionModeService.cs",
+      "lastWriteTime": "2026-10-08T17:20:40.3592513+08:00",
+      "sha256": "71D79433C36DBC97CD331C7633E6DD04B43E9E1D70FDA90E1EE0D45BCC9C6966"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Perception\\NeedDashboard.cs",
+      "lastWriteTime": "2026-10-08T23:23:48.3552530+08:00",
+      "sha256": "F784EC2EB9B4F4D66762FAAC1DD41DB8CA8F912C02FA8F8F41589F7AC6A80609"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Perception\\PerceptionCoordinator.cs",
+      "lastWriteTime": "2026-10-08T15:05:13.9763865+08:00",
+      "sha256": "520DC7B605BD4E110C91492C6DE95FF85580DCC1844D3C9E0159885F3BD3C997"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Perception\\PerceptionQuery.cs",
+      "lastWriteTime": "2026-10-08T15:01:00.5188085+08:00",
+      "sha256": "E0B6546E833C1E35C3C68166EBC77FC3D36D397C25F958E15E367225A2DE2149"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Perception\\PerceptionSource.cs",
+      "lastWriteTime": "2026-10-08T14:44:36.9494573+08:00",
+      "sha256": "239684A7D04185DB348957CD73484C7982084A281C62334300268FD2BB4097E2"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Planning\\PlanningSourcePorts.cs",
+      "lastWriteTime": "2026-10-08T21:23:20.2797802+08:00",
+      "sha256": "A51C224166DB51CC20409ED29E93BAB50D5E80FDEA025ED00A5E5AB9EA8229E5"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Planning\\ShadowPlanningCoordinator.cs",
+      "lastWriteTime": "2026-10-08T22:11:30.0028189+08:00",
+      "sha256": "270544A88EF20E46D25A504B5C2F176BC414A546E0A3761C6DF89948C9F7E838"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Production\\ProductionReadoutPorts.cs",
+      "lastWriteTime": "2026-10-09T18:01:10.7974416+08:00",
+      "sha256": "E652E31EBA86FA4B54D2E11AAB4606A212B4DF553172E05B1FF164F80364F5DC"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\Production\\WorkshopExecutorPorts.cs",
+      "lastWriteTime": "2026-10-09T22:38:49.1203609+08:00",
+      "sha256": "996568A27AD27325C8DB4FAC0E3110AE6A8AA666386ED194AA791A5DC99F683D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Capture\\Patch_BillProduction.cs",
+      "lastWriteTime": "2026-10-08T22:00:14.9354295+08:00",
+      "sha256": "3A5B664BA2E608017FBC0E608AD1E6E8DFEDB7E24F30F1590D051763648C1A18"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Capture\\Patch_TendUtility.cs",
+      "lastWriteTime": "2026-10-08T23:46:14.9419916+08:00",
+      "sha256": "D851E6C6B5384395B70D9064957B15B168F2E2AC2F06C29A19134F273353508D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Capture\\ServiceProcessProbes.cs",
+      "lastWriteTime": "2026-10-09T23:10:26.1024873+08:00",
+      "sha256": "B335B067A8716ADAAD1D81FB4368F50A26708BA064EB1629A539606F8291AE69"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\CareSaveData.cs",
+      "lastWriteTime": "2026-10-09T23:27:17.8589706+08:00",
+      "sha256": "90EC97D68CF3DD55E5B9576020DFCFB116AC93B0E2E8143224FC4CF26CC0783E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\EmploymentSaveData.cs",
+      "lastWriteTime": "2026-10-10T00:18:30.6164258+08:00",
+      "sha256": "CBACF0F9A623F1E58C9B05E9A016A7BCAFDDF8166AA5BA664FBE81C6D2B7E61E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\InstitutionModeSaveData.cs",
+      "lastWriteTime": "2026-10-09T23:48:15.9613757+08:00",
+      "sha256": "CD68816FAE21996B3F4F6BFEEF61A4A1BF33EA3E29ECA56BA98006E55FA2CC27"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\InstitutionPolicySaveData.cs",
+      "lastWriteTime": "2026-10-09T23:56:46.4178491+08:00",
+      "sha256": "075E4685B8D9BABF58E72B4A9FE18E72261F94A88E94B0D41A2D829BDCF4CA61"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\LearningSaveData.cs",
+      "lastWriteTime": "2026-10-09T21:08:26.8587556+08:00",
+      "sha256": "861691730517B4D58F83C0A05A7D94FBB261F649C2B7A981E17B8D836F6AC7BA"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\LegacySettlementArchive.cs",
+      "lastWriteTime": "2026-10-08T16:49:08.3236017+08:00",
+      "sha256": "171B90F5D134D93E26D61AE2AE96EA0C9BED767F5DACE0ECCDBE4A80930C37FE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\ProductionAuthorisationSaveData.cs",
+      "lastWriteTime": "2026-10-09T22:36:26.9714168+08:00",
+      "sha256": "0BD9BDC89964C8E5F6F0AA25AF20E8DDE0D5C29517FB102359EADA4A309E7AEE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\ReserveJournalCodec.cs",
+      "lastWriteTime": "2026-10-08T16:19:56.0863562+08:00",
+      "sha256": "B8671F9F0924296C4EB914A850D4A5D1294A7DA67027E28E23654BDDEA1FE5CA"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\SettlementLedgerCodec.cs",
+      "lastWriteTime": "2026-10-08T22:15:27.2396731+08:00",
+      "sha256": "F1E26610E7591735493D4F9900040FE42C3F05BAD8D35781A32EEED008F0C1EF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\ShadowPlanningSaveData.cs",
+      "lastWriteTime": "2026-10-08T21:36:36.7352431+08:00",
+      "sha256": "56347A9EBB25F51ED8441C6CAEAD7D813064C4949FA143C2761C30A17742C9D2"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\TreasuryOperationsSaveData.cs",
+      "lastWriteTime": "2026-10-08T18:03:12.4927997+08:00",
+      "sha256": "108CE9C8417AC814D33CDA14390C561B7A85ED8BD827F7F50CDB59FA145EE89C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomy\\WorkOwnershipSaveData.cs",
+      "lastWriteTime": "2026-10-08T21:43:05.2809099+08:00",
+      "sha256": "33223AB6130FDD8F05111B35EC5E75836CAA705FE10FB2EF1C65A39963BE55A2"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Data\\PawnEconomySaveData.cs",
+      "lastWriteTime": "2026-10-08T16:49:08.3251724+08:00",
+      "sha256": "C53BB4A90B706C27C9AE3CA5B7678140FC7BFB5FD4973B0C05F2F007EFBF6455"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Budget\\LifeBudget.cs",
+      "lastWriteTime": "2026-10-09T19:54:00.3572577+08:00",
+      "sha256": "4064DA933DF2B1B78E2B52AC1685C0F92009908256D1E93F4B0CE7BAD19CF171"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Care\\CareContracts.cs",
+      "lastWriteTime": "2026-10-09T23:10:29.4923797+08:00",
+      "sha256": "3813524FFD1F9A38C3215072E6F59B7B922B3902853C0E8AB3D176588EF38463"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\EconomyModel.cs",
+      "lastWriteTime": "2026-10-08T09:06:26.4635794+08:00",
+      "sha256": "F4C8FE6748B7FBE98741C722389541FF3BF4F4CC151E08F8332885B40E4D3123"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Employment\\ContractExitRules.cs",
+      "lastWriteTime": "2026-10-09T20:00:52.2325879+08:00",
+      "sha256": "E2538725FFAF763A4ABD7312C3C0E2C42ADD789D12FB142B3731423DACCDDACD"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Employment\\EmploymentContracts.cs",
+      "lastWriteTime": "2026-10-10T00:13:52.3903819+08:00",
+      "sha256": "BA84A891E4B478841143891D8B36B9B4F68A974FD5CBED44C73274D1A7EBC2EE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Employment\\WorkOwnershipRules.cs",
+      "lastWriteTime": "2026-10-08T21:43:02.0806364+08:00",
+      "sha256": "4130366347FA36071A2EDC3F7EC019BB5005751D020A2FD2964C00ED2D290FD7"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Finance\\FinancialContracts.cs",
+      "lastWriteTime": "2026-10-08T15:53:35.2477699+08:00",
+      "sha256": "51EC453ADD282945C66CA5B8F76648E52378E6272247D5216FDD7DCC83E8C08A"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Finance\\SettlementContracts.cs",
+      "lastWriteTime": "2026-10-08T22:14:37.3906409+08:00",
+      "sha256": "49BC63E10AD2C5274173A164AF7A2C791F6A284BE78746C2E499DC0D864D9744"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Finance\\SilverReserveContracts.cs",
+      "lastWriteTime": "2026-10-08T16:31:50.3349570+08:00",
+      "sha256": "D942973BC2182380B78708558AA6721A105DF89BD9CC670B77CB7AD204E980BA"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Finance\\TreasuryDelivery.cs",
+      "lastWriteTime": "2026-10-08T18:14:33.3301204+08:00",
+      "sha256": "4E28A298CF3AFD10C54B30B218BC8D549909A499133701E1D4818F85D7D4540A"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Governance\\InstitutionModeContracts.cs",
+      "lastWriteTime": "2026-10-08T17:36:53.3230965+08:00",
+      "sha256": "A78D1258F13D9E458F2E0D7027496950CFC68FA4677E97B7A1D03E54FF1BB02F"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Governance\\InstitutionPolicy.cs",
+      "lastWriteTime": "2026-10-09T23:56:03.2886381+08:00",
+      "sha256": "C3AFDF6C737C1B6AD2F374CDEDCA9CB9762957C5E2063DD5622045D3EBC420A3"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\CredibilityEstimate.cs",
+      "lastWriteTime": "2026-10-09T20:34:16.6660662+08:00",
+      "sha256": "3A45A68470332DA73B41CB74EA983C1EB6BC9ABDFFF4C4713F3DB6A7333846CD"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\ExperienceLedger.cs",
+      "lastWriteTime": "2026-10-09T18:01:03.1137240+08:00",
+      "sha256": "16AB10C361B7C03C39F54E3F60D77B2C59BD8046D2779DFFA8CEA6A51035A416"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\ExperienceSummary.cs",
+      "lastWriteTime": "2026-10-09T20:34:17.7085809+08:00",
+      "sha256": "F80667637318DA9B3AEDF62CF37B2EFD30B44B722E11D8ED3D62D1254604EBDF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\FailureClassification.cs",
+      "lastWriteTime": "2026-10-09T20:46:42.8800199+08:00",
+      "sha256": "6CAEFED4B4DC71779DC63F1B405FDB156E752DD3F9892A19A3B932479D202EE7"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\RecoveryRules.cs",
+      "lastWriteTime": "2026-10-09T20:46:38.3475684+08:00",
+      "sha256": "1EBF7D60CA8C2ABCC8B093201C3A0F8138140175E191EFBCD3097251326CCEC9"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\ReliabilityChoiceRules.cs",
+      "lastWriteTime": "2026-10-09T20:20:12.8596864+08:00",
+      "sha256": "5A9A23A0FE876B1B6D5F3217D04E12A79F4F0D0E0489712039ECDAB69A3A125B"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\RetryBackoffRules.cs",
+      "lastWriteTime": "2026-10-09T20:30:02.4249866+08:00",
+      "sha256": "1D6BDC0ECB720B6643598A56FCC8F5B792AC0CE231D9B2067CE963ED9023021E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\StyleLearning.cs",
+      "lastWriteTime": "2026-10-09T20:23:50.3871216+08:00",
+      "sha256": "28822756E477FE2B878DF48E3D2E9FD1DAF06BB44E76A0667E3BC7EC65577E50"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\StyleLedger.cs",
+      "lastWriteTime": "2026-10-09T21:08:28.8902950+08:00",
+      "sha256": "DE73CA9A9FACCC8A090976CEE8CFB6094F458C5923BDAF1523E45544043CE73F"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Learning\\WageCredibility.cs",
+      "lastWriteTime": "2026-10-09T18:01:05.4121412+08:00",
+      "sha256": "B556A0ECF951184828C4D0CF2E1678422B7285395EB24B5EF05137EE4377C37D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Perception\\CurrentNeedProjector.cs",
+      "lastWriteTime": "2026-10-08T14:24:12.8679366+08:00",
+      "sha256": "C496B6DB6EC10CE3F6A5422E7CA9D80DF722A97025A3BC6770B66F73B60C0F54"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Perception\\Fact.cs",
+      "lastWriteTime": "2026-10-08T14:24:12.8668763+08:00",
+      "sha256": "7FB45A2BA3162AC5E87F2D94C352FCEEA8CDFFDEB2BCB6E1D1CEA92F6E68D70C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Perception\\NeedObservation.cs",
+      "lastWriteTime": "2026-10-09T18:27:43.4111984+08:00",
+      "sha256": "7ED7C6A97E2DF6D50E7A986FED9DC728E3B100781186ED62AE833E3B469D7F2C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Perception\\PawnFactSnapshot.cs",
+      "lastWriteTime": "2026-10-08T15:22:27.4276496+08:00",
+      "sha256": "B61776FAD264F51C734FC04AC32C9F366ECCEB90CD527261A7DCAB137FAB8AA9"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Perception\\PerceptionReadRequest.cs",
+      "lastWriteTime": "2026-10-08T14:45:32.0680938+08:00",
+      "sha256": "F16EAF105A9869D3F99BD8A9C5E9DE7B365BECF38DBB6DC10C8479ABF144E6B7"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Planning\\LifePolicy.cs",
+      "lastWriteTime": "2026-10-09T20:24:21.0591942+08:00",
+      "sha256": "565311C98C0982851BDC06FAF285F1D6A219F160A0AE457D9DF0633417A65644"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Planning\\ShadowPlan.cs",
+      "lastWriteTime": "2026-10-09T23:40:15.0701501+08:00",
+      "sha256": "D34E01FB3460F36FDB53AC06FD3B7F568CE45D56C93A7F05FC172357B79B8FD6"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Planning\\ShadowPlanLatch.cs",
+      "lastWriteTime": "2026-10-08T21:36:26.7163485+08:00",
+      "sha256": "FBDE1B608F1A8735667EAB87D274A1AD64B8B2FA7B93785548278AE150705C9F"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Production\\InstitutionToolCatalogue.cs",
+      "lastWriteTime": "2026-10-09T17:45:59.4551193+08:00",
+      "sha256": "2365843E474DE1986755012F8010153B584080298AE04CC9F972230F2953FFAE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Production\\ProductionAuthorisation.cs",
+      "lastWriteTime": "2026-10-09T22:35:47.9204974+08:00",
+      "sha256": "1F8B437509CF06FF2F0D65A0F2C4B88A2F2156D1DDAB753F285663B10BE70AE3"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Production\\ProductionReadout.cs",
+      "lastWriteTime": "2026-10-09T23:23:38.3203902+08:00",
+      "sha256": "D27AE74B5A24098989E24B43147615045322A80A042695D2E2C221EC0E8DCE45"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\Production\\RestockPlanner.cs",
+      "lastWriteTime": "2026-10-09T00:08:52.5485330+08:00",
+      "sha256": "3D74F0673ADEC81D4037F010E23BCDB41B33D740F2B6E06371DB5B4B2024DFBA"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Dialog_PawnEconomy.Authorisation.cs",
+      "lastWriteTime": "2026-10-09T22:46:16.0077445+08:00",
+      "sha256": "E69D9ECA129C36F5EA1CF63327DC267186A26D44EFF824706EAED0EA4AFC88A6"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Dialog_PawnEconomy.Care.cs",
+      "lastWriteTime": "2026-10-09T23:10:33.0051362+08:00",
+      "sha256": "F1F53F6E0F312EC1467F3BDD6278513375F3890E8B4CD8B2E5D35EEFD7F2ADF8"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Dialog_PawnEconomy.cs",
+      "lastWriteTime": "2026-10-09T07:30:55.3158232+08:00",
+      "sha256": "6495B0949ECE596312A4C5850D6E3101D750579F8FF72548C62098D58AB48F3B"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Dialog_PawnEconomy.Needs.cs",
+      "lastWriteTime": "2026-10-08T20:10:10.1374676+08:00",
+      "sha256": "25131DC8335BCB785AC0BADA4D8C39EE9BD760D81D371DD94DDDCDD0C2F36666"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Dialog_PawnEconomy.Overview.cs",
+      "lastWriteTime": "2026-10-09T23:45:22.3814284+08:00",
+      "sha256": "E3C1166659572A8C1B87F7A6F282C900F4261A380D44DCC327C22D02B7107278"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Dialog_PawnEconomy.Policy.cs",
+      "lastWriteTime": "2026-10-09T23:57:59.8477337+08:00",
+      "sha256": "6D1B8877030012D59D550245E5A9DCA92FDD52F76B899ECEF43C7CAE9C291E53"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Dialog_PawnEconomy.StockTarget.cs",
+      "lastWriteTime": "2026-10-09T23:58:34.7221782+08:00",
+      "sha256": "A88B21A7767A4F6D5685E3F8097CA396ADE84C54CB8303FE843C001C007066CC"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyCare.cs",
+      "lastWriteTime": "2026-10-10T00:05:43.4037452+08:00",
+      "sha256": "E45756E3C036BE78E82E1C94287DDB279D9586D85108771EE1699F74AE0A253F"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyCommands.cs",
+      "lastWriteTime": "2026-10-08T17:50:05.0320636+08:00",
+      "sha256": "9185041EA7C4D9DC16AC9BA96479CC6ABDFA49B48517708D23BC8CB8BB886E46"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyConsumption.cs",
+      "lastWriteTime": "2026-10-10T00:19:23.2734277+08:00",
+      "sha256": "DCF73B9D36828868387B4F1FC113BB32F0C1374D268D295DDA0E5EBFB9886C15"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyEmployment.cs",
+      "lastWriteTime": "2026-10-10T00:18:37.7548311+08:00",
+      "sha256": "4098DB45C5252CA318BA0508BE64C0D450C43F0A20781808C4F083C61763DA51"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyInstitutionMode.cs",
+      "lastWriteTime": "2026-10-09T23:48:24.2325588+08:00",
+      "sha256": "B2A90438BAF4FDE3262CBDDDE79159D6068BB5A199BCB6F5E3C58C2C5EC0EFD3"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyInstitutionPolicy.cs",
+      "lastWriteTime": "2026-10-09T23:59:02.5550577+08:00",
+      "sha256": "C9C1EE55C4594AC236CD110E3C4C22AD418ACAA45CB0590396353121CC4874F2"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyInterruption.cs",
+      "lastWriteTime": "2026-10-09T20:53:45.0853238+08:00",
+      "sha256": "E964CEE2D4A15F66F7E24C97C35E4E7B830D50974E6EB283CFA383FF989FBEFB"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyLearningPersistence.cs",
+      "lastWriteTime": "2026-10-09T21:08:32.3998955+08:00",
+      "sha256": "2E71576E8933B443190FC51633C37082B9705496D633AF846CAFBD6E5B6B45A9"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyNeedDashboard.cs",
+      "lastWriteTime": "2026-10-09T23:05:29.7583278+08:00",
+      "sha256": "22AB081CE311F1F62B86890281872C74892924ABD6DF10BD415A6005D7A79ED5"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyPerception.cs",
+      "lastWriteTime": "2026-10-08T20:10:22.4760049+08:00",
+      "sha256": "781727C234F25825EB3B777C02C5A0A730E712C27FBEBA98D2C28D5778A33926"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyPerfCounters.cs",
+      "lastWriteTime": "2026-10-09T17:50:52.1787381+08:00",
+      "sha256": "E8593D698286A423D97F1F928BCDD2D6011997D133FF1132F2A6A7A3E25B8AE5"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyPreservedAssets.cs",
+      "lastWriteTime": "2026-10-08T17:22:34.7703816+08:00",
+      "sha256": "D1185181ED1FF2FA5F73E77DFA70167024DCF40AF581D47D18AF53E8BFAFFAFA"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyProductionAuthorisation.cs",
+      "lastWriteTime": "2026-10-09T22:36:26.2748899+08:00",
+      "sha256": "01F8DDB58994D44AEEBCAA75BE396F384837F59E6B1047B6FA95127EE88E6E6B"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyProductionFacade.cs",
+      "lastWriteTime": "2026-10-09T23:23:05.9679370+08:00",
+      "sha256": "1D4B445E34B691B500BD6417F3E871E0C039BA216C7345311EC015851932A58E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyReconciliation.cs",
+      "lastWriteTime": "2026-10-08T15:54:49.8273057+08:00",
+      "sha256": "28784C64AB729EFDDB4C8599C240860FC5645225C4F10FC36672E046BC1E44E9"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyRuntime.cs",
+      "lastWriteTime": "2026-10-10T00:18:38.3044259+08:00",
+      "sha256": "F9351ABD0FBF60528F0D0338BE4652F8B4C1265B31CF224EDFA0A28F6FA8643E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyShadowPlanning.cs",
+      "lastWriteTime": "2026-10-09T20:24:06.4688792+08:00",
+      "sha256": "986304A741E9B80C29C38FFE6FB2417084F3D262DB340E1CC78554E935449223"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyTreasuryOperations.cs",
+      "lastWriteTime": "2026-10-08T18:14:33.3311165+08:00",
+      "sha256": "8C6C0379A0C92369C0A017D5C8FAED6102AFDEF3AA6DF21C7834297EE0BAEE95"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyTreasuryPresenter.cs",
+      "lastWriteTime": "2026-10-08T18:05:22.1880094+08:00",
+      "sha256": "59AE2A960C6852BEC22C94FBFDE62DEF6520D087A53503DA71205CC98AD0149B"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyWorkOwnership.cs",
+      "lastWriteTime": "2026-10-08T21:43:14.4303971+08:00",
+      "sha256": "39A86A12D52521CDF1BF4839BBFBB2BD98FC92A5DF8A000F6A395D8AD33D55A7"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyWorld.cs",
+      "lastWriteTime": "2026-10-08T09:05:46.3057057+08:00",
+      "sha256": "D2E0DF803BEFE4A77791B0C84298DC1FACBEB96559D2E868258FF2A0090ABAA9"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\ITab_Pawn_PersonalNeeds.cs",
+      "lastWriteTime": "2026-10-09T18:31:24.1118680+08:00",
+      "sha256": "1F3FEACEADB7F843B668A1E7314083FCE783B1E8B1E5E1EF30622B4978A31EC6"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\NeedDashboardPanel.cs",
+      "lastWriteTime": "2026-10-09T18:09:25.1462329+08:00",
+      "sha256": "BC44CA5E4E35B9755D1CDA8BB30B3C26AA8CAEB692636D6150DD5541766122A3"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\NeedDashboardPresenter.cs",
+      "lastWriteTime": "2026-10-09T23:04:47.4278230+08:00",
+      "sha256": "36AB2C9F18AEB63718E00D7DA884FE8041181A506AAD4D6C080E76A870DC01D3"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\NeedDashboardTextFlow.cs",
+      "lastWriteTime": "2026-10-08T20:24:04.1913364+08:00",
+      "sha256": "C4543905C25242854E00A0E22F5D77F4E4940B124DA6EB51A6B88E4FAC6FB8C8"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\NeedsCyclePanel.cs",
+      "lastWriteTime": "2026-10-09T23:30:14.1504223+08:00",
+      "sha256": "C999E9197686D1523521E0A77AC3922E0F6E3699F0DA931783966BED6084099F"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\NeedsCyclePanel.Decision.cs",
+      "lastWriteTime": "2026-10-09T23:30:19.8924428+08:00",
+      "sha256": "1CA6BE747A27404D34DED824535B01347C04F6BD45EAA0E2F6B43AFFB66BADC1"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\NeedsCyclePanel.Demand.cs",
+      "lastWriteTime": "2026-10-09T19:08:45.8061673+08:00",
+      "sha256": "A65B549F5DA03B58317B6293C0C4AEB6DB1CF927804C52D5F76E595B4CCFD7DA"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\NeedsCyclePanel.Goal.cs",
+      "lastWriteTime": "2026-10-09T23:06:21.8224611+08:00",
+      "sha256": "2C69AECE423B6285BE272E969B21C440709EF06EF3DBB8F22CB7EE2C3916ECF4"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\NeedsCyclePanel.Measure.cs",
+      "lastWriteTime": "2026-10-09T23:30:19.4120758+08:00",
+      "sha256": "87267AD01159082E287311C9A45646BEC5D7E40D991EEB6BF4275A7902AB7E67"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\PawnEconomyFactsPresenter.cs",
+      "lastWriteTime": "2026-10-09T23:05:06.7994893+08:00",
+      "sha256": "CFE7774136A30B257C791425CB988C69B1D5FCDD972F30F120A272A8FA734FFB"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\PawnSettlementSaveHost.cs",
+      "lastWriteTime": "2026-10-08T22:16:10.7055668+08:00",
+      "sha256": "9AAAB26139980C933224955742EA81A3F1C9463B0CAFD25E281F3CD3C703AADC"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Perception\\VanillaNeedRegistry.cs",
+      "lastWriteTime": "2026-10-09T18:27:43.8415215+08:00",
+      "sha256": "CA7714C6FC149D19206774C85A855217045E4A9868292EF70FC33C23DEBD4E94"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Perception\\VanillaPawnFactCapture.Body.cs",
+      "lastWriteTime": "2026-10-08T14:52:02.7946316+08:00",
+      "sha256": "735C748C34E6FFCE7A1B4A847FC3EAA046C8FCA7B359D1B1BF61DE4ACF22C12D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Perception\\VanillaPawnFactCapture.cs",
+      "lastWriteTime": "2026-10-08T20:10:22.4760049+08:00",
+      "sha256": "FAC599A8967CD71A966A04C7CC0814AE7DE759F79D91507F634392F851ACA9B9"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Planning\\EconomyFoodCostSource.cs",
+      "lastWriteTime": "2026-10-10T00:19:27.9244501+08:00",
+      "sha256": "AD7037867256729366480A366EB0C5E475945D1425B832B1DD20FF4E9713E189"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Planning\\EconomyInstitutionWorkSource.cs",
+      "lastWriteTime": "2026-10-08T21:29:59.4259449+08:00",
+      "sha256": "BC118A57555DCF6C034F98E509177B26D4C537F5023A89FD42520E3C54ADBAA3"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Production\\EconomyProductionReadoutSource.cs",
+      "lastWriteTime": "2026-10-09T22:56:59.5121218+08:00",
+      "sha256": "EE472EABCCA3FE145F53502A5F87967C83DCB335D52F52EFE5F2CD3A77E51422"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\Production\\EconomyWorkshopExecutor.cs",
+      "lastWriteTime": "2026-10-09T22:36:12.1099060+08:00",
+      "sha256": "69B5EFD93BA76FC3E28CFB9C759FBC37F2D40579F7D73FB853702B7D90D9A6B7"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\SettlementReservePrototype.cs",
+      "lastWriteTime": "2026-10-08T16:51:51.6916817+08:00",
+      "sha256": "9594374E4AA0E55FE4C193539E069DF389849597E730AA8A63E7FDCA9B992610"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\ShadowPlanPresenter.cs",
+      "lastWriteTime": "2026-10-09T23:40:28.9646488+08:00",
+      "sha256": "C592B391C8BA3D9184DD7C08F644A02F3207B1AF543F495FCF010B5B27E37685"
+    }
+  ],
+  "existingTests": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Tests\\TestResults\\R09-part.trx",
+      "time": "2026-10-10T00:19:39.1854098+08:00",
+      "sha256": "56D052B324EDAAA6EBB1E535A8898AFEB74FAEAB8794647D9603889D33D596FC",
+      "total": "1196",
+      "executed": "1195",
+      "passed": "1195",
+      "failed": "0"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Tests\\TestResults\\R08-rest.trx",
+      "time": "2026-10-10T00:19:02.1403024+08:00",
+      "sha256": "5873C364C7D2865985DF3C1FC33FD5AB342754562C6ED04D4BE05E657CAAB978",
+      "total": "1196",
+      "executed": "1195",
+      "passed": "1195",
+      "failed": "0"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Tests\\TestResults\\R05-core-V2.trx",
+      "time": "2026-10-10T00:15:20.5713969+08:00",
+      "sha256": "9C684264E85EB2B5EB013E6B6DE24CCF2EB1B99CE2FBD256CA5EFD2A1FC16DD7",
+      "total": "1195",
+      "executed": "1194",
+      "passed": "1194",
+      "failed": "0"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Tests\\TestResults\\R05-core-Final.trx",
+      "time": "2026-10-10T00:14:30.5479539+08:00",
+      "sha256": "0B892863A181D6C46F46288D4FE34C3F1489BD89D5755DF26625175DFA767C93",
+      "total": "1193",
+      "executed": "1192",
+      "passed": "1191",
+      "failed": "1"
+    }
+  ],
+  "binaries": [
+    {
+      "Path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Assemblies\\PersonalChronicle.dll",
+      "Hash": "7FC796D77CBDB0393673C51AC65EA85FF3E1B9D62C242287AB256DA9153906B3"
+    },
+    {
+      "Path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统\\Assemblies\\PersonalChronicle.dll",
+      "Hash": "F1443B0BDF29D5B5B1C0FC001321A399AC8161B862F39C1A019E00917EC51969"
+    }
+  ]
+}

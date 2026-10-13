@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_Make_FarmFrame.label>制造农机机架</PC_Make_FarmFrame.label>
+  <PC_Make_FarmFrame.description>用钢材焊接加固底盘机架，是所有自动化农业设备组装的基础组件。</PC_Make_FarmFrame.description>
+  <PC_Make_FarmFrame.jobString>制造农机机架</PC_Make_FarmFrame.jobString>
+  <PC_Make_GrowLightModule.label>制造生长灯模块</PC_Make_GrowLightModule.label>
+  <PC_Make_GrowLightModule.description>用钢材与工业部件组装带支架的生长灯管模块。</PC_Make_GrowLightModule.description>
+  <PC_Make_GrowLightModule.jobString>制造生长灯模块</PC_Make_GrowLightModule.jobString>
+  <PC_Make_IrrigationModule.label>制造灌溉模块</PC_Make_IrrigationModule.label>
+  <PC_Make_IrrigationModule.description>用钢材与工业部件组装水泵管路模块。</PC_Make_IrrigationModule.description>
+  <PC_Make_IrrigationModule.jobString>制造灌溉模块</PC_Make_IrrigationModule.jobString>
+  <PC_Make_FertilizerModule.label>制造施肥模块</PC_Make_FertilizerModule.label>
+  <PC_Make_FertilizerModule.description>用钢材与工业部件组装化学撒肥料斗模块，仅大型农机需要。</PC_Make_FertilizerModule.description>
+  <PC_Make_FertilizerModule.jobString>制造施肥模块</PC_Make_FertilizerModule.jobString>
+  <PC_Make_SowerModule.label>制造播种模块</PC_Make_SowerModule.label>
+  <PC_Make_SowerModule.description>用钢材与工业部件组装带分配轮的种子料斗模块。</PC_Make_SowerModule.description>
+  <PC_Make_SowerModule.jobString>制造播种模块</PC_Make_SowerModule.jobString>
+  <PC_Make_HarvesterModule.label>制造收割模块</PC_Make_HarvesterModule.label>
+  <PC_Make_HarvesterModule.description>用钢材与工业部件组装铰接式切割机械臂模块。</PC_Make_HarvesterModule.description>
+  <PC_Make_HarvesterModule.jobString>制造收割模块</PC_Make_HarvesterModule.jobString>
+  <PC_Make_PowerModule.label>制造电力模块</PC_Make_PowerModule.label>
+  <PC_Make_PowerModule.description>用钢材与工业部件组装带光伏板的蓄电池模块，为农机提供应急电力。</PC_Make_PowerModule.description>
+  <PC_Make_PowerModule.jobString>制造电力模块</PC_Make_PowerModule.jobString>
+</LanguageData>

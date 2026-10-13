@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!--
+    CHG-20261004-STAFF（2026-10-04 审计 P2）：与中文对齐 —— 工作类型列名
+    「车间 / workshop」→「员工 / Staff」。这套体系是"现代工业岗位体系"，
+    列名要与 vanilla 的 种田/采矿/搬运/清洁/研究 并列表达"从事工业生产劳动"，
+    而"车间"描述的是**地点**，保留在 description / verb 里。
+
+    CHG-20261004-MEALSCHEDULE：新增 PC_MealBreak（原缺失，中英不对等）。
+  -->
+  <PC_WorkshopOperation.labelShort>Staff</PC_WorkshopOperation.labelShort>
+  <PC_WorkshopOperation.pawnLabel>Staff</PC_WorkshopOperation.pawnLabel>
+  <PC_WorkshopOperation.gerundLabel>working in the workshop</PC_WorkshopOperation.gerundLabel>
+  <PC_WorkshopOperation.description>Work an assigned workshop: operate, watch over and maintain the automated production line. "Staff" is a company-wide role; which workshop they attend and which processes they take on is decided by the schedule.</PC_WorkshopOperation.description>
+  <PC_WorkshopOperation.verb>Work in the workshop</PC_WorkshopOperation.verb>
+
+  <!-- Work-time accounting labels (visible=false, hidden from the Work tab) -->
+  <PC_WorkshopMaintenance.labelShort>Staff · Maint.</PC_WorkshopMaintenance.labelShort>
+  <PC_WorkshopMaintenance.pawnLabel>Maintenance staff</PC_WorkshopMaintenance.pawnLabel>
+  <PC_WorkshopMaintenance.gerundLabel>maintaining equipment</PC_WorkshopMaintenance.gerundLabel>
+  <PC_WorkshopMaintenance.description>Staff on duty tagged as maintenance (work-time accounting label only).</PC_WorkshopMaintenance.description>
+  <PC_WorkshopMaintenance.verb>Maintain equipment</PC_WorkshopMaintenance.verb>
+
+  <PC_WorkshopQualityCheck.labelShort>Staff · QC</PC_WorkshopQualityCheck.labelShort>
+  <PC_WorkshopQualityCheck.pawnLabel>QC staff</PC_WorkshopQualityCheck.pawnLabel>
+  <PC_WorkshopQualityCheck.gerundLabel>inspecting output</PC_WorkshopQualityCheck.gerundLabel>
+  <PC_WorkshopQualityCheck.description>Staff on duty tagged as quality check (work-time accounting label only).</PC_WorkshopQualityCheck.description>
+  <PC_WorkshopQualityCheck.verb>Inspect output</PC_WorkshopQualityCheck.verb>
+
+  <PC_WorkshopStandby.labelShort>Staff · Standby</PC_WorkshopStandby.labelShort>
+  <PC_WorkshopStandby.pawnLabel>Standby staff</PC_WorkshopStandby.pawnLabel>
+  <PC_WorkshopStandby.gerundLabel>standing by on site</PC_WorkshopStandby.gerundLabel>
+  <PC_WorkshopStandby.description>Staff on duty tagged as standby (work-time accounting label only).</PC_WorkshopStandby.description>
+  <PC_WorkshopStandby.verb>Stand by on site</PC_WorkshopStandby.verb>
+
+  <!-- CHG-20261004-MEALSCHEDULE：三餐作息（不出现在工作面板，仅用于设置页与提示文本） -->
+  <PC_MealBreak.labelShort>Meal</PC_MealBreak.labelShort>
+  <PC_MealBreak.pawnLabel>Meal</PC_MealBreak.pawnLabel>
+  <PC_MealBreak.gerundLabel>having a meal</PC_MealBreak.gerundLabel>
+  <PC_MealBreak.description>Go eat during the configured meal windows. Outside those windows this work type does nothing; hunger is still handled by the vanilla needs system.</PC_MealBreak.description>
+  <PC_MealBreak.verb>Eat at</PC_MealBreak.verb>
+</LanguageData>

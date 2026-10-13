@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "机制 11 · 只读呈现装配",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [930, 500]
+  },
+  "stages": [
+    { "label": "两个宿主" },
+    { "label": "只读门面" },
+    { "label": "装配与门控" },
+    { "label": "分区与边界" }
+  ],
+  "nodes": [
+    { "id": "itab", "type": "frontend", "label": "ITab 单人宿主", "sublabel": "个人需求页三页签", "stage": 0, "row": 0, "tag": "RUIF 自绘" },
+    { "id": "roster", "type": "frontend", "label": "总控名册宿主", "sublabel": "经济「需求观察」页", "stage": 0, "row": 2, "tag": "12 人分页" },
+    { "id": "facade", "type": "security", "label": "只读门面", "sublabel": "QueryNeedDashboard", "stage": 1, "row": 1, "tag": "零写路径" },
+    { "id": "assemble", "type": "backend", "label": "装配", "sublabel": "缺口 · 计划 · 账本", "stage": 2, "row": 0, "tag": "先目标后需求行" },
+    { "id": "gate", "type": "backend", "label": "刷新门控", "sublabel": "60 tick + 三重失效", "stage": 2, "row": 1, "tag": "语言 / 地图 / epoch" },
+    { "id": "sections", "type": "database", "label": "分区契约", "sublabel": "单页七分区", "stage": 3, "row": 0, "tag": "结构化字段" },
+    { "id": "bound", "type": "external", "label": "边界断言", "sublabel": "verify 禁写清单", "stage": 3, "row": 2, "tag": "会话态非 static" }
+  ],
+  "flows": [
+    { "id": "itab-facade", "from": "itab", "to": "facade", "label": "单人查询", "classification": "秒级只读", "variant": "emphasis" },
+    { "id": "roster-facade", "from": "roster", "to": "facade", "label": "名册查询", "classification": "分页", "variant": "default" },
+    { "id": "facade-assemble", "from": "facade", "to": "assemble", "label": "取数", "classification": "同一装配点", "variant": "emphasis" },
+    { "id": "assemble-sections", "from": "assemble", "to": "sections", "label": "装配分区", "classification": "七分区", "variant": "emphasis" },
+    { "id": "facade-gate", "from": "facade", "to": "gate", "label": "节流", "classification": "60 tick", "variant": "default", "fromSide": "right", "toSide": "left", "route": "straight", "labelDy": 44 },
+    { "id": "sections-bound", "from": "sections", "to": "bound", "label": "必须零写", "classification": "禁写路径", "variant": "default", "fromSide": "bottom", "toSide": "top", "route": "straight", "labelDy": 24 },
+    { "id": "gate-bound", "from": "gate", "to": "bound", "label": "门控纪律", "classification": "非 static", "variant": "dashed", "fromSide": "right", "toSide": "left", "labelDy": 24 }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "装配要点",
+      "items": [
+        "缺口投影与影子计划共用同一装配点，先生成目标态再装配需求行",
+        "名册路径只填需求 / 覆盖 / 心情等分区；规划类分区为空（不假装有数据）",
+        "无比例时显示事实状态（Unsupported / Error / Unknown），不得一律「未配置」"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "门控与只读",
+      "items": [
+        "刷新门控：60 tick + 三重失效（epoch / 地图可用性 / 语言）才重查",
+        "取数只走 Query* 纯读方法；服务能力用 QueryServiceCapability 而非会推进 revision 的评估路径",
+        "只读账本事实只准在装配点取，面板不得引用经济组件"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "红线（verify 卡口）",
+      "items": [
+        "禁用原版需求 UI（NeedsCardUtility / PawnNeedsUIUtility）与原版需求 Tab",
+        "单人门面禁止写路径：Terminate / TrySignForOpportunity / CreateCareAuthorization 等",
+        "会话态（滚动 / 测量缓存 / 页签）挂 NeedPanelState，严禁 static"
+      ]
+    }
+  ]
+}

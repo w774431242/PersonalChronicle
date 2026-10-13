@@ -1,0 +1,3516 @@
+{
+  "changeId": "CHG-20261011-PUBLIC-ASSET-LINKS",
+  "verifiedUtc": "2026-10-11T11:03:27.4123998Z",
+  "testsPassed": 1329,
+  "testsFailed": 0,
+  "testsSkipped": 1,
+  "codeVerified": true,
+  "testVerified": true,
+  "gameVerified": false,
+  "modSha256": "94A2FFACE2054E9DF2B3728042A90978B2725ABE8B739C1E802B33741A89D82E",
+  "compiledSourceDocuments": 718,
+  "sourceFiles": [
+    {
+      "path": "_scripts/deploy-public-assets.ps1",
+      "sha256": "409537D1451264BA66CC4596CD9FFC8BABB43F1CF8A546E7F7C3938D29295EDC"
+    },
+    {
+      "path": "_scripts/verify-public-assets.ps1",
+      "sha256": "25ED6C46C3F02F58972257174CA2D566C9B98039DBE32BE192C409B08D8097DA"
+    },
+    {
+      "path": "About/About.xml",
+      "sha256": "AA2E080F4EEC5D791B69738CD1BCFEC01D72C80BB3FAE9F5688A8A4E265D83EC"
+    },
+    {
+      "path": "Defs/ArchiveCategoryDefs.xml",
+      "sha256": "2106209CBDA65D4F70D2B1077E8F3B8778A07187EA5024F5783068782ADC44A3"
+    },
+    {
+      "path": "Defs/Automation_AutoFarm.xml",
+      "sha256": "ACDBD51B2250A6EE232AA150695B18A2CA335614E3F4AF8665669B82DA11881F"
+    },
+    {
+      "path": "Defs/Automation_Category.xml",
+      "sha256": "86FA329FB12191D6B038F2F06B1A6A2C91BD5605E89AF57755F94C13505D191F"
+    },
+    {
+      "path": "Defs/Automation_Conveyor.xml",
+      "sha256": "8A98E2A6CD084410014F4117B17073EC3F965EC4CC92989E22AD41B316D124C0"
+    },
+    {
+      "path": "Defs/Automation_FarmComponents.xml",
+      "sha256": "FFA27BD0D1D6CCF7F4DEEE242B5B112FBDC52F7EAD2BAA4ED6EAB5A7F29FD770"
+    },
+    {
+      "path": "Defs/Automation_Jobs.xml",
+      "sha256": "EE9FD3F00FF45876331B9197407D383A89AB68A0023621E797D511B095B6C668"
+    },
+    {
+      "path": "Defs/Automation_Pipe.xml",
+      "sha256": "7F0E2B8EE865329517FCBB15E4613A6816B33D2993C506E96725800F8BBB3149"
+    },
+    {
+      "path": "Defs/Automation_Research.xml",
+      "sha256": "FF2AB62677DA3E5FC5AD0BF1AF3389016D566BF70F55FCAA1C1AAF90865C44A8"
+    },
+    {
+      "path": "Defs/Automation_TimeAssignment.xml",
+      "sha256": "0636CB93968F5AF8B1AB972F675673163B8DDBED0F0D39B3218C23DBF137D4B0"
+    },
+    {
+      "path": "Defs/Automation_WorkType.xml",
+      "sha256": "C2B783C45D61E71FDC57A2C9F08DFBBE0014CE43C3CFC37CA68C6E39D95BCD9B"
+    },
+    {
+      "path": "Defs/Chronicle_Events.xml",
+      "sha256": "5FAFFEA074F26FBE5743A4A7A7E157E668CD0FC231F4665DA724259F1C376719"
+    },
+    {
+      "path": "Defs/HealthValuation.xml",
+      "sha256": "B5B2C12A1C149E2027C2E4162D68B0D148F95288D7E0329465EFA25039A0B9B0"
+    },
+    {
+      "path": "Defs/MainButtonDefs.xml",
+      "sha256": "55E876C147B8815EE9B2FF70693F8AF65719291C4F9E91C1CBB3EAC387436AED"
+    },
+    {
+      "path": "Defs/ManufacturingRoutes.xml",
+      "sha256": "5FB6E54BDBA6015B38943CA1E1A5851820383FE94D0A7F52A608A22ED166EB64"
+    },
+    {
+      "path": "Defs/MedalDefs.xml",
+      "sha256": "4394424802FD807A4EB9E5D6A94B79D37F11E558E4CE61E8F14F9C78C35EF057"
+    },
+    {
+      "path": "Defs/PawnEconomy_Institutions.xml",
+      "sha256": "642761DE9E45E5CB8E43D85FDBD33C89C4F9F1CC2CE0A095458ED2243857C751"
+    },
+    {
+      "path": "Defs/PawnEconomy_Storage.xml",
+      "sha256": "9DF7A7D92E2DD6E6FA1A2690547D1B5848972CA01A1B00F5F49296D32268F027"
+    },
+    {
+      "path": "Defs/PawnEconomy_Treasury.xml",
+      "sha256": "6B509BC58E3AC08D6B4FA6C0694D847A7DA0828D4A3DD07B04DA522797FA74D9"
+    },
+    {
+      "path": "Defs/ProfessionalMajorFit.xml",
+      "sha256": "24859C246BDBA4456D0905826E9644AFDA29019F0BEBA3258ED0521DA5EABCF5"
+    },
+    {
+      "path": "Defs/ProfessionalQualityWeight.xml",
+      "sha256": "79C066CE8E084EE9AD410EEDE9ACBDD7969DCB31F995107277E304CB200EB5C2"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.Landing.xml",
+      "sha256": "AA84A5C1159E6866BBD2953659282FBA330F3A57044A4DADB3E57A6A2E9E32AE"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.MajorBonuses.xml",
+      "sha256": "95D06F4AD2CABC352C8011A65B64CDB7F9B0CC88319277ED964EBEEE00FF9DD0"
+    },
+    {
+      "path": "Defs/ProfessionalSkills.xml",
+      "sha256": "6EFE21C418C0A0734C09968E4EBC45D5BFD965BF24BF0B864D6832A827795C20"
+    },
+    {
+      "path": "Defs/QualificationDefs.xml",
+      "sha256": "86BA260C50745A67B2791C712F5CA5DB580E65D87DF62E16E7DE1E5F367F806B"
+    },
+    {
+      "path": "Defs/RecipeDefs.xml",
+      "sha256": "B09333FBECBAF145483D90C91A4F8E2C867D3AE64746011ECDAF488C11BD2BF0"
+    },
+    {
+      "path": "Defs/SocialRelationPolicy.xml",
+      "sha256": "6D8FC6169DA230843A8DBD73F87B7B4B5CA4F77B6088930C1BE3AE1594E646A2"
+    },
+    {
+      "path": "Defs/SystemCenterDefs.xml",
+      "sha256": "30A494A3A2CF5FD563D51ED9D1E6D186F16B1710C2051223244749B4D05E2766"
+    },
+    {
+      "path": "Defs/T1_Production.xml",
+      "sha256": "017BD71C9BEAA3A1EFDF2FA6D6DC6D4B47F0830D1726D4CCC3A98E99984228EA"
+    },
+    {
+      "path": "Defs/T1_WorkshopProcesses.xml",
+      "sha256": "E9B640D748D7DEEEBA0308617F4CE99DAB3C3AECB629524842962582C3F01D2C"
+    },
+    {
+      "path": "Defs/ThingArchivePolicy.xml",
+      "sha256": "D85711CE85474A35021AD9543012F3B21360F4EA8C77F9D0D1D95BE58882ACD3"
+    },
+    {
+      "path": "Defs/ThingDefs.xml",
+      "sha256": "36A54E6C8707F3BDD292D551032A37E33C5245595F7B88A03A879FC502DE5ACB"
+    },
+    {
+      "path": "Defs/WorkIntensity.xml",
+      "sha256": "B1960D4257CC253F4D3D6C09F381408B48746795DE24528DCA403932DE36B757"
+    },
+    {
+      "path": "Defs/WorkshopDeviceEquivalences.xml",
+      "sha256": "4E47C7006F83F1A5FF0A248817F1E2D1F7D47DC0A59CFEB1CED0B8CED19F01D4"
+    },
+    {
+      "path": "Defs/WorkshopPosts.xml",
+      "sha256": "57F44FD59F5CC9B8F58B9D574874544A2A746B66C2D32DA89E756DB2104675E3"
+    },
+    {
+      "path": "Defs/WorkshopProcesses.xml",
+      "sha256": "FBA1C75A945D4AEF2B054E10A88CCC4DDC1B39C6A53BD6A560FC97B86F62AB24"
+    },
+    {
+      "path": "Defs/WorkshopRestPolicies.xml",
+      "sha256": "AFD4E60816343448E9558E1434DF073BA5823850170278EBB827A1DF48709517"
+    },
+    {
+      "path": "Defs/WorkshopTypes.xml",
+      "sha256": "176C78055F9F4D7F0ED7817A70AA01B2590218EC93F94F03E00F1A5725E2CBCB"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/DesignationCategoryDef/Automation_Category.xml",
+      "sha256": "DF262BC3D9B9C814FFC93D1B7AA70EA401CE669AF5EB51721D0CBEE1F1235EF2"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/DesignatorDropdownGroupDef/Automation.xml",
+      "sha256": "5464A75121BB33F8E05010E04FF7C3BFE64E3B061659EF1836ED0036CD10926F"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/JobDef/AutomationJobs.xml",
+      "sha256": "21E97FE3BD508F5914213ECB202B16504D028BF15698B48FB806D0C67F6B3C35"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+      "sha256": "4A7FF9BA956B780001F607DBD09033F9B4FF01FA19D4B3B8D59858F8C8DB65C9"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ProfessionalSkillDef/Skills.xml",
+      "sha256": "7F1859388CE3B4AE2B8650E51B1511EDAFBDA84F10A566ED35ACE328B2B6A89A"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/RecipeDef/Automation.xml",
+      "sha256": "22720D787588C6821C13F18E4EEABA58E670B100B7BB94EE6A8103418528739A"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/RecipeDef/ExamRecipes.xml",
+      "sha256": "1C7CD12322B8005EAED073A69D41ECD9874E33C7855848BE0DC252E592EF3511"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ResearchProjectDef/AutomationResearch.xml",
+      "sha256": "9B580DA80375F0D3815DC183B5BC9ECB2189F1EDF6BB794B11497A8B7E8A65AB"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ResearchTabDef/AutomationResearch.xml",
+      "sha256": "EB9C015D7E321D74C940A6007720227BF6D29DEBCFFEDFC30B9932678E5E9CA4"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ThingDef/ExamThings.xml",
+      "sha256": "7AB8B20DAF28B9E71FBA22786E42248A870DF3A948EEF811195F1A453D061E80"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/ThingDef/Things_Automation.xml",
+      "sha256": "BB0281422D79D06A2B6B676632B53477103D0D91B977982E07F2A9F89FCEE660"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/TimeAssignmentDef/PCMeals.xml",
+      "sha256": "974BA7D15A26BE982C9E22E7426EA0AFD31A16CF2A946033808BC6B98DD548B5"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/WorkGiverDef/AutomationJobs.xml",
+      "sha256": "954F5101FF0FDD22A2A332E2DC7B007BFB87FF903A7C40C8977E9772E67CF0B8"
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/WorkTypeDef/AutomationWork.xml",
+      "sha256": "AF8B96D7B1E218C75684618A64D004682800AEA8492C4BCF796A887DADC40C0C"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Archive.xml",
+      "sha256": "E6B8D747142D613C9BB8DF036939E655E4ED57E79249F8C28C1B88FE9E2F7405"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Automation.xml",
+      "sha256": "EC6A85C8A16C0DA236FD29AE0D2D150803104820C88F24C56F1CC59C64DD2512"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/ColonyEconomy.xml",
+      "sha256": "DE7A82A00E3FF91072785AACE01ACC8FF916D5CD759575E4F6CA12F9B2764735"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/EconomyMode.xml",
+      "sha256": "C757715E05FCA9E737D6A5D067631FA3B5CC52C4F941B37CE60D5BE1A06AF375"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/Guide.xml",
+      "sha256": "7D60B083BAEF931C5DF0E3ECC068101E5FBC265D290C2A03B2F682F795B0A075"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomy.xml",
+      "sha256": "DF26380080672A8E8CFB6710B665C407D5C7DA28BED26134D35D51C7A40FA8FB"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+      "sha256": "CF4D87AB2436AC37B55F8D3C8A7B82BBB3E5824CEEDAB30EF16AA8067970FEA7"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyPlanning.xml",
+      "sha256": "2D4FA9B665C2CD88E174DCEEB89006BC2038D792F7C2BD237DE6F31A7CD24949"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyPublicAssets.xml",
+      "sha256": "EA2049767B6BADB9C54F31835951E15398C87494B3FCBEAEA9ACA7D85F1CA815"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyStorage.xml",
+      "sha256": "BB41DFA159394C12494D4CCCBD8F165C15C92F18E6767CFA6D9598CFC170E54C"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnNeedSpeech.xml",
+      "sha256": "83C17375255729F5CFF285BC4E89261BD10A8CBDB6338A1A474EA79EF82F44C1"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/SettingsUi.xml",
+      "sha256": "D24C86ADE8881762B2174288966ADCB1D69E59002E31027F5E2CA5220CE87071"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/T1_Production.xml",
+      "sha256": "5BB7DE9E05C412769E307D064D90695F093AB9A8E7881F5BC61DB2E90F10989C"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/TreasuryOperations.xml",
+      "sha256": "51E4C7A8AB67D5E51B3D69B71DC5FD08CA9DDF978CE81E19D66A4CE2CF1CFCA8"
+    },
+    {
+      "path": "Languages/English/DefInjected/ArchiveCategoryDef/ArchiveCategoryDefs.xml",
+      "sha256": "B2DFE0938A0A5EF2BBA75276AAFED5AEA95777758549427520DFA67AE017193B"
+    },
+    {
+      "path": "Languages/English/DefInjected/DesignationCategoryDef/Automation_Category.xml",
+      "sha256": "165AC83F20C2165B4FF89FB81C8A6B8E972F68A3EAA12B4A22A99C7241F88EAC"
+    },
+    {
+      "path": "Languages/English/DefInjected/DesignationCategoryDef/PawnEconomy.xml",
+      "sha256": "45F32772AEED0C24C3B3B11AE486FC94D614A0548871A2064AD880D01DE3C126"
+    },
+    {
+      "path": "Languages/English/DefInjected/HealthValuationPolicyDef/HealthValuation.xml",
+      "sha256": "F2B065863F4BEED07A212277146CED689EAB53924BD7FA6418A4997775EF8F0F"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/AutomationJobs.xml",
+      "sha256": "0299E3561E4559278ACF0DF9087A5A0B7D704C35278A80D267C4E24FE3324EB0"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+      "sha256": "44525148DCA11F10E642BD16F59C857E772426A808472CEB732C67447802EED0"
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/PawnEconomy.xml",
+      "sha256": "5F59AFB2AA04A9477780695A74474CD7C84970E24F931CE06B815A996A99CE72"
+    },
+    {
+      "path": "Languages/English/DefInjected/MainButtonDef/MainButtonDefs.xml",
+      "sha256": "6012B3609A5C45E0D9899BEFED97F6E514FC6E49788E01D85E5FE49A26C1B6AD"
+    },
+    {
+      "path": "Languages/English/DefInjected/RecipeDef/Automation.xml",
+      "sha256": "19E20BEE701784950B061E09CE285ACBE631B3EFA0C8A7DE678821B0CB5CA875"
+    },
+    {
+      "path": "Languages/English/DefInjected/RecipeDef/ExamRecipes.xml",
+      "sha256": "CC167B96DFC5FCF23731B09944F4A2F0E1FCBC2D6FD0EB502D3B67BE0F0ED2EC"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchProjectDef/AutomationResearch.xml",
+      "sha256": "CC64E79DAC4FAA0EE1786A8064FB695FDACBB7E3F9C3B0ED6A86CB7F4D0B32A8"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchProjectDef/T1_Production.xml",
+      "sha256": "852BA50E27A0F0F35ED8FC76D9022636066D6D4F5758573E42078A654701409D"
+    },
+    {
+      "path": "Languages/English/DefInjected/ResearchTabDef/AutomationResearch.xml",
+      "sha256": "A94239154F767C151666C5AD8C780A582D823DAA8711D7ADD27374D235B6B844"
+    },
+    {
+      "path": "Languages/English/DefInjected/RouteDef/ManufacturingRoutes.xml",
+      "sha256": "811A897F54D8F78E44A60B6291D0C6ABA93B9AB86AB62B60A53BCA43D21D6405"
+    },
+    {
+      "path": "Languages/English/DefInjected/SocialRelationPolicyDef/SocialRelationPolicy.xml",
+      "sha256": "7073B63BBC20712387B625399B5CCCC7353AD54A116649B2AAAC82DB2E659942"
+    },
+    {
+      "path": "Languages/English/DefInjected/SystemCenterDef/SystemCenterDefs.xml",
+      "sha256": "8676306BFDCE8E716FC3F9282F607FBEDF8D099F1D81580408E799C9F126567F"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingArchivePolicyDef/ThingArchivePolicy.xml",
+      "sha256": "997FFFD4E5FEEA54DD8341525E23828AA3420FFBAA6C04B49CB503BEC4627DE5"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/ExamThings.xml",
+      "sha256": "BD5E31348F1DDB314346E3AE265F352794246FE7FB54A3A65129D67291B4B4A6"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/PawnEconomy.xml",
+      "sha256": "ED31C796220A7B9FC28252FA41005BE93CECDF368A676FBE2BD17B21203E26B6"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/PawnEconomyStorage.xml",
+      "sha256": "7DFA4825A1D3B896046B11CEE942A337728FB07654E9B3E4C5185449AB4AD040"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/T1_Production.xml",
+      "sha256": "6A0229D027985335758F7D53BA1FBDEFECDFF7EAB7443315211849E26A507CE5"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/Things_Automation.xml",
+      "sha256": "14AD2FC18814A1BD256795DC87439EBCA5B7632B52DC31A3AFB22F369DF2B5E4"
+    },
+    {
+      "path": "Languages/English/DefInjected/TimeAssignmentDef/PCMeals.xml",
+      "sha256": "EFCAA20A41CAAD196ADAC8A55611F96FBAD922D189EA1978131DF87F171EED22"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkGiverDef/AutomationJobs.xml",
+      "sha256": "4BD519905FD3805B9DED26E9DBCBE69A5FA6EE8C44DD99D091F7E294174C90BD"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkGiverDef/PawnEconomy.xml",
+      "sha256": "6E372025D0A51914174CC94E83D7950E80B3B9FA6FD3D56E7FC50677C4DEC891"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopDeviceEquivalenceDef/WorkshopDeviceEquivalences.xml",
+      "sha256": "9D10459A435DC16EBEC1854F1AAA1DD5A9B12DCBEE51BD8D9D40340E24AD12A7"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopPostDef/WorkshopPosts.xml",
+      "sha256": "834064A4DDD64473443710C57EE6A0E159F39980F7D85774886364CD7DD873CD"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopProcessDef/T1_WorkshopProcesses.xml",
+      "sha256": "54E4DDA79786BC32990DDFFDDC069D51AF48621D8A1C9E694CD9CB420AA50B5C"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopProcessDef/WorkshopProcesses.xml",
+      "sha256": "8B1DA3016DE69A025D5817E4E96794CA949C879A7EA636C479CBEE482ADAE293"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkshopTypeDef/WorkshopTypes.xml",
+      "sha256": "97576B85DEB73F326D9CF00D5FDE53B940362FEEE72719BE6B84CE65750B4251"
+    },
+    {
+      "path": "Languages/English/DefInjected/WorkTypeDef/AutomationWork.xml",
+      "sha256": "6AFC6397B825B82C3EB98B953405DE3F77682EFD891BBF57E0F129FD24BC2347"
+    },
+    {
+      "path": "Languages/English/Keyed/Archive.xml",
+      "sha256": "8C57580A8CE1640854107A27E04BD8EFC1480F555990A7F93382EBB02474D965"
+    },
+    {
+      "path": "Languages/English/Keyed/Automation.xml",
+      "sha256": "6F0F622D89FFF9CFDF084BE919B9F1159655C849351242D5BA20330BC26C6135"
+    },
+    {
+      "path": "Languages/English/Keyed/ColonyEconomy.xml",
+      "sha256": "1B6388F43FD7289428EE8AD949E9B5C7BD1F3D25E6A4E71623BEABE5C0146241"
+    },
+    {
+      "path": "Languages/English/Keyed/EconomyMode.xml",
+      "sha256": "0066FED898C6094D93738FCF3EDDFBD82B108711A0023C3A8FC3390CEBCCEFB8"
+    },
+    {
+      "path": "Languages/English/Keyed/Guide.xml",
+      "sha256": "EB618D62E81A17A0385DCBC05FE6667ECDE5248D8768981F8856730FC9F71DF1"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomy.xml",
+      "sha256": "3A4C82D880A565ED7236FC1B518CA2A3A5213144E6A8728412F0B676EBE0F751"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyNeeds.xml",
+      "sha256": "DE221C306D0E1C68F2239807B9367316F11AC972EAABCA685FA23F850E0C213C"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyPlanning.xml",
+      "sha256": "4C43B034357DAB4D7F7CC04D4E658D1A28A443649C708F421E367558DDBEE94C"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyPublicAssets.xml",
+      "sha256": "06467792C96780B79A303CE7BBF9B7904250EA8664FB0FEA3682C7EFC9F8A154"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyStorage.xml",
+      "sha256": "9499C26D99886A7DF761BA7BD60B21AFED3C621ABBF842C1332DCA5F0C6347A0"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnNeedSpeech.xml",
+      "sha256": "05D50F1E7CB34E36609D3B9F0B41570559EC6FA17F9A1D5254134D5803F5AB16"
+    },
+    {
+      "path": "Languages/English/Keyed/SettingsUi.xml",
+      "sha256": "5A65C2DF270FA5A378D16F2C7D09EB7BD94E41942E11F8CE01C5FC20FE4E6E56"
+    },
+    {
+      "path": "Languages/English/Keyed/T1_Production.xml",
+      "sha256": "7C01AC6C04E76D56B5E7D085045BA2CF8EE717999E604D21C8F84FC41312CF13"
+    },
+    {
+      "path": "Languages/English/Keyed/TreasuryOperations.xml",
+      "sha256": "D5C812EF80B13B15BFC9A7AF1DCAD44D4969AB35A2AFAF88B2CFE69C1C80BA83"
+    },
+    {
+      "path": "Source/PersonalChronicle.csproj",
+      "sha256": "552BD258FF48A9C2BACBAAB0A2EE00D7678F2FDCF98407A0CDF5BEE6F9430F5E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/ApiVersion.cs",
+      "sha256": "8A030A7236EBD6D7BFB58BA0E9BCA3EF16D4A07BA0CF3D5FEC4DDC4076C7BF4F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/ArchiveEntityRef.cs",
+      "sha256": "C38834C6358A4B401EC59909FBD84E203A2109E55F7A9CFA73CDC08CDB8EC19A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/ArchiveEventInput.cs",
+      "sha256": "815F149BAB40DDADC808A1BE054741AEC58EE98A14FBE1D70A5DF63C562D31D4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/ArchiveProviderRegistry.cs",
+      "sha256": "862F02993382D92686722323DA2861520A6DC5CFCC454734DC8A0C013F13A5AC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/CaptureResult.cs",
+      "sha256": "C8D0184896C11A723E81FEAE139512A9AD66AC191A1A2DB4933717574A2A22E7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/DomainProviders/Builtin/BuiltinBattleProvider.cs",
+      "sha256": "9758273523077533984ADD0CCB82701CAEEF73A7AC2EE89753B55F00698D9CE8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/DomainProviders/Builtin/BuiltinPlaceProvider.cs",
+      "sha256": "7B63C4A7388F5FB3B3652ADFBF4BC27A9E38FFB2A00D1BD648C9E71178C5E34F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/DomainProviders/Builtin/BuiltinProductionProvider.cs",
+      "sha256": "E706AF06F19A104B00102B2B9AA2695D656AB714C441CD42C2FE8F384D6BA496"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/DomainProviders/Builtin/BuiltinRelationProvider.cs",
+      "sha256": "482D93BCF2C91531AB3979F6E6A943161DD075D30D25EE6A661CE9290E33C1D9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/DomainProviders/IBattleProvider.cs",
+      "sha256": "650B55ECD7BE3687158EF57D6EFDA61EBB362647A6D2595709AB8F014F3BAF71"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/DomainProviders/IPlaceProvider.cs",
+      "sha256": "A77A57588CAF3A025A9CF4CFEF75E5B0C9A2306C517AAA187E6C7FB416F88F1B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/DomainProviders/IProductionProvider.cs",
+      "sha256": "907B0738EA33A3572A818CC138C7C44E2EE59EB8965A2A0AECFBAEE411841BEF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/DomainProviders/IRelationProvider.cs",
+      "sha256": "7FE25E28904F8DA939500BEB6B8808C2FA93FCD9482570521F4A5833483C0746"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/IArchiveEventSink.cs",
+      "sha256": "4259662CBFDFC2B88F0E10B95177A7973F4EB86B1EB93F511E5BEC52706BF553"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/IArchiveProvider.cs",
+      "sha256": "294ACD2D21F219D816118832016F12D71294611BE99A1C588D6A2C784DFC940C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/IArchiveProviderRegistry.cs",
+      "sha256": "66D446C7A9E5060A3E18154CA0F854A6355582EB1A6A13D08D50F2698A46A275"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/IArchiveQueryService.cs",
+      "sha256": "B85B6A8655AA9B476103904768343F7BB62F2F7B5F9EF54C24D22999742C617C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/IPersonalChronicleApi.cs",
+      "sha256": "2DD367BD551BDCB3E8FBC30EEC88676D4245F4C929643498A5068F7078385F89"
+    },
+    {
+      "path": "Source/PersonalChronicle/Api/PersonalChronicleApi.cs",
+      "sha256": "4181F5E7EE180EE00C1DC034253901599D9CD48DEA351DD40C73512DF4B63013"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveLiveViews.cs",
+      "sha256": "6CA3B949303339DFAAF6D6CDF420CBF4B2866B0F7E0B34EB047131B1BE736FFF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Battle.cs",
+      "sha256": "0E82625F7274B291E151050791B0B9A80EC940A3164797B63AD87FE53C16DA42"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Battle.Helpers.cs",
+      "sha256": "C75533A9B1EF75A879BFF5D150ADD7EEBF8BFB004F7A1A6ED9E346A132001ACF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Career.cs",
+      "sha256": "980BFE43082685CAE83077AA7D40F33CD3368C571F86555599D93CC90622512B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Consumption.cs",
+      "sha256": "2F8FEC6AC91F79D3C88297FD920417966CB64AFC289883E1568F0671DC51D2B6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.cs",
+      "sha256": "08A6B861872077714FB94DC6D982272E99A54A7932D77A0C692234ED938F2485"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.ItemFacts.cs",
+      "sha256": "3D6306DDAF7780674DDAB4538BA35E327754EF046DC600A6A0C8AF6FB723AEE1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.ItemFlow.cs",
+      "sha256": "E4EC9A058D791F6364A3CFFD555759FB140214998D670B3F7E71DEEE632A4669"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Live.cs",
+      "sha256": "C34353155F391DAA2BDC04CD11B15A9A3D077B005CFE919FC3A505B48F854EFF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Location.cs",
+      "sha256": "237EF4F36D757814C2BD8424CB6A04E7D804CB58D5867D424F12DA34FF1C239C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Production.cs",
+      "sha256": "37F2ABCF5F542108B118FD185EE596E06E174A6451E4B2A47A135D5544FC62D8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Qualification.cs",
+      "sha256": "E4BC50EA3C5F99135B4721E0F56F75ED084F83E0121C384507D1CB114C538FE4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Query.cs",
+      "sha256": "CD7869CAE9497BAE87E69237402414E9EC578878AEC5B7B6828DFE20262B8B31"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Social.cs",
+      "sha256": "1D2E0BA9616010E0E79C9A17A395548A4B057E76990A9A4340FE7227CEBEEFCD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Work.Aggregate.cs",
+      "sha256": "46C8C2B0DFA502BF894E7C869802532E3025294F170599BDCC44F089EF3B3E05"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Work.cs",
+      "sha256": "73DB6300B243D872408D9B9C82DC989DAFA7C897C0CD47F15F9C690609A407AB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Work.Intensity.cs",
+      "sha256": "112BA603483019F4E93E43534F94007B915FFA809286CD5A076DC225E52E9287"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ArchiveService.Work.Skills.cs",
+      "sha256": "FCADA94374582BE06213482D5FB9AD8AF2C77D18FE65FC452ED1CCF82929E716"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ChroniclePawnAccess.cs",
+      "sha256": "82639C19FEAC64E074909E744B7CD5D91A9D1C77B2AF45B393174BE8BDF6B200"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Effects/ProfessionalEffectService.cs",
+      "sha256": "36EED762EA44F1CAE627C4BB0E92532390E7A0F2F8BE325194BAAE848F2E3C43"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Effects/WorkshopBonusAccess.cs",
+      "sha256": "57E6978A287EA2F715238AAD1454F0A09E58D5F1C9B8B861F6ABF18F3C41A53A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Effects/WorkshopBonusData.cs",
+      "sha256": "9151149EF8ED02F4B12BAED13B3CBF1A984975B79AE7A67A8D165D728F6FA9E6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Effects/WorkshopRatingShift.cs",
+      "sha256": "E69F1C428EACCBD2BAD4D5A0573627D8622B97B45EDEABF7A3A9AD133D47B2E7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/EquipmentStateText.cs",
+      "sha256": "CFD2008615941BA81DE89BF12859D6169D6BFDC5590102DE45E4BEC9B2B89A26"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/IArchiveService.cs",
+      "sha256": "C63079083554633F7A72EB9DBB9BA497057B6C74D03A64D77806E93CC57750D4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Manufacturing/ManufacturingLayoutService.cs",
+      "sha256": "8713C3406225F9763D0D0B4AAD58A12A20DF88B4B0CFF6594FBEF079D7C8AA0F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/MedalAwardService.cs",
+      "sha256": "E4EB5528EB296137A1D56F611BA99E34C30D796DF3B7B74A6D77FFCD45E1451C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/MedalTranslationKeys.cs",
+      "sha256": "7C2C48720606C532E322B17A3511E3F62FA78ED6367EE001CCE3091CF9519DC9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Care/CareService.cs",
+      "sha256": "E8A023F1B11B31C68EDA1B2D25057F946044FAEB5F4048D7C186D1D53ADA7479"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/EconomyReadQueries.cs",
+      "sha256": "3CCB8B155B35426450EB1FB82429148162ADA38ADD49DC15EDE5A9161FC489FC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/EconomyService.cs",
+      "sha256": "B70313BD863639CA9C4C19D0BC8FBC47092D361692F4752A283EFE76D13AAD6C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/EconomyTable.cs",
+      "sha256": "1779BC3E9F7C19C9640DA0E04C755CB9351E08ABB9A50ECF0AB78A0915A0BBB4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/EconomyView.cs",
+      "sha256": "051876628522E714BED19E1466E955D4CD11B9765ED4D67B425E14A9CD6824D5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Employment/EmploymentService.cs",
+      "sha256": "20F0AC4A6B2B74F0C3CC0715437772DF0D89FF360D3D3F660D7622332F255325"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Finance/FundedSettlementLedger.cs",
+      "sha256": "1809C91ADF1DAC3153479770E1F62F75EABD079AD4C6ADC3394E544D4439DC17"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Finance/LegacyCutoverPlan.cs",
+      "sha256": "77E066D9FF07E045483DFDE12FA04D4B45BDF6BB2D0E5956DAA95A94312E93CD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Finance/LegacyReconciliation.cs",
+      "sha256": "07EA6D1AE3992CE3C36D025CC8D981F1A59EF4913A52A9067EAE6FA41EA9D50D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Finance/ShadowTransactionKernel.cs",
+      "sha256": "FAADDBA719B9FE1D00981AABA08CADAAA6218C413AC05F49DDC0EE94C85DD704"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Governance/InstitutionModeService.cs",
+      "sha256": "71D79433C36DBC97CD331C7633E6DD04B43E9E1D70FDA90E1EE0D45BCC9C6966"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/NeedDashboard.cs",
+      "sha256": "F784EC2EB9B4F4D66762FAAC1DD41DB8CA8F912C02FA8F8F41589F7AC6A80609"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/PerceptionCoordinator.cs",
+      "sha256": "520DC7B605BD4E110C91492C6DE95FF85580DCC1844D3C9E0159885F3BD3C997"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/PerceptionQuery.cs",
+      "sha256": "B3C783359A87E6E263F489AD994789B12F1E06815553B45DB9D4DF07317BD58B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/PerceptionSource.cs",
+      "sha256": "239684A7D04185DB348957CD73484C7982084A281C62334300268FD2BB4097E2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Planning/PlanningSourcePorts.cs",
+      "sha256": "A51C224166DB51CC20409ED29E93BAB50D5E80FDEA025ED00A5E5AB9EA8229E5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Planning/ShadowPlanningCoordinator.cs",
+      "sha256": "270544A88EF20E46D25A504B5C2F176BC414A546E0A3761C6DF89948C9F7E838"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Production/ProductionReadoutPorts.cs",
+      "sha256": "E652E31EBA86FA4B54D2E11AAB4606A212B4DF553172E05B1FF164F80364F5DC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Production/WorkshopExecutorPorts.cs",
+      "sha256": "B1E4948BA16A2864AB9DDDECFE0EA22C2FF934827592D183C6518D7136782DF0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/VanillaContractRow.cs",
+      "sha256": "2ED806C8108A8B69C5A244C602DBEB3DAC2687211F0F5FC714A5F0DE6B80AFAF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/WorkspaceView.cs",
+      "sha256": "69AC7C00C5C717D6C71F393A75DD152A8D6F22D9FB4A48271747AE1307347F04"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/QualificationFlowService.Query.cs",
+      "sha256": "9B83B19ACFA08F876A563A4D936331CE8569C84ADEA10B094EE8784F2FC9A0C0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveSectionSnapshot.cs",
+      "sha256": "3C4CE7B5E492F98152409E0DD8AFB58C752BE8A92F3E8046E9AE4F4C68FF38FA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.Career.cs",
+      "sha256": "BAF204AC3A864571A44285E7AC05B4B6634589A9886A3A41EC6FCB4CABE1A606"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.cs",
+      "sha256": "C5B559CFAE12714186122E253A268ACC4AB7EB5537205B1F2595B9D622E1B591"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.Detail.cs",
+      "sha256": "1AE58751554A5785C3A19615BB00219131A01B5FB7305D74196DE96EEA23E7FB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.Event.cs",
+      "sha256": "644461D441FA608BC25207A6A9D4281741E50BD7D74718AE348E8AFA0C2332A5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.Ledger.cs",
+      "sha256": "4E2F07D3416109DA0CD99E5BB735DB89022AB5744DF77C19D36EB64501766902"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.Legacy.cs",
+      "sha256": "91769D4B0E24ACA47A7A6D1DD4F218A8810EAB0356CDDB234F0086FB8078D40E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.LifeHealth.cs",
+      "sha256": "772172C0A67A2546285298E4F31968714DD5DE41FF47B1D05BAA652A5DEA2220"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.Qualification.cs",
+      "sha256": "C32BC2CD9A6407A2D63DBC2AE6A8AFB714611AB526E91D8F85E6CA6895B81878"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.SocialTies.cs",
+      "sha256": "06814E6854FE358B5DDDA422A2486DED3E2B1FA397701AD00126C186FF54F73F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveUiDataProvider.Workplace.cs",
+      "sha256": "7B07FE383CFA8BE19F7C5FF8C0CB1CCDE2103C8CC5C92E65832F4FD8BABA9CA9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ArchiveViewLayout.cs",
+      "sha256": "E452E05FFE4F595567F4F9E82A067FFAF658C6FBF36F824B5968244121CA73BF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ColonyEconomySnapshot.cs",
+      "sha256": "B0536C17C8AF50BBA76E584881FE04E252BA43B1FFE8F70A7E4C3D59E7AB92AE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ColonyStockGallerySnapshot.cs",
+      "sha256": "DEB31BAF16D4A8C0877838664B910220815E975818B88A93D9C3DBEF50C65D8F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/FloorDeviceDetailSnapshot.cs",
+      "sha256": "7D0ABF4F24FDA31A3EBDF1F1A5A48112EC3BD5D806DF7870708D99CE8C9E71EE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ManufacturingAnalysisSnapshot.cs",
+      "sha256": "DF2D59DD349C941C1A91BC4DF850A2E4749309E50E903525C82CE48EC4542246"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ManufacturingBridgeSnapshot.cs",
+      "sha256": "E6D9DF94A8C4178B4EBE9FB7537B7D20837D7E92B882D82363494027685D9E50"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ManufacturingChromeSnapshot.cs",
+      "sha256": "D3395B5615B12E5B2B13C318E61CBB0B28537B20601F1BB90A08B64A93790948"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ManufacturingCommandBarSnapshot.cs",
+      "sha256": "E5AEFE850CDA304A98A08183640FB6DB36393E98361BD5405E2BCB9F1E6A9724"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ManufacturingDataLayerSnapshot.cs",
+      "sha256": "23638FDCA5E5A3ECC6B4B444F1373EDA4C3E5AA274CB0161C96AE4A9AA88F670"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ManufacturingEventsSnapshot.cs",
+      "sha256": "A4CEA1A5CC88917A29DDE6E6FD8783668EDC216F9635013493922E696946EE3A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ManufacturingOperationsSnapshot.cs",
+      "sha256": "A5B604B079A2D492FE2CD4BE60C86EAB6848E9624D04E65B08CC680F3CFE67B1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ManufacturingStockQueueSnapshot.cs",
+      "sha256": "FE8338DE0DF09988FE9CB3A29EB059E5F5C70CF398E7E0A08933E379CC269644"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/PopulationOverviewSnapshot.cs",
+      "sha256": "7E863615506F056E0ECB772FF844EC7643FC6F223F48BC269351B25B3E786C2B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ProductionDeviceCardView.cs",
+      "sha256": "3B5BF61C0A1197093D2E948229801A2CA3BA601BB51664C2C4E8BFE31A7EF3AC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ProfessionalBonusView.cs",
+      "sha256": "A322C3C5114D330527FCC58E8DFC095B1C0787989C65143B3277A58B9B235CFA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ProfessionalGuideView.cs",
+      "sha256": "71F95302F8579FF7C83460393D44752286884F2219A423C5932D1DF4CF440F10"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/SectionSnapshots.Career.cs",
+      "sha256": "9099A628100247C9969F486F56D603A3E9A4DC4C88D118BE1DFF6F6F58BA72F2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/SectionSnapshots.Detail.cs",
+      "sha256": "45A270BD1428475DFBFE1A665D38D32E957AC36F1FA51597020F5981B50136C5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/SectionSnapshots.Event.cs",
+      "sha256": "A5D51574AB634E1FC53F3C188896488D7244F73AD616E2954B347FCACAF203F2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/SectionSnapshots.Home.cs",
+      "sha256": "1BA44453805AF58DB2115832F3CF699AB04141C95608BF649ED1B1726BC994F6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/SectionSnapshots.Overview.cs",
+      "sha256": "712E8BF65D2FF4C1FC042AB8A2C80D96D06AC8BFC367CB6C09A8EE54D69FD37F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/SpanText.cs",
+      "sha256": "F64DE84766EBB8E968AF091FEB47C540948F1348364F405B7FC7262DC7B5A9D6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/SystemCenterReadModelProvider.cs",
+      "sha256": "0823722AA212371F8C15D79A9BD4C3BA6279BCDCF7B8D67502A23A65FB7D120B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/SystemCenterSnapshots.cs",
+      "sha256": "66CDDA9F416ED3CB13EF1ACEFB17576BD8B4CBABB4424D8FB37C9CD83BD9E75C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/ViewTypes.cs",
+      "sha256": "1773B284588EB7365330EB74ED0071DB9612A2DB7F00EC430104D7DCC9194937"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/WorkshopFloorSnapshot.cs",
+      "sha256": "63947A4415F1ED1AC96FDDF80881F84FF9BBDDF9EE3CEF75F718EE7F9EF712A6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/ReadModels/WorkshopPaletteModels.cs",
+      "sha256": "FD50DF9BA452B9EB103419C1CF0CA48B3CB2E609FA74CEA8E37A8ACF5B61B4AA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinColonyEconomyProvider.cs",
+      "sha256": "2324D9B54A0C3C700FCC73688C0B42AB0DE6764D6A46D15A594A71DD8123FC99"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinColonyEconomyProvider.StockGallery.cs",
+      "sha256": "B073B91B90B5E7CEF830C2FF9F9F987A034BD55513FD93B1EC53F4EFB8DD78C4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.Analysis.cs",
+      "sha256": "3E0BAE4B41F124B85180F1F88CCAAD013684E0180510562AF43E17B17186307C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.Bridge.cs",
+      "sha256": "74C3E9DBD61B9DAAACA5D29DC963EB9DD9E3D553E38D7D81FB2FE18ED26A63DD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.Chrome.cs",
+      "sha256": "CB8E381B1978D924429570196F5A2BDEFD6FB0BDC5954C9156B2C1FFE3430F6E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.CommandBar.cs",
+      "sha256": "17CE63E6A5196A12C8E5B4E2671B182935FB75A8CC1219B40AD9E358A33C546B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.cs",
+      "sha256": "AD1407E697D1E487043192F9CEC5F24908492767E37FA9ED00515A1EBED747CB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.DataLayer.cs",
+      "sha256": "2A50C29AA6B414C466A761FF24CEFAAEC9116C6CDAD45498EA43780046101208"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.Events.cs",
+      "sha256": "5B96DE51B71872BA57A59765C1D409E7913CC0CDF731049FD92726AE2F4EA75D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.Operations.cs",
+      "sha256": "D86DF3F7FDE457563585E2E01992BD8292C16E2AFD53674722790853A0B78F1D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinManufacturingProvider.StockQueue.cs",
+      "sha256": "F0E96DE8686DDF51622739B4C5144746FA3650087C6CAC0408A8F2162118D430"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinPopulationProvider.cs",
+      "sha256": "00230831908378705FC9B0221CFDDC1F6107D3775A86F1852CF070F2D5FBFC00"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinPopulationProvider.Derived.cs",
+      "sha256": "A329C1F79541AEA979388D61DD3CEAD7C4E8E9A5AD6A302BD077203CC2E39774"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinPopulationProvider.Overview.cs",
+      "sha256": "984A76F9DD961556FC7742DE8D6F812F46232B2869668CCE658729F88559824C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/ColonyStockViewRequest.cs",
+      "sha256": "F8EC5FB31FD42611F79EFFDD70631D8F1378F07F94B23AFC7BC0D318E60DBB25"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Dev/DevArchiveFixtures.cs",
+      "sha256": "EEC54BF3ECA2CC6B79B03086B468A4A97CA39FBFC965D2BA6CBAAF95A2D22D20"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/Dev/DevPopulationFixtures.cs",
+      "sha256": "0C83D1DDD56B5126FF81038D52C8146A4E142FF9EE65F979AE5BAEB428DDD37F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IArchiveViewDataProvider.cs",
+      "sha256": "EE888A6BC0D27218845028AFB174A8CFCE9EE8675FEA03B1FC3374C15C095F38"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IColonyEconomyDataProvider.cs",
+      "sha256": "A3FB8A2593DF2EC80A612AF5AF96AD499F9EE9788609FA8232C67F3B420518FC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IManufacturingAnalysisDataProvider.cs",
+      "sha256": "8D9A7E33A6EB569DCFDB5CA5DC923D24B2C311C95FDE53FA8B911FF7A6AEDAE8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IManufacturingBridgeDataProvider.cs",
+      "sha256": "D109CDFC624BEEADB50E0D6507F81BDB6D4FCE3F020036B1B84CBA6E68908D21"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IManufacturingChromeDataProvider.cs",
+      "sha256": "11BEE6BE8C510D8E1336479DA05BF4A448B17FB95ABC98F85AEF8FEB367B9223"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IManufacturingCommandBarDataProvider.cs",
+      "sha256": "179BC776CFD678C1B536D88B04D00C4CE7DEACD91EC8A0D4B49BB71D75713981"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IManufacturingDataLayerDataProvider.cs",
+      "sha256": "5CAEEDE890B6D9FA6404063E4F03E90E1C63D0D7280AFEE3F79E47F19D231C13"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IManufacturingEventsDataProvider.cs",
+      "sha256": "C8E30FB0922B66DA862B7944780E92126689A8D8E1A5C4128DE389308717D90C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IManufacturingOperationsDataProvider.cs",
+      "sha256": "ADB188DD478846B304E9A275E60305304497292BB1B0A36200BABC3F504B869C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IManufacturingStockQueueDataProvider.cs",
+      "sha256": "DEBCD701A91CA077BB5510F53F2B954616E390C5F11379688F59962826859B2E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IPopulationOverviewProvider.cs",
+      "sha256": "2BCC51F69470B6AE4B0404180A267A18CD680AF966222A514BD5EE10B364AF8F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/ISystemCenterDataProvider.cs",
+      "sha256": "4BF97519F22049222BE7E1061D87F86CB3936CBA90AF631881F008283B50A66F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/ISystemCenterKpiVisibility.cs",
+      "sha256": "5E56186DEE2B074974399EDCAE02E416DC1F1B13ACB681F76181D8BD1E212EDF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/IWorkshopViewDataProvider.cs",
+      "sha256": "55E8E40590DDC84FAA42C0C796F8D25C8BDBDBDF88BC84611FDE9987651DDA68"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/SystemCenterDataRegistry.cs",
+      "sha256": "16D48A20021459BF0A3BF740B00AABDD7243B69E1B76A590613C34B34D852319"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/SystemCenters/SystemCenterKpiFactory.cs",
+      "sha256": "A8DC1AC263D04EEAEC29089D260FEEC8FA5421AA19E1EF6E3D088E57D4767169"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/WorkIntensityContracts.cs",
+      "sha256": "06DD6734A08D4D0D3E702B7452309759C5DFA166FCA99246F1AF8F1D961CC350"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Workshop/IWorkshopPaletteAccess.cs",
+      "sha256": "D29C9CF468518F9D643E723467E9108A15E6994423FF0F0A1CDAAD696A00323C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Workshop/WorkshopOpsAccess.cs",
+      "sha256": "7E8752D10BD3E2A2324AC22675E605DF3302C635C46D8453647DABF4B1062BDD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Workshop/WorkshopProductionEffects.cs",
+      "sha256": "65A8C5A239E92D2FBD18B81245375A45ED586979B3B05CE3382D533732520247"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/Workshop/WorkshopQualityAccess.cs",
+      "sha256": "B90E78E46E6E0D366DC694A5F66A51FF5ED490B29AB1FDEE7FCD92FD9670E555"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ArchiveCenterViewProvider.cs",
+      "sha256": "6A774D979BDEF25999C3F193D20756D5C14794A4E7FA9782ECEACC7E8FD953DA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ArchivePanelBase.cs",
+      "sha256": "F5F1E6C3C3F9F583BD6CEE28ECB07F7AADD74001C01D1840275958CEE12E55E2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ArchiveUiStyle.cs",
+      "sha256": "D32935D34A88D239C65FC0B5E040DC036E88808CE70FA3F98C2234808BDB5AE6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ChronicleInspectTabInjector.cs",
+      "sha256": "125775ADC22C992D8C55866113282937F9E6F9FC497C614F8EB45404C9F000D0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/DevCoverageProbe.cs",
+      "sha256": "4A40C0DBD6918C267AD3408237B714F1141B2C23E3A06784DBFF039F97109E66"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/DevSelfTest.cs",
+      "sha256": "04AB60810E4A1860A022C2ED5E7569E47C9BFB0844A5BA733099B94471C48939"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/DevTestButtons.Career.cs",
+      "sha256": "37BA91CBBEAA653560AA18585DB52EB05890C2EA5D17D8F2609395ADC5E402CE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/DevTestButtons.CoverageFill.cs",
+      "sha256": "39623F34EEFEF8A9CE509240B65D4B0B6A576A4F56C819E9265B3F7A878C2C79"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/DevTestButtons.cs",
+      "sha256": "EFFF025F01609109249308B8A09F6C10F9A198F31E1E8EC027C2A8F0EDF44B11"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_DevCoverageReport.cs",
+      "sha256": "4A3F343FB3ECAF62235801B6243CC4B7781776A5E636B526105E66FAFAF68D1D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_DevSelfTestReport.cs",
+      "sha256": "B0BB6B604864BAC842DB1F5429701477CC686A587EB2EDCA1316BFEB2448AEEC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_ManualMedalAward.cs",
+      "sha256": "A7CF4B24216A4D09D6D33EA405DECEE2DEB3F6ED222BF5979B8DE10AB2B4B37E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_MedalDetail.cs",
+      "sha256": "C90DB98A5FDC27C66B6CA00B7A0E352396A6B76C64CFA61FC3D210FFEDE49C62"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_OverviewFields.cs",
+      "sha256": "D3363B20CC7FFB3E59AB8BD1409A515EDE857526FDD8A5E94C11EEED7A1E8991"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_QualificationFlow.cs",
+      "sha256": "098EEDFE261A823FBC3591A9445525A8C7451FAA852834F939597D37ABD027B9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_RenameWorkplace.cs",
+      "sha256": "CCAF03E69B22A724AD34F5DE5CD71CAB84712E95917EA9EC55414235642BCDA4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_SetDisplayHonor.cs",
+      "sha256": "9E6F2B0F05C1C92DC7798D9E70F71C53CF20D312C6ACA914EAC8BA316F1D87AD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_SetPrimaryDirection.cs",
+      "sha256": "31567188BAC5F5ED2C4CF57AC509610E3A3F04764D7903FE5745E30785575722"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/Dialog_WorkplaceList.cs",
+      "sha256": "06605AE1D35DD370136150EAACCC82DB321B07F7B58DC6950157F54FAEB5DEA0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ITab_Pawn_Career.Breakdown.cs",
+      "sha256": "6A0C7C447234212E0ABC321CA5DEF8D5463EE8598734D4D10378407564390C6C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ITab_Pawn_Career.cs",
+      "sha256": "FEB2895EA95C0F4548BE2E887051F9CD3236C5389B44A5E0F33A872845A60B82"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ITab_Pawn_Career.Fit.cs",
+      "sha256": "5AC9E97906F287B074B3FBF25E3198E63399E128581E0F64793712029FF9F3DE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ITab_Pawn_Career.Honor.cs",
+      "sha256": "8F73EA193D444078645DAEB62B83390E4160EC2463498079F3C4E03485653AF5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ITab_Pawn_Career.Overview.cs",
+      "sha256": "E4E9CF6CE9C94DFEBE76BF8CE473CFDF4014375F1A86906506D2137CF0803FC0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ITab_Pawn_Career.Qualification.cs",
+      "sha256": "6AC2ADA25819C708C1E06FFB958BE6AAACD30337182C418BC5C4F33A0F443E6C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ITab_Pawn_Career.Resume.cs",
+      "sha256": "53F8A618783677E7D91ACE59E0834411B3C8738546C3C859E912F108BFA0BC4D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/ITab_Pawn_Chronicle.cs",
+      "sha256": "EA107023E096046D8E126E71F7763CDF4229FF062F9D1953EECD0A92922BA981"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/OverviewFieldRegistry.cs",
+      "sha256": "9B178A6D7D8D84837A3F195B9BBA94C1BBA9909D9A7D381629560210D3150A92"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/OverviewFieldRegistry.Scan.cs",
+      "sha256": "89BFBA396BEC51DC366F99CFDE905683777A243B08F7C19B0788AFB4116A918F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/StatBreakdown.cs",
+      "sha256": "DE7265D9DE4F081A0E098D6D87165F808A8773C192E47E2DBCC8B4AEFE372CFF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/RuifBridge.cs",
+      "sha256": "ACD765E46AACD9184CBEFB7DBC1F7C41E063610D28B57F4D1BD1AA0E9AFD4A3B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UiAtoms.cs",
+      "sha256": "BD1408CAD773C559B3038616F8ADC4DADB36248AC9C38E1BFD4C685CBED4ED16"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UIComponents.cs",
+      "sha256": "131602DB0C47D06DED23D2FAAD3963A78A05527B3F44FF2295FB5018A8AE3A5C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UIComponents.KpiGrid.cs",
+      "sha256": "9CB63D89A993FAAF550734C4DF218F4C4F7FE8A26CE28EC11C539EE967406F03"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UIComponents.Loc.cs",
+      "sha256": "6596824538FB77E53A143DBF84A3A7883E5D988DA7FBDF52F5CE540112FF5CDE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UIComponents.Sidebar.cs",
+      "sha256": "C3CC1B2056215769140410DD5230B29B186C13FACCB1A9E5F63D1E299AA363FB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UIComponents.Tables.cs",
+      "sha256": "D7BD9ADF83FF35336632BFD9F6292DF1DB534AB52DD04EC08F6C5050DFA574E9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UIComponents.ThemeSwitch.cs",
+      "sha256": "41B3E6574D960EE29C9B896F05B3A33B75E2A6FCF1C854AECF66BDCE22C907FB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UITextureLibrary.cs",
+      "sha256": "A97D5199F01D1F2C75BE8791438AB9967F24504461DDB0127EAA8D79B5C1A3D6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Archive/UI/UITheme.cs",
+      "sha256": "7E9E57648DE20780AAC2B99EA42967A8BC3B778257E503EB7BBA99F784F36930"
+    },
+    {
+      "path": "Source/PersonalChronicle/AssemblyInfo.Branding.cs",
+      "sha256": "E758BD709833BF3B2001897C7F58A11D7C43F40204540E31309BE28A2B790A39"
+    },
+    {
+      "path": "Source/PersonalChronicle/AssemblyInfo.Visibility.cs",
+      "sha256": "398F4E4D69A7B225707199877E3A3D4C291E8B2B01629F2D377DFE8D8AABDE91"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/AutoAssignService.cs",
+      "sha256": "AF62CA3094A9BBC669E96620063CC76494630614495A27BFC6F489EEFB043000"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Building_AutoFarm.cs",
+      "sha256": "04FC1A72A0D47A543B0C270EA9B91BF87C2F6D007CC4D8D0D0B98BFD35F085FF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Building_ConveyorSegment.cs",
+      "sha256": "DEE8B32530872602FAC83C2A0BCD7FE1348CD4589AA046E15FED8D7A2690DE09"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Building_PipeSegment.cs",
+      "sha256": "508FDDEA6E9D97C5C3601F92BFE876DD9561568068CBFD1FD71EACCE7196C65E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Building_SmartBench.cs",
+      "sha256": "725ADA1B1B3AFC6053B7FD2DB785FD0AD8A7F37DEF35035A5E0728E6E67252C9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/CompAutoAgriculture.Collect.cs",
+      "sha256": "643209E2939C0851A927D73DB111887107EF1581756F21A5F52867FA8B82EA8E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/CompAutoAgriculture.cs",
+      "sha256": "04BF157BEED02FFE4567FCF704510F7FFF1B93973A1C047C3AA852223A288CA3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/CompItemPort.cs",
+      "sha256": "5A8DF9C6367041E6EBCA7A8E0D5E51448A02686A9AA9F345E15C40D1CCE4DF5F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/CompItemStorage.cs",
+      "sha256": "DE3B01A4D2D709BDCC6DD970302927AE13D1ED342A6F961C201473527EBB3F5D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/CompPowerTraderWithSolar.cs",
+      "sha256": "58CF0E750C316DDD3A0D8534D0508E270A024F75F5C38B4CF46D2788596BB6B2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Designator_AutoFarmGrowZone.cs",
+      "sha256": "6A42A3377CE4F9971FB77475EB4EC22CF5CF9C7403AA3D96A6F28EF727EEF3B4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Designator_DeconstructPipe.cs",
+      "sha256": "623D2AE1FAF7C2506C4B3FB62B95F3BB4392B0AFACCCCC1E45057E5EA71A69AF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Designator_ZoneAdd_Workshop.cs",
+      "sha256": "37AF494D609E7E661EEE577A7E14599403EF2B199BF143A40E287F09942F8ACF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_AutoFarmSetup.cs",
+      "sha256": "4211D2E4389B120352AEC8FEC4C71D37B1C234933F936D3DB9F18349E1FAB47A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_ChooseCrop.cs",
+      "sha256": "8FD815BD2FBC61AA42352EF14E81948433EF7494D4E087BE1ADB8CDDF6D910FB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_ChooseTerrain.cs",
+      "sha256": "5367149261AB71E527B9305653E4CE31DF6A86543BE493BE1238C12C5D20DE0A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_DefPicker.cs",
+      "sha256": "1A62B715E85543AD23400C4A657769DDE49815F32A68AAA2D2165B6F1C487FFB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_HourPick.cs",
+      "sha256": "0018234804077BE4FD38006958EFC3A25D51F9B244D6BAD8D8022D826B624B86"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_LogisticsManage.cs",
+      "sha256": "1B0BB2886277B4D39B81E5F5331F0CEF44596D184D2B494EC9226FEBC2D4B4B3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_TimeRange.cs",
+      "sha256": "BAB8C4083F2ED97A73D617414B24149CEF14D1753AF202C9007104CBDC9EB6C6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_WorkshopCrewEditor.cs",
+      "sha256": "3DBBE5A3DF4A742587829D14FB231F5D17109784917FBEC6A912F3BB9CC05B67"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_WorkshopManage.cs",
+      "sha256": "09E834501F3C407B18709AC326A4009366C25C674E867DE3DE4ED0C2BD6C60A0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Dialog_WorkshopShiftEditor.cs",
+      "sha256": "93CF6027FFA38DBC792E953AAE96C11BCDCC4FDBE050682472DC20A5D0AB52D1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/IItemStorage.cs",
+      "sha256": "D6AA43CF17B58D42CDEA4334612D28749EA5F9DF96410177751DEF5E8847F885"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/IWorkshopDevice.cs",
+      "sha256": "0F77D7306161B5C623DD0DB1372CB2F591EEAEB1D8863E48EE7201F58E5E7494"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/JobDriver_WorkshopDuty.cs",
+      "sha256": "3302128E395C30687E697C0A5A59655D90174572F59210651B4799FD79CD8E45"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_AutoFarmTerrain.cs",
+      "sha256": "4D58AD8ADFE324CC8151B1B7F31D6B9A4F1E97B7E34E44E725B2C5698F1C4B44"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_MealSchedule.cs",
+      "sha256": "CAC52FAF7877C13A8E34DED9BC2FBC7E2EF1399D99592F7224C2785425778264"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_PipeNetwork.cs",
+      "sha256": "DD6E7608D18CB933DAFEFA2322347B43F9E011B806C4D8349AF4DE63020CD3F4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.AutoHide.cs",
+      "sha256": "3912E25D69E55788CEA5ED74B3C046BF6276EF0CE2439C7FBF4DEC7F6200E1B0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.cs",
+      "sha256": "879B922F67EB007DBF92629D8769FA7E2D8C6C4C6F936970CA67DEA02781F519"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.OffShift.cs",
+      "sha256": "7A576C6D56F3E39BCD6AFBBCD9F0D9BB744785A9EB8054B2F0BDE89AF56A9666"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.Runtime.cs",
+      "sha256": "B210DDC57AB3123F6567EC5C22D5F07756E444D1026C543DA9A6C00BFCDDBDC7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.Schedule.cs",
+      "sha256": "861A7835653BF96E8B0F3268416FD0DA5717C5E36CB5B3A6ED9CAA505EC3AC0C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.WorkDemote.cs",
+      "sha256": "3D4808DCEB9EE48F332ACFEDCD1F7C4A3348BE882332710608DA9ADE795032FF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.WorkEnable.cs",
+      "sha256": "22BB74864FC83EFF2E69CE71FD8B330DEDCFEDF9DEAC14283F18D74B0D725CD3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.WorkInterruptions.cs",
+      "sha256": "460D1987EB94C2F711B756224C0A5485981AC56DBEC1832189F38B065A8B57E7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.WorkTakeover.cs",
+      "sha256": "C3CD4B3637E50A158C68B0F346DA19FAEBDF7ADEAB4F0492972FC130BDB8119F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MealFoodSearch.cs",
+      "sha256": "B2687AAC0D0F4102387C776ECE8566D8FEDD3651F149BC57BC68DD2DDA006A41"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MealWorkTypeResolver.cs",
+      "sha256": "89A0D846CD397A0B457BE81CD0AA5C00AF25F26AAC49A4BB84210E03F981B8A2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Patch_WorkshopDutyRuntime.cs",
+      "sha256": "EC8F73E4188DDD1240C8ACB4E9990C69FFF4652D8F03B450B0BFC3230E9DDA7F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/PlaceWorker_NoPipeStack.cs",
+      "sha256": "C239DC64389920D1F5EF51673B7F3A5DB4F4A8250D56DF0A4EFD27968EF2D1DB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/ProductionDeviceCards.cs",
+      "sha256": "1B822DC7A19FE022B402368DC5DB7BC7773ABB7A454E97A1B563B54A5EEAFD1D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/SmartBenchBootstrap.cs",
+      "sha256": "4D54EFE71E816DA1FE01A61E46F2DDD32052982A7EDCED3C5601095CFA1916E8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkGiver_Meal.cs",
+      "sha256": "FBBAF0265B92564F869344B82F04DA70754A68E8C6F3577A0DCEA802355E69B7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkGiver_Workshop.cs",
+      "sha256": "ADED2796B6C16AC3F05C2DA72ED8D447F9C701722C37F3EEADDABA08355A5EF9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Workshop/WorkshopPaletteAccessBinder.cs",
+      "sha256": "B2DA91B4F5935A0C1480D38F8DB149058F573EB02DFA531F52CF07468171D551"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopAttendance.cs",
+      "sha256": "015DCD89493111049B86FD26E7F94AE1DCEF83C15E95B2C4B597B7EFA66D6B47"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopBillActions.cs",
+      "sha256": "1AAF05BB18FF1587627F1BFA2A545A1F51092CA89C8F9110182F0BC476C845A8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopBonusAccessBinder.cs",
+      "sha256": "D7F74FCFBD9277D836B6BCFA10783F862E14CF64564933175BDC3E76723D1215"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopBonusResolver.cs",
+      "sha256": "2D60EF73349FD854BB114611E11DC9C989339865A5BC919605E07D673FB6C80C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopCrew.cs",
+      "sha256": "FFB31F80EA0B5B086B0FECE2D82B95EF94FA5F54CBED4D6279D9555C68044032"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopCrewException.cs",
+      "sha256": "8FDC8590A54B0B894366F2793366C302EC52B8852A59846375B504D1A27BFF7F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopDeviceIdentity.cs",
+      "sha256": "3215F7A15382C69EDBBE20FA7E6548D0B2794775A89BC97DBA38C3412063EB6E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopDeviceLedger.cs",
+      "sha256": "6DBF1E1EC85DD22C7D6FC136BF25CF84A94A904B1AF213515AC6B707645CFAE3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopDeviceStateResolver.cs",
+      "sha256": "A3CBBE7D99DF636C87425E5E6EE27A4207C9D5C9507E765C4ACAA6F3C176DD5C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopDutyCoordinator.cs",
+      "sha256": "43B96522C29FA259F8B7EB307B918EC6F0F8F77A02F33E252E0D00344AA088B6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopDutyScoring.cs",
+      "sha256": "EC5068ACADD27EEF51DCD9EF2CCA7C794E6F7EEB27B0AC49C577E98265627A8D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopFloorViewProvider.cs",
+      "sha256": "5D81FF988B77ED4A1B34E18087580BB08FE8F3D7BF3177DDF63A152DCDE2A8D0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopFloorViewProvider.Detail.cs",
+      "sha256": "0B5E54E698E27EECA2C81FCA43E9908B6804F827EDF882BE499D81AF17411996"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopFloorViewProvider.Detail.Tabs.cs",
+      "sha256": "3D0D1BB705D3DECA2C6EE4A28A770CFF7BFABACE4347196EB38E9B37C2D30FF2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopGatePicker.cs",
+      "sha256": "52B9693B669E5C0561D28ABF9CFE3FDEDB6D2D1F6A316F2F9AC02FF3D8013730"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopHandoverBoard.cs",
+      "sha256": "471ED5577AC640CDA81D286C920ACECC5804657DB395F21F09A1BAEA9AE45A30"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopLoc.cs",
+      "sha256": "E24DB1023634C4A9BC0961F00DD29FDF195FB810F15395B58AA24F36F23F0E8A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopManageView.cs",
+      "sha256": "61B3A0A7A564F54FBBE84A8A036F836CD47685F483579565D68797FC30653503"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopManageView.Overview.cs",
+      "sha256": "4A36F9E368BD5F00F4472640EDE0AA010F7D5072CEA9BA211384FE0E36CC8CB4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopManageView.Posts.cs",
+      "sha256": "B9208F8C7426D6B55347327331DC1901940D74A54B367F754A49DFC3BBAAB84F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopManageView.RestPolicy.cs",
+      "sha256": "95874010F176FB7F9EF651AA9F22F51CE44FE926280ECC1BF0D32D2DEAD464D4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopManageView.Schedule.cs",
+      "sha256": "D08754519F6F914E4199DFBE94F4797188F164BF061B8C0174676F9A90DC057A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopManageView.Shifts.cs",
+      "sha256": "83770FF9B53FC31B91E743D931AAB08E3BA03AECE495B31123CAE77641F05573"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopManageView.Takeover.cs",
+      "sha256": "5A65652374FD043930C715C89F421220B545D6BA7BC20FED794827DC06B399B1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopManageView.WorkStation.cs",
+      "sha256": "922367CFB9558E2B56E384EB595F876974C6445F6948BDC5A9BB6D619DD58BDB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopOpsAccessBinder.cs",
+      "sha256": "6539E8ADD89A19267F448F060060DDC62999338561828395D59BB8748BFBED12"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopPawnAccess.cs",
+      "sha256": "37A6C5B249F7420F8614204AE3A82EC694370218485847E4E364E75DF34368A8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopPerformance.cs",
+      "sha256": "00B97411B58B8BC0D01A18CE1EB6F37C7FB37D1A53D5D7908DA7FD91662096D1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopPostAssignmentService.cs",
+      "sha256": "4664C607F4915907990D78AF806BA13F57241C7CFDCE07FFCA71406E57256E14"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopPostCatalog.cs",
+      "sha256": "B3D6AAE50A4C438078E1E43086F2FD97DD6CB4D38A239D83793593B57CC4F919"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopPostDef.cs",
+      "sha256": "4D68C0AC319DA07895D8C754F0856B056E782975CA90D2D449D9049FAB803E11"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopPostLandingService.cs",
+      "sha256": "036300E09A94B467960C64D59D96075F5EDD305FFDBBF4B5418FC60AAEE81F96"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopProcessCatalog.cs",
+      "sha256": "6DFEDE17BC5538884DE59C2B1A2AB2F8EF681B3C916A6599E7F89CB7EB927704"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopProcessDef.cs",
+      "sha256": "3CA5773D1877B63635D3452BF8A6EFF78D0698766B497EF2FC6FBE74B6B21D72"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopProductRegistry.cs",
+      "sha256": "BD1201010AF2C9C67B2FAC433E5ECFB27B88AB0AB2735538219C7751A3438644"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopQualityAccessBinder.cs",
+      "sha256": "44CF67EDA0219C5FB8CFF10AE619274DA3DB189D247BD78C1DE627FF4FA82525"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopRatingShiftBinder.cs",
+      "sha256": "2D8C73CEECCEC7547F6E823EEB16B77DD3C8FA8F86501B5220C3FB98C0705184"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopRestPolicyDef.cs",
+      "sha256": "E30607512C584B60CE970606A55A7224481AC8564BF049D826EC95C3B7E07313"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopRosterBoard.cs",
+      "sha256": "F5F5D8E60BF66F2DA4579DE1D78EAFCA2950E6111A40F15628131A221497AA32"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopRosterCoverage.cs",
+      "sha256": "A1EE37ED0A489B759D2E1F42C9F907849CDE537909C43862254633662238A488"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopSchedule.cs",
+      "sha256": "166DE126FE05B898EA6166D91A135499560BF4EDCF9102EE64A4B819478B4079"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopShift.cs",
+      "sha256": "F2C9AAD4CEB820D14AA0A45547985BFC553444467D5172A1E8535F852CA5C6CC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopStats.cs",
+      "sha256": "4C344926D7F1D2017E904DA40D0DF1936BFE05E011B2142D1DE23613CBF21036"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopTypeDef.cs",
+      "sha256": "2083183A16FA575AE09BA622E692B3A63782C536032944C18C2C4DE67BE70865"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopZoneUtility.cs",
+      "sha256": "8866F7BE599F0B74012B1A92BD94BD7F0A7DC1A6E0F115CCB43A5CA459A8F765"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/Zone_Workshop.cs",
+      "sha256": "CA8D1C8AA44B744EB8B325EFBCB8818C11689346FCEB4034BC83212AFC9D003B"
+    },
+    {
+      "path": "Source/PersonalChronicle/BuildStamp.g.cs",
+      "sha256": "00A7779BFCA8CFFC0561C309B1F5125BF008CB14AA0EFC015A83E481B513F458"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/CapturePatchDiagnostics.cs",
+      "sha256": "5B837E86B767A6FD10F49789DE5CE80D877A44B3B1E79E95477FEF66E54423C9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/IncidentBattleExtension.cs",
+      "sha256": "1F96480D1FCBA13C6A9A62C9225D947154F3D991236E26921E6B842134C91EBE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/LocationAtlasCapture.cs",
+      "sha256": "31E7A190992A818AE4508776EE40AAF00D1E9C7F72AAC42D6B2709774A8D1FB7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_BillProduction.cs",
+      "sha256": "AACDF4F1E41FB64CC6DE0EFDAD3828453E0284942EFFC68896C709D99BE492BE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_DesignationSource.cs",
+      "sha256": "B3030BD644D27CA4BD607761371FFC148AEFD00429B77B0E759A38ADFFF12225"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_EconomyStoredFood.cs",
+      "sha256": "A8F72D4D94AE4225538ECC5F723A01EA9B66B39EE7B1C4FE97E257372154F30F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_GenConstruct.cs",
+      "sha256": "67BC498C82D13F24DEE3CA2407D3C8095007C1AEBC3A6168E542D0FD57934892"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_GenRecipe.cs",
+      "sha256": "D75808A91CA83BE3CE183DD65CCD8FA94BEB191B65554AFE880ACAFBE1D5CC5A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_IncidentWorker.cs",
+      "sha256": "D6638568F7BC7CFD47BD6202EE8B890E3EA606496876C2AE7D00166527F2D18C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_ItemFlowIngredients.cs",
+      "sha256": "2F6A8D57AE46817F1303C9828E6D0243FE740CB61929194C0C4901FD5B85C64F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_ItemFlowMining.cs",
+      "sha256": "D68F4C4BAE6A76C5B223FCA6F1B32D1C75756D4701F8A3A9C9FCDB9BEA35E344"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_ItemFlowPlant.cs",
+      "sha256": "3687C19DFF1477BA85D406ADA788754C786DE42A064EB9B7AF20003120E9F84B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_JobGiver_Work_GetPriority.cs",
+      "sha256": "611BE415CEEE066B844A9A44EA6C1CE00DC8D70B56A6F1D45B28F64F6AAEACB7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_MainTabWindowWorkPawns.cs",
+      "sha256": "414BF370974335351B3B2C49B34918AB653069E6FE9144C2975C9E251ECB847A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_Pawn_GetDisabledWorkTypes.cs",
+      "sha256": "1387FC28CFC93CBC326063678C89F84CEF63112437CB5225545FA00BE425667D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PawnColumnWorker_Timetable.cs",
+      "sha256": "99A737F28840E62B5268A10C9A079D3A2A7E87FC13EB79B823A278689FE06077"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PawnJobTracker.cs",
+      "sha256": "09A37538EB882287E246CC4FA50D399F5A08E5351D053049586714C2B904310A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PawnKill.cs",
+      "sha256": "26AF89DD329B87C19BA0139A23E817E8392BB81DCC25DA1A2995F5B44A57E440"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PawnTakeDamage.cs",
+      "sha256": "C9EC4B10F02DE10CA13C573053E439563CB305ABAE8223F59EC83DF287855F28"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PawnTitleBadge.cs",
+      "sha256": "39F44FAEC7FA7C9871103279A18CEAA6F38F9DEA30541584CC3035E37E51255F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PawnWorkSettings_CacheGivers.cs",
+      "sha256": "4BB90F7389CFF8C7431B4373D2ACDB2DC12642B3BB9BC4EFC5CE0AE8B5B3C6CB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PawnWorkTabGizmo.cs",
+      "sha256": "F766257674FFDD398742278EC9663BA28EF487B19220563AAA0AF094DC8FCB9A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PublicApparel.cs",
+      "sha256": "039F4E6CFE596DA78B9BA363B0965977779419F852E0A375C2CFC43D7F91DAB5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_PublicStockpile.cs",
+      "sha256": "BAC339CFF5D5036AD2641AC7BCF7CC87E0F975F0108D6F0E09E6D0C0B6CC2539"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_RaidLordPawnLost.cs",
+      "sha256": "4A166DBF2D8C350BB8C9F6663E72DB0BAB9704E762875FAD2F3DFB2691A565A5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_Relations.cs",
+      "sha256": "A0735C23F21FC2E8A4909138707EB5E44270C8FF2C01E1EA3BFC6D1D0F9733DA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_ResearchFinishProject.cs",
+      "sha256": "59758E9E54E602C3E23059FBD7521247CA29E2CE15A62F799DC87362915DCE91"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_RoomRoleLabel.cs",
+      "sha256": "F78CB6005E401DCBEB0FFE6AFF1606C179BF6F14D6D247D34C9CA757ADB0FD6A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_SetFaction.cs",
+      "sha256": "0912CC66F6827F8E62F0DC086BAAC2D111007008C81C88ABC58F4806300DAE33"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_SkillRecord_Learn.cs",
+      "sha256": "CE22D7A7B56CF8716FEE8D1E63EC17DDF4E2EB14B9E13234687C136E9AE15F60"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_TendUtility.cs",
+      "sha256": "D851E6C6B5384395B70D9064957B15B168F2E2AC2F06C29A19134F273353508D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_ThingDestroy.cs",
+      "sha256": "01BD169A13757EDC4B9F196CD0C7DE35061706A561BEDF450C05D2EEB521F16C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_ThingIngested.cs",
+      "sha256": "0FF3F74671B54E2488BA88EEB3D09A91BDF428B95465F04068673BEB4A66B091"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_TimeAssignmentSelector.cs",
+      "sha256": "7C37A19275AA6FEA10639267F3B4EA83B4038DDA5F0B47BAFC9D85F80685FF10"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_WorkshopDeviceLabel.cs",
+      "sha256": "E12DD1F5C29450DE91BAB452B9F0E99C8957E94664C57F719DA307D714CC88D9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_WorkTab_ContractLock.cs",
+      "sha256": "CF3D68691F8EED3C1A625AAA52B37F2315CCA0CE401A178803282BCE51EF9D36"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/ServiceProcessProbes.cs",
+      "sha256": "B335B067A8716ADAAD1D81FB4368F50A26708BA064EB1629A539606F8291AE69"
+    },
+    {
+      "path": "Source/PersonalChronicle/ChronicleLog.cs",
+      "sha256": "963CB43507EF8B261743F81C6B113D8E9E0FC4D684EF90BD2513ECB97B493698"
+    },
+    {
+      "path": "Source/PersonalChronicle/ChronicleMod.cs",
+      "sha256": "D688B145C215A3814868C2B655EDDF5738F509D50058B2B3C252075D9CA1B738"
+    },
+    {
+      "path": "Source/PersonalChronicle/ChronicleSettings.cs",
+      "sha256": "7A3523C0D58957655E287D985ABD503F85F6F3406091750CB671C6773343CC5D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Compatibility/Dlc/IdeologyAdapter.cs",
+      "sha256": "7F3ACE535E693ED78C113E0AC55071D0BB03043206E2A32AB4DABD6914B65729"
+    },
+    {
+      "path": "Source/PersonalChronicle/Compatibility/Dlc/PawnLifeBiotechAdapter.cs",
+      "sha256": "F7A0EB9ECDA113BF2037AAD0C50414414FEE1245F4814411DE35C4CFBEE622BA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.Aliases.cs",
+      "sha256": "585B19CD76A434F57F9F6C12EA4ABD5F106B5FBF2A735C578B7C31215C5040EB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.AutoAssign.cs",
+      "sha256": "C2125E6A2F0EE73702E0C10B40A6A41A1938C4386C0E08CA71108FE9CBC3C8DF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.Battle.cs",
+      "sha256": "4C3141E2AF772034784756AC5898761D13F6EC8227DE7780C609E221FF483AE9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.cs",
+      "sha256": "3DFD89BB61A96438EDE3EDD45A23558374382091671D0C3427B1A59732AC0E3C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.DeviceLayout.cs",
+      "sha256": "D6D2F07D2725CB46493E673362BC739F233AE0B748DBA779DB007F874D8DCE75"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.Helpers.cs",
+      "sha256": "E7F10FE35735FD5D778D107E7BF6A03144E7744D3DDC55BF77ABE132733FBB8E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.ItemFlow.cs",
+      "sha256": "F3139CD12A60CC82F325C2F6D653262577FE46B64FA855B05A4ACDA892A5B97D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.Layout.cs",
+      "sha256": "90DF5B7F051543F6EEFAD9BCD020016E78BD42059A143C9EBF4A85292284A2B3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.MealPriority.cs",
+      "sha256": "BF5635AFE3434724AD1768E91794CB9CF46DF0FDF15BEF31F5EE8134A93B88D6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.Qualification.cs",
+      "sha256": "227817C85489CE619577F8CA19F49F5207D0C34ED332999FE1D2740B7FAEEFD2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.Queries.cs",
+      "sha256": "F50E542EC3405F4CEB7547E11E90269EE3AF5124CA1D6C6877154A49A0F5103F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.Sampling.cs",
+      "sha256": "C414BF79F85853D8132E3C37BD06A437FE2DB9D57AC6279AECCA1F404D5F287A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.Sampling.Places.cs",
+      "sha256": "A610D030E4E8424288F26CE8BC3078AFB9AF1D34B5141A2E1EE83D0A901A0A78"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.StockSeries.cs",
+      "sha256": "C12CE046746294C214249295FA6864E7E5D5592BC0307716CF95601C12D016DA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.WorkDemotion.cs",
+      "sha256": "164DA94E9E2BFE0CA3365732F6ACE5383C5B0D176905F48D7CFB10D3E7345DB4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.WorkTabHide.cs",
+      "sha256": "C0143D617859E96CEE586750199BB7FA664C17B2C59766BD7781DC8CDE34CE52"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/ChronicleGameComponent.WorkTakeover.cs",
+      "sha256": "0B76D44EC2AD951B61B670FE2392127660096753B74A514F097595B5A77A010D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/MealPriorityLedger.cs",
+      "sha256": "DF9215958FFD056585F09CE6B8A29FDA3F752719D9B3D8B2B48D5A48CF0A89C5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/CareSaveData.cs",
+      "sha256": "90EC97D68CF3DD55E5B9576020DFCFB116AC93B0E2E8143224FC4CF26CC0783E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/EmploymentSaveData.cs",
+      "sha256": "FB72C627087EBEBAC7CCD718377B35FD5DE515D7A0D77F6E8BE58916FC00CCD9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/InstitutionModeSaveData.cs",
+      "sha256": "B258A3E67BA3FB489E58E6F81AB09B082221930C3997FB967680CFB47D58190E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/LearningSaveData.cs",
+      "sha256": "861691730517B4D58F83C0A05A7D94FBB261F649C2B7A981E17B8D836F6AC7BA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/LegacyPolicyProbe.cs",
+      "sha256": "65C02B749C3B9AF2EA4914BA4C9E062C46C3A70A8CFF2BC4BBCCDA0EA4755025"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/LegacySettlementArchive.cs",
+      "sha256": "171B90F5D134D93E26D61AE2AE96EA0C9BED767F5DACE0ECCDBE4A80930C37FE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/ProductionAuthorisationSaveData.cs",
+      "sha256": "C55D239119B88070A9845E48B97B346D686AF89377E47091254EFF9EA862E9F7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/ReserveJournalCodec.cs",
+      "sha256": "B8671F9F0924296C4EB914A850D4A5D1294A7DA67027E28E23654BDDEA1FE5CA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/SettlementLedgerCodec.cs",
+      "sha256": "1AC7E7C981C2308265CD22E0E41F007A9A0F890630A55BF15B192859CE2FB6E8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/ShadowPlanningSaveData.cs",
+      "sha256": "56347A9EBB25F51ED8441C6CAEAD7D813064C4949FA143C2761C30A17742C9D2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/TreasuryOperationsSaveData.cs",
+      "sha256": "549AD506147E0EB693FA6B6F138E31E3EE34808D8631A0F7C246F200008EFA7F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/WorkOwnershipSaveData.cs",
+      "sha256": "33223AB6130FDD8F05111B35EC5E75836CAA705FE10FB2EF1C65A39963BE55A2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomySaveData.cs",
+      "sha256": "C53BB4A90B706C27C9AE3CA5B7678140FC7BFB5FD4973B0C05F2F007EFBF6455"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/WorkIntensityDefCatalog.cs",
+      "sha256": "1E52DC21B962143CB8DDB33B904F6B9F63A84A336B9D6D775DF693D316904289"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ArchiveCategoryDef.cs",
+      "sha256": "9208553C3D89D200524EC57677BC03F652FD4E57402B7054E1E9B6C58A7E6418"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ArchiveCategoryKeys.cs",
+      "sha256": "AEC633F4489541C115E9BCCE006F362BE4C0006B60D8F3641729836C044145C6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ArchiveObject.cs",
+      "sha256": "5F13CE4EF9ED6DA8F14CD12D65AA5518FFFDAB3E51A1B0AC7CECA70F0C06E07D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/AutoAssignLedger.cs",
+      "sha256": "B0DCDFE59DFBEAFB25471444B82B5FD3A28F043321F6C49EC176B863069A6BF3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/AutoAssignPriority.cs",
+      "sha256": "C55D175C5BD2C34BFB755C6C1FCD3CAC011C2B4312687BCE82E809E49A1B3B3D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/BattleObject.cs",
+      "sha256": "1FEB5B8336F8B8AD04A019A1993EABF1C8055ECED3262F5E9D9B58C45C005C58"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Career/CareerEvent.cs",
+      "sha256": "27F790CD826917113157555FEE43B7EA537426DBDA27E33E3C61DA67ECD0B130"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ChronicleColonistScanner.cs",
+      "sha256": "9C0F653F82EC5C47D71AEBE292C5373FC548B86BFAA4EB00342F8AA358B0E491"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ChronicleEvent.cs",
+      "sha256": "6B4F93144B22AD33433F770430838E144A77413CDD32BA81018A05E5231D0214"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ChronicleEventDef.cs",
+      "sha256": "73B55C538DADBFADAE2C81A0425E4F4E11497ABC30E30BF6F52EA44A6777D271"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ChronicleEventParams.cs",
+      "sha256": "B35ABED02C4C00CD1C911BC7EBAEBD0EE90D46A7AFDDF29B1F5D44CB29AC5F99"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ChronicleEventType.cs",
+      "sha256": "8AE419B329A846076D06EF9B0E15257D06CADA1E57A2D417876A036C57F8D664"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ChronicleImportance.cs",
+      "sha256": "C38368817A905D7E703BD99425EA895F85B0FEB1BD01F96DB5CC13A50C6ECA90"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ConsumptionAccumulator.cs",
+      "sha256": "967A597D04375E64BADC1540B72ED10024817BAAB88A5371F6D34FCC451D9FC5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/DecommissionRecord.cs",
+      "sha256": "377B8BA3E606E11FE2913C02837429D5803D8E57834A3956121810D31ADB697E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/DlcStatus.cs",
+      "sha256": "EDE28379D588E16A11BC54DCB5F539CC57FCE0CAF9C304316300F0540F4548B0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/EconomyPeriodTier.cs",
+      "sha256": "377B7584B20B9A7CD9B9169E1EDF4B818CDB1BF06EE55ED817324769FBB76DBF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/EquipmentState.cs",
+      "sha256": "A7336EE23067128320E061DB9ACB94F01AC3FF2CC29014EFC128CF65C8D1A6C8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/HealthValuation.cs",
+      "sha256": "911A46C6BD809FE8DDAE5D66F268F55DF9E4D62535C1D44EE17E15B18435B961"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/HealthValuationDef.cs",
+      "sha256": "F33B48C7B99D8EE1354C7A5471A8E68E973929E3945ADD55F16A77B45F449297"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/HealthValuationKeys.cs",
+      "sha256": "1190D6D2F7B01D6BB10D7BAF4C51A3DD063C0811FF7F98440C6AC6DD4C9F53E4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/HolderRecord.cs",
+      "sha256": "884212938140C0BD3AC125E87B63EFE747D3B9F683BA8E9E078F7F0422A33A6B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Honor/AchievementEvaluator.cs",
+      "sha256": "C7B83B70E1FCBEFD3C6816016237AF44E1424E92CE4999C8FDFE042BDFFECF6E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Honor/HonorDisplayKeys.cs",
+      "sha256": "9BF00B7A6530CD58E55DCAEAC032DC5764C65351A2E293DCADD9B8BE95451DC8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Honor/MedalRecord.cs",
+      "sha256": "C63D4E8DEC7DC5988540496AE3FA3F5817C69800C16B6E6EA7451B3DDBF243AD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ItemFlowLedger.cs",
+      "sha256": "ABF0D886005DAF1B5FCF899B0E60D27DAD872B45589A3DE7DD6F65A3546D0155"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/LocationObject.cs",
+      "sha256": "787EADE04724CCEFAEB458A1CE1A60482DEE6BDE5276EA4169B451D792ADA8F6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Meal/MealScheduleDefaults.cs",
+      "sha256": "164D5FCF55119E887F142AEFB7B85044792D80274EEEBAE84975846F780D797E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/MedalAwardEvaluator.cs",
+      "sha256": "D2A342716E97E8B3EEF09D2C7BCA4F3A214865B2D51DF9ADB0834A3829B3E6FF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/MedalDef.cs",
+      "sha256": "08E1C5D60CD3160770AD692A21FF236FD1EC1D0F84FA16199E7B1827476D90FD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/MedalMetricKeys.cs",
+      "sha256": "8D629AE6248E49212929EB8387E36F05158CCF1B005FF8AA32D9BDC876366ABA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ObjectRef.cs",
+      "sha256": "455C7015D88EDEDB7030F3F8D7B523F8F389886F43CB80AABDAD6D6C78FB0516"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnArchiveSnapshots.cs",
+      "sha256": "DF44750C42BBE5C92E3A802BE1AF4C51ABC026C73CE0093B9540F0C0CB73EB26"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnArchiveStatus.cs",
+      "sha256": "ABB73A24C764B37CFB6A4A17971AF28692EEDCC44B98BF21B29AB3D9BD96D873"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Budget/LifeBudget.cs",
+      "sha256": "4064DA933DF2B1B78E2B52AC1685C0F92009908256D1E93F4B0CE7BAD19CF171"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Care/CareContracts.cs",
+      "sha256": "AAD7E3C807450504F4AF1904EF7B50A777712831C3EE9BD010A0A090AE87CA93"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/EconomyModel.cs",
+      "sha256": "F4C8FE6748B7FBE98741C722389541FF3BF4F4CC151E08F8332885B40E4D3123"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Employment/ContractExitRules.cs",
+      "sha256": "E2538725FFAF763A4ABD7312C3C0E2C42ADD789D12FB142B3731423DACCDDACD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Employment/EmploymentContracts.cs",
+      "sha256": "D66A1315D793BBB11DD7AE31C867D9251CAE7B7F4CAE891D20D91C3EEC655ABA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Employment/WorkContractRules.cs",
+      "sha256": "A41E3176E3FAD9E419EC2D56AF07CC267AADB1533609BC7040849ED514F2DF5F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Employment/WorkOwnershipRules.cs",
+      "sha256": "4130366347FA36071A2EDC3F7EC019BB5005751D020A2FD2964C00ED2D290FD7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/FinancialContracts.cs",
+      "sha256": "51EC453ADD282945C66CA5B8F76648E52378E6272247D5216FDD7DCC83E8C08A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/ItemValuation.cs",
+      "sha256": "341647B393B9AA8CB7BD3811175F7044B2F6996C543E5E30A49AB85DF31AA6FE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/SettlementContracts.cs",
+      "sha256": "FDAFAEBE68C122D30AA832071C3E0DE460F091CDCA0F48F234BDBC7CAAC89E0B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/SilverReserveContracts.cs",
+      "sha256": "D942973BC2182380B78708558AA6721A105DF89BD9CC670B77CB7AD204E980BA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/TreasuryDelivery.cs",
+      "sha256": "4E28A298CF3AFD10C54B30B218BC8D549909A499133701E1D4818F85D7D4540A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Governance/InstitutionModeContracts.cs",
+      "sha256": "A78D1258F13D9E458F2E0D7027496950CFC68FA4677E97B7A1D03E54FF1BB02F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/CredibilityEstimate.cs",
+      "sha256": "3A45A68470332DA73B41CB74EA983C1EB6BC9ABDFFF4C4713F3DB6A7333846CD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/ExperienceLedger.cs",
+      "sha256": "16AB10C361B7C03C39F54E3F60D77B2C59BD8046D2779DFFA8CEA6A51035A416"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/ExperienceSummary.cs",
+      "sha256": "F80667637318DA9B3AEDF62CF37B2EFD30B44B722E11D8ED3D62D1254604EBDF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/FailureClassification.cs",
+      "sha256": "6CAEFED4B4DC71779DC63F1B405FDB156E752DD3F9892A19A3B932479D202EE7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/RecoveryRules.cs",
+      "sha256": "1EBF7D60CA8C2ABCC8B093201C3A0F8138140175E191EFBCD3097251326CCEC9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/ReliabilityChoiceRules.cs",
+      "sha256": "5A9A23A0FE876B1B6D5F3217D04E12A79F4F0D0E0489712039ECDAB69A3A125B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/RetryBackoffRules.cs",
+      "sha256": "1D6BDC0ECB720B6643598A56FCC8F5B792AC0CE231D9B2067CE963ED9023021E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/StyleLearning.cs",
+      "sha256": "28822756E477FE2B878DF48E3D2E9FD1DAF06BB44E76A0667E3BC7EC65577E50"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/StyleLedger.cs",
+      "sha256": "DE73CA9A9FACCC8A090976CEE8CFB6094F458C5923BDAF1523E45544043CE73F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Learning/WageCredibility.cs",
+      "sha256": "B556A0ECF951184828C4D0CF2E1678422B7285395EB24B5EF05137EE4377C37D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/CurrentNeedProjector.cs",
+      "sha256": "C496B6DB6EC10CE3F6A5422E7CA9D80DF722A97025A3BC6770B66F73B60C0F54"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/Fact.cs",
+      "sha256": "7FB45A2BA3162AC5E87F2D94C352FCEEA8CDFFDEB2BCB6E1D1CEA92F6E68D70C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/NeedObservation.cs",
+      "sha256": "7ED7C6A97E2DF6D50E7A986FED9DC728E3B100781186ED62AE833E3B469D7F2C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/PawnFactSnapshot.cs",
+      "sha256": "B61776FAD264F51C734FC04AC32C9F366ECCEB90CD527261A7DCAB137FAB8AA9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/PawnNeedSpeech.cs",
+      "sha256": "30A07F969E06E6803802B6070656BD2F422228ADC98944CE73F44FB58C1E695B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/PerceptionReadRequest.cs",
+      "sha256": "F16EAF105A9869D3F99BD8A9C5E9DE7B365BECF38DBB6DC10C8479ABF144E6B7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/StorageFoodRules.cs",
+      "sha256": "D3636C994FD6B0B359F246DEB45629F4E06ED10C45D6C15CA63EE7BA15087216"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Planning/LifePolicy.cs",
+      "sha256": "565311C98C0982851BDC06FAF285F1D6A219F160A0AE457D9DF0633417A65644"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Planning/ShadowPlan.cs",
+      "sha256": "11FCCB48A5F00B3833E01550967DB96FAE2EC0EC34068D1259F5D5958F921076"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Planning/ShadowPlanLatch.cs",
+      "sha256": "FBDE1B608F1A8735667EAB87D274A1AD64B8B2FA7B93785548278AE150705C9F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Production/InstitutionToolCatalogue.cs",
+      "sha256": "2365843E474DE1986755012F8010153B584080298AE04CC9F972230F2953FFAE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Production/ProductionAuthorisation.cs",
+      "sha256": "F5DD9603D7E5FD4811C250029C5F8F31DED37157800BD482FC6E76B9098814B6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Production/ProductionReadout.cs",
+      "sha256": "D27AE74B5A24098989E24B43147615045322A80A042695D2E2C221EC0E8DCE45"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Production/RestockPlanner.cs",
+      "sha256": "3D74F0673ADEC81D4037F010E23BCDB41B33D740F2B6E06371DB5B4B2024DFBA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnObject.cs",
+      "sha256": "275A55F742AC5C0EABFB49C3CF3EF7AAEFF66DF8315F6F49FE8684C3F61C10F6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnRecord.cs",
+      "sha256": "2067DFE6A32A02C4AA9F2F42A347416B21A86D928214607A930D6F2E5076956E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PlaceVisit.cs",
+      "sha256": "EDD99443260BDA5D64DD8C81F013B33187D029D34E24FE638E91AA7A3D6459BC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PlaceVisitKeys.cs",
+      "sha256": "FE6E4B069FCAA57D254F7603D77008D27E0DA8CCD75DEE976A3509B2681215BC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PowerGridReading.cs",
+      "sha256": "683D89CED86B6DA62E322D93AE1C7BB5E33BE484A3CDB82AB9026A221EAA6F28"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ProductionAccumulator.cs",
+      "sha256": "90AEBF0B384B1820997E5DA56C2117593C328C6ACF01A1853D630877D864086E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/AbilityMappingDef.cs",
+      "sha256": "D5829AD3910E2221A0CF492794B65572BA232B96494C01A008657CD476F68765"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/CraftXpSettlement.cs",
+      "sha256": "DB0959C13A91C11E53DC031F114626E81DC3AFDA3DC666F4B10EA723C36C5838"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalAbilityEvaluator.cs",
+      "sha256": "CA1124A4C4F7423CAB483E8139C8E0610C9E979F70F491FF25E73E7D096DFF77"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalDirectionDef.cs",
+      "sha256": "4A81B65DCC66B4F8F3DC5ED261010E8D54D6BDC10A953A22448E7219F7EE84EF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalDirectionEvaluator.cs",
+      "sha256": "09FDA813A837152EE78C7BCF8423716E5AA82DE64868FD355142C690C4B41222"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalEffectDef.cs",
+      "sha256": "C0D556BAC29198E5DE3415C7F981CE3692CA0A02E5FBA3C050C2D03B413AEB18"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalEffectIndex.cs",
+      "sha256": "E760597A4BF132478DC9FDBDD0216ABB02C5AB29467109F78014A934D0838A5B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalEffectResolver.cs",
+      "sha256": "FC8030F16335318C81EE8A3E0743779AEF86C90536CA4E66025B9DC2D7F0FF81"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalFitAnalyzer.cs",
+      "sha256": "41F12BC575B76EBB6267D38C2D2EC9772C2901FF8AB32A3367F1D2C5675084F0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalMajorFitDef.cs",
+      "sha256": "B70E2EB006BD2C6FB70A1A09ACF5BA1ADB9331B9AED7AD4F729848DE93B9499B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalMajorFitLoader.cs",
+      "sha256": "14825618E4640DC585C902BC9A1859EE6B05FA61D4C7B64E75AEA27C7EEDF57A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalRatingDef.cs",
+      "sha256": "ED96F7C7E9F7DFA40A6004A524E1AF6A4CF4FAABA258609DB9A2F8091DA37246"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalRatingEvaluator.cs",
+      "sha256": "4059899DDBB1773B809C9F9CA91280F87342F86991E8D7E4D7A686F9A9823AC2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalSkillData.cs",
+      "sha256": "81CE00616B6335D5080BCACA73DDCB69C8FD8D59304B3B48628986AA8C0EAF5B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalSkillDef.cs",
+      "sha256": "AEAEE38B94085041FC142713F4F179916FEF17893746905A6B593B731938669A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalSkillSourceCache.cs",
+      "sha256": "DA335D80E4B45A8E619055F2703EE18549F5A3DB5ADA22F2A40939D4937840D6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalState.cs",
+      "sha256": "BE98377CCAA638627F399451362EDFFC29EB35080E95CB7E9A3AE051BF9EC3FC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalXpEvaluator.cs",
+      "sha256": "7539AB9A5CEE868BB85F307FF172CFB6AF04EF0598FEA9C278E6837564BC09D3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Profession/ProfessionalXpPolicyDef.cs",
+      "sha256": "E5DDD467BB7CD344E84D69606ADB15350080C83AD8C132EA0F12012A841A1C26"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/QuadrumBuckets.cs",
+      "sha256": "276CB0B27D39DA3F5187EFF53D111BC8E16C59D4B3856B5F3D6913EE85874370"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Qualification/ExamData.cs",
+      "sha256": "23888D5A92A78864079387F600D99E388327B1ACCA0A7FD0A1E6F61DEA9903CB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Qualification/ExamScoring.cs",
+      "sha256": "B639A611D2800E6C6424A275E8C3D29F1CA3118E402721ED9BC44CBDEDF569D1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Qualification/ProfessionalTitleDef.cs",
+      "sha256": "6BC8E8BCA19C55E12A1441EE0A1CC14416A8B2C884FCBA053254B489A88ABAB4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Qualification/QualificationDef.cs",
+      "sha256": "83A4D4C26525AA20D898EBC8017B54E5C103104FE1ED6E5DFD6DB01EE2D5B4FC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Qualification/QualificationEvaluator.cs",
+      "sha256": "F4A3C6D2A4A3C93267E7CBE8273E935A6E25DD1B15D6E7ADB281A90D4ADDBECA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Qualification/QualificationState.cs",
+      "sha256": "E3C8573A24F865392020A2A4F4E5E9B983AA7E51E5829705A56693B9AA8EEF4D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Qualification/ThesisData.cs",
+      "sha256": "98C1D817A9F0E5BEBA485A0EF9F5D34C0B506D7088272000AB2A8789E970C10A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ResidenceSnapshot.cs",
+      "sha256": "3D4B38F4ED6E25AF1CD03F6AE30C887D256777FE40265DA06D8588B001D1633D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/RouteDef.cs",
+      "sha256": "8AE3F2D855DFC13A2B0C15AE539451E2FF90CCD23A6FE35CCB122DE5C87D509A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/SignificantRelation.cs",
+      "sha256": "2DB8CBC9B5ED417DF0B5ABBA559BE8C89DAEA7871A769636A4A74B9C6C744DA5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/SmartBenchState.cs",
+      "sha256": "80C8305C34B9AF5759F6611C0D95358C82D234C1DB28FDEFBC8D8DF6D216E1B5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/SocialRelationFilter.cs",
+      "sha256": "AB271CD620336F2673F4B43C14ACFED932EB17346F4908E45F4783EE8CD605D4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/SocialRelationPolicyDef.cs",
+      "sha256": "A5F37CB20A86848854803FACB6385FE0EF90148FA3C4666221AEED66E93E807D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/StableOrder.cs",
+      "sha256": "F2B657F25E239FDE92D55BDA15F9C7A5885E8739BBB00FD72C89F24FB73CC48D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/StockCandle.cs",
+      "sha256": "D89249C86144DAC710D6DF10F6B3BF4C10945F506888D3633204537CB52FFCEB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/StockSeries.cs",
+      "sha256": "90DF00C2C8BBE66DE25E968FF324C3A09CC859505542525ADBD687A4ECEBB839"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/StockSeriesStore.cs",
+      "sha256": "2359E4B62E037CA5771C99067340282CAF86AAB20872DF7C40C04C1D443D39E1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/SystemCenterDef.cs",
+      "sha256": "605F483AF3517207F3EEFEE8452EFCCBAB513BF22D79335919C21B046D6480C4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/SystemCenterIds.cs",
+      "sha256": "10DBC4A778FD68463CEA3F95F1889C841AC3368F1F68645586B28FA88FEF48D8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/SystemCenterRegistry.cs",
+      "sha256": "FCFC232C5EF98CCF493856DB01473C1C902E4CDCC55E9809B969EB3D032BCDB8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ThingArchivePolicy.cs",
+      "sha256": "8AE0854B3E676AE0B206C5F567E02540DF39A4116CBAF64D976C30661818D6E0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ThingArchivePolicyDef.cs",
+      "sha256": "3DFAA7F909021F6C17DD1002C66B1EADF6529056E034BA8EA048F7D8BF0CF532"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/ThingObject.cs",
+      "sha256": "2AB5AC507FFBEBAEF83CFB5999CBFAEE555AFF8E54781505DFE76F02D1DB0CE9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkIntensity.cs",
+      "sha256": "1EE38A9834D132BA560D6CFCCD7D215F02C28E635C689977619AE8EF82B467F1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkIntensityDef.cs",
+      "sha256": "95F2B98470E16729FE2E24F77D437E8A2BCCB023DF1D32B0E509AFBF79BD8945"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkplaceHistoryEntry.cs",
+      "sha256": "45F8FB4F9FDACEBDDDC3F52611DA1D25142F805FFB9C0E01DC85A9FF7F26845B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkplaceSnapshot.cs",
+      "sha256": "B3DB03E7F44A54F69F5FCCB7E710955BBC6D9099CD316DD8DEFDAA963AF0ED6A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkPrioritySnapshot.cs",
+      "sha256": "BD98667BFA8461F00DF4A485EA61D31D3DBB109826EA0E5019CBA3F86845BB19"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Workshop/WorkshopCrewScoring.cs",
+      "sha256": "C1B274E339596238FFD5C5244FC739CC01E6BD6CEECBF80036BC9CA850C5B79E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Workshop/WorkshopDutyRules.cs",
+      "sha256": "4B65D3F1FA4E8753BA6B2BC72B0322D69FE2004407C88260C9AF2A43CC1E634B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Workshop/WorkshopProductionRules.cs",
+      "sha256": "68AD1421A9A78352962025BEB494A436CF68FF1858073EACD34BE71393D00409"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Workshop/WorkshopRosterRules.cs",
+      "sha256": "3B45DAE77F07AEEAE13490BE7CA10C263DB2AFD1CD5BFD5D8640D17C8892171B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/Workshop/WorkshopShiftPolicy.cs",
+      "sha256": "C7AA50E077A4DD68FA0EC439AD8BE09E62075B48098A8079B32C661BF958D23A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopBillSelection.cs",
+      "sha256": "90F414571D534A942DD201F995785F260690C104527FF6B54619FD4D26BEC173"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopCanvasAlignment.cs",
+      "sha256": "C170A7C452D3D4BF3713298AB140D827AAA08C4598E1B5F122D89E804254571C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopCrewCycle.cs",
+      "sha256": "AF5BCE4E7B9BB97040C17FC372CCA58354CCE00270F060DBF4B50A879593353A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopDeviceFit.cs",
+      "sha256": "D5A515A57EB7B92183973C0CC6A1A30D936012651CBD1760CE5BA60E4EFECE17"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopDeviceNaming.cs",
+      "sha256": "D028107AAA789B0658E6A512DA1D33C5827AAE8DBA910243C45D8093D204F66A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopDeviceReadings.cs",
+      "sha256": "0478E75A4EEBA6C7E890552E95DE31A6AFC27B702D0E96745F6C8E164439AE21"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopDeviceRules.cs",
+      "sha256": "E7A8E12EE38DA3D12E6273DDF123DB0F449C99D710FD1F7F0DBDC3E37C93304C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopDutyRuntimeRules.cs",
+      "sha256": "9A3F0833B498B82BD45DFCABB6C96BA41A290BF1B1318DADAECBF3BFF9CD71F9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopPostAssign.cs",
+      "sha256": "96AD2A66920A3035A93DE8B32F5AFC1A7A9389FFF962BB22D60E03A4C639C796"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopShiftPatterns.cs",
+      "sha256": "EA9F2C841C80C1AE8518F55E491403C0D688FF11252E81DCBC3AC9BFDAB64F52"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopShiftPlan.cs",
+      "sha256": "8E7A6E3BA5F7713E45A390AF9C22FE81AA2A348E86F64A8AA5FE5E47853AFC9F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopTakeover.cs",
+      "sha256": "ADF7D73F3D35D42E04C644DC764E0DE6A7896BE4E6D34ED8039454DAF2DF024A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopTime.cs",
+      "sha256": "6ED09157AEA11DDF7A4FD7006B5DBB54F38F4A05D25BF1A26CDDAE5D5031B9D1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkshopWorkDemotionLedger.cs",
+      "sha256": "8DB1A0296347330AE1C14F5301DADC25ADB432849F98CACE04124E75533E5F29"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkTabHideFilter.cs",
+      "sha256": "3009D48591DF01C33AC57A3E50DDD170061B4D463E2BA72E4D46145BA6E8764A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/WorkTimeAccumulator.cs",
+      "sha256": "45B310A4D1DCEFFBC706FA610B23F1A077CAC4447D08149EA3CB6BAD4792B68E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/EconomyMarketFormat.cs",
+      "sha256": "63295F993CB43155F01E44A1BA3FD4C35FCCC03C82D5A5F827B4961D28B84943"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Building_EconomyStorage.cs",
+      "sha256": "BD4121CBCBF2DB58C2463C4CF8C9EE7D108B5C7A8F5C4A89CF565A4F6E1D17E9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/CarePanel.cs",
+      "sha256": "A16F4CD5C8DB572D873714D314607A64C74F6A58304DF0B6468D23995A3A258E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/ColonyPublicAssets.cs",
+      "sha256": "E3DBE4FB643C38ED3A9AD815D513E823B083BA30457C62FE49EBDBCC5BC16F51"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Dialog_WorkContract.cs",
+      "sha256": "8269FB9CF54BAAF83B42035D5B381114745930C62E9E411642DE3DCCA0ABB7EE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyCare.cs",
+      "sha256": "F0F2F8BAA4212793FD7C054CDA2BB1CD103DCE31A56BE7EBD82267AE88CD909B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyCommands.cs",
+      "sha256": "74A930F5228B38D35FB012480282582D4F4783AD4F48DFB373FBFAFD74804C32"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyConsumption.cs",
+      "sha256": "D758792126134931F83CB3E843DD1A88BCB94DCF6D4D390D810D0EE2191512A1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyEmployment.cs",
+      "sha256": "9C61E6DD3602126B90E52F5495933D7D0A10FCC9E02BDC441405F5FC2BA299A8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyEnrollment.cs",
+      "sha256": "F0703F7BF81B3B9D3CEADA38FCAD31CFAEEC266199E55A4C1FD948136169FDA7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyHostedTabs.cs",
+      "sha256": "ECD03C00FF33185F4B467C9F26C685E729A673B37C164614FE54580E6788F61F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyInstitutionCards.cs",
+      "sha256": "100ED4300C30DDECDCCAF364B1F03F536D03145B57C719E2640A7C73EFFA7411"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyInstitutionMode.cs",
+      "sha256": "041D6D803C03A9EA95239DEA792ECA2887B7C9B938E036EA2D7E2D55E08AEDAD"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyInstitutionPolicy.cs",
+      "sha256": "CA0507D81AAD9E0AA706B78DB995BFCCC6524997620391BDBA55916FC9041BA5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyInterruption.cs",
+      "sha256": "E964CEE2D4A15F66F7E24C97C35E4E7B830D50974E6EB283CFA383FF989FBEFB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLabels.cs",
+      "sha256": "50C793B28AE751F3C0378C3D57F39A6EB21A7D474B0812DE94654BD26C4C014F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLearningPersistence.cs",
+      "sha256": "2E71576E8933B443190FC51633C37082B9705496D633AF846CAFBD6E5B6B45A9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedDashboard.cs",
+      "sha256": "B93537629088855CD0BD781CA3D9CF46710A678C274E453A119530B14B8279EF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedSpeech.cs",
+      "sha256": "9A01ADA35716C796082C8899A8E42950DF170FB6785E79C3C1108F8A8B21D672"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyPerception.cs",
+      "sha256": "861BF72A4D2377F1132A1C06FC4B5CD14F1AF5239CF45A97A6859E09ED6E120E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyPerfCounters.cs",
+      "sha256": "E8593D698286A423D97F1F928BCDD2D6011997D133FF1132F2A6A7A3E25B8AE5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyPreservedAssets.cs",
+      "sha256": "D1185181ED1FF2FA5F73E77DFA70167024DCF40AF581D47D18AF53E8BFAFFAFA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyProductionAuthorisation.cs",
+      "sha256": "AF52A9C05A522DB1571461DEB6C05279B2FB1580C88EBBABB1D8F1DFCF5B3295"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyProductionFacade.cs",
+      "sha256": "1D4B445E34B691B500BD6417F3E871E0C039BA216C7345311EC015851932A58E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyPublicApparel.cs",
+      "sha256": "5D5C85E16D84207A78E631F478B61910C46C46307112CBC12447C7BEF637F806"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyReconciliation.cs",
+      "sha256": "28784C64AB729EFDDB4C8599C240860FC5645225C4F10FC36672E046BC1E44E9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRowList.cs",
+      "sha256": "93DE032DECA8D3854D024150022AA78C3713BB55AD34AD9480287AFC7CAF06C0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "sha256": "8D1AC4D1B15F49937C8B50947DCD4EB6D2D1415EDB1C137B32B12BDED6D5EDFA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyShadowPlanning.cs",
+      "sha256": "55C92E0C05607E72FCBF3B6B3BE24997360A1F03730D15689C000EE363298C33"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyStorage.cs",
+      "sha256": "F98F407B9393F73AF0B37ED49B46645CB3681BFAEF75EA8B465A8D07B9320945"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyStoredFoodPurchase.cs",
+      "sha256": "23E1CFCE1392778302892C92C9D47C235E8832CD38521FAE730731394CAC50E9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyTreasuryOperations.cs",
+      "sha256": "538B6E3CE0F72F74177183DCF661873493E7B9EF8B06CCDBE15056E06288F58C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyTreasuryPresenter.cs",
+      "sha256": "43B8174CE9D24FB7B89198E799739560BE1D92A8217E5146D0021F1C66F82495"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyUiKit.cs",
+      "sha256": "795323B111349AA583B5223877FF61AC43F53265EEBA6E92AA0522610D044851"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyVanillaWork.cs",
+      "sha256": "9A764473F5333E67BB6AC8C9145E1710C4BEEC306356AF4F71A3BCE9CD10429A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWindowLayout.cs",
+      "sha256": "20F93E57BF2B80CBB9471F0B76757112DC9AD6832CB9C5B255DA05EDEAB812AB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorkOwnership.cs",
+      "sha256": "39A86A12D52521CDF1BF4839BBFBB2BD98FC92A5DF8A000F6A395D8AD33D55A7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorkspaceQueries.cs",
+      "sha256": "25C1A148BBE6F2D79B067F6CB9728AF1FEFC05A299697C85F888243719C098F1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorld.cs",
+      "sha256": "40754FA1FB1881311AF57CF118741C5ECD1765E0E51B72C8F4F4BE838FA188F4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/ITab_Pawn_PersonalNeeds.cs",
+      "sha256": "E86B8B5C954C5D33C3E24EA5304409BE21648F761B26FEAB890C7C68F2BF7021"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedDashboardPanel.cs",
+      "sha256": "613831238B34CD180910CEF19F8C52F6EC3EC5235482D36340B5326601064717"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedDashboardPresenter.cs",
+      "sha256": "36AB2C9F18AEB63718E00D7DA884FE8041181A506AAD4D6C080E76A870DC01D3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedDashboardTextFlow.cs",
+      "sha256": "C4543905C25242854E00A0E22F5D77F4E4940B124DA6EB51A6B88E4FAC6FB8C8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.cs",
+      "sha256": "205DBA842C3A7D926E7398AF8E47A59D29D7BC390FD38DE31696829806920DA4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.Decision.cs",
+      "sha256": "1CA6BE747A27404D34DED824535B01347C04F6BD45EAA0E2F6B43AFFB66BADC1"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.Demand.cs",
+      "sha256": "A65B549F5DA03B58317B6293C0C4AEB6DB1CF927804C52D5F76E595B4CCFD7DA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.Goal.cs",
+      "sha256": "2C69AECE423B6285BE272E969B21C440709EF06EF3DBB8F22CB7EE2C3916ECF4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.Measure.cs",
+      "sha256": "87267AD01159082E287311C9A45646BEC5D7E40D991EEB6BF4275A7902AB7E67"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/OverviewPanel.cs",
+      "sha256": "5FF017607E98019B67B143B9B0D3AD6A4E4A60FF95BDC0C05136BB90ED7DCC97"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/PawnEconomyFactsPresenter.cs",
+      "sha256": "CFE7774136A30B257C791425CB988C69B1D5FCDD972F30F120A272A8FA734FFB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/PawnSettlementSaveHost.cs",
+      "sha256": "46B7272BC39E05C866B82BA94733B1C9C2BC63FD38D99AA0B92043021E6CA63E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaNeedRegistry.cs",
+      "sha256": "CA7714C6FC149D19206774C85A855217045E4A9868292EF70FC33C23DEBD4E94"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaPawnFactCapture.Body.cs",
+      "sha256": "735C748C34E6FFCE7A1B4A847FC3EAA046C8FCA7B359D1B1BF61DE4ACF22C12D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaPawnFactCapture.cs",
+      "sha256": "FAC599A8967CD71A966A04C7CC0814AE7DE759F79D91507F634392F851ACA9B9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Planning/EconomyFoodCostSource.cs",
+      "sha256": "1D60E047C9E161C60EEB69A57A4B715DA76D920CDD35F2BD58265BB206B6E6B2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Planning/EconomyVanillaWorkSource.cs",
+      "sha256": "63A7628A52EFE90CCDF3AE35FD9153C0F6BF2FDCEE5800D362CF9173CC0F1682"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Planning/VanillaOrderCatalogue.cs",
+      "sha256": "87F60388EABABEBDE7A8DB66C322BF9B836E0C6394DD9A40341EC4A2D5EA31F4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Production/EconomyProductionReadoutSource.cs",
+      "sha256": "38040F4CFFB56296696204B5F36679403D1BFDCAE64234DFD9CDE36B7EE01C3B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Production/EconomyWorkshopExecutor.cs",
+      "sha256": "DE2498D5AFAA64AB0E03C5289936DE313B606BC3CF00EC8B577FE7763E714FDF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/PublicStockpile.cs",
+      "sha256": "621BA10430D6B6A4AB29290FD826BFAFD75739BF16FF6055AA2F327CE438AB05"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/SettlementReservePrototype.cs",
+      "sha256": "9594374E4AA0E55FE4C193539E069DF389849597E730AA8A63E7FDCA9B992610"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/ShadowPlanPresenter.cs",
+      "sha256": "C592B391C8BA3D9184DD7C08F644A02F3207B1AF543F495FCF010B5B27E37685"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Window_InstitutionWorkspace.cs",
+      "sha256": "7B0A21DC4C31B5A288D0926AAF35E721C953F0E7D9F7C94F80EB3E222561C92B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Window_InstitutionWorkspace.Table.cs",
+      "sha256": "6FD5BB5389EE2570D24E4F20ECCB8E0EBD6C6894ECADAC6EF441A3195F142E19"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Window_PawnEconomyDiagnostics.cs",
+      "sha256": "811B6E810E0EE625B2128C0FDC154D0C0898328BCEA697393237CEAEE2DCCBB4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/WorkAuthorityService.cs",
+      "sha256": "5335B9072E5BC541C584B5F8D5FB090C52B84D8FBBC107AB19B130695B0366CA"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/UI/EconomyPanelChrome.cs",
+      "sha256": "46FCEE51B2C8723352F2EDFBF86EFA684154523BBC8F3C9167B049A3ECE9EC02"
+    },
+    {
+      "path": "Source/PersonalChronicle/Effects/ProfessionalEffectStatPartInjector.cs",
+      "sha256": "814923A7217783F52B10F97A1D461DF786C1866F6D088CC8088482D9F55F9A37"
+    },
+    {
+      "path": "Source/PersonalChronicle/Effects/StatPart_ProfessionalStatBonus.cs",
+      "sha256": "A7EDE149975046B082E5421C3F8329AAC9780FEB8FA0693EF5EB15EDFA092666"
+    },
+    {
+      "path": "Source/PersonalChronicle/Effects/StatPart_ProfessionalWorkSpeed.cs",
+      "sha256": "33C798DB30A97D9110A87C8DCC34F1314E5F9859C2FCF71EA45DF69E83B83675"
+    },
+    {
+      "path": "Source/PersonalChronicle/Effects/StatPart_WorkshopProduct.cs",
+      "sha256": "7EE49532E343B8BD61600A0C9DEAC5B3D2BCDA858C4822552D78C30594F3A0A4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Effects/StatPart_WorkshopResearchSpeed.cs",
+      "sha256": "DFAA2FE98D4BF87EB921A7207407811DD05CA71C604D3415DAF9B2B28E44A09E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Effects/StatPart_WorkshopWorkSpeed.cs",
+      "sha256": "2F8BDC1F4072195A810BDEBDCA0D5A62B99AC0399AB1F647FA60265659509B22"
+    },
+    {
+      "path": "Source/PersonalChronicle/Effects/WorkshopStatPartInjector.cs",
+      "sha256": "CC5FEC42BA0D752BD003EE5850CC94D18E6DCD7814C39C6622826D4D4CDBEEB9"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/FloorDeviceDetailWindow.cs",
+      "sha256": "6614F26960703DA2D8CF2985E330B4ADF842EDD12E233A2C87D139EAEC2208A0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/FloorDeviceDetailWindow.Draw.cs",
+      "sha256": "19064EA78EFFB28063070D6563CAC16B0648A86A21F826F2635E17823AA17070"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/FloorPalette.cs",
+      "sha256": "A989B34721FBBAB746D8F80195866DDA7A4B8BFDBD51A6EA94E4ADA83F56358D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/ManufacturingAnalysisPanels.cs",
+      "sha256": "6AB8AF5C4CD926502F0A8FA0305677884848E693A6ECE23A95CCFB9733E48EBF"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/ManufacturingBridgePanels.cs",
+      "sha256": "BE7A023C400D13E6B6DE7A325FFFD55E5BC1606819E1C9912A755B517CC9B28B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/ManufacturingCommandBar.cs",
+      "sha256": "AFCA220FDD8B73D476AF9AA873568C26D6E2FD2BC248F744EB22529311E370B2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/ManufacturingDataLayerPanels.cs",
+      "sha256": "1AC655A49D6DCF1D0A5F01B650B7736F1315A3CCF5C5C3878A2ACB92A2F8772C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/ManufacturingEventsPanels.cs",
+      "sha256": "7CFBDD249707F501914681EC67E37E5A01EA1F0736D8B9BEEFC95A45B21BAF2A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/ManufacturingOperationsPanels.cs",
+      "sha256": "6AD8F1140811AD636E4FCC472C34320A5B604E395674CB776ED9BC99529BAEFC"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/ManufacturingStockQueuePanels.cs",
+      "sha256": "56B7FBBBF05FE40EFF9B4A5643C2754BBE7AF901AE99A36A7B5881A09A650A82"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/ProductionDeviceCardArt.cs",
+      "sha256": "CE5F8065C0302224C295C0ACA7E7388B7C1F28BF2CD2956BCD337B06534D9485"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopFloorPlan.cs",
+      "sha256": "595B1BE4E40D47C36977E6A66948D74D198B2F0F065E271F48C114A1BC4F6C03"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopFloorPlan.Layers.cs",
+      "sha256": "8D31F85239B824CD48893AF409EDF2B35FCEBFED2F0315F6F03BE33C62C35059"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopFloorPlan.Rails.cs",
+      "sha256": "0E75ED1D3ADECD1405B9D6BD79A4CF1B3DA95C932DB87B385C41304D960D1A0C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopFloorPlan.Routes.cs",
+      "sha256": "DE70A74E0FC8ADEDC5EC5EAC29E9675CFD881D3A20B6454F79BF247938860D8A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopLayoutCanvas.Align.cs",
+      "sha256": "D70581DF11EBEA20F53180EF8D3F73B0FBDAC1F04D092A9F56FDF98AA7A1DE0E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopLayoutCanvas.cs",
+      "sha256": "18BC2011BA3A5B4C7A95AA79745C4F96F6013EA680A7280A50A5C562CDA6FD4C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopLayoutCanvas.Device.cs",
+      "sha256": "5A7B7313C74EDBE916916C7FE222C2E08941D69A6FFB61CEDA924725C189689D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopLayoutCanvas.Interaction.cs",
+      "sha256": "EAAF0A48AD27FDDB4C7FEDCC929E66BD75D772A74DC506307BFE04B7CE49364A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopLayoutCanvas.Palette.cs",
+      "sha256": "B4851ED50B43209E28C3E96FC50507576B24C4D708E4B597F3BD99A67D4A9D1C"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopLayoutCanvas.Placement.cs",
+      "sha256": "AFD16ACCD2CCC2A2B09EC057597B340A4A52F307D6F558C2A6809E93A1204B8F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/UI/WorkshopLayoutCanvas.Primitives.cs",
+      "sha256": "6FE0C79F644FE3C6B45C05D621C600AC33603D43FCD88AE48575A8EC50702419"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/WorkshopFloorLayout.cs",
+      "sha256": "55466FE2DBC8B5FDEF09327B409E41C1C26CF5450B16043FA5B43743B4CFC438"
+    },
+    {
+      "path": "Source/PersonalChronicle/Manufacturing/WorkshopFloorTextures.cs",
+      "sha256": "B27C1A2B549E5DEE0198DD43CC96E487CBA280A2229DBCA2914B524794B5AACB"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.AppShell.cs",
+      "sha256": "D8CF26A9CAEB5432329EE1BD4534B81FA2F46E2CB65633263FACF6CC417511AA"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Archive.cs",
+      "sha256": "72E6C1ABF8658A279266229439FC226F38C6ADFF504017A794D1B1F4133164D0"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Chrome.cs",
+      "sha256": "7634693A8EF910746D40189A43CDA00AB8746AE99E75CA49A35D470CB1CF47B3"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.cs",
+      "sha256": "52C313D2EA99285C5410AFE4BAB6ACFB0C90587F7CDC4A428D225F0B9FB7B4AA"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Detail.cs",
+      "sha256": "C298663075A62A02909DAFB2F58F749E7CC77550408EA87516A5D2A0AE56D274"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Dev.cs",
+      "sha256": "905E13C4F46E6CA338A6963387C8371BAA52F37C0ACBAD91F86737DFC62CCBCD"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Economy.cs",
+      "sha256": "37ED0ACEA2E7108F886F40A8877939A20139E1E608F3E56634D6414E6E8CCF7B"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.FloorTabs.cs",
+      "sha256": "569D7D42B732629F36A375FB19F16183BA0305AC639A38AFFABED608F93B9735"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Overview.cs",
+      "sha256": "C971034F1473F05D27D13F0AD9E5C10C7AF54DA58DC6FB7356C3DE5422773192"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Population.cs",
+      "sha256": "1D439A25F0AFF8B164217965693DFFA0AB7F1160BF8166F4A13AB300C58B2B7F"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.PopulationViews.cs",
+      "sha256": "D6F091D917E3540AA4BC94F17D619A62D6FA3FB359A3F30B9D5A61EBF55F28FD"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Roster.cs",
+      "sha256": "199E25C5635F9AE1E641B95BE4793614FCC670C2AD0934EA3783BC8D7E080C2B"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Shell.cs",
+      "sha256": "4533A2419AC290D687AF4B1443D01DB9EC4E47ABF308A49CE0F2C521FA5B7CAF"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchiveHost.cs",
+      "sha256": "E31A7BCCDC7D8B7E8ADCE339338EFF8EBD9C2F1F7118DF7E8C826A053F46CAF1"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Battle.cs",
+      "sha256": "90AEC7D0EBC45D597F1D1FBB62F6E64344F794A92FB4C9B8EFA0C73E07697F3A"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Cache.cs",
+      "sha256": "D01E9812AF2E159E28501440193EFE9C4790B03E1C7CFABA20FAF9BBF19298B7"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.cs",
+      "sha256": "38A00B36C056EBAAA159F47B700796F99807337902DBDF20494131BEC335DF5D"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Embedded.cs",
+      "sha256": "CD33DE09431D75B98344A2330FFB3BA5BCB1D049FA24443D0F745553252E2E81"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.EmbeddedCards.cs",
+      "sha256": "6E6B3943F6417F49ED941623F9D072DF2B1DB41158B1B2311D289E37FD0F9FA1"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.EventCache.cs",
+      "sha256": "E23B8C2D6B1D0BA17D5804E044167FC7151573A221A3FC1E1A29E54F4027BE1D"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.EventDetail.cs",
+      "sha256": "831B18BCFA5E2191E56DF309CD0CAA182D26AB591F9E6AFAF7559703A55F2CC8"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.FactionCodex.cs",
+      "sha256": "073D005BEE2C52244C5E9F4E5F60D3CABAE00179B8F3F928461FF28916748576"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.HealthValuation.cs",
+      "sha256": "B7B9E0D18DF20D96282F6B7E3C13FC8242535F43454368FCFA0C1EC10B10514A"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.ItemTable.cs",
+      "sha256": "D283D49F1490A0DE2B95D42A66258A91C682BAB0BA5FE63C49D8BAB84C7E504C"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Labels.cs",
+      "sha256": "5E89D9A85D9FF95793CCD82BA0BCB87C9F899969A03FCEDB71741A782EF28697"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Legacy.cs",
+      "sha256": "929F8A14528919DDA8BB18C9F3A04C330BC9B085AC0893ABB3FCAF9497072F87"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Location.cs",
+      "sha256": "30D74D1ADC548CF74827BA639AF2A396CFDC5F4B70F29B0202E757D1A0E21A1C"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Manual.cs",
+      "sha256": "B45AB0878CD3855A18567F3C31403EB392AB7FA89A825B45C87362A7B6E52F83"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Metrics.cs",
+      "sha256": "1AB65BA3C81951E1E5680E170C176D06E99DBF1FA5098A4F39139D1D72BD12A2"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Nav.cs",
+      "sha256": "62EB50BDAA3540866CEF98F959509B2BDB80876C1F6414EAA7F9967A8FA950D3"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Overview.cs",
+      "sha256": "88A96ADD3B05698976BB8432634515620B1B0A51DB71D18287F8C6E1DE3EE08D"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnCharts.cs",
+      "sha256": "4207B41936AD4BD0E585D3795E06E3295240DA1C9E0C9B7CE9D91BF81AFCDC75"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnCombat.cs",
+      "sha256": "90B1B5A4E8D0E7001168E7B7C64FE83DB240CEB61308813AAD72E7049B55189B"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnDetail.cs",
+      "sha256": "3D2B15074A0B4BE417A7CAE4EADC9DF35E7F5082F1F924FE34E5CE4EA6EE5A20"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnHealth.cs",
+      "sha256": "1FA96EECC851232C7CE1B7B0000744FBD5B0BEE43CDD269F865E87DC5D7A7D8E"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnMedal.cs",
+      "sha256": "8C8D957F74B599537E826629BA47CDD7A56C475675E9A39283644A918B325A5A"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnOverview.cs",
+      "sha256": "706EF38ACA124FA22B27F6454CF16ED40EA6EF562166E8CE4D3A36A374E9EEC4"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnSocial.cs",
+      "sha256": "D750C10D7B47A84F824597D762548142CE8F6BCD87220A213024056FE12D8ACC"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnTable.cs",
+      "sha256": "FDEB1FF6B4080328EEAB635F5D2A08D85D9832D8E8AE29EE0B0E01EEC0FE24AD"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.PawnWork.cs",
+      "sha256": "D0AABD95DDE42003F3D4F68BB6A97F96F785C3FACD0C105C891F421A3D4A7CF1"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.Shell.cs",
+      "sha256": "1DCC5FD69D9835157A87D7A3BB2ABCD091F8F41890794C8284D37B71ADFE2B81"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Population/PersonnelArchivePanel.WeaponDetail.cs",
+      "sha256": "2B712480D881542F197DFF58C28992D644DBFE8103FDFD06C961E1472A5BD55A"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/TourAnchorRegistry.cs",
+      "sha256": "FCFB76B95ADFD4B49BD5A1C9AA42D8072B74D4780B42BB4DD637D9155F2929CE"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Window_NewcomerGuide.cs",
+      "sha256": "D1954202AA729998A15805035AFB4D358AABE0BE59D476A6F6AC4D3341DAEA05"
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/Window_TourOverlay.cs",
+      "sha256": "F27BC7267F72EC10D30FD996058EDC2E7DCF8D36E27D651099EE07209D061FDC"
+    },
+    {
+      "path": "Source/PersonalChronicle/PerfProbe.cs",
+      "sha256": "89760FCA149D1D0A7224E965071087F6CB8BD0EC3F153A0FBA6900E1AC441035"
+    },
+    {
+      "path": "Source/PersonalChronicle/Settings/SettingsCatalog.cs",
+      "sha256": "7D7F7C3654B296BD0D27252D3B2A365836610F9E054609A891C099B652BFE74B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Settings/SettingsDrawer.cs",
+      "sha256": "30B873A9971F9FF888AF7F21264AB5C2860B46215DB5363C92865A6FE0DEA698"
+    },
+    {
+      "path": "Source/PersonalChronicle/Settings/SettingsText.cs",
+      "sha256": "446E523A3C1BB857056A551CE95FED623A5A63B8ACF8F9A36D55892E5F36CA33"
+    },
+    {
+      "path": "Source/PersonalChronicle/WorkAuthority.cs",
+      "sha256": "B5CE3DBE5C2B85B030701796168E65303CF2CD5B0CBF6D16A075CA229F468E49"
+    },
+    {
+      "path": "Tests/ArchiveViewLayoutTests.cs",
+      "sha256": "CE51EB519F9D28F800314D45DA0E253A2DEEA304F5DC6C1055BAC6DCB18FE2D9"
+    },
+    {
+      "path": "Tests/CareAuthorisationSelectionTests.cs",
+      "sha256": "6F70FDFC8A9D00BB61233B6AF48AC62C0705C6F4978B7987CE422927DE57157B"
+    },
+    {
+      "path": "Tests/CareCoordinationTests.cs",
+      "sha256": "EA20AC1188AF6D8CB7EA42974F368C63E7B94E500E851AE06280ECBC6E267F68"
+    },
+    {
+      "path": "Tests/CareerDataFlowSimTests.cs",
+      "sha256": "7C179E6CF57DA80D134766D5C815D8D279F373B5B22EECCC94C71AE45DB22F57"
+    },
+    {
+      "path": "Tests/CareerQualificationTests.cs",
+      "sha256": "C66F69247D401EF0303F1859825F4B631F6385A44CCAB1527AA9954457A94014"
+    },
+    {
+      "path": "Tests/CareExpiryTrimTests.cs",
+      "sha256": "028CA533758043F736C0EF8E4721399ED968749DFE8E4505619B808CE4E39599"
+    },
+    {
+      "path": "Tests/CredibilityEstimateTests.cs",
+      "sha256": "A537E3D4D16EF30DEAD5A8DED2950274935BC73A07DB905716002BDA5F5FF714"
+    },
+    {
+      "path": "Tests/EconBatch1FixesTests.cs",
+      "sha256": "133596EBBE2D8D392FC000D42E6C8CC52777F5BA19444394D57C22369A5F614B"
+    },
+    {
+      "path": "Tests/EconomyCareTests.cs",
+      "sha256": "FF51710ACA28F69C972628EDA467CA94A37780515F7217C31B2D5E30A19D63C6"
+    },
+    {
+      "path": "Tests/EconomyEmploymentTests.cs",
+      "sha256": "475FA296D16F07B01D08C6AE992AB11CCBF55CE996A9E57F7845B0FBC9EBF24D"
+    },
+    {
+      "path": "Tests/EconomyMarketFormatTests.cs",
+      "sha256": "D5B226A3907028E672EC96538023A0FCE7C143D579F01DDB031FE934EAFAA813"
+    },
+    {
+      "path": "Tests/EconomyProductionTests.cs",
+      "sha256": "CDDE80F5104D2972F2ADCF6BCA3D83748C6299CE5E7F67A47DFE5EE4BFB96DC0"
+    },
+    {
+      "path": "Tests/EconomyPurchaseTests.cs",
+      "sha256": "74C049C4D29939A420686B9D7A36E7E7AA0491D0118C2DD9D419C40516025025"
+    },
+    {
+      "path": "Tests/EconomyTableOpsTests.cs",
+      "sha256": "9655A3DF2C62BA01D482818A3A27A86C0C7098FB8426AB3427EE82AC6F2F724B"
+    },
+    {
+      "path": "Tests/EconomyWageTransferTests.cs",
+      "sha256": "D39CD5E812C4EB7B3E5A4AB9EC1858442089C67405085A71CB8FD6906E9D393D"
+    },
+    {
+      "path": "Tests/EconomyWindowPresentationTests.cs",
+      "sha256": "76AD691C2A3260EC8C8B792B15AD761D46413D29333EB2C441083F044104B320"
+    },
+    {
+      "path": "Tests/EconomyWorkOwnershipTests.cs",
+      "sha256": "66542B4147A5E8BB1046AD468461054EC66B638D5954E0ED8656D0C23089ECA2"
+    },
+    {
+      "path": "Tests/EmploymentContractExitTests.cs",
+      "sha256": "32E07819CCAAD03AE75C729C1C9818E7E05854F966B30D171B46C418BF6C66E7"
+    },
+    {
+      "path": "Tests/EquipmentStateResolverTests.cs",
+      "sha256": "F4C618E7A5BE8D411F8DE01464CBF2FDE7ECF4B991C1ABAE40005B5FF27054AA"
+    },
+    {
+      "path": "Tests/FailureClassificationTests.cs",
+      "sha256": "6077B2DEE9B4BEE4781151AC7458790525FC7346ABF5BEE4FADCCF5E7A0C394B"
+    },
+    {
+      "path": "Tests/HarmonyStartupTests.cs",
+      "sha256": "14FF836B36B050AC03050B9F779DB3BFB3AF8A08AB77A2574A793AF7252CA42C"
+    },
+    {
+      "path": "Tests/InstitutionPolicyRemovalLockdownTests.cs",
+      "sha256": "137CE0FB21A6041D36E3E08B8BC857CC711AF277A1714B8D54B8D9CE18938623"
+    },
+    {
+      "path": "Tests/InterruptionProtocolTests.cs",
+      "sha256": "E6C153A8FB4B102E9D51C7241E4059085CD75355489277ADAF87012310FDD3C1"
+    },
+    {
+      "path": "Tests/ItemFlowLedgerTests.cs",
+      "sha256": "4366570F69F1156186828A8FB75AF687E57D6240F69B238CDE04C921A70C2DE0"
+    },
+    {
+      "path": "Tests/ItemValuationTests.cs",
+      "sha256": "FA2E5C7CAB52BE35837FA161D841D72CA6D730661BD27B21386CFA429106A6C6"
+    },
+    {
+      "path": "Tests/LearningPersistenceTests.cs",
+      "sha256": "FBA8AA679EBFB5E0173A8A0397F73AFCB581129223ED95E380C4A4CC43831210"
+    },
+    {
+      "path": "Tests/LegacyPolicyProbeTests.cs",
+      "sha256": "A46F161C191585CF3EC8A9F9B3D66572A82DFAF3D58B5A49ECA315EE9376E49E"
+    },
+    {
+      "path": "Tests/MedalAwardEvaluatorTests.cs",
+      "sha256": "8B0EA563EDFBD4F32A61F1758DD9129C1CD154BAEC7DBB994DF318B1039E862B"
+    },
+    {
+      "path": "Tests/MedalAwardServiceTests.cs",
+      "sha256": "13093CFF3DD7719EAA765A6BE8F4FBA740F6CA07F01C5797F92CC44369140AA3"
+    },
+    {
+      "path": "Tests/PawnEconomyFactsPresenterTests.cs",
+      "sha256": "C19D6DFC73E9ACB7E2D2F711C826B9918B3A89D30A7552DD6AD951E630A60813"
+    },
+    {
+      "path": "Tests/PawnEconomyScribeTests.cs",
+      "sha256": "AB27DF993DF090835AC83522B5AB9D9F2F7464F7787A04C1D59AD415A7D8F340"
+    },
+    {
+      "path": "Tests/PawnEconomyTests.cs",
+      "sha256": "EEB42C0F6117A1ED3B4DF7E8457514E1705BE66C796289F8F1D45DF781A53C4D"
+    },
+    {
+      "path": "Tests/PawnFinanceKernelTests.cs",
+      "sha256": "D1B11EF66BEB21D0A7895E5E52FD741764135C136C636110FDEDA15AEE0699FE"
+    },
+    {
+      "path": "Tests/PawnInstitutionModeTests.cs",
+      "sha256": "04088A68B49761AEB0A5B1E3B7A338D517C670549485297AF8722F917EC5BE75"
+    },
+    {
+      "path": "Tests/PawnLegacyReconciliationTests.cs",
+      "sha256": "D439E9D6959C2AEBE8C62ECB21417335B205D0228113C745094F402C565B3409"
+    },
+    {
+      "path": "Tests/PawnLifeBudgetTests.cs",
+      "sha256": "2D03697782AC949FC7F8C7423ED848A5E3D858FB52E5692B4209E6E408B0941F"
+    },
+    {
+      "path": "Tests/PawnNeedDashboardTests.cs",
+      "sha256": "3349EFD62831E309AC7251EEE8090771BC3B621939FCD43C64432003CFD80E66"
+    },
+    {
+      "path": "Tests/PawnNeedPerceptionTests.cs",
+      "sha256": "EB8CFBC5304DF971B8021F4CAD2D466EA19C751B1F1C4AABF809FEF2BA04B7E9"
+    },
+    {
+      "path": "Tests/PawnNeedSpeechTests.cs",
+      "sha256": "A6CF3C71C98A8D35C449D7819E3BA6587B696624E9B785098DE9FC3666DCD64D"
+    },
+    {
+      "path": "Tests/PawnPerceptionCoordinatorTests.cs",
+      "sha256": "7E2FE33EA2AA2903DF79A28F71DA32D1E3627F233F51631BE0B7C393A9906E68"
+    },
+    {
+      "path": "Tests/PawnPerceptionReadQueriesTests.cs",
+      "sha256": "50B88BC560F3ABFA814740C01077D4DE07915DA917F9C0E844B1FC34AAE5861F"
+    },
+    {
+      "path": "Tests/PawnPerceptionVanillaNeedTests.cs",
+      "sha256": "610D9886146329B7891C83A05DBEE8AF9D67366FF8793B28A6B0B61D1A545BEA"
+    },
+    {
+      "path": "Tests/PawnSettlementPersistenceTests.cs",
+      "sha256": "A4A4F296E44E418C3256373A01406ADB765D26E2969F8074C0ABA74949B27A3C"
+    },
+    {
+      "path": "Tests/PawnShadowPlanningTests.cs",
+      "sha256": "F10ECDB963F345DD96A116780CF87BC3A801CECE122957822305547BF306178D"
+    },
+    {
+      "path": "Tests/PawnSilverReserveTests.cs",
+      "sha256": "0D33C55BE1CD50BB667911BF53A226047C1D25D7679A52751D946C4AFEC375ED"
+    },
+    {
+      "path": "Tests/PawnTreasuryOperationsTests.cs",
+      "sha256": "37758E922EBE2F0AC93BD35A64DB8D4E3A458AB9D9C7DA35AACCE1DB4BA5BBB2"
+    },
+    {
+      "path": "Tests/PersonalChronicle.Tests.csproj",
+      "sha256": "5FA0DE3DF0D8AA462D2E62B0AE74AA7D9D5F62D19AE9EFABB63A35393930CB73"
+    },
+    {
+      "path": "Tests/PersonnelArchivePanelTests.cs",
+      "sha256": "2001FA960BB454B0BD8F244EED68BFB2256143D6394ADAD03E931B36B4505102"
+    },
+    {
+      "path": "Tests/PlanningSourcePortsTests.cs",
+      "sha256": "6AAD15D7328D06242C7D9EDC9B0A7CC83459DE75C4B7949BD6BE904288305668"
+    },
+    {
+      "path": "Tests/PlanOptionFeasibilityTests.cs",
+      "sha256": "AFB7B28E116CDFA65ECB6F09F37F897CB731BF93231D7D3134A66FF5E9AC0B16"
+    },
+    {
+      "path": "Tests/PolicyThresholdInvariantTests.cs",
+      "sha256": "78B7EC2D95B251E4795E9C9EB6ECA5664D9CDDE1A7B4B079B1599BEB07931689"
+    },
+    {
+      "path": "Tests/ProductionAccumulatorTests.cs",
+      "sha256": "E536D7F6759640126836E88AE1D01710C1495FB089AF38FB145812562BA44EC0"
+    },
+    {
+      "path": "Tests/ProductionAuthorisationTests.cs",
+      "sha256": "63EA7F947E58C23654D7634A9C23E7EF506D500323B6FB360B0F398C4C7C8DCE"
+    },
+    {
+      "path": "Tests/ProductionDeviceCardTests.cs",
+      "sha256": "1985374DBE83955FD6D675DE586F1BFB29D1B83BE54C38F9EA66D0084632542C"
+    },
+    {
+      "path": "Tests/ProfessionalEffectResolverTests.cs",
+      "sha256": "290B3F771C6F9023FE2BEA73E822A45EC46C24CD23F837E5B898F549EEA130DB"
+    },
+    {
+      "path": "Tests/ProfessionalEvaluatorTests.cs",
+      "sha256": "2381E904C70338B2E537272D9B9F297A2F506BB0647BAADC4BE8483204BDBA20"
+    },
+    {
+      "path": "Tests/ProfessionalFitAnalyzerTests.cs",
+      "sha256": "A74C05BBF7744BEF2C77BDB7E38EEEFF05DF174B76B52BC90462F7D2702A3077"
+    },
+    {
+      "path": "Tests/ProfessionalRatingTests.cs",
+      "sha256": "0733E8BBC8328AC1A02B3F8D1817DBDBC7CB04472F062FD85BFC1451D7BB7FD4"
+    },
+    {
+      "path": "Tests/PublicInstitutionFundsTests.cs",
+      "sha256": "EAA2A707CD5E4FE4054E350EAB439957313D74AEC77FFFA412F1C4326D9DC1CF"
+    },
+    {
+      "path": "Tests/PublicStockpileTests.cs",
+      "sha256": "E0C158F728115C722E688C40600FAE07E5C0AF39140A25D2DB6A9CB358C30968"
+    },
+    {
+      "path": "Tests/PureLogicTests.cs",
+      "sha256": "59D1E6ABD407FFFD3DA2B7DBE08C9BF6E44D6A810E690BE564CA8C3D9D679D2E"
+    },
+    {
+      "path": "Tests/RecoveryRulesTests.cs",
+      "sha256": "31253A95449616B65ED1F4BF23C88446D4E29AB1235C5C86018EE72ADFE12910"
+    },
+    {
+      "path": "Tests/ReliabilityChoiceTests.cs",
+      "sha256": "5A3804B9C40E332B57C2AE73A3C2AF32B5892A64C95E5A75ACCBCA43ADEE6753"
+    },
+    {
+      "path": "Tests/RestockPresentationTests.cs",
+      "sha256": "D70AE3C14E564CD5E77BE4A9D1047450BE9F515019B2EBBA4F39158B9538CD13"
+    },
+    {
+      "path": "Tests/RetryBackoffTests.cs",
+      "sha256": "9BCF905702CD06B6A6E795C778C17E9AE6DFDC0BEC012F6D2DB23D83FF8286CE"
+    },
+    {
+      "path": "Tests/RotationRuleTests.cs",
+      "sha256": "A0A9CB2FFE95C54B0892D31794F0CBA596AFE76AAFC95C2C94C63BABFC33D006"
+    },
+    {
+      "path": "Tests/ServiceEvidenceTests.cs",
+      "sha256": "301280EE4C541F121D1DF4FD48751C991F6F10BFBA609C0B33D940A095439D83"
+    },
+    {
+      "path": "Tests/ShadowGoalRankingTests.cs",
+      "sha256": "29A4C1EDCB73EE5150AA052EE50A06C070CDCBEB6DB37E84EDE5798C450C73FC"
+    },
+    {
+      "path": "Tests/ShadowPlanningLatchTests.cs",
+      "sha256": "CCE3D3E64274795D78462D48B48BE92705769F742F3AA9EBF0B9DBC87CF2BDBD"
+    },
+    {
+      "path": "Tests/StableOrderTests.cs",
+      "sha256": "828FF9140FEF61C42DCF9F61694DD76B222B5031FAC1C29FB61411E996FEAD35"
+    },
+    {
+      "path": "Tests/StockSeriesScribeTests.cs",
+      "sha256": "11F6DF3AFC8AC19B38F88517233A6B6524D722CA4D0C9C26ED1C33DA45D6D830"
+    },
+    {
+      "path": "Tests/StockSeriesTests.cs",
+      "sha256": "C8B65E6BC6E14746CA5C073EED5DE14CC6490834020D3FEEF7FB9D847E40DBEA"
+    },
+    {
+      "path": "Tests/StorageFoodTests.cs",
+      "sha256": "696FF27BD1F8714B5DDEC35DA327873D19FF8CF644503DF9E5C69E29398D2DBA"
+    },
+    {
+      "path": "Tests/StyleLearningTests.cs",
+      "sha256": "AB64227E0634D37E077B757F6F6F84E7DE13DE57974B1280D911A67A6045110A"
+    },
+    {
+      "path": "Tests/StyleLedgerTests.cs",
+      "sha256": "64A65A41C81C49654004F1E21BAB0E1C35D1C8768F281D7E718EED462520CFA5"
+    },
+    {
+      "path": "Tests/SystemCenterRegistryTests.cs",
+      "sha256": "0565192539F9F7BF04F5E8EA1D02F815F280E4DD702DE6CF5CD919A20519C98E"
+    },
+    {
+      "path": "Tests/SystemCenterWiringTests.cs",
+      "sha256": "3F62D5945FB0BF03045100017EAA43D81879EC6FB2D6E7322204DDC4E02A5DEC"
+    },
+    {
+      "path": "Tests/T1ProductionTests.cs",
+      "sha256": "7EA5BB32BB5212E75157D251709FEBA8ECB84F6D6C739829FFE63E3652903DB6"
+    },
+    {
+      "path": "Tests/TempR8Measure.cs",
+      "sha256": "D43473D1DAF9D8D91A7A701957AD8CE885AC20479F93F9FE747F9F9DD9F0D551"
+    },
+    {
+      "path": "Tests/VanillaContractRowTests.cs",
+      "sha256": "2D9AF7B0FB39AE4CA351E150F5A6192974F01574F474576B043BD66A987C2926"
+    },
+    {
+      "path": "Tests/VanillaOrderCatalogueTests.cs",
+      "sha256": "CD4B395604E6BB015AE98891DA3CCCBB8E05E1650FD77368806F23C78931A3C3"
+    },
+    {
+      "path": "Tests/WorkAuthorityTests.cs",
+      "sha256": "DAB56267A29D37B95023AAB61E4D2808895CBE48B49BE484F2EA112DAD506E6C"
+    },
+    {
+      "path": "Tests/WorkContractRulesTests.cs",
+      "sha256": "8724F57C8FBCD5545C456DA60977D9613C3BAF05BFBBC7FC7F7D6375A217A704"
+    },
+    {
+      "path": "Tests/WorkIntensityEvaluatorTests.cs",
+      "sha256": "B321FF784F125039BD0680A62D078F171E070307E112503D222F0AC8987F2276"
+    },
+    {
+      "path": "Tests/WorkshopAttendanceTests.cs",
+      "sha256": "B926EE39B93AAAFE6958AFDE3AE7FA9ABBF568D88F6CDCEC0F5CFB4139B46E5F"
+    },
+    {
+      "path": "Tests/WorkshopCanvasAlignmentTests.cs",
+      "sha256": "F0E9705302989F399E76FB49CE3D31542DABF2902314BA3C479416C8948D48C7"
+    },
+    {
+      "path": "Tests/WorkshopCrewCycleTests.cs",
+      "sha256": "51B148D88A48CB49099BFD955B29ACC33B31DE469EE42B176DE41563BC7562B0"
+    },
+    {
+      "path": "Tests/WorkshopCrewExceptionTests.cs",
+      "sha256": "9356BF4F5125036C41761C8F6F75D4567033FA5CC5F62AE2CB2D734D3CAAFC4B"
+    },
+    {
+      "path": "Tests/WorkshopCrewScoringTests.cs",
+      "sha256": "7B318FD9716A4264BF2F3EA99C5CEE1051B00C13FBA15ABF05C543435FE0F2C2"
+    },
+    {
+      "path": "Tests/WorkshopDeviceFitDedupTests.cs",
+      "sha256": "1B15CC93E242C569A14F931DE1AAD76F5A0C14CC0F55F9C2142431E0D784874D"
+    },
+    {
+      "path": "Tests/WorkshopDeviceFitEvaluatorTests.cs",
+      "sha256": "8DC09FABFE04078D1CF3682652FF7A5EE3042639F60574131D12927341F72393"
+    },
+    {
+      "path": "Tests/WorkshopDeviceRulesTests.cs",
+      "sha256": "E4FF328FF8E9189EB5CB307FC2A68A7C1C0DCFABBA46550A7F11009014866491"
+    },
+    {
+      "path": "Tests/WorkshopDutyRulesTests.cs",
+      "sha256": "61C35D8DFF8DDEF9D411FDA20B0F2C15B22A8E6568FFC1AABB573D1376C3CFE6"
+    },
+    {
+      "path": "Tests/WorkshopDutyRuntimeTests.cs",
+      "sha256": "2D3D74DE1C7256B7B30172548A4B40142D741A2CADECBB36C0577A83CF80BBF5"
+    },
+    {
+      "path": "Tests/WorkshopHoursTests.cs",
+      "sha256": "1D422087377AE022525128EB0BE9AC90DED64437318713EBF89B0594232325B8"
+    },
+    {
+      "path": "Tests/WorkshopPostAssignerTests.cs",
+      "sha256": "CFEDF5E54757204B5CE21019FFDCB1ACB8F989903A6F841F775ED0C00F134C01"
+    },
+    {
+      "path": "Tests/WorkshopProductionRulesTests.cs",
+      "sha256": "D4FE8150DCF6485011D761C0E820D226446EB546FAD91F518F32F1F4E29F63CF"
+    },
+    {
+      "path": "Tests/WorkshopProductRegistryTests.cs",
+      "sha256": "6A77D96C1AB07BFF26D8EE1F23F9FAD8DF0DE39B813549783894D200790DB5C2"
+    },
+    {
+      "path": "Tests/WorkshopRatingShiftTests.cs",
+      "sha256": "6C3C090BD593BA0B4D6AB84717AF9A3C5680E4CD7616ABFE36EB17A58AB4EB9F"
+    },
+    {
+      "path": "Tests/WorkshopRestPolicyTests.cs",
+      "sha256": "3D55B6A695515C0F5342FFB9256FCB452C8DC921520A2C53F3151ED06AFD2904"
+    },
+    {
+      "path": "Tests/WorkshopRosterCoverageTests.cs",
+      "sha256": "717B84B6045C4123219430D0BAA102000CF61116463FAEAD3866F5D1C35A2132"
+    },
+    {
+      "path": "Tests/WorkshopRosterRulesTests.cs",
+      "sha256": "FDE15830AA920E7D5B2CC2CD0F630F62B4C47CE268158959C6D086026BD21A23"
+    },
+    {
+      "path": "Tests/WorkshopShiftPatternsTests.cs",
+      "sha256": "62684CB1A0CB4EEB4A74EA7971C05C7C964947445449A9DF0B9805A830DDB44B"
+    },
+    {
+      "path": "Tests/WorkshopShiftPlannerTests.cs",
+      "sha256": "152FB62BE1AC970C088F4CE5F40F483E17C980E3CF0F835FA1DAA289F148B56C"
+    },
+    {
+      "path": "Tests/WorkshopTakeoverTests.cs",
+      "sha256": "E27C51437551BC921D4C34D5919F68B5D778E7F83135A11DDA069A2D9C9EC685"
+    },
+    {
+      "path": "Tests/WorkshopTimetableHoursTests.cs",
+      "sha256": "6698E4FCAF618FAE804082E1C03F1E7E1FC7E39AAFC9BC71ADC73A4B42DBE8B6"
+    },
+    {
+      "path": "Tests/WorkshopWorkDemotionLedgerTests.cs",
+      "sha256": "A77E5BFC1A7A900FEA0081B07449C2A261D067BC499A071D1DD08D480D58369F"
+    },
+    {
+      "path": "Tests/WorkshopWorkDemotionScribeTests.cs",
+      "sha256": "E89226D7022651109CB888ED96EF9F0071582BECAB276F3D3D0CB50BA5B66DB8"
+    },
+    {
+      "path": "Tests/WorkspaceSecondaryTabTests.cs",
+      "sha256": "65DD438076214E7F8677FF7703EC6DF97C4ABAFD809AFF54630C356794DA3595"
+    },
+    {
+      "path": "Tests/WorkTabHideFilterTests.cs",
+      "sha256": "ABC7D2C13070D7D7293ECBFC2A169FCB60C723702DC23022FE6787B5C7B4DFED"
+    }
+  ],
+  "testReports": [
+    {
+      "path": "Tests/TestResults/PublicEconomy-Regression.trx",
+      "sha256": "21BFCEC38A604D54888236E779EF0B78A266DBC736E33CB2A5173BC21F1E0827"
+    },
+    {
+      "path": "docs/验证/公有资产与机构资金贯通_20261011/compiled-source-checksums.json",
+      "sha256": "F9BD93EC9316FC7339CC3DD50F6A4D977A612BC05DDDABFCB642C5F5856F1A08"
+    }
+  ]
+}

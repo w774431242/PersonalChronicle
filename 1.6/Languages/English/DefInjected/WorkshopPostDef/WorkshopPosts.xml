@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  English overrides for WorkshopPostDef (CHG-20261006-TRKEY · LOC-01).
+  岗位名按工业/军队岗位习惯译（Agronomist / Material Handler / Process Engineer …），
+  与 UI 内「岗位」列的既有英文口径保持一致。
+-->
+<LanguageData>
+  <WP_Agronomist.label>Agronomist</WP_Agronomist.label>
+  <WP_MaterialHandler.label>Material Handler</WP_MaterialHandler.label>
+  <WP_Medic.label>Medic</WP_Medic.label>
+  <WP_Miner.label>Miner</WP_Miner.label>
+  <WP_Operator.label>Operator</WP_Operator.label>
+  <WP_ProcessEngineer.label>Process Engineer</WP_ProcessEngineer.label>
+  <WP_SafetyOfficer.label>Safety Officer</WP_SafetyOfficer.label>
+  <WP_Stockman.label>Stockman</WP_Stockman.label>
+  <WP_Technician.label>Equipment Technician</WP_Technician.label>
+  <WP_WarehouseKeeper.label>Warehouse Keeper</WP_WarehouseKeeper.label>
+</LanguageData>

@@ -1,0 +1,7 @@
+{
+  "result": "Passed",
+  "flowNodes": 9,
+  "edges": 13,
+  "allNodesReachable": true,
+  "allNodesReturnToState": true
+}

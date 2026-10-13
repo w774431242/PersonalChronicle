@@ -1,0 +1,68 @@
+{
+  "changeId": "CHG-20261010-PAWN-NEED-SPEECH",
+  "verifiedUtc": "2026-10-10T08:53:50.4033217Z",
+  "modSha256": "974A8FEB227F10101C137192555800D3CAE8BC30D50AF8F816D30D5E323B8F8F",
+  "buildSucceeded": true,
+  "buildWarnings": 0,
+  "newTestsPassed": 22,
+  "regressionPassed": 1254,
+  "regressionSkipped": 1,
+  "regressionFailed": 0,
+  "translationKeyCount": 16,
+  "sourceFiles": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/PawnNeedSpeech.cs",
+      "sha256": "30A07F969E06E6803802B6070656BD2F422228ADC98944CE73F44FB58C1E695B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedSpeech.cs",
+      "sha256": "D517C0425DEC9C6558A4F6FA33F3F6DBA852AEB70E6D7F0AFFA050A3B7173235"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "sha256": "C20B806D092E0B13C104C34E80D1B6BE5E27979D0E979B48E2D0B5E01FA69E70"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyPerception.cs",
+      "sha256": "861BF72A4D2377F1132A1C06FC4B5CD14F1AF5239CF45A97A6859E09ED6E120E"
+    },
+    {
+      "path": "Source/PersonalChronicle/ChronicleSettings.cs",
+      "sha256": "715C99D58E6E716065E4DE5B75A9853B1845360DE2B9567BC69C596E6CD30A41"
+    },
+    {
+      "path": "Source/PersonalChronicle/Settings/SettingsCatalog.cs",
+      "sha256": "7D7F7C3654B296BD0D27252D3B2A365836610F9E054609A891C099B652BFE74B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Settings/SettingsDrawer.cs",
+      "sha256": "30B873A9971F9FF888AF7F21264AB5C2860B46215DB5363C92865A6FE0DEA698"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnNeedSpeech.xml",
+      "sha256": "83C17375255729F5CFF285BC4E89261BD10A8CBDB6338A1A474EA79EF82F44C1"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnNeedSpeech.xml",
+      "sha256": "05D50F1E7CB34E36609D3B9F0B41570559EC6FA17F9A1D5254134D5803F5AB16"
+    },
+    {
+      "path": "Tests/PawnNeedSpeechTests.cs",
+      "sha256": "A6CF3C71C98A8D35C449D7819E3BA6587B696624E9B785098DE9FC3666DCD64D"
+    }
+  ],
+  "testReports": [
+    {
+      "path": "Tests/TestResults/PawnNeedSpeech.trx",
+      "sha256": "6BDE2278B8A09E9AEFAF1D216264C3932E2372C8E81C030175C663E819E4EF77",
+      "counters": []
+    },
+    {
+      "path": "Tests/TestResults/PawnNeedSpeech-Regression.trx",
+      "sha256": "6BA2379F9E0DE237E94E6244E357116F397AE21665F0E369D43737A13538DDBF",
+      "counters": []
+    }
+  ],
+  "codeVerified": true,
+  "gameVerified": false
+}

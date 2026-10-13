@@ -1,0 +1,19 @@
+工程：  E:\SteamLibrary\steamapps\common\RimWorld\11\殖民地综合管理系统
+目标：  E:\SteamLibrary\steamapps\common\RimWorld\Mods\殖民地综合管理系统
+packageId 校验通过：colony.integratedmanagement
+
+已复制 202 个文件；备份 202 个到 E:\SteamLibrary\steamapps\common\RimWorld\11\殖民地综合管理系统\_backups\release-deploy\deploy_20261008_091757_610
+  About        13 个文件
+  Assemblies   1 个文件
+  Defs         35 个文件
+  Fonts        8 个文件
+  Languages    56 个文件
+  Patches      3 个文件
+  README.md    1 个文件
+  Textures     85 个文件
+
+目标 DLL：2026-10-08 09:17:52  1,479.5 KB
+  OK Defs       35 files synced
+  OK Languages  56 files synced
+  OK Assemblies 1 files synced
+⚠ 下一步必须**重启 RimWorld**（运行中不会重载程序集），再打开设备卡弹窗核对。

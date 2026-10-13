@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <DesignationCategoryDef>
+    <defName>PC_PEA_Institutions</defName>
+    <label>经济机构</label>
+    <order>510</order>
+  </DesignationCategoryDef>
+  <ThingDef Name="PC_PEA_CounterBase" ParentName="BuildingBase" Abstract="True">
+    <thingClass>PersonalChronicle.Economy.PawnEconomy.Building_EconomyInstitution</thingClass>
+    <category>Building</category>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <graphicData>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>(2,2)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <uiIconScale>1</uiIconScale>
+    <size>(1,2)</size>
+    <rotatable>true</rotatable>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <designationCategory>PC_PEA_Institutions</designationCategory>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>900</WorkToBuild>
+      <Mass>15</Mass>
+      <Flammability>1</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+      <Steel>15</Steel>
+    </costList>
+    <building>
+      <isEdifice>false</isEdifice>
+    </building>
+  </ThingDef>
+  <ThingDef ParentName="PC_PEA_CounterBase">
+    <defName>PC_PEA_LaborOffice</defName>
+    <label>劳务站</label>
+    <description>殖民者经济服务柜台。通过“经济机构”管理账户、岗位、真实库存与服务；需要在管理界面启用经济系统。</description>
+    <graphicData>
+      <texPath>Things/Building/PawnEconomy/PC_PEA_LaborOffice</texPath>
+    </graphicData>
+    <uiIconPath>Things/Building/PawnEconomy/PC_PEA_LaborOffice_north</uiIconPath>
+    <modExtensions>
+      <li Class="PersonalChronicle.Economy.PawnEconomy.EconomyInstitutionExtension">
+        <kind>LaborOffice</kind>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="PC_PEA_CounterBase">
+    <defName>PC_PEA_WorkshopOffice</defName>
+    <label>工坊管理处</label>
+    <description>殖民者经济服务柜台。通过“经济机构”管理账户、岗位、真实库存与服务；需要在管理界面启用经济系统。</description>
+    <graphicData>
+      <texPath>Things/Building/PawnEconomy/PC_PEA_WorkshopOffice</texPath>
+    </graphicData>
+    <uiIconPath>Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north</uiIconPath>
+    <modExtensions>
+      <li Class="PersonalChronicle.Economy.PawnEconomy.EconomyInstitutionExtension">
+        <kind>WorkshopOffice</kind>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="PC_PEA_CounterBase">
+    <defName>PC_PEA_SettlementOffice</defName>
+    <label>工资结算处</label>
+    <description>殖民者经济服务柜台。通过“经济机构”管理账户、岗位、真实库存与服务；需要在管理界面启用经济系统。</description>
+    <graphicData>
+      <texPath>Things/Building/PawnEconomy/PC_PEA_SettlementOffice</texPath>
+    </graphicData>
+    <uiIconPath>Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north</uiIconPath>
+    <modExtensions>
+      <li Class="PersonalChronicle.Economy.PawnEconomy.EconomyInstitutionExtension">
+        <kind>SettlementOffice</kind>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="PC_PEA_CounterBase">
+    <defName>PC_PEA_Shop</defName>
+    <label>生活用品商店</label>
+    <description>殖民者经济服务柜台。通过“经济机构”管理账户、岗位、真实库存与服务；需要在管理界面启用经济系统。</description>
+    <graphicData>
+      <texPath>Things/Building/PawnEconomy/PC_PEA_Shop</texPath>
+    </graphicData>
+    <uiIconPath>Things/Building/PawnEconomy/PC_PEA_Shop_north</uiIconPath>
+    <modExtensions>
+      <li Class="PersonalChronicle.Economy.PawnEconomy.EconomyInstitutionExtension">
+        <kind>Shop</kind>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="PC_PEA_CounterBase">
+    <defName>PC_PEA_ExamCenter</defName>
+    <label>体检中心</label>
+    <description>殖民者经济服务柜台。通过“经济机构”管理账户、岗位、真实库存与服务；需要在管理界面启用经济系统。</description>
+    <graphicData>
+      <texPath>Things/Building/PawnEconomy/PC_PEA_ExamCenter</texPath>
+    </graphicData>
+    <uiIconPath>Things/Building/PawnEconomy/PC_PEA_ExamCenter_north</uiIconPath>
+    <modExtensions>
+      <li Class="PersonalChronicle.Economy.PawnEconomy.EconomyInstitutionExtension">
+        <kind>ExamCenter</kind>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <JobDef>
+    <defName>PC_PEA_Visit</defName>
+    <driverClass>PersonalChronicle.Economy.PawnEconomy.JobDriver_EconomicVisit</driverClass>
+    <reportString>前往经济机构办理服务。</reportString>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+  <JobDef>
+    <defName>PC_PEA_PerformExam</defName>
+    <driverClass>PersonalChronicle.Economy.PawnEconomy.JobDriver_EconomicVisit</driverClass>
+    <reportString>提供身体检查服务。</reportString>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+  <JobDef>
+    <defName>PC_PEA_Stock</defName>
+    <driverClass>PersonalChronicle.Economy.PawnEconomy.JobDriver_EconomicStock</driverClass>
+    <reportString>搬运衣物到商店柜台。</reportString>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+  <JobDef>
+    <defName>PC_PEA_WearOwned</defName>
+    <driverClass>PersonalChronicle.Economy.PawnEconomy.JobDriver_EconomicWear</driverClass>
+    <reportString>穿戴自己购买的衣物。</reportString>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+  <WorkGiverDef>
+    <defName>PC_PEA_Exam</defName>
+    <label>提供体检服务</label>
+    <giverClass>PersonalChronicle.Economy.PawnEconomy.WorkGiver_EconomicExam</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>-100</priorityInType>
+    <verb>检查</verb>
+    <gerund>检查</gerund>
+    <scanThings>true</scanThings>
+    <requiredCapacities>
+      <li>Manipulation</li>
+      <li>Moving</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+</Defs>

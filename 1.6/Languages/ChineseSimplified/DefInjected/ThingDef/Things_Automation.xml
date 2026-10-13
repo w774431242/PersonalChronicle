@@ -1,0 +1,28 @@
+<LanguageData>
+  <PC_ConveyorSegment.label>传送带段</PC_ConveyorSegment.label>
+  <PC_ConveyorSegment.description>车间产线用的短距工业传送带。小人可将物品搬上传送带作为缓冲，传送带会沿朝向定期把物品前送到下一格；只有朝向一致的相邻段才会接力前送，对头相对的两段不会互推。物品不会自动入库，仍需搬运工或下游设备取走。小人可以站上传送带。</PC_ConveyorSegment.description>
+  <PC_FarmFrame.label>农机机架</PC_FarmFrame.label>
+  <PC_FarmFrame.description>加固钢制底盘机架。所有自动化农业设备组装的基础组件。</PC_FarmFrame.description>
+  <PC_GrowLightModule.label>生长灯模块</PC_GrowLightModule.label>
+  <PC_GrowLightModule.description>带安装支架的长条生长灯管。为农机覆盖区内的植物提供生长所需光照。</PC_GrowLightModule.description>
+  <PC_IrrigationModule.label>灌溉模块</PC_IrrigationModule.label>
+  <PC_IrrigationModule.description>水泵与管路总成。为农机覆盖区保持灌溉（水渍视觉效果）。</PC_IrrigationModule.description>
+  <PC_FertilizerModule.label>施肥模块</PC_FertilizerModule.label>
+  <PC_FertilizerModule.description>带撒肥杆的化学料斗。可提升农机覆盖区内的土壤肥力；设备被拆除时地面会还原为原有地形。</PC_FertilizerModule.description>
+  <PC_SowerModule.label>播种模块</PC_SowerModule.label>
+  <PC_SowerModule.description>带分配轮的种子料斗。在农机覆盖区内自动播种作物。</PC_SowerModule.description>
+  <PC_HarvesterModule.label>收割模块</PC_HarvesterModule.label>
+  <PC_HarvesterModule.description>铰接式切割机械臂。自动收割成熟作物并将产物投放在设备旁。</PC_HarvesterModule.description>
+  <PC_PowerModule.label>电力模块</PC_PowerModule.label>
+  <PC_PowerModule.description>带小型光伏板的蓄电池组。装备到农机上后，设备可存储电网电能，并在断供时反向放电（应急电力）；大型机型白天还能利用光伏板发电。</PC_PowerModule.description>
+  <PC_AutoFarm_S.label>自动农场（小型）</PC_AutoFarm_S.label>
+  <PC_AutoFarm_S.description>小型自动化农业设备。自动打理以自身为中心的 9×9 正方形范围：在玩家的生长区内自动播种该区指定的作物（不消耗种子与资源），作物成熟后自动收割，产物掉落在作物旁，由搬运工或传送带运走。\n\n【使用方法】在覆盖范围内画一块生长区，并指定要种的作物。\n【运行条件】通电 + 有化合燃料 + 未被关闭，缺一即停。\n【说明】机器的劳作不计入殖民者职业工时。</PC_AutoFarm_S.description>
+  <PC_AutoFarm_M.label>自动农场（中型）</PC_AutoFarm_M.label>
+  <PC_AutoFarm_M.description>中型自动化农业设备。自动打理以自身为中心的 15×15 正方形范围，播种与收割逻辑同小型机型；内置生长灯提供人工光照，**昼夜（含夜间）均可生长**；带灌溉水花表现。\n\n【使用方法】在覆盖范围内画一块生长区，并指定要种的作物。\n【运行条件】通电 + 有化合燃料 + 未被关闭，缺一即停。\n【说明】机器的劳作不计入殖民者职业工时。</PC_AutoFarm_M.description>
+  <PC_AutoFarm_L.label>自动农场（大型）</PC_AutoFarm_L.label>
+  <PC_AutoFarm_L.description>大型自动化农业设备。自动打理以自身为中心的 21×21 正方形范围，具备中型机型的全部能力（生长灯昼夜补光、灌溉表现），并独占施肥系统：范围内的贫瘠自然地面会被改良为沃土（生长速度 +40%）。玩家铺的地砖绝不会被改动；设备被拆除、摧毁或搬迁时，地面自动还原为原有地形。\n\n【使用方法】在覆盖范围内画一块生长区，并指定要种的作物。\n【运行条件】通电 + 有化合燃料 + 未被关闭，缺一即停。\n【说明】机器的劳作不计入殖民者职业工时。</PC_AutoFarm_L.description>
+  <PC_PipeSegment.label>物流管道</PC_PipeSegment.label>
+  <PC_PipeSegment.description>自动化产线用的地面物流管道。把它接到装有物品输出端口的设备旁，再绑定一个目标储物格：货物以虚拟批次在管网中流动，只在目的地实体化，直接落入任何接收它的原版或第三方 mod 存储——无需任何接收端建筑。目标格的过滤器不收这类货物时，管道会淤塞反压而不是丢失货物。小人可以从上面走过。</PC_PipeSegment.description>
+  <PC_PipeSegmentHidden.label>隐藏式物流管道</PC_PipeSegmentHidden.label>
+  <PC_PipeSegmentHidden.description>埋在地板下的物流管道。视觉上几乎隐形（只有一条淡淡的埋线和中央接线节点），适合不想让管道破坏基地观感的玩家。运行方式与可见的物流管道完全一致：同一管网、同一吞吐、同一反压。</PC_PipeSegmentHidden.description>
+</LanguageData>

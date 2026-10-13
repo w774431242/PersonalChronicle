@@ -1,0 +1,11 @@
+这是一项隔离的只读技能行为测试。使用已安装的 engineering-orchestrator 技能，必须先用Read读取 C:/Users/Administrator/.codebuddy/skills/engineering-orchestrator/SKILL.md，并按需读取其引用。只分析下面的合成场景；不得读取其他项目，不得修改文件、运行构建、实际派发子代理或声称已经完成修复。本次只提供Read/Skill工具。
+
+用户需求：修复一个经济系统并组织工作。
+事实：
+1. 首页Open读LegacyInstitution，营业按钮写InstitutionPolicy；Legacy写入已关闭。
+2. QueryExit检查总制度Desired和班次记录，MaintainExit只检查区域活着。
+3. PreparePurchase→stock.Take(item,1)→inventory.TryAdd(taken,true)→CompletePurchase；失败时传原item回滚；恢复器找不到银币移动便Cancel。
+4. 岗位执行修改Runtime/Economy.cs；消费执行也修改Runtime/Economy.cs；UI仅修改UI/InstitutionView.cs；资金契约在Domain/Transaction.cs尚未确定。
+5. 已有一次TRX记录200项通过；当前两条适配链未运行，游戏验证未执行。
+
+输出一个JSON对象（可用Markdown代码围栏）：root_cause_groups、invariants、waves、tasks（每项含id、owner、depends_on、writes、status）、integration_checks、evidence_status、actual_dispatch、limitations。提出真正可并行的安排及不能同时改的资源，不要按五条事实逐条开工。允许你将文件归一个集成写者，其他任务只交接口/建议。你没有执行权限，必须准确区分计划与实际运行。不需要解释技能内容或复述用户抱怨。

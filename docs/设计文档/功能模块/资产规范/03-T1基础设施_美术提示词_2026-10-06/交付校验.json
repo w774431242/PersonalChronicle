@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "scope": "design_and_text_only",
+  "devices": 14,
+  "direction_prompts": 56,
+  "combined_prompts": 14,
+  "new_pngs": 0,
+  "runtime_changes": false,
+  "checks": [
+    "UTF-8",
+    "unique_proposed_defNames",
+    "four_directions_per_device",
+    "orientation_dimensions",
+    "game_size_below_512",
+    "prompt_sha256",
+    "no_def_metadata_in_individual_prompts",
+    "batch_counts_9_4_1",
+    "workspace_markdown_links",
+    "vanilla_research_names",
+    "existing_T1_power_total_3630W",
+    "energy_calculations",
+    "cooler_hot_cold_four_directions"
+  ],
+  "existing_style_reference_pngs_in_package": 1
+}

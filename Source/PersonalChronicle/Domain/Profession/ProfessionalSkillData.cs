@@ -37,6 +37,12 @@ namespace PersonalChronicle.Domain.Profession
         /// <summary>扩展统计（如各品质制造次数，append-only）。</summary>
         public Dictionary<string, int> statistics = new Dictionary<string, int>();
 
+        /// <summary>
+        /// XP 来源精确拆分（key=原版技能 defName，如 Crafting/Intellectual）。
+        /// append-only：每次注入按来源技能累加，供浮层来源占比精确计算（V2.0+ 通用体系）。
+        /// </summary>
+        public Dictionary<string, float> xpBySource = new Dictionary<string, float>();
+
         public void ExposeData()
         {
             Scribe_Values.Look(ref skillDefName, "skillDefName");
@@ -48,8 +54,10 @@ namespace PersonalChronicle.Domain.Profession
             Scribe_Values.Look(ref practiceCount, "practiceCount", 0);
             Scribe_Collections.Look(ref abilityXp, "abilityXp", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref statistics, "statistics", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref xpBySource, "xpBySource", LookMode.Value, LookMode.Value);
             if (abilityXp == null) abilityXp = new Dictionary<string, float>();
             if (statistics == null) statistics = new Dictionary<string, int>();
+            if (xpBySource == null) xpBySource = new Dictionary<string, float>();
         }
 
         /// <summary>能力维度 XP 读取（null-safe）。</summary>
@@ -64,6 +72,27 @@ namespace PersonalChronicle.Domain.Profession
                 return v;
             }
             return 0f;
+        }
+
+        /// <summary>按原版来源技能累加 XP（append-only）。</summary>
+        public void AddXpBySource(string vanillaSkillName, float amount)
+        {
+            if (string.IsNullOrEmpty(vanillaSkillName) || amount <= 0f)
+            {
+                return;
+            }
+            if (xpBySource == null)
+            {
+                xpBySource = new Dictionary<string, float>();
+            }
+            if (xpBySource.TryGetValue(vanillaSkillName, out float v))
+            {
+                xpBySource[vanillaSkillName] = v + amount;
+            }
+            else
+            {
+                xpBySource[vanillaSkillName] = amount;
+            }
         }
     }
 }

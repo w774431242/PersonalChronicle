@@ -14,7 +14,9 @@ namespace PersonalChronicle.Archive.UI
     /// hand-rolling <c>GUI.color = ...; Widgets.DrawBox(...)</c> blocks. This is
     /// the single convergence point for all presentational drawing.
     /// </summary>
-    internal static class UIComponents
+    /// [ARC-013] 本类已 partial 化：六宫格 KPI 复合组件见 UIComponents.KpiGrid.cs，
+    /// 本文件保留基础组件（Label / Panel / Card / ProgressBar ...）。零契约改动，仅物理搬移。
+    internal static partial class UIComponents
     {
         // ---- Low-level pairing guard: draw a label with a temporary color+font,
         // then restore both. This is the primitive that removes scattered
@@ -22,16 +24,37 @@ namespace PersonalChronicle.Archive.UI
         internal static void Label(Rect rect, string text, GameFont font, Color color,
             TextAnchor anchor = TextAnchor.UpperLeft)
         {
-            Color prevColor = GUI.color;
-            GameFont prevFont = Verse.Text.Font;
-            TextAnchor prevAnchor = Verse.Text.Anchor;
-            GUI.color = color;
-            Verse.Text.Font = font;
-            Verse.Text.Anchor = anchor;
-            Widgets.Label(rect, text);
-            GUI.color = prevColor;
-            Verse.Text.Font = prevFont;
-            Verse.Text.Anchor = prevAnchor;
+            // 【RUIF 硬依赖 · 要求二】实现**转发 RUIF L0 适配层** `RUIF.Draw.Label`
+            // （它同样保存/恢复 GUI.color 与 Text.Font/Anchor，并固化 1.6 的 DrawBoxSolid
+            // 重置 GUI.color 坑）——保留本包装只为维持工程调用约定（默认 anchor、命名），
+            // 绘制实现**零自研**；调用点无需改动。
+            // ⚠ 保险：本工程所有 Label 均配合 TruncateToWidth 使用，预期单行；若链路中
+            // 任何一处把 Text.WordWrap 设为 true 且未恢复，定宽标签会被折行（实机表现：
+            // 「现役殖民者」拆成两行并压到环内）。强制 false 绘制后恢复，不影响其他模块。
+            bool prevWrap = Verse.Text.WordWrap;
+            Verse.Text.WordWrap = false;
+            try
+            {
+                RUIF.Draw.Label(rect, text, font, color, anchor);
+            }
+            finally
+            {
+                Verse.Text.WordWrap = prevWrap;
+            }
+
+            // ⚠ 2026-09-19（审计 §3.2）：**截断补偿的兜底** —— 有些调用点把**完整文本**
+            // 直接交给 Label（不预先 `TruncateToWidth`）⇒ 由本方法补上悬停。
+            //
+            // ⚠ 成本控制：**先做矩形命中测试**（极廉价），只有鼠标真的停在这一条上才做文本实测
+            //   ⇒ 绝大多数帧只测 0~1 条，**没有 per-frame 全量测量开销**（这是能放进热路径的前提）。
+            // ⚠ 预截断的调用点在这里**补不了**（原文已经丢了，`text` 就是截断后的串）
+            //   ⇒ 它们应改用 `TruncateToWidth(..., tipRect)` 重载（见其注释）。
+            if (Event.current != null && !string.IsNullOrEmpty(text)
+                && rect.Contains(Event.current.mousePosition)
+                && !string.Equals(TruncateToWidth(text, rect.width, font), text, System.StringComparison.Ordinal))
+            {
+                TooltipHandler.TipRegion(rect, text);
+            }
         }
 
         /// <summary>One-line label with a dark drop shadow so it stays readable over
@@ -61,8 +84,44 @@ namespace PersonalChronicle.Archive.UI
             Verse.Text.WordWrap = prevWrap;
         }
 
-        /// <summary>Truncates text with "…" so it is guaranteed not to exceed the
-        /// given width in the given font. Returns original text if it already fits.</summary>
+        /// <summary>
+        /// <see cref="TruncateToWidth(string,float,GameFont)"/> + **截断补偿**：
+        /// 真的被截断时，在 <paramref name="tipRect"/> 上挂悬停显示**原文**。
+        ///
+        /// <para>⚠ 2026-09-19（审计 §3.2）：全工程 43 处截断里只有 7 处挂了悬停。
+        /// **根因不是"调用点健忘"，而是"截断"与"补偿"被拆成了两条独立语句** ——
+        /// 一旦拆开，被截掉的信息就**只存在于调用点的记忆里**，改写/迁移时必然丢失
+        /// （本线已多次见到：改一行布局就把补偿丢了）。</para>
+        ///
+        /// <para>⇒ 把补偿**收进截断本身**：用本重载的调用点，**结构上不可能**只截断不补偿。
+        /// 📌 工程纪律：**凡是会丢信息的操作，都要把"补回来"的手段做进同一个调用**。</para>
+        ///
+        /// <para>⚠ 代价：每条被截断且**鼠标正停在上面**的标签多一次 <c>TipRegion</c>；
+        /// 判据用"结果是否变了"而不是重算宽度（截断内部已经量过，不重复测）。</para>
+        /// </summary>
+        internal static string TruncateToWidth(string text, float maxWidth, GameFont font, Rect tipRect)
+        {
+            string clipped = TruncateToWidth(text, maxWidth, font);
+            if (!string.IsNullOrEmpty(text)
+                && !string.Equals(clipped, text, System.StringComparison.Ordinal))
+            {
+                TooltipHandler.TipRegion(tipRect, text);
+            }
+            return clipped;
+        }
+
+        /// <summary>
+        /// 按宽度截断并在**中间**插省略号（两端保留）；本来就放得下则原样返回。
+        ///
+        /// <para><b>⛔ 2026-09-13 实机修复（影响面 = 全工程所有截断标签）</b>：原实现从 <c>i = 0</c>
+        /// 起步递增，而 <c>i = 0</c> 的第一个候选就是<b>最短的 <c>"…"</c></b> —— 只要省略号本身放得下
+        /// 就立刻 <c>return "…"</c> ⇒ <b>凡是被截断的文本都只剩三个点</b>
+        /// （实机症状：设备卡名称、车间角标、图例全变 <c>…</c>，用户报「设备信息丢失」）。</para>
+        ///
+        /// <para>修法：**从长到短二分**（候选宽度随保留字数单调不减），第一个放得下的即答案；
+        /// 连 <c>"…"</c> 都放不下才返回空串。二分而非线性，是为了绘制路径的测量次数可控
+        /// （≤ log₂(长度)，原线性写法在修好后会是 O(n²)）。</para>
+        /// </summary>
         internal static string TruncateToWidth(string text, float maxWidth, GameFont font)
         {
             if (string.IsNullOrEmpty(text)) return text;
@@ -70,29 +129,34 @@ namespace PersonalChronicle.Archive.UI
             Verse.Text.Font = font;
             try
             {
-                Vector2 size = Text.CalcSize(text);
-                if (size.x <= maxWidth) return text;
+                if (Text.CalcSize(text).x <= maxWidth) return text;
 
-                // Prefer removing from the middle so both ends stay readable.
                 int len = text.Length;
-                for (int i = 0; i < len; i++)
+                int lo = 1;
+                int hi = len - 1;
+                string best = null;
+                while (lo <= hi)
                 {
-                    int rightKeep = i / 2;
-                    int leftKeep = i - rightKeep;
-                    string candidate;
-                    if (leftKeep + rightKeep >= len)
+                    int keep = lo + (hi - lo) / 2;
+                    int rightKeep = keep / 2;
+                    int leftKeep = keep - rightKeep;
+                    string candidate = text.Substring(0, leftKeep) + "…" +
+                        text.Substring(len - rightKeep, rightKeep);
+                    if (Text.CalcSize(candidate).x <= maxWidth)
                     {
-                        candidate = text;
+                        best = candidate;
+                        lo = keep + 1;
                     }
                     else
                     {
-                        candidate = text.Substring(0, leftKeep) + "…" +
-                            text.Substring(len - rightKeep, rightKeep);
+                        hi = keep - 1;
                     }
-                    Vector2 cs = Text.CalcSize(candidate);
-                    if (cs.x <= maxWidth) return candidate;
                 }
-                return "…";
+                if (best != null)
+                {
+                    return best;
+                }
+                return Text.CalcSize("…").x <= maxWidth ? "…" : string.Empty;
             }
             finally
             {
@@ -108,7 +172,7 @@ namespace PersonalChronicle.Archive.UI
         internal static void Panel(Rect rect, Color fill = default)
         {
             Color c = fill == default ? UITheme.Panel : fill;
-            Widgets.DrawBoxSolid(rect, c);
+            RUIF.Draw.Box(rect, c);
             Border(rect, UITheme.BorderSoft);
         }
 
@@ -117,13 +181,11 @@ namespace PersonalChronicle.Archive.UI
         // backing dropped — see Panel note above re: light parchment assets).
         internal static void Card(Rect rect, Color accent)
         {
-            Widgets.DrawBoxSolid(rect, UITheme.Card);
+            RUIF.Draw.Box(rect, UITheme.Card);
             Border(rect, UITheme.BorderSoft);
-            Color prev = GUI.color;
-            GUI.color = accent;
-            Widgets.DrawLineVertical(rect.x, rect.y, rect.height);
-            Widgets.DrawLineVertical(rect.x + 1f, rect.y, rect.height);
-            GUI.color = prev;
+            // 【RUIF 硬依赖】左侧 2px accent 竖线走 `RUIF.Draw.LineV`（自带染色作用域）。
+            RUIF.Draw.LineV(rect.x, rect.y, rect.height, accent);
+            RUIF.Draw.LineV(rect.x + 1f, rect.y, rect.height, accent);
         }
 
         /// <summary>
@@ -135,7 +197,7 @@ namespace PersonalChronicle.Archive.UI
             GameFont keyFont = GameFont.Tiny, GameFont valueFont = GameFont.Small,
             float valueReservedRight = 0f)
         {
-            Widgets.DrawBoxSolid(rect, UITheme.Card);
+            RUIF.Draw.Box(rect, UITheme.Card);
             Border(rect, UITheme.BorderSoft);
             Color prev = GUI.color;
             GUI.color = accent;
@@ -206,7 +268,7 @@ namespace PersonalChronicle.Archive.UI
             float titleW = Mathf.Min(240f, Verse.Text.CalcSize(title).x + 8f);
             string clipped = TruncateToWidth(title, titleW, GameFont.Small);
             GUI.color = UITheme.Accent;
-            Widgets.DrawBoxSolid(new Rect(rect.x, y + 4f, 4f, 14f), UITheme.Accent);
+            RUIF.Draw.Box(new Rect(rect.x, y + 4f, 4f, 14f), UITheme.Accent);
             GUI.color = prevColor;
             Widgets.Label(new Rect(rect.x + 10f, y, Mathf.Min(titleW, maxTitleW), 22f), clipped);
             float ruleX = rect.x + 10f + titleW + 4f;
@@ -218,22 +280,16 @@ namespace PersonalChronicle.Archive.UI
         // ---- Hairline divider between rows/sections ----
         internal static void Rule(Rect rect, Color color)
         {
-            Color prev = GUI.color;
-            GUI.color = color;
-            Widgets.DrawLineHorizontal(rect.x, rect.y, rect.width);
-            GUI.color = prev;
+            // 【RUIF 硬依赖 · 要求二】转发 `RUIF.Draw.LineH` —— 由 RUIF 的染色作用域接管
+            //（不再手写 GUI.color 保存/恢复，避免漏恢复导致染色泄漏）。
+            RUIF.Draw.LineH(rect.x, rect.y, rect.width, color);
         }
 
         // ---- Border: 1px frame on all four sides ----
         internal static void Border(Rect rect, Color color)
         {
-            Color prev = GUI.color;
-            GUI.color = color;
-            Widgets.DrawLineHorizontal(rect.x, rect.y, rect.width);
-            Widgets.DrawLineHorizontal(rect.x, rect.yMax - 1f, rect.width);
-            Widgets.DrawLineVertical(rect.x, rect.y, rect.height);
-            Widgets.DrawLineVertical(rect.xMax - 1f, rect.y, rect.height);
-            GUI.color = prev;
+            // 【RUIF 硬依赖 · 要求二】实现转发 `RUIF.Draw.Border`（四边线，内部已处理染色作用域）。
+            RUIF.Draw.Border(rect, color);
         }
 
         // ---- Pill: status chip (alive/dead/role) ----
@@ -243,7 +299,7 @@ namespace PersonalChronicle.Archive.UI
             GameFont prevFont = Verse.Text.Font;
             TextAnchor prevAnchor = Verse.Text.Anchor;
             GUI.color = UITheme.WithAlpha(color, 0.16f);
-            Widgets.DrawBoxSolid(rect, GUI.color);
+            RUIF.Draw.Box(rect, GUI.color);
             Border(rect, color);
             GUI.color = color;
             Verse.Text.Font = GameFont.Tiny;
@@ -262,7 +318,7 @@ namespace PersonalChronicle.Archive.UI
             TextAnchor prevAnchor = Verse.Text.Anchor;
             Verse.Text.Font = GameFont.Tiny;
             GUI.color = UITheme.WithAlpha(color, 0.14f);
-            Widgets.DrawBoxSolid(rect, GUI.color);
+            RUIF.Draw.Box(rect, GUI.color);
             Border(rect, color);
             GUI.color = color;
             Verse.Text.Anchor = TextAnchor.MiddleCenter;
@@ -287,7 +343,7 @@ namespace PersonalChronicle.Archive.UI
             float padX = 7f;
             float arrowW = 16f; // right-side jump-to arrow region width
 
-            Widgets.DrawBoxSolid(rect, UITheme.Card);
+            RUIF.Draw.Box(rect, UITheme.Card);
             Border(rect, UITheme.BorderSoft);
             Widgets.DrawHighlightIfMouseover(rect);
 
@@ -301,16 +357,16 @@ namespace PersonalChronicle.Archive.UI
                 Widgets.DrawLineVertical(rect.x, rect.y, rect.height);
                 Widgets.DrawLineVertical(rect.x + 1f, rect.y, rect.height);
 
-                // v1.1.4 布局优化：垂直布局 —— key 小字上沿（Tiny），value 大字下沿（Small），
-                // value 占据卡片整宽（左侧 padX，右侧预留箭头区），长文本加省略号。
+                // v1.1.6 优化：key 上移到 y+2f（更贴近顶部），value 垂直居中偏下（0.38→0.40），
+                // 配合 ResidenceBarH=52f 让三卡内文字分布更均匀。
                 float valueRight = rect.xMax - padX - (subClickable ? arrowW : 0f);
                 float valueW = Mathf.Max(0f, valueRight - (rect.x + padX) - 2f);
-                // key 行：Tiny，行高按真实 LineHeight（CJK ≥18f），不再硬编码 14f。
+                // key 行：Tiny，上沿收紧
                 float keyH = Verse.Text.LineHeight;
-                Label(new Rect(rect.x + padX, rect.y + 3f, valueW, keyH),
+                Label(new Rect(rect.x + padX, rect.y + 2f, valueW, keyH),
                     TruncateToWidth(key ?? "", valueW, keyFont), keyFont, UITheme.Dim, TextAnchor.UpperLeft);
-                // value 行：Small，行高 = FontBodyLineHeight（22f，CJK 安全），避免基线被裁。
-                Label(new Rect(rect.x + padX, rect.y + rect.height * 0.42f, valueW, UITheme.FontBodyLineHeight),
+                // value 行：Small，垂直微调居中
+                Label(new Rect(rect.x + padX, rect.y + rect.height * 0.40f, valueW, UITheme.FontBodyLineHeight),
                     TruncateForWidth(value, valueW, valueFont), valueFont, UITheme.Text, TextAnchor.UpperLeft);
 
                 // Jump-to arrow on the right (only when subClickable). Coordinates are
@@ -332,16 +388,36 @@ namespace PersonalChronicle.Archive.UI
                 GUI.color = prev;
             }
 
-            bool clicked = Widgets.ButtonInvisible(rect);
-
-            // jump-to clickable region (right-side arrow strip)
-            if (subClickable)
+            // ⚠ 2026-09-19（审计 §2.4 / P1）：**箭头热区必须先判、且必须排除箭头区**。
+            //
+            // 原实现顺序相反：先 `ButtonInvisible(rect)`（**整卡**，含右侧 16px 箭头条）
+            // —— 这一次点击已经把 `MouseDown` 事件消费掉 ⇒ 后面箭头区的判定**恒为 false**
+            // ⇒ 画出来的 ▶ 是**看得见、点不到**的假热区；而真实入口是**没有视觉提示的右键**。
+            // （工程自己的问题记录早已承认这条：`docs/问题跟踪/实机测试问题记录.md:398-408`）
+            //
+            // ⇒ 修法：**先判箭头区**（它优先级更高，因为它是卡内更小的目标），
+            //   再判卡片主体时**扣掉箭头区** —— 两者热区不重叠，语义与视觉一致。
+            bool clicked = false;
+            Rect arrowBtnRect = new Rect(rect.xMax - arrowW, rect.y, arrowW, rect.height);
+            if (subClickable && Widgets.ButtonInvisible(arrowBtnRect))
             {
-                Rect arrowBtnRect = new Rect(rect.xMax - arrowW, rect.y, arrowW, rect.height);
-                if (Widgets.ButtonInvisible(arrowBtnRect))
+                jumpClicked = true;
+            }
+
+            if (!jumpClicked)
+            {
+                // 右键检测：右键点击整卡区域 → jump-to（镜头跳转）。
+                // v1.1.6 增加：用户语义明确为「右键=跳转坐标」（保留，作为无箭头的快捷路径）。
+                if (subClickable
+                    && Event.current.type == EventType.MouseDown && Event.current.button == 1
+                    && rect.Contains(Event.current.mousePosition))
                 {
                     jumpClicked = true;
-                    clicked = false;
+                    Event.current.Use();
+                }
+                else
+                {
+                    clicked = Widgets.ButtonInvisible(rect);
                 }
             }
             return clicked;
@@ -353,20 +429,18 @@ namespace PersonalChronicle.Archive.UI
         {
             // v1.1.5 patch6: rimworld 1.6 Widgets.DrawBoxSolid 内部把 GUI.color 重置为
             // 传入的 Color（如 Color.white），忽略外层 GUI.color tint——导致 TintedBox
-            // 永远画白色。正确做法：直接调 Widgets.DrawBoxSolid(rect, tint)，让 rimworld
+            // 永远画白色。正确做法：直接调 RUIF.Draw.Box(rect, tint)，让 rimworld
             // 内部把 GUI.color 改为 tint，再绘制 WhiteTex×tint = tint 像素。
-            Widgets.DrawBoxSolid(rect, tint);
+            RUIF.Draw.Box(rect, tint);
         }
 
         // ---- ProgressBar: track + fill by 0..1 share (career bars, intensity) ----
         internal static void ProgressBar(Rect rect, float share01, Color fill)
         {
-            Widgets.DrawBoxSolid(rect, UITheme.BorderSoft);
-            float fillW = Mathf.Clamp01(share01) * rect.width;
-            if (fillW > 0f)
-            {
-                Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, fillW, rect.height), fill);
-            }
+            // 【RUIF 硬依赖 · 要求二】改用 RUIF **进度条组件** `ProgressAtoms.CapacityBar`
+            // （值/容量语义 ⇒ 传 `(share01, 1f)`；内部自绘 track + fill，含溢出红块判定，
+            //  本工程 share01 已 Clamp01 ⇒ 永不溢出）。
+            RUIF.ProgressAtoms.CapacityBar(rect, Mathf.Clamp01(share01), 1f, fill);
         }
 
         /// <summary>ProgressBar variant that draws a centered caption above the fill.</summary>
@@ -389,7 +463,7 @@ namespace PersonalChronicle.Archive.UI
         // ---- StatCell background helper: token colour (texture backing dropped) ----
         private static void DrawStatCellBackground(Rect rect)
         {
-            Widgets.DrawBoxSolid(rect, UITheme.PanelRaised);
+            RUIF.Draw.Box(rect, UITheme.PanelRaised);
         }
 
         // ---- StatCell: KPI cell (label over value, optional sub-label).
@@ -520,10 +594,12 @@ namespace PersonalChronicle.Archive.UI
             Color prev = GUI.color;
             GameFont prevFont = Verse.Text.Font;
             Rect rule = new Rect(rect.x, rect.y + 4f, 3f, Mathf.Max(0f, rect.height - 8f));
-            Widgets.DrawBoxSolid(rule, UITheme.Accent);
+            RUIF.Draw.Box(rule, UITheme.Accent);
             Verse.Text.Font = GameFont.Small;
             GUI.color = UITheme.Text;
-            string title = key.Translate().ToString();
+            // ⚠ 2026-09-19（CHG-20260919-ECON-UI-010）：改走语言级缓存。
+            // 本原语（分区标题）被各面板在**绘制期**调用，原先每帧翻译 + 分配。
+            string title = Loc(key);
             float titleW = Mathf.Max(0f, rect.width - 10f);
             Widgets.Label(new Rect(rect.x + 10f, rect.y, titleW, rect.height),
                 TruncateToWidth(title, titleW, GameFont.Small));
@@ -533,6 +609,47 @@ namespace PersonalChronicle.Archive.UI
 
         /// <summary>Minimum card height StatCell needs to fit label+value+subLabel.</summary>
         internal const float StatCellMinHeight = 64f;
+
+        /// <summary>
+        /// 紧凑 KPI 格高 —— 预览 `.kstrip` 单格实测 **46.4**（标签 9px / 值 14px / `padding:6px 8px`）：
+        /// 实机 Tiny 18 + Small 22 + 上下内距 4×2 + 行距 2 = **48**（见 <see cref="StatCellCompact"/>）。
+        /// </summary>
+        internal const float StatCellCompactHeight = 48f;
+
+        /// <summary>
+        /// **紧凑 KPI 格**（战役 / 地点 KPI 条专用）：标签 `Tiny` + 值 **`Small`**（行高 22）+
+        /// 上下内距 4 / 行距 2 ⇒ 总高 <see cref="StatCellCompactHeight"/>。
+        ///
+        /// <para>⚠ 为什么新增方法而不改 <see cref="StatCell"/>：后者的值用 `Medium`（行高 **30**）⇒
+        /// 硬下限 <see cref="StatCellMinHeight"/>=64，且被图鉴等 5+ 处复用；把 64 压到 48 必须
+        /// 换字体档，会连带改所有复用点。新增紧凑档 = 只影响两处 KPI 条（回归面可控）。
+        /// 预览的两条 KPI 条实测就是 46.4 高、值 14px（= `Small`），与紧凑档一致。</para>
+        /// </summary>
+        internal static void StatCellCompact(Rect rect, string label, string value, Color valueColor)
+        {
+            Color prevColor = GUI.color;
+            GameFont prevFont = Verse.Text.Font;
+            DrawStatCellBackground(rect);
+            Border(rect, UITheme.BorderSoft);
+            const float padX = 8f;
+            const float padY = 4f;
+            const float gap = 2f;
+            float innerW = Mathf.Max(0f, rect.width - padX * 2f);
+            Verse.Text.Font = GameFont.Tiny;
+            float labelH = Verse.Text.LineHeight;                       // Tiny = 18
+            GUI.color = UITheme.Muted;
+            Widgets.Label(new Rect(rect.x + padX, rect.y + padY, innerW, labelH),
+                TruncateToWidth(label, innerW, GameFont.Tiny));
+            Verse.Text.Font = GameFont.Small;
+            float valueH = Verse.Text.LineHeight;                       // Small = 22
+            float valueY = rect.y + padY + labelH + gap;
+            float available = Mathf.Max(0f, rect.yMax - padY - valueY);
+            GUI.color = valueColor;
+            Widgets.Label(new Rect(rect.x + padX, valueY, innerW, Mathf.Min(valueH, available)),
+                TruncateToWidth(value, innerW, GameFont.Small));
+            GUI.color = prevColor;
+            Verse.Text.Font = prevFont;
+        }
 
         // ---- TimelineNode: one node on a lifecycle/spine timeline. Height is
         // computed from real font line-heights (Text.LineHeight / CalcHeight) so
@@ -566,7 +683,7 @@ namespace PersonalChronicle.Archive.UI
             Rect nodeRect = new Rect(rect.x, y + 2f, nodeSize, nodeSize);
             Color prev = GUI.color;
             GUI.color = dotColor;
-            Widgets.DrawBoxSolid(nodeRect, dotColor);
+            RUIF.Draw.Box(nodeRect, dotColor);
             GUI.color = UITheme.Border;
             Widgets.DrawBox(nodeRect);
             GUI.color = prev;
@@ -591,361 +708,6 @@ namespace PersonalChronicle.Archive.UI
             return y + h;
         }
 
-        // ---- v4.15 condense tab: six-cell KPI grid (3x2) ------------------------
-        // Pure presentation — every value/tone is supplied by the caller (the ITab
-        // reads them from DetailSnapshot). No aggregation, no Read-Model logic here.
-        internal struct KpiCell
-        {
-#pragma warning disable CS0649 // optional fields validly left unset by callers
-            public string KindKey;   // "work"/"prod"/"kill"/"battle"/"foot"/"legacy"
-            public string TitleKey;  // translation key for the cell title
-            public string TitleSide; // v1.1.4: right-aligned small text on the SAME row as the title (e.g. 传承锻造者) — may be empty
-            public string Value;     // big number / primary text (e.g. weapon name or count)
-            public string Unit;      // inline unit after the value (e.g. "h/天", "件", "银") — may be empty
-            public string InlineMetric; // right-aligned metric on the SAME row as Value (e.g. "第3/12") — may be empty
-            public string Sub;       // one-line meta (may be empty)
-            public KpiRow[] Rows;    // compact label/value strip below the value (KPI 条) — may be null
-            public KpiBar[] Bars;    // progress-bar list (结构/贡献) — may be null
-            public KpiChain[] Chain; // legacy chain rows (传承链) — may be null
-            public string[] Badges;  // compact tag group (e.g. production categories) — may be null
-#pragma warning restore CS0649
-        }
-
-        /// <summary>One label/value row in a cell's KPI strip.</summary>
-        internal struct KpiRow
-        {
-            public string Label;     // localized left label (e.g. "周工时")
-            public string Value;     // right value (e.g. "42 h")
-        }
-
-        /// <summary>One progress bar: caption + 0..1 share + optional tag (主业/副业).</summary>
-        internal struct KpiBar
-        {
-            public string Caption;   // bar caption (e.g. "种植 · 469h")
-            public float Share01;    // 0..1 fill ratio
-            public string Tag;       // optional trailing tag (e.g. "主业") — may be empty
-        }
-
-        /// <summary>One legacy-chain row: holder label + kill count.
-        /// v1.1.4 传承链改用 <see cref="KpiBar"/>（进度条），本结构保留以防回归。</summary>
-        internal struct KpiChain
-        {
-#pragma warning disable CS0649
-            public string Label;     // holder label (e.g. "戈治钟 · 初代")
-            public string Value;     // kill count text (e.g. "18 杀")
-#pragma warning restore CS0649
-        }
-
-        internal static readonly float KpiCardH = 250f;
-        internal static readonly float KpiGap = 10f;
-        // Badge group metrics (preview E1): height 16, padding 6, wrap with 4f line gap.
-        internal static readonly float KpiBadgeH = 16f;
-        internal static readonly float KpiBadgePadX = 6f;
-        internal static readonly float KpiBadgeGap = 4f;
-        // v1.1.4: 六宫格进度条间距统一（caption↔bar 与 bar↔下一 caption 同距 KpiBarGapY）。
-        internal static readonly float KpiBarCaptionH = 17f;
-        internal static readonly float KpiBarH = 12f;
-        // v1.1.4 加大：caption↔bar 间距 4f→8f（用户要求"文本与进度条间隔扩大"）。
-        // 锻造者字段不可减少（传承宫格 TitleSide 已装配，KPI 行仍保留代数/当代击杀 2 行 + 3 进度条占位）。
-        internal static readonly float KpiBarGapY = 8f;
-
-        /// <summary>
-        /// v4.15 condense-tab six-cell (3×N) KPI grid. When the cell count exceeds
-        /// the rows that fit in <paramref name="rect"/>, the grid scrolls vertically
-        /// via <paramref name="scroll"/> so the digest never crowds the fixed-height
-        /// inspect tab. Pure presentation — all values/tones supplied by the caller.
-        /// </summary>
-        internal static void SixGrid(Rect rect, KpiCell[] cells, ref Vector2 scroll)
-        {
-            if (cells == null || cells.Length == 0) return;
-            int cols = 3;
-            Color prevColor = GUI.color;
-            GameFont prevFont = Verse.Text.Font;
-            try
-            {
-                int rows = (cells.Length + cols - 1) / cols;
-                // v4.17 体检：内容高 = 行高总和 - 2f 与视口精确对齐（ITab 六宫格
-                // 恰好 2 行 520f vs 视口 518f，旧值恒显 2px 垂直滚动条）。
-                float contentH = Mathf.Max(0f, rows * (KpiCardH + KpiGap) - 2f);
-                // v1.1.4 横向修复：inner 宽扣除滚动条，cardW 基于 inner.width 计算，
-                // 保证 3 列恰好填满 inner（第三列不再被 scrollview 右边缘裁掉）。
-                // v4.17 体检：极窄容器下宽度 clamp 到 ≥0（避免负宽 Rect）。
-                Rect inner = new Rect(0f, 0f,
-                    Mathf.Max(0f, rect.width - UITheme.ScrollbarThickness),
-                    Mathf.Max(contentH, rect.height));
-                float cardW = (inner.width - KpiGap * (cols - 1)) / cols;
-
-                Widgets.BeginScrollView(rect, ref scroll, inner);
-                for (int i = 0; i < cells.Length; i++)
-                {
-                    int col = i % cols;
-                    int row = i / cols;
-                    float x = inner.x + col * (cardW + KpiGap);
-                    float y = inner.y + row * (KpiCardH + KpiGap);
-                    Rect card = new Rect(x, y, cardW, KpiCardH);
-                    KpiCell c = cells[i];
-                    Color tone = UITheme.TintForEventKind(c.KindKey);
-
-                    // card body (token tint, dimmed) + left accent bar
-                    Widgets.DrawBoxSolid(card, UITheme.Panel);
-                    Rect bar = new Rect(card.x, card.y, 3f, card.height);
-                    Widgets.DrawBoxSolid(bar, tone);
-                    Border(card, UITheme.Border);
-
-                    // Clip everything to the card so long captions never bleed into
-                    // neighbouring cells.
-                    GUI.BeginGroup(card);
-
-                    // hover highlight (mouse-over only)
-                    Widgets.DrawHighlightIfMouseover(new Rect(0f, 0f, card.width, card.height));
-
-                    float pad = 12f;
-                    // v1.1.4: 标题行左侧=宫格名，右侧=TitleSide（如传承锻造者），右对齐小字。
-                    Rect titleR = new Rect(pad, 8f, card.width - pad * 2, 18f);
-                    if (!string.IsNullOrEmpty(c.TitleSide))
-                    {
-                        Verse.Text.Font = GameFont.Tiny;
-                        Vector2 sideSize = Text.CalcSize(c.TitleSide);
-                        Verse.Text.Font = prevFont;
-                        float sideW = Mathf.Clamp(sideSize.x + 6f, 0f, titleR.width * 0.55f);
-                        Rect sideR = new Rect(titleR.xMax - sideW, titleR.y, sideW, titleR.height);
-                        // v4.17 体检：TitleSide 只 clamp 宽度不截断 → 长文本向左溢出盖标题。
-                        Label(sideR, UIComponents.TruncateToWidth(c.TitleSide, sideW - 4f, GameFont.Tiny),
-                            GameFont.Tiny, UITheme.Muted, TextAnchor.MiddleRight);
-                        titleR = new Rect(titleR.x, titleR.y, titleR.width - sideW - 4f, titleR.height);
-                    }
-                    Label(titleR, c.TitleKey.Translate().ToString(), GameFont.Tiny, UITheme.SecondaryText);
-
-                    // Big value (Medium) + optional inline unit + optional同行 right-aligned metric.
-                    Rect valR = new Rect(pad, 26f, card.width - pad * 2, 36f);
-                    Rect valueTextR = valR;
-                    bool valueEmpty = (c.Value ?? "") == "--";
-                    Color valueColor = valueEmpty ? UITheme.Muted : tone;
-                    if (!string.IsNullOrEmpty(c.InlineMetric))
-                    {
-                        // Reserve right portion for the同行 metric; shrink value width.
-                        Verse.Text.Font = GameFont.Tiny;
-                        Vector2 mSize = Text.CalcSize(c.InlineMetric);
-                        Verse.Text.Font = prevFont;
-                        float mW = Mathf.Clamp(mSize.x + 6f, 0f, valR.width * 0.55f);
-                        float mH = 18f;
-                        Rect metricR = new Rect(valR.xMax - mW, valR.y + (valR.height - mH) * 0.5f, mW, mH);
-                        // v4.17 体检：同行指标截断（长文本向左溢出盖大数值）。
-                        Label(metricR, UIComponents.TruncateToWidth(c.InlineMetric, mW - 4f, GameFont.Tiny),
-                            GameFont.Tiny, valueEmpty ? UITheme.Dim : UITheme.Muted, TextAnchor.MiddleRight);
-                        valueTextR = new Rect(valR.x, valR.y, valR.width - mW - 4f, valR.height);
-                    }
-                    // Adaptive font: long weapon names (e.g. >4 Chinese characters) can
-                    // exceed the Medium width and wrap to a second line. Shrink to Small,
-                    // then Tiny if necessary, and truncate as last resort.
-                    string valText = c.Value ?? "";
-                    GameFont valueFont = GameFont.Medium;
-                    Verse.Text.Font = valueFont;
-                    if (Text.CalcSize(valText).x > valueTextR.width)
-                    {
-                        valueFont = GameFont.Small;
-                        Verse.Text.Font = valueFont;
-                        if (Text.CalcSize(valText).x > valueTextR.width)
-                        {
-                            valueFont = GameFont.Tiny;
-                            Verse.Text.Font = valueFont;
-                        }
-                    }
-                    Verse.Text.Font = prevFont;
-                    string fittedValue = TruncateToWidth(valText, valueTextR.width, valueFont);
-
-                    if (string.IsNullOrEmpty(c.Unit))
-                    {
-                        Label(valueTextR, fittedValue, valueFont, valueColor);
-                    }
-                    else
-                    {
-                        Label(valueTextR, fittedValue, valueFont, valueColor);
-                        Verse.Text.Font = valueFont;
-                        Vector2 valSize = Text.CalcSize(fittedValue);
-                        Verse.Text.Font = prevFont;
-                        Rect unitR = new Rect(valueTextR.x + Mathf.Min(valSize.x, valueTextR.width) + 4f,
-                            valueTextR.y + (valueTextR.height - 18f) * 0.5f, valueTextR.width, 18f);
-                        Label(unitR, c.Unit, GameFont.Tiny, UITheme.Muted, TextAnchor.MiddleLeft);
-                    }
-
-                    // ---- Structured sub-content (mirrors preview v6.6 six-grid) ----
-                    float cy = 72f; // below the big value row
-                    float contentW = card.width - pad * 2;
-
-                    // KPI strip rows (label left / value right). When empty, show a
-                    // "--" placeholder row so the card layout stays identical between
-                    // populated and unpopulated states (easier screenshot diffing).
-                    string noRec = "PersonalChronicle.UI.Kpi.NoRecord".Translate().ToString();
-                    if (c.Rows != null)
-                    {
-                        foreach (KpiRow kr in c.Rows)
-                        {
-                            if (kr.Label == null && kr.Value == null) continue;
-                            Rect rR = new Rect(pad, cy, contentW, 18f);
-                            Label(new Rect(rR.x, rR.y, rR.width * 0.55f, rR.height), kr.Label ?? "", GameFont.Tiny, UITheme.Dim);
-                            Label(new Rect(rR.x + rR.width * 0.55f, rR.y, rR.width * 0.45f, rR.height), kr.Value ?? "", GameFont.Tiny, UITheme.Text, TextAnchor.UpperRight);
-                            cy += 18f;
-                        }
-                    }
-                    else
-                    {
-                        Rect rR = new Rect(pad, cy, contentW, 18f);
-                        Label(new Rect(rR.x, rR.y, rR.width * 0.55f, rR.height), noRec, GameFont.Tiny, UITheme.Dim);
-                        Label(new Rect(rR.x + rR.width * 0.55f, rR.y, rR.width * 0.45f, rR.height), "--", GameFont.Tiny, UITheme.Muted, TextAnchor.UpperRight);
-                        cy += 18f;
-                    }
-
-                    // Section divider before bars / chain.
-                    bool hasBars = c.Bars != null && c.Bars.Length > 0;
-                    bool hasChain = c.Chain != null && c.Chain.Length > 0;
-                    if (hasBars || hasChain)
-                    {
-                        cy += 2f;
-                        Widgets.DrawLineHorizontal(pad, cy, contentW, UITheme.BorderSoft);
-                        cy += 8f;
-                    }
-
-                    // Progress bars（结构/贡献/战损/击杀构成等）。
-                    // v1.1.4 统一基准：caption 固定在 bar 上方；N 个 bar 等距分布——第 1 条贴近
-                    // 分割线下方、第 N 条贴近卡片底（margin 6f），各 bar 槽垂直居中，3 条间隔平均化。
-                    if (hasBars)
-                    {
-                        int nBars = c.Bars.Length;
-                        float barsTop = cy;                                  // 第 1 个 caption 顶 y
-                        float barsBottom = card.height - 6f;                // 卡片内底（含 6f 边距）
-                        float totalH = Mathf.Max(0f, barsBottom - barsTop);
-                        float slotH = nBars > 0 ? totalH / nBars : 0f;
-                        // 单槽内：caption + gap + bar；多出的 padding 在槽内上下对称。
-                        float innerH = KpiBarCaptionH + KpiBarGapY + KpiBarH;
-                        for (int bi = 0; bi < nBars; bi++)
-                        {
-                            KpiBar kb = c.Bars[bi];
-                            float slotPad = Mathf.Max(0f, (slotH - innerH) / 2f);
-                            float slotY = barsTop + bi * slotH;
-                            float capY = slotY + slotPad;
-                            float barY = capY + KpiBarCaptionH + KpiBarGapY;
-
-                            // Caption row above the bar so long text never overlaps the fill.
-                            string tag = kb.Tag ?? "";
-                            float tagW = 0f;
-                            if (!string.IsNullOrEmpty(tag))
-                            {
-                                Verse.Text.Font = GameFont.Tiny;
-                                Vector2 tagSize = Text.CalcSize(tag);
-                                Verse.Text.Font = prevFont;
-                                tagW = Mathf.Clamp(tagSize.x + 6f, 0f, contentW * 0.45f);
-                            }
-                            float capW = contentW - tagW - (tagW > 0f ? 4f : 0f);
-                            Rect capR = new Rect(pad, capY, capW, KpiBarCaptionH);
-                            ShadowLabel(capR, kb.Caption ?? "", GameFont.Tiny, UITheme.Text, TextAnchor.MiddleLeft);
-                            if (tagW > 0f)
-                            {
-                                string tagClipped = TruncateToWidth(tag, tagW - 4f, GameFont.Tiny);
-                                Rect tagR = new Rect(pad + contentW - tagW, capY, tagW, KpiBarCaptionH);
-                                ShadowLabel(tagR, tagClipped, GameFont.Tiny, UITheme.SecondaryText, TextAnchor.MiddleRight);
-                            }
-
-                            // Bar: dark track + soft border + tone fill (inset by 1px).
-                            Rect barR = new Rect(pad, barY, contentW, KpiBarH);
-                            Widgets.DrawBoxSolid(barR, UITheme.BorderHair);
-                            Border(barR, UITheme.BorderSoft);
-                            float fillW = Mathf.Max(2f, Mathf.Clamp01(kb.Share01) * (barR.width - 2f));
-                            if (fillW > 0f)
-                            {
-                                Color fill = tone;
-                                if (fill.r + fill.g + fill.b > 2.2f)
-                                    fill = new Color(fill.r * 0.85f, fill.g * 0.85f, fill.b * 0.85f, fill.a);
-                                Widgets.DrawBoxSolid(new Rect(barR.x + 1f, barR.y + 1f, fillW, barR.height - 2f), fill);
-                            }
-                        }
-                    }
-
-                    // Legacy chain rows (label left / value right).
-                    // v1.1.4 统一基准：与 bars 一致等距分布（贴 divider 下方、贴卡片底、间隔平均化）。
-                    if (hasChain)
-                    {
-                        int nCh = c.Chain.Length;
-                        float chainTop = cy;
-                        float chainBottom = card.height - 6f;
-                        float totalH = Mathf.Max(0f, chainBottom - chainTop);
-                        float slotH = nCh > 0 ? totalH / nCh : 0f;
-                        const float chainRowH = 18f;
-                        for (int ci = 0; ci < nCh; ci++)
-                        {
-                            KpiChain ch = c.Chain[ci];
-                            float slotPad = Mathf.Max(0f, (slotH - chainRowH) / 2f);
-                            float rowY = chainTop + ci * slotH + slotPad;
-                            Rect rR = new Rect(pad, rowY, contentW, chainRowH);
-                            Label(new Rect(rR.x, rR.y, rR.width * 0.6f, rR.height), ch.Label ?? "", GameFont.Tiny, UITheme.Dim);
-                            Label(new Rect(rR.x + rR.width * 0.6f, rR.y, rR.width * 0.4f, rR.height), ch.Value ?? "", GameFont.Tiny, UITheme.Text, TextAnchor.UpperRight);
-                        }
-                    }
-
-                    // No bars and no chain: keep the sub-content block visible with a
-                    // "--" placeholder so populated/unpopulated cards render identically.
-                    if (!hasBars && !hasChain)
-                    {
-                        cy += 2f;
-                        Widgets.DrawLineHorizontal(pad, cy, contentW, UITheme.BorderSoft);
-                        cy += 8f;
-                        Rect rR = new Rect(pad, cy, contentW, 18f);
-                        Label(new Rect(rR.x, rR.y, rR.width * 0.55f, rR.height), noRec, GameFont.Tiny, UITheme.Dim);
-                        Label(new Rect(rR.x + rR.width * 0.55f, rR.y, rR.width * 0.45f, rR.height), "--", GameFont.Tiny, UITheme.Muted, TextAnchor.UpperRight);
-                        cy += 18f;
-                    }
-
-                    // One-line sub at the very bottom (legacy fallback / weapon epithet).
-                    if (!string.IsNullOrEmpty(c.Sub))
-                    {
-                        Rect subR = new Rect(pad, card.height - 18f, contentW, 16f);
-                        Label(subR, c.Sub, GameFont.Tiny, UITheme.SecondaryText);
-                    }
-
-                    // Badge group: compact tags (only used if no structured content).
-                    if (c.Badges != null && c.Badges.Length > 0 && !hasBars && !hasChain)
-                    {
-                        float badgeY = card.height - 22f - KpiBadgeH - KpiBadgeGap;
-                        float bx = pad;
-                        float maxX = card.width - pad;
-                        for (int b = 0; b < c.Badges.Length; b++)
-                        {
-                            string badge = c.Badges[b];
-                            if (string.IsNullOrEmpty(badge)) continue;
-                            Verse.Text.Font = GameFont.Tiny;
-                            Vector2 bSize = Text.CalcSize(badge);
-                            Verse.Text.Font = prevFont;
-                            float bw = bSize.x + KpiBadgePadX * 2f;
-                            if (bx + bw > maxX && bx > pad)
-                            {
-                                int remaining = 0;
-                                for (int r = b; r < c.Badges.Length; r++)
-                                    if (!string.IsNullOrEmpty(c.Badges[r])) remaining++;
-                                if (remaining > 0)
-                                {
-                                    string more = "PersonalChronicle.UI.Kpi.CatMore".Translate(remaining);
-                                    Verse.Text.Font = GameFont.Tiny;
-                                    Vector2 mSize = Text.CalcSize(more);
-                                    Verse.Text.Font = prevFont;
-                                    Badge(new Rect(bx, badgeY, mSize.x + KpiBadgePadX * 2f, KpiBadgeH), more, UITheme.Info);
-                                }
-                                break;
-                            }
-                            Badge(new Rect(bx, badgeY, bw, KpiBadgeH), badge, tone);
-                            bx += bw + KpiBadgeGap;
-                        }
-                    }
-
-                    GUI.EndGroup();
-                }
-                Widgets.EndScrollView();
-            }
-            finally
-            {
-                GUI.color = prevColor;
-                Verse.Text.Font = prevFont;
-            }
-        }
 
     }
 }

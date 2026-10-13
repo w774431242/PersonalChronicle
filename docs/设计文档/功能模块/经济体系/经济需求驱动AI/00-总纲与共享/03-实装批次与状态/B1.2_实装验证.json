@@ -1,0 +1,912 @@
+{
+  "changeId": "CHG-20261008-ECON-PERCEPTION",
+  "checkedUtc": "2026-10-08T07:08:00.3991712Z",
+  "scope": "B1.2 compiled contracts/source/runtime integration and offline behavior; no game process executed, no UI addition/deployment/money migration.",
+  "assembly": {
+    "gameVersion": "1.6.4871 rev590",
+    "gameSha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "gameMvid": "61e41735-6189-4da4-9d21-0260257b5097",
+    "modSha256": "7D134290406CB7261A3C24555E3615840122D65D92755E239C375DA3841BC6F1"
+  },
+  "compiledChecks": {
+    "coreTypes": 42,
+    "noGameUiReferencesInCore": true,
+    "tickCalls": [
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::TickPerception()",
+      "PersonalChronicle.Domain.PawnEconomy.EconomyState PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_State()",
+      "System.Boolean PersonalChronicle.Domain.PawnEconomy.EconomyState::get_Ready()",
+      "PersonalChronicle.Domain.PawnEconomy.EconomyState PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_State()",
+      "Verse.TickManager Verse.Find::get_TickManager()",
+      "System.Int32 Verse.TickManager::get_TicksGame()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::RefreshPawns()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::Reconcile()",
+      "PersonalChronicle.Application.PawnEconomy.EconomyService PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_Service()",
+      "System.Int32 PersonalChronicle.Application.PawnEconomy.EconomyService::SettlePayables()",
+      "PersonalChronicle.Application.PawnEconomy.EconomyService PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_Service()",
+      "System.Void PersonalChronicle.Application.PawnEconomy.EconomyService::TrimHistory()"
+    ],
+    "finalizeCalls": [
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::QueuePerceptionInitialization()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::RefreshPawns()",
+      "System.Void System.Collections.Generic.List`1<PersonalChronicle.Economy.PawnEconomy.Building_EconomyInstitution>::Clear()",
+      "System.Collections.Generic.List`1<Verse.Map> Verse.Find::get_Maps()",
+      "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<Verse.Map>::GetEnumerator()",
+      "!0 System.Collections.Generic.List`1/Enumerator<Verse.Map>::get_Current()",
+      "System.Collections.Generic.List`1<Verse.Thing> Verse.ListerThings::get_AllThings()",
+      "System.Collections.Generic.IEnumerable`1<!!0> System.Linq.Enumerable::OfType<PersonalChronicle.Economy.PawnEconomy.Building_EconomyInstitution>(System.Collections.IEnumerable)",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<PersonalChronicle.Economy.PawnEconomy.Building_EconomyInstitution>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<PersonalChronicle.Economy.PawnEconomy.Building_EconomyInstitution>::get_Current()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::Register(PersonalChronicle.Economy.PawnEconomy.Building_EconomyInstitution)",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Boolean System.Collections.Generic.List`1/Enumerator<Verse.Map>::MoveNext()",
+      "System.Void System.IDisposable::Dispose()",
+      "PersonalChronicle.Domain.PawnEconomy.EconomyState PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_State()",
+      "System.Boolean PersonalChronicle.Domain.PawnEconomy.EconomyState::get_Ready()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::Reconcile()"
+    ],
+    "deferredInitializationCalls": [
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy/<>c__DisplayClass20_0::.ctor()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::InvalidatePerception()",
+      "System.Void System.Object::.ctor()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy/<>c__DisplayClass20_0::<QueuePerceptionInitialization>b__0()",
+      "System.Void System.Action::.ctor(System.Object,System.IntPtr)",
+      "System.Void Verse.LongEventHandler::ExecuteWhenFinished(System.Action)"
+    ],
+    "guardedInitializationCalls": [
+      "System.Boolean Verse.UnityData::get_IsInMainThread()",
+      "Verse.Game Verse.Current::get_Game()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::InitializePerception()"
+    ],
+    "guardedInitializationIl": [
+      "IL_0000: call System.Boolean Verse.UnityData::get_IsInMainThread()",
+      "IL_0005: brfalse.s IL_0035",
+      "IL_0007: ldarg.1",
+      "IL_0008: ldarg.0",
+      "IL_0009: ldfld System.Object PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::perceptionInitializationToken",
+      "IL_000e: bne.un.s IL_0035",
+      "IL_0010: call Verse.Game Verse.Current::get_Game()",
+      "IL_0015: ldarg.0",
+      "IL_0016: ldfld Verse.Game PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::perceptionGame",
+      "IL_001b: bne.un.s IL_0035",
+      "IL_001d: ldarg.0",
+      "IL_001e: ldfld Verse.Game PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::perceptionGame",
+      "IL_0023: brfalse.s IL_0035",
+      "IL_0025: ldarg.0",
+      "IL_0026: ldfld PersonalChronicle.Application.PawnEconomy.Perception.PerceptionCoordinator PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::perception",
+      "IL_002b: brtrue.s IL_0035",
+      "IL_002d: ldarg.0",
+      "IL_002e: ldfld System.Boolean PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::perceptionInitializationFailed",
+      "IL_0033: brfalse.s IL_0036",
+      "IL_0035: ret",
+      "IL_0036: ldarg.0",
+      "IL_0037: ldnull",
+      "IL_0038: stfld System.Object PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::perceptionInitializationToken",
+      "IL_003d: ldarg.0",
+      "IL_003e: call System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::InitializePerception()",
+      "IL_0043: ret"
+    ],
+    "saveCalls": [
+      "!!0[] System.Array::Empty<System.Object>()",
+      "System.Void Verse.Scribe_Deep::Look<PersonalChronicle.Data.PawnEconomySaveData>(!!0&,System.String,System.Object[])",
+      "System.Void PersonalChronicle.Data.PawnEconomySaveData::.ctor()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::InvalidatePerception()",
+      "PersonalChronicle.Application.PawnEconomy.EconomyService PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_Service()",
+      "System.Void PersonalChronicle.Application.PawnEconomy.EconomyService::RecoverAfterLoad()"
+    ],
+    "captureReadOnlyBoundary": true,
+    "actionEligibilityNotReused": true,
+    "protectedFreezeNotCalled": true
+  },
+  "gameApi": [
+    {
+      "type": "Verse.MapPawns",
+      "methods": [
+        "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonists()",
+        "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonistsAndPrisoners()",
+        "System.Int32 Verse.MapPawns::get_FreeColonistsCount()",
+        "System.Int32 Verse.MapPawns::get_FreeColonistsAndPrisonersCount()",
+        "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonistsSpawned()",
+        "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonistsAndPrisonersSpawned()",
+        "System.Int32 Verse.MapPawns::get_FreeColonistsSpawnedCount()",
+        "System.Int32 Verse.MapPawns::get_FreeColonistsAndPrisonersSpawnedCount()",
+        "System.Int32 Verse.MapPawns::get_FreeColonistsSpawnedOrInPlayerEjectablePodsCount()",
+        "System.Boolean Verse.MapPawns::get_AnyFreeColonistSpawned()"
+      ],
+      "fields": []
+    },
+    {
+      "type": "Verse.Pawn",
+      "methods": [
+        "System.Boolean Verse.Pawn::get_IsFreeNonSlaveColonist()",
+        "Verse.DevelopmentalStage Verse.Pawn::get_DevelopmentalStage()",
+        "System.Void Verse.Pawn::Notify_BecameVisible()",
+        "System.Void Verse.Pawn::Notify_BecameInvisible()",
+        "System.Void Verse.Pawn::Notify_ForcedVisible()"
+      ],
+      "fields": [
+        "Verse.PawnKindDef Verse.Pawn::kindDef",
+        "System.Int32 Verse.Pawn::DefaultBabyNamingPeriod",
+        "System.Int32 Verse.Pawn::DefaultGrowthMomentChoicePeriod"
+      ]
+    },
+    {
+      "type": "Verse.Thing",
+      "methods": [
+        "Verse.Map Verse.Thing::get_MapHeld()",
+        "Verse.IntVec3 Verse.Thing::get_PositionHeld()"
+      ],
+      "fields": [
+        "Verse.ThingDef Verse.Thing::def"
+      ]
+    },
+    {
+      "type": "Verse.Hediff",
+      "methods": [
+        "System.String Verse.Hediff::get_SeverityLabel()",
+        "System.Boolean Verse.Hediff::get_Visible()",
+        "System.Single Verse.Hediff::get_Severity()",
+        "System.Void Verse.Hediff::set_Severity(System.Single)",
+        "System.Boolean Verse.Hediff::TendableNow(System.Boolean)",
+        "System.Void Verse.Hediff::SetVisible()"
+      ],
+      "fields": [
+        "Verse.HediffDef Verse.Hediff::def",
+        "Verse.ThingDef Verse.Hediff::sourceDef",
+        "Verse.HediffDef Verse.Hediff::sourceHediffDef",
+        "System.Int32 Verse.Hediff::loadID"
+      ]
+    },
+    {
+      "type": "Verse.Hediff_Pregnant",
+      "methods": [],
+      "fields": []
+    },
+    {
+      "type": "RimWorld.Need",
+      "methods": [
+        "System.Single RimWorld.Need::get_MaxLevel()",
+        "System.Single RimWorld.Need::get_CurLevel()",
+        "System.Void RimWorld.Need::set_CurLevel(System.Single)",
+        "System.Single RimWorld.Need::get_CurLevelPercentage()",
+        "System.Void RimWorld.Need::set_CurLevelPercentage(System.Single)",
+        "System.Boolean RimWorld.Need::get_IsFrozen()"
+      ],
+      "fields": [
+        "RimWorld.NeedDef RimWorld.Need::def"
+      ]
+    },
+    {
+      "type": "RimWorld.NeedDef",
+      "methods": [],
+      "fields": [
+        "System.Type RimWorld.NeedDef::needClass"
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_NeedsTracker",
+      "methods": [
+        "System.Collections.Generic.List`1<RimWorld.Need> RimWorld.Pawn_NeedsTracker::get_AllNeeds()"
+      ],
+      "fields": []
+    },
+    {
+      "type": "RimWorld.Need_Play",
+      "methods": [
+        "RimWorld.PlayCategory RimWorld.Need_Play::get_CurCategory()"
+      ],
+      "fields": []
+    },
+    {
+      "type": "RimWorld.Need_Learning",
+      "methods": [
+        "System.Boolean RimWorld.Need_Learning::get_IsFrozen()",
+        "RimWorld.LearningCategory RimWorld.Need_Learning::get_CurCategory()"
+      ],
+      "fields": []
+    },
+    {
+      "type": "RimWorld.Pawn_ApparelTracker",
+      "methods": [
+        "System.Collections.Generic.List`1<RimWorld.Apparel> RimWorld.Pawn_ApparelTracker::get_WornApparel()",
+        "System.Int32 RimWorld.Pawn_ApparelTracker::get_WornApparelCount()"
+      ],
+      "fields": []
+    },
+    {
+      "type": "RimWorld.Pawn_RelationsTracker",
+      "methods": [
+        "System.Collections.Generic.List`1<RimWorld.DirectPawnRelation> RimWorld.Pawn_RelationsTracker::get_DirectRelations()",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::GetDirectRelationsCount(RimWorld.PawnRelationDef,System.Predicate`1<Verse.Pawn>)",
+        "System.Void RimWorld.Pawn_RelationsTracker::GetDirectRelations(RimWorld.PawnRelationDef,System.Collections.Generic.List`1<Verse.Pawn>&,System.Predicate`1<Verse.Pawn>)"
+      ],
+      "fields": []
+    },
+    {
+      "type": "RimWorld.Pawn_Ownership",
+      "methods": [
+        "RimWorld.Building_Bed RimWorld.Pawn_Ownership::get_OwnedBed()"
+      ],
+      "fields": []
+    },
+    {
+      "type": "Verse.GenTemperature",
+      "methods": [
+        "Verse.FloatRange Verse.GenTemperature::ComfortableTemperatureRange(Verse.Pawn)",
+        "Verse.FloatRange Verse.GenTemperature::ComfortableTemperatureRange(Verse.Pawn,System.Collections.Generic.List`1<RimWorld.ThingStuffPair>)",
+        "Verse.FloatRange Verse.GenTemperature::ComfortableTemperatureRange(Verse.ThingDef,System.Collections.Generic.List`1<RimWorld.ThingStuffPair>)"
+      ],
+      "fields": []
+    },
+    {
+      "type": "Verse.LongEventHandler",
+      "methods": [
+        "System.Void Verse.LongEventHandler::ExecuteWhenFinished(System.Action)",
+        "System.Void Verse.LongEventHandler::ForceExecuteToExecuteWhenFinished()"
+      ],
+      "fields": []
+    },
+    {
+      "type": "Verse.UnityData",
+      "methods": [
+        "System.Boolean Verse.UnityData::get_IsInMainThread()"
+      ],
+      "fields": []
+    }
+  ],
+  "sourceCalls": [
+    "!0 System.Collections.Generic.KeyValuePair`2<System.String,Verse.Pawn>::get_Key()",
+    "!0 System.Collections.Generic.List`1<RimWorld.Apparel>::get_Item(System.Int32)",
+    "!0 System.Collections.Generic.List`1<RimWorld.DirectPawnRelation>::get_Item(System.Int32)",
+    "!0 System.Collections.Generic.List`1<RimWorld.Need>::get_Item(System.Int32)",
+    "!0 System.Collections.Generic.List`1<Verse.Hediff>::get_Item(System.Int32)",
+    "!0 System.Collections.Generic.List`1<Verse.Map>::get_Item(System.Int32)",
+    "!0 System.Collections.Generic.List`1<Verse.Pawn>::get_Item(System.Int32)",
+    "!0 System.Func`1<PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T>>::Invoke()",
+    "!0 System.Func`1<RimWorld.Building_Bed>::Invoke()",
+    "!0 System.Func`1<T>::Invoke()",
+    "!0 Verse.DefDatabase`1<RimWorld.NeedDef>::GetNamedSilentFail(System.String)",
+    "!1 System.Collections.Generic.KeyValuePair`2<System.String,Verse.Pawn>::get_Value()",
+    "!1 System.Func`2<RimWorld.Need,System.String>::Invoke(!0)",
+    "!1 System.Func`2<System.String,System.Type>::Invoke(!0)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.CurrentNeedGap PersonalChronicle.Domain.PawnEconomy.Perception.CurrentNeedProjector::Project(System.String,PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact,PersonalChronicle.Domain.PawnEconomy.Perception.NeedTarget)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.BedFact> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::CaptureBed(System.Func`1<RimWorld.Building_Bed>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean> PersonalChronicle.Economy.PawnEconomy.Perception.IVanillaLifeExtension::VisiblePregnancy(System.Collections.Generic.IReadOnlyList`1<Verse.Hediff>,System.Boolean)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_0::<CaptureBody>b__6()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single> PersonalChronicle.Domain.PawnEconomy.Perception.CurrentNeedGap::get_ActualRatio()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single> PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact::get_CurrentLevel()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single> PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact::get_MaximumLevel()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::ReadCondition(RimWorld.Need,System.Int64,System.Int32)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::ReadFinite(System.Func`1<System.Single>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.String> PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact::get_VanillaCategory()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.BedFact>::Error(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.BedFact>::Known(T)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.BedFact>::NotApplicable(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.BedFact>::Unknown(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>::Unavailable(PersonalChronicle.Domain.PawnEconomy.Perception.FactState,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>::Unknown(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Int32>::Known(T)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Int32>::Unknown(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>::Error(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>::NotApplicable(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>::Unavailable(PersonalChronicle.Domain.PawnEconomy.Perception.FactState,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>::Unknown(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>::Unsupported(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.String>::NotApplicable(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T>::Error(System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T>::Known(T)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::Read<System.Single>(System.Func`1<T>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::Read<System.String>(System.Func`1<T>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Read<PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>>(System.Func`1<T>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Read<System.Boolean>(System.Func`1<T>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Read<System.Int32>(System.Func`1<T>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Read<System.Single>(System.Func`1<T>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Read<System.String>(System.Func`1<T>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Read<Verse.FloatRange>(System.Func`1<T>,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.BodyLifeFactSet> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::CaptureBody(Verse.Pawn,System.Collections.Generic.List`1<RimWorld.Need>,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.Boolean)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.BodyLifeFactSet> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__10()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.NeedFactSet> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::CaptureNeeds(System.Collections.Generic.List`1<RimWorld.Need>,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.Boolean)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.NeedFactSet> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__9()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFactSet> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::CaptureRelationships(Verse.Pawn,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFactSet> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__11()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::CaptureGroup<PersonalChronicle.Domain.PawnEconomy.Perception.BodyLifeFactSet>(System.Func`1<PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T>>,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::CaptureGroup<PersonalChronicle.Domain.PawnEconomy.Perception.NeedFactSet>(System.Func`1<PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T>>,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::CaptureGroup<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFactSet>(System.Func`1<PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T>>,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.String)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Group<PersonalChronicle.Domain.PawnEconomy.Perception.BodyLifeFactSet>(T,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.Boolean,System.Int32)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Group<PersonalChronicle.Domain.PawnEconomy.Perception.NeedFactSet>(T,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.Boolean,System.Int32)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Group<PersonalChronicle.Domain.PawnEconomy.Perception.PawnContextFact>(T,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.Boolean,System.Int32)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T> PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Group<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFactSet>(T,PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest,System.Boolean,System.Int32)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactState PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.BedFact>::get_State()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactState PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>>::get_State()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactState PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>::get_State()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactState PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.String>::get_State()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.FactState PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<Verse.FloatRange>::get_State()",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::ReadNumeric(RimWorld.Need,System.Int64,System.Int32)",
+    "PersonalChronicle.Domain.PawnEconomy.Perception.PerceptionGroups PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest::get_Groups()",
+    "PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/Adapter PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::Match(RimWorld.Need)",
+    "RimWorld.BeautyCategory RimWorld.Need_Beauty::get_CurCategory()",
+    "RimWorld.Building_Bed PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_0::<CaptureBody>b__4()",
+    "RimWorld.Building_Bed PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_0::<CaptureBody>b__5()",
+    "RimWorld.Building_Bed RimWorld.Pawn_Ownership::get_OwnedBed()",
+    "RimWorld.Building_Bed RimWorld.RestUtility::CurrentBed(Verse.Pawn)",
+    "RimWorld.ComfortCategory RimWorld.Need_Comfort::get_CurCategory()",
+    "RimWorld.HungerCategory RimWorld.Need_Food::get_CurCategory()",
+    "RimWorld.JoyCategory RimWorld.Need_Joy::get_CurCategory()",
+    "RimWorld.OutdoorsCategory RimWorld.Need_Outdoors::get_CurCategory()",
+    "RimWorld.RestCategory RimWorld.Need_Rest::get_CurCategory()",
+    "RimWorld.RoomSizeCategory RimWorld.Need_RoomSize::get_CurCategory()",
+    "RimWorld.TimeAssignmentDef RimWorld.Pawn_TimetableTracker::get_CurrentAssignment()",
+    "System.Boolean PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>>::TryGetValue(T&)",
+    "System.Boolean PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>::TryGetValue(T&)",
+    "System.Boolean PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<Verse.FloatRange>::TryGetValue(T&)",
+    "System.Boolean PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact::get_StandardRatioSupported()",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::HasCondition(RimWorld.Need)",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::IsConditionCandidate(RimWorld.Need)",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::IsObservedMood(RimWorld.Need)",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Eligible(Verse.Pawn)",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_1::<CaptureBody>b__8()",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__3()",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__4()",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__5()",
+    "System.Boolean PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__7()",
+    "System.Boolean RimWorld.QuestUtility::IsQuestLodger(Verse.Pawn)",
+    "System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<System.String,Verse.Pawn>::MoveNext()",
+    "System.Boolean System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Domain.PawnEconomy.Perception.SubjectLocation>::Remove(!0)",
+    "System.Boolean System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Domain.PawnEconomy.Perception.SubjectLocation>::TryGetValue(!0,!1&)",
+    "System.Boolean System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/Adapter>::TryGetValue(!0,!1&)",
+    "System.Boolean System.Collections.Generic.Dictionary`2<System.String,Verse.Pawn>::ContainsKey(!0)",
+    "System.Boolean System.Collections.Generic.Dictionary`2<System.String,Verse.Pawn>::Remove(!0)",
+    "System.Boolean System.Collections.Generic.Dictionary`2<System.String,Verse.Pawn>::TryGetValue(!0,!1&)",
+    "System.Boolean System.Collections.Generic.HashSet`1<System.String>::Add(!0)",
+    "System.Boolean System.Collections.Generic.List`1<Verse.Map>::Contains(!0)",
+    "System.Boolean System.Single::IsInfinity(System.Single)",
+    "System.Boolean System.Single::IsNaN(System.Single)",
+    "System.Boolean System.String::IsNullOrWhiteSpace(System.String)",
+    "System.Boolean System.String::op_Equality(System.String,System.String)",
+    "System.Boolean System.Type::op_Equality(System.Type,System.Type)",
+    "System.Boolean Verse.Hediff::get_Visible()",
+    "System.Boolean Verse.Hediff::TendableNow(System.Boolean)",
+    "System.Boolean Verse.Pawn::get_Dead()",
+    "System.Boolean Verse.Pawn::get_Downed()",
+    "System.Boolean Verse.Pawn::get_Drafted()",
+    "System.Boolean Verse.Pawn::get_InMentalState()",
+    "System.Boolean Verse.Pawn::get_IsFreeNonSlaveColonist()",
+    "System.Boolean Verse.RaceProperties::get_Humanlike()",
+    "System.Boolean Verse.Thing::get_Spawned()",
+    "System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<System.String,Verse.Pawn>::GetEnumerator()",
+    "System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<System.String,Verse.Pawn>::get_Current()",
+    "System.Collections.Generic.List`1<RimWorld.Apparel> RimWorld.Pawn_ApparelTracker::get_WornApparel()",
+    "System.Collections.Generic.List`1<RimWorld.DirectPawnRelation> RimWorld.Pawn_RelationsTracker::get_DirectRelations()",
+    "System.Collections.Generic.List`1<RimWorld.Need> RimWorld.Pawn_NeedsTracker::get_AllNeeds()",
+    "System.Collections.Generic.List`1<Verse.Map> Verse.Find::get_Maps()",
+    "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonists()",
+    "System.Globalization.CultureInfo System.Globalization.CultureInfo::get_InvariantCulture()",
+    "System.Int32 PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest::get_Tick()",
+    "System.Int32 PersonalChronicle.Application.PawnEconomy.Perception.PerceptionSettings::get_MaximumSubjects()",
+    "System.Int32 PersonalChronicle.Application.PawnEconomy.Perception.PerceptionSettings::get_PopulationInterval()",
+    "System.Int32 PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__0()",
+    "System.Int32 PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__1()",
+    "System.Int32 System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Domain.PawnEconomy.Perception.SubjectLocation>::get_Count()",
+    "System.Int32 System.Collections.Generic.Dictionary`2<System.String,Verse.Pawn>::get_Count()",
+    "System.Int32 System.Collections.Generic.HashSet`1<System.String>::get_Count()",
+    "System.Int32 System.Collections.Generic.List`1<RimWorld.Apparel>::get_Count()",
+    "System.Int32 System.Collections.Generic.List`1<RimWorld.DirectPawnRelation>::get_Count()",
+    "System.Int32 System.Collections.Generic.List`1<RimWorld.Need>::get_Count()",
+    "System.Int32 System.Collections.Generic.List`1<System.String>::get_Count()",
+    "System.Int32 System.Collections.Generic.List`1<Verse.Hediff>::get_Count()",
+    "System.Int32 System.Collections.Generic.List`1<Verse.Map>::get_Count()",
+    "System.Int32 System.Collections.Generic.List`1<Verse.Pawn>::get_Count()",
+    "System.Int32 System.Math::Min(System.Int32,System.Int32)",
+    "System.Int32 System.Threading.Thread::get_ManagedThreadId()",
+    "System.Int32 Verse.BodyPartRecord::get_Index()",
+    "System.Int32 Verse.Thing::get_HitPoints()",
+    "System.Int32 Verse.Thing::get_MaxHitPoints()",
+    "System.Int64 PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest::get_Revision()",
+    "System.Int64 PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::get_ReadErrors()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c__DisplayClass12_0::<ReadNumeric>b__0()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c__DisplayClass12_0::<ReadNumeric>b__1()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c__DisplayClass16_0::<ReadCondition>b__0()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c__DisplayClass16_0::<ReadCondition>b__1()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_0::<CaptureBody>b__0()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_0::<CaptureBody>b__2()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_0::<CaptureBody>b__3()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_1::<CaptureBody>b__7()",
+    "System.Single PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_2::<CaptureBody>b__9()",
+    "System.Single RimWorld.Need::get_CurInstantLevel()",
+    "System.Single RimWorld.Need::get_CurLevel()",
+    "System.Single RimWorld.Need::get_MaxLevel()",
+    "System.Single Verse.Hediff::get_Severity()",
+    "System.Single Verse.Thing::get_AmbientTemperature()",
+    "System.String PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureRequest::get_PawnId()",
+    "System.String PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>>::get_ReasonCode()",
+    "System.String PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<Verse.FloatRange>::get_ReasonCode()",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c__DisplayClass12_0::<ReadNumeric>b__2()",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c::<.ctor>b__9_0(RimWorld.Need)",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c::<.ctor>b__9_1(RimWorld.Need)",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c::<.ctor>b__9_2(RimWorld.Need)",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c::<.ctor>b__9_3(RimWorld.Need)",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c::<.ctor>b__9_4(RimWorld.Need)",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c::<.ctor>b__9_5(RimWorld.Need)",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c::<.ctor>b__9_6(RimWorld.Need)",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__2()",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__6()",
+    "System.String PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::<Capture>b__8()",
+    "System.String System.Int32::ToString(System.IFormatProvider)",
+    "System.String System.Object::ToString()",
+    "System.String System.Reflection.MemberInfo::get_Name()",
+    "System.String System.String::Concat(System.String,System.String,System.String)",
+    "System.String System.String::Concat(System.String,System.String)",
+    "System.String Verse.Hediff::GetUniqueLoadID()",
+    "System.String Verse.Thing::GetUniqueLoadID()",
+    "System.StringComparer System.StringComparer::get_Ordinal()",
+    "System.Threading.Thread System.Threading.Thread::get_CurrentThread()",
+    "System.Type PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c::<.ctor>b__18_0(System.String)",
+    "System.Type System.Exception::GetType()",
+    "System.Type System.Object::GetType()",
+    "System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+    "System.Void PersonalChronicle.Application.PawnEconomy.Perception.PawnCaptureResult::.ctor(PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.PawnContextFact>,PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.NeedFactSet>,PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.BodyLifeFactSet>,PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFactSet>)",
+    "System.Void PersonalChronicle.Application.PawnEconomy.Perception.PerceptionSubject::.ctor(System.String,System.Int32)",
+    "System.Void PersonalChronicle.Application.PawnEconomy.Perception.PopulationUpdate::.ctor(System.Collections.Generic.IEnumerable`1<PersonalChronicle.Application.PawnEconomy.Perception.PerceptionSubject>,System.Boolean,System.Int32,System.Collections.Generic.IDictionary`2<System.String,PersonalChronicle.Domain.PawnEconomy.Perception.SubjectLocation>)",
+    "System.Void PersonalChronicle.ChronicleLog::Warning(System.String,System.String)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.ApparelFact::.ctor(System.String,System.String,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.BedFact::.ctor(System.String,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Int32>)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.BodyLifeFactSet::.ctor(System.Collections.Generic.IEnumerable`1<PersonalChronicle.Domain.PawnEconomy.Perception.VisibleHediffFact>,System.Collections.Generic.IEnumerable`1<PersonalChronicle.Domain.PawnEconomy.Perception.ApparelFact>,System.Collections.Generic.IEnumerable`1<PersonalChronicle.Domain.PawnEconomy.Perception.NeedConditionFact>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.BedFact>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<PersonalChronicle.Domain.PawnEconomy.Perception.BedFact>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>,PersonalChronicle.Domain.PawnEconomy.Perception.CaptureState,PersonalChronicle.Domain.PawnEconomy.Perception.CaptureState,PersonalChronicle.Domain.PawnEconomy.Perception.CaptureState,System.Int32,System.Int32)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.NeedFactSet>::.ctor(PersonalChronicle.Domain.PawnEconomy.Perception.CaptureState,T,System.Int32,System.Int64,System.String,System.Int32)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.PawnContextFact>::.ctor(PersonalChronicle.Domain.PawnEconomy.Perception.CaptureState,T,System.Int32,System.Int64,System.String,System.Int32)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFactSet>::.ctor(PersonalChronicle.Domain.PawnEconomy.Perception.CaptureState,T,System.Int32,System.Int64,System.String,System.Int32)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<T>::.ctor(PersonalChronicle.Domain.PawnEconomy.Perception.CaptureState,T,System.Int32,System.Int64,System.String,System.Int32)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.NeedConditionFact::.ctor(System.String,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>,System.Int32,System.Int64)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.NeedFactSet::.ctor(System.Collections.Generic.IEnumerable`1<PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact>,System.Collections.Generic.IEnumerable`1<System.String>,System.Collections.Generic.IEnumerable`1<System.String>,System.Collections.Generic.IEnumerable`1<System.String>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact::.ctor(System.String,System.String,System.String,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>,System.Boolean,System.String,System.Int64,System.Int32,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.String>)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.PawnContextFact::.ctor(PersonalChronicle.Domain.PawnEconomy.Perception.SubjectLocation,System.Int32,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Int32>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Int32>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.String>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.String>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.String>)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFact::.ctor(System.String,System.String,System.Int32)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFactSet::.ctor(System.Collections.Generic.IEnumerable`1<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFact>)",
+    "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.VisibleHediffFact::.ctor(System.String,System.String,System.String,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Single>,PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>)",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.IVanillaLifeExtension::RegisterNeeds(PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry)",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::.ctor(System.Func`2<System.String,System.Type>,System.Action`2<System.String,System.Exception>)",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::Register(System.String,System.Type,System.String,System.String,System.Func`2<RimWorld.Need,System.String>,System.Boolean)",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry::set_ReadErrors(System.Int64)",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c__DisplayClass12_0::.ctor()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c__DisplayClass16_0::.ctor()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/<>c::.ctor()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/Adapter::.ctor()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::Diagnose(System.String,System.Exception)",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture::MainThread()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_0::.ctor()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_1::.ctor()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_2::.ctor()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass24_0::.ctor()",
+    "System.Void PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c::.ctor()",
+    "System.Void System.Action`2<System.String,System.Exception>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Action`2<System.String,System.Exception>::Invoke(!0,!1)",
+    "System.Void System.ArgumentException::.ctor(System.String,System.String)",
+    "System.Void System.ArgumentNullException::.ctor(System.String)",
+    "System.Void System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Domain.PawnEconomy.Perception.SubjectLocation>::.ctor(System.Collections.Generic.IEqualityComparer`1<!0>)",
+    "System.Void System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Domain.PawnEconomy.Perception.SubjectLocation>::Clear()",
+    "System.Void System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Domain.PawnEconomy.Perception.SubjectLocation>::set_Item(!0,!1)",
+    "System.Void System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/Adapter>::.ctor(System.Collections.Generic.IEqualityComparer`1<!0>)",
+    "System.Void System.Collections.Generic.Dictionary`2<System.String,PersonalChronicle.Economy.PawnEconomy.Perception.VanillaNeedRegistry/Adapter>::Add(!0,!1)",
+    "System.Void System.Collections.Generic.Dictionary`2<System.String,Verse.Pawn>::.ctor(System.Collections.Generic.IEqualityComparer`1<!0>)",
+    "System.Void System.Collections.Generic.Dictionary`2<System.String,Verse.Pawn>::Clear()",
+    "System.Void System.Collections.Generic.Dictionary`2<System.String,Verse.Pawn>::set_Item(!0,!1)",
+    "System.Void System.Collections.Generic.HashSet`1<System.String>::.ctor(System.Collections.Generic.IEqualityComparer`1<!0>)",
+    "System.Void System.Collections.Generic.HashSet`1<System.String>::Clear()",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Application.PawnEconomy.Perception.PerceptionSubject>::.ctor(System.Int32)",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Application.PawnEconomy.Perception.PerceptionSubject>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.ApparelFact>::.ctor()",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.ApparelFact>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.NeedConditionFact>::.ctor()",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.NeedConditionFact>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact>::.ctor()",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.NumericNeedFact>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFact>::.ctor()",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFact>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.VisibleHediffFact>::.ctor()",
+    "System.Void System.Collections.Generic.List`1<PersonalChronicle.Domain.PawnEconomy.Perception.VisibleHediffFact>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<System.String>::.ctor()",
+    "System.Void System.Collections.Generic.List`1<System.String>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<Verse.Hediff>::.ctor()",
+    "System.Void System.Collections.Generic.List`1<Verse.Hediff>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<Verse.Map>::.ctor()",
+    "System.Void System.Collections.Generic.List`1<Verse.Map>::Add(!0)",
+    "System.Void System.Collections.Generic.List`1<Verse.Map>::Clear()",
+    "System.Void System.Func`1<PersonalChronicle.Domain.PawnEconomy.Perception.Fact`1<System.Boolean>>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.BodyLifeFactSet>>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.NeedFactSet>>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<PersonalChronicle.Domain.PawnEconomy.Perception.FactGroup`1<PersonalChronicle.Domain.PawnEconomy.Perception.RelationshipFactSet>>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<RimWorld.Building_Bed>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<System.Boolean>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<System.Int32>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<System.Single>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<System.String>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`1<Verse.FloatRange>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`2<RimWorld.Need,System.String>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.Func`2<System.String,System.Type>::.ctor(System.Object,System.IntPtr)",
+    "System.Void System.IDisposable::Dispose()",
+    "System.Void System.InvalidOperationException::.ctor(System.String)",
+    "System.Void System.Object::.ctor()",
+    "Verse.AI.Job Verse.Pawn::get_CurJob()",
+    "Verse.BodyPartRecord Verse.Hediff::get_Part()",
+    "Verse.DevelopmentalStage Verse.Pawn::get_DevelopmentalStage()",
+    "Verse.FloatRange PersonalChronicle.Economy.PawnEconomy.Perception.VanillaPawnFactCapture/<>c__DisplayClass0_0::<CaptureBody>b__1()",
+    "Verse.FloatRange Verse.GenTemperature::ComfortableTemperatureRange(Verse.Pawn)",
+    "Verse.IntVec3 Verse.Thing::get_PositionHeld()",
+    "Verse.Map Verse.Thing::get_MapHeld()",
+    "Verse.RaceProperties Verse.Pawn::get_RaceProps()"
+  ],
+  "files": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/PawnFactSnapshot.cs",
+      "sha256": "EAE10DE3046C3DA33732EBD2686350E3F8721F445BC2D5D85983DB770C7B3651",
+      "anchors": [
+        {
+          "line": 8,
+          "text": "internal enum PerceptionGroups { None = 0, Context = 1, Needs = 2, Body = 4, Relationships = 8, All = 15 }"
+        },
+        {
+          "line": 9,
+          "text": "internal enum CaptureState { Unknown = 0, Complete = 1, Partial = 2, NotApplicable = 3, Error = 4 }"
+        },
+        {
+          "line": 10,
+          "text": "internal enum SubjectLocation { Unknown = 0, SpawnedMap = 1, HeldOnMap = 2, OffMap = 3, Dead = 4 }"
+        },
+        {
+          "line": 12,
+          "text": "internal static class PerceptionCollections"
+        },
+        {
+          "line": 18,
+          "text": "internal sealed class FactGroup<T> where T : class"
+        },
+        {
+          "line": 39,
+          "text": "internal sealed class PawnContextFact"
+        },
+        {
+          "line": 63,
+          "text": "internal sealed class NeedFactSet"
+        },
+        {
+          "line": 79,
+          "text": "internal sealed class VisibleHediffFact"
+        },
+        {
+          "line": 89,
+          "text": "internal sealed class ApparelFact"
+        },
+        {
+          "line": 97,
+          "text": "internal sealed class NeedConditionFact"
+        },
+        {
+          "line": 106,
+          "text": "internal sealed class BedFact"
+        },
+        {
+          "line": 112,
+          "text": "internal sealed class BodyLifeFactSet"
+        },
+        {
+          "line": 142,
+          "text": "internal sealed class RelationshipFact"
+        },
+        {
+          "line": 150,
+          "text": "internal sealed class RelationshipFactSet"
+        },
+        {
+          "line": 156,
+          "text": "internal sealed class PawnFactSnapshot"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/PerceptionReadRequest.cs",
+      "sha256": "F16EAF105A9869D3F99BD8A9C5E9DE7B365BECF38DBB6DC10C8479ABF144E6B7",
+      "anchors": [
+        {
+          "line": 6,
+          "text": "internal enum PerceptionReadiness { Unknown = 0, Loading = 1, Ready = 2, Partial = 3, Stale = 4, OutOfScope = 5, Error = 6 }"
+        },
+        {
+          "line": 7,
+          "text": "internal enum PerceptionPurpose { Display = 0, Planning = 1 }"
+        },
+        {
+          "line": 8,
+          "text": "internal sealed class PerceptionReadRequest"
+        },
+        {
+          "line": 32,
+          "text": "internal sealed class GroupReadStatus"
+        },
+        {
+          "line": 44,
+          "text": "internal sealed class FactQueryResult"
+        },
+        {
+          "line": 55,
+          "text": "internal sealed class ObservationQueryResult"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/NeedObservation.cs",
+      "sha256": "C6D9DF22E51A42BAA10E1826844E37E7AB88B08B0AE91ED4AEF90F7643E2CD01",
+      "anchors": [
+        {
+          "line": 6,
+          "text": "internal enum TargetState { Unknown = 0, Enabled = 1, Disabled = 2, NotApplicable = 3 }"
+        },
+        {
+          "line": 8,
+          "text": "internal static class RequirementIdentity"
+        },
+        {
+          "line": 27,
+          "text": "internal sealed class NumericNeedFact"
+        },
+        {
+          "line": 65,
+          "text": "internal readonly struct NeedTarget"
+        },
+        {
+          "line": 82,
+          "text": "internal sealed class CurrentNeedGap"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/PerceptionSource.cs",
+      "sha256": "239684A7D04185DB348957CD73484C7982084A281C62334300268FD2BB4097E2",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "internal sealed class PerceptionSubject"
+        },
+        {
+          "line": 17,
+          "text": "internal sealed class PopulationUpdate"
+        },
+        {
+          "line": 31,
+          "text": "internal sealed class PawnCaptureRequest"
+        },
+        {
+          "line": 41,
+          "text": "internal sealed class PawnCaptureResult"
+        },
+        {
+          "line": 51,
+          "text": "internal interface IPawnPerceptionSource"
+        },
+        {
+          "line": 59,
+          "text": "internal sealed class PerceptionSettings"
+        },
+        {
+          "line": 84,
+          "text": "internal sealed class PerceptionDiagnostics"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/PerceptionCoordinator.cs",
+      "sha256": "520DC7B605BD4E110C91492C6DE95FF85580DCC1844D3C9E0159885F3BD3C997",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "internal sealed partial class PerceptionCoordinator"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/PerceptionQuery.cs",
+      "sha256": "E0B6546E833C1E35C3C68166EBC77FC3D36D397C25F958E15E367225A2DE2149",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "internal sealed partial class PerceptionCoordinator"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/EconomyReadQueries.cs",
+      "sha256": "3CCB8B155B35426450EB1FB82429148162ADA38ADD49DC15EDE5A9161FC489FC",
+      "anchors": [
+        {
+          "line": 8,
+          "text": "internal sealed class EconomyAccountSnapshot"
+        },
+        {
+          "line": 20,
+          "text": "internal sealed class EconomyPersonSnapshot"
+        },
+        {
+          "line": 29,
+          "text": "internal static class EconomyReadQueries"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaNeedRegistry.cs",
+      "sha256": "B8080266D6ED8C33BF92697FE83191109F0F2CAC899E754157D0051B5B25C200",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "internal interface IVanillaLifeExtension"
+        },
+        {
+          "line": 14,
+          "text": "internal sealed class VanillaNeedRegistry"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaPawnFactCapture.cs",
+      "sha256": "2BE950F06315580E7E228547F5418F34576439D571400036BA79E63FC8C67BE5",
+      "anchors": [
+        {
+          "line": 11,
+          "text": "internal sealed partial class VanillaPawnFactCapture : IPawnPerceptionSource"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaPawnFactCapture.Body.cs",
+      "sha256": "735C748C34E6FFCE7A1B4A847FC3EAA046C8FCA7B359D1B1BF61DE4ACF22C12D",
+      "anchors": [
+        {
+          "line": 10,
+          "text": "internal sealed partial class VanillaPawnFactCapture"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyPerception.cs",
+      "sha256": "7F0E15CE69E17150330B88E54C40C97373FEF95949A9ED535921F1D449CCBBEA",
+      "anchors": []
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "sha256": "F955FAD7FD5853C1591AE0106C8528C87398AD79D3ECFAA4C0210538ED192207",
+      "anchors": []
+    },
+    {
+      "path": "Source/PersonalChronicle/Compatibility/Dlc/PawnLifeBiotechAdapter.cs",
+      "sha256": "F7A0EB9ECDA113BF2037AAD0C50414414FEE1245F4814411DE35C4CFBEE622BA",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "internal sealed class PawnLifeBiotechAdapter : IVanillaLifeExtension"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnPerceptionCoordinatorTests.cs",
+      "sha256": "20A7B1F46C3A563125DFF387CEF6C5DC70FA65A590FFD467FBAEC9606E6F14E4",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "public sealed class PawnPerceptionCoordinatorTests"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnPerceptionReadQueriesTests.cs",
+      "sha256": "50B88BC560F3ABFA814740C01077D4DE07915DA917F9C0E844B1FC34AAE5861F",
+      "anchors": [
+        {
+          "line": 11,
+          "text": "public sealed class PawnPerceptionReadQueriesTests"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnPerceptionVanillaNeedTests.cs",
+      "sha256": "610D9886146329B7891C83A05DBEE8AF9D67366FF8793B28A6B0B61D1A545BEA",
+      "anchors": [
+        {
+          "line": 14,
+          "text": "public sealed class PawnPerceptionVanillaNeedTests"
+        }
+      ]
+    },
+    {
+      "path": "_scripts/verify-pawn-perception.ps1",
+      "sha256": "09EFC1B44B059B3DE5878E432AF4374BA2A35B7CE7695E2356F0981E20CA377E",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/02-B1.2人口采集与查询_实装记录.md",
+      "sha256": "1BE194B656A3694AFE0C34298BB1E2FB08A1330B14656C788AA638BB6A06625B",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. Intake / ADR"
+        },
+        {
+          "line": 19,
+          "text": "## 2. 实现与验收证据"
+        },
+        {
+          "line": 37,
+          "text": "## 3. 验证结果与限制"
+        },
+        {
+          "line": 58,
+          "text": "## 4. 变更标注与回滚"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实施批次状态.json",
+      "sha256": "0F3139DDBA5223CE96E4AE96FE8421F4593DA58FF2C555622ABF788EE9016015",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/04-实装指导手册/00-总册与实施路线.md",
+      "sha256": "EF9A4DFF05A856FEEFBA6DFD709AD572ACDFFAC5C61F7CC8FF6B637A44471848",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "## 1. 本手册回答什么"
+        },
+        {
+          "line": 18,
+          "text": "## 2. 阅读与交付索引"
+        },
+        {
+          "line": 51,
+          "text": "## 3. 当前核验基线"
+        },
+        {
+          "line": 64,
+          "text": "## 4. 模块划分"
+        },
+        {
+          "line": 83,
+          "text": "## 5. 架构和数据流"
+        },
+        {
+          "line": 111,
+          "text": "## 6. 首版具体闭环"
+        },
+        {
+          "line": 129,
+          "text": "## 7. 实施里程碑和退出条件"
+        },
+        {
+          "line": 141,
+          "text": "## 8. 开发工作包写法"
+        }
+      ]
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI人口感知与查询.md",
+      "sha256": "D3DFFCE2B639666DBAE582C34996AC3DFBA4284A102B5F1264E7E9B76782EF0C",
+      "anchors": []
+    }
+  ],
+  "tests": {
+    "path": "Tests/TestResults/EconomyLanding-B12-Full.trx",
+    "sha256": "06DCA0504E555B04DE8278EC766ABF220E7501891773BD4E9232D372960E6658",
+    "total": 667,
+    "passed": 666,
+    "failed": 0,
+    "skipped": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "newPerceptionCases": 41,
+    "newPassed": 41
+  },
+  "limits": [
+    "Offline vanilla Need tests shim Verse.Log only; Unity textures, map/holder/DLC execution and game timing remain unverified.",
+    "Named work quotas and elapsed diagnostics are implemented, but 20/100/300 Pawn game profiling and allocation measurement have not been performed.",
+    "Omitted population entries can include unexamined map/candidate entries; they are not an exact count of unique missing eligible Pawns.",
+    "Dirty marking is available but no new Harmony event hook is installed; periodic sampling is the active fallback.",
+    "Legacy account snapshots do not verify physical currency backing; B2 migration remains planned.",
+    "Historical design/B1.1 fingerprints describe their original source revision; this record fingerprints the changed B1.2 sources."
+  ]
+}

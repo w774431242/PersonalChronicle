@@ -1,0 +1,298 @@
+{
+  "changeId": "CHG-20261008-ECON-FINANCE-CORE",
+  "checkedUtc": "2026-10-08T08:02:43.3822168Z",
+  "state": "CodeVerified",
+  "batch": "B2.1",
+  "modSha256": "A5C1E3D2C2339516A7D6F2C076356463A921C17F9D888D550ACF41DFB3FFFBE2",
+  "compiledChecks": {
+    "pureTypesIncludingGenerated": 20,
+    "noMutableDeclaredStaticState": true,
+    "shadowKernelNotRuntimeWired": true,
+    "readinessAlwaysFalse": true,
+    "readonlyQueryCalls": [
+      "System.Threading.Thread System.Threading.Thread::get_CurrentThread()",
+      "System.Int32 System.Threading.Thread::get_ManagedThreadId()",
+      "System.Void System.InvalidOperationException::.ctor(System.String)",
+      "PersonalChronicle.Domain.PawnEconomy.EconomyState PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_State()",
+      "PersonalChronicle.Application.PawnEconomy.Finance.LegacyReconciliationReport PersonalChronicle.Application.PawnEconomy.Finance.LegacyReconciler::Capture(PersonalChronicle.Domain.PawnEconomy.EconomyState)"
+    ],
+    "existingRuifDependency": true
+  },
+  "tests": {
+    "path": "Tests/TestResults/EconomyLanding-B21-Full.trx",
+    "sha256": "FC122DBAFAE08E6ACFCD94B9A86340E9059C55D87FF34923355901BC7E9E0AC9",
+    "passed": 746,
+    "failed": 0,
+    "skipped": 1,
+    "skippedNames": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "newCases": 48
+  },
+  "files": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/FinancialContracts.cs",
+      "sha256": "51EC453ADD282945C66CA5B8F76648E52378E6272247D5216FDD7DCC83E8C08A",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "public static class MinorCurrency"
+        },
+        {
+          "line": 29,
+          "text": "public sealed class FinancialAccountSnapshot"
+        },
+        {
+          "line": 42,
+          "text": "public sealed class FinancialTransferLeg"
+        },
+        {
+          "line": 55,
+          "text": "public sealed class FinancialIntent"
+        },
+        {
+          "line": 84,
+          "text": "public enum FinancialPhase { Prepared, Committed, Cancelled, Expired }"
+        },
+        {
+          "line": 85,
+          "text": "public enum FinancialResultCode"
+        },
+        {
+          "line": 91,
+          "text": "public sealed class FinancialTransactionSnapshot"
+        },
+        {
+          "line": 99,
+          "text": "public sealed class FinancialResult"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Finance/ShadowTransactionKernel.cs",
+      "sha256": "FAADDBA719B9FE1D00981AABA08CADAAA6218C413AC05F49DDC0EE94C85DD704",
+      "anchors": [
+        {
+          "line": 13,
+          "text": "public sealed class ShadowTransactionKernel"
+        },
+        {
+          "line": 58,
+          "text": "public FinancialResult Prepare(FinancialIntent intent, long now)"
+        },
+        {
+          "line": 97,
+          "text": "public FinancialResult Commit(string commandId, long expectedVersion, long now, string evaluationEvidenceId)"
+        },
+        {
+          "line": 115,
+          "text": "public FinancialResult Cancel(string commandId, long expectedVersion, long now)"
+        },
+        {
+          "line": 126,
+          "text": "public FinancialResult Expire(long now)"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Finance/LegacyReconciliation.cs",
+      "sha256": "07EA6D1AE3992CE3C36D025CC8D981F1A59EF4913A52A9067EAE6FA41EA9D50D",
+      "anchors": [
+        {
+          "line": 10,
+          "text": "public sealed class LegacyRecordSnapshot"
+        },
+        {
+          "line": 24,
+          "text": "public sealed class LegacyReconciliationIssue"
+        },
+        {
+          "line": 32,
+          "text": "public sealed class LegacyReconciliationReport"
+        },
+        {
+          "line": 74,
+          "text": "public static class LegacyReconciler"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyReconciliation.cs",
+      "sha256": "28784C64AB729EFDDB4C8599C240860FC5645225C4F10FC36672E046BC1E44E9",
+      "anchors": [
+        {
+          "line": 6,
+          "text": "public sealed partial class GameComponent_PawnEconomy"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnFinanceKernelTests.cs",
+      "sha256": "D1B11EF66BEB21D0A7895E5E52FD741764135C136C636110FDEDA15AEE0699FE",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "public sealed class PawnFinanceKernelTests"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnLegacyReconciliationTests.cs",
+      "sha256": "D439E9D6959C2AEBE8C62ECB21417335B205D0228113C745094F402C565B3409",
+      "anchors": [
+        {
+          "line": 15,
+          "text": "public sealed class PawnLegacyReconciliationTests"
+        }
+      ]
+    },
+    {
+      "path": "_scripts/verify-pawn-finance-core.ps1",
+      "sha256": "C16D6F6EEC40DB5871A6B887459E79DB088CB92A0AD0BFC0B5AF4D36F44413B1",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/04-B2.1_事务内核与旧账对账_实装记录.md",
+      "sha256": "1421DA8C9D6A2E18B372E080B3DDFC9D4DE24097A7FDAE8F6998D0938EC70BE2",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. Intake / ADR（编码前）"
+        },
+        {
+          "line": 19,
+          "text": "## 2. 后续 B2 子批"
+        },
+        {
+          "line": 30,
+          "text": "## 3. 已实装行为与调用约定"
+        },
+        {
+          "line": 48,
+          "text": "## 4. 验证证据与 Gate"
+        },
+        {
+          "line": 64,
+          "text": "## 5. 变更、回滚与后续接入"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实施批次状态.json",
+      "sha256": "E63E829AF48AC63517073F6793EBEEF9ED9AE2F65B00CC982DDB339233E6C7F6",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/00-实装落地计划_v1.0.md",
+      "sha256": "A194A6AAEA0B1A0CDD810A5E1BFB1C024107BC75D4F38DDE21FD2E20915B568D",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "## 1. 目标、范围与交付纪律"
+        },
+        {
+          "line": 15,
+          "text": "## 2. 当前代码基线及迁移差异"
+        },
+        {
+          "line": 34,
+          "text": "## 3. 架构决策与数据边界"
+        },
+        {
+          "line": 46,
+          "text": "## 4. 批次总览与依赖"
+        },
+        {
+          "line": 63,
+          "text": "## 5. B1：需求感知与 RUIF 最小闭环"
+        },
+        {
+          "line": 91,
+          "text": "## 6. B2：实资、迁移与制度开关"
+        },
+        {
+          "line": 107,
+          "text": "## 7. B3：生活规划、储蓄与影子决策"
+        },
+        {
+          "line": 115,
+          "text": "## 8. B4：第一条自主经济闭环"
+        },
+        {
+          "line": 129,
+          "text": "## 9. B5：家庭与服务分项落地"
+        },
+        {
+          "line": 139,
+          "text": "## 10. B6：机构再生产与有限学习"
+        },
+        {
+          "line": 149,
+          "text": "## 11. B7：RUIF 治理与综合验收"
+        },
+        {
+          "line": 157,
+          "text": "## 12. 每批证据与检查命令"
+        },
+        {
+          "line": 173,
+          "text": "## 13. 迁移与回滚纪律"
+        },
+        {
+          "line": 179,
+          "text": "## 14. 完成定义与下一步"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/04-实装指导手册/00-总册与实施路线.md",
+      "sha256": "7530BE87A3DEB9C88B687DAB7A960123EEB65DD612FCA5F0B8456D87203BDD89",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "## 1. 本手册回答什么"
+        },
+        {
+          "line": 18,
+          "text": "## 2. 阅读与交付索引"
+        },
+        {
+          "line": 53,
+          "text": "## 3. 当前核验基线"
+        },
+        {
+          "line": 66,
+          "text": "## 4. 模块划分"
+        },
+        {
+          "line": 85,
+          "text": "## 5. 架构和数据流"
+        },
+        {
+          "line": 113,
+          "text": "## 6. 首版具体闭环"
+        },
+        {
+          "line": 131,
+          "text": "## 7. 实施里程碑和退出条件"
+        },
+        {
+          "line": 143,
+          "text": "## 8. 开发工作包写法"
+        }
+      ]
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI事务与对账内核.md",
+      "sha256": "2BF47E081A65975303E4042FBC7AB56788778368C73C4574B1A74DD217DB052A",
+      "anchors": []
+    }
+  ],
+  "limits": [
+    "Shadow balances and opaque evidence IDs do not prove physical deposits or real fulfillment.",
+    "No v2 persistence, raw legacy backup, migration mapping, ThingOwner reserve, settings switch or payment takeover implemented in B2.1.",
+    "Legacy report observes current revision only; old load recovery may already have cancelled pending orders.",
+    "Legacy diagnostics check bounded financial and identity invariants, not every business reference or original payload field from unknown versions.",
+    "No deployment, game acceptance or performance profiling executed; full workspace GATE-DELTA runner absent."
+  ]
+}

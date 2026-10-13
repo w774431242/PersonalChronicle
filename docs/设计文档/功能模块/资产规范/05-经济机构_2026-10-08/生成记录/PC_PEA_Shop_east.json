@@ -1,0 +1,19 @@
+{
+  "kind": "Shop",
+  "defName": "PC_PEA_Shop",
+  "direction": "east",
+  "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_east.png",
+  "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-f0df20c3-7f63-4eb3-9160-884d386f1f3b.png",
+  "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png",
+  "northReferenceSha256": "372343F4D2333CE5C05D68CAB0C36ABC0674FEED966ECA05563653F2D6021D01",
+  "promptFile": "PC_PEA_Shop_east.prompt.txt",
+  "sha256": "e82c0505ca628c28e775f6b8c2c83d52ce73b0606f2aec7c0ef6f71d14503d29",
+  "generator": "built-in image_gen",
+  "generationMode": "north-reference generation or targeted reference edit",
+  "externalPixelEditsPerformed": false,
+  "inputReferences": [
+    "C:/Users/Administrator/.codex/generated_images/01a116ec-7957-7de1-816a-0b501e24b6b0/exec-4f280a38-7f00-4151-880b-1f6ec4d9c7f7.png",
+    "E:/SteamLibrary/steamapps/common/RimWorld/11/殖民地综合管理系统/Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png"
+  ],
+  "repairTargetSha256": "4c9d7ece280505bcdacf5131edf472941f3b2f263fcc66f44cfc255dba22d8eb"
+}

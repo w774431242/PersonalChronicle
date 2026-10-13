@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "机制 04 · 预算与储蓄",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" }
+  },
+  "lanes": [
+    { "id": "rail", "label": "预算求解" },
+    { "id": "state", "label": "状态出口" },
+    { "id": "bad", "label": "不一致出口", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "p1", "label": "窗口与账户", "fromCol": 0, "toCol": 1 },
+    { "id": "p2", "label": "切片校验", "fromCol": 2, "toCol": 2, "variant": "emphasis" },
+    { "id": "p3", "label": "聚合与水线", "fromCol": 3, "toCol": 4 },
+    { "id": "p4", "label": "分配", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["win", "acct", "slices", "agg", "water", "alloc"],
+  "semanticChecks": { "allowedRoots": ["win"], "allowedTerminals": ["alloc", "ready", "incons", "waita", "waitq"] },
+  "nodes": [
+    { "id": "win", "lane": "rail", "col": 0, "type": "backend", "label": "窗口", "sublabel": "now .. now + 2 天", "tag": "ReserveDays 2" },
+    { "id": "acct", "lane": "rail", "col": 1, "type": "database", "label": "账户快照", "sublabel": "可用 + 已预留", "tag": "未知不算 0" },
+    { "id": "slices", "lane": "rail", "col": 2, "type": "security", "label": "切片校验", "sublabel": "≤ 64 片", "tag": "逐片对账", "height": 64 },
+    { "id": "agg", "lane": "rail", "col": 3, "type": "backend", "label": "聚合", "sublabel": "必要 / 即时 / 可选", "tag": "净额 = 成本 − 覆盖" },
+    { "id": "water", "lane": "rail", "col": 4, "type": "backend", "label": "水位与应急", "sublabel": "70% · 8%", "tag": "补储迟滞在此判定" },
+    { "id": "alloc", "lane": "rail", "col": 5, "type": "backend", "label": "三分配", "sublabel": "即时 / 储蓄 / 可选", "tag": "saving = 2000 bp" },
+    { "id": "ready", "lane": "state", "col": 5, "type": "database", "label": "Ready", "sublabel": "全部通过" },
+    { "id": "waitq", "lane": "state", "col": 3, "type": "database", "label": "WaitingQuote", "sublabel": "成本源不全" },
+    { "id": "waita", "lane": "state", "col": 1, "type": "database", "label": "WaitingAccount", "sublabel": "账户未知" },
+    { "id": "incons", "lane": "bad", "col": 2, "type": "security", "label": "Inconsistent", "sublabel": "窗口 / 片 / 覆盖 / 背书 / 金额", "width": 130 }
+  ],
+  "edges": [
+    { "from": "win", "to": "acct" },
+    { "from": "acct", "to": "slices" },
+    { "from": "slices", "to": "agg", "label": "净额" },
+    { "from": "agg", "to": "water", "label": "储备目标" },
+    { "from": "water", "to": "alloc", "label": "现金不足才补储" },
+    { "from": "slices", "to": "incons", "label": "六类不一致", "role": "error", "variant": "security" },
+    { "from": "acct", "to": "waita", "label": "未知", "role": "error", "variant": "dashed" },
+    { "from": "slices", "to": "waitq", "label": "成本不全", "role": "error", "variant": "dashed" },
+    { "from": "alloc", "to": "ready", "label": "就绪" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "三分配公式",
+      "items": [
+        "即时 = min(现金, 即时必要额)；储蓄 = min(剩余保护额, 剩余现金 × 20%)",
+        "可选 = min(可选额, 剩余现金 − 储蓄分配)",
+        "三者互斥，和 ≤ 现金；储备目标 = Σ 必要切片净额"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "水位与触发线",
+      "items": [
+        "下水位 = ceil(目标 × 70%)；应急储备 = floor(目标 × 8%)",
+        "补储实际触发线 = min(目标, 下水位 + 应急额)",
+        "refill = 目标 >0 ∧ 现金 <目标 ∧ (上周期已补 ∨ 现金 <触发线) ⇒ 迟滞不抖动"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "状态纪律",
+      "items": [
+        "State = Ready 时三分配与触发线才 Known，其余状态一律 Unknown（不得当 0）",
+        "六类 Inconsistent：窗口 / 片重复 / 覆盖重复 / 覆盖超成本 / 无背书预留 / 金额溢出",
+        "savingBasisPoints 合法域 0–4000，越界即 Inconsistent"
+      ]
+    }
+  ]
+}

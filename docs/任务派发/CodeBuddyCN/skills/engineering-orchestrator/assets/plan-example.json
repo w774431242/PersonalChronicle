@@ -1,0 +1,9 @@
+{
+  "tasks": [
+    {"id":"contract","owner":"coordinator","depends_on":[],"status":"planned","writes":["Domain/EmploymentContract.cs"]},
+    {"id":"test-design","owner":"test-reviewer","depends_on":[],"status":"planned","writes":[]},
+    {"id":"employment","owner":"employment-worker","depends_on":["contract"],"status":"planned","writes":["Runtime/EmploymentAdapter.cs"]},
+    {"id":"consumption","owner":"transaction-worker","depends_on":["contract"],"status":"planned","writes":["Runtime/ConsumptionAdapter.cs"]},
+    {"id":"integrate","owner":"coordinator","depends_on":["employment","consumption","test-design"],"status":"planned","writes":["Runtime/EconomyRuntime.cs"]}
+  ]
+}

@@ -1,0 +1,5208 @@
+{
+  "collectedUtc": "2026-10-08T05:40:51.5252018Z",
+  "gameVersion": "1.6.4871 rev590",
+  "method": "Read-only current game/RUIF DLL metadata, selected IL call operands and source fingerprints; no game code executed.",
+  "assembly": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\RimWorldWin64_Data\\Managed\\Assembly-CSharp.dll",
+    "sha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "mvid": "61e41735-6189-4da4-9d21-0260257b5097"
+  },
+  "ruif": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\RUIF\\Assemblies\\RUIF.dll",
+    "sha256": "E9C0ED7C4B027F3F6C3F656C0737311DBCD21603FA94138D38C7105842C0ACAC",
+    "assembly": "RUIF, Version=1.3.0.0, Culture=neutral, PublicKeyToken=null",
+    "methods": [
+      {
+        "type": "RUIF.PanelAtoms",
+        "signature": "System.Void RUIF.PanelAtoms::StatRow(UnityEngine.Rect,System.String,System.String,System.Nullable`1<System.Single>,System.Nullable`1<UnityEngine.Color>)"
+      },
+      {
+        "type": "RUIF.DataAtoms",
+        "signature": "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single)"
+      },
+      {
+        "type": "RUIF.DataAtoms",
+        "signature": "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single,RUIF.StatCol[],System.Int32,System.Single,System.Single[],System.String[])"
+      },
+      {
+        "type": "RUIF.FeedbackAtoms",
+        "signature": "System.Boolean RUIF.FeedbackAtoms::AlertBanner(UnityEngine.Rect,RUIF.AlertPriority,System.String,System.String)"
+      },
+      {
+        "type": "RUIF.FeedbackAtoms",
+        "signature": "System.Boolean RUIF.FeedbackAtoms::EmptyState(UnityEngine.Rect,System.String,System.String,System.String)"
+      },
+      {
+        "type": "RUIF.ProgressAtoms",
+        "signature": "System.Void RUIF.ProgressAtoms::CapacityBar(UnityEngine.Rect,System.Single,System.Single,System.Nullable`1<UnityEngine.Color>)"
+      },
+      {
+        "type": "RUIF.NavAtomsB",
+        "signature": "System.Void RUIF.NavAtomsB::LayerSwitch(UnityEngine.Rect,System.String[],System.Int32&)"
+      },
+      {
+        "type": "RUIF.InputAtoms",
+        "signature": "System.Boolean RUIF.InputAtoms::Segmented(UnityEngine.Rect,System.String[],System.Int32&)"
+      },
+      {
+        "type": "RUIF.InputAtoms",
+        "signature": "System.Boolean RUIF.InputAtoms::Segmented(UnityEngine.Rect,System.String[],System.Int32&,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)"
+      },
+      {
+        "type": "RUIF.InputAtoms",
+        "signature": "System.Boolean RUIF.InputAtoms::SearchField(UnityEngine.Rect,System.String&,System.String&,System.String,System.Single&,System.Single)"
+      },
+      {
+        "type": "RUIF.InputAtoms",
+        "signature": "System.Boolean RUIF.InputAtoms::Stepper(UnityEngine.Rect,System.Int32&,System.Int32,System.Int32,System.Int32)"
+      },
+      {
+        "type": "RUIF.InputAtoms",
+        "signature": "System.Boolean RUIF.InputAtoms::Checkbox(UnityEngine.Rect,System.String,System.Boolean&,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)"
+      },
+      {
+        "type": "RUIF.ButtonAtoms",
+        "signature": "System.Boolean RUIF.ButtonAtoms::PrimaryButton(UnityEngine.Rect,System.String,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)"
+      },
+      {
+        "type": "RUIF.Layout",
+        "signature": "UnityEngine.Rect RUIF.Layout::BeginScroll(UnityEngine.Rect,System.Single,UnityEngine.Vector2&,System.Boolean)"
+      },
+      {
+        "type": "RUIF.Layout",
+        "signature": "System.Void RUIF.Layout::EndScroll()"
+      }
+    ]
+  },
+  "types": [
+    {
+      "type": "Verse.AI.ThinkNode",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Collections.Generic.List`1<Verse.AI.ThinkNode> Verse.AI.ThinkNode::subNodes",
+        "System.Boolean Verse.AI.ThinkNode::leaveJoinableLordIfIssuesJob",
+        "System.String Verse.AI.ThinkNode::tag",
+        "Verse.AI.ThinkNode Verse.AI.ThinkNode::parent",
+        "System.Int32 Verse.AI.ThinkNode::InvalidSaveKey"
+      ],
+      "methods": [
+        {
+          "signature": "System.Int32 Verse.AI.ThinkNode::get_UniqueSaveKey()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.ThinkNode> Verse.AI.ThinkNode::get_ThisAndChildrenRecursive()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.ThinkNode> Verse.AI.ThinkNode::get_ChildrenRecursive()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ThinkNode::.ctor()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "T Verse.AI.ThinkNode::FirstNodeOfType(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ThinkNode::TryGetPriority(Verse.Pawn,System.Single&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.AI.ThinkNode::GetPriority(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.ThinkResult Verse.AI.ThinkNode::TryIssueJobPackage(Verse.Pawn,Verse.AI.JobIssueParams)",
+          "public": true,
+          "protected": false,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.ThinkNode::ResolveSubnodes()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.ThinkNode::ResolveSubnodesAndRecur()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ThinkNode::ResolveReferences()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.ThinkNode Verse.AI.ThinkNode::DeepCopy(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.AI.ThinkNode::GetHashCode()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "Verse.AI.ThinkNode_JobGiver",
+      "baseType": "Verse.AI.ThinkNode",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.String Verse.AI.ThinkNode_JobGiver::get_CrawlingReportStringOverride()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.ThinkNode Verse.AI.ThinkNode_JobGiver::DeepCopy(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job Verse.AI.ThinkNode_JobGiver::TryGiveJob(Verse.Pawn)",
+          "public": false,
+          "protected": true,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.ThinkResult Verse.AI.ThinkNode_JobGiver::TryIssueJobPackage(Verse.Pawn,Verse.AI.JobIssueParams)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.ThinkNode_JobGiver::.ctor()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.AI.Pawn_JobTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.AI.Job Verse.AI.Pawn_JobTracker::curJob",
+        "Verse.AI.JobDriver Verse.AI.Pawn_JobTracker::curDriver",
+        "Verse.AI.JobQueue Verse.AI.Pawn_JobTracker::jobQueue",
+        "RimWorld.PawnPosture Verse.AI.Pawn_JobTracker::posture",
+        "System.Boolean Verse.AI.Pawn_JobTracker::startingNewJob",
+        "System.Boolean Verse.AI.Pawn_JobTracker::debugLog"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean Verse.AI.Pawn_JobTracker::get_HandlingFacing()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Pawn_JobTracker::get_DeterminingNextJob()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.AI.Pawn_JobTracker::get_StartedFormingCaravanTick()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::Notify_WorkTypeDisabled(Verse.WorkTypeDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::Notify_JoyKindDisabled(RimWorld.JoyKindDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::JobTrackerTick()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::JobTrackerTickInterval(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.Job> Verse.AI.Pawn_JobTracker::AllJobs()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::StartJob(Verse.AI.Job,Verse.AI.JobCondition,Verse.AI.ThinkNode,System.Boolean,System.Boolean,Verse.ThinkTreeDef,System.Nullable`1<Verse.AI.JobTag>,System.Boolean,System.Boolean,System.Nullable`1<System.Boolean>,System.Boolean,System.Boolean,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::EndCurrentOrQueuedJob(Verse.AI.Job,Verse.AI.JobCondition,System.Boolean,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::SuspendCurrentJob(Verse.AI.JobCondition,System.Boolean,System.Nullable`1<System.Boolean>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::EndCurrentJob(Verse.AI.JobCondition,System.Boolean,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.JobQueue Verse.AI.Pawn_JobTracker::CaptureAndClearJobQueue()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::RestoreCapturedJobs(Verse.AI.JobQueue,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::ClearQueuedJobs(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::ReleaseReservations(Verse.LocalTargetInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::CheckForJobOverride(System.Single,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::StopAll(System.Boolean,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job Verse.AI.Pawn_JobTracker::TryOpportunisticJob(Verse.AI.Job,Verse.AI.Job)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::SetFormingCaravanTick(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Pawn_JobTracker::IsCurrentJobPlayerInterruptible()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Pawn_JobTracker::TryTakeOrderedJobPrioritizedWork(Verse.AI.Job,RimWorld.WorkGiver,Verse.IntVec3)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Pawn_JobTracker::TryTakeOrderedJob(Verse.AI.Job,System.Nullable`1<Verse.AI.JobTag>,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::Notify_TuckedIntoBed(RimWorld.Building_Bed)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::Notify_DamageTaken(Verse.DamageInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::Notify_MasterStartedFieldWork()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::DrawLinesBetweenTargets()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::DebugLogEvent(System.String)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Pawn_JobTracker::ClearDriver()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.AI.JobDriver",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Int32 Verse.AI.JobDriver::PlaceInInventoryDuration",
+        "Verse.Pawn Verse.AI.JobDriver::pawn",
+        "Verse.AI.Job Verse.AI.JobDriver::job",
+        "System.Collections.Generic.List`1<System.Func`1<Verse.AI.JobCondition>> Verse.AI.JobDriver::globalFailConditions",
+        "System.Collections.Generic.List`1<System.Action`1<Verse.AI.JobCondition>> Verse.AI.JobDriver::globalFinishActions",
+        "System.Boolean Verse.AI.JobDriver::ended",
+        "System.Int32 Verse.AI.JobDriver::ticksLeftThisToil",
+        "Verse.AI.TargetIndex Verse.AI.JobDriver::rotateToFace",
+        "System.Boolean Verse.AI.JobDriver::asleep",
+        "System.Single Verse.AI.JobDriver::uninstallWorkLeft",
+        "System.Boolean Verse.AI.JobDriver::collideWithPawns",
+        "Verse.Pawn Verse.AI.JobDriver::locomotionUrgencySameAs",
+        "System.Int32 Verse.AI.JobDriver::debugTicksSpentThisToil"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.Rot4 Verse.AI.JobDriver::get_ForcedLayingRotation()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "UnityEngine.Vector3 Verse.AI.JobDriver::get_ForcedBodyOffset()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Toil Verse.AI.JobDriver::get_CurToil()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.JobDriver::get_HaveCurToil()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.AI.JobDriver::get_CurToilIndex()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.AI.JobDriver::get_CurToilString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.JobDriver::get_OnLastToil()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.SkillDef Verse.AI.JobDriver::get_ActiveSkill()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.JobDriver::get_HandlingFacing()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.JobDriver::get_PlayerInterruptable()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.LocalTargetInfo Verse.AI.JobDriver::get_TargetA()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.LocalTargetInfo Verse.AI.JobDriver::get_TargetB()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.LocalTargetInfo Verse.AI.JobDriver::get_TargetC()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing Verse.AI.JobDriver::get_TargetThingA()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::set_TargetThingA(Verse.Thing)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing Verse.AI.JobDriver::get_TargetThingB()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::set_TargetThingB(Verse.Thing)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing Verse.AI.JobDriver::get_TargetThingC()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::set_TargetThingC(Verse.Thing)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn Verse.AI.JobDriver::get_TargetPawnA()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::set_TargetPawnA(Verse.Pawn)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn Verse.AI.JobDriver::get_TargetPawnB()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::set_TargetPawnB(Verse.Pawn)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn Verse.AI.JobDriver::get_TargetPawnC()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::set_TargetPawnC(Verse.Pawn)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.IntVec3 Verse.AI.JobDriver::get_TargetLocA()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Map Verse.AI.JobDriver::get_Map()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.AI.JobDriver::GetReport()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.AI.JobDriver::GetReportStringOverride()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.AI.JobDriver::ReportStringProcessed(System.String)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.JobDriver::TryMakePreToilReservations(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.Toil> Verse.AI.JobDriver::MakeNewToils()",
+          "public": false,
+          "protected": true,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::SetInitialPosture()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::Cleanup(Verse.AI.JobCondition)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::SetFinalizerJob(System.Func`2<Verse.AI.JobCondition,Verse.AI.Job>)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job Verse.AI.JobDriver::GetFinalizerJob(Verse.AI.JobCondition)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.JobDriver::CanBeginNowWhileLyingDown()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::ClearToils()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::DriverTick()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::DriverTickInterval(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::ReadyForNextToil()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::EndJobWith(Verse.AI.JobCondition)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Object[] Verse.AI.JobDriver::TaleParameters()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::JumpToToil(Verse.AI.Toil)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::Notify_Starting()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::Notify_PatherArrived()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::Notify_PatherFailed()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::Notify_StanceChanged()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::Notify_DamageTaken(Verse.DamageInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Pawn Verse.AI.JobDriver::GetActor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::AddEndCondition(System.Func`1<Verse.AI.JobCondition>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::AddFailCondition(System.Func`1<System.Boolean>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::AddFinishAction(System.Action`1<Verse.AI.JobCondition>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.JobDriver::ModifyCarriedThingDrawPos(UnityEngine.Vector3&,System.Boolean&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.RandomSocialMode Verse.AI.JobDriver::DesiredSocialMode()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.JobDriver::IsContinuation(Verse.AI.Job)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Nullable`1<System.Boolean> Verse.AI.JobDriver::IsSameJobAs(Verse.AI.Job)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.JobDriver::.ctor()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.AI.Job",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.JobDef Verse.AI.Job::def",
+        "Verse.LocalTargetInfo Verse.AI.Job::targetA",
+        "Verse.LocalTargetInfo Verse.AI.Job::targetB",
+        "Verse.LocalTargetInfo Verse.AI.Job::targetC",
+        "System.Collections.Generic.List`1<Verse.LocalTargetInfo> Verse.AI.Job::targetQueueA",
+        "System.Collections.Generic.List`1<Verse.LocalTargetInfo> Verse.AI.Job::targetQueueB",
+        "RimWorld.Planet.GlobalTargetInfo Verse.AI.Job::globalTarget",
+        "System.Int32 Verse.AI.Job::count",
+        "System.Collections.Generic.List`1<System.Int32> Verse.AI.Job::countQueue",
+        "System.Int32 Verse.AI.Job::loadID",
+        "System.Int32 Verse.AI.Job::startTick",
+        "System.Int32 Verse.AI.Job::expiryInterval",
+        "System.Boolean Verse.AI.Job::checkOverrideOnExpire",
+        "System.Boolean Verse.AI.Job::playerForced",
+        "System.Boolean Verse.AI.Job::playerInterruptedForced",
+        "System.Boolean Verse.AI.Job::showCarryingInspectLine",
+        "System.Boolean Verse.AI.Job::flying",
+        "System.Boolean Verse.AI.Job::swimming",
+        "Verse.AI.TargetIndex Verse.AI.Job::intervalScalingTarget",
+        "System.Collections.Generic.List`1<Verse.ThingCountClass> Verse.AI.Job::placedThings",
+        "System.Int32 Verse.AI.Job::maxNumMeleeAttacks",
+        "System.Int32 Verse.AI.Job::maxNumStaticAttacks",
+        "Verse.AI.LocomotionUrgency Verse.AI.Job::locomotionUrgency",
+        "Verse.AI.HaulMode Verse.AI.Job::haulMode",
+        "RimWorld.Bill Verse.AI.Job::bill",
+        "RimWorld.ICommunicable Verse.AI.Job::commTarget",
+        "Verse.ThingDef Verse.AI.Job::plantDefToSow",
+        "Verse.ThingDef Verse.AI.Job::thingDefToCarry",
+        "Verse.Verb Verse.AI.Job::verbToUse",
+        "System.Boolean Verse.AI.Job::haulOpportunisticDuplicates",
+        "System.Boolean Verse.AI.Job::exitMapOnArrival",
+        "System.Boolean Verse.AI.Job::failIfCantJoinOrCreateCaravan",
+        "System.Boolean Verse.AI.Job::killIncappedTarget",
+        "System.Boolean Verse.AI.Job::ignoreForbidden",
+        "System.Boolean Verse.AI.Job::ignoreDesignations",
+        "System.Boolean Verse.AI.Job::canBashDoors",
+        "System.Boolean Verse.AI.Job::canBashFences",
+        "System.Boolean Verse.AI.Job::canUseRangedWeapon",
+        "System.Boolean Verse.AI.Job::haulDroppedApparel",
+        "System.Boolean Verse.AI.Job::restUntilHealed",
+        "System.Boolean Verse.AI.Job::ignoreJoyTimeAssignment",
+        "System.Boolean Verse.AI.Job::doUntilGatheringEnded",
+        "System.Boolean Verse.AI.Job::overeat",
+        "System.Boolean Verse.AI.Job::ingestTotalCount",
+        "System.Boolean Verse.AI.Job::attackDoorIfTargetLost",
+        "System.Int32 Verse.AI.Job::takeExtraIngestibles",
+        "System.Boolean Verse.AI.Job::expireRequiresEnemiesNearby",
+        "System.Boolean Verse.AI.Job::ensureReachable",
+        "System.Boolean Verse.AI.Job::expireOnEnemiesNearby",
+        "Verse.AI.Group.Lord Verse.AI.Job::lord",
+        "System.Boolean Verse.AI.Job::collideWithPawns",
+        "System.Boolean Verse.AI.Job::forceSleep",
+        "RimWorld.InteractionDef Verse.AI.Job::interaction",
+        "System.Boolean Verse.AI.Job::endIfCantShootTargetFromCurPos",
+        "System.Boolean Verse.AI.Job::endIfCantShootInMelee",
+        "System.Boolean Verse.AI.Job::checkEncumbrance",
+        "System.Single Verse.AI.Job::followRadius",
+        "System.Boolean Verse.AI.Job::endAfterTendedOnce",
+        "RimWorld.Quest Verse.AI.Job::quest",
+        "Verse.Mote Verse.AI.Job::mote",
+        "System.Single Verse.AI.Job::psyfocusTargetLast",
+        "System.Boolean Verse.AI.Job::wasOnMeditationTimeAssignment",
+        "System.Boolean Verse.AI.Job::reactingToMeleeThreat",
+        "System.Boolean Verse.AI.Job::preventFriendlyFire",
+        "Verse.RopingPriority Verse.AI.Job::ropingPriority",
+        "System.Boolean Verse.AI.Job::ropeToUnenclosedPens",
+        "System.Boolean Verse.AI.Job::showSpeechBubbles",
+        "RimWorld.Direction8Way Verse.AI.Job::lookDirection",
+        "Verse.Rot4 Verse.AI.Job::overrideFacing",
+        "System.Boolean Verse.AI.Job::forceMaintainFacing",
+        "System.String Verse.AI.Job::dutyTag",
+        "System.String Verse.AI.Job::ritualTag",
+        "System.String Verse.AI.Job::controlGroupTag",
+        "System.Int32 Verse.AI.Job::takeInventoryDelay",
+        "System.Boolean Verse.AI.Job::draftedTend",
+        "System.Boolean Verse.AI.Job::speechFaceSpectatorsIfPossible",
+        "Verse.SoundDef Verse.AI.Job::speechSoundMale",
+        "Verse.SoundDef Verse.AI.Job::speechSoundFemale",
+        "System.String Verse.AI.Job::biosculpterCycleKey",
+        "System.String Verse.AI.Job::reportStringOverride",
+        "System.String Verse.AI.Job::crawlingReportStringOverride",
+        "System.Boolean Verse.AI.Job::startInvoluntarySleep",
+        "System.Boolean Verse.AI.Job::isLearningDesire",
+        "System.Int32 Verse.AI.Job::interactableIndex",
+        "Verse.ThinkTreeDef Verse.AI.Job::jobGiverThinkTree",
+        "Verse.AI.ThinkNode Verse.AI.Job::jobGiver",
+        "RimWorld.WorkGiverDef Verse.AI.Job::workGiverDef",
+        "RimWorld.Ability Verse.AI.Job::ability",
+        "Verse.ILoadReferenceable Verse.AI.Job::source"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.RecipeDef Verse.AI.Job::get_RecipeDef()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.JobDriver Verse.AI.Job::get_GetCachedDriverDirect()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::Clear()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::.ctor(Verse.JobDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::.ctor(Verse.JobDef,Verse.LocalTargetInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::.ctor(Verse.JobDef,Verse.LocalTargetInfo,Verse.LocalTargetInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::.ctor(Verse.JobDef,Verse.LocalTargetInfo,Verse.LocalTargetInfo,Verse.LocalTargetInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::.ctor(Verse.JobDef,Verse.LocalTargetInfo,System.Int32,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::.ctor(Verse.JobDef,System.Int32,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job Verse.AI.Job::Clone()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.LocalTargetInfo Verse.AI.Job::GetTarget(Verse.AI.TargetIndex)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.LocalTargetInfo> Verse.AI.Job::GetTargetQueue(Verse.AI.TargetIndex)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::SetTarget(Verse.AI.TargetIndex,Verse.LocalTargetInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::AddQueuedTarget(Verse.AI.TargetIndex,Verse.LocalTargetInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.JobDriver Verse.AI.Job::MakeDriver(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.JobDriver Verse.AI.Job::GetCachedDriver(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Job::TryMakePreToilReservations(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.AI.Job::GetReport(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.LocalTargetInfo Verse.AI.Job::GetDestination(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Job::CanBeginNow(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Job::JobIsSameAs(Verse.Pawn,Verse.AI.Job)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Job::AnyTargetIs(Verse.LocalTargetInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Job::AnyTargetOutsideArea(Verse.Area)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.AI.Job::ToString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.AI.Job::GetUniqueLoadID()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Job::LogDetails(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.AI.Toil",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.Pawn Verse.AI.Toil::actor",
+        "System.Action Verse.AI.Toil::initAction",
+        "System.Action Verse.AI.Toil::tickAction",
+        "System.Action`1<System.Int32> Verse.AI.Toil::tickIntervalAction",
+        "System.Collections.Generic.List`1<System.Func`1<Verse.AI.JobCondition>> Verse.AI.Toil::endConditions",
+        "System.Collections.Generic.List`1<System.Action> Verse.AI.Toil::preInitActions",
+        "System.Collections.Generic.List`1<System.Action> Verse.AI.Toil::preTickActions",
+        "System.Collections.Generic.List`1<System.Action`1<System.Int32>> Verse.AI.Toil::preTickIntervalActions",
+        "System.Collections.Generic.List`1<System.Action> Verse.AI.Toil::finishActions",
+        "System.Boolean Verse.AI.Toil::atomicWithPrevious",
+        "RimWorld.RandomSocialMode Verse.AI.Toil::socialMode",
+        "System.Func`1<RimWorld.SkillDef> Verse.AI.Toil::activeSkill",
+        "Verse.AI.ToilCompleteMode Verse.AI.Toil::defaultCompleteMode",
+        "System.Int32 Verse.AI.Toil::defaultDuration",
+        "System.Boolean Verse.AI.Toil::handlingFacing",
+        "System.Boolean Verse.AI.Toil::inPool",
+        "System.String Verse.AI.Toil::debugName"
+      ],
+      "methods": [
+        {
+          "signature": "System.Void Verse.AI.Toil::Clear()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Toil::Cleanup(System.Int32,Verse.AI.JobDriver)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn Verse.AI.Toil::GetActor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Toil::AddFailCondition(System.Func`1<System.Boolean>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Toil::AddEndCondition(System.Func`1<Verse.AI.JobCondition>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Toil::AddPreInitAction(System.Action)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Toil::AddPreTickAction(System.Action)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Toil::AddPreTickIntervalAction(System.Action`1<System.Int32>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.Toil::AddFinishAction(System.Action)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.AI.Toil::ToString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Toil::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.AI.ReservationManager",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Int32 Verse.AI.ReservationManager::StackCount_All"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation> Verse.AI.ReservationManager::get_ReservationsReadOnly()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ReservationManager::.ctor(Verse.Map)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ReservationManager::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::IsReserved(Verse.LocalTargetInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ReservationManager::ReserversOf(Verse.LocalTargetInfo,System.Collections.Generic.HashSet`1<Verse.Pawn>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::HasReservedOfDef(Verse.Pawn,Verse.ThingDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::CanReserve(Verse.Pawn,Verse.LocalTargetInfo,System.Int32,System.Int32,Verse.ReservationLayerDef,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.AI.ReservationManager::CanReserveStack(Verse.Pawn,Verse.LocalTargetInfo,System.Int32,Verse.ReservationLayerDef,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::Reserve(Verse.Pawn,Verse.AI.Job,Verse.LocalTargetInfo,System.Int32,System.Int32,Verse.ReservationLayerDef,System.Boolean,System.Boolean,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ReservationManager::Release(Verse.LocalTargetInfo,Verse.Pawn,Verse.AI.Job)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ReservationManager::ReleaseAllForTarget(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ReservationManager::ReleaseClaimedBy(Verse.Pawn,Verse.AI.Job)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.AI.ReservationManager::ReleaseAllClaimedBy(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.LocalTargetInfo Verse.AI.ReservationManager::FirstReservationFor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::IsReservedByAnyoneOf(Verse.LocalTargetInfo,RimWorld.Faction)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::TryGetReserver(Verse.LocalTargetInfo,RimWorld.Faction,Verse.Pawn&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::OnlyReservationsForJobDef(Verse.LocalTargetInfo,Verse.JobDef,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::IsReservedAndRespected(Verse.LocalTargetInfo,Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::IsReservedAndRespected(Verse.LocalTargetInfo,RimWorld.Faction)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn Verse.AI.ReservationManager::FirstRespectedReserver(Verse.LocalTargetInfo,Verse.Pawn,Verse.ReservationLayerDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::ReservedBy(Verse.LocalTargetInfo,Verse.Pawn,Verse.AI.Job)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.AI.ReservationManager::ReservedBy(Verse.LocalTargetInfo,Verse.Pawn,System.Nullable`1<Verse.LocalTargetInfo>,System.Nullable`1<Verse.LocalTargetInfo>,System.Nullable`1<Verse.LocalTargetInfo>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.AI.ReservationManager::AllReservedThings()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.AI.Group.LordJob",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.AI.Group.Lord Verse.AI.Group.LordJob::lord"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_LostImportantReferenceDuringLoading()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_AllowStartNewGatherings()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_AllowStartNewRituals()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_NeverInRestraints()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_GuiltyOnDowned()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_CanBlockHostileVisitors()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_AddFleeToil()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_OrganizerIsStartingPawn()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_KeepExistingWhileHasAnyBuilding()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_AlwaysShowWeapon()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_IsCaravanSendable()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_ManagesRopableAnimals()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_DontInterruptLayingPawnsOnCleanup()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_CanAutoAddPawns()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::get_ShouldExistWithoutPawns()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Map Verse.AI.Group.LordJob::get_Map()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Group.StateGraph Verse.AI.Group.LordJob::CreateGraph()",
+          "public": true,
+          "protected": false,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::LordJobTick()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Cleanup()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::PostCleanup()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_AddedToLord()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_PawnAdded(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_PawnLost(Verse.Pawn,Verse.AI.Group.PawnLostCondition)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_PawnJobDone(Verse.Pawn,Verse.AI.JobCondition)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_InMentalState(Verse.Pawn,Verse.MentalStateDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_BuildingAdded(Verse.Building)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_CorpseAdded(Verse.Corpse)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_BuildingLost(Verse.Building)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_CorpseLost(Verse.Corpse)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_LordDestroyed()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_MapRemoved()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_PawnUndowned(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Notify_PawnDowned(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.ThinkResult Verse.AI.Group.LordJob::Notify_DutyConstantResult(Verse.AI.ThinkResult,Verse.Pawn,Verse.AI.JobIssueParams)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.ThinkResult Verse.AI.Group.LordJob::Notify_DutyResult(Verse.AI.ThinkResult,Verse.Pawn,Verse.AI.JobIssueParams)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.AI.Group.LordJob::GetJobReport(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.AI.Group.LordJob::GetReport(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::CanOpenAnyDoor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::ShouldRemovePawn(Verse.Pawn,Verse.AI.Group.PawnLostCondition)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Gizmo> Verse.AI.Group.LordJob::GetPawnGizmos(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::EndPawnJobOnCleanup(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::BlocksSocialInteraction(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::DutyActiveWhenDown(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AcceptanceReport Verse.AI.Group.LordJob::AllowsFloatMenu(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::PrisonerSecure(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AcceptanceReport Verse.AI.Group.LordJob::AbilityAllowed(RimWorld.Ability)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AcceptanceReport Verse.AI.Group.LordJob::AllowsDrafting(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.AI.Group.LordJob::ValidateAttackTarget(Verse.Pawn,Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Unity.Collections.NativeBitArray Verse.AI.Group.LordJob::GetWalkGrid(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::Dispose()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.AI.Group.LordJob::.ctor()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.WorkGiver_DoBill",
+      "baseType": "RimWorld.WorkGiver_Scanner",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "Verse.AI.PathEndMode RimWorld.WorkGiver_DoBill::get_PathEndMode()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Danger RimWorld.WorkGiver_DoBill::MaxPathDanger(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.ThingRequest RimWorld.WorkGiver_DoBill::get_PotentialWorkThingRequest()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.WorkGiver_DoBill::ShouldSkip(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.WorkGiver_DoBill::JobOnThing(Verse.Pawn,Verse.Thing,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.WorkGiver_DoBill::TryStartNewDoBillJob(Verse.Pawn,RimWorld.Bill,RimWorld.IBillGiver,System.Collections.Generic.List`1<Verse.ThingCount>,Verse.AI.Job&,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.WorkGiver_DoBill::ThingIsUsableBillGiver(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.WorkGiver_DoBill::TryFindBestFixedIngredients(System.Collections.Generic.List`1<Verse.IngredientCount>,Verse.Pawn,Verse.Thing,System.Collections.Generic.List`1<Verse.ThingCount>,System.Single)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.MedicalCareCategory RimWorld.WorkGiver_DoBill::GetMedicalCareCategory(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.WorkGiver_DoBill::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Bill_Production",
+      "baseType": "RimWorld.Bill",
+      "publicFields": [
+        "RimWorld.BillRepeatModeDef RimWorld.Bill_Production::repeatMode",
+        "System.Int32 RimWorld.Bill_Production::repeatCount",
+        "System.Int32 RimWorld.Bill_Production::targetCount",
+        "System.Boolean RimWorld.Bill_Production::pauseWhenSatisfied",
+        "System.Int32 RimWorld.Bill_Production::unpauseWhenYouHave",
+        "System.Boolean RimWorld.Bill_Production::includeEquipped",
+        "System.Boolean RimWorld.Bill_Production::includeTainted",
+        "Verse.FloatRange RimWorld.Bill_Production::hpRange",
+        "RimWorld.QualityRange RimWorld.Bill_Production::qualityRange",
+        "System.Boolean RimWorld.Bill_Production::limitToAllowedStuff",
+        "System.Boolean RimWorld.Bill_Production::paused"
+      ],
+      "methods": [
+        {
+          "signature": "System.String RimWorld.Bill_Production::get_StatusString()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Bill_Production::get_StatusLineMinHeight()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Bill_Production::get_RepeatInfoText()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Bill_Production::get_RenamableLabel()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::set_RenamableLabel(System.String)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Bill_Production::get_BaseLabel()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Bill_Production::get_InspectLabel()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Bill_Production::get_LabelCap()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::.ctor(Verse.RecipeDef,RimWorld.Precept_ThingStyle)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.BillStoreModeDef RimWorld.Bill_Production::GetStoreMode()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.ISlotGroup RimWorld.Bill_Production::GetSlotGroup()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::SetIncludeGroup(RimWorld.ISlotGroup)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.ISlotGroup RimWorld.Bill_Production::GetIncludeSlotGroup()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::SetStoreMode(RimWorld.BillStoreModeDef,RimWorld.ISlotGroup)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Bill_Production::ShouldDoNow()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::Notify_IterationCompleted(Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Window RimWorld.Bill_Production::GetBillDialog()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::DoConfigInterface(UnityEngine.Rect,UnityEngine.Color)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::DoStatusLineInterface(UnityEngine.Rect)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Bill_Production::ValidateSettings()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.Bill RimWorld.Bill_Production::Clone()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "Verse.GenRecipe",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.GenRecipe::MakeRecipeProducts(Verse.RecipeDef,Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>,Verse.Thing,RimWorld.IBillGiver,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.GenRecipe::FinalizeGestatedPawns(RimWorld.Bill_Mech,Verse.Pawn,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.Thing",
+      "baseType": "Verse.Entity",
+      "publicFields": [
+        "Verse.ThingDef Verse.Thing::def",
+        "System.Int32 Verse.Thing::thingIDNumber",
+        "System.Int32 Verse.Thing::stackCount",
+        "Verse.ThingOwner Verse.Thing::holdingOwner",
+        "System.Collections.Generic.List`1<System.String> Verse.Thing::questTags",
+        "System.Int32 Verse.Thing::spawnedTick",
+        "System.Int32 Verse.Thing::despawnedTick",
+        "System.Nullable`1<System.Int32> Verse.Thing::overrideGraphicIndex",
+        "System.Boolean Verse.Thing::debugRotLocked",
+        "System.Boolean Verse.Thing::shouldHighlightCached",
+        "System.Int32 Verse.Thing::shouldHighlightCachedTick",
+        "UnityEngine.Color Verse.Thing::highlightColorCached",
+        "System.Int32 Verse.Thing::highlightColorCachedTick",
+        "System.Boolean Verse.Thing::allowDestroyNonDestroyable",
+        "System.Collections.Generic.HashSet`1<RimWorld.RitualPatternDef> Verse.Thing::showingGizmosForRitualsTmp",
+        "System.Single Verse.Thing::SmeltCostRecoverFraction"
+      ],
+      "methods": [
+        {
+          "signature": "System.Int32 Verse.Thing::get_HitPoints()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::set_HitPoints(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::get_MaxHitPoints()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.Thing::get_MarketValue()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Thing::get_RoyalFavorValue()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Nullable`1<System.Int32> Verse.Thing::get_OverrideGraphicIndex()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "UnityEngine.Texture Verse.Thing::get_UIIconOverride()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_EverSeenByPlayer()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::set_EverSeenByPlayer(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.ThingStyleDef Verse.Thing::get_StyleDef()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::set_StyleDef(Verse.ThingStyleDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.Precept_ThingStyle Verse.Thing::get_StyleSourcePrecept()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::set_StyleSourcePrecept(RimWorld.Precept_ThingStyle)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_FlammableNow()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_FireBulwark()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_Destroyed()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_Discarded()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_Spawned()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_SpawnedOrAnyParentSpawned()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing Verse.Thing::get_SpawnedParentOrMe()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::get_TickSpawned()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::get_TickDeSpawned()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Map Verse.Thing::get_Map()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Map Verse.Thing::get_MapHeld()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.IntVec3 Verse.Thing::get_Position()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::set_Position(Verse.IntVec3)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.IntVec3 Verse.Thing::get_PositionHeld()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Rot4 Verse.Thing::get_Rotation()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::set_Rotation(Verse.Rot4)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_Smeltable()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_BurnableByRecipe()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.IThingHolder Verse.Thing::get_ParentHolder()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.Faction Verse.Thing::get_Faction()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_ThingID()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::set_ThingID(System.String)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::IDNumberFromThingID(System.String)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.IntVec2 Verse.Thing::get_RotatedSize()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Nullable`1<Verse.CellRect> Verse.Thing::get_CustomRectForSelector()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_Label()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_LabelNoCount()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_LabelCap()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_LabelCapNoCount()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_LabelShort()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_LabelNoParenthesis()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_LabelNoParenthesisCap()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.ModContentPack Verse.Thing::get_ContentSource()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_IngestibleNow()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.ThingDef Verse.Thing::get_Stuff()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Graphic Verse.Thing::get_DefaultGraphic()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Graphic Verse.Thing::get_Graphic()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.IntVec3> Verse.Thing::get_InteractionCells()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.IntVec3 Verse.Thing::get_InteractionCell()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Thing::get_AmbientTemperature()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Planet.PlanetTile Verse.Thing::get_Tile()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_Suspended()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_InCryptosleep()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Thing::get_DescriptionDetailed()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::get_DescriptionFlavor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_IsOnHoldingPlatform()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.TerrainAffordanceDef Verse.Thing::get_TerrainAffordanceNeeded()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::get_BeingTransportedOnGravship()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::get_MinTickIntervalRate()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::get_MaxTickIntervalRate()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::get_UpdateRateTickOffset()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::get_UpdateRateTicks()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::DoTick()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::PostMake()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PostPostMake()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PostQualitySet()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::GetUniqueLoadID()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::SpawnSetup(Verse.Map,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::DeSpawnOrDeselect(Verse.DestroyMode)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::DeSpawn(Verse.DestroyMode)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Kill(System.Nullable`1<Verse.DamageInfo>,Verse.Hediff)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Destroy(Verse.DestroyMode)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PreTraded(RimWorld.TradeAction,Verse.Pawn,RimWorld.ITrader)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PostGeneratedForTrader(RimWorld.TraderKindDef,RimWorld.Planet.PlanetTile,RimWorld.Faction)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Thing::GetBeauty(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_MyMapRemoved()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_LordDestroyed()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_AbandonedAtTile(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_KilledLeavingsLeft(System.Collections.Generic.List`1<Verse.Thing>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_Studied(Verse.Pawn,System.Single,RimWorld.KnowledgeCategoryDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_Unfogged()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::ForceSetStateToUnspawned()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::DecrementMapIndex()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PostMapInit()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Nullable`1<UnityEngine.Vector3> Verse.Thing::get_DrawPosHeld()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Vector3 Verse.Thing::get_DrawPos()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "UnityEngine.Vector2 Verse.Thing::get_DrawSize()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "UnityEngine.Color Verse.Thing::get_DrawColor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::set_DrawColor(UnityEngine.Color)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "UnityEngine.Color Verse.Thing::get_DrawColorTwo()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::DrawNowAt(UnityEngine.Vector3,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::DynamicDrawPhase(Verse.DrawPhase)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::DynamicDrawPhaseAt(Verse.DrawPhase,UnityEngine.Vector3,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::DrawAt(UnityEngine.Vector3,System.Boolean)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Print(Verse.SectionLayer)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::DirtyMapMesh(Verse.Map)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::DrawGUIOverlay()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::DrawExtraSelectionOverlays()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::GetInspectString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::GetInspectStringLowPriority()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Gizmo> Verse.Thing::GetGizmos()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.FloatMenuOption> Verse.Thing::GetFloatMenuOptions(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.FloatMenuOption> Verse.Thing::GetMultiSelectFloatMenuOptions(System.Collections.Generic.IEnumerable`1<Verse.Pawn>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.InspectTabBase> Verse.Thing::GetInspectTabs()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Thing::GetCustomLabelNoCount(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.DamageWorker/DamageResult Verse.Thing::TakeDamage(Verse.DamageInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::PreApplyDamage(Verse.DamageInfo&,System.Boolean&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PostApplyDamage(Verse.DamageInfo,System.Single)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::CanStackWith(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::TryAbsorbStack(Verse.Thing,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Thing Verse.Thing::SplitOff(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<RimWorld.StatDrawEntry> Verse.Thing::SpecialDisplayStats()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.DefHyperlink> Verse.Thing::get_DescriptionHyperlinks()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_ColorChanged()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_Equipped(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_Unequipped(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_UsedVerb(Verse.Pawn,Verse.Verb)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_UsedWeapon(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_DebugSpawned()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_MinifiedThingAboutToBeDestroyed(Verse.DestroyMode)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_RecipeProduced(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_SignalReceived(RimWorld.Signal)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_Explosion(Verse.Explosion)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_BulletImpactNearby(RimWorld.BulletImpactData)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_ThingSelected()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.TipSignal Verse.Thing::GetTooltip()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::BlocksPawn(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::SetFactionDirect(RimWorld.Faction)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::SetFaction(RimWorld.Faction,Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AcceptanceReport Verse.Thing::ClaimableBy(RimWorld.Faction)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::AdoptableBy(RimWorld.Faction,System.Text.StringBuilder)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::FactionPreventsClaimingOrAdopting(RimWorld.Faction,System.Boolean,System.String&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::SetPositionDirect(Verse.IntVec3)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::SetStuffDirect(Verse.ThingDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Thing::ToString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::Equals(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Thing::GetHashCode()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Discard(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_DefsHotReloaded()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.Thing::ButcherProducts(Verse.Pawn,System.Single)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.Thing::StoneBlockProducts(Verse.Pawn,System.Single)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.Thing::SmeltProducts(System.Single)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Thing::Ingested(Verse.Pawn,System.Single)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Thing::PrePostIngested(Verse.Pawn)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PostIngested(Verse.Pawn)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::IngestedCalculateAmounts(Verse.Pawn,System.Single,System.Int32&,System.Single&)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Thing::PreventPlayerSellingThingsNearby(System.String&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PreSwapMap()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::PostSwapMap()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::Notify_LeftBehind()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Thing::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.ThingOwner",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.LookMode Verse.ThingOwner::contentsLookMode",
+        "System.Boolean Verse.ThingOwner::removeContentsIfDestroyed",
+        "System.Boolean Verse.ThingOwner::dontTickContents"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.IThingHolder Verse.ThingOwner::get_Owner()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::get_Count()",
+          "public": true,
+          "protected": false,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Thing Verse.ThingOwner::get_Item(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::get_Any()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::add_OnContentsChanged(System.Action)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::remove_OnContentsChanged(System.Action)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::get_TotalStackCount()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.ThingOwner::get_ContentsString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder,Verse.LookMode,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder,System.Boolean,Verse.LookMode,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::DoTick()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::Clear()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::ClearAndDestroyContents(Verse.DestroyMode)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::ClearAndDestroyContentsOrPassToWorld(Verse.DestroyMode)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::CanAcceptAnyOf(Verse.Thing,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::GetCountCanAccept(Verse.Thing,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::TryAdd(Verse.Thing,System.Int32,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::TryAdd(Verse.Thing,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::IndexOf(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::Remove(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Thing Verse.ThingOwner::GetAt(System.Int32)",
+          "public": false,
+          "protected": true,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::Contains(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::RemoveAt(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::TryAddOrTransfer(Verse.Thing,System.Int32,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::TryAddOrTransfer(Verse.Thing,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::TryAddRangeOrTransfer(System.Collections.Generic.IEnumerable`1<Verse.Thing>,System.Boolean,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::RemoveAll(System.Predicate`1<Verse.Thing>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Int32,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Int32,Verse.Thing&,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::TryTransferAllToContainer(Verse.ThingOwner,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing Verse.ThingOwner::Take(Verse.Thing,System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing Verse.ThingOwner::Take(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.ThingPlaceMode,System.Int32,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,System.Int32,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::TryDropAll(Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::Contains(Verse.ThingDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner::Contains(Verse.ThingDef,System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner::TotalStackCountOfDef(Verse.ThingDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::Notify_ContainedItemDestroyed(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::NotifyAdded(Verse.Thing)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::NotifyAddedAndMergedWith(Verse.Thing,System.Int32)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner::NotifyRemoved(Verse.Thing)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "Verse.ThingOwner`1",
+      "baseType": "Verse.ThingOwner",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<T> Verse.ThingOwner`1::get_InnerListForReading()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "T Verse.ThingOwner`1::get_Item(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner`1::get_Count()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::.ctor(Verse.IThingHolder)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::.ctor(Verse.IThingHolder,Verse.LookMode,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::.ctor(Verse.IThingHolder,System.Boolean,Verse.LookMode,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.List`1/Enumerator<T> Verse.ThingOwner`1::GetEnumerator()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner`1::GetCountCanAccept(Verse.Thing,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner`1::TryAdd(Verse.Thing,System.Int32,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner`1::TryAdd(Verse.Thing,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::NotifyAdded(Verse.Thing)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::NotifyRemoved(Verse.Thing)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::TryAddRangeOrTransfer(System.Collections.Generic.IEnumerable`1<T>,System.Boolean,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner`1::IndexOf(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner`1::Remove(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner`1::RemoveAll(System.Predicate`1<T>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing Verse.ThingOwner`1::GetAt(System.Int32)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.ThingOwner`1::GetThingsOfType(System.Collections.Generic.List`1<J>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.ThingOwner`1::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Int32,T&,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "T Verse.ThingOwner`1::Take(Verse.Thing,System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "T Verse.ThingOwner`1::Take(Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner`1::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,System.Int32,T&,System.Action`2<T,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner`1::TryDrop(Verse.Thing,Verse.ThingPlaceMode,T&,System.Action`2<T,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.ThingOwner`1::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,T&,System.Action`2<T,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.TradeDeal",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Collections.Generic.List`1<System.String> RimWorld.TradeDeal::cannotSellReasons"
+      ],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.TradeDeal::get_TradeableCount()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Tradeable RimWorld.TradeDeal::get_CurrencyTradeable()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Tradeable> RimWorld.TradeDeal::get_AllTradeables()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TradeDeal::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TradeDeal::Reset()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TradeDeal::UpdateCurrencyCount()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TradeDeal::TryExecute(System.Boolean&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TradeDeal::DoesTraderHaveEnoughSilver()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Tradeable",
+      "baseType": "RimWorld.Transferable",
+      "publicFields": [
+        "System.Collections.Generic.List`1<Verse.Thing> RimWorld.Tradeable::thingsColony",
+        "System.Collections.Generic.List`1<Verse.Thing> RimWorld.Tradeable::thingsTrader",
+        "System.Single RimWorld.Tradeable::NegotiatorLeaderOffset"
+      ],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.Tradeable::get_CountToTransfer()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Tradeable::set_CountToTransfer(System.Int32)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Thing RimWorld.Tradeable::get_FirstThingColony()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing RimWorld.Tradeable::get_FirstThingTrader()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Tradeable::get_Label()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Tradeable::get_BaseMarketValue()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Tradeable::get_Interactive()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Tradeable::get_TraderWillTrade()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Tradeable::get_HasAnyThing()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Thing RimWorld.Tradeable::get_AnyThing()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.ThingDef RimWorld.Tradeable::get_ThingDef()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.ThingDef RimWorld.Tradeable::get_StuffDef()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Tradeable::get_TipDescription()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.TradeAction RimWorld.Tradeable::get_ActionToDo()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Tradeable::get_IsCurrency()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Tradeable::get_IsFavor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Tradeable::CostToInt(System.Single)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.TransferablePositiveCountDirection RimWorld.Tradeable::get_PositiveCountDirection()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Tradeable::get_CurTotalCurrencyCostForSource()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Tradeable::get_CurTotalCurrencyCostForDestination()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Window RimWorld.Tradeable::get_NewInfoDialog()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Tradeable::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Tradeable::.ctor(Verse.Thing,Verse.Thing)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Tradeable::AddThing(Verse.Thing,RimWorld.Transactor)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.PriceType RimWorld.Tradeable::PriceTypeFor(RimWorld.TradeAction)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Tradeable::GetPriceTooltip(RimWorld.TradeAction)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Tradeable::GetPriceFor(RimWorld.TradeAction)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Tradeable::GetMinimumToTransfer()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Tradeable::GetMaximumToTransfer()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AcceptanceReport RimWorld.Tradeable::UnderflowReport()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AcceptanceReport RimWorld.Tradeable::OverflowReport()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Tradeable::CountHeldBy(RimWorld.Transactor)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Tradeable::CountPostDealFor(RimWorld.Transactor)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Tradeable::ResolveTrade()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Tradeable::ToString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Tradeable::GetHashCode()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Tradeable::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_RelationsTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Boolean RimWorld.Pawn_RelationsTracker::everSeenByPlayer",
+        "System.Boolean RimWorld.Pawn_RelationsTracker::canGetRescuedThought",
+        "Verse.Pawn RimWorld.Pawn_RelationsTracker::relativeInvolvedInRescueQuest",
+        "RimWorld.MarriageNameChange RimWorld.Pawn_RelationsTracker::nextMarriageNameChange",
+        "System.Boolean RimWorld.Pawn_RelationsTracker::hidePawnRelations",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::romanceEnableTick",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::FriendOpinionThreshold",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::RivalOpinionThreshold",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::MinLovinAge",
+        "System.Single RimWorld.Pawn_RelationsTracker::PsychicLoveFactor"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.DirectPawnRelation> RimWorld.Pawn_RelationsTracker::get_DirectRelations()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.VirtualPawnRelation> RimWorld.Pawn_RelationsTracker::get_VirtualRelations()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_Children()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::get_ChildrenCount()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::get_IsTryRomanceOnCooldown()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::get_RelatedToAnyoneOrAnyoneRelatedToMe()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_FamilyByBlood()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_PotentiallyRelatedPawns()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_RelatedPawns()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.PregnancyApproach RimWorld.Pawn_RelationsTracker::GetPregnancyApproachForPartner(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::SetPregnancyApproach(Verse.Pawn,RimWorld.PregnancyApproach)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RelationsTrackerTickInterval(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.DirectPawnRelation RimWorld.Pawn_RelationsTracker::GetDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn RimWorld.Pawn_RelationsTracker::GetFirstDirectRelationPawn(RimWorld.PawnRelationDef,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::GetDirectRelationsCount(RimWorld.PawnRelationDef,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::DirectRelationExists(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::VirtualRelationExists(RimWorld.PawnRelationDef,RimWorld.RelationshipRecord)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::GetDirectRelations(RimWorld.PawnRelationDef,System.Collections.Generic.List`1<Verse.Pawn>&,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ElevateToVirtualRelation(RimWorld.DirectPawnRelation)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::AddDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveRelation(RimWorld.RelationshipRecord)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveDirectRelation(RimWorld.DirectPawnRelation)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::TryRemoveDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::OpinionOf(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_RelationsTracker::OpinionExplanation(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::SecondaryLovinChanceFactor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::PrettinessFactor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::LovinAgeFactor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::SecondaryRomanceChanceFactor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::CompatibilityWith(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::ConstantPerPawnsPairCompatibilityOffset(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ClearAllRelations()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ClearAllNonBloodRelations()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnDestroyed(Verse.DestroyMode)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PassedToWorld()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnLeftBehind()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_ExitedMap()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_ChangedFaction()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnSold(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnKidnapped()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_RescuedBy(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_FailedRescueQuest()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::GetFriendDiedThoughtPowerFactor(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::GetRivalDiedThoughtPowerFactor(System.Int32)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::CheckAppendBondedAnimalDiedInfo(Verse.TaggedString&,Verse.TaggedString&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.JobDriver_TendPatient",
+      "baseType": "Verse.AI.JobDriver",
+      "publicFields": [
+        "System.Int32 RimWorld.JobDriver_TendPatient::BaseTendDuration"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.Thing RimWorld.JobDriver_TendPatient::get_MedicineUsed()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn RimWorld.JobDriver_TendPatient::get_Deliveree()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.JobDriver_TendPatient::get_IsMedicineInDoctorInventory()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn_InventoryTracker RimWorld.JobDriver_TendPatient::get_MedicineHolderInventory()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn RimWorld.JobDriver_TendPatient::get_OtherPawnMedicineHolder()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_TendPatient::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_TendPatient::Notify_Starting()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.JobDriver_TendPatient::TryMakePreToilReservations(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.Toil> RimWorld.JobDriver_TendPatient::MakeNewToils()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_TendPatient::Notify_DamageTaken(Verse.DamageInfo)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.AI.Toil> RimWorld.JobDriver_TendPatient::CollectMedicineToils(Verse.Pawn,Verse.Pawn,Verse.AI.Job,Verse.AI.Toil,Verse.AI.Toil&)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Toil RimWorld.JobDriver_TendPatient::FindMoreMedicineToil(Verse.Pawn,Verse.Pawn,Verse.AI.TargetIndex,Verse.AI.Job,Verse.AI.Toil)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_TendPatient::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.JobDriver_FeedBaby",
+      "baseType": "Verse.AI.JobDriver",
+      "publicFields": [
+        "System.Single RimWorld.JobDriver_FeedBaby::BabyFedMemoryFoodNeedIncrease"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.Pawn RimWorld.JobDriver_FeedBaby::get_Baby()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.JobDriver_FeedBaby::TryMakePreToilReservations(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.Toil> RimWorld.JobDriver_FeedBaby::FeedBaby()",
+          "public": false,
+          "protected": true,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Toil RimWorld.JobDriver_FeedBaby::get_FeedingToil()",
+          "public": false,
+          "protected": true,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_FeedBaby::set_FeedingToil(Verse.AI.Toil)",
+          "public": false,
+          "protected": true,
+          "abstract": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.JobDriver_FeedBaby::get_Feeding()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.Toil> RimWorld.JobDriver_FeedBaby::MakeNewToils()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_FeedBaby::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_FeedBaby::.ctor()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.JobDriver_Breastfeed",
+      "baseType": "RimWorld.JobDriver_FeedBaby",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "Verse.AI.Toil RimWorld.JobDriver_Breastfeed::get_FeedingToil()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_Breastfeed::set_FeedingToil(Verse.AI.Toil)",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.JobDriver_Breastfeed::TryMakePreToilReservations(System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_Breastfeed::SetInitialPosture()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.JobDriver_Breastfeed::CanBeginNowWhileLyingDown()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.Toil> RimWorld.JobDriver_Breastfeed::FeedBaby()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobDriver_Breastfeed::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.GameComponent",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Void Verse.GameComponent::GameComponentUpdate()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.GameComponent::GameComponentTick()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.GameComponent::GameComponentOnGUI()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.GameComponent::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.GameComponent::FinalizeInit()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.GameComponent::StartedNewGame()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.GameComponent::LoadedGame()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.GameComponent::AppendDebugString(System.Text.StringBuilder)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.GameComponent::.ctor()",
+          "public": false,
+          "protected": true,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.Scribe_Values",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Void Verse.Scribe_Values::Look(T&,System.String,T,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.Scribe_Deep",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Void Verse.Scribe_Deep::Look(T&,System.String,System.Object[])",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Scribe_Deep::Look(T&,System.Boolean,System.String,System.Object[])",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Scribe_Deep::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.Scribe_References",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Void Verse.Scribe_References::Look(T&,System.String,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Scribe_References::Look(Verse.WeakReference`1<T>&,System.String,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Scribe_References::CheckSaveReferenceToDestroyedThing(Verse.Thing,System.String,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Scribe_References::CheckSaveReferenceToDestroyedWorldObject(RimWorld.Planet.WorldObject,System.String,System.Boolean)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Joy",
+      "baseType": "RimWorld.Need",
+      "publicFields": [
+        "RimWorld.JoyToleranceSet RimWorld.Need_Joy::tolerances"
+      ],
+      "methods": [
+        {
+          "signature": "RimWorld.JoyCategory RimWorld.Need_Joy::get_CurCategory()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Joy::get_GUIChangeArrow()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::.ctor(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::SetInitialLevel()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::GainJoy(System.Single,RimWorld.JoyKindDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::NeedInterval()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Joy::GetTipString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.JoyToleranceSet",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.JoyToleranceSet::get_Item(RimWorld.JoyKindDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.JoyToleranceSet::ExposeData()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.JoyToleranceSet::BoredOf(RimWorld.JoyKindDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.JoyToleranceSet::Notify_JoyGained(System.Single,RimWorld.JoyKindDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.JoyToleranceSet::JoyFactorFromTolerance(RimWorld.JoyKindDef)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.JoyToleranceSet::NeedInterval(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.JoyToleranceSet::TolerancesString()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.JoyToleranceSet::BoredOfKinds(System.Collections.Generic.List`1<RimWorld.JoyKindDef>)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.JoyToleranceSet::BoredOfAllAvailableJoyKinds(Verse.Pawn)",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.JoyToleranceSet::.ctor()",
+          "public": true,
+          "protected": false,
+          "abstract": false,
+          "virtual": false
+        }
+      ]
+    }
+  ],
+  "selectedCallEvidence": [
+    {
+      "method": "System.Boolean RimWorld.TradeDeal::TryExecute(System.Boolean&)",
+      "hasBody": true,
+      "calls": [
+        "System.Void RimWorld.TradeDeal::UpdateCurrencyCount()",
+        "System.Void RimWorld.TradeDeal::LimitCurrencyCountToFunds()",
+        "RimWorld.Faction RimWorld.ITrader::get_Faction()",
+        "System.Int32 RimWorld.Planet.FactionGiftUtility::GetGoodwillChange(System.Collections.Generic.List`1<RimWorld.Tradeable>,RimWorld.Faction)",
+        "RimWorld.Planet.GlobalTargetInfo RimWorld.Planet.GlobalTargetInfo::op_Implicit(Verse.Thing)",
+        "System.Void RimWorld.Planet.FactionGiftUtility::GiveGift(System.Collections.Generic.List`1<RimWorld.Tradeable>,RimWorld.Faction,RimWorld.Planet.GlobalTargetInfo)",
+        "RimWorld.Tradeable RimWorld.TradeDeal::get_CurrencyTradeable()",
+        "System.Int32 RimWorld.Tradeable::CountPostDealFor(RimWorld.Transactor)",
+        "Verse.WindowStack Verse.Find::get_WindowStack()",
+        "WindowType Verse.WindowStack::WindowOfType<RimWorld.Dialog_Trade>()",
+        "System.Void RimWorld.Dialog_Trade::FlashSilver()",
+        "Verse.TaggedString Verse.Translator::Translate(System.String)",
+        "System.String Verse.TaggedString::op_Implicit(Verse.TaggedString)",
+        "System.Void Verse.Messages::Message(System.String,Verse.MessageTypeDef,System.Boolean)",
+        "System.Boolean Verse.ModsConfig::get_IdeologyActive()",
+        "System.Boolean RimWorld.TradeDeal/<>c::<TryExecute>b__14_0(RimWorld.Tradeable)",
+        "System.Void System.Predicate`1<RimWorld.Tradeable>::.ctor(System.Object,System.IntPtr)",
+        "System.Boolean Verse.GenCollection::Any<RimWorld.Tradeable>(System.Collections.Generic.List`1<T>,System.Predicate`1<T>)",
+        "Verse.NamedArgument Verse.NamedArgumentUtility::Named(System.Object,System.String)",
+        "System.Void RimWorld.HistoryEvent::.ctor(RimWorld.HistoryEventDef,Verse.NamedArgument)",
+        "System.Boolean RimWorld.IdeoUtility::Notify_PawnAboutToDo(RimWorld.HistoryEvent,System.String)",
+        "RimWorld.HistoryEventsManager Verse.Find::get_HistoryEventsManager()",
+        "System.Void RimWorld.HistoryEventsManager::RecordEvent(RimWorld.HistoryEvent,System.Boolean)",
+        "System.Boolean RimWorld.TradeDeal/<>c::<TryExecute>b__14_1(RimWorld.Tradeable)",
+        "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<RimWorld.Tradeable>::GetEnumerator()",
+        "!0 System.Collections.Generic.List`1/Enumerator<RimWorld.Tradeable>::get_Current()",
+        "RimWorld.TradeAction RimWorld.Tradeable::get_ActionToDo()",
+        "System.Single RimWorld.Tradeable::get_CurTotalCurrencyCostForDestination()",
+        "System.Void RimWorld.Tradeable::ResolveTrade()",
+        "System.Boolean System.Collections.Generic.List`1/Enumerator<RimWorld.Tradeable>::MoveNext()",
+        "System.Void System.IDisposable::Dispose()",
+        "System.Void RimWorld.TradeDeal::Reset()",
+        "System.Void RimWorld.Faction::Notify_PlayerTraded(System.Single,Verse.Pawn)",
+        "RimWorld.Tale RimWorld.TaleRecorder::RecordTale(RimWorld.TaleDef,System.Object[])",
+        "System.Void RimWorld.InspirationHandler::EndInspiration(RimWorld.InspirationDef)"
+      ]
+    },
+    {
+      "method": "System.Void RimWorld.Tradeable::ResolveTrade()",
+      "hasBody": true,
+      "calls": [
+        "RimWorld.TradeAction RimWorld.Tradeable::get_ActionToDo()",
+        "System.Int32 RimWorld.Transferable::get_CountToTransferToDestination()",
+        "System.Void RimWorld.Tradeable/<>c::<ResolveTrade>b__73_0(Verse.Thing,System.Int32)",
+        "System.Void System.Action`2<Verse.Thing,System.Int32>::.ctor(System.Object,System.IntPtr)",
+        "System.Void RimWorld.TransferableUtility::TransferNoSplit(System.Collections.Generic.List`1<Verse.Thing>,System.Int32,System.Action`2<Verse.Thing,System.Int32>,System.Boolean,System.Boolean)",
+        "System.Int32 RimWorld.Transferable::get_CountToTransferToSource()",
+        "System.Void RimWorld.Tradeable::<ResolveTrade>b__73_1(Verse.Thing,System.Int32)"
+      ]
+    },
+    {
+      "method": "System.Void RimWorld.Bill_Production::Notify_IterationCompleted(Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>)",
+      "hasBody": true,
+      "calls": [
+        "System.String RimWorld.Bill::get_LabelCap()",
+        "Verse.NamedArgument Verse.NamedArgument::op_Implicit(System.String)",
+        "Verse.TaggedString Verse.TranslatorFormattedStringExtensions::Translate(System.String,Verse.NamedArgument)",
+        "System.String Verse.TaggedString::op_Implicit(Verse.TaggedString)",
+        "Verse.LookTargets Verse.LookTargets::op_Implicit(Verse.Thing)",
+        "System.Void Verse.Messages::Message(System.String,Verse.LookTargets,Verse.MessageTypeDef,System.Boolean)",
+        "Verse.RecipeWorker Verse.RecipeDef::get_Worker()",
+        "System.Void Verse.RecipeWorker::Notify_IterationCompleted(Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>)"
+      ]
+    },
+    {
+      "method": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.GenRecipe::MakeRecipeProducts(Verse.RecipeDef,Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>,Verse.Thing,RimWorld.IBillGiver,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)",
+      "hasBody": true,
+      "calls": [
+        "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::.ctor(System.Int32)"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\ThinkNode.cs",
+      "sha256": "6F589339EC3A244CE9754E7634F924F12C46D9A2B6E9C9FA699014F61F51D427"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\ThinkNode_JobGiver.cs",
+      "sha256": "2B411E67216B7D7E982514EE438987055AD8F94479C12A47372005FFE743E3AE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\Pawn_JobTracker.cs",
+      "sha256": "C78FF1E2F34C448F64F7491F5C4376F467A328E25B7D93404AF5BCB079F2EB76"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\JobDriver.cs",
+      "sha256": "BCBC0F8B64F8301034C391524106F46238ECD0B9D9A9A32ADEC16AAB558EC010"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\Job.cs",
+      "sha256": "1E37D8835F21AC1327BB7184232F4438B01E5B1F4F63EB749532F9AAD9FD6477"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\Toil.cs",
+      "sha256": "6E44B76E19D0384EDDD59C8C4177F1DB49CB672801BB2CFD7A8137D359123C72"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\ReservationManager.cs",
+      "sha256": "952799C50445C806E006610BEE2241395653576644E557D7A50C636F68D8B965"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\Group\\LordJob.cs",
+      "sha256": "09BA3F16BDB25DB3AC06732083F36F2C12496DA2A0939DB009AB5E989BD98405"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\WorkGiver_DoBill.cs",
+      "sha256": "1B5631AB1F1229C6CDB54A0488E7E55518E31E04150C7720F8B5CBF283035CE6"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Bill_Production.cs",
+      "sha256": "E741732BA5C07C67C8F0FA2639D1BFBDC1362DD6481E21AE12BE58ED9FA7B05D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\GenRecipe.cs",
+      "sha256": "4E5221BF57C5D631E353940B75D2A82B00E681E160CE2A126A31C8E69539B348"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Thing.cs",
+      "sha256": "1BCED9493E0ED74249F83DE6EDA2324EED31D17C656108604484E46876218B5F"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\ThingOwner.cs",
+      "sha256": "60E57E3A2E929438DC1B8736A84D4E835FAB62B3AE806B2F465D0290C3088F93"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\TradeDeal.cs",
+      "sha256": "793757519F82F708B855D0CF7B0345E43E4D8B163EB4CF68BF3C6E0A3574B3CF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Tradeable.cs",
+      "sha256": "773CA5795DEA0060A22BE8C474581ECCDADE7C64A449A4D28E6410378604C3BE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_RelationsTracker.cs",
+      "sha256": "FAD014F0F09516168E57E57880E222E2BE57D8D29760C33F5E2264999324AD93"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\JobDriver_TendPatient.cs",
+      "sha256": "654D593C88AF6C77B5EC054994C41CD58348B74236106DC5F92F6F0E687BFD06"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\JobDriver_FeedBaby.cs",
+      "sha256": "82863F0FA05EC029049B0E0D2D9F746CB8A23A9061A9B0F6D4ED50E52ECF82AD"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\JobDriver_Breastfeed.cs",
+      "sha256": "7B7DAE23D957D10F0C7EA1A8CF6F698D25AA713929A5BE02B8E796E1A6920DB1"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\GameComponent.cs",
+      "sha256": "BACBBB717FC44853360086ED2162D36B708549F7B44F8C25912D879FE1AEB7FB"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Scribe_Values.cs",
+      "sha256": "27FFE6CE6C3A331431AC0E4865233445C0EAB940689A40E987CD7A5490298591"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Scribe_Deep.cs",
+      "sha256": "9183D025A3563DC0FBACAFA4638883BAC303C59E6FA47FA68C491E0F1BC18551"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Scribe_References.cs",
+      "sha256": "56D9EF19A00969778F3EB0D296B1A5152BC98B128062F4F052FE9CBCF4062E4A"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Joy.cs",
+      "sha256": "708A75F144C04BE36BD14318998C87114147266F809F9AFE5FD2D4F3AD5B046C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\JoyToleranceSet.cs",
+      "sha256": "8121505F819DD9918A942B18FFC1BE8DEEB1F2B8C9BC08907BA210CED922F63E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Domain\\PawnEconomy\\EconomyModel.cs",
+      "sha256": "F4C8FE6748B7FBE98741C722389541FF3BF4F4CC151E08F8332885B40E4D3123"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyService.cs",
+      "sha256": "B70313BD863639CA9C4C19D0BC8FBC47092D361692F4752A283EFE76D13AAD6C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyRuntime.cs",
+      "sha256": "83CDDF5000215CB251D82C7E9EC4F6E6111DAE47B95DDB5C88F073528B687182"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyCommands.cs",
+      "sha256": "A534105FC057044FDF6A2C5826E533BFC9CC31AD8326AF526F13F3AECC5765EE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyWorld.cs",
+      "sha256": "D2E0DF803BEFE4A77791B0C84298DC1FACBEB96559D2E868258FF2A0090ABAA9"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\ChronicleSettings.cs",
+      "sha256": "E70A1D3491393B3E2FD856D3AEAFFA0E5E2BC0246635CC9133B642EC09798F88"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle.csproj",
+      "sha256": "90BEEC014C69D1A74091462F9B9FB392A501B309770963769743CED9CCDF1F55"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\PanelAtoms.cs",
+      "sha256": "CE5EE3B8AD40A8FAE1158F07E50C033B47E7B6BEA294FA2D2C7ABEC3E8356597"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\DataAtoms.cs",
+      "sha256": "64947523E20D868A53620321349BCC60F8ED2BDFFA788B667A3A56E84C1FE055"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\FeedbackAtoms.cs",
+      "sha256": "DC71042AEB123A8730B6A098E5421EB2BEE4DBAF0E9CCF89A1C7962F6B73F137"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\ProgressAtoms.cs",
+      "sha256": "BAAAFA9E1577DDBEFCFDCA59282D0ACC52252D1197F8695F4C1CB0C1E1ED7E8E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\NavAtomsB.cs",
+      "sha256": "FBD5798537776CFE9BD1124BE53039CEB63C292B8459D136255B2A85F379F0F0"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\InputAtoms.cs",
+      "sha256": "49111701A273A13A7FE54A562119733E5B95DB295D714498449F7F571F93BC4D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\ButtonAtoms.cs",
+      "sha256": "BCFEE16E66B6A4592B87375104AB1F62D04B9164EFC37B4EBF595EB723408598"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Layout\\Layout.cs",
+      "sha256": "7B4198F528C3CDFA17E7F1571D84AF69FE567961D1D66F2C3604D3850C25C73F"
+    }
+  ],
+  "publicReferences": [
+    "https://harmony.pardeike.net/v2/articles/patching-prefix.html",
+    "https://harmony.pardeike.net/v2/articles/patching-postfix.html",
+    "https://spdskatr.github.io/RWModdingResources/saving-guide"
+  ],
+  "limits": [
+    "API/IL operands do not prove a complete safe execution or transaction hook.",
+    "Production iterator construction is not proof of final products delivered or paid.",
+    "Decompiled source explains semantics but is not guaranteed identical to current DLL bodies.",
+    "Economy, household authority, claims, money and utility are Mod design, not vanilla APIs.",
+    "No runtime implementation, build, deployment, performance test or in-game acceptance executed."
+  ]
+}

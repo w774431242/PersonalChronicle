@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    SystemCenterDef —— 终局管理系统「系统中心」注册凭据（CenterManifest，规范书 §2.2）。
+    - 元素名必须是全限定名（1.6：简单名无法解析）。
+    - defName 是逻辑主键（snake_case），必须与 Languages/<Lang>/DefInjected/SystemCenterDef/ 一致；
+      程序内被引用的 ID 登记在 Domain/SystemCenterIds.cs，启动期会校验漂移。
+    - 本 Def 只放静态注册信息，不放任何运行态 / 数值 / 存档字段（GOV-003）。
+    - 接入状态（运行中 / 数据未接入 / 预留）由运行期推导，不写进 Def：Def 只回答「该中心该不该有玩法」，
+      「有没有数据 Provider 接上来」由注册表在运行期回答 ⇒ 非预留且无 Provider =「数据未接入」
+      （模块已存在但尚未接入中心框架，属合法状态，不是缺陷）。
+    - 「预留」与「数据未接入」都只显示清单态、不显示 KPI（不用样例数据冒充真实数据，LAND-009）。
+    - label 是中文基线，英文覆盖见 Languages/English/DefInjected/SystemCenterDef/SystemCenterDefs.xml。
+  -->
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>manufacturing_center</defName>
+    <label>制造系统中心</label>
+    <nameEn>Manufacturing</nameEn>
+    <priorityTier>10</priorityTier>
+    <centerVersion>0.1.0-draft</centerVersion>
+    <reserved>false</reserved>
+    <responsible>
+      <li>配方管理</li>
+      <li>产线编排</li>
+      <li>产能核算</li>
+      <li>原料消耗</li>
+      <li>成品入库</li>
+    </responsible>
+    <delegated>
+      <li>搬运入库 → 内务中心</li>
+      <li>贸易结算 → 殖民地经济</li>
+    </delegated>
+    <dependsOn>
+      <li>logistics_center</li>
+    </dependsOn>
+    <provides>
+      <li>cap.manufacturing.production</li>
+    </provides>
+    <emits>
+      <li>evt.manufacturing.product_ready</li>
+    </emits>
+    <consumes>
+      <li>evt.economy.reorder</li>
+      <li>evt.logistics.space_available</li>
+    </consumes>
+    <hooks>
+      <li>OnTick</li>
+      <li>OnPhase(produce)</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>logistics_center</defName>
+    <label>内务系统中心</label>
+    <nameEn>Logistics</nameEn>
+    <priorityTier>15</priorityTier>
+    <centerVersion>0.1.0-draft</centerVersion>
+    <!-- ⚠ 2026-10-06（CHG-20261006-CENTER-RESERVE）：`reserved` 由 false 改 **true** —— 玩家裁决，
+         把内务系统中心与医疗系统中心一并禁用（降级为预留中心）。
+         为什么用 reserved 而不是删 Def：预留 = 只登记 ID 与档位、不接玩法，是**可逆**状态
+         （卡片移入总控页「预留中心」分组、徽标「预留 · 未接入」、不采集 KPI、详情页不接数据源）；
+         删 Def 会丢掉稳定主键与档位，并让 manufacturing_center / economy_center 指向本中心的
+         dependsOn 声明失去锚点。
+         成对约束（框架不变量，见 ChronicleMod.ValidateSystemCenterProviders）：reserved=true 的中心
+         **不得**注册数据 Provider，否则每次启动写一条 Log.Warning 且该 Provider 永不被调用（死代码）。
+         故原 KPI 数据源 BuiltinLogisticsProvider 已同步从 SystemCenterDataRegistry.CreateWithBuiltins
+         解绑并删除（原件快照 `_backups/centers_retire_20261006/`，含完整回滚步骤）。
+         复活该中心：补数据源 + 把本行改回 false，一行即回。 -->
+    <reserved>true</reserved>
+    <responsible>
+      <li>仓储管理</li>
+      <li>搬运调度</li>
+      <li>资源分配</li>
+      <li>清洁维护</li>
+      <li>内部运转</li>
+    </responsible>
+    <delegated>
+      <li>成品生产 → 制造中心</li>
+      <li>伤员处置 → 医疗中心</li>
+    </delegated>
+    <provides>
+      <li>cap.logistics.hauling</li>
+    </provides>
+    <emits>
+      <li>evt.logistics.space_available</li>
+      <li>evt.logistics.delivered</li>
+    </emits>
+    <consumes>
+      <li>evt.manufacturing.product_ready</li>
+      <li>evt.economy.reorder</li>
+    </consumes>
+    <hooks>
+      <li>OnTick</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>economy_center</defName>
+    <label>殖民地经济</label>
+    <nameEn>Economy</nameEn>
+    <priorityTier>20</priorityTier>
+    <centerVersion>0.1.0-draft</centerVersion>
+    <reserved>false</reserved>
+    <!-- ⚠ 2026-09-20（CHG-LCE-001）：原「经济系统中心」的市场模拟职责（定价 / 贸易结算 / 市场）
+         已随用户裁决整体删除，本中心重建为「本地殖民地经济」；职责词按新定位更新，id 不变。
+         能力/事件按「成对裁决」更新：cap.economy.pricing 无消费者 ⇒ 更名；
+         evt.economy.trade_settled 无消费者 ⇒ 移除；evt.economy.reorder 的消费方为
+         制造中心与物流中心（Def 层声明，见本文件对应中心 consumes）⇒ 保留。 -->
+    <responsible>
+      <li>库存与物资</li>
+      <li>产出与消耗</li>
+      <li>收支与财富</li>
+      <li>劳动力观测</li>
+    </responsible>
+    <delegated>
+      <li>成品生产 → 制造中心</li>
+      <li>搬运入库 → 内务中心</li>
+      <li>医疗支付 → 医疗中心</li>
+    </delegated>
+    <dependsOn>
+      <li>logistics_center</li>
+    </dependsOn>
+    <provides>
+      <li>cap.economy.ledger</li>
+    </provides>
+    <emits>
+      <li>evt.economy.reorder</li>
+    </emits>
+    <consumes>
+      <li>evt.manufacturing.product_ready</li>
+    </consumes>
+    <hooks />
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>medical_center</defName>
+    <label>医疗系统中心</label>
+    <nameEn>Medical</nameEn>
+    <priorityTier>12</priorityTier>
+    <centerVersion>0.1.0-draft</centerVersion>
+    <!-- ⚠ 2026-10-06（CHG-20261006-CENTER-RESERVE）：`reserved` 由 false 改 **true** —— 玩家裁决，
+         把医疗系统中心与内务系统中心一并禁用（降级为预留中心）。理由、可逆性与成对约束同上方
+         logistics_center 的注释（框架不变量：reserved=true 不得注册数据 Provider）。
+         原 KPI 数据源 BuiltinMedicalProvider 已同步解绑并删除，原件快照见
+         `_backups/centers_retire_20261006/`。复活：补数据源 + 把本行改回 false。 -->
+    <reserved>true</reserved>
+    <responsible>
+      <li>伤病处置</li>
+      <li>治疗调度</li>
+      <li>药品管理</li>
+      <li>防疫</li>
+    </responsible>
+    <delegated>
+      <li>搬运伤员 → 内务中心</li>
+      <li>医疗支付 → 殖民地经济</li>
+    </delegated>
+    <dependsOn>
+      <li>logistics_center</li>
+    </dependsOn>
+    <provides>
+      <li>cap.medical.treatment</li>
+    </provides>
+    <emits>
+      <li>evt.medical.treated</li>
+      <li>evt.medical.supply_low</li>
+    </emits>
+    <consumes>
+      <li>evt.logistics.delivered</li>
+    </consumes>
+    <hooks>
+      <li>OnTick</li>
+      <li>OnPhase(triage)</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>policy_center</defName>
+    <label>政策系统中心</label>
+    <nameEn>Policy</nameEn>
+    <priorityTier>30</priorityTier>
+    <centerVersion>0.1.0-draft</centerVersion>
+    <!-- ⚠ 2026-09-19（CHG-20260919-ECON-UI-011）：reserved 由 false 改 **true**。
+         判据取自本文件下方 population_center 的既有裁定：「模块已存在 ⇒ reserved=false + 无 Provider，
+         总控中心如实显示『数据未接入』，而不是『预留（待做）』」。
+         而本中心在 Source/ 下**零代码**（全仓 `policy` 命中均为 `*PolicyDef` 命名模式，与本中心无关）
+         ⇒ 声明 reserved=false 等于谎称"模块已存在"。
+         改 true 后卡片显示「预留（待做）」—— 与 0.1.0-draft 的实际状态一致。
+         ⚠ 将来若真要落地该中心：补 Provider + 把本行改回 false，一行即回。 -->
+    <reserved>true</reserved>
+    <responsible>
+      <li>律令制定</li>
+      <li>分配政策</li>
+      <li>权限管理</li>
+      <li>激励</li>
+    </responsible>
+    <delegated>
+      <li>执行调度 → 各业务中心</li>
+    </delegated>
+    <provides>
+      <li>cap.policy.governance</li>
+    </provides>
+    <emits>
+      <li>evt.policy.law_changed</li>
+      <li>evt.policy.ration_set</li>
+    </emits>
+    <hooks>
+      <li>OnPhase(govern)</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <!-- 人员系统中心：模块已存在（殖民地档案馆 = 个体档案），缺的只是「经 Provider 接入中心框架」⇒
+       reserved=false（非预留）+ 无 Provider，总控中心如实显示「数据未接入」，而不是「预留（待做）」。
+       defName 保持 population_center：稳定主键（DefInjected 与外部引用按它索引），本次只改显示名。 -->
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>population_center</defName>
+    <label>人员系统中心</label>
+    <nameEn>Personnel</nameEn>
+    <priorityTier>18</priorityTier>
+    <centerVersion>-</centerVersion>
+    <reserved>false</reserved>
+    <responsible>
+      <li>个体档案</li>
+      <li>需求</li>
+      <li>情绪</li>
+      <li>成长</li>
+    </responsible>
+    <provides>
+      <li>cap.population.profile</li>
+    </provides>
+    <emits>
+      <li>evt.population.mood_changed</li>
+    </emits>
+    <consumes>
+      <li>evt.policy.law_changed</li>
+    </consumes>
+    <hooks>
+      <li>OnTick</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>diplomacy_center</defName>
+    <label>外交系统中心</label>
+    <nameEn>Diplomacy</nameEn>
+    <priorityTier>25</priorityTier>
+    <centerVersion>-</centerVersion>
+    <reserved>true</reserved>
+    <responsible>
+      <li>派系</li>
+      <li>声望</li>
+      <li>条约</li>
+    </responsible>
+    <provides>
+      <li>cap.diplomacy.relations</li>
+    </provides>
+    <emits>
+      <li>evt.diplomacy.relation_changed</li>
+    </emits>
+    <hooks>
+      <li>OnPhase(govern)</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>research_center</defName>
+    <label>科研系统中心</label>
+    <nameEn>Research</nameEn>
+    <priorityTier>22</priorityTier>
+    <centerVersion>-</centerVersion>
+    <reserved>true</reserved>
+    <responsible>
+      <li>项目</li>
+      <li>进度</li>
+      <li>解锁</li>
+    </responsible>
+    <provides>
+      <li>cap.research.unlock</li>
+    </provides>
+    <emits>
+      <li>evt.research.completed</li>
+    </emits>
+    <hooks>
+      <li>OnTick</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>defense_center</defName>
+    <label>防御系统中心</label>
+    <nameEn>Defense</nameEn>
+    <priorityTier>8</priorityTier>
+    <centerVersion>-</centerVersion>
+    <reserved>true</reserved>
+    <responsible>
+      <li>威胁</li>
+      <li>布防</li>
+      <li>征召</li>
+    </responsible>
+    <provides>
+      <li>cap.defense.posture</li>
+    </provides>
+    <emits>
+      <li>evt.defense.threat</li>
+    </emits>
+    <consumes>
+      <li>evt.diplomacy.relation_changed</li>
+    </consumes>
+    <hooks>
+      <li>OnTick</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+  <PersonalChronicle.Domain.SystemCenterDef>
+    <defName>environment_center</defName>
+    <label>环境系统中心</label>
+    <nameEn>Environment</nameEn>
+    <priorityTier>28</priorityTier>
+    <centerVersion>-</centerVersion>
+    <reserved>true</reserved>
+    <responsible>
+      <li>气候</li>
+      <li>灾害</li>
+      <li>资源点</li>
+    </responsible>
+    <provides>
+      <li>cap.environment.forecast</li>
+    </provides>
+    <emits>
+      <li>evt.environment.alert</li>
+    </emits>
+    <hooks>
+      <li>OnTick</li>
+    </hooks>
+  </PersonalChronicle.Domain.SystemCenterDef>
+
+</Defs>

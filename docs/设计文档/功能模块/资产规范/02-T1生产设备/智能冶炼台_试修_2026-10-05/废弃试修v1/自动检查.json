@@ -1,0 +1,186 @@
+{
+  "created_at": "2026-10-05T21:26:34",
+  "trial_only": true,
+  "source_unchanged": true,
+  "north_east_mothers_byte_identical": true,
+  "image_models_called": false,
+  "runtime_assets_written": false,
+  "files": {
+    "north": {
+      "original": "D:\\素材\\智能冶炼台北.PNG",
+      "original_sha256": "608FE9799B7CE0B528BC555B13C5991267611F1F30F18A64FB3E9013E6D183F1",
+      "mother": {
+        "mode": "RGBA",
+        "size": [
+          1916,
+          821
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          167,
+          182,
+          1747,
+          656
+        ],
+        "sha256": "608FE9799B7CE0B528BC555B13C5991267611F1F30F18A64FB3E9013E6D183F1"
+      },
+      "game": {
+        "mode": "RGBA",
+        "size": [
+          448,
+          192
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          39,
+          42,
+          409,
+          154
+        ],
+        "sha256": "C4DA3F6BE9A73CD8482E597F01C9B075866F7FD935149080E18996633832A0AA"
+      }
+    },
+    "east": {
+      "original": "D:\\素材\\智能冶炼台东.PNG",
+      "original_sha256": "55C03E4B12FEEB391BC59F4C770156C70247D29861CA6BD501C194AFA89206C9",
+      "mother": {
+        "mode": "RGBA",
+        "size": [
+          821,
+          1916
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          230,
+          203,
+          653,
+          1676
+        ],
+        "sha256": "55C03E4B12FEEB391BC59F4C770156C70247D29861CA6BD501C194AFA89206C9"
+      },
+      "game": {
+        "mode": "RGBA",
+        "size": [
+          192,
+          448
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          53,
+          47,
+          153,
+          392
+        ],
+        "sha256": "5A7354E8BAB9D6E752B93DB669FAEF5023FC213C8871DA56819AA6F359E16A15"
+      }
+    },
+    "south": {
+      "original": "D:\\素材\\智能冶炼台南.PNG",
+      "original_sha256": "25F559DCCD8E9CF53CD4B56A5B301EA211C14E2E36E822265E837FF4E5B6CADC",
+      "mother": {
+        "mode": "RGBA",
+        "size": [
+          1916,
+          821
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          175,
+          220,
+          1747,
+          659
+        ],
+        "sha256": "2993C5947E853429715A7CDC14F4191A3370CB69064243DC82E294AF926BA9AB"
+      },
+      "game": {
+        "mode": "RGBA",
+        "size": [
+          448,
+          192
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          40,
+          51,
+          409,
+          154
+        ],
+        "sha256": "43CEDE67DB9B79B897A902EE093D87146574F35F0CF008A7F38DE2D64BC3E44B"
+      }
+    },
+    "west": {
+      "original": "D:\\素材\\智能冶炼台西.PNG",
+      "original_sha256": "7DD8025D01CAD16E3118E9FC97627A0142B365C357823779D942EEAF3C35A838",
+      "mother": {
+        "mode": "RGBA",
+        "size": [
+          821,
+          1916
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          208,
+          200,
+          636,
+          1715
+        ],
+        "sha256": "C49AE61F789F9B9AC89B0DDD3419EF64A65122D759EFE14119C59F46EC07B8B2"
+      },
+      "game": {
+        "mode": "RGBA",
+        "size": [
+          192,
+          448
+        ],
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          48,
+          46,
+          149,
+          402
+        ],
+        "sha256": "D45A2FCF599FBA33C3AC73F3C687E3B752A36F657DE7F8A4989F868C865F9E14"
+      }
+    }
+  },
+  "operations": {
+    "south": "Mirror overall X, flip control-panel Y; preserve existing South furnace view",
+    "west": "Reorder controller/tray/furnace bands; mirror furnace face X and panel Y"
+  },
+  "limitations": [
+    "Lighting and perspective require visual review; not a regenerated 3D view",
+    "No in-game runtime verification"
+  ]
+}

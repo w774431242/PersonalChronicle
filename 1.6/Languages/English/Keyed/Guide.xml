@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- ============================================================
+       Newcomer guide (CHG-20261006-GUIDE / TOUR / TOUR2)
+       Entry = "Newcomer guide" button in the master-control header
+         -> confirmation dialog (Window_NewcomerGuide)
+         -> "Start the tour" pushes the full-screen tour overlay
+            (Window_TourOverlay, 13 steps incl. the in-game build chain).
+       HARD RULE for comments here: never put two consecutive hyphens inside a comment
+       (it once broke the whole file's parse and the UI showed raw keys).
+       ============================================================ -->
+  <PersonalChronicle.UI.Guide.Button>Newcomer guide</PersonalChronicle.UI.Guide.Button>
+  <PersonalChronicle.UI.Guide.ButtonTip>Open the newcomer guide: a 13-step tour (workshop, devices, bills, dashboards)</PersonalChronicle.UI.Guide.ButtonTip>
+
+  <!-- Confirmation dialog (Window_NewcomerGuide) -->
+  <PersonalChronicle.UI.Guide.Ask.Title>Start the newcomer tour?</PersonalChronicle.UI.Guide.Ask.Title>
+  <PersonalChronicle.UI.Guide.Ask.Body>A step-by-step tour: painting a workshop zone, placing devices, adding a bill, and reading the manufacturing center. Two or three minutes; you can stop at any time and nothing is changed.</PersonalChronicle.UI.Guide.Ask.Body>
+  <PersonalChronicle.UI.Guide.Ask.EscHint>You can leave at any time with ESC or the "Skip this step" button.</PersonalChronicle.UI.Guide.Ask.EscHint>
+  <PersonalChronicle.UI.Guide.Ask.Later>Not now</PersonalChronicle.UI.Guide.Ask.Later>
+  <PersonalChronicle.UI.Guide.Tour.Start>Start the tour</PersonalChronicle.UI.Guide.Tour.Start>
+
+  <!-- The tour itself (Tour2, 13 steps) -->
+  <PersonalChronicle.UI.Guide.Tour2.Next>Next</PersonalChronicle.UI.Guide.Tour2.Next>
+  <PersonalChronicle.UI.Guide.Tour2.Prev>Back</PersonalChronicle.UI.Guide.Tour2.Prev>
+  <PersonalChronicle.UI.Guide.Tour2.Skip>Skip this step</PersonalChronicle.UI.Guide.Tour2.Skip>
+  <PersonalChronicle.UI.Guide.Tour2.Finish>Finish</PersonalChronicle.UI.Guide.Tour2.Finish>
+  <PersonalChronicle.UI.Guide.Tour2.EscHint>ESC to quit</PersonalChronicle.UI.Guide.Tour2.EscHint>
+  <PersonalChronicle.UI.Guide.Tour2.Gate.Workshop>Continues automatically once a workshop zone exists (or skip this step)</PersonalChronicle.UI.Guide.Tour2.Gate.Workshop>
+  <PersonalChronicle.UI.Guide.Tour2.Gate.Device>Continues automatically once a workbench is built</PersonalChronicle.UI.Guide.Tour2.Gate.Device>
+  <PersonalChronicle.UI.Guide.Tour2.Gate.Bill>Continues automatically once a bill with ingredients exists</PersonalChronicle.UI.Guide.Tour2.Gate.Bill>
+  <PersonalChronicle.UI.Guide.Tour2.Gate.OpenCenter>Continues automatically once the manufacturing center is open</PersonalChronicle.UI.Guide.Tour2.Gate.OpenCenter>
+
+  <PersonalChronicle.UI.Guide.Tour2.S0.Title>This is the system-center registry</PersonalChronicle.UI.Guide.Tour2.S0.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S0.Body>Each card is one system center. The initial centers (manufacturing / population / economy) carry live data; centers marked "reserved · not wired" show only their charter (duties and dependencies) - that is a roster entry, not a broken page.</PersonalChronicle.UI.Guide.Tour2.S0.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S1.Title>Reopen this tour any time</PersonalChronicle.UI.Guide.Tour2.S1.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S1.Body>The top-right button restarts this tour at any time. While touring: ESC or "Skip this step" exits, "Back" steps one screen back, and the bubble follows whatever it points at.</PersonalChronicle.UI.Guide.Tour2.S1.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S2.Title>One-click palette</PersonalChronicle.UI.Guide.Tour2.S2.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S2.Body>"Theme" switches the whole palette; every window of this mod follows it (the settings page lists each option's source and cost).</PersonalChronicle.UI.Guide.Tour2.S2.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S3.Title>Step 1: paint a "workshop" zone</PersonalChronicle.UI.Guide.Tour2.S3.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S3.Body>The architect menu has been opened for you: click "Zones" -> "Workshop zone", then drag a rectangle where you want to produce (you can close this window with the X at its top).\nOrder matters: paint the zone first, place buildings second - workshop cells resist being dropped by later construction.</PersonalChronicle.UI.Guide.Tour2.S3.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S4.Title>Step 2: place devices inside it</PersonalChronicle.UI.Guide.Tour2.S4.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S4.Body>The camera has been moved to your workshop (center of the screen) - build workbenches inside it: research bench, stove, tailoring bench, smelter; any production facility is assigned to the workshop it stands in.</PersonalChronicle.UI.Guide.Tour2.S4.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S5.Title>Step 3: add a bill that consumes ingredients</PersonalChronicle.UI.Guide.Tour2.S5.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S5.Body>The camera is on the workbench inside your workshop (center of the screen) - click it -> "Add bill" -> pick a recipe that consumes ingredients (a simple meal, a piece of clothing). Only then does the manufacturing center's material rail have anything to list.</PersonalChronicle.UI.Guide.Tour2.S5.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S6.Title>Look at the result</PersonalChronicle.UI.Guide.Tour2.S6.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S6.Body>The master control has been opened for you: click the manufacturing center card. The zone, the devices and the bill you just made all turn into readable numbers there.</PersonalChronicle.UI.Guide.Tour2.S6.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S7.Title>Left rail: materials (by bill demand)</PersonalChronicle.UI.Guide.Tour2.S7.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S7.Body>The left rail lists materials of the current bills: the number is the map-wide stock; below one craft's worth is marked red, and hovering shows "N per craft". It lists what bills need, not what the stockpile happens to hold.</PersonalChronicle.UI.Guide.Tour2.S7.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S8.Title>Right rail: finished goods (by workshop)</PersonalChronicle.UI.Guide.Tour2.S8.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S8.Body>The right rail counts quality-bearing finished goods that sit inside workshop zones, grouped by vanilla quality tiers. Anything stored outside the workshops is not counted.</PersonalChronicle.UI.Guide.Tour2.S8.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S9.Title>Top tabs: View / Layout</PersonalChronicle.UI.Guide.Tour2.S9.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S9.Body>"Layout" is the free-placement canvas: drag devices from the left palette onto the canvas; the layout is saved with the game, and clicking a device card opens its detail window. "View" is the read-only top-down plan.</PersonalChronicle.UI.Guide.Tour2.S9.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S10.Title>What the other centers show</PersonalChronicle.UI.Guide.Tour2.S10.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S10.Body>Population: per-colonist archive (events, milestones, medals) plus "Career plan" (a recommendation, never forced). Economy: stock value and market trends. The remaining centers still read "reserved · not wired".</PersonalChronicle.UI.Guide.Tour2.S10.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S11.Title>Back to the overview</PersonalChronicle.UI.Guide.Tour2.S11.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S11.Body>Click "Back" at the top-right to return to the registry - the first screen of this tour.</PersonalChronicle.UI.Guide.Tour2.S11.Body>
+  <PersonalChronicle.UI.Guide.Tour2.S12.Title>Done - start exploring</PersonalChronicle.UI.Guide.Tour2.S12.Title>
+  <PersonalChronicle.UI.Guide.Tour2.S12.Body>Two rules to remember: anything without data shows "—" (this mod never paints fake values), and every master-control screen has "Newcomer guide" at the top-right to replay this tour.</PersonalChronicle.UI.Guide.Tour2.S12.Body>
+</LanguageData>

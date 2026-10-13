@@ -1,0 +1,47 @@
+{
+  "changeId": "CHG-20261010-ECONOMY-STORAGE",
+  "verifiedUtc": "2026-10-10T10:04:54.1115106Z",
+  "source": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\economy-storage_20261010_180453_527",
+  "files": [
+    {
+      "path": "Assemblies/PersonalChronicle.dll",
+      "sha256": "D703AE003A5050E829DB2383E642A6685FEB085A9FB25E02303E467A98877D2B",
+      "previousSha256": "974A8FEB227F10101C137192555800D3CAE8BC30D50AF8F816D30D5E323B8F8F"
+    },
+    {
+      "path": "Defs/PawnEconomy_Storage.xml",
+      "sha256": "0AD6321C99996BB591C656DE6A4F5C7D34216C5BAA62E7B2F12C1B3D8ABA12AF",
+      "previousSha256": null
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyStorage.xml",
+      "sha256": "54BDB884D43226D52E605B116CFE4B28FE2CFBDDE86E2C34DC23154DA4710375",
+      "previousSha256": null
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyStorage.xml",
+      "sha256": "B047728F0744C3159BF76D3A7E09B6B7484F8B8A7319C15765C71D790B5C3D12",
+      "previousSha256": null
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/PawnEconomyStorage.xml",
+      "sha256": "7DFA4825A1D3B896046B11CEE942A337728FB07654E9B3E4C5185449AB4AD040",
+      "previousSha256": null
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnNeedSpeech.xml",
+      "sha256": "83C17375255729F5CFF285BC4E89261BD10A8CBDB6338A1A474EA79EF82F44C1",
+      "previousSha256": "83C17375255729F5CFF285BC4E89261BD10A8CBDB6338A1A474EA79EF82F44C1"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnNeedSpeech.xml",
+      "sha256": "05D50F1E7CB34E36609D3B9F0B41570559EC6FA17F9A1D5254134D5803F5AB16",
+      "previousSha256": "05D50F1E7CB34E36609D3B9F0B41570559EC6FA17F9A1D5254134D5803F5AB16"
+    }
+  ],
+  "unchangedFilesVerified": 233,
+  "deployed": true,
+  "gameVerified": false
+}

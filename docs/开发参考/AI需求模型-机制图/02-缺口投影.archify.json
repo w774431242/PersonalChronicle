@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "机制 02 · 缺口投影",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" },
+    "viewBox": [900, 560]
+  },
+  "lanes": [
+    { "id": "guard", "label": "读数与双守卫" },
+    { "id": "calc", "label": "三口径计算" },
+    { "id": "fact", "label": "原因码与身份", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "p1", "label": "输入", "fromCol": 0, "toCol": 0 },
+    { "id": "p2", "label": "守卫判定", "fromCol": 1, "toCol": 2, "variant": "emphasis" },
+    { "id": "p3", "label": "计算", "fromCol": 3, "toCol": 3 },
+    { "id": "p4", "label": "出口", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["reading", "actual", "calc", "gap"],
+  "semanticChecks": { "allowedRoots": ["reading", "desired"], "allowedTerminals": ["gap", "abs", "raw", "codes", "key"] },
+  "nodes": [
+    { "id": "reading", "lane": "guard", "col": 0, "type": "backend", "label": "观测读数", "sublabel": "CurLevel / MaxLevel", "tag": "已适配" },
+    { "id": "actual", "lane": "guard", "col": 1, "type": "security", "label": "ActualRatio", "sublabel": "六道守卫", "tag": "顺序即优先级", "height": 64 },
+    { "id": "desired", "lane": "guard", "col": 2, "type": "security", "label": "TargetRatio", "sublabel": "四态映射", "tag": "目标态入口", "height": 64 },
+    { "id": "calc", "lane": "calc", "col": 3, "type": "backend", "label": "缺口计算", "sublabel": "双端可取才算", "tag": "double 中间量" },
+    { "id": "gap", "lane": "calc", "col": 4, "type": "database", "label": "相对缺口", "sublabel": "clamp01(Δ / target)" },
+    { "id": "abs", "lane": "calc", "col": 5, "type": "database", "label": "绝对缺口", "sublabel": "max(0, 目标 − 当前)" },
+    { "id": "codes", "lane": "fact", "col": 3, "type": "security", "label": "原因码", "sublabel": "Unsupported / Error", "tag": "Fact.cs 常量" },
+    { "id": "key", "lane": "fact", "col": 4, "type": "database", "label": "需求键", "sublabel": "长度前缀稳定 ID", "tag": "不含 Tick" },
+    { "id": "raw", "lane": "fact", "col": 5, "type": "database", "label": "原始缺口", "sublabel": "目标×上限 − 当前", "tag": "无单位则 Unsupported" }
+  ],
+  "edges": [
+    { "from": "reading", "to": "actual", "label": "语义支持？" },
+    { "from": "actual", "to": "calc", "label": "current" },
+    { "from": "desired", "to": "calc", "label": "target" },
+    { "from": "calc", "to": "gap" },
+    { "from": "calc", "to": "abs" },
+    { "from": "calc", "to": "raw", "label": "需 RawUnit" },
+    { "from": "actual", "to": "codes", "label": "六条原因", "role": "branch" },
+    { "from": "calc", "to": "key", "label": "绑定身份", "role": "branch" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "三口径",
+      "items": [
+        "相对：clamp01((target − current) / target)，target 已知必 >0",
+        "绝对：max(0, target − current)",
+        "原始：max(0, target×maximum − clamp(current))，无单位则 Unsupported"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "守卫与回落",
+      "items": [
+        "ActualRatio 六条守卫顺序即优先级，原因码全在 Fact.cs",
+        "TargetState 四态：Unknown / Disabled / NotApplicable / Enabled",
+        "任一端不可取 ⇒ 三条缺口全部回落为该端（不是各自为政）"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "实装事实",
+      "items": [
+        "epsilon 仅用于越界判定（ratio ∉ [−ε, 1+ε] ⇒ OutsideStandardRange）",
+        "中间量一律 double，避免浮点溢出",
+        "需求键 = 长度前缀拼接，不含 Tick / 价格 / revision"
+      ]
+    }
+  ]
+}

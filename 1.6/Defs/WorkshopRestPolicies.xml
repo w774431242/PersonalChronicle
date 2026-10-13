@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    CHG-20261003-WORKSHOP-SPLIT · 车间作息策略（GOV-006：行为参数与可选集合走 XML，C# 零硬编码）。
+
+    背景（用户实机确认的成因 A）：旧实现按「该班组当日轮到的班次」改写原版作息表。
+    一个班组同时被指派日班(08-17) + 夜班(20-08) 时，绑定每天轮换
+    => pawn 的 Work 小时在日与日之间翻转约 12 小时 => 睡眠时段剧烈跳变。
+
+    三档语义：
+      FixedPerShift  岗位永久绑定一个班次，不按天翻转（默认，还原真实工厂）
+      NaturalRest    不写原版作息表，靠 Needs_Rest 自然休息 + 值勤 Job 控上下工
+      RotateDaily    旧行为（按当日轮换改写）；会翻转睡眠时段，UI 必须警示
+
+    ⚠ RotateDaily 仅作对照，默认不选；其 warningKey 由 UI 强制展示（GOV-010）。
+  -->
+  <PersonalChronicle.Automation.WorkshopRestPolicyDef>
+    <defName>PC_WorkshopRestPolicy_Fixed</defName>
+    <policy>FixedPerShift</policy>
+    <minContinuousHours>1</minContinuousHours>
+    <labelKey>PersonalChronicle.Automation.RestPolicy.Fixed.Label</labelKey>
+    <descKey>PersonalChronicle.Automation.RestPolicy.Fixed.Desc</descKey>
+    <selectable>true</selectable>
+  </PersonalChronicle.Automation.WorkshopRestPolicyDef>
+
+  <PersonalChronicle.Automation.WorkshopRestPolicyDef>
+    <defName>PC_WorkshopRestPolicy_Natural</defName>
+    <policy>NaturalRest</policy>
+    <minContinuousHours>1</minContinuousHours>
+    <labelKey>PersonalChronicle.Automation.RestPolicy.Natural.Label</labelKey>
+    <descKey>PersonalChronicle.Automation.RestPolicy.Natural.Desc</descKey>
+    <selectable>true</selectable>
+  </PersonalChronicle.Automation.WorkshopRestPolicyDef>
+
+  <PersonalChronicle.Automation.WorkshopRestPolicyDef>
+    <defName>PC_WorkshopRestPolicy_Rotate</defName>
+    <policy>RotateDaily</policy>
+    <minContinuousHours>1</minContinuousHours>
+    <labelKey>PersonalChronicle.Automation.RestPolicy.Rotate.Label</labelKey>
+    <descKey>PersonalChronicle.Automation.RestPolicy.Rotate.Desc</descKey>
+    <warningKey>PersonalChronicle.Automation.RestPolicy.Rotate.Warning</warningKey>
+    <selectable>true</selectable>
+  </PersonalChronicle.Automation.WorkshopRestPolicyDef>
+</Defs>

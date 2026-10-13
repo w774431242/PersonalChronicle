@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA_LaborOffice.label>labor office</PC_PEA_LaborOffice.label>
+  <PC_PEA_LaborOffice.description>Economic service counter. Open Economic institutions to manage accounts, jobs, real stock and services. The economy must be enabled explicitly.</PC_PEA_LaborOffice.description>
+  <PC_PEA_WorkshopOffice.label>workshop office</PC_PEA_WorkshopOffice.label>
+  <PC_PEA_WorkshopOffice.description>Economic service counter. Open Economic institutions to manage accounts, jobs, real stock and services. The economy must be enabled explicitly.</PC_PEA_WorkshopOffice.description>
+  <PC_PEA_SettlementOffice.label>payroll office</PC_PEA_SettlementOffice.label>
+  <PC_PEA_SettlementOffice.description>Economic service counter. Open Economic institutions to manage accounts, jobs, real stock and services. The economy must be enabled explicitly.</PC_PEA_SettlementOffice.description>
+  <PC_PEA_Shop.label>apparel shop</PC_PEA_Shop.label>
+  <PC_PEA_Shop.description>Economic service counter. Open Economic institutions to manage accounts, jobs, real stock and services. The economy must be enabled explicitly.</PC_PEA_Shop.description>
+  <PC_PEA_ExamCenter.label>examination center</PC_PEA_ExamCenter.label>
+  <PC_PEA_ExamCenter.description>Economic service counter. Open Economic institutions to manage accounts, jobs, real stock and services. The economy must be enabled explicitly.</PC_PEA_ExamCenter.description>
+</LanguageData>

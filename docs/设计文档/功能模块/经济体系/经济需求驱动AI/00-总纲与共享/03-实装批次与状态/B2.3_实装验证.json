@@ -1,0 +1,382 @@
+{
+  "changeId": "CHG-20261008-ECON-PERSISTENCE",
+  "batch": "B2.3",
+  "state": "CodeVerified",
+  "checkedUtc": "2026-10-08T09:03:14.1071317Z",
+  "modSha256": "6A65AC85AD715B0C20313EF2E4BB7EF79AE5FB580BC8D02E7301A7517FF39204",
+  "gameSha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+  "gameAssemblyVersion": "1.6.9676.17735",
+  "compiledChecks": {
+    "pureFinanceTypesIncludingGenerated": 41,
+    "sidecarSaveWired": true,
+    "paymentRuntimeWired": false,
+    "readinessAlwaysFalse": true,
+    "archiveBeforeLegacyRecovery": true,
+    "fullProofBinding": true,
+    "losslessTextWireEncoding": true,
+    "ruifDependency": true,
+    "nativeXmlWriteCalls": [
+      "System.Void Verse.Log::Error(System.String)",
+      "System.Void System.Xml.XmlWriter::WriteElementString(System.String,System.String)"
+    ]
+  },
+  "tests": {
+    "path": "Tests/TestResults/EconomyLanding-B23-Full.trx",
+    "sha256": "692A35F9BD4620E8BF20778ABE7FE240F12A92F7095F73919F6D709371946927",
+    "passed": 828,
+    "failed": 0,
+    "skipped": 1,
+    "skippedNames": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "newCases": 40
+  },
+  "gameSaveWired": true,
+  "offlineHostScribeVerified": true,
+  "finalLegacyCutoverComplete": false,
+  "backingVerified": false,
+  "deployedThisChange": false,
+  "gameVerifiedThisChange": false,
+  "globalGateAvailable": false,
+  "files": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/SettlementContracts.cs",
+      "sha256": "9CBB1A57EDB75FE165561726CF64BCE7207C42B7F33DE03A1D5BC52A391E678F",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "internal enum SettlementKind { Deposit, Withdrawal, LegacyAllocation }"
+        },
+        {
+          "line": 8,
+          "text": "internal enum SettlementPhase { Prepared, Finalized, Cancelled, ReconciliationRequired }"
+        },
+        {
+          "line": 9,
+          "text": "internal enum SettlementCode"
+        },
+        {
+          "line": 12,
+          "text": "internal sealed class SettlementIntent"
+        },
+        {
+          "line": 40,
+          "text": "internal static class SettlementLedgerNames { public const string Treasury = \"Treasury\"; }"
+        },
+        {
+          "line": 41,
+          "text": "internal sealed class SettlementEntry"
+        },
+        {
+          "line": 53,
+          "text": "internal sealed class SettlementResult"
+        },
+        {
+          "line": 59,
+          "text": "internal sealed class LegacyCashClaim"
+        },
+        {
+          "line": 69,
+          "text": "internal sealed class SettlementAudit"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Finance/FundedSettlementLedger.cs",
+      "sha256": "1F96E33AE0B317FAEFBF2AEE23F4DC9FFE1A0C489CF6ABEC8972757DB02EEC59",
+      "anchors": [
+        {
+          "line": 11,
+          "text": "internal sealed class FundedSettlementLedger"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/SettlementLedgerCodec.cs",
+      "sha256": "B9E249F9051BB924923334A7EF742B841A1B1B45A4DAE4A58D168229187C09E2",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "internal sealed class SettlementLedgerLoad"
+        },
+        {
+          "line": 21,
+          "text": "internal static class SettlementLedgerCodec"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/LegacySettlementArchive.cs",
+      "sha256": "171B90F5D134D93E26D61AE2AE96EA0C9BED767F5DACE0ECCDBE4A80930C37FE",
+      "anchors": [
+        {
+          "line": 17,
+          "text": "internal sealed class LegacySettlementArchive"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomySaveData.cs",
+      "sha256": "C53BB4A90B706C27C9AE3CA5B7678140FC7BFB5FD4973B0C05F2F007EFBF6455",
+      "anchors": [
+        {
+          "line": 11,
+          "text": "public sealed class PawnEconomyEnvelope"
+        },
+        {
+          "line": 24,
+          "text": "public sealed class PawnEconomySaveData : IExposable"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/PawnSettlementSaveHost.cs",
+      "sha256": "21D7FF445F9B91BA07D182502BD5EE47F72C1D655C79D36BE8AAF2AC29FA572E",
+      "anchors": [
+        {
+          "line": 14,
+          "text": "internal sealed class PawnSettlementSaveHost : IExposable"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/SettlementReservePrototype.cs",
+      "sha256": "9594374E4AA0E55FE4C193539E069DF389849597E730AA8A63E7FDCA9B992610",
+      "anchors": [
+        {
+          "line": 16,
+          "text": "internal sealed class SettlementReservePrototype : IThingHolder, IExposable"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "sha256": "67F904CD268A3D550244E2A2CD1C3EFC005DC20DFBC626CB2CDF8D28B84A69E5",
+      "anchors": [
+        {
+          "line": 14,
+          "text": "public sealed partial class GameComponent_PawnEconomy : GameComponent"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnSilverReserveTests.cs",
+      "sha256": "0D33C55BE1CD50BB667911BF53A226047C1D25D7679A52751D946C4AFEC375ED",
+      "anchors": [
+        {
+          "line": 20,
+          "text": "public sealed partial class PawnSilverReserveTests"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnSettlementPersistenceTests.cs",
+      "sha256": "01851A3611663A1595893CBA66778B2616B75BFC2C96DBA4DFD2A2B26985E46C",
+      "anchors": [
+        {
+          "line": 19,
+          "text": "public sealed partial class PawnSilverReserveTests"
+        },
+        {
+          "line": 308,
+          "text": "public sealed class PawnSettlementLedgerTests"
+        }
+      ]
+    },
+    {
+      "path": "_scripts/verify-pawn-settlement-persistence.ps1",
+      "sha256": "7A7C9CE590E14039B18ECD3F271284051C099C306AE91821793ADB0A38EC1294",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/06-B2.3_持久事务与旧账保护_实装记录.md",
+      "sha256": "986090373F2BB354FEA26DE0EE1FE0365951195924E45C805A1873F9D5BEC1EA",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. Intake 与 Architecture Review"
+        },
+        {
+          "line": 13,
+          "text": "## 2. Save Review / ADR"
+        },
+        {
+          "line": 26,
+          "text": "## 3. 实装与验证"
+        },
+        {
+          "line": 40,
+          "text": "## 4. 保存恢复与原版依据"
+        },
+        {
+          "line": 54,
+          "text": "## 5. 验证证据"
+        },
+        {
+          "line": 72,
+          "text": "## 6. 变更标注、回滚与下一批"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实施批次状态.json",
+      "sha256": "6B8E410449BEB88C834F605CA167B7B1AD83497C13E8E6CA3968F758AB62840F",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/00-实装落地计划_v1.0.md",
+      "sha256": "0042A1D863CF882D550A81F62740175BB95B67A703FB0EFDCB2F3D638B9C4B56",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "## 1. 目标、范围与交付纪律"
+        },
+        {
+          "line": 15,
+          "text": "## 2. 当前代码基线及迁移差异"
+        },
+        {
+          "line": 34,
+          "text": "## 3. 架构决策与数据边界"
+        },
+        {
+          "line": 46,
+          "text": "## 4. 批次总览与依赖"
+        },
+        {
+          "line": 63,
+          "text": "## 5. B1：需求感知与 RUIF 最小闭环"
+        },
+        {
+          "line": 91,
+          "text": "## 6. B2：实资、迁移与制度开关"
+        },
+        {
+          "line": 107,
+          "text": "## 7. B3：生活规划、储蓄与影子决策"
+        },
+        {
+          "line": 115,
+          "text": "## 8. B4：第一条自主经济闭环"
+        },
+        {
+          "line": 129,
+          "text": "## 9. B5：家庭与服务分项落地"
+        },
+        {
+          "line": 139,
+          "text": "## 10. B6：机构再生产与有限学习"
+        },
+        {
+          "line": 149,
+          "text": "## 11. B7：RUIF 治理与综合验收"
+        },
+        {
+          "line": 157,
+          "text": "## 12. 每批证据与检查命令"
+        },
+        {
+          "line": 173,
+          "text": "## 13. 迁移与回滚纪律"
+        },
+        {
+          "line": 179,
+          "text": "## 14. 完成定义与下一步"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/04-实装指导手册/00-总册与实施路线.md",
+      "sha256": "C643D2AF70811427CF34AC150F05CE2A8260D511E0F7C7FAFFE42FB13D6F8C82",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "## 1. 本手册回答什么"
+        },
+        {
+          "line": 18,
+          "text": "## 2. 阅读与交付索引"
+        },
+        {
+          "line": 55,
+          "text": "## 3. 当前核验基线"
+        },
+        {
+          "line": 68,
+          "text": "## 4. 模块划分"
+        },
+        {
+          "line": 87,
+          "text": "## 5. 架构和数据流"
+        },
+        {
+          "line": 115,
+          "text": "## 6. 首版具体闭环"
+        },
+        {
+          "line": 133,
+          "text": "## 7. 实施里程碑和退出条件"
+        },
+        {
+          "line": 145,
+          "text": "## 8. 开发工作包写法"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/M11-资金资源权利与制度协调/11-资金资源权利与制度协调_代码设计方案.md",
+      "sha256": "F6BFDB6D979C509632FD76105E4E59750D1A18146BF8A22AFACBA337F113654B",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. 输入输出与职责"
+        },
+        {
+          "line": 11,
+          "text": "## 2. 共同数据与不变量"
+        },
+        {
+          "line": 27,
+          "text": "## 3. 银币缴存、提取与外贸"
+        },
+        {
+          "line": 39,
+          "text": "## 4. 账户与借贷腿"
+        },
+        {
+          "line": 54,
+          "text": "## 5. 资源权利与谱系"
+        },
+        {
+          "line": 64,
+          "text": "## 6. 原子准备与交易恢复"
+        },
+        {
+          "line": 74,
+          "text": "## 7. 开关、迁移与能力路由"
+        },
+        {
+          "line": 86,
+          "text": "## 8. 接口、落点与原版依据"
+        },
+        {
+          "line": 102,
+          "text": "## 9. 验收"
+        }
+      ]
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI持久事务与旧账保护.md",
+      "sha256": "2D16D30C932817A63918F2FB6F989573C802C23188FEB57C4126E8AC531119BC",
+      "anchors": []
+    }
+  ],
+  "limits": [
+    "Sidecar is mounted but no gameplay deposit, withdrawal or legacy allocation command calls exist outside the internal host.",
+    "Legacy working recovery still cancels pending orders; the original payload and rights are independently preserved before it.",
+    "Initial archive is not final cutover settlement. B2.4 must stop the old route, reconcile changes and protect nonmonetary rights before any activation.",
+    "Only balances and unpaid wages have explicit funded cash allocation rules. Orders, contracts and asset titles remain preserved, not activated.",
+    "Offline tests use minimal Silver Def, compatible type inventory and existing Unity host shims. Core Scribe/Thing transfer methods are not patched.",
+    "No deployment, complete game/save acceptance, UI inspection, performance profiling or third-party trade/haul acceptance performed."
+  ]
+}

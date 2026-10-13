@@ -1,0 +1,4199 @@
+{
+  "collectedUtc": "2026-10-08T01:15:37.1939077Z",
+  "workspaceRoot": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "method": "Read-only Mono.Cecil metadata and IL call operands; no game assembly executed.",
+  "gameVersion": "1.6.4871 rev590",
+  "game": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\RimWorldWin64_Data\\Managed\\Assembly-CSharp.dll",
+    "sha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "assembly": "Assembly-CSharp, Version=1.6.9676.17735, Culture=neutral, PublicKeyToken=null",
+    "mvid": "61e41735-6189-4da4-9d21-0260257b5097",
+    "types": [
+      {
+        "type": "RimWorld.Bill_Production",
+        "baseType": "RimWorld.Bill",
+        "fields": [
+          {
+            "signature": "RimWorld.BillRepeatModeDef RimWorld.Bill_Production::repeatMode",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 RimWorld.Bill_Production::repeatCount",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 RimWorld.Bill_Production::targetCount",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.Bill_Production::pauseWhenSatisfied",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 RimWorld.Bill_Production::unpauseWhenYouHave",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.Bill_Production::includeEquipped",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.Bill_Production::includeTainted",
+            "constant": null
+          },
+          {
+            "signature": "Verse.FloatRange RimWorld.Bill_Production::hpRange",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.QualityRange RimWorld.Bill_Production::qualityRange",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.Bill_Production::limitToAllowedStuff",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.Bill_Production::paused",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void RimWorld.Bill_Production::Notify_IterationCompleted(Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>)",
+            "token": 100725340,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.String RimWorld.Bill::get_LabelCap()",
+              "Verse.NamedArgument Verse.NamedArgument::op_Implicit(System.String)",
+              "Verse.TaggedString Verse.TranslatorFormattedStringExtensions::Translate(System.String,Verse.NamedArgument)",
+              "System.String Verse.TaggedString::op_Implicit(Verse.TaggedString)",
+              "Verse.LookTargets Verse.LookTargets::op_Implicit(Verse.Thing)",
+              "System.Void Verse.Messages::Message(System.String,Verse.LookTargets,Verse.MessageTypeDef,System.Boolean)",
+              "Verse.RecipeWorker Verse.RecipeDef::get_Worker()",
+              "System.Void Verse.RecipeWorker::Notify_IterationCompleted(Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.Need",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "RimWorld.NeedDef RimWorld.Need::def",
+            "constant": null
+          },
+          {
+            "signature": "System.Single RimWorld.Need::MaxDrawHeight",
+            "constant": 70.0
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void RimWorld.Need::.ctor(Verse.Pawn)",
+            "token": 100715266,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Object::.ctor()",
+              "System.Void RimWorld.Need::SetInitialLevel()",
+              "T Verse.ThingCompUtility::TryGetComp<RimWorld.CompCanBeDormant>(Verse.Thing)"
+            ]
+          },
+          {
+            "signature": "System.Void RimWorld.Need::ExposeData()",
+            "token": 100715267,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void Verse.Scribe_Defs::Look<RimWorld.NeedDef>(T&,System.String)",
+              "System.Void Verse.Scribe_Values::Look<System.Single>(T&,System.String,T,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Void RimWorld.Need::NeedInterval()",
+            "token": 100715268,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": true,
+            "virtual": true,
+            "calls": []
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.Need_Food",
+        "baseType": "RimWorld.Need",
+        "fields": [
+          {
+            "signature": "System.Int32 RimWorld.Need_Food::lastNonStarvingTick",
+            "constant": null
+          },
+          {
+            "signature": "System.Single RimWorld.Need_Food::BaseFoodFallPerTick",
+            "constant": 2.6666667E-05
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void RimWorld.Need_Food::NeedInterval()",
+            "token": 100715356,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Boolean RimWorld.Need::get_IsFrozen()",
+              "System.Single RimWorld.Need::get_CurLevel()",
+              "System.Single RimWorld.Need_Food::get_FoodFallPerTick()",
+              "System.Void RimWorld.Need::set_CurLevel(System.Single)",
+              "System.Boolean RimWorld.Need_Food::get_Starving()",
+              "Verse.TickManager Verse.Find::get_TickManager()",
+              "System.Int32 Verse.TickManager::get_TicksGame()",
+              "System.Boolean Verse.Pawn::get_Deathresting()",
+              "System.Single RimWorld.Need_Food::get_MalnutritionSeverityPerInterval()",
+              "System.Void Verse.HealthUtility::AdjustSeverity(Verse.Pawn,Verse.HediffDef,System.Single)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.NeedDef",
+        "baseType": "Verse.Def",
+        "fields": [
+          {
+            "signature": "System.Type RimWorld.NeedDef::needClass",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Intelligence RimWorld.NeedDef::minIntelligence",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::colonistAndPrisonersOnly",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::playerMechsOnly",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::colonistsOnly",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::slavesOnly",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::onlyIfCausedByHediff",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::onlyIfCausedByGene",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::onlyIfCausedByTrait",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::onlyIfCausedByIdeo",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::neverOnPrisoner",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::neverOnSlave",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<RimWorld.RoyalTitleDef> RimWorld.NeedDef::titleRequiredAny",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<Verse.HediffDef> RimWorld.NeedDef::hediffRequiredAny",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<RimWorld.PreceptDef> RimWorld.NeedDef::nullifyingPrecepts",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<Verse.CompProperties> RimWorld.NeedDef::requiredComps",
+            "constant": null
+          },
+          {
+            "signature": "Verse.DevelopmentalStage RimWorld.NeedDef::developmentalStageFilter",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::showOnNeedList",
+            "constant": null
+          },
+          {
+            "signature": "System.Single RimWorld.NeedDef::baseLevel",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::major",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 RimWorld.NeedDef::listPriority",
+            "constant": null
+          },
+          {
+            "signature": "System.String RimWorld.NeedDef::tutorHighlightTag",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::showForCaravanMembers",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::scaleBar",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::showUnitTicks",
+            "constant": null
+          },
+          {
+            "signature": "System.Single RimWorld.NeedDef::fallPerDay",
+            "constant": null
+          },
+          {
+            "signature": "System.Single RimWorld.NeedDef::seekerRisePerHour",
+            "constant": null
+          },
+          {
+            "signature": "System.Single RimWorld.NeedDef::seekerFallPerHour",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::freezeWhileSleeping",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean RimWorld.NeedDef::freezeInMentalState",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Collections.Generic.IEnumerable`1<System.String> RimWorld.NeedDef::ConfigErrors()",
+            "token": 100702545,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void RimWorld.NeedDef/<ConfigErrors>d__30::.ctor(System.Int32)"
+            ]
+          },
+          {
+            "signature": "System.Void RimWorld.NeedDef::.ctor()",
+            "token": 100702546,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Def::.ctor()"
+            ]
+          },
+          {
+            "signature": "System.Collections.Generic.IEnumerable`1<System.String> RimWorld.NeedDef::<>n__0()",
+            "token": 100702547,
+            "public": false,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Collections.Generic.IEnumerable`1<System.String> Verse.Def::ConfigErrors()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.Pawn_ApparelTracker",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "Verse.Pawn RimWorld.Pawn_ApparelTracker::pawn",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void RimWorld.Pawn_ApparelTracker::Wear(RimWorld.Apparel,System.Boolean,System.Boolean)",
+            "token": 100715568,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.Thing::DeSpawnOrDeselect(Verse.DestroyMode)",
+              "System.Boolean RimWorld.ApparelUtility::HasPartsToWear(Verse.Pawn,Verse.ThingDef)",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Log::Warning(System.String)",
+              "System.Boolean RimWorld.CompBiocodable::IsBiocoded(Verse.Thing)",
+              "System.Boolean RimWorld.CompBiocodable::IsBiocodedFor(Verse.Thing,Verse.Pawn)",
+              "T Verse.ThingCompUtility::TryGetComp<RimWorld.CompBiocodable>(Verse.Thing)",
+              "System.String RimWorld.CompBiocodable::get_CodedPawnLabel()",
+              "System.String System.String::Concat(System.String[])",
+              "System.Boolean RimWorld.Apparel::PawnCanWear(Verse.Pawn,System.Boolean)",
+              "System.Int32 Verse.ThingOwner::get_Count()",
+              "T Verse.ThingOwner`1<RimWorld.Apparel>::get_Item(System.Int32)",
+              "Verse.RaceProperties Verse.Pawn::get_RaceProps()",
+              "System.Boolean RimWorld.ApparelUtility::CanWearTogether(Verse.ThingDef,Verse.ThingDef,Verse.BodyDef)",
+              "RimWorld.Faction Verse.Thing::get_Faction()",
+              "RimWorld.Faction RimWorld.Faction::get_OfPlayer()",
+              "System.Boolean RimWorld.FactionUtility::HostileTo(RimWorld.Faction,RimWorld.Faction)",
+              "Verse.Map Verse.Thing::get_Map()",
+              "System.Boolean Verse.ThingOwner::Remove(Verse.Thing)",
+              "Verse.IntVec3 Verse.Thing::get_PositionHeld()",
+              "System.Boolean RimWorld.Pawn_ApparelTracker::TryDrop(RimWorld.Apparel,RimWorld.Apparel&,Verse.IntVec3,System.Boolean)",
+              "System.String System.String::Concat(System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Void RimWorld.Pawn_ApparelTracker::Remove(RimWorld.Apparel)",
+              "Verse.Pawn RimWorld.Apparel::get_Wearer()",
+              "System.Boolean Verse.ThingOwner::TryAdd(Verse.Thing,System.Boolean)",
+              "System.Void RimWorld.Pawn_ApparelTracker::Lock(RimWorld.Apparel)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.Pawn_NeedsTracker",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "RimWorld.Need_Mood RimWorld.Pawn_NeedsTracker::mood",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Food RimWorld.Pawn_NeedsTracker::food",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_MechEnergy RimWorld.Pawn_NeedsTracker::energy",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Rest RimWorld.Pawn_NeedsTracker::rest",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Joy RimWorld.Pawn_NeedsTracker::joy",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Beauty RimWorld.Pawn_NeedsTracker::beauty",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_RoomSize RimWorld.Pawn_NeedsTracker::roomsize",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Outdoors RimWorld.Pawn_NeedsTracker::outdoors",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Indoors RimWorld.Pawn_NeedsTracker::indoors",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Chemical_Any RimWorld.Pawn_NeedsTracker::drugsDesire",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Comfort RimWorld.Pawn_NeedsTracker::comfort",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Learning RimWorld.Pawn_NeedsTracker::learning",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Need_Play RimWorld.Pawn_NeedsTracker::play",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void RimWorld.Pawn_NeedsTracker::ExposeData()",
+            "token": 100715480,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void Verse.Scribe_Collections::Look<RimWorld.Need>(System.Collections.Generic.List`1<T>&,System.String,Verse.LookMode,System.Object[])",
+              "System.Void System.Predicate`1<RimWorld.Need>::.ctor(System.Object,System.IntPtr)",
+              "System.Int32 System.Collections.Generic.List`1<RimWorld.Need>::RemoveAll(System.Predicate`1<!0>)",
+              "System.String Verse.Gen::ToStringSafe<Verse.Pawn>(T)",
+              "System.String System.String::Concat(System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Void RimWorld.Pawn_NeedsTracker::BindDirectNeedFields()",
+              "System.Void RimWorld.Pawn_NeedsTracker::CacheMiscNeeds()",
+              "System.Void Verse.BackCompatibility::PostExposeData(System.Object)"
+            ]
+          },
+          {
+            "signature": "System.Void RimWorld.Pawn_NeedsTracker::NeedsTrackerTickInterval(System.Int32)",
+            "token": 100715483,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.Gen::IsHashIntervalTick(Verse.Thing,System.Int32,System.Int32)",
+              "!0 System.Collections.Generic.List`1<RimWorld.Need>::get_Item(System.Int32)",
+              "System.Void RimWorld.Need::NeedInterval()",
+              "System.Int32 System.Collections.Generic.List`1<RimWorld.Need>::get_Count()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.Pawn_Ownership",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "RimWorld.Building_Bed RimWorld.Pawn_Ownership::get_OwnedBed()",
+            "token": 100715990,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": []
+          },
+          {
+            "signature": "Verse.Room RimWorld.Pawn_Ownership::get_OwnedRoom()",
+            "token": 100716000,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "RimWorld.Building_Bed RimWorld.Pawn_Ownership::get_OwnedBed()",
+              "Verse.Room Verse.RegionAndRoomQuery::GetRoom(Verse.Thing,Verse.RegionType)",
+              "System.Collections.Generic.IEnumerable`1<Verse.Pawn> Verse.Room::get_Owners()",
+              "System.Boolean System.Linq.Enumerable::Contains<Verse.Pawn>(System.Collections.Generic.IEnumerable`1<!!0>,!!0)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.Pawn_SkillTracker",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "System.Collections.Generic.List`1<RimWorld.SkillRecord> RimWorld.Pawn_SkillTracker::skills",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "RimWorld.SkillRecord RimWorld.Pawn_SkillTracker::GetSkill(RimWorld.SkillDef)",
+            "token": 100716551,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "!0 System.Collections.Generic.List`1<RimWorld.SkillRecord>::get_Item(System.Int32)",
+              "System.Int32 System.Collections.Generic.List`1<RimWorld.SkillRecord>::get_Count()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.SkillRecord",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "RimWorld.SkillDef RimWorld.SkillRecord::def",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 RimWorld.SkillRecord::levelInt",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Passion RimWorld.SkillRecord::passion",
+            "constant": null
+          },
+          {
+            "signature": "System.Single RimWorld.SkillRecord::xpSinceLastLevel",
+            "constant": null
+          },
+          {
+            "signature": "System.Single RimWorld.SkillRecord::xpSinceMidnight",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 RimWorld.SkillRecord::IntervalTicks",
+            "constant": 200
+          },
+          {
+            "signature": "System.Int32 RimWorld.SkillRecord::MinLevel",
+            "constant": 0
+          },
+          {
+            "signature": "System.Int32 RimWorld.SkillRecord::MaxLevel",
+            "constant": 20
+          },
+          {
+            "signature": "System.Int32 RimWorld.SkillRecord::MaxFullRateXpPerDay",
+            "constant": 4000
+          },
+          {
+            "signature": "System.Int32 RimWorld.SkillRecord::MasterSkillThreshold",
+            "constant": 14
+          },
+          {
+            "signature": "System.Single RimWorld.SkillRecord::SaturatedLearningFactor",
+            "constant": 0.2
+          },
+          {
+            "signature": "System.Single RimWorld.SkillRecord::LearnFactorPassionNone",
+            "constant": 0.35
+          },
+          {
+            "signature": "System.Single RimWorld.SkillRecord::LearnFactorPassionMinor",
+            "constant": 1.0
+          },
+          {
+            "signature": "System.Single RimWorld.SkillRecord::LearnFactorPassionMajor",
+            "constant": 1.5
+          },
+          {
+            "signature": "System.Single RimWorld.SkillRecord::MinXPAmount",
+            "constant": -1000.0
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Int32 RimWorld.SkillRecord::get_Level()",
+            "token": 100716568,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Int32 RimWorld.SkillRecord::GetLevel(System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Int32 RimWorld.SkillRecord::GetLevel(System.Boolean)",
+            "token": 100716586,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean RimWorld.SkillRecord::get_TotallyDisabled()",
+              "System.Int32 RimWorld.SkillRecord::get_Aptitude()",
+              "System.Int32 UnityEngine.Mathf::Clamp(System.Int32,System.Int32,System.Int32)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RimWorld.WorkGiver_DoBill",
+        "baseType": "RimWorld.WorkGiver_Scanner",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "Verse.AI.Job RimWorld.WorkGiver_DoBill::JobOnThing(Verse.Pawn,Verse.Thing,System.Boolean)",
+            "token": 100697024,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Boolean RimWorld.WorkGiver_DoBill::ThingIsUsableBillGiver(Verse.Thing)",
+              "RimWorld.BillStack RimWorld.IBillGiver::get_BillStack()",
+              "System.Boolean RimWorld.BillStack::get_AnyShouldDoNow()",
+              "System.Boolean RimWorld.IBillGiver::UsableForBillsAfterFueling()",
+              "Verse.LocalTargetInfo Verse.LocalTargetInfo::op_Implicit(Verse.Thing)",
+              "System.Boolean Verse.AI.ReservationUtility::CanReserve(Verse.Pawn,Verse.LocalTargetInfo,System.Int32,System.Int32,Verse.ReservationLayerDef,System.Boolean)",
+              "System.Boolean RimWorld.FireUtility::IsBurning(Verse.Thing)",
+              "Verse.IntVec3 Verse.Thing::get_InteractionCell()",
+              "System.Boolean Verse.AI.ReservationUtility::CanReserveSittableOrSpot(Verse.Pawn,Verse.IntVec3,Verse.Thing,System.Boolean)",
+              "T Verse.ThingCompUtility::TryGetComp<RimWorld.CompRefuelable>(Verse.Thing)",
+              "System.Boolean RimWorld.CompRefuelable::get_HasFuel()",
+              "System.Boolean RimWorld.RefuelWorkGiverUtility::CanRefuel(Verse.Pawn,Verse.Thing,System.Boolean)",
+              "Verse.AI.Job RimWorld.RefuelWorkGiverUtility::RefuelJob(Verse.Pawn,Verse.Thing,System.Boolean,Verse.JobDef,Verse.JobDef)",
+              "System.Void RimWorld.BillStack::RemoveIncompletableBills()",
+              "Verse.AI.Job RimWorld.WorkGiver_DoBill::StartOrResumeBillJob(Verse.Pawn,RimWorld.IBillGiver,System.Boolean)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.AI.JobDriver",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "System.Int32 Verse.AI.JobDriver::PlaceInInventoryDuration",
+            "constant": 25
+          },
+          {
+            "signature": "Verse.Pawn Verse.AI.JobDriver::pawn",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.Job Verse.AI.JobDriver::job",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<System.Func`1<Verse.AI.JobCondition>> Verse.AI.JobDriver::globalFailConditions",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<System.Action`1<Verse.AI.JobCondition>> Verse.AI.JobDriver::globalFinishActions",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.AI.JobDriver::ended",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.AI.JobDriver::ticksLeftThisToil",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.TargetIndex Verse.AI.JobDriver::rotateToFace",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.AI.JobDriver::asleep",
+            "constant": null
+          },
+          {
+            "signature": "System.Single Verse.AI.JobDriver::uninstallWorkLeft",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.AI.JobDriver::collideWithPawns",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn Verse.AI.JobDriver::locomotionUrgencySameAs",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.AI.JobDriver::debugTicksSpentThisToil",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Boolean Verse.AI.JobDriver::TryMakePreToilReservations(System.Boolean)",
+            "token": 100687847,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": true,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Collections.Generic.IEnumerable`1<Verse.AI.Toil> Verse.AI.JobDriver::MakeNewToils()",
+            "token": 100687848,
+            "public": false,
+            "family": true,
+            "static": false,
+            "abstract": true,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.AI.JobDriver::ExposeData()",
+            "token": 100687850,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void Verse.Scribe_Values::Look<System.Boolean>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Values::Look<System.Int32>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Values::Look<Verse.AI.TargetIndex>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Values::Look<System.Single>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_References::Look<Verse.Pawn>(T&,System.String,System.Boolean)",
+              "System.Void Verse.AI.JobDriver::SetupToils()"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.AI.JobDriver::Cleanup(Verse.AI.JobCondition)",
+            "token": 100687851,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "!0 System.Collections.Generic.List`1<System.Action`1<Verse.AI.JobCondition>>::get_Item(System.Int32)",
+              "System.Void System.Action`1<Verse.AI.JobCondition>::Invoke(!0)",
+              "System.String Verse.Gen::ToStringSafe<Verse.Pawn>(T)",
+              "System.String System.Int32::ToString()",
+              "System.String Verse.Gen::ToStringSafe<Verse.AI.JobDriver>(T)",
+              "System.String Verse.Gen::ToStringSafe<Verse.AI.Job>(T)",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String[])",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Int32 System.Collections.Generic.List`1<System.Action`1<Verse.AI.JobCondition>>::get_Count()",
+              "System.Int32 System.Collections.Generic.List`1<Verse.AI.Toil>::get_Count()",
+              "!0 System.Collections.Generic.List`1<Verse.AI.Toil>::get_Item(System.Int32)",
+              "System.Void Verse.AI.Toil::Cleanup(System.Int32,Verse.AI.JobDriver)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.AI.Pawn_JobTracker",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "Verse.AI.Job Verse.AI.Pawn_JobTracker::curJob",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.JobDriver Verse.AI.Pawn_JobTracker::curDriver",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.JobQueue Verse.AI.Pawn_JobTracker::jobQueue",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.PawnPosture Verse.AI.Pawn_JobTracker::posture",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.AI.Pawn_JobTracker::startingNewJob",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.AI.Pawn_JobTracker::debugLog",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void Verse.AI.Pawn_JobTracker::StartJob(Verse.AI.Job,Verse.AI.JobCondition,Verse.AI.ThinkNode,System.Boolean,System.Boolean,Verse.ThinkTreeDef,System.Nullable`1<Verse.AI.JobTag>,System.Boolean,System.Boolean,System.Nullable`1<System.Boolean>,System.Boolean,System.Boolean,System.Boolean)",
+            "token": 100688842,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "Verse.TickManager Verse.Find::get_TickManager()",
+              "System.Boolean Verse.TickManager::get_Paused()",
+              "System.Boolean Verse.Prefs::get_DevMode()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Pawn::ClearReservationsForJob(Verse.AI.Job)",
+              "System.String Verse.Gen::ToStringSafe<Verse.Pawn>(T)",
+              "System.String Verse.Gen::ToStringSafe<Verse.AI.Job>(T)",
+              "System.String Verse.Gen::ToStringSafe<Verse.AI.ThinkNode>(T)",
+              "System.String System.String::Concat(System.String[])",
+              "System.Void Verse.AI.JobUtility::TryStartErrorRecoverJob(Verse.Pawn,System.String,System.Exception,Verse.AI.JobDriver)",
+              "System.String System.String::Format(System.String,System.Object[])",
+              "System.Void Verse.AI.Pawn_JobTracker::DebugLogEvent(System.String)",
+              "System.Boolean Verse.Pawn_StanceTracker::get_FullBodyBusy()",
+              "System.Void Verse.Pawn_StanceTracker::CancelBusyStanceHard()",
+              "System.Void Verse.Log::Warning(System.String)",
+              "System.Void Verse.AI.Pawn_JobTracker::SuspendCurrentJob(Verse.AI.JobCondition,System.Boolean,System.Nullable`1<System.Boolean>)",
+              "Verse.AI.Job Verse.AI.JobDriver::GetFinalizerJob(Verse.AI.JobCondition)",
+              "!0 System.Nullable`1<System.Boolean>::GetValueOrDefault()",
+              "System.Boolean System.Nullable`1<System.Boolean>::get_HasValue()",
+              "System.Void System.Nullable`1<System.Boolean>::.ctor(!0)",
+              "System.Void Verse.AI.Pawn_JobTracker::CleanupCurrentJob(Verse.AI.JobCondition,System.Boolean,System.Boolean,System.Boolean,System.Nullable`1<System.Boolean>)",
+              "System.String System.String::Concat(System.String,System.String)",
+              "System.Int32 Verse.TickManager::get_TicksGame()",
+              "System.Boolean Verse.Pawn::get_Drafted()",
+              "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<Verse.Hediff>::GetEnumerator()",
+              "!0 System.Collections.Generic.List`1/Enumerator<Verse.Hediff>::get_Current()",
+              "System.Boolean Verse.HediffDef::TryGetReportStringOverrideFor(Verse.JobDef,System.String&)",
+              "System.Boolean System.Collections.Generic.List`1/Enumerator<Verse.Hediff>::MoveNext()",
+              "System.Void System.IDisposable::Dispose()",
+              "Verse.AI.JobDriver Verse.AI.Job::MakeDriver(Verse.Pawn)",
+              "System.Boolean Verse.AI.JobDriver::TryMakePreToilReservations(System.Boolean)",
+              "Verse.AI.Job Verse.AI.Pawn_JobTracker::TryOpportunisticJob(Verse.AI.Job,Verse.AI.Job)",
+              "System.Void Verse.AI.JobQueue::EnqueueFirst(Verse.AI.Job,System.Nullable`1<Verse.AI.JobTag>)",
+              "System.Void Verse.AI.Pawn_JobTracker::ClearDriver()",
+              "System.Void Verse.AI.Pawn_JobTracker::StartJob(Verse.AI.Job,Verse.AI.JobCondition,Verse.AI.ThinkNode,System.Boolean,System.Boolean,Verse.ThinkTreeDef,System.Nullable`1<Verse.AI.JobTag>,System.Boolean,System.Boolean,System.Nullable`1<System.Boolean>,System.Boolean,System.Boolean,System.Boolean)",
+              "System.Boolean System.Nullable`1<Verse.AI.JobTag>::get_HasValue()",
+              "!0 System.Nullable`1<Verse.AI.JobTag>::GetValueOrDefault()",
+              "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.PawnUtility::SpawnedMasteredPawns(Verse.Pawn)",
+              "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Verse.Pawn>::GetEnumerator()",
+              "!0 System.Collections.Generic.IEnumerator`1<Verse.Pawn>::get_Current()",
+              "System.Void Verse.AI.Pawn_JobTracker::Notify_MasterStartedFieldWork()",
+              "System.Boolean System.Collections.IEnumerator::MoveNext()",
+              "!0 System.Nullable`1<Verse.AI.JobTag>::get_Value()",
+              "System.Boolean RimWorld.PawnUtility::IsCarrying(Verse.Pawn)",
+              "Verse.Thing Verse.Pawn_CarryTracker::get_CarriedThing()",
+              "System.String System.String::Format(System.String,System.Object,System.Object)",
+              "System.Void Verse.Log::Message(System.String)",
+              "Verse.IntVec3 Verse.Thing::get_Position()",
+              "System.Boolean Verse.Pawn_CarryTracker::TryDropCarriedThing(Verse.IntVec3,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>)",
+              "System.Void Verse.AI.JobDriver::SetInitialPosture()",
+              "System.Void Verse.AI.JobDriver::Notify_Starting()",
+              "System.Void Verse.AI.JobDriver::SetupToils()",
+              "System.Void Verse.AI.JobDriver::ReadyForNextToil()",
+              "System.Void RimWorld.Pawn_FlightTracker::Notify_JobStarted(Verse.AI.Job)",
+              "System.Void Verse.AI.Pawn_JobTracker::EndCurrentJob(Verse.AI.JobCondition,System.Boolean,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.AI.Pawn_JobTracker::EndCurrentJob(Verse.AI.JobCondition,System.Boolean,System.Boolean)",
+            "token": 100688845,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.String System.Object::ToString()",
+              "System.String Verse.AI.Pawn_JobTracker::CurToilString(Verse.AI.JobDriver)",
+              "System.String System.String::Concat(System.String[])",
+              "System.Void Verse.AI.Pawn_JobTracker::DebugLogEvent(System.String)",
+              "System.Void Verse.Log::Warning(System.String)",
+              "Verse.AI.Job Verse.AI.JobDriver::GetFinalizerJob(Verse.AI.JobCondition)",
+              "System.Void System.Nullable`1<System.Boolean>::.ctor(!0)",
+              "System.Void Verse.AI.Pawn_JobTracker::CleanupCurrentJob(Verse.AI.JobCondition,System.Boolean,System.Boolean,System.Boolean,System.Nullable`1<System.Boolean>)",
+              "Verse.AI.Job Verse.JobMaker::MakeJob(Verse.JobDef,System.Int32,System.Boolean)",
+              "System.Void Verse.AI.Pawn_JobTracker::StartJob(Verse.AI.Job,Verse.AI.JobCondition,Verse.AI.ThinkNode,System.Boolean,System.Boolean,Verse.ThinkTreeDef,System.Nullable`1<Verse.AI.JobTag>,System.Boolean,System.Boolean,System.Nullable`1<System.Boolean>,System.Boolean,System.Boolean,System.Boolean)",
+              "System.Boolean Verse.AI.Pawn_JobTracker::CanPawnTakeOpportunisticJob(Verse.Pawn)",
+              "System.Boolean Verse.AI.Pawn_PathFollower::get_Moving()",
+              "System.Void Verse.AI.Pawn_JobTracker::TryFindAndStartJob()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.AI.ReservationManager",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "System.Int32 Verse.AI.ReservationManager::StackCount_All",
+            "constant": -1
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Boolean Verse.AI.ReservationManager::CanReserve(Verse.Pawn,Verse.LocalTargetInfo,System.Int32,System.Int32,Verse.ReservationLayerDef,System.Boolean)",
+            "token": 100688981,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean Verse.Thing::get_Spawned()",
+              "Verse.Map Verse.Thing::get_Map()",
+              "System.Boolean Verse.LocalTargetInfo::get_IsValid()",
+              "System.Boolean Verse.LocalTargetInfo::get_ThingDestroyed()",
+              "System.Boolean Verse.LocalTargetInfo::get_HasThing()",
+              "Verse.Thing Verse.LocalTargetInfo::get_Thing()",
+              "System.Boolean Verse.Thing::get_SpawnedOrAnyParentSpawned()",
+              "Verse.Map Verse.Thing::get_MapHeld()",
+              "System.Boolean Verse.PhysicalInteractionReservationManager::IsReserved(Verse.LocalTargetInfo)",
+              "System.Boolean Verse.PhysicalInteractionReservationManager::IsReservedBy(Verse.Pawn,Verse.LocalTargetInfo)",
+              "System.Boolean Verse.AI.ReservationManager::IsAlreadyReserved(Verse.Pawn,Verse.LocalTargetInfo,Verse.ReservationLayerDef,System.Int32)",
+              "Verse.IntVec3 Verse.Thing::get_InteractionCell()",
+              "Verse.Building Verse.GridsUtility::GetEdifice(Verse.IntVec3,Verse.Map)",
+              "Verse.LocalTargetInfo Verse.LocalTargetInfo::op_Implicit(Verse.Thing)",
+              "RimWorld.Faction Verse.Thing::get_Faction()",
+              "System.Boolean Verse.AI.ReservationManager::TryGetReserver(Verse.LocalTargetInfo,RimWorld.Faction,Verse.Pawn&)",
+              "Verse.LocalTargetInfo Verse.LocalTargetInfo::op_Implicit(Verse.IntVec3)",
+              "System.Void System.Collections.Generic.List`1<Verse.Pawn>::Clear()",
+              "!0 System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::get_Item(System.Int32)",
+              "Verse.LocalTargetInfo Verse.AI.ReservationManager/Reservation::get_Target()",
+              "System.Boolean Verse.LocalTargetInfo::op_Inequality(Verse.LocalTargetInfo,Verse.LocalTargetInfo)",
+              "Verse.ReservationLayerDef Verse.AI.ReservationManager/Reservation::get_Layer()",
+              "Verse.Pawn Verse.AI.ReservationManager/Reservation::get_Claimant()",
+              "System.Boolean System.Collections.Generic.List`1<Verse.Pawn>::Contains(!0)",
+              "System.Boolean Verse.AI.ReservationManager::RespectsReservationsOf(Verse.Pawn,Verse.Pawn)",
+              "System.Int32 Verse.AI.ReservationManager/Reservation::get_MaxPawns()",
+              "System.Void System.Collections.Generic.List`1<Verse.Pawn>::Add(!0)",
+              "System.Int32 Verse.AI.ReservationManager/Reservation::get_StackCount()",
+              "System.Int32 System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::get_Count()"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.AI.ReservationManager::Reserve(Verse.Pawn,Verse.AI.Job,Verse.LocalTargetInfo,System.Int32,System.Int32,Verse.ReservationLayerDef,System.Boolean,System.Boolean,System.Boolean)",
+            "token": 100688984,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Log::ErrorOnce(System.String,System.Int32)",
+              "System.String Verse.Gen::ToStringSafe<Verse.Pawn>(T)",
+              "System.String Verse.Gen::ToStringSafe<Verse.LocalTargetInfo>(T)",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Log::Warning(System.String)",
+              "System.Boolean Verse.LocalTargetInfo::get_HasThing()",
+              "Verse.Thing Verse.LocalTargetInfo::get_Thing()",
+              "!0 System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::get_Item(System.Int32)",
+              "Verse.LocalTargetInfo Verse.AI.ReservationManager/Reservation::get_Target()",
+              "System.Boolean Verse.LocalTargetInfo::op_Equality(Verse.LocalTargetInfo,Verse.LocalTargetInfo)",
+              "Verse.Pawn Verse.AI.ReservationManager/Reservation::get_Claimant()",
+              "Verse.AI.Job Verse.AI.ReservationManager/Reservation::get_Job()",
+              "Verse.ReservationLayerDef Verse.AI.ReservationManager/Reservation::get_Layer()",
+              "System.Int32 Verse.AI.ReservationManager/Reservation::get_StackCount()",
+              "System.Int32 System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::get_Count()",
+              "System.Boolean Verse.LocalTargetInfo::get_IsValid()",
+              "System.Boolean Verse.LocalTargetInfo::get_ThingDestroyed()",
+              "System.Boolean Verse.AI.ReservationManager::CanReserve(Verse.Pawn,Verse.LocalTargetInfo,System.Int32,System.Int32,Verse.ReservationLayerDef,System.Boolean)",
+              "System.Void Verse.AI.ReservationManager/Reservation::.ctor(Verse.Pawn,Verse.AI.Job,System.Int32,System.Int32,Verse.LocalTargetInfo,Verse.ReservationLayerDef)",
+              "System.Void System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::Add(!0)",
+              "System.Collections.Generic.List`1<!!0> System.Linq.Enumerable::ToList<Verse.AI.ReservationManager/Reservation>(System.Collections.Generic.IEnumerable`1<!!0>)",
+              "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::GetEnumerator()",
+              "!0 System.Collections.Generic.List`1/Enumerator<Verse.AI.ReservationManager/Reservation>::get_Current()",
+              "System.Boolean Verse.AI.ReservationManager::RespectsReservationsOf(Verse.Pawn,Verse.Pawn)",
+              "System.Void Verse.AI.Pawn_JobTracker::EndCurrentOrQueuedJob(Verse.AI.Job,Verse.AI.JobCondition,System.Boolean,System.Boolean)",
+              "Verse.IntVec3 Verse.Thing::get_InteractionCell()",
+              "Verse.Map Verse.Thing::get_Map()",
+              "Verse.Building Verse.GridsUtility::GetEdifice(Verse.IntVec3,Verse.Map)",
+              "Verse.LocalTargetInfo Verse.LocalTargetInfo::op_Implicit(Verse.Thing)",
+              "Verse.LocalTargetInfo Verse.LocalTargetInfo::op_Implicit(Verse.IntVec3)",
+              "System.Boolean System.Collections.Generic.List`1/Enumerator<Verse.AI.ReservationManager/Reservation>::MoveNext()",
+              "System.Void System.IDisposable::Dispose()",
+              "System.Void Verse.AI.ReservationManager::LogCouldNotReserveError(Verse.Pawn,Verse.AI.Job,Verse.LocalTargetInfo,System.Int32,System.Int32,Verse.ReservationLayerDef)",
+              "System.Void Verse.MapEvents::Notify_ReservationAdded(Verse.AI.ReservationManager/Reservation)"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.AI.ReservationManager::Release(Verse.LocalTargetInfo,Verse.Pawn,Verse.AI.Job)",
+            "token": 100688985,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.LocalTargetInfo::get_ThingDestroyed()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Log::Warning(System.String)",
+              "!0 System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::get_Item(System.Int32)",
+              "Verse.LocalTargetInfo Verse.AI.ReservationManager/Reservation::get_Target()",
+              "System.Boolean Verse.LocalTargetInfo::op_Equality(Verse.LocalTargetInfo,Verse.LocalTargetInfo)",
+              "Verse.Pawn Verse.AI.ReservationManager/Reservation::get_Claimant()",
+              "Verse.AI.Job Verse.AI.ReservationManager/Reservation::get_Job()",
+              "System.Int32 System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::get_Count()",
+              "System.String System.String::Concat(System.String[])",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::Remove(!0)",
+              "System.Void Verse.MapEvents::Notify_ReservationRemoved(Verse.AI.ReservationManager/Reservation)"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.AI.ReservationManager::ReleaseClaimedBy(Verse.Pawn,Verse.AI.Job)",
+            "token": 100688987,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Int32 System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::get_Count()",
+              "!0 System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::get_Item(System.Int32)",
+              "Verse.Pawn Verse.AI.ReservationManager/Reservation::get_Claimant()",
+              "Verse.AI.Job Verse.AI.ReservationManager/Reservation::get_Job()",
+              "System.Void System.Collections.Generic.List`1<Verse.AI.ReservationManager/Reservation>::RemoveAt(System.Int32)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.AI.ThinkNode_JobGiver",
+        "baseType": "Verse.AI.ThinkNode",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "Verse.AI.Job Verse.AI.ThinkNode_JobGiver::TryGiveJob(Verse.Pawn)",
+            "token": 100689223,
+            "public": false,
+            "family": true,
+            "static": false,
+            "abstract": true,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "Verse.AI.ThinkResult Verse.AI.ThinkNode_JobGiver::TryIssueJobPackage(Verse.Pawn,Verse.AI.JobIssueParams)",
+            "token": 100689224,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "Verse.AI.Job Verse.AI.ThinkNode_JobGiver::TryGiveJob(Verse.Pawn)",
+              "Verse.AI.ThinkResult Verse.AI.ThinkResult::get_NoJob()",
+              "System.String Verse.AI.ThinkNode_JobGiver::get_CrawlingReportStringOverride()",
+              "System.Void Verse.AI.ThinkResult::.ctor(Verse.AI.Job,Verse.AI.ThinkNode,System.Nullable`1<Verse.AI.JobTag>,System.Boolean)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.AI.ThinkNode_PrioritySorter",
+        "baseType": "Verse.AI.ThinkNode",
+        "fields": [
+          {
+            "signature": "System.Single Verse.AI.ThinkNode_PrioritySorter::minPriority",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "Verse.AI.ThinkResult Verse.AI.ThinkNode_PrioritySorter::TryIssueJobPackage(Verse.Pawn,Verse.AI.JobIssueParams)",
+            "token": 100689125,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<Verse.AI.ThinkNode>::Clear()",
+              "System.Int32 System.Collections.Generic.List`1<Verse.AI.ThinkNode>::get_Count()",
+              "System.Int32 Verse.Rand::Range(System.Int32,System.Int32)",
+              "!0 System.Collections.Generic.List`1<Verse.AI.ThinkNode>::get_Item(System.Int32)",
+              "System.Void System.Collections.Generic.List`1<Verse.AI.ThinkNode>::Insert(System.Int32,!0)",
+              "System.Single Verse.AI.ThinkNode::GetPriority(Verse.Pawn)",
+              "System.Type System.Object::GetType()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "Verse.AI.ThinkResult Verse.AI.ThinkResult::get_NoJob()",
+              "Verse.AI.ThinkResult Verse.AI.ThinkNode::TryIssueJobPackage(Verse.Pawn,Verse.AI.JobIssueParams)",
+              "System.Boolean Verse.AI.ThinkResult::get_IsValid()",
+              "System.Void System.Collections.Generic.List`1<Verse.AI.ThinkNode>::RemoveAt(System.Int32)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.AI.ThinkNode_SubtreesByTag",
+        "baseType": "Verse.AI.ThinkNode",
+        "fields": [
+          {
+            "signature": "System.String Verse.AI.ThinkNode_SubtreesByTag::insertTag",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void Verse.AI.ThinkNode_SubtreesByTag::ResolveSubnodes()",
+            "token": 100689140,
+            "public": false,
+            "family": true,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "Verse.AI.ThinkResult Verse.AI.ThinkNode_SubtreesByTag::TryIssueJobPackage(Verse.Pawn,Verse.AI.JobIssueParams)",
+            "token": 100689141,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<Verse.ThinkTreeDef>::.ctor()",
+              "System.Collections.Generic.IEnumerable`1<T> Verse.DefDatabase`1<Verse.ThinkTreeDef>::get_AllDefs()",
+              "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Verse.ThinkTreeDef>::GetEnumerator()",
+              "!0 System.Collections.Generic.IEnumerator`1<Verse.ThinkTreeDef>::get_Current()",
+              "System.Boolean System.String::op_Equality(System.String,System.String)",
+              "System.Void System.Collections.Generic.List`1<Verse.ThinkTreeDef>::Add(!0)",
+              "System.Boolean System.Collections.IEnumerator::MoveNext()",
+              "System.Void System.IDisposable::Dispose()",
+              "System.Void System.Func`2<Verse.ThinkTreeDef,System.Single>::.ctor(System.Object,System.IntPtr)",
+              "System.Linq.IOrderedEnumerable`1<!!0> System.Linq.Enumerable::OrderByDescending<Verse.ThinkTreeDef,System.Single>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,!!1>)",
+              "System.Collections.Generic.List`1<!!0> System.Linq.Enumerable::ToList<Verse.ThinkTreeDef>(System.Collections.Generic.IEnumerable`1<!!0>)",
+              "!0 System.Collections.Generic.List`1<Verse.ThinkTreeDef>::get_Item(System.Int32)",
+              "Verse.AI.ThinkResult Verse.AI.ThinkNode::TryIssueJobPackage(Verse.Pawn,Verse.AI.JobIssueParams)",
+              "System.Boolean Verse.AI.ThinkResult::get_IsValid()",
+              "System.Int32 System.Collections.Generic.List`1<Verse.ThinkTreeDef>::get_Count()",
+              "Verse.AI.ThinkResult Verse.AI.ThinkResult::get_NoJob()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.AI.Toils_Recipe",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "Verse.AI.Toil Verse.AI.Toils_Recipe::DoRecipeWork()",
+            "token": 100687659,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.AI.Toils_Recipe/<>c__DisplayClass2_0::.ctor()",
+              "Verse.AI.Toil Verse.ToilMaker::MakeToil(System.String)",
+              "System.Void System.Action::.ctor(System.Object,System.IntPtr)",
+              "System.Void System.Action`1<System.Int32>::.ctor(System.Object,System.IntPtr)",
+              "System.Void System.Func`1<Verse.EffecterDef>::.ctor(System.Object,System.IntPtr)",
+              "Verse.AI.Toil Verse.AI.ToilEffects::WithEffect(Verse.AI.Toil,System.Func`1<Verse.EffecterDef>,Verse.AI.TargetIndex,System.Nullable`1<UnityEngine.Color>)",
+              "System.Void System.Func`1<Verse.SoundDef>::.ctor(System.Object,System.IntPtr)",
+              "Verse.AI.Toil Verse.AI.ToilEffects::PlaySustainerOrSound(Verse.AI.Toil,System.Func`1<Verse.SoundDef>,System.Single)",
+              "System.Void System.Func`1<System.Single>::.ctor(System.Object,System.IntPtr)",
+              "Verse.AI.Toil Verse.AI.ToilEffects::WithProgressBar(Verse.AI.Toil,Verse.AI.TargetIndex,System.Func`1<System.Single>,System.Boolean,System.Single,System.Boolean)",
+              "System.Void System.Func`1<System.Boolean>::.ctor(System.Object,System.IntPtr)",
+              "T Verse.AI.ToilFailConditions::FailOn<Verse.AI.Toil>(T,System.Func`1<System.Boolean>)",
+              "System.Void System.Func`1<RimWorld.SkillDef>::.ctor(System.Object,System.IntPtr)"
+            ]
+          },
+          {
+            "signature": "Verse.AI.Toil Verse.AI.Toils_Recipe::FinishRecipeAndStartStoringProduct(Verse.AI.TargetIndex)",
+            "token": 100687660,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.AI.Toils_Recipe/<>c__DisplayClass3_0::.ctor()",
+              "Verse.AI.Toil Verse.ToilMaker::MakeToil(System.String)",
+              "System.Void System.Action::.ctor(System.Object,System.IntPtr)",
+              "System.Void Verse.AI.Toil::AddFinishAction(System.Action)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": [
+          {
+            "method": "System.Void Verse.AI.Toils_Recipe/<>c__DisplayClass3_0::<FinishRecipeAndStartStoringProduct>b__1()",
+            "offset": 341,
+            "target": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.GenRecipe::MakeRecipeProducts(Verse.RecipeDef,Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>,Verse.Thing,RimWorld.IBillGiver,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)"
+          },
+          {
+            "method": "System.Void Verse.AI.Toils_Recipe/<>c__DisplayClass3_0::<FinishRecipeAndStartStoringProduct>b__1()",
+            "offset": 393,
+            "target": "System.Void Verse.AI.Toils_Recipe::ConsumeIngredients(System.Collections.Generic.List`1<Verse.Thing>,Verse.RecipeDef,Verse.Map)"
+          },
+          {
+            "method": "System.Void Verse.AI.Toils_Recipe/<>c__DisplayClass3_0::<FinishRecipeAndStartStoringProduct>b__1()",
+            "offset": 406,
+            "target": "System.Void RimWorld.Bill::Notify_IterationCompleted(Verse.Pawn,System.Collections.Generic.List`1<Verse.Thing>)"
+          }
+        ]
+      },
+      {
+        "type": "Verse.Def",
+        "baseType": "Verse.Editable",
+        "fields": [
+          {
+            "signature": "System.String Verse.Def::defName",
+            "constant": null
+          },
+          {
+            "signature": "System.String Verse.Def::label",
+            "constant": null
+          },
+          {
+            "signature": "System.String Verse.Def::description",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<Verse.DefHyperlink> Verse.Def::descriptionHyperlinks",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Def::ignoreConfigErrors",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Def::ignoreIllegalLabelCharacterConfigError",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<Verse.DefModExtension> Verse.Def::modExtensions",
+            "constant": null
+          },
+          {
+            "signature": "System.UInt16 Verse.Def::shortHash",
+            "constant": null
+          },
+          {
+            "signature": "System.UInt16 Verse.Def::index",
+            "constant": null
+          },
+          {
+            "signature": "Verse.ModContentPack Verse.Def::modContentPack",
+            "constant": null
+          },
+          {
+            "signature": "System.String Verse.Def::fileName",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Def::defNameHash",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Def::generated",
+            "constant": null
+          },
+          {
+            "signature": "System.UInt16 Verse.Def::debugRandomId",
+            "constant": null
+          },
+          {
+            "signature": "System.String Verse.Def::DefaultDefName",
+            "constant": "UnnamedDef"
+          }
+        ],
+        "methods": [
+          {
+            "signature": "T Verse.Def::GetModExtension()",
+            "token": 100666774,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "!0 System.Collections.Generic.List`1<Verse.DefModExtension>::get_Item(System.Int32)",
+              "System.Int32 System.Collections.Generic.List`1<Verse.DefModExtension>::get_Count()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.DefModExtension",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Collections.Generic.IEnumerable`1<System.String> Verse.DefModExtension::ConfigErrors()",
+            "token": 100672501,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Collections.Generic.IEnumerable`1<!!0> System.Linq.Enumerable::Empty<System.String>()"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.DefModExtension::ResolveReferences(Verse.Def)",
+            "token": 100672502,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.DefModExtension::.ctor()",
+            "token": 100672503,
+            "public": false,
+            "family": true,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Object::.ctor()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.Game",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "System.SByte Verse.Game::currentMapIndex",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<Verse.GameComponent> Verse.Game::components",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.PlaySettings Verse.Game::playSettings",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.StoryWatcher Verse.Game::storyWatcher",
+            "constant": null
+          },
+          {
+            "signature": "Verse.LetterStack Verse.Game::letterStack",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.ResearchManager Verse.Game::researchManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.AnalysisManager Verse.Game::analysisManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.GameEnder Verse.Game::gameEnder",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Storyteller Verse.Game::storyteller",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.History Verse.Game::history",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.TaleManager Verse.Game::taleManager",
+            "constant": null
+          },
+          {
+            "signature": "Verse.PlayLog Verse.Game::playLog",
+            "constant": null
+          },
+          {
+            "signature": "Verse.BattleLog Verse.Game::battleLog",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.OutfitDatabase Verse.Game::outfitDatabase",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.DrugPolicyDatabase Verse.Game::drugPolicyDatabase",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.ReadingPolicyDatabase Verse.Game::readingPolicyDatabase",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.FoodRestrictionDatabase Verse.Game::foodRestrictionDatabase",
+            "constant": null
+          },
+          {
+            "signature": "Verse.TickManager Verse.Game::tickManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Tutor Verse.Game::tutor",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Autosaver Verse.Game::autosaver",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.DateNotifier Verse.Game::dateNotifier",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.SignalManager Verse.Game::signalManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.UniqueIDsManager Verse.Game::uniqueIDsManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.QuestManager Verse.Game::questManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.TransportShipManager Verse.Game::transportShipManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.StudyManager Verse.Game::studyManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.CustomXenogermDatabase Verse.Game::customXenogermDatabase",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.CustomXenotypeDatabase Verse.Game::customXenotypeDatabase",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.RelationshipRecords Verse.Game::relationshipRecords",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.HiddenItemsManager Verse.Game::hiddenItemsManager",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.EntityCodex Verse.Game::entityCodex",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void Verse.Game::FillComponents()",
+            "token": 100668609,
+            "public": false,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Predicate`1<Verse.GameComponent>::.ctor(System.Object,System.IntPtr)",
+              "System.Int32 System.Collections.Generic.List`1<Verse.GameComponent>::RemoveAll(System.Predicate`1<!0>)",
+              "System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+              "System.Collections.Generic.List`1<System.Type> Verse.GenTypes::AllSubclassesNonAbstract(System.Type)",
+              "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<System.Type>::GetEnumerator()",
+              "!0 System.Collections.Generic.List`1/Enumerator<System.Type>::get_Current()",
+              "Verse.GameComponent Verse.Game::GetComponent(System.Type)",
+              "System.Object System.Activator::CreateInstance(System.Type,System.Object[])",
+              "System.Void System.Collections.Generic.List`1<Verse.GameComponent>::Add(!0)",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean System.Collections.Generic.List`1/Enumerator<System.Type>::MoveNext()",
+              "System.Void System.IDisposable::Dispose()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.GameComponent",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void Verse.GameComponent::GameComponentUpdate()",
+            "token": 100668630,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.GameComponent::GameComponentTick()",
+            "token": 100668631,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.GameComponent::GameComponentOnGUI()",
+            "token": 100668632,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.GameComponent::ExposeData()",
+            "token": 100668633,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.GameComponent::FinalizeInit()",
+            "token": 100668634,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.GameComponent::StartedNewGame()",
+            "token": 100668635,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.GameComponent::LoadedGame()",
+            "token": 100668636,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.GameComponent::AppendDebugString(System.Text.StringBuilder)",
+            "token": 100668637,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.GameComponent::.ctor()",
+            "token": 100668638,
+            "public": false,
+            "family": true,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Object::.ctor()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.GenRecipe",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "Verse.Thing Verse.GenRecipe::PostProcessProduct(Verse.Thing,Verse.RecipeDef,Verse.Pawn,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)",
+            "token": 100685218,
+            "public": false,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "T Verse.ThingCompUtility::TryGetComp<RimWorld.CompQuality>(Verse.Thing)",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "RimWorld.QualityCategory RimWorld.QualityUtility::GenerateQualityCreatedByPawn(Verse.Pawn,RimWorld.SkillDef,System.Boolean)",
+              "System.Void System.Nullable`1<RimWorld.ArtGenerationContext>::.ctor(!0)",
+              "System.Void RimWorld.CompQuality::SetQuality(RimWorld.QualityCategory,System.Nullable`1<RimWorld.ArtGenerationContext>)",
+              "T Verse.ThingCompUtility::TryGetComp<RimWorld.CompArt>(Verse.Thing)",
+              "System.Void RimWorld.CompArt::JustCreatedBy(Verse.Pawn)",
+              "RimWorld.QualityCategory RimWorld.CompQuality::get_Quality()",
+              "RimWorld.Tale RimWorld.TaleRecorder::RecordTale(RimWorld.TaleDef,System.Object[])",
+              "System.Void RimWorld.QualityUtility::SendCraftNotification(Verse.Thing,Verse.Pawn)",
+              "RimWorld.Ideo Verse.Pawn::get_Ideo()",
+              "Verse.ThingStyleDef RimWorld.Ideo::GetStyleFor(Verse.ThingDef)",
+              "System.Void Verse.Thing::set_StyleDef(Verse.ThingStyleDef)",
+              "System.Void Verse.Thing::set_StyleSourcePrecept(RimWorld.Precept_ThingStyle)",
+              "System.Boolean Verse.GenList::NullOrEmpty<Verse.ThingStyleChance>(System.Collections.Generic.IList`1<T>)",
+              "System.Boolean Verse.Rand::Chance(System.Single)",
+              "System.Void System.Func`2<Verse.ThingStyleChance,System.Single>::.ctor(System.Object,System.IntPtr)",
+              "T Verse.GenCollection::RandomElementByWeight<Verse.ThingStyleChance>(System.Collections.Generic.IEnumerable`1<T>,System.Func`2<T,System.Single>)",
+              "Verse.ThingStyleDef Verse.ThingStyleChance::get_StyleDef()",
+              "System.Void RimWorld.ThingStyleHelper::SetStyleDef(Verse.Thing,Verse.ThingStyleDef)",
+              "System.Boolean Verse.ThingDef::get_Minifiable()",
+              "RimWorld.MinifiedThing RimWorld.MinifyUtility::MakeMinified(Verse.Thing,Verse.DestroyMode)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": [
+          {
+            "method": "System.Boolean Verse.GenRecipe/<FinalizeGestatedPawns>d__1::MoveNext()",
+            "offset": 80,
+            "target": "Verse.Thing Verse.GenRecipe::PostProcessProduct(Verse.Thing,Verse.RecipeDef,Verse.Pawn,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)"
+          },
+          {
+            "method": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::System.IDisposable.Dispose()",
+            "offset": 61,
+            "target": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::<>m__Finally1()"
+          },
+          {
+            "method": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::System.IDisposable.Dispose()",
+            "offset": 71,
+            "target": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::<>m__Finally2()"
+          },
+          {
+            "method": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::System.IDisposable.Dispose()",
+            "offset": 81,
+            "target": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::<>m__Finally3()"
+          },
+          {
+            "method": "System.Boolean Verse.GenRecipe/<MakeRecipeProducts>d__0::MoveNext()",
+            "offset": 434,
+            "target": "Verse.Thing Verse.GenRecipe::PostProcessProduct(Verse.Thing,Verse.RecipeDef,Verse.Pawn,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)"
+          },
+          {
+            "method": "System.Boolean Verse.GenRecipe/<MakeRecipeProducts>d__0::MoveNext()",
+            "offset": 703,
+            "target": "Verse.Thing Verse.GenRecipe::PostProcessProduct(Verse.Thing,Verse.RecipeDef,Verse.Pawn,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)"
+          },
+          {
+            "method": "System.Boolean Verse.GenRecipe/<MakeRecipeProducts>d__0::MoveNext()",
+            "offset": 749,
+            "target": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::<>m__Finally1()"
+          },
+          {
+            "method": "System.Boolean Verse.GenRecipe/<MakeRecipeProducts>d__0::MoveNext()",
+            "offset": 846,
+            "target": "Verse.Thing Verse.GenRecipe::PostProcessProduct(Verse.Thing,Verse.RecipeDef,Verse.Pawn,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)"
+          },
+          {
+            "method": "System.Boolean Verse.GenRecipe/<MakeRecipeProducts>d__0::MoveNext()",
+            "offset": 892,
+            "target": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::<>m__Finally2()"
+          },
+          {
+            "method": "System.Boolean Verse.GenRecipe/<MakeRecipeProducts>d__0::MoveNext()",
+            "offset": 995,
+            "target": "Verse.Thing Verse.GenRecipe::PostProcessProduct(Verse.Thing,Verse.RecipeDef,Verse.Pawn,RimWorld.Precept_ThingStyle,Verse.ThingStyleDef,System.Nullable`1<System.Int32>)"
+          },
+          {
+            "method": "System.Boolean Verse.GenRecipe/<MakeRecipeProducts>d__0::MoveNext()",
+            "offset": 1041,
+            "target": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::<>m__Finally3()"
+          },
+          {
+            "method": "System.Boolean Verse.GenRecipe/<MakeRecipeProducts>d__0::MoveNext()",
+            "offset": 1143,
+            "target": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::System.IDisposable.Dispose()"
+          },
+          {
+            "method": "System.Collections.Generic.IEnumerator`1<Verse.Thing> Verse.GenRecipe/<MakeRecipeProducts>d__0::System.Collections.Generic.IEnumerable<Verse.Thing>.GetEnumerator()",
+            "offset": 35,
+            "target": "System.Void Verse.GenRecipe/<MakeRecipeProducts>d__0::.ctor(System.Int32)"
+          },
+          {
+            "method": "System.Collections.IEnumerator Verse.GenRecipe/<MakeRecipeProducts>d__0::System.Collections.IEnumerable.GetEnumerator()",
+            "offset": 1,
+            "target": "System.Collections.Generic.IEnumerator`1<Verse.Thing> Verse.GenRecipe/<MakeRecipeProducts>d__0::System.Collections.Generic.IEnumerable<Verse.Thing>.GetEnumerator()"
+          }
+        ]
+      },
+      {
+        "type": "Verse.Hediff",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "Verse.HediffDef Verse.Hediff::def",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Hediff::ageTicks",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Hediff::tickAdded",
+            "constant": null
+          },
+          {
+            "signature": "System.String Verse.Hediff::sourceLabel",
+            "constant": null
+          },
+          {
+            "signature": "Verse.ThingDef Verse.Hediff::sourceDef",
+            "constant": null
+          },
+          {
+            "signature": "Verse.BodyPartGroupDef Verse.Hediff::sourceBodyPartGroup",
+            "constant": null
+          },
+          {
+            "signature": "System.String Verse.Hediff::sourceToolLabel",
+            "constant": null
+          },
+          {
+            "signature": "Verse.HediffDef Verse.Hediff::sourceHediffDef",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Hediff::loadID",
+            "constant": null
+          },
+          {
+            "signature": "Verse.WeakReference`1<Verse.LogEntry> Verse.Hediff::combatLogEntry",
+            "constant": null
+          },
+          {
+            "signature": "System.String Verse.Hediff::combatLogText",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Hediff::temp_partIndexToSetLater",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Hediff::canBeThreateningToPart",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn Verse.Hediff::pawn",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Boolean Verse.Hediff::get_Visible()",
+            "token": 100674046,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "Verse.HediffStage Verse.Hediff::get_CurStage()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.HediffSet",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "Verse.Pawn Verse.HediffSet::pawn",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<Verse.Hediff> Verse.HediffSet::hediffs",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void Verse.HediffSet::ExposeData()",
+            "token": 100675382,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "!!0[] System.Array::Empty<System.Object>()",
+              "System.Void Verse.Scribe_Collections::Look<Verse.Hediff>(System.Collections.Generic.List`1<T>&,System.String,Verse.LookMode,System.Object[])",
+              "System.Void System.Predicate`1<Verse.Hediff>::.ctor(System.Object,System.IntPtr)",
+              "System.Int32 System.Collections.Generic.List`1<Verse.Hediff>::RemoveAll(System.Predicate`1<!0>)",
+              "System.String Verse.Gen::ToStringSafe<Verse.Pawn>(T)",
+              "System.String System.String::Concat(System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "!0 System.Collections.Generic.List`1<Verse.Hediff>::get_Item(System.Int32)",
+              "System.Int32 System.Collections.Generic.List`1<Verse.Hediff>::get_Count()",
+              "System.Void Verse.HediffSet::DirtyCache()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.IThingHolder",
+        "baseType": "",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "Verse.IThingHolder Verse.IThingHolder::get_ParentHolder()",
+            "token": 100678198,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": true,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.IThingHolder::GetChildHolders(System.Collections.Generic.List`1<Verse.IThingHolder>)",
+            "token": 100678199,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": true,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "Verse.ThingOwner Verse.IThingHolder::GetDirectlyHeldThings()",
+            "token": 100678200,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": true,
+            "virtual": true,
+            "calls": []
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.MapComponent",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "Verse.Map Verse.MapComponent::map",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void Verse.MapComponent::.ctor(Verse.Map)",
+            "token": 100670824,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Object::.ctor()"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.MapComponent::MapComponentUpdate()",
+            "token": 100670825,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.MapComponent::MapComponentTick()",
+            "token": 100670826,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.MapComponent::MapComponentOnGUI()",
+            "token": 100670827,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.MapComponent::MapComponentDraw()",
+            "token": 100670828,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.MapComponent::ExposeData()",
+            "token": 100670829,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.MapComponent::FinalizeInit()",
+            "token": 100670830,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.MapComponent::MapGenerated()",
+            "token": 100670831,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.MapComponent::MapRemoved()",
+            "token": 100670832,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.Pawn",
+        "baseType": "Verse.ThingWithComps",
+        "fields": [
+          {
+            "signature": "Verse.PawnKindDef Verse.Pawn::kindDef",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Gender Verse.Pawn::gender",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_AgeTracker Verse.Pawn::ageTracker",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_HealthTracker Verse.Pawn::health",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_RecordsTracker Verse.Pawn::records",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_InventoryTracker Verse.Pawn::inventory",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_MeleeVerbs Verse.Pawn::meleeVerbs",
+            "constant": null
+          },
+          {
+            "signature": "Verse.VerbTracker Verse.Pawn::verbTracker",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_Ownership Verse.Pawn::ownership",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_CarryTracker Verse.Pawn::carryTracker",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_NeedsTracker Verse.Pawn::needs",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.Pawn_MindState Verse.Pawn::mindState",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_SurroundingsTracker Verse.Pawn::surroundings",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.Pawn_Thinker Verse.Pawn::thinker",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.Pawn_JobTracker Verse.Pawn::jobs",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_StanceTracker Verse.Pawn::stances",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_InfectionVectorTracker Verse.Pawn::infectionVectors",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_DuplicateTracker Verse.Pawn::duplicate",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_RotationTracker Verse.Pawn::rotationTracker",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.Pawn_PathFollower Verse.Pawn::pather",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_NativeVerbs Verse.Pawn::natives",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_FilthTracker Verse.Pawn::filth",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_RopeTracker Verse.Pawn::roping",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_FlightTracker Verse.Pawn::flight",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_EquipmentTracker Verse.Pawn::equipment",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_ApparelTracker Verse.Pawn::apparel",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_SkillTracker Verse.Pawn::skills",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_StoryTracker Verse.Pawn::story",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_GuestTracker Verse.Pawn::guest",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_GuiltTracker Verse.Pawn::guilt",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_RoyaltyTracker Verse.Pawn::royalty",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_AbilityTracker Verse.Pawn::abilities",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_IdeoTracker Verse.Pawn::ideo",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_GeneTracker Verse.Pawn::genes",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_CreepJoinerTracker Verse.Pawn::creepjoiner",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_WorkSettings Verse.Pawn::workSettings",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_TraderTracker Verse.Pawn::trader",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_StyleTracker Verse.Pawn::style",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_StyleObserverTracker Verse.Pawn::styleObserver",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_ConnectionsTracker Verse.Pawn::connections",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_TrainingTracker Verse.Pawn::training",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Pawn_CallTracker Verse.Pawn::caller",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_PsychicEntropyTracker Verse.Pawn::psychicEntropy",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_MutantTracker Verse.Pawn::mutant",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_RelationsTracker Verse.Pawn::relations",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_InteractionsTracker Verse.Pawn::interactions",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_PlayerSettings Verse.Pawn::playerSettings",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_OutfitTracker Verse.Pawn::outfits",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_DrugPolicyTracker Verse.Pawn::drugs",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_FoodRestrictionTracker Verse.Pawn::foodRestriction",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_TimetableTracker Verse.Pawn::timetable",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_InventoryStockTracker Verse.Pawn::inventoryStock",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_MechanitorTracker Verse.Pawn::mechanitor",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_LearningTracker Verse.Pawn::learning",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_ReadingTracker Verse.Pawn::reading",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.Pawn_DraftController Verse.Pawn::drafter",
+            "constant": null
+          },
+          {
+            "signature": "Verse.AI.Group.Lord Verse.Pawn::lord",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::markedForDiscard",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn::becameWorldPawnTickAbs",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::teleporting",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::forceNoDeathNotification",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn::showNamePromptOnTick",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn::babyNamingDeadline",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::addCorpseToLord",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn::timesRaisedAsShambler",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn::lastVacuumBurntTick",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Map Verse.Pawn::prevMap",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::wasLeftBehindStartingPawn",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::debugMaxMoveSpeed",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::wasDraftedBeforeSkip",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::dontGivePreArrivalPathway",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::everLostEgo",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn::DefaultBabyNamingPeriod",
+            "constant": 60000
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn::DefaultGrowthMomentChoicePeriod",
+            "constant": 120000
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn::MaxMoveTicks",
+            "constant": 450
+          },
+          {
+            "signature": "RimWorld.CompCanBeDormant Verse.Pawn::canBeDormant",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.CompActivity Verse.Pawn::activity",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Boolean Verse.Pawn::get_Downed()",
+            "token": 100675629,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.Pawn_HealthTracker::get_Downed()"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::get_Dead()",
+            "token": 100675634,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.Pawn_HealthTracker::get_Dead()"
+            ]
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<Verse.WorkTypeDef> Verse.Pawn::GetDisabledWorkTypes(System.Boolean)",
+            "token": 100675809,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<Verse.WorkTypeDef>::.ctor()",
+              "System.Void Verse.Pawn::<GetDisabledWorkTypes>g__FillList|375_0(System.Collections.Generic.List`1<Verse.WorkTypeDef>,Verse.Pawn/<>c__DisplayClass375_0&)"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn::WorkTypeIsDisabled(Verse.WorkTypeDef)",
+            "token": 100675811,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Collections.Generic.List`1<Verse.WorkTypeDef> Verse.Pawn::GetDisabledWorkTypes(System.Boolean)",
+              "System.Boolean System.Collections.Generic.List`1<Verse.WorkTypeDef>::Contains(!0)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.Pawn_HealthTracker",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "Verse.Effecter Verse.Pawn_HealthTracker::woundedEffecter",
+            "constant": null
+          },
+          {
+            "signature": "Verse.Effecter Verse.Pawn_HealthTracker::deflectionEffecter",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn_HealthTracker::forceDowned",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn_HealthTracker::beCarriedByCaravanIfSick",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn_HealthTracker::killedByRitual",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Pawn_HealthTracker::lastReceivedNeuralSuperchargeTick",
+            "constant": null
+          },
+          {
+            "signature": "System.Single Verse.Pawn_HealthTracker::overrideDeathOnDownedChance",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn_HealthTracker::isBeingKilled",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn_HealthTracker::couldCrawl",
+            "constant": null
+          },
+          {
+            "signature": "Verse.HediffSet Verse.Pawn_HealthTracker::hediffSet",
+            "constant": null
+          },
+          {
+            "signature": "Verse.PawnCapacitiesHandler Verse.Pawn_HealthTracker::capacities",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.BillStack Verse.Pawn_HealthTracker::surgeryBills",
+            "constant": null
+          },
+          {
+            "signature": "Verse.SummaryHealthHandler Verse.Pawn_HealthTracker::summaryHealth",
+            "constant": null
+          },
+          {
+            "signature": "Verse.ImmunityHandler Verse.Pawn_HealthTracker::immunity",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Boolean Verse.Pawn_HealthTracker::get_Downed()",
+            "token": 100676430,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": []
+          },
+          {
+            "signature": "System.Boolean Verse.Pawn_HealthTracker::get_Dead()",
+            "token": 100676431,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.Pawn_HealthTracker::ExposeData()",
+            "token": 100676439,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void Verse.Scribe_Values::Look<Verse.PawnHealthState>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Values::Look<System.Boolean>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Values::Look<System.Int32>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Deep::Look<Verse.HediffSet>(T&,System.String,System.Object[])",
+              "System.Void Verse.Scribe_Deep::Look<RimWorld.BillStack>(T&,System.String,System.Object[])",
+              "System.Void Verse.Scribe_Deep::Look<Verse.ImmunityHandler>(T&,System.String,System.Object[])",
+              "System.Void Verse.Scribe_Values::Look<System.Nullable`1<UnityEngine.Vector3>>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Values::Look<System.Single>(T&,System.String,T,System.Boolean)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.PawnCapacitiesHandler",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Single Verse.PawnCapacitiesHandler::GetLevel(Verse.PawnCapacityDef)",
+            "token": 100675543,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.Pawn_HealthTracker::get_Dead()",
+              "System.Void Verse.PawnCapacitiesHandler::Notify_CapacityLevelsDirty()",
+              "V Verse.DefMap`2<Verse.PawnCapacityDef,Verse.PawnCapacitiesHandler/CacheElement>::get_Item(D)",
+              "System.String System.String::Format(System.String,System.Object)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Single Verse.PawnCapacityUtility::CalculateCapacityLevel(Verse.HediffSet,Verse.PawnCapacityDef,System.Collections.Generic.List`1<Verse.PawnCapacityUtility/CapacityImpactor>,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.PawnCapacitiesHandler::CapableOf(Verse.PawnCapacityDef)",
+            "token": 100675544,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Single Verse.PawnCapacitiesHandler::GetLevel(Verse.PawnCapacityDef)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.Scribe_Collections",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.List`1<T>&,System.String,System.Boolean,Verse.LookMode,System.Object[])",
+            "token": 100677223,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+              "System.Boolean System.Type::get_IsGenericType()",
+              "System.Type System.Type::GetGenericTypeDefinition()",
+              "System.Boolean System.Type::op_Equality(System.Type,System.Type)",
+              "System.Boolean System.Reflection.MethodInfo::op_Equality(System.Reflection.MethodInfo,System.Reflection.MethodInfo)",
+              "System.Reflection.MethodInfo System.Type::GetMethod(System.String,System.Reflection.BindingFlags)",
+              "System.Type[] System.Type::GetGenericArguments()",
+              "System.Reflection.MethodInfo System.Reflection.MethodInfo::MakeGenericMethod(System.Type[])",
+              "System.Object System.Reflection.MethodBase::Invoke(System.Object,System.Object[])",
+              "System.Void Verse.Scribe_Collections::Look<T>(System.Collections.Generic.List`1<T>&,System.Boolean,System.String,Verse.LookMode,System.Object[])"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.List`1<T>&,System.String,Verse.LookMode,System.Object[])",
+            "token": 100677224,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Scribe_Collections::Look<T>(System.Collections.Generic.List`1<T>&,System.String,System.Boolean,Verse.LookMode,System.Object[])"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.List`1<T>&,System.Boolean,System.String,Verse.LookMode,System.Object[])",
+            "token": 100677226,
+            "public": false,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+              "System.Boolean Verse.Scribe_Universal::TryResolveLookMode(System.Type,Verse.LookMode&,System.Boolean,System.Boolean)",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean Verse.Scribe::EnterNode(System.String)",
+              "System.Void Verse.ScribeSaver::WriteAttribute(System.String,System.String)",
+              "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<T>::GetEnumerator()",
+              "!0 System.Collections.Generic.List`1/Enumerator<T>::get_Current()",
+              "System.Boolean System.Type::get_IsGenericType()",
+              "System.Type System.Type::GetGenericTypeDefinition()",
+              "System.Boolean System.Type::op_Equality(System.Type,System.Type)",
+              "System.Void System.InvalidOperationException::.ctor(System.String)",
+              "System.Void Verse.Scribe_Values::Look<T>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_TargetInfo::Look(Verse.LocalTargetInfo&,System.Boolean,System.String)",
+              "System.Void Verse.Scribe_TargetInfo::Look(Verse.TargetInfo&,System.Boolean,System.String)",
+              "System.Void Verse.Scribe_TargetInfo::Look(RimWorld.Planet.GlobalTargetInfo&,System.Boolean,System.String)",
+              "System.Void Verse.Scribe_Defs::Look<Verse.Def>(T&,System.String)",
+              "System.Void Verse.Scribe_BodyParts::Look(Verse.BodyPartRecord&,System.String,Verse.BodyPartRecord)",
+              "System.Void Verse.Scribe_Deep::Look<T>(T&,System.Boolean,System.String,System.Object[])",
+              "System.Void Verse.Scribe_References::Look<Verse.ILoadReferenceable>(T&,System.String,System.Boolean)",
+              "System.Type System.Object::GetType()",
+              "System.String Verse.Gen::ToStringSafe<System.Type>(T)",
+              "System.Boolean System.Collections.Generic.List`1/Enumerator<T>::MoveNext()",
+              "System.Void System.IDisposable::Dispose()",
+              "System.Xml.XmlAttributeCollection System.Xml.XmlNode::get_Attributes()",
+              "System.Xml.XmlAttribute System.Xml.XmlAttributeCollection::get_ItemOf(System.String)",
+              "System.String System.Xml.XmlNode::get_Value()",
+              "System.Boolean System.String::Equals(System.String,System.StringComparison)",
+              "System.Void Verse.LoadIDsWantedBank::RegisterLoadIDListReadFromXml(System.Collections.Generic.List`1<System.String>,System.String)",
+              "System.Xml.XmlNodeList System.Xml.XmlNode::get_ChildNodes()",
+              "System.Int32 System.Xml.XmlNodeList::get_Count()",
+              "System.Void System.Collections.Generic.List`1<T>::.ctor(System.Int32)",
+              "System.Collections.IEnumerator System.Xml.XmlNodeList::GetEnumerator()",
+              "System.Object System.Collections.IEnumerator::get_Current()",
+              "T Verse.ScribeExtractor::ValueFromNode<T>(System.Xml.XmlNode,T)",
+              "System.Void System.Collections.Generic.List`1<T>::Add(!0)",
+              "System.Boolean System.Collections.IEnumerator::MoveNext()",
+              "T Verse.ScribeExtractor::SaveableFromNode<T>(System.Xml.XmlNode,System.Object[])",
+              "T Verse.ScribeExtractor::DefFromNodeUnsafe<T>(System.Xml.XmlNode)",
+              "System.String System.Int32::ToString()",
+              "Verse.BodyPartRecord Verse.ScribeExtractor::BodyPartFromNode(System.Xml.XmlNode,System.String,Verse.BodyPartRecord)",
+              "Verse.LocalTargetInfo Verse.LocalTargetInfo::get_Invalid()",
+              "Verse.LocalTargetInfo Verse.ScribeExtractor::LocalTargetInfoFromNode(System.Xml.XmlNode,System.String,Verse.LocalTargetInfo)",
+              "Verse.TargetInfo Verse.TargetInfo::get_Invalid()",
+              "Verse.TargetInfo Verse.ScribeExtractor::TargetInfoFromNode(System.Xml.XmlNode,System.String,Verse.TargetInfo)",
+              "RimWorld.Planet.GlobalTargetInfo RimWorld.Planet.GlobalTargetInfo::get_Invalid()",
+              "RimWorld.Planet.GlobalTargetInfo Verse.ScribeExtractor::GlobalTargetInfoFromNode(System.Xml.XmlNode,System.String,RimWorld.Planet.GlobalTargetInfo)",
+              "System.Void System.Collections.Generic.List`1<System.String>::.ctor(System.Int32)",
+              "System.String System.Xml.XmlNode::get_InnerText()",
+              "System.Void System.Collections.Generic.List`1<System.String>::Add(!0)",
+              "System.Collections.Generic.List`1<T> Verse.CrossRefHandler::TakeResolvedRefList<T>(System.String)",
+              "!0 System.Collections.Generic.List`1<T>::get_Item(System.Int32)",
+              "Verse.LocalTargetInfo Verse.ScribeExtractor::ResolveLocalTargetInfo(Verse.LocalTargetInfo,System.String)",
+              "System.Void System.Collections.Generic.List`1<T>::set_Item(System.Int32,!0)",
+              "System.Int32 System.Collections.Generic.List`1<T>::get_Count()",
+              "Verse.TargetInfo Verse.ScribeExtractor::ResolveTargetInfo(Verse.TargetInfo,System.String)",
+              "RimWorld.Planet.GlobalTargetInfo Verse.ScribeExtractor::ResolveGlobalTargetInfo(RimWorld.Planet.GlobalTargetInfo,System.String)",
+              "System.Void Verse.Scribe::ExitNode()"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.Dictionary`2<K,V>&,System.String,Verse.LookMode,Verse.LookMode)",
+            "token": 100677227,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.String System.String::Concat(System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Void Verse.Scribe_Collections::Look<K,V>(System.Collections.Generic.Dictionary`2<K,V>&,System.String,Verse.LookMode,Verse.LookMode,System.Collections.Generic.List`1<K>&,System.Collections.Generic.List`1<V>&,System.Boolean,System.Boolean,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.Dictionary`2<K,V>&,System.String,Verse.LookMode,Verse.LookMode,System.Collections.Generic.List`1<K>&,System.Collections.Generic.List`1<V>&,System.Boolean,System.Boolean,System.Boolean)",
+            "token": 100677229,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.Scribe::EnterNode(System.String)",
+              "System.Void Verse.ScribeSaver::WriteAttribute(System.String,System.String)",
+              "System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+              "System.Boolean System.Type::get_IsGenericType()",
+              "System.Type System.Type::GetGenericTypeDefinition()",
+              "System.Boolean System.Type::op_Equality(System.Type,System.Type)",
+              "System.Void System.InvalidOperationException::.ctor(System.String)",
+              "System.Xml.XmlAttributeCollection System.Xml.XmlNode::get_Attributes()",
+              "System.Xml.XmlAttribute System.Xml.XmlAttributeCollection::get_ItemOf(System.String)",
+              "System.String System.Xml.XmlNode::get_Value()",
+              "System.Boolean System.String::Equals(System.String,System.StringComparison)",
+              "System.Void System.Collections.Generic.Dictionary`2<K,V>::.ctor()",
+              "System.Void System.Collections.Generic.List`1<K>::.ctor()",
+              "System.Void System.Collections.Generic.List`1<V>::.ctor()",
+              "System.Collections.Generic.Dictionary`2/Enumerator<!0,!1> System.Collections.Generic.Dictionary`2<K,V>::GetEnumerator()",
+              "System.Collections.Generic.KeyValuePair`2<!0,!1> System.Collections.Generic.Dictionary`2/Enumerator<K,V>::get_Current()",
+              "!0 System.Collections.Generic.KeyValuePair`2<K,V>::get_Key()",
+              "System.Void System.Collections.Generic.List`1<K>::Add(!0)",
+              "!1 System.Collections.Generic.KeyValuePair`2<K,V>::get_Value()",
+              "System.Void System.Collections.Generic.List`1<V>::Add(!0)",
+              "System.Boolean System.Collections.Generic.Dictionary`2/Enumerator<K,V>::MoveNext()",
+              "System.Void System.IDisposable::Dispose()",
+              "!!0[] System.Array::Empty<System.Object>()",
+              "System.Void Verse.Scribe_Collections::Look<K>(System.Collections.Generic.List`1<T>&,System.String,System.Boolean,Verse.LookMode,System.Object[])",
+              "System.Void Verse.Scribe_Collections::Look<V>(System.Collections.Generic.List`1<T>&,System.String,System.Boolean,Verse.LookMode,System.Object[])",
+              "System.Void System.Collections.Generic.List`1<K>::Clear()",
+              "System.Void System.Collections.Generic.List`1<V>::Clear()",
+              "System.Void Verse.Scribe_Collections::BuildDictionary<K,V>(System.Collections.Generic.Dictionary`2<K,V>,System.Collections.Generic.List`1<K>,System.Collections.Generic.List`1<V>,System.String,System.Boolean)",
+              "System.Void Verse.Scribe::ExitNode()"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.HashSet`1<T>&,System.String,Verse.LookMode)",
+            "token": 100677230,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Scribe_Collections::Look<T>(System.Collections.Generic.HashSet`1<T>&,System.Boolean,System.String,Verse.LookMode)"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.HashSet`1<T>&,System.Boolean,System.String,Verse.LookMode)",
+            "token": 100677231,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<T>::.ctor()",
+              "System.Collections.Generic.HashSet`1/Enumerator<!0> System.Collections.Generic.HashSet`1<T>::GetEnumerator()",
+              "!0 System.Collections.Generic.HashSet`1/Enumerator<T>::get_Current()",
+              "System.Void System.Collections.Generic.List`1<T>::Add(!0)",
+              "System.Boolean System.Collections.Generic.HashSet`1/Enumerator<T>::MoveNext()",
+              "System.Void System.IDisposable::Dispose()",
+              "!!0[] System.Array::Empty<System.Object>()",
+              "System.Void Verse.Scribe_Collections::Look<T>(System.Collections.Generic.List`1<T>&,System.Boolean,System.String,Verse.LookMode,System.Object[])",
+              "System.Void System.Collections.Generic.HashSet`1<T>::.ctor()",
+              "!0 System.Collections.Generic.List`1<T>::get_Item(System.Int32)",
+              "System.Boolean System.Collections.Generic.HashSet`1<T>::Add(!0)",
+              "System.Int32 System.Collections.Generic.List`1<T>::get_Count()"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.Stack`1<T>&,System.String,Verse.LookMode)",
+            "token": 100677232,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<T>::.ctor()",
+              "System.Collections.Generic.Stack`1/Enumerator<!0> System.Collections.Generic.Stack`1<T>::GetEnumerator()",
+              "!0 System.Collections.Generic.Stack`1/Enumerator<T>::get_Current()",
+              "System.Void System.Collections.Generic.List`1<T>::Add(!0)",
+              "System.Boolean System.Collections.Generic.Stack`1/Enumerator<T>::MoveNext()",
+              "System.Void System.IDisposable::Dispose()",
+              "!!0[] System.Array::Empty<System.Object>()",
+              "System.Void Verse.Scribe_Collections::Look<T>(System.Collections.Generic.List`1<T>&,System.String,Verse.LookMode,System.Object[])",
+              "System.Void System.Collections.Generic.Stack`1<T>::.ctor()",
+              "!0 System.Collections.Generic.List`1<T>::get_Item(System.Int32)",
+              "System.Void System.Collections.Generic.Stack`1<T>::Push(!0)",
+              "System.Int32 System.Collections.Generic.List`1<T>::get_Count()"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Collections::Look(System.Collections.Generic.Queue`1<T>&,System.String,Verse.LookMode)",
+            "token": 100677233,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<T>::.ctor()",
+              "System.Collections.Generic.Queue`1/Enumerator<!0> System.Collections.Generic.Queue`1<T>::GetEnumerator()",
+              "!0 System.Collections.Generic.Queue`1/Enumerator<T>::get_Current()",
+              "System.Void System.Collections.Generic.List`1<T>::Add(!0)",
+              "System.Boolean System.Collections.Generic.Queue`1/Enumerator<T>::MoveNext()",
+              "System.Void System.IDisposable::Dispose()",
+              "!!0[] System.Array::Empty<System.Object>()",
+              "System.Void Verse.Scribe_Collections::Look<T>(System.Collections.Generic.List`1<T>&,System.String,Verse.LookMode,System.Object[])",
+              "System.Void System.Collections.Generic.Queue`1<T>::.ctor()",
+              "!0 System.Collections.Generic.List`1<T>::get_Item(System.Int32)",
+              "System.Void System.Collections.Generic.Queue`1<T>::Enqueue(!0)",
+              "System.Int32 System.Collections.Generic.List`1<T>::get_Count()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.Scribe_Deep",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void Verse.Scribe_Deep::Look(T&,System.String,System.Object[])",
+            "token": 100677234,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Scribe_Deep::Look<T>(T&,System.Boolean,System.String,System.Object[])"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_Deep::Look(T&,System.Boolean,System.String,System.Object[])",
+            "token": 100677235,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.Thing::get_Destroyed()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Log::Warning(System.String)",
+              "System.Boolean Verse.Thing::get_Discarded()",
+              "System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean Verse.Scribe::EnterNode(System.String)",
+              "System.Void Verse.ScribeSaver::WriteAttribute(System.String,System.String)",
+              "System.Void Verse.Scribe::ExitNode()",
+              "System.Type System.Object::GetType()",
+              "System.Boolean System.Type::op_Inequality(System.Type,System.Type)",
+              "System.Boolean System.Type::get_IsGenericTypeDefinition()",
+              "System.String Verse.GenTypes::GetTypeNameWithoutIgnoredNamespaces(System.Type)",
+              "System.Void Verse.IExposable::ExposeData()",
+              "System.String Verse.Gen::ToStringSafe<Verse.IExposable>(T)",
+              "System.Void Verse.DebugLoadIDsSavingErrorsChecker::RegisterDeepSaved(System.Object,System.String)",
+              "System.Void System.IDisposable::Dispose()",
+              "System.Xml.XmlElement System.Xml.XmlNode::get_Item(System.String)",
+              "T Verse.ScribeExtractor::SaveableFromNode<T>(System.Xml.XmlNode,System.Object[])",
+              "System.String Verse.Gen::ToStringSafe<System.Xml.XmlElement>(T)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.Scribe_References",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void Verse.Scribe_References::Look(T&,System.String,System.Boolean)",
+            "token": 100677238,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.ScribeSaver::WriteElement(System.String,System.String)",
+              "System.Boolean Verse.Scribe_References::CheckSaveReferenceToDestroyedThing(Verse.Thing,System.String,System.Boolean)",
+              "System.Boolean Verse.Scribe_References::CheckSaveReferenceToDestroyedWorldObject(RimWorld.Planet.WorldObject,System.String,System.Boolean)",
+              "System.String Verse.ILoadReferenceable::GetUniqueLoadID()",
+              "System.Void Verse.DebugLoadIDsSavingErrorsChecker::RegisterReferenced(Verse.ILoadReferenceable,System.String)",
+              "System.Type System.Object::GetType()",
+              "System.Boolean System.Type::get_IsValueType()",
+              "System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String[])",
+              "System.Void Verse.Log::Warning(System.String)",
+              "System.Xml.XmlElement System.Xml.XmlNode::get_Item(System.String)",
+              "System.String System.Xml.XmlNode::get_InnerText()",
+              "System.Void Verse.LoadIDsWantedBank::RegisterLoadIDReadFromXml(System.String,System.Type,System.String)",
+              "T Verse.CrossRefHandler::TakeResolvedRef<T>(System.String)"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.Scribe_References::Look(Verse.WeakReference`1<T>&,System.String,System.Boolean)",
+            "token": 100677239,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "T Verse.WeakReference`1<T>::get_Target()",
+              "System.Void Verse.Scribe_References::Look<T>(T&,System.String,System.Boolean)",
+              "System.Void Verse.WeakReference`1<T>::.ctor(T)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.Scribe_Values",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void Verse.Scribe_Values::Look(T&,System.String,T,System.Boolean)",
+            "token": 100677261,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+              "System.Boolean System.Type::op_Equality(System.Type,System.Type)",
+              "System.String System.String::Concat(System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean System.Type::IsAssignableFrom(System.Type)",
+              "System.Boolean Verse.GenTypes::IsDef(System.Type)",
+              "System.Boolean System.Object::Equals(System.Object)",
+              "System.Boolean Verse.Scribe::EnterNode(System.String)",
+              "System.Void Verse.ScribeSaver::WriteAttribute(System.String,System.String)",
+              "System.Void Verse.Scribe::ExitNode()",
+              "System.String UnityEngine.Vector2::ToString(System.String)",
+              "System.String UnityEngine.Vector3::ToString(System.String)",
+              "System.String UnityEngine.Quaternion::ToString(System.String)",
+              "System.String System.Single::ToString(System.String)",
+              "System.String System.Object::ToString()",
+              "System.Void Verse.ScribeSaver::WriteElement(System.String,System.String)",
+              "System.Xml.XmlElement System.Xml.XmlNode::get_Item(System.String)",
+              "T Verse.ScribeExtractor::ValueFromNode<T>(System.Xml.XmlNode,T)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.Thing",
+        "baseType": "Verse.Entity",
+        "fields": [
+          {
+            "signature": "Verse.ThingDef Verse.Thing::def",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Thing::thingIDNumber",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Thing::stackCount",
+            "constant": null
+          },
+          {
+            "signature": "Verse.ThingOwner Verse.Thing::holdingOwner",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.List`1<System.String> Verse.Thing::questTags",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Thing::spawnedTick",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Thing::despawnedTick",
+            "constant": null
+          },
+          {
+            "signature": "System.Nullable`1<System.Int32> Verse.Thing::overrideGraphicIndex",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Thing::debugRotLocked",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Thing::shouldHighlightCached",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Thing::shouldHighlightCachedTick",
+            "constant": null
+          },
+          {
+            "signature": "UnityEngine.Color Verse.Thing::highlightColorCached",
+            "constant": null
+          },
+          {
+            "signature": "System.Int32 Verse.Thing::highlightColorCachedTick",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.Thing::allowDestroyNonDestroyable",
+            "constant": null
+          },
+          {
+            "signature": "System.Collections.Generic.HashSet`1<RimWorld.RitualPatternDef> Verse.Thing::showingGizmosForRitualsTmp",
+            "constant": null
+          },
+          {
+            "signature": "System.Single Verse.Thing::SmeltCostRecoverFraction",
+            "constant": 0.25
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.String Verse.Thing::GetUniqueLoadID()",
+            "token": 100678004,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.String Verse.Thing::get_ThingID()",
+              "System.String System.String::Concat(System.String,System.String)"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.Thing::TryAbsorbStack(Verse.Thing,System.Boolean)",
+            "token": 100678049,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Boolean Verse.Thing::CanStackWith(Verse.Thing)",
+              "System.Int32 Verse.ThingUtility::TryAbsorbStackNumToTake(Verse.Thing,Verse.Thing,System.Boolean)",
+              "System.Int32 Verse.Thing::get_HitPoints()",
+              "System.Int32 UnityEngine.Mathf::CeilToInt(System.Single)",
+              "System.Void Verse.Thing::set_HitPoints(System.Int32)",
+              "Verse.Map Verse.Thing::get_Map()",
+              "System.Void Verse.Thing::DirtyMapMesh(Verse.Map)",
+              "System.Void RimWorld.StealAIDebugDrawer::Notify_ThingChanged(Verse.Thing)",
+              "System.Boolean Verse.Thing::get_Spawned()",
+              "System.Void RimWorld.ListerMergeables::Notify_ThingStackChanged(Verse.Thing)",
+              "System.Void Verse.Thing::Destroy(Verse.DestroyMode)"
+            ]
+          },
+          {
+            "signature": "Verse.Thing Verse.Thing::SplitOff(System.Int32)",
+            "token": 100678050,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void System.ArgumentException::.ctor(System.String,System.String)",
+              "System.String System.Int32::ToString()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String[])",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean Verse.Thing::DeSpawnOrDeselect(Verse.DestroyMode)",
+              "System.Boolean Verse.ThingOwner::Remove(Verse.Thing)",
+              "Verse.ThingDef Verse.Thing::get_Stuff()",
+              "Verse.Thing Verse.ThingMaker::MakeThing(Verse.ThingDef,Verse.ThingDef)",
+              "Verse.Map Verse.Thing::get_Map()",
+              "System.Void Verse.Thing::DirtyMapMesh(Verse.Map)",
+              "System.Boolean Verse.Thing::get_Spawned()",
+              "System.Void RimWorld.ListerMergeables::Notify_ThingStackChanged(Verse.Thing)",
+              "System.Int32 Verse.Thing::get_HitPoints()",
+              "System.Void Verse.Thing::set_HitPoints(System.Int32)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.ThingComp",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "Verse.ThingWithComps Verse.ThingComp::parent",
+            "constant": null
+          },
+          {
+            "signature": "Verse.CompProperties Verse.ThingComp::props",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void Verse.ThingComp::PostExposeData()",
+            "token": 100678626,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.ThingComp::PostSpawnSetup(System.Boolean)",
+            "token": 100678627,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.ThingComp::PostDeSpawn(Verse.Map,Verse.DestroyMode)",
+            "token": 100678629,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.ThingComp::PostDestroy(Verse.DestroyMode,Verse.Map)",
+            "token": 100678630,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.ThingComp::PreAbsorbStack(Verse.Thing,System.Int32)",
+            "token": 100678643,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.ThingComp::PostSplitOff(Verse.Thing)",
+            "token": 100678644,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Boolean Verse.ThingComp::AllowStackWith(Verse.Thing)",
+            "token": 100678648,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": []
+          },
+          {
+            "signature": "System.Void Verse.ThingComp::.ctor()",
+            "token": 100678704,
+            "public": false,
+            "family": true,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Object::.ctor()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.ThingOwner",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "Verse.LookMode Verse.ThingOwner::contentsLookMode",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.ThingOwner::removeContentsIfDestroyed",
+            "constant": null
+          },
+          {
+            "signature": "System.Boolean Verse.ThingOwner::dontTickContents",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Void Verse.ThingOwner::ExposeData()",
+            "token": 100678222,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Void Verse.Scribe_Values::Look<System.Int32>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Values::Look<Verse.LookMode>(T&,System.String,T,System.Boolean)",
+              "System.Void Verse.Scribe_Values::Look<System.Boolean>(T&,System.String,T,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Int32 Verse.ThingOwner::TryAddOrTransfer(Verse.Thing,System.Int32,System.Boolean)",
+            "token": 100678236,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Log::Warning(System.String)",
+              "System.Int32 Verse.ThingOwner::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Int32,System.Boolean)",
+              "System.Int32 Verse.ThingOwner::TryAdd(Verse.Thing,System.Int32,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.ThingOwner::TryAddOrTransfer(Verse.Thing,System.Boolean)",
+            "token": 100678237,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Log::Warning(System.String)",
+              "System.Boolean Verse.ThingOwner::TryTransferToContainer(Verse.Thing,Verse.ThingOwner,System.Boolean)",
+              "System.Boolean Verse.ThingOwner::TryAdd(Verse.Thing,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.ThingPlaceMode,System.Int32,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+            "token": 100678246,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "Verse.Map Verse.ThingOwnerUtility::GetRootMap(Verse.IThingHolder)",
+              "Verse.IntVec3 Verse.ThingOwnerUtility::GetRootPosition(Verse.IThingHolder)",
+              "System.Boolean Verse.IntVec3::get_IsValid()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,System.Int32,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,System.Int32,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+            "token": 100678247,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.ThingOwner::Contains(Verse.Thing)",
+              "System.String Verse.Gen::ToStringSafe<Verse.Thing>(T)",
+              "System.String System.String::Concat(System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.String System.Int32::ToString()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String[])",
+              "System.Boolean Verse.GenDrop::TryDropSpawn(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>,System.Boolean)",
+              "System.Boolean Verse.ThingOwner::Remove(Verse.Thing)",
+              "Verse.Thing Verse.Thing::SplitOff(System.Int32)",
+              "System.Boolean Verse.Thing::TryAbsorbStack(Verse.Thing,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>)",
+            "token": 100678248,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "Verse.Map Verse.ThingOwnerUtility::GetRootMap(Verse.IThingHolder)",
+              "Verse.IntVec3 Verse.ThingOwnerUtility::GetRootPosition(Verse.IThingHolder)",
+              "System.Boolean Verse.IntVec3::get_IsValid()",
+              "System.String System.Object::ToString()",
+              "System.String System.String::Concat(System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.ThingOwner::TryDrop(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>,System.Boolean)",
+            "token": 100678249,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.ThingOwner::Contains(Verse.Thing)",
+              "System.String Verse.Gen::ToStringSafe<Verse.IThingHolder>(T)",
+              "System.String Verse.Gen::ToStringSafe<Verse.Thing>(T)",
+              "System.String System.String::Concat(System.String,System.String,System.String,System.String)",
+              "System.Void Verse.Log::Error(System.String)",
+              "System.Boolean Verse.GenDrop::TryDropSpawn(Verse.Thing,Verse.IntVec3,Verse.Map,Verse.ThingPlaceMode,Verse.Thing&,System.Action`2<Verse.Thing,System.Int32>,System.Predicate`1<Verse.IntVec3>,System.Boolean)",
+              "System.Boolean Verse.ThingOwner::Remove(Verse.Thing)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.ThingOwner`1",
+        "baseType": "Verse.ThingOwner",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void Verse.ThingOwner`1::.ctor()",
+            "token": 100678157,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<T>::.ctor()",
+              "System.Void Verse.ThingOwner::.ctor()"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.ThingOwner`1::.ctor(Verse.IThingHolder)",
+            "token": 100678158,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<T>::.ctor()",
+              "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder)"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.ThingOwner`1::.ctor(Verse.IThingHolder,Verse.LookMode,System.Boolean)",
+            "token": 100678159,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<T>::.ctor()",
+              "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder)"
+            ]
+          },
+          {
+            "signature": "System.Void Verse.ThingOwner`1::.ctor(Verse.IThingHolder,System.Boolean,Verse.LookMode,System.Boolean)",
+            "token": 100678160,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void System.Collections.Generic.List`1<T>::.ctor()",
+              "System.Void Verse.ThingOwner::.ctor(Verse.IThingHolder,System.Boolean,Verse.LookMode,System.Boolean)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "Verse.ThingWithComps",
+        "baseType": "Verse.Thing",
+        "fields": [
+          {
+            "signature": "RimWorld.CompStyleable Verse.ThingWithComps::compStyleable",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.CompForbiddable Verse.ThingWithComps::compForbiddable",
+            "constant": null
+          },
+          {
+            "signature": "RimWorld.CompQuality Verse.ThingWithComps::compQuality",
+            "constant": null
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Boolean Verse.ThingWithComps::TryAbsorbStack(Verse.Thing,System.Boolean)",
+            "token": 100678355,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Boolean Verse.Thing::CanStackWith(Verse.Thing)",
+              "System.Int32 Verse.ThingUtility::TryAbsorbStackNumToTake(Verse.Thing,Verse.Thing,System.Boolean)",
+              "!0 System.Collections.Generic.List`1<Verse.ThingComp>::get_Item(System.Int32)",
+              "System.Void Verse.ThingComp::PreAbsorbStack(Verse.Thing,System.Int32)",
+              "System.Int32 System.Collections.Generic.List`1<Verse.ThingComp>::get_Count()",
+              "System.Boolean Verse.Thing::TryAbsorbStack(Verse.Thing,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "Verse.Thing Verse.ThingWithComps::SplitOff(System.Int32)",
+            "token": 100678356,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "Verse.Thing Verse.Thing::SplitOff(System.Int32)",
+              "!0 System.Collections.Generic.List`1<Verse.ThingComp>::get_Item(System.Int32)",
+              "System.Void Verse.ThingComp::PostSplitOff(Verse.Thing)",
+              "System.Int32 System.Collections.Generic.List`1<Verse.ThingComp>::get_Count()"
+            ]
+          },
+          {
+            "signature": "System.Boolean Verse.ThingWithComps::CanStackWith(Verse.Thing)",
+            "token": 100678357,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": true,
+            "calls": [
+              "System.Boolean Verse.Thing::CanStackWith(Verse.Thing)",
+              "!0 System.Collections.Generic.List`1<Verse.ThingComp>::get_Item(System.Int32)",
+              "System.Boolean Verse.ThingComp::AllowStackWith(Verse.Thing)",
+              "System.Int32 System.Collections.Generic.List`1<Verse.ThingComp>::get_Count()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      }
+    ]
+  },
+  "ruif": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\RUIF\\Assemblies\\RUIF.dll",
+    "sha256": "E9C0ED7C4B027F3F6C3F656C0737311DBCD21603FA94138D38C7105842C0ACAC",
+    "assembly": "RUIF, Version=1.3.0.0, Culture=neutral, PublicKeyToken=null",
+    "mvid": "140a0572-bd37-43f9-a6dc-9037e4448c51",
+    "types": [
+      {
+        "type": "RUIF.Api",
+        "baseType": "System.Object",
+        "fields": [
+          {
+            "signature": "System.String RUIF.Api::VersionString",
+            "constant": "1.3.0"
+          }
+        ],
+        "methods": [
+          {
+            "signature": "System.Version RUIF.Api::ParseVersion(System.String)",
+            "token": 100663297,
+            "public": false,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean System.Version::TryParse(System.String,System.Version&)",
+              "System.Void System.Version::.ctor(System.Int32,System.Int32,System.Int32)"
+            ]
+          },
+          {
+            "signature": "System.Version RUIF.Api::get_Version()",
+            "token": 100663298,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": []
+          },
+          {
+            "signature": "System.Boolean RUIF.Api::IsAvailable(System.String)",
+            "token": 100663299,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Version RUIF.Api::get_Version()",
+              "System.Int32 System.Version::get_Major()",
+              "System.Int32 System.Version::get_Minor()",
+              "System.Int32 System.Version::get_Build()",
+              "System.Boolean System.String::IsNullOrEmpty(System.String)",
+              "System.Boolean System.Version::TryParse(System.String,System.Version&)",
+              "System.Boolean System.Version::op_GreaterThanOrEqual(System.Version,System.Version)"
+            ]
+          },
+          {
+            "signature": "System.Void RUIF.Api::.cctor()",
+            "token": 100663300,
+            "public": false,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Version RUIF.Api::ParseVersion(System.String)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.ButtonAtoms",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Boolean RUIF.ButtonAtoms::PrimaryButton(UnityEngine.Rect,System.String,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)",
+            "token": 100663415,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean Verse.Mouse::IsOver(UnityEngine.Rect)",
+              "System.Boolean RUIF.ButtonAtoms::PressedNow()",
+              "RUIF.InputState RUIF.ButtonFmt::Resolve(System.Boolean,System.Boolean,System.Boolean,System.Boolean)",
+              "System.Void RUIF.ButtonFmt::Channels(RUIF.InputState,RUIF.ButtonTone,UnityEngine.Color&,UnityEngine.Color&,UnityEngine.Color&,UnityEngine.Color&)",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Void RUIF.Draw::Border(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Void UnityEngine.GUI::SetNextControlName(System.String)",
+              "System.Boolean Verse.Widgets::ButtonInvisible(UnityEngine.Rect,System.Boolean)",
+              "System.Void RUIF.ButtonAtoms::ApplyFocusOverlay(UnityEngine.Rect,RUIF.ButtonTone,RUIF.InputState,System.Boolean,System.Boolean,System.String)",
+              "System.Void RUIF.ButtonAtoms::DrawTextContent(UnityEngine.Rect,System.String,UnityEngine.Color)",
+              "System.String RUIF.Tr::Get(System.String)",
+              "Verse.TipSignal Verse.TipSignal::op_Implicit(System.String)",
+              "System.Void Verse.TooltipHandler::TipRegion(UnityEngine.Rect,Verse.TipSignal)",
+              "System.Boolean RUIF.ButtonFmt::Clicked(System.Boolean,System.Boolean)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.DataAtoms",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single)",
+            "token": 100663492,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single,RUIF.StatCol[],System.Int32,System.Single,System.Single[],System.String[])"
+            ]
+          },
+          {
+            "signature": "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single,RUIF.StatCol[],System.Int32,System.Single,System.Single[],System.String[])",
+            "token": 100663493,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Single[] RUIF.DataAtoms::MakeEven(System.Int32)",
+              "System.Void RUIF.TableFmt::ColumnSplit(UnityEngine.Rect,System.Single[],System.Single,System.Single[])",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "UnityEngine.TextAnchor RUIF.TableFmt::ColumnAlignOf(RUIF.StatCol[],System.Int32)",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+              "System.Void RUIF.Draw::LineH(System.Single,System.Single,System.Single,UnityEngine.Color)",
+              "System.Single RUIF.Measure::RowHeight(Verse.GameFont)",
+              "System.Single UnityEngine.Mathf::Min(System.Single,System.Single)",
+              "System.Single UnityEngine.Rect::get_yMax()",
+              "UnityEngine.Color RUIF.Draw::WithAlpha(UnityEngine.Color,System.Single)",
+              "System.Boolean RUIF.TableFmt::IsBandCol(System.Int32,System.Int32)",
+              "System.String RUIF.TableFmt::BandTextOf(System.Single[],System.String[],System.Int32,System.Single)",
+              "System.Void RUIF.TableAtoms::ValueCell(UnityEngine.Rect,System.String,System.Single,System.Single)",
+              "System.Boolean RUIF.TableFmt::IsDimColumn(RUIF.StatCol[],System.Int32)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.FeedbackAtoms",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Boolean RUIF.FeedbackAtoms::AlertBanner(UnityEngine.Rect,RUIF.AlertPriority,System.String,System.String)",
+            "token": 100663546,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "UnityEngine.Color RUIF.Draw::WithAlpha(UnityEngine.Color,System.Single)",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void RUIF.Draw::LineV(System.Single,System.Single,System.Single,UnityEngine.Color)",
+              "System.Void RUIF.Draw::Border(UnityEngine.Rect,UnityEngine.Color)",
+              "RUIF.HStack RUIF.Layout::Row(UnityEngine.Rect,System.Single)",
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Single UnityEngine.Mathf::Max(System.Single,System.Single)",
+              "UnityEngine.Rect RUIF.HStack::Take(System.Single)",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+              "System.Boolean System.String::IsNullOrEmpty(System.String)",
+              "UnityEngine.Rect RUIF.HStack::get_Rest()",
+              "System.Boolean Verse.Widgets::ButtonText(UnityEngine.Rect,System.String,System.Boolean,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.TextAnchor>)"
+            ]
+          },
+          {
+            "signature": "System.Boolean RUIF.FeedbackAtoms::EmptyState(UnityEngine.Rect,System.String,System.String,System.String)",
+            "token": 100663550,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Single UnityEngine.Mathf::Min(System.Single,System.Single)",
+              "UnityEngine.Vector2 UnityEngine.Rect::get_center()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+              "RUIF.VStack RUIF.Layout::Column(UnityEngine.Rect,System.Single)",
+              "UnityEngine.Rect RUIF.VStack::Take(System.Single)",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "Verse.GameFont RUIF.Tokens::get_FontBody()",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "System.Boolean System.String::IsNullOrEmpty(System.String)",
+              "System.Boolean Verse.Widgets::ButtonText(UnityEngine.Rect,System.String,System.Boolean,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.TextAnchor>)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.InputAtoms",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Boolean RUIF.InputAtoms::Segmented(UnityEngine.Rect,System.String[],System.Int32&)",
+            "token": 100663602,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Void RUIF.Draw::Border(UnityEngine.Rect,UnityEngine.Color)",
+              "UnityEngine.Rect RUIF.InputFmt::SegmentRect(UnityEngine.Rect,System.Int32,System.Int32)",
+              "UnityEngine.Color RUIF.Tokens::get_AccentSoft()",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void RUIF.Draw::LineV(System.Single,System.Single,System.Single,UnityEngine.Color)",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+              "System.Boolean Verse.Widgets::ButtonInvisible(UnityEngine.Rect,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Boolean RUIF.InputAtoms::Segmented(UnityEngine.Rect,System.String[],System.Int32&,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)",
+            "token": 100663603,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "UnityEngine.Color RUIF.ButtonFmt::ToneSoft(RUIF.ButtonTone)",
+              "UnityEngine.Color RUIF.ButtonFmt::Tone(RUIF.ButtonTone)",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Void RUIF.Draw::Border(UnityEngine.Rect,UnityEngine.Color)",
+              "UnityEngine.Rect RUIF.InputFmt::SegmentRect(UnityEngine.Rect,System.Int32,System.Int32)",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void RUIF.Draw::LineV(System.Single,System.Single,System.Single,UnityEngine.Color)",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+              "System.Void UnityEngine.GUI::SetNextControlName(System.String)",
+              "System.Boolean Verse.Widgets::ButtonInvisible(UnityEngine.Rect,System.Boolean)",
+              "System.Boolean RUIF.ButtonFmt::Clicked(System.Boolean,System.Boolean)",
+              "System.String UnityEngine.GUI::GetNameOfFocusedControl()",
+              "System.Boolean System.String::op_Equality(System.String,System.String)",
+              "System.Boolean RUIF.ButtonFmt::ShouldRing(System.Boolean,System.Boolean)",
+              "System.Void RUIF.ButtonAtoms::FocusRing(UnityEngine.Rect,RUIF.ButtonTone)"
+            ]
+          },
+          {
+            "signature": "System.Boolean RUIF.InputAtoms::Checkbox(UnityEngine.Rect,System.String,System.Boolean&,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)",
+            "token": 100663605,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Boolean RUIF.InputAtoms::SelectionRow(UnityEngine.Rect,System.String,System.Boolean,System.Boolean,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Boolean RUIF.InputAtoms::Stepper(UnityEngine.Rect,System.Int32&,System.Int32,System.Int32,System.Int32)",
+            "token": 100663608,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "RUIF.HStack RUIF.Layout::Row(UnityEngine.Rect,System.Single)",
+              "UnityEngine.Rect RUIF.HStack::Take(System.Single)",
+              "System.Boolean Verse.Widgets::ButtonText(UnityEngine.Rect,System.String,System.Boolean,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.TextAnchor>)",
+              "System.Int32 RUIF.InputFmt::StepValue(System.Int32,System.Int32,System.Int32,System.Int32)",
+              "UnityEngine.Rect RUIF.HStack::get_Rest()",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Void RUIF.Draw::Border(UnityEngine.Rect,UnityEngine.Color)",
+              "System.String System.Int32::ToString()",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+              "System.Single UnityEngine.Rect::get_xMax()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)"
+            ]
+          },
+          {
+            "signature": "System.Boolean RUIF.InputAtoms::SearchField(UnityEngine.Rect,System.String&,System.String&,System.String,System.Single&,System.Single)",
+            "token": 100663610,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.String Verse.Widgets::TextField(UnityEngine.Rect,System.String)",
+              "System.Single UnityEngine.Time::get_realtimeSinceStartup()",
+              "System.Boolean System.String::op_Inequality(System.String,System.String)",
+              "System.Boolean RUIF.InputFmt::DebounceReady(System.Single,System.Single,System.Single)",
+              "System.Boolean System.String::IsNullOrEmpty(System.String)",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.Layout",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "RUIF.VStack RUIF.Layout::Column(UnityEngine.Rect,System.Single)",
+            "token": 100663386,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void RUIF.VStack::.ctor(UnityEngine.Rect,System.Single)"
+            ]
+          },
+          {
+            "signature": "RUIF.HStack RUIF.Layout::Row(UnityEngine.Rect,System.Single)",
+            "token": 100663387,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void RUIF.HStack::.ctor(UnityEngine.Rect,System.Single)"
+            ]
+          },
+          {
+            "signature": "System.Void RUIF.Layout::Split(UnityEngine.Rect,System.Single,System.Single,UnityEngine.Rect&,UnityEngine.Rect&)",
+            "token": 100663389,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Single UnityEngine.Mathf::Clamp01(System.Single)",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+              "System.Single UnityEngine.Mathf::Max(System.Single,System.Single)"
+            ]
+          },
+          {
+            "signature": "UnityEngine.Rect RUIF.Layout::BeginScroll(UnityEngine.Rect,System.Single,UnityEngine.Vector2&,System.Boolean)",
+            "token": 100663390,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Single UnityEngine.Mathf::Max(System.Single,System.Single)",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+              "System.Void Verse.Widgets::BeginScrollView(UnityEngine.Rect,UnityEngine.Vector2&,UnityEngine.Rect,System.Boolean)"
+            ]
+          },
+          {
+            "signature": "System.Void RUIF.Layout::EndScroll()",
+            "token": 100663391,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void Verse.Widgets::EndScrollView()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.NavAtomsB",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void RUIF.NavAtomsB::LayerSwitch(UnityEngine.Rect,System.String[],System.Int32&)",
+            "token": 100663709,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Int32 UnityEngine.Mathf::Clamp(System.Int32,System.Int32,System.Int32)",
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+              "UnityEngine.Color RUIF.Tokens::get_AccentSoft()",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Single UnityEngine.Rect::get_yMax()",
+              "System.Void RUIF.Draw::LineH(System.Single,System.Single,System.Single,UnityEngine.Color)",
+              "System.Boolean Verse.Mouse::IsOver(UnityEngine.Rect)",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+              "System.Boolean Verse.Widgets::ButtonInvisible(UnityEngine.Rect,System.Boolean)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.PanelAtoms",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void RUIF.PanelAtoms::StatRow(UnityEngine.Rect,System.String,System.String,System.Nullable`1<System.Single>,System.Nullable`1<UnityEngine.Color>)",
+            "token": 100663788,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Void RUIF.PanelFmt::RowSplit(UnityEngine.Rect,System.Single,System.Single,UnityEngine.Rect&,UnityEngine.Rect&)",
+              "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+              "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+              "System.Boolean System.Nullable`1<System.Single>::get_HasValue()",
+              "RUIF.HStack RUIF.Layout::Row(UnityEngine.Rect,System.Single)",
+              "UnityEngine.Rect RUIF.HStack::Take(System.Single)",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_width()",
+              "!0 System.Nullable`1<System.Single>::get_Value()",
+              "System.Single UnityEngine.Mathf::Clamp01(System.Single)",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+              "System.Boolean System.Nullable`1<UnityEngine.Color>::get_HasValue()",
+              "!0 System.Nullable`1<UnityEngine.Color>::GetValueOrDefault()",
+              "UnityEngine.Rect RUIF.HStack::get_Rest()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.ProgressAtoms",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void RUIF.ProgressAtoms::CapacityBar(UnityEngine.Rect,System.Single,System.Single,System.Nullable`1<UnityEngine.Color>)",
+            "token": 100663820,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Single RUIF.ProgressFmt::CapacityRatio(System.Single,System.Single)",
+              "System.Void RUIF.Draw::Box(UnityEngine.Rect,UnityEngine.Color)",
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Single UnityEngine.Mathf::Min(System.Single,System.Single)",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+              "System.Boolean System.Nullable`1<UnityEngine.Color>::get_HasValue()",
+              "!0 System.Nullable`1<UnityEngine.Color>::GetValueOrDefault()",
+              "System.Single RUIF.ProgressFmt::OverflowRatio(System.Single,System.Single)",
+              "System.Single UnityEngine.Mathf::Max(System.Single,System.Single)",
+              "System.Single UnityEngine.Rect::get_xMax()"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.VStack",
+        "baseType": "System.ValueType",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "UnityEngine.Rect RUIF.VStack::Take(System.Single)",
+            "token": 100663394,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Single UnityEngine.Mathf::Max(System.Single,System.Single)",
+              "System.Single UnityEngine.Mathf::Min(System.Single,System.Single)",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)"
+            ]
+          },
+          {
+            "signature": "UnityEngine.Rect RUIF.VStack::get_Rest()",
+            "token": 100663395,
+            "public": true,
+            "family": false,
+            "static": false,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Single UnityEngine.Mathf::Max(System.Single,System.Single)",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      },
+      {
+        "type": "RUIF.WindowFrame",
+        "baseType": "System.Object",
+        "fields": [],
+        "methods": [
+          {
+            "signature": "System.Void RUIF.WindowFrame::Draw(UnityEngine.Rect,System.String,UnityEngine.Rect&,UnityEngine.Rect&)",
+            "token": 100663946,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "UnityEngine.Rect RUIF.WindowFmt::FooterRect(UnityEngine.Rect)",
+              "UnityEngine.Rect RUIF.WindowFmt::ContentRect(UnityEngine.Rect)",
+              "System.Void RUIF.WindowFrame::DrawTitle(UnityEngine.Rect,System.String)",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Void RUIF.WindowFrame::DrawRule(System.Single,System.Single,System.Single)"
+            ]
+          },
+          {
+            "signature": "System.Void RUIF.WindowFrame::Draw(UnityEngine.Rect,System.String,System.Int32,UnityEngine.Rect&,UnityEngine.Rect&)",
+            "token": 100663947,
+            "public": true,
+            "family": false,
+            "static": true,
+            "abstract": false,
+            "virtual": false,
+            "calls": [
+              "System.Int32 UnityEngine.Mathf::Max(System.Int32,System.Int32)",
+              "UnityEngine.Rect RUIF.WindowFmt::FooterRect(UnityEngine.Rect)",
+              "UnityEngine.Rect RUIF.WindowFmt::ContentRect(UnityEngine.Rect)",
+              "System.Single UnityEngine.Rect::get_width()",
+              "System.Boolean RUIF.WindowFmt::NeedsStack(System.Single,System.Int32)",
+              "System.Single RUIF.WindowFmt::StackedHeight(System.Int32)",
+              "System.Single UnityEngine.Rect::get_height()",
+              "System.Single UnityEngine.Mathf::Min(System.Single,System.Single)",
+              "System.Single UnityEngine.Rect::get_x()",
+              "System.Single UnityEngine.Rect::get_yMax()",
+              "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+              "System.Single UnityEngine.Rect::get_y()",
+              "System.Single UnityEngine.Mathf::Max(System.Single,System.Single)",
+              "System.Void RUIF.WindowFrame::DrawTitle(UnityEngine.Rect,System.String)",
+              "System.Void RUIF.WindowFrame::DrawRule(System.Single,System.Single,System.Single)"
+            ]
+          }
+        ],
+        "nestedRelevantCallSites": []
+      }
+    ]
+  },
+  "sourceHashes": [
+    {
+      "relativePath": "Source/PersonalChronicle.csproj",
+      "sha256": "90BEEC014C69D1A74091462F9B9FB392A501B309770963769743CED9CCDF1F55"
+    },
+    {
+      "relativePath": "About/About.xml",
+      "sha256": "AA2E080F4EEC5D791B69738CD1BCFEC01D72C80BB3FAE9F5688A8A4E265D83EC"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Capture/Patch_BillProduction.cs",
+      "sha256": "BB5244B4CEDC65DA04AC5BA809ACA0D4B8F8429019145391B46299D4E6F06269"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Capture/Patch_GenRecipe.cs",
+      "sha256": "D75808A91CA83BE3CE183DD65CCD8FA94BEB191B65554AFE880ACAFBE1D5CC5A"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.Runtime.cs",
+      "sha256": "2983EF2DBCFF115D18DA713DA3CD1B51476732CBE212CCA50204BAE15C7F1CC1"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Automation/Patch_WorkshopDutyRuntime.cs",
+      "sha256": "EC8F73E4188DDD1240C8ACB4E9990C69FFF4652D8F03B450B0BFC3230E9DDA7F"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Economy.cs",
+      "sha256": "4020E1F8F8CCF6452C80DEF3024DADF953439D31D7D8B7DA887F3505BB28DC1F"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinColonyEconomyProvider.cs",
+      "sha256": "2324D9B54A0C3C700FCC73688C0B42AB0DE6764D6A46D15A594A71DD8123FC99"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Data/ChronicleGameComponent.cs",
+      "sha256": "3DFD89BB61A96438EDE3EDD45A23558374382091671D0C3427B1A59732AC0E3C"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Automation/CompItemStorage.cs",
+      "sha256": "DE3B01A4D2D709BDCC6DD970302927AE13D1ED342A6F961C201473527EBB3F5D"
+    },
+    {
+      "relativePath": "Defs/SystemCenterDefs.xml",
+      "sha256": "30A494A3A2CF5FD563D51ED9D1E6D186F16B1710C2051223244749B4D05E2766"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Application/SystemCenters/SystemCenterDataRegistry.cs",
+      "sha256": "16D48A20021459BF0A3BF740B00AABDD7243B69E1B76A590613C34B34D852319"
+    },
+    {
+      "relativePath": "Source/PersonalChronicle/Automation/WorkshopPostAssignmentService.cs",
+      "sha256": "4664C607F4915907990D78AF806BA13F57241C7CFDCE07FFCA71406E57256E14"
+    }
+  ],
+  "decompiledSnapshotNotice": "Existing local snapshots, not freshly decompiled in this task. Interface claims cross-checked against current DLL metadata; selected nested IL calls recorded separately.",
+  "decompiledSnapshots": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Game.cs",
+      "sha256": "886BB97E7449CC59F5D444233EED4E7A9FC3995F70E8C12C396C29D52762B3BD"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\GameComponent.cs",
+      "sha256": "BACBBB717FC44853360086ED2162D36B708549F7B44F8C25912D879FE1AEB7FB"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\ThingComp.cs",
+      "sha256": "02570A2A1B218301BF0CFCBA361358976A219EF22E7FDDB544E04570F421A520"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\ThingWithComps.cs",
+      "sha256": "1D81AC8ADE9C6814753D00F2C2E777BC2984A4A2307E63A723245417AE9EE318"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\ThingOwner.2.cs",
+      "sha256": "E7DC95516321DBA08A98B5B09959F5B8C97202EE9346D47749630AE527A0F1BF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\IThingHolder.cs",
+      "sha256": "FE5BC2AD255B26B31A8AEFBFE2A8834117CA0B81AED106A1C958AD4145FDF41D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\ThinkNode_SubtreesByTag.cs",
+      "sha256": "F0BBBA039119D8732C6727E178A9C4FE16B049EAFC89FAD3B27F9E5183C7B701"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\ThinkNode_PrioritySorter.cs",
+      "sha256": "0ED020DDADE4BEE2F3CA8C375EDA6557EFC104A02764134B11A1EBAB4269BC05"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\Toils_Recipe.cs",
+      "sha256": "83B2A0E76C651DD9C7748FD1A92344FD7A79C293207BC96E64949661D9604329"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\JobDriver.cs",
+      "sha256": "BCBC0F8B64F8301034C391524106F46238ECD0B9D9A9A32ADEC16AAB558EC010"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\ThinkNode_JobGiver.cs",
+      "sha256": "2B411E67216B7D7E982514EE438987055AD8F94479C12A47372005FFE743E3AE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\AI\\ReservationManager.cs",
+      "sha256": "952799C50445C806E006610BEE2241395653576644E557D7A50C636F68D8B965"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\GenRecipe.cs",
+      "sha256": "4E5221BF57C5D631E353940B75D2A82B00E681E160CE2A126A31C8E69539B348"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Bill_Production.cs",
+      "sha256": "E741732BA5C07C67C8F0FA2639D1BFBDC1362DD6481E21AE12BE58ED9FA7B05D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_NeedsTracker.cs",
+      "sha256": "967415F3C4FF956677B74DA9303AEC41AC0084EE35B751C4CBD81EA147908D95"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need.cs",
+      "sha256": "17954C2B9B5CA939E38BD94476B363EBEA02502818864190288AB5545783AB60"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_ApparelTracker.cs",
+      "sha256": "3FE8D0568150BC9575045AA1971806D0C67569604034F162AD559404D040A1C2"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_Ownership.cs",
+      "sha256": "826F1CCD71C8E7945F963D0E291DD478AC16BD76ED8D1717D0391698354A0317"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Pawn.cs",
+      "sha256": "A339D6E6F311B250A2448748C41AA8969E7E408111B6EB1DF474DFECB859F0D4"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Pawn_HealthTracker.cs",
+      "sha256": "83167E32AC0CB0B8ECE213318191F42A878BFD98C8AF4689FFC6EC1F609EC859"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\PawnCapacitiesHandler.cs",
+      "sha256": "A889DAF5FBEEC28C8969EB919790C2A73867CE0FCFE2C37A1AAAB583C63D4C70"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Hediff.cs",
+      "sha256": "C24CA8CC5FB928DC80812C9903F63778C36689987C61FEF2FAF347F38FFC9287"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\HediffSet.cs",
+      "sha256": "C8A6926CB06BCADC722FCE6B587795C241095C4DE2DCEB11C3CFB13FA22F60B0"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_SkillTracker.cs",
+      "sha256": "F085D8E395BAE7FE1619EF1ECC15B2D70C662CEC4C4C3CCBE12931D2406E60F6"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\SkillRecord.cs",
+      "sha256": "3CF34FC35B620F853CF1555C193F6DA02A08E040F125E6897051742AC827EF4B"
+    }
+  ],
+  "currentGameXml": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Core\\Defs\\ThinkTreeDefs\\Humanlike.xml",
+      "sha256": "047FC3C5BCB60EAD007ADBCD0090690A25AF882ADEB11298DF8F4B551BBBDD4E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Core\\Defs\\ThinkTreeDefs\\SubTrees_Misc.xml",
+      "sha256": "C287C0C2A97F151D86516CF058E2EB54B4D87F1BCCF50BFA46FAF8B26EBA3071"
+    }
+  ],
+  "ruifSourceHashes": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Core\\Api.cs",
+      "sha256": "3D3BC1B353695115109BEB3DBF1E0DCA18E224D94F61D57F522DF4FC94B64902"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Layout\\Layout.cs",
+      "sha256": "7B4198F528C3CDFA17E7F1571D84AF69FE567961D1D66F2C3604D3850C25C73F"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\DataAtoms.cs",
+      "sha256": "64947523E20D868A53620321349BCC60F8ED2BDFFA788B667A3A56E84C1FE055"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\ButtonAtoms.cs",
+      "sha256": "BCFEE16E66B6A4592B87375104AB1F62D04B9164EFC37B4EBF595EB723408598"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\InputAtoms.cs",
+      "sha256": "49111701A273A13A7FE54A562119733E5B95DB295D714498449F7F571F93BC4D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\PanelAtoms.cs",
+      "sha256": "CE5EE3B8AD40A8FAE1158F07E50C033B47E7B6BEA294FA2D2C7ABEC3E8356597"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\FeedbackAtoms.cs",
+      "sha256": "DC71042AEB123A8730B6A098E5421EB2BEE4DBAF0E9CCF89A1C7962F6B73F137"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\ProgressAtoms.cs",
+      "sha256": "BAAAFA9E1577DDBEFCFDCA59282D0ACC52252D1197F8695F4C1CB0C1E1ED7E8E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\NavAtomsB.cs",
+      "sha256": "FBD5798537776CFE9BD1124BE53039CEB63C292B8459D136255B2A85F379F0F0"
+    }
+  ],
+  "ruifApiSourceHash": "3D3BC1B353695115109BEB3DBF1E0DCA18E224D94F61D57F522DF4FC94B64902"
+}

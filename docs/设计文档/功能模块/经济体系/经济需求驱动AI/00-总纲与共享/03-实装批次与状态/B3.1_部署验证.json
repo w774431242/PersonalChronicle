@@ -1,0 +1,46 @@
+{
+  "changeId": "CHG-20261008-ECON-B3-SHADOW",
+  "verifiedUtc": "2026-10-08T12:25:47.4533056Z",
+  "source": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\economy-b3-deploy_20261008_202546_849",
+  "testedBuildSha256": "F33335D5C7542E16B87896A18FD9E01C68FC35AD8E9E7D2E58FD2DD0BEABDA08",
+  "deployedBuildSha256": "F33335D5C7542E16B87896A18FD9E01C68FC35AD8E9E7D2E58FD2DD0BEABDA08",
+  "deployed": true,
+  "files": [
+    {
+      "path": "Assemblies/PersonalChronicle.dll",
+      "sha256": "F33335D5C7542E16B87896A18FD9E01C68FC35AD8E9E7D2E58FD2DD0BEABDA08",
+      "previousSha256": "F72561366C7959388678D27CE4C61DB23EE2E84B87AB365F96885E4E84FF5FEE",
+      "newFile": false
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+      "sha256": "EF04153E14FDA5A7E3AF37FF01EC22681D679938C399305AA39CA40726DC950A",
+      "previousSha256": "E4FCF8ABD63EFA412DCBA5DD79432D2DEF3B1209B3E11831692C06636B886DA9",
+      "newFile": false
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyNeeds.xml",
+      "sha256": "5B7378350B9F630C63F69139D1E107E31383D56732CD0A1E1DD10FE73BA9EB50",
+      "previousSha256": "CD34133BA539548841BEB8C2E35D24327A9F1B98EB5F07E361D0464F9EDF3B45",
+      "newFile": false
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyPlanning.xml",
+      "sha256": "226B1B06EB04EC6670273C85D9E387EBFAA77F9133934214659B39512E6C66EE",
+      "previousSha256": null,
+      "newFile": true
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyPlanning.xml",
+      "sha256": "F09FDA6B5172664A4810240A1666F8311C720E2BAC0B9A5164FF52CDC7C1593B",
+      "previousSha256": null,
+      "newFile": true
+    }
+  ],
+  "unchangedFilesVerified": 229,
+  "workshopIdentityPreserved": true,
+  "gameVerified": false,
+  "automaticEmploymentFixed": false
+}

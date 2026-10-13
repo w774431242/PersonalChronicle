@@ -1,0 +1,48 @@
+{
+  "stage": "design_sample_only_not_runtime_configuration",
+  "revision": "1.0",
+  "gameTicksPerDay": 60000,
+  "gameTicksPerHour": 2500,
+  "moneyMinorUnitsPerDisplayUnit": 100,
+  "planningHorizonDays": 2,
+  "reserveBaseDays": 2,
+  "reserveCoverageDayBounds": [1, 3],
+  "refillLowBasisPoints": 7000,
+  "refillHighBasisPoints": 10000,
+  "savingBaseBasisPoints": 2000,
+  "savingBasisPointBounds": [0, 4000],
+  "premiumBaseBasisPoints": 2500,
+  "premiumBasisPointBounds": [0, 5000],
+  "workBaseHours": 8,
+  "workHourBounds": [0, 10],
+  "leisureBaseHours": 2,
+  "leisureHourBounds": [0, 4],
+  "unallocatedSlackHours": 2,
+  "planReviewTargetTicks": 2500,
+  "styleNeutralValue": 0.5,
+  "styleMaxDailyChange": 0.03,
+  "styleSummaryFusionAlpha": 0.1,
+  "numericNeedExamples": {
+    "Food": {"desiredRatio": 0.85, "enterBelow": 0.55, "completeAt": 0.85},
+    "Rest": {"desiredRatio": 0.9, "enterBelow": 0.45, "completeAt": 0.9},
+    "Joy": {"desiredRatio": 0.7, "enterBelow": 0.35, "completeAt": 0.7}
+  },
+  "timeExampleHours": {
+    "sleep": 8,
+    "food": 1,
+    "travel": 1,
+    "care": 2,
+    "leisure": 2,
+    "slack": 2,
+    "existingWork": 4
+  },
+  "cashExampleMinorUnits": {
+    "cashAvailable": 500,
+    "dailyUncoveredNecessaryCost": 600,
+    "wagePerHourConditional": 200,
+    "reserved": 0,
+    "otherCoveredCosts": true
+  },
+  "rulesAreModProposals": true,
+  "runtimeValidated": false
+}

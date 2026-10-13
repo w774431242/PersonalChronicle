@@ -392,29 +392,26 @@ namespace PersonalChronicle.Domain.Qualification
         /// 守卫说明：不按全局 order 取「第一个未授予」——否则已授「高级技工」(order 2) 但低档
         /// 「初级技工」(order 0) 未授予时会把「下一职称」算成低级档，出现当前职称高于下一职称。
         /// 档位顺序以 QualificationDef.order 为准（与 ProfessionalTitleDef.order 同源同值）。
+        /// majorKey：仅返回指定一级专业（如 "Manufacturing"）下的资格；null = 不限制。
         /// </summary>
-        public static QualificationDef NextQualification(CareerData cd, IEnumerable<QualificationDef> defs)
+        public static QualificationDef NextQualification(CareerData cd, IEnumerable<QualificationDef> defs, string majorKey = null)
         {
             if (cd == null || defs == null)
             {
                 return null;
             }
             int currentMaxOrder = -1;
-            if (cd.GrantedTitles != null)
-            {
-                foreach (QualificationDef q in defs)
-                {
-                    if (q == null || string.IsNullOrEmpty(q.titleDefName)) continue;
-                    if (HasGrantedTitleKey(cd, q.titleDefName) && q.order > currentMaxOrder)
-                    {
-                        currentMaxOrder = q.order;
-                    }
-                }
-            }
+            int highest = FindHighestGrantedOrder(cd, defs, majorKey);
+            currentMaxOrder = highest;
+
             QualificationDef best = null;
             foreach (QualificationDef q in defs)
             {
                 if (q == null || string.IsNullOrEmpty(q.titleDefName)) continue;
+                // 0) 按一级专业过滤。
+                if (!string.IsNullOrEmpty(majorKey)
+                    && !string.Equals(q.majorKey, majorKey, System.StringComparison.Ordinal))
+                    continue;
                 // 1) 已授予 → 跳过。
                 if (HasGrantedTitleKey(cd, q.titleDefName)) continue;
                 // 2) 前置职称：有前置必须已授予（双键），否则跳过。
@@ -425,6 +422,38 @@ namespace PersonalChronicle.Domain.Qualification
                 if (best == null || q.order < best.order) best = q;
             }
             return best;
+        }
+
+        /// <summary>当前已授最高档 order（按 majorKey 过滤；null = 不限制）。</summary>
+        /// <remarks>
+        /// 从传入的 <paramref name="defs"/> 候选集（运行期 = AllDefsListForReading，离线 = 注入集）
+        /// 按 QualificationDefName / TitleDefName 双键匹配 <see cref="QualificationDef.order"/>。
+        /// 不依赖 DefDatabase 二次解析，运行期/离线一致；majorKey 过滤基于资格 Def 的 majorKey，
+        /// 避免方向错配导致的「下一职称」跨方向串味。
+        /// </remarks>
+        public static int FindHighestGrantedOrder(CareerData cd, IEnumerable<QualificationDef> defs, string majorKey = null)
+        {
+            if (cd == null || cd.GrantedTitles == null || defs == null) return -1;
+            int maxOrder = -1;
+            foreach (GrantedTitle gt in cd.GrantedTitles)
+            {
+                if (gt == null) continue;
+                // v1.2.x 体检修复：GrantedTitle 可能只记录 TitleDefName（无 QualificationDefName），
+                // 仅用 QualificationDefName 匹配会导致已授职称被漏算，进而"下一职称"低于当前职称。
+                // 改为双键匹配（与 HasGrantedTitleKey 一致）。
+                foreach (QualificationDef q in defs)
+                {
+                    if (q == null) continue;
+                    if (!string.Equals(q.defName, gt.QualificationDefName ?? string.Empty, System.StringComparison.Ordinal)
+                        && !string.Equals(q.titleDefName, gt.TitleDefName ?? string.Empty, System.StringComparison.Ordinal)
+                        && !string.Equals(q.defName, gt.TitleDefName ?? string.Empty, System.StringComparison.Ordinal))
+                        continue;
+                    if (!string.IsNullOrEmpty(majorKey)
+                        && !string.Equals(q.majorKey, majorKey, System.StringComparison.Ordinal)) continue;
+                    if (q.order > maxOrder) maxOrder = q.order;
+                }
+            }
+            return maxOrder;
         }
     }
 }

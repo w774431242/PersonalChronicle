@@ -152,5 +152,27 @@ namespace PersonalChronicle.Data
                 1,
                 null));
         }
+
+        /// <summary>
+        /// 手动授予入口（修场景 D：titleDef.autoGrant=false 时 RunQualification 停在 Qualified 不自动授予）。
+        /// 仅在状态 Qualified + 未授予 + autoGrant=false 时由 UI「确认授予」按钮调用。
+        /// </summary>
+        public bool ManualGrantQualifiedTitle(PawnObject po, QualificationDef def)
+        {
+            if (po == null || def == null || po.CareerData == null) return false;
+            ProfessionalTitleDef titleDef = DefDatabase<ProfessionalTitleDef>.GetNamedSilentFail(def.titleDefName);
+            if (titleDef == null || titleDef.autoGrant) return false;
+            QualificationProgress progress = po.CareerData.Qualification != null ? po.CareerData.Qualification.Get(def.defName) : null;
+            if (progress == null || progress.Status != QualificationStatus.Qualified) return false;
+            if (HasTitle(po, titleDef.defName))
+            {
+                progress.Status = QualificationStatus.Granted;
+                return false;
+            }
+            GrantTitle(null, po, titleDef, def);
+            progress.Status = QualificationStatus.Granted;
+            MarkChanged();
+            return true;
+        }
     }
 }

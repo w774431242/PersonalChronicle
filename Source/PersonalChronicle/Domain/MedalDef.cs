@@ -46,7 +46,7 @@ namespace PersonalChronicle.Domain
     /// <summary>
     /// Data-driven medal definition. The evaluator only reads kind/ownerType/
     /// metricKey/threshold; labels and descriptions are derived from the
-    /// defName via UI.Medal.&lt;defName&gt;.Label/.Desc so another mod can add
+    /// defName via PersonalChronicle.UI.Medal.&lt;defName&gt;.Label/.Desc so another mod can add
     /// medals purely through XML + translation keys.
     /// </summary>
     public sealed class MedalDef : Def
@@ -142,7 +142,7 @@ namespace PersonalChronicle.Domain
         /// <summary>Additive offset applied to the stat (e.g. 0.03 = +3%).</summary>
         public float statOffset;
 
-        /// <summary>Channel B display bonus text key (UI.Medal.Buff.*).</summary>
+        /// <summary>Channel B display bonus text key (PersonalChronicle.UI.Medal.Buff.*).</summary>
         public string displayBonus;
     }
 }

@@ -1,74 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-  <name>Personal Chronicle - Archive</name>
-  <author>Personal Chronicle Team</author>
-  <packageId>PersonalChronicle.Archive</packageId>
-  <modVersion>1.1.4</modVersion>
-  <supportedVersions>
-    <li>1.6</li>
-  </supportedVersions>
+  <name>殖民地综合管理系统</name>
+  <author>殖民地综合管理系统开发者</author>
+  <packageId>colony.integratedmanagement</packageId>
+  <modVersion>0.1</modVersion>
+  <supportedVersions><li>1.6</li></supportedVersions>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
-      <displayName>Harmony</displayName>
-      <downloadUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</downloadUrl>
-      <steamWorkshopUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</steamWorkshopUrl>
+      <displayName>Harmony 补丁框架</displayName>
+      <downloadUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077</downloadUrl>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>PersonalChronicle.RUIFramework</packageId>
+      <displayName>RUI 界面框架</displayName>
+      <downloadUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3799502474</downloadUrl>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3799502474</steamWorkshopUrl>
     </li>
   </modDependencies>
-  <loadAfter>
-    <li>brrainz.harmony</li>
-  </loadAfter>
-  <description>前置要求
-- 游戏版本：RimWorld 1.6
-- 必需依赖：Harmony（自动加载）
-- 语言：简体中文 / English
+  <loadAfter><li>brrainz.harmony</li><li>PersonalChronicle.RUIFramework</li></loadAfter>
+  <incompatibleWith><li>PersonalChronicle.Archive</li></incompatibleWith>
+  <modIconPath>UI/ManagementIcon</modIconPath>
+  <description>殖民地综合管理系统
+版本：0.1
 
-这是个啥
-给殖民地请个「史官」，自动记录人物、物品、战役、地点，主界面底部「档案馆」按钮随时翻看。
+一套面向《边缘世界》的殖民地综合管理系统。以总控中心为入口，将人员组织、车间生产、物流运输、库存经济与历史档案纳入统一的管理界面。
 
-都能干啥
-- 总览：分类统计 + 最新事件流 + KPI 仪表盘，随时掌握殖民地动态。
-- 分类浏览：人物 / 物品 / 战役 / 地点，一个都别想跑。
-- 详情：时间轴 + 关联档案网络，谁摸鱼、谁背锅一目了然。
-- 人物小传：生涯工时分档（核动力驴 / 超级牛马 / 常规牛马 / 劣质牛马 / 社会懒汉）、战斗履历、社会关系、足迹、健康残值。
-- 检视面板：在 pawn 检视页签直接打开专属档案（v4.6）。
-- 阵营图鉴（v4.3）、传承 / 所有权变更链（v4.7）、榨取总账、产出核销。
+从班组排班到设备产出，从资源流转到人物生涯，持续掌握殖民地的运行状态，让组织安排、生产记录与资源变化有据可查。
 
-老板视角
-本模组就是给你这尊「黑心老板」准备的：谁加班最多、谁划水最狠、谁惹了祸还甩锅，全记在小本本上。年终奖发不发另说，至少账算得门儿清。
+主要功能
+- 总控中心：查看系统入口、殖民地概况及已接入的运行指标。
+- 车间管理：划定车间，组织班组，安排班次、倒班、岗位、作息与班中三餐。
+- 制造管理：俯视图、自由编排画布、设备详情、工单信息与产出统计。
+- T1 智能生产设备：十类人工操作的电力辅助工作台，保留原版配方与技能要求，统一在“自动化”中建造。
+- 农业与物流：三档自动农机、设备储物、传送带与管道运输。
+- 库存与经济：财富与库存市值、库存数量 K 线和分类热力图。
+- 人员与档案：职业成长、工时、人物经历、物品流转、战役与地点记录。
 
-接入说明
-对外提供统一接入契约（PersonalChronicleApi 门面 + Provider 注册表），第三方模组可无侵入扩展采集与能力，Provider 异常失败隔离。API 契约版本 1.0，与发布版本号保持一致。
+运行要求
+- 《边缘世界》1.6。
+- 必需依赖：Harmony 补丁框架与 RUI 界面框架（RUIF 1.3.0 及以上），两个前置需先于本模组加载。
+- 以简体中文为主要展示语言，保留英文游戏语言支持。
 
-与 Character Editor 共存
-本模组在 Languages/ChineseSimplified 下提供翻译文件的同时，已附带 LanguageInfo.xml 元数据，确保简体中文语言身份被正确识别。若同时启用 Character Editor，其编辑器窗口内的中文依赖游戏当前语言的 FriendlyNameEnglish；本模组不修改任何翻译系统，仅补全自身语言元数据以避免语言聚合时的回退命名冲突。如仍发现 CE 编辑器显示英文，请确认简体中文语言包（含 LanguageInfo.xml）已启用且加载顺序正确。
+使用说明
+从底部“总控中心”进入管理界面，在“人员系统中心”的“档案总览”和“人物档案”中查看记录。
+车间编组会联动参与人员的工作档位与作息；实际生产仍使用原版工作与工单。
+经济模块只做观测与记账，不通过市场模拟改写原版物价。
+本版本为开发测试首发，部分系统入口为预留，部分自动化设备仍采用测试期建造配置。
+库存历史和新增统计从启用后开始累积，不补回此前未记录的数据。
 
-Personal Chronicle · 殖民地档案馆 · v1.1.4 · 国人开发
-
----
-
-Requirements
-- Game version: RimWorld 1.6
-- Required dependency: Harmony (auto-loaded)
-- Languages: Simplified Chinese / English
-
-What is this
-Hire a "court historian" for your colony. It auto-records pawns, things, battles and locations, and the "Archive" button on the main tab bar lets you flip through it anytime.
-
-What it does
-- Overview: category stats + latest event feed + KPI dashboard.
-- Categories: pawns / things / battles / locations — nobody slips through.
-- Detail: timeline + relation network. Who slacked off, who took the blame, all in the book.
-- Pawn profile: career work-hours tier (Reactor Mule / Super Workhorse / Regular Workhorse / Poor Workhorse / Social Slacker), battle record, social relations, footprint, health valuation.
-- Inspect tab: open a pawn's archive directly from its inspect panel (v4.6).
-- Faction codex (v4.3), legacy / ownership chain (v4.7), exploitation ledger, output reconciliation.
-
-Integration
-Ships a unified integration contract (PersonalChronicleApi facade + Provider registry) so third-party mods can extend capture and capabilities non-invasively, with per-provider failure isolation. API contract version 1.0, aligned with the mod version.
-
-Coexistence with Character Editor
-This mod ships its translation files under Languages/ChineseSimplified together with a LanguageInfo.xml metadata file, so the Simplified Chinese language identity is recognized correctly. When Character Editor is also enabled, the Chinese text inside its editor window depends on the game's current language FriendlyNameEnglish; this mod does not alter any translation system — it only supplies its own language metadata to avoid fallback-naming conflicts during language aggregation. If CE's editor still shows English, make sure the Simplified Chinese language pack (with its own LanguageInfo.xml) is enabled and loaded in the correct order.
-
-Personal Chronicle · Colony Archive · v1.1.4 · made by a Chinese dev</description>
-  <modIconPath>UI/ArchiveIcon</modIconPath>
+安装与存档
+本模组采用独立模组标识。请勿与旧“殖民地档案馆”同时启用。
+建议使用新存档体验；切换旧存档前请备份，旧档迁移尚未完成实机验证。</description>
 </ModMetaData>

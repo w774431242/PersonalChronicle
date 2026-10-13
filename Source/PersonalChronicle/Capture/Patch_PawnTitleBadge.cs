@@ -69,13 +69,16 @@ namespace PersonalChronicle.Capture
                     GUI.color = new Color(tierColor.r, tierColor.g, tierColor.b, alpha);
 
                     float titleW = Text.CalcSize(badge.Title).x;
-                    float dirW = Text.CalcSize(badge.Direction).x;
+                    float dirW = string.IsNullOrEmpty(badge.Direction) ? 0f : Text.CalcSize(badge.Direction).x;
                     float width = Mathf.Max(titleW, dirW, 60f);
                     Rect titleRect = new Rect(pos.x - width / 2f, pos.y + 22f, width, 18f);
                     Widgets.Label(titleRect, badge.Title);
 
-                    Rect dirRect = new Rect(pos.x - width / 2f, pos.y + 38f, width, 16f);
-                    Widgets.Label(dirRect, badge.Direction);
+                    if (!string.IsNullOrEmpty(badge.Direction))
+                    {
+                        Rect dirRect = new Rect(pos.x - width / 2f, pos.y + 38f, width, 16f);
+                        Widgets.Label(dirRect, badge.Direction);
+                    }
                 }
                 finally
                 {
@@ -116,11 +119,15 @@ namespace PersonalChronicle.Capture
                     return;
                 }
                 TitleBadgeHelper.TitleBadgeInfo badge = TitleBadgeHelper.Resolve(__instance);
-                if (badge == null)
+                if (badge == null || string.IsNullOrEmpty(badge.Title))
                 {
                     return;
                 }
-                __result = __result + "\n" + badge.Title + " · " + badge.Direction;
+                // 殖民者栏按 LabelShort 单行排版：禁止插入换行，否则多条称号会叠在相邻头像上。
+                if (__result.IndexOf(badge.Title, StringComparison.Ordinal) < 0)
+                {
+                    __result = __result + " · " + badge.Title;
+                }
             }
             catch (Exception)
             {
@@ -159,17 +166,86 @@ namespace PersonalChronicle.Capture
                 return null;
             }
             CareerData cd = pawnObj.CareerData;
-            if (cd.GrantedTitles == null || cd.GrantedTitles.Count == 0)
-            {
-                return null;
-            }
-            string primary = cd.Professional != null ? cd.Professional.primaryDirection : null;
-            if (string.IsNullOrEmpty(primary))
+            if (HonorDisplayKeys.IsNone(cd.DisplayedHonorKey))
             {
                 return null;
             }
 
-            ProfessionalTitleDef bestTitle = null;
+            string titleDefName;
+            string medalDefName;
+            if (HonorDisplayKeys.TryParseTitle(cd.DisplayedHonorKey, out titleDefName))
+            {
+                return FromTitleDefName(cd, titleDefName);
+            }
+            if (HonorDisplayKeys.TryParseMedal(cd.DisplayedHonorKey, out medalDefName))
+            {
+                return FromMedalDefName(pawnObj, medalDefName);
+            }
+
+            TitleBadgeInfo autoTitle = BestTitleForPrimary(cd);
+            if (autoTitle != null)
+            {
+                return autoTitle;
+            }
+            return BestMedal(pawnObj);
+        }
+
+        private static TitleBadgeInfo FromTitleDefName(CareerData cd, string titleDefName)
+        {
+            if (cd == null || cd.GrantedTitles == null || string.IsNullOrEmpty(titleDefName))
+            {
+                return null;
+            }
+            bool granted = false;
+            for (int i = 0; i < cd.GrantedTitles.Count; i++)
+            {
+                GrantedTitle g = cd.GrantedTitles[i];
+                if (g != null && string.Equals(g.TitleDefName, titleDefName, StringComparison.Ordinal))
+                {
+                    granted = true;
+                    break;
+                }
+            }
+            if (!granted)
+            {
+                return null;
+            }
+            ProfessionalTitleDef def = DefDatabase<ProfessionalTitleDef>.GetNamedSilentFail(titleDefName);
+            return def == null ? null : FromTitleDef(def);
+        }
+
+        private static TitleBadgeInfo FromMedalDefName(PawnObject pawnObj, string medalDefName)
+        {
+            if (pawnObj == null || pawnObj.GrantedMedals == null || string.IsNullOrEmpty(medalDefName))
+            {
+                return null;
+            }
+            bool granted = false;
+            for (int i = 0; i < pawnObj.GrantedMedals.Count; i++)
+            {
+                if (string.Equals(pawnObj.GrantedMedals[i], medalDefName, StringComparison.Ordinal))
+                {
+                    granted = true;
+                    break;
+                }
+            }
+            if (!granted)
+            {
+                return null;
+            }
+            MedalDef def = DefDatabase<MedalDef>.GetNamedSilentFail(medalDefName);
+            return FromMedalDef(def, medalDefName);
+        }
+
+        private static TitleBadgeInfo BestTitleForPrimary(CareerData cd)
+        {
+            if (cd == null || cd.GrantedTitles == null || cd.GrantedTitles.Count == 0)
+            {
+                return null;
+            }
+            string primary = cd.Professional != null ? cd.Professional.primaryDirection : null;
+            ProfessionalTitleDef bestMatch = null;
+            ProfessionalTitleDef bestAny = null;
             for (int i = 0; i < cd.GrantedTitles.Count; i++)
             {
                 GrantedTitle g = cd.GrantedTitles[i];
@@ -177,27 +253,125 @@ namespace PersonalChronicle.Capture
                 {
                     continue;
                 }
-                ProfessionalTitleDef def = DefDatabase<ProfessionalTitleDef>.GetNamed(g.TitleDefName, false);
-                if (def == null || def.professionalSkillDefName != primary)
+                ProfessionalTitleDef def = DefDatabase<ProfessionalTitleDef>.GetNamedSilentFail(g.TitleDefName);
+                if (def == null)
                 {
                     continue;
                 }
-                if (bestTitle == null || def.order > bestTitle.order)
+                if (bestAny == null || def.order > bestAny.order)
                 {
-                    bestTitle = def;
+                    bestAny = def;
+                }
+                if (TitleMatchesPrimary(def, primary)
+                    && (bestMatch == null || def.order > bestMatch.order))
+                {
+                    bestMatch = def;
                 }
             }
-            if (bestTitle == null)
+            ProfessionalTitleDef chosen = bestMatch != null ? bestMatch : bestAny;
+            return chosen == null ? null : FromTitleDef(chosen);
+        }
+
+        private static bool TitleMatchesPrimary(ProfessionalTitleDef def, string primary)
+        {
+            if (def == null || string.IsNullOrEmpty(primary))
+            {
+                return false;
+            }
+            if (string.Equals(def.professionalSkillDefName, primary, StringComparison.Ordinal))
+            {
+                return true;
+            }
+            ProfessionalSkillDef skill = DefDatabase<ProfessionalSkillDef>.GetNamedSilentFail(def.professionalSkillDefName);
+            if (skill != null && string.Equals(skill.direction, primary, StringComparison.Ordinal))
+            {
+                return true;
+            }
+            ProfessionalDirectionDef dir = DefDatabase<ProfessionalDirectionDef>.GetNamedSilentFail(primary);
+            if (dir != null && dir.skillDefNames != null)
+            {
+                for (int i = 0; i < dir.skillDefNames.Count; i++)
+                {
+                    if (string.Equals(dir.skillDefNames[i], def.professionalSkillDefName, StringComparison.Ordinal))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private static TitleBadgeInfo BestMedal(PawnObject pawnObj)
+        {
+            if (pawnObj == null || pawnObj.GrantedMedals == null || pawnObj.GrantedMedals.Count == 0)
             {
                 return null;
             }
+            MedalDef best = null;
+            string bestName = null;
+            for (int i = 0; i < pawnObj.GrantedMedals.Count; i++)
+            {
+                string name = pawnObj.GrantedMedals[i];
+                if (string.IsNullOrEmpty(name))
+                {
+                    continue;
+                }
+                MedalDef def = DefDatabase<MedalDef>.GetNamedSilentFail(name);
+                if (def == null)
+                {
+                    continue;
+                }
+                if (best == null
+                    || (int)def.tier > (int)best.tier
+                    || ((int)def.tier == (int)best.tier && def.order > best.order))
+                {
+                    best = def;
+                    bestName = name;
+                }
+            }
+            return FromMedalDef(best, bestName);
+        }
 
+        private static TitleBadgeInfo FromTitleDef(ProfessionalTitleDef def)
+        {
+            if (def == null)
+            {
+                return null;
+            }
             TitleBadgeInfo info = new TitleBadgeInfo();
-            info.Title = ("Professional.Title." + bestTitle.defName + ".Label").Translate();
-            ProfessionalSkillDef skillDef = DefDatabase<ProfessionalSkillDef>.GetNamed(primary, false);
-            info.Direction = skillDef != null ? skillDef.LabelCap : primary;
-            info.Tier = bestTitle.order;
+            info.Title = TranslateOrFallback("PersonalChronicle.Professional.Title." + def.defName + ".Label", def.LabelCap);
+            ProfessionalSkillDef skillDef = DefDatabase<ProfessionalSkillDef>.GetNamedSilentFail(def.professionalSkillDefName);
+            // CHG-20261006-TRKEY · LOC-02：原先直取 skillDef.LabelCap，而 12 个 ProfessionalSkillDef
+            // 的 Def 未写 label ⇒ 徽章方向位会显示裸 defName。改为与 342 行同口径：Keyed 优先、Def 兜底。
+            info.Direction = skillDef != null
+                ? TranslateOrFallback("PersonalChronicle.Professional.Skill." + skillDef.defName + ".Label", skillDef.LabelCap)
+                : null;
+            info.Tier = def.order;
             return info;
+        }
+
+        private static TitleBadgeInfo FromMedalDef(MedalDef def, string defName)
+        {
+            if (def == null && string.IsNullOrEmpty(defName))
+            {
+                return null;
+            }
+            string name = def != null ? def.defName : defName;
+            TitleBadgeInfo info = new TitleBadgeInfo();
+            string key = PersonalChronicle.Data.MedalTranslationKeys.Label(name);
+            info.Title = TranslateOrFallback(key, def != null ? def.LabelCap : name);
+            info.Direction = null;
+            info.Tier = def != null ? (int)def.tier : 0;
+            return info;
+        }
+
+        private static string TranslateOrFallback(string key, string fallback)
+        {
+            if (!string.IsNullOrEmpty(key) && key.CanTranslate())
+            {
+                return key.Translate();
+            }
+            return string.IsNullOrEmpty(fallback) ? key : fallback;
         }
     }
 }

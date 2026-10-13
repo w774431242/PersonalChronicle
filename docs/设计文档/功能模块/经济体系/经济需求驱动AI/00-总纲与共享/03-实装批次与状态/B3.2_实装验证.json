@@ -1,0 +1,156 @@
+{
+  "changeId": "CHG-20261008-ECON-B32B4",
+  "batch": "B3.2",
+  "wave": 1,
+  "verifiedUtc": "2026-10-08T13:47:52Z",
+  "buildStamp": "2026-10-08 13:47",
+  "modSha256": "2A5ECF5C502374209AFA2E529FB1D6C820571ED20B7AB4CB8A2A94514F5C3ED5",
+  "deployedTarget": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "deployedSha256": "2A5ECF5C502374209AFA2E529FB1D6C820571ED20B7AB4CB8A2A94514F5C3ED5",
+  "deployUtc": "2026-10-08T13:47:10Z",
+  "tests": {
+    "path": "Tests/TestResults/EconomyU1-Full.trx",
+    "sha256": "AABFD9BB574B1A52F974B931C8CACB2F8B7D4093F4ADBB0E49C99F0CAEB88BD2",
+    "executed": 984,
+    "passed": 984,
+    "failed": 0,
+    "skipped": 1,
+    "newTests": 22
+  },
+  "ports": {
+    "pricedConsumptionProviderWired": true,
+    "institutionWorkProviderWired": true,
+    "institutionPolicyPersistenceWired": true,
+    "persistentHysteresisWired": true,
+    "workOwnershipChannelWired": true,
+    "excregistration": "docs/设计文档/架构/EXC-2026-028.md",
+    "note": "B4 合同/工资/消费仍未接入；automaticEmploymentFixed 保持 false，待 EMP-01 实机"
+  },
+  "sourceFiles": [
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Planning/PlanningSourcePorts.cs",
+      "bytes": 3892,
+      "sha256": "A51C224166DB51CC20409ED29E93BAB50D5E80FDEA025ED00A5E5AB9EA8229E5"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Governance/InstitutionPolicy.cs",
+      "bytes": 3934,
+      "sha256": "B187D78DD43E94AF914C139AF7D31339FB9BD454B55C534731FEBB07DE7AB257"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/InstitutionPolicySaveData.cs",
+      "bytes": 6491,
+      "sha256": "015D3F7D435B3E63691E24E93D5D65A7F81B3A764876819C7D6A9CC0297812EB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyInstitutionPolicy.cs",
+      "bytes": 6181,
+      "sha256": "8574B577A2FB5549D1C70F0A9BF99D314373B73A6E8CB7218405E1AA7188CC12"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Planning/EconomyFoodCostSource.cs",
+      "bytes": 4214,
+      "sha256": "72F4B8F0AF16E301E1AC0EA9D13B0F02E0968939F4788E78B619667E9F9760A4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Planning/EconomyInstitutionWorkSource.cs",
+      "bytes": 4809,
+      "sha256": "BC118A57555DCF6C034F98E509177B26D4C537F5023A89FD42520E3C54ADBAA3"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Planning/ShadowPlanLatch.cs",
+      "bytes": 1292,
+      "sha256": "FBDE1B608F1A8735667EAB87D274A1AD64B8B2FA7B93785548278AE150705C9F"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/ShadowPlanningSaveData.cs",
+      "bytes": 5671,
+      "sha256": "56347A9EBB25F51ED8441C6CAEAD7D813064C4949FA143C2761C30A17742C9D2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyShadowPlanning.cs",
+      "bytes": 7261,
+      "sha256": "5A1E9C66FD90CC188814FD65BA576A07599BC68753306F76A8EAA8F3BB93CC79"
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Planning/ShadowPlanningCoordinator.cs",
+      "bytes": 6653,
+      "sha256": "68091AC5A94F5620658C21CE6BA1FE6E8711ABBD165ABD1E585A59829E3BEC0D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Planning/ShadowPlan.cs",
+      "bytes": 12525,
+      "sha256": "FC5783032C31B92194BB56165F03098ED8F18EA242C9D4538CE1FFEDE1150F47"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Planning/LifePolicy.cs",
+      "bytes": 4094,
+      "sha256": "4845EF1D3F9E74CA2CAD8F909A800C8A216E5CDE610F13E7A1965AEC8330D0F0"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "bytes": 29718,
+      "sha256": "289B8C9D5CC1A2BCEFD55A7549E3225F27ED479A6344B19F4958689EFC27E05D"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Dialog_PawnEconomy.cs",
+      "bytes": 6316,
+      "sha256": "BE21ADFFF74D3AB2235C5E8725F82349E5284787E3F7189889E89ED38782625B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Dialog_PawnEconomy.Policy.cs",
+      "bytes": 7568,
+      "sha256": "85D80535132EE3741DEB2501F0B9DEDD24A41FDF65E8B466BBD173C9F09AC9F8"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Employment/WorkOwnershipRules.cs",
+      "bytes": 2050,
+      "sha256": "4130366347FA36071A2EDC3F7EC019BB5005751D020A2FD2964C00ED2D290FD7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/WorkOwnershipSaveData.cs",
+      "bytes": 5045,
+      "sha256": "33223AB6130FDD8F05111B35EC5E75836CAA705FE10FB2EF1C65A39963BE55A2"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorkOwnership.cs",
+      "bytes": 3393,
+      "sha256": "39A86A12D52521CDF1BF4839BBFBB2BD98FC92A5DF8A000F6A395D8AD33D55A7"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomy.xml",
+      "bytes": 6794,
+      "sha256": "C3FE80AC7CBD958E291DC3113049F1D553F6B5FB9363F0485B7E1BC8098BDC8F"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomy.xml",
+      "bytes": 6917,
+      "sha256": "CB5E978942A27AFA3A479FD19501A58928CD168C936910BE84D9B19832347817"
+    },
+    {
+      "path": "Tests/PlanningSourcePortsTests.cs",
+      "bytes": 7175,
+      "sha256": "6AAD15D7328D06242C7D9EDC9B0A7CC83459DE75C4B7949BD6BE904288305668"
+    },
+    {
+      "path": "Tests/InstitutionPolicyTests.cs",
+      "bytes": 6970,
+      "sha256": "F363DD3778185B4FA5EE07EF2DF08E16CB7E8CDF316C4251AC3A62F3779E4ED0"
+    },
+    {
+      "path": "Tests/ShadowPlanningLatchTests.cs",
+      "bytes": 10163,
+      "sha256": "49E1D2EC3D80567D796E0A328F3CB185C5F70624B322D318B53062A8EE3BE18D"
+    },
+    {
+      "path": "Tests/EconomyWorkOwnershipTests.cs",
+      "bytes": 6235,
+      "sha256": "66542B4147A5E8BB1046AD468461054EC66B638D5954E0ED8656D0C23089ECA2"
+    },
+    {
+      "path": "docs/设计文档/架构/EXC-2026-028.md",
+      "bytes": 5209,
+      "sha256": "244DAAA8AA8BDCCA09F3DF9B311BF3BCA5323FE7464E0F83789D713C2D43FB80"
+    }
+  ]
+}

@@ -1,0 +1,2103 @@
+{
+  "created_at": "2026-10-05T21:38:44",
+  "devices_reviewed": 10,
+  "remaining_devices_reviewed": 9,
+  "remaining_devices_modified": 8,
+  "remaining_directions_modified": 19,
+  "game_files": 40,
+  "game_files_modified": 21,
+  "game_files_unchanged": 19,
+  "north_baselines_unchanged": true,
+  "source_files_unchanged": true,
+  "original_archive": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\T1-assets-original_20261005_205423_760058",
+  "image_models_called": false,
+  "visual_review_completed": true,
+  "runtime_gameplay_verified": false,
+  "deployed_to_mods": false,
+  "lighting_note": "沿用用户认可的结构转向方式；像素旋转会同时旋转原图光照和投影，未独立重绘光照。",
+  "files": [
+    {
+      "device": "智能冶炼台",
+      "identity": "PC_T1_Smelter",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能冶炼台北.PNG",
+      "original_sha256": "608FE9799B7CE0B528BC555B13C5991267611F1F30F18A64FB3E9013E6D183F1",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": null,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          167,
+          182,
+          1747,
+          656
+        ],
+        "bytes": 783783,
+        "sha256": "608FE9799B7CE0B528BC555B13C5991267611F1F30F18A64FB3E9013E6D183F1"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          39,
+          42,
+          409,
+          154
+        ],
+        "bytes": 48889,
+        "sha256": "C4DA3F6BE9A73CD8482E597F01C9B075866F7FD935149080E18996633832A0AA"
+      }
+    },
+    {
+      "device": "智能冶炼台",
+      "identity": "PC_T1_Smelter",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能冶炼台东.PNG",
+      "original_sha256": "55C03E4B12FEEB391BC59F4C770156C70247D29861CA6BD501C194AFA89206C9",
+      "operation": "保留原图",
+      "donor_direction": "东",
+      "clockwise_angle": null,
+      "changed": false,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          230,
+          203,
+          653,
+          1676
+        ],
+        "bytes": 665190,
+        "sha256": "55C03E4B12FEEB391BC59F4C770156C70247D29861CA6BD501C194AFA89206C9"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          53,
+          47,
+          153,
+          392
+        ],
+        "bytes": 43562,
+        "sha256": "5A7354E8BAB9D6E752B93DB669FAEF5023FC213C8871DA56819AA6F359E16A15"
+      }
+    },
+    {
+      "device": "智能冶炼台",
+      "identity": "PC_T1_Smelter",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能冶炼台南.PNG",
+      "original_sha256": "25F559DCCD8E9CF53CD4B56A5B301EA211C14E2E36E822265E837FF4E5B6CADC",
+      "operation": "沿用用户认可的冶炼台试修版",
+      "donor_direction": "南",
+      "clockwise_angle": null,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          175,
+          220,
+          1747,
+          659
+        ],
+        "bytes": 750486,
+        "sha256": "2993C5947E853429715A7CDC14F4191A3370CB69064243DC82E294AF926BA9AB"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          40,
+          51,
+          409,
+          154
+        ],
+        "bytes": 49410,
+        "sha256": "43CEDE67DB9B79B897A902EE093D87146574F35F0CF008A7F38DE2D64BC3E44B"
+      }
+    },
+    {
+      "device": "智能冶炼台",
+      "identity": "PC_T1_Smelter",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能冶炼台西.PNG",
+      "original_sha256": "7DD8025D01CAD16E3118E9FC97627A0142B365C357823779D942EEAF3C35A838",
+      "operation": "沿用用户认可的冶炼台试修版",
+      "donor_direction": "西",
+      "clockwise_angle": null,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          168,
+          240,
+          591,
+          1713
+        ],
+        "bytes": 646077,
+        "sha256": "330241633D986537860FBC27C57AF10C87C897C171DF4837CCE5939A9FE7720A"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          39,
+          56,
+          139,
+          401
+        ],
+        "bytes": 45517,
+        "sha256": "0EE6D0323CD1C7357407D3A80C84BFA56CB90E6772ABCD59092CCD881EE427C7"
+      }
+    },
+    {
+      "device": "智能机加台",
+      "identity": "PC_T1_Machining",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能机加台北.png",
+      "original_sha256": "F553977A09838AC80DD7B16871DC30852417F1A91EFD4E7A5330C81553A1012E",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          204,
+          145,
+          1714,
+          668
+        ],
+        "bytes": 771917,
+        "sha256": "F553977A09838AC80DD7B16871DC30852417F1A91EFD4E7A5330C81553A1012E"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          47,
+          34,
+          401,
+          157
+        ],
+        "bytes": 51612,
+        "sha256": "71F2AEF59EA241921277E89D25A52C2CE4CF91BEAF172938108CF0C26522D995"
+      }
+    },
+    {
+      "device": "智能机加台",
+      "identity": "PC_T1_Machining",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能机加台东.PNG",
+      "original_sha256": "2C3C58EB5F2D8CA637BF6FD062AAF566F7D7301301EE1FDFD187EE4E7033474D",
+      "operation": "保留原图",
+      "donor_direction": "东",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          136,
+          159,
+          689,
+          1785
+        ],
+        "bytes": 888355,
+        "sha256": "2C3C58EB5F2D8CA637BF6FD062AAF566F7D7301301EE1FDFD187EE4E7033474D"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          31,
+          37,
+          161,
+          418
+        ],
+        "bytes": 62237,
+        "sha256": "36ADF55B5581599F06FE237239CA6F6C8425A4D4A5E3316F5E509C97F29EC272"
+      }
+    },
+    {
+      "device": "智能机加台",
+      "identity": "PC_T1_Machining",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能机加台南.PNG",
+      "original_sha256": "D22E97972595C842F23C1B2549DE0F01A12240FE91CEEEE7CBB3890B292FD918",
+      "operation": "保留原图",
+      "donor_direction": "南",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          154,
+          142,
+          1762,
+          672
+        ],
+        "bytes": 826332,
+        "sha256": "D22E97972595C842F23C1B2549DE0F01A12240FE91CEEEE7CBB3890B292FD918"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          36,
+          33,
+          412,
+          157
+        ],
+        "bytes": 56426,
+        "sha256": "6E7E23A6C712EB73B6CA4B74C7212576A1DCAAE59C004728FF7BEB153744F44B"
+      }
+    },
+    {
+      "device": "智能机加台",
+      "identity": "PC_T1_Machining",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能机加台西.PNG",
+      "original_sha256": "E437082C755A9432E50B730AF8CA9269887B5DB34E90B9D7FB11CBE3D1A37F4E",
+      "operation": "保留原图",
+      "donor_direction": "西",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          165,
+          186,
+          645,
+          1733
+        ],
+        "bytes": 749894,
+        "sha256": "E437082C755A9432E50B730AF8CA9269887B5DB34E90B9D7FB11CBE3D1A37F4E"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          38,
+          43,
+          151,
+          406
+        ],
+        "bytes": 53277,
+        "sha256": "46CB7DDC97ACB7B4B9851664EA02C1B68DA30A139FC5371DCE10B64A262D62C6"
+      }
+    },
+    {
+      "device": "智能缝纫台",
+      "identity": "PC_T1_Tailoring",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能缝纫台北.PNG",
+      "original_sha256": "E334B7BD866D4D5572224085D4AE9C4C00BA9F5716C688F1E6C28113B43FA6C8",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          207,
+          131,
+          1710,
+          679
+        ],
+        "bytes": 819275,
+        "sha256": "E334B7BD866D4D5572224085D4AE9C4C00BA9F5716C688F1E6C28113B43FA6C8"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          48,
+          30,
+          400,
+          159
+        ],
+        "bytes": 56244,
+        "sha256": "DC15AB62A772530325E17E8D28B73D603FDA02AE9F5D6EC48827A586E59AE481"
+      }
+    },
+    {
+      "device": "智能缝纫台",
+      "identity": "PC_T1_Tailoring",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能缝纫台东.PNG",
+      "original_sha256": "49E2BFEF21791CE944E6AAA4A2867D5BAE5D06861A5FB16E7EBD5F848F0B304F",
+      "operation": "保留原图",
+      "donor_direction": "东",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          147,
+          186,
+          674,
+          1728
+        ],
+        "bytes": 786961,
+        "sha256": "49E2BFEF21791CE944E6AAA4A2867D5BAE5D06861A5FB16E7EBD5F848F0B304F"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          34,
+          43,
+          158,
+          404
+        ],
+        "bytes": 63569,
+        "sha256": "3E8FB8F8498F4A778F182E29DB3C82E52B7D7EC8933968B89B6D789E95CD365A"
+      }
+    },
+    {
+      "device": "智能缝纫台",
+      "identity": "PC_T1_Tailoring",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能缝纫台南.PNG",
+      "original_sha256": "0BE51C14E12BCF10CC5CFACA605EF563123E6FD7FDB87DDCF685B87FE933039F",
+      "operation": "北向完整机体顺时针转向 180°",
+      "donor_direction": "北",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          206,
+          142,
+          1709,
+          690
+        ],
+        "bytes": 798993,
+        "sha256": "AE8AB1B38EFE09208EB0AD3BEF5BD16D6CE740D8DBB49DB1D967772C17059158"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          48,
+          33,
+          400,
+          162
+        ],
+        "bytes": 57511,
+        "sha256": "A7966DE96A49E7651D63DF3E3C25D081A5474C0ABF525999023363E47EA60287"
+      }
+    },
+    {
+      "device": "智能缝纫台",
+      "identity": "PC_T1_Tailoring",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能缝纫台西.PNG",
+      "original_sha256": "867B41F9666400D59BBE1FAD99C8191B917EF0C6FC0EC2969DB5CCBDA6A3CBEB",
+      "operation": "保留原图",
+      "donor_direction": "西",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          133,
+          196,
+          671,
+          1745
+        ],
+        "bytes": 786858,
+        "sha256": "867B41F9666400D59BBE1FAD99C8191B917EF0C6FC0EC2969DB5CCBDA6A3CBEB"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          31,
+          45,
+          157,
+          408
+        ],
+        "bytes": 63743,
+        "sha256": "929FAA2680BFE839F32CD8B5F48584957198D6C9BBB355D15C90B09E5ECEC5EE"
+      }
+    },
+    {
+      "device": "智能锻造台",
+      "identity": "PC_T1_Smithy",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能锻造台北.PNG",
+      "original_sha256": "3A479AE3F4E8FD9A19563215C9187F8D7B3BD019A9727D17780EE637E44635FE",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          111,
+          176,
+          1807,
+          637
+        ],
+        "bytes": 837009,
+        "sha256": "3A479AE3F4E8FD9A19563215C9187F8D7B3BD019A9727D17780EE637E44635FE"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          26,
+          41,
+          423,
+          149
+        ],
+        "bytes": 59160,
+        "sha256": "D5ED39A75AE56D44ABABD0C1221BD9B0009FAD9BAD594B3A4D91AB3AC7980BF7"
+      }
+    },
+    {
+      "device": "智能锻造台",
+      "identity": "PC_T1_Smithy",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能锻造台东.PNG",
+      "original_sha256": "16995C531E5FF26A63B212CF0E4D2624CCF388D5009E7C9FF95EF3AE85129796",
+      "operation": "保留原图",
+      "donor_direction": "东",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          199,
+          174,
+          625,
+          1742
+        ],
+        "bytes": 777951,
+        "sha256": "16995C531E5FF26A63B212CF0E4D2624CCF388D5009E7C9FF95EF3AE85129796"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          46,
+          40,
+          146,
+          408
+        ],
+        "bytes": 58326,
+        "sha256": "F06ED632ACFEB6AF0321286EE7F442C06FD6B128664D2CED46E5935DCFF80983"
+      }
+    },
+    {
+      "device": "智能锻造台",
+      "identity": "PC_T1_Smithy",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能锻造台南.PNG",
+      "original_sha256": "EE41DB783029F2B108B77709480DCB83D9974D4C810ED23D920A314E5B30666C",
+      "operation": "北向完整机体顺时针转向 180°",
+      "donor_direction": "北",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          109,
+          184,
+          1805,
+          645
+        ],
+        "bytes": 822361,
+        "sha256": "5BC2929B9591B52D91121E7E153A3C198CD8D892F54EF62850EA4DCBECF185F2"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          25,
+          43,
+          422,
+          151
+        ],
+        "bytes": 60539,
+        "sha256": "68D46C95490EE4F0E5433422FA41BCE762E57F605FC1579B074360C2247C2C1E"
+      }
+    },
+    {
+      "device": "智能锻造台",
+      "identity": "PC_T1_Smithy",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能锻造台西.PNG",
+      "original_sha256": "B26A1FE740EBAFA84BE81388E6B9E55D31DE2DFE5EDD5E4E529F98BDFA1383BE",
+      "operation": "保留原图",
+      "donor_direction": "西",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          178,
+          180,
+          644,
+          1735
+        ],
+        "bytes": 766378,
+        "sha256": "B26A1FE740EBAFA84BE81388E6B9E55D31DE2DFE5EDD5E4E529F98BDFA1383BE"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          41,
+          42,
+          151,
+          406
+        ],
+        "bytes": 59228,
+        "sha256": "805FD1CBB90E36B44EED38F67CB981EE1731BEED0F0683AEAE678A6C78606664"
+      }
+    },
+    {
+      "device": "智能烹饪台",
+      "identity": "PC_T1_Cooking",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能烹饪台北.PNG",
+      "original_sha256": "796E75CAAC88FA6494DD90DCA971AF53DCFE27975E60E24C1162381067978B6C",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          157,
+          180,
+          1761,
+          609
+        ],
+        "bytes": 648355,
+        "sha256": "796E75CAAC88FA6494DD90DCA971AF53DCFE27975E60E24C1162381067978B6C"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          36,
+          42,
+          412,
+          143
+        ],
+        "bytes": 46716,
+        "sha256": "EB2B20958553D959E1DDD3186AA5406A02208C9C2D8B4A957990752AB1F221AB"
+      }
+    },
+    {
+      "device": "智能烹饪台",
+      "identity": "PC_T1_Cooking",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能烹饪台东.PNG",
+      "original_sha256": "7259A614827BDFC0E36242D01BB44D1F17686712D6414D0A8AC12826F56E20B8",
+      "operation": "保留原图",
+      "donor_direction": "东",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          194,
+          183,
+          628,
+          1732
+        ],
+        "bytes": 669482,
+        "sha256": "7259A614827BDFC0E36242D01BB44D1F17686712D6414D0A8AC12826F56E20B8"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          45,
+          42,
+          147,
+          405
+        ],
+        "bytes": 48456,
+        "sha256": "925DAF1851C79D9506A2A62D889C784DA2CDD5AD9B618776C901915732903609"
+      }
+    },
+    {
+      "device": "智能烹饪台",
+      "identity": "PC_T1_Cooking",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能烹饪台南.PNG",
+      "original_sha256": "D158E19DB8A399BA0CB8C75177338CBECA5BE8254AE7B41154AAD4B4926E3754",
+      "operation": "北向完整机体顺时针转向 180°",
+      "donor_direction": "北",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          155,
+          212,
+          1759,
+          641
+        ],
+        "bytes": 622970,
+        "sha256": "724FF624A564B004BB7E3ECE28369C13E0F40F3BAF5BA03DEFF5C0174976510D"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          36,
+          49,
+          412,
+          150
+        ],
+        "bytes": 48503,
+        "sha256": "EDD95EA1CFC88CEF3025F97A3C1D007FDDD8D320AFB10DBDE8F855B2A5323D19"
+      }
+    },
+    {
+      "device": "智能烹饪台",
+      "identity": "PC_T1_Cooking",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能烹饪台西.PNG",
+      "original_sha256": "71ABA895AF42CA53017247624114C0DD47243FD0F54998AB4C2D76A5DCD19588",
+      "operation": "东向完整机体顺时针转向 180°",
+      "donor_direction": "东",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          193,
+          184,
+          627,
+          1733
+        ],
+        "bytes": 651001,
+        "sha256": "14C59BA5CDF2E08C0F1223FDF574847874670DAEF1C6EAF32F4C6BCD342B71D0"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          45,
+          43,
+          147,
+          406
+        ],
+        "bytes": 50454,
+        "sha256": "A22A3492442841041F05759B5C79CC49FE647444A96BAC2CDD61C12FD272FA86"
+      }
+    },
+    {
+      "device": "智能制药台",
+      "identity": "PC_T1_DrugLab",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能制药台北.PNG",
+      "original_sha256": "F9EC784663F15F1D5F44DB32BE5C01460BD0A49A76D427734200CDA9BC6D820D",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          341,
+          161,
+          1580,
+          648
+        ],
+        "bytes": 577806,
+        "sha256": "F9EC784663F15F1D5F44DB32BE5C01460BD0A49A76D427734200CDA9BC6D820D"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          79,
+          37,
+          370,
+          152
+        ],
+        "bytes": 43969,
+        "sha256": "3D3703C718AFAC3B72CEC98B74982814962B9BF6636F269D214E97FA28FCD464"
+      }
+    },
+    {
+      "device": "智能制药台",
+      "identity": "PC_T1_DrugLab",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能制药台东.PNG",
+      "original_sha256": "5E8E10304BAA73581EEBBF8518FC1787B5D3E7777D31037C29A0C68B29D97077",
+      "operation": "北向完整机体顺时针转向 90°",
+      "donor_direction": "北",
+      "clockwise_angle": 90,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          173,
+          341,
+          660,
+          1580
+        ],
+        "bytes": 560703,
+        "sha256": "FC4F74510CFB06991F6019994FD501CA578B5221449E62D13089B469033AB12F"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          40,
+          79,
+          155,
+          370
+        ],
+        "bytes": 46090,
+        "sha256": "2B93227FDF6FEB1EF18B53BD10ACA8053895A96E448B416A3923628624B7B592"
+      }
+    },
+    {
+      "device": "智能制药台",
+      "identity": "PC_T1_DrugLab",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能制药台南.PNG",
+      "original_sha256": "B2DC5014EF4135B4C108F8FE85BB820EF0D9EBBD1AD993FA1767B27F69816503",
+      "operation": "北向完整机体顺时针转向 180°",
+      "donor_direction": "北",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          336,
+          173,
+          1575,
+          660
+        ],
+        "bytes": 557351,
+        "sha256": "138E910C27A2A5A701B418B438A22FD7AE0A72BE196A6C62CF34C32D5132B26C"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          78,
+          40,
+          369,
+          155
+        ],
+        "bytes": 45186,
+        "sha256": "6DCB8DCAFE5FCB9BCEB7845FBD063CDE3AF60CB896A0A5814628EB30A1259B99"
+      }
+    },
+    {
+      "device": "智能制药台",
+      "identity": "PC_T1_DrugLab",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能制药台西.PNG",
+      "original_sha256": "6E828C7D44FCDECF923C8956126D3749E20FF4813DF644411E71CCCFB27E76EC",
+      "operation": "北向完整机体顺时针转向 270°",
+      "donor_direction": "北",
+      "clockwise_angle": 270,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          161,
+          336,
+          648,
+          1575
+        ],
+        "bytes": 561170,
+        "sha256": "0C1AD23047AB4D0A08C46934506D8A308C788F4415E112E5353B1118191C7C02"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          37,
+          78,
+          152,
+          369
+        ],
+        "bytes": 46139,
+        "sha256": "1395005B0110823F30C1A5AFE1C742AEEC16C64D518EF09286CC0E46D7774A07"
+      }
+    },
+    {
+      "device": "智能石工台",
+      "identity": "PC_T1_Stonecutting",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能石工台北.PNG",
+      "original_sha256": "1B9F9F977D901E83612ABA0A70512ED6A062C1E5A694E5646A8E5351004132EF",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          149,
+          200,
+          1768,
+          636
+        ],
+        "bytes": 727782,
+        "sha256": "1B9F9F977D901E83612ABA0A70512ED6A062C1E5A694E5646A8E5351004132EF"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          34,
+          46,
+          414,
+          149
+        ],
+        "bytes": 54155,
+        "sha256": "414BA183BA3187B76DCC695BF489870EF1D04F47DE9B4CCB4AA278C5D56147ED"
+      }
+    },
+    {
+      "device": "智能石工台",
+      "identity": "PC_T1_Stonecutting",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能石工台东.PNG",
+      "original_sha256": "C837B015DA06341D080DD02778CB016266425731942DD7E92BBD753871514836",
+      "operation": "北向完整机体顺时针转向 90°",
+      "donor_direction": "北",
+      "clockwise_angle": 90,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          185,
+          149,
+          621,
+          1768
+        ],
+        "bytes": 733020,
+        "sha256": "B7D5DD96B46BFB742AE7698CADE06BFE2FB4353E645A4F728963AE226AC5F557"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          43,
+          34,
+          146,
+          414
+        ],
+        "bytes": 57699,
+        "sha256": "786EDE2323BCB0499400992909A2F4EE8D5C8E4E95B8C57B48B14A92FD74C1A0"
+      }
+    },
+    {
+      "device": "智能石工台",
+      "identity": "PC_T1_Stonecutting",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能石工台南.PNG",
+      "original_sha256": "02D31A6A8E0FF20F814A55A9FC4F2A0B14C9F3E73828009359E55F17B658E367",
+      "operation": "北向完整机体顺时针转向 180°",
+      "donor_direction": "北",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          148,
+          185,
+          1767,
+          621
+        ],
+        "bytes": 708504,
+        "sha256": "4582E21ECA89A0C6C5BCAF5E6FDDCACE01EF1FF5CBE28ED4B7440B4DD479E8F9"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          34,
+          43,
+          414,
+          146
+        ],
+        "bytes": 55043,
+        "sha256": "E177656ED3F999E5C09572C1EC7B8FAA19CC01672634D00278FCC545D4BD4DB3"
+      }
+    },
+    {
+      "device": "智能石工台",
+      "identity": "PC_T1_Stonecutting",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能石工台西.PNG",
+      "original_sha256": "4E4236F8F709C5B098AB9181E6B4D571660892D00EE248B2C28F35F61DAA7CFF",
+      "operation": "北向完整机体顺时针转向 270°",
+      "donor_direction": "北",
+      "clockwise_angle": 270,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          200,
+          148,
+          636,
+          1767
+        ],
+        "bytes": 734485,
+        "sha256": "C32BAC5BE385473A400126EF09532A2477E77BDE2CD70BD11B680D98361DDB4A"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          46,
+          34,
+          149,
+          414
+        ],
+        "bytes": 57843,
+        "sha256": "1FB68BD383DC5730AE9FF0D6D873D1C5FC5FA2A6ED42A04563B1EE14FC8C48D4"
+      }
+    },
+    {
+      "device": "智能雕艺台",
+      "identity": "PC_T1_Sculpting",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能雕艺台北.PNG",
+      "original_sha256": "9048D77367D2500492A41131918C12E61C4CD02DAD061A00E9C129F3914EDF6D",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          283,
+          183,
+          1635,
+          629
+        ],
+        "bytes": 646085,
+        "sha256": "9048D77367D2500492A41131918C12E61C4CD02DAD061A00E9C129F3914EDF6D"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          66,
+          43,
+          383,
+          148
+        ],
+        "bytes": 45675,
+        "sha256": "33FBB522CF922D3FCA7CF6B23FF4268D234183EA3B92E8B7D09DC0BD6089EC25"
+      }
+    },
+    {
+      "device": "智能雕艺台",
+      "identity": "PC_T1_Sculpting",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能雕艺台东.PNG",
+      "original_sha256": "42656B0CB1474075E7E4613E901E820405D10339532510ACD299571E657F5E43",
+      "operation": "北向完整机体顺时针转向 90°",
+      "donor_direction": "北",
+      "clockwise_angle": 90,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          192,
+          283,
+          638,
+          1635
+        ],
+        "bytes": 637705,
+        "sha256": "7AEF9FD912D532C28CDB255EB8C8DFD6947F943787D2A32E43750FA775B3FEFE"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          44,
+          66,
+          149,
+          383
+        ],
+        "bytes": 47907,
+        "sha256": "BECB3B08DADD90F2A6907800D8570241C3A8CB2723E67347094FB562C337C55F"
+      }
+    },
+    {
+      "device": "智能雕艺台",
+      "identity": "PC_T1_Sculpting",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能雕艺台南.PNG",
+      "original_sha256": "C3BE91802EF43F58C8B816BFB6C56B6B806B98A40E6A8B789892B0CD77D3F4F5",
+      "operation": "北向完整机体顺时针转向 180°",
+      "donor_direction": "北",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          281,
+          192,
+          1633,
+          638
+        ],
+        "bytes": 624223,
+        "sha256": "1EE7438D4108DE988837DE73A3EB1F7DA1BCD332BC6017D25A26A4525056A787"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          65,
+          44,
+          382,
+          149
+        ],
+        "bytes": 46308,
+        "sha256": "41AF707BD5254FF549E919E0ACDAABF8FDA8581A55B2CF3A2145A46C1FC59180"
+      }
+    },
+    {
+      "device": "智能雕艺台",
+      "identity": "PC_T1_Sculpting",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能雕艺台西.PNG",
+      "original_sha256": "AA7AE20479FFAE5282DAF062709CF8C489EE2835D184B457E42F2F3469A00F7D",
+      "operation": "北向完整机体顺时针转向 270°",
+      "donor_direction": "北",
+      "clockwise_angle": 270,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          183,
+          281,
+          629,
+          1633
+        ],
+        "bytes": 637786,
+        "sha256": "92B0F52948750B2045F2E37B7B3B5C74BDFD324710F32993DB35996ACC093B3B"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          43,
+          65,
+          148,
+          382
+        ],
+        "bytes": 47963,
+        "sha256": "B02D07760433283A11E83FED0C7C4DA5BA78FA5AF7502E8E3995E135CEDC4277"
+      }
+    },
+    {
+      "device": "智能屠宰台",
+      "identity": "PC_T1_Butchery",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能屠宰台北.PNG",
+      "original_sha256": "E0DBAE2DB905A1E3ABD4612BDCA3E70DBEF1A220CD654F86F6D945EBC42AA14D",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          110,
+          161,
+          1807,
+          670
+        ],
+        "bytes": 925675,
+        "sha256": "E0DBAE2DB905A1E3ABD4612BDCA3E70DBEF1A220CD654F86F6D945EBC42AA14D"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          25,
+          37,
+          423,
+          157
+        ],
+        "bytes": 59055,
+        "sha256": "15A7D82803B161F0EE681ED8E20C059BEE113111FD1A645860E2CD224E718784"
+      }
+    },
+    {
+      "device": "智能屠宰台",
+      "identity": "PC_T1_Butchery",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能屠宰台东.PNG",
+      "original_sha256": "4E3858E6F66E6EDB2841A8C88CAE3D872AE29CE857DBD610E48CE163B3694CA5",
+      "operation": "北向完整机体顺时针转向 90°",
+      "donor_direction": "北",
+      "clockwise_angle": 90,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          151,
+          110,
+          660,
+          1807
+        ],
+        "bytes": 912593,
+        "sha256": "1CF40B7FA28854CE15777498E340905A55D4605EE11A38CB92A0CF23D3B30DAB"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          35,
+          25,
+          155,
+          423
+        ],
+        "bytes": 62798,
+        "sha256": "0A224BB756A1DAD2830040169D8A7FD7B1220AF1FAA8B7976ABCBAB8C3FE90B3"
+      }
+    },
+    {
+      "device": "智能屠宰台",
+      "identity": "PC_T1_Butchery",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能屠宰台南.PNG",
+      "original_sha256": "08919B07B526AA6BA4152394E2274EB77EAC7F60072E5ED9680BC11D2133AAB8",
+      "operation": "北向完整机体顺时针转向 180°",
+      "donor_direction": "北",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          109,
+          151,
+          1806,
+          660
+        ],
+        "bytes": 903931,
+        "sha256": "8E5C3017C45E3BD45F1EE9BE6E3EF1BB3AEF4156E0F354B3388E62CB26BF7B6D"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          25,
+          35,
+          423,
+          155
+        ],
+        "bytes": 61001,
+        "sha256": "E36F357C027154C4C1F36D3E86008ADD85BC09C5AB67592FB0654D090DB1DEA8"
+      }
+    },
+    {
+      "device": "智能屠宰台",
+      "identity": "PC_T1_Butchery",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能屠宰台西.PNG",
+      "original_sha256": "56DA18FF2A95D4F6A8391274681A43E51781DBF3A197D4EE378863A5EF07B5E3",
+      "operation": "北向完整机体顺时针转向 270°",
+      "donor_direction": "北",
+      "clockwise_angle": 270,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          161,
+          109,
+          670,
+          1806
+        ],
+        "bytes": 913408,
+        "sha256": "6B6B36DC656E29590DFCBCE257A8272AD9A1DED47D66231B19353460C50D996C"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          37,
+          25,
+          157,
+          423
+        ],
+        "bytes": 62687,
+        "sha256": "D8452403AF68B8F6E3A177526191B5BFD3FEA97568031EABAEDE07F0F7A787A9"
+      }
+    },
+    {
+      "device": "智能制作台",
+      "identity": "PC_T1_Crafting",
+      "direction": "north",
+      "direction_chinese": "北",
+      "original": "D:\\素材\\智能制作台北.PNG",
+      "original_sha256": "522DD888FDDE03B89B28B08A40BF7DA5520D3C468F0BCB35B767FFC165FF3C5A",
+      "operation": "保留原图",
+      "donor_direction": "北",
+      "clockwise_angle": 0,
+      "changed": false,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          132,
+          169,
+          1785,
+          642
+        ],
+        "bytes": 806592,
+        "sha256": "522DD888FDDE03B89B28B08A40BF7DA5520D3C468F0BCB35B767FFC165FF3C5A"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          31,
+          39,
+          418,
+          151
+        ],
+        "bytes": 55202,
+        "sha256": "897A32F6272DD75483C99B4D178BF2DDE36D308DF0491CC28F1C91E03758391B"
+      }
+    },
+    {
+      "device": "智能制作台",
+      "identity": "PC_T1_Crafting",
+      "direction": "east",
+      "direction_chinese": "东",
+      "original": "D:\\素材\\智能制作台东.PNG",
+      "original_sha256": "CA3A9BAF5434DCE0ACADF30E18B732616B62DC2B6704E314A45669CC85F6741A",
+      "operation": "北向完整机体顺时针转向 90°",
+      "donor_direction": "北",
+      "clockwise_angle": 90,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          179,
+          132,
+          652,
+          1785
+        ],
+        "bytes": 806958,
+        "sha256": "82590ED8DEDAF3B2A6C4473C58F145059FC6A596A9A95B325990D3D29CE17FBE"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          41,
+          31,
+          153,
+          418
+        ],
+        "bytes": 58996,
+        "sha256": "AA8F5EE6490DF1C78168F9D3CC6DBE817F2D5032070839D8B968A8CBCB18DF5B"
+      }
+    },
+    {
+      "device": "智能制作台",
+      "identity": "PC_T1_Crafting",
+      "direction": "south",
+      "direction_chinese": "南",
+      "original": "D:\\素材\\智能制作台南.PNG",
+      "original_sha256": "C8295A64F86C20655B60A71B945765E76F0F43716BDC350A359F77130385C158",
+      "operation": "北向完整机体顺时针转向 180°",
+      "donor_direction": "北",
+      "clockwise_angle": 180,
+      "changed": true,
+      "mother": {
+        "size": [
+          1916,
+          821
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          131,
+          179,
+          1784,
+          652
+        ],
+        "bytes": 784847,
+        "sha256": "B5CA995198927B536C4D29B02395C1909B26478D02CBBA3BB84479573ACCC5AE"
+      },
+      "game": {
+        "size": [
+          448,
+          192
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          30,
+          41,
+          417,
+          153
+        ],
+        "bytes": 56690,
+        "sha256": "A80A46F00DC22FFBDEC2AC66975C6C3F7397263C047AFAE14FF72AC8939511B1"
+      }
+    },
+    {
+      "device": "智能制作台",
+      "identity": "PC_T1_Crafting",
+      "direction": "west",
+      "direction_chinese": "西",
+      "original": "D:\\素材\\智能制作台西.PNG",
+      "original_sha256": "ADE6A6BB80B5F76A3579E875A9E0495F259F7B29473CD5B3EBF75A02E882A13C",
+      "operation": "北向完整机体顺时针转向 270°",
+      "donor_direction": "北",
+      "clockwise_angle": 270,
+      "changed": true,
+      "mother": {
+        "size": [
+          821,
+          1916
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          169,
+          131,
+          642,
+          1784
+        ],
+        "bytes": 806227,
+        "sha256": "EB453010A5E0E8B75EBC6BBDF2B977174DE0C08C839A7BD10CA058627E250150"
+      },
+      "game": {
+        "size": [
+          192,
+          448
+        ],
+        "mode": "RGBA",
+        "alpha_extrema": [
+          0,
+          255
+        ],
+        "transparent_corners": true,
+        "visible_bbox": [
+          39,
+          30,
+          151,
+          417
+        ],
+        "bytes": 59007,
+        "sha256": "0FCBDB7E5825A1E0740318C33502ECA243EA3B1228BDAB2C60A99A53D389BD86"
+      }
+    }
+  ],
+  "development_imported": true,
+  "runtime_texture_backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\T1-textures_20261005_214056_591",
+  "imported_game_bytes": 2152792
+}

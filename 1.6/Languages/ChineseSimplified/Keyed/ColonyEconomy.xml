@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 殖民地经济中心（CHG-LCE-001 重建期最小骨架）。键前缀 PersonalChronicle.Economy.* -->
+<LanguageData>
+  <PersonalChronicle.Economy.Kpi.Wealth>总财富</PersonalChronicle.Economy.Kpi.Wealth>
+  <PersonalChronicle.Economy.Kpi.Wealth.Note>原版 WealthWatcher：物品 / 建筑 / 小人合计</PersonalChronicle.Economy.Kpi.Wealth.Note>
+  <PersonalChronicle.Economy.Kpi.Silver>白银</PersonalChronicle.Economy.Kpi.Silver>
+  <PersonalChronicle.Economy.Kpi.Silver.Note>全图白银计数（原版 ResourceCounter）</PersonalChronicle.Economy.Kpi.Silver.Note>
+  <PersonalChronicle.Economy.Kpi.StockValue>库存市值</PersonalChronicle.Economy.Kpi.StockValue>
+  <PersonalChronicle.Economy.Kpi.StockValue.Note>仓储物品数量 × 原版单价（BaseMarketValue）</PersonalChronicle.Economy.Kpi.StockValue.Note>
+
+  <PersonalChronicle.Economy.Page.Title>殖民地经济</PersonalChronicle.Economy.Page.Title>
+  <PersonalChronicle.Economy.Page.Rebuilding1>本中心正在重建：市场模拟部分已整体移除，保留「本地殖民地经济」。</PersonalChronicle.Economy.Page.Rebuilding1>
+  <PersonalChronicle.Economy.Page.Rebuilding2>即将上线：库存与市值 / 产消账本（含可维持天数）/ 劳动力与产出。</PersonalChronicle.Economy.Page.Rebuilding2>
+  <PersonalChronicle.Economy.Page.Rebuilding3>当前 KPI 条为原版真实读数：总财富 / 白银 / 库存市值。</PersonalChronicle.Economy.Page.Rebuilding3>
+
+  <!-- 阶段 3 落地（SDD-LCE-003）：库存 K 线 + 树图热力图 -->
+  <PersonalChronicle.Economy.Stock.Title>品种 K 线</PersonalChronicle.Economy.Stock.Title>
+  <PersonalChronicle.Economy.Stock.HeatTitle>热力图</PersonalChronicle.Economy.Stock.HeatTitle>
+  <PersonalChronicle.Economy.Stock.SwitchToHeat>◧ 热力图</PersonalChronicle.Economy.Stock.SwitchToHeat>
+  <PersonalChronicle.Economy.Stock.SwitchToKline>◨ 品种 K 线</PersonalChronicle.Economy.Stock.SwitchToKline>
+  <PersonalChronicle.Economy.Stock.Source>② 实测 · 库存数量</PersonalChronicle.Economy.Stock.Source>
+  <PersonalChronicle.Economy.Stock.Empty>采样中 · 尚无记录（每 250 tick 采样一次库存数量）</PersonalChronicle.Economy.Stock.Empty>
+  <PersonalChronicle.Economy.Stock.Error>读取失败 · 已降级为空态（详见日志）</PersonalChronicle.Economy.Stock.Error>
+  <PersonalChronicle.Economy.Stock.NoStock>当前没有库存数量（列表内所有物品计数为 0）</PersonalChronicle.Economy.Stock.NoStock>
+  <PersonalChronicle.Economy.Stock.PickItem>品种</PersonalChronicle.Economy.Stock.PickItem>
+  <PersonalChronicle.Economy.Stock.More>…另 {0} 项（按库存价值降序取前 {1}）</PersonalChronicle.Economy.Stock.More>
+  <PersonalChronicle.Economy.Stock.Value>价值</PersonalChronicle.Economy.Stock.Value>
+  <PersonalChronicle.Economy.Stock.Delta>变化</PersonalChronicle.Economy.Stock.Delta>
+  <PersonalChronicle.Economy.Stock.Last>最新</PersonalChronicle.Economy.Stock.Last>
+  <PersonalChronicle.Economy.Stock.Hover>指针</PersonalChronicle.Economy.Stock.Hover>
+  <PersonalChronicle.Economy.Stock.Other>其他</PersonalChronicle.Economy.Stock.Other>
+  <PersonalChronicle.Economy.Stock.Ohlc.Open>开</PersonalChronicle.Economy.Stock.Ohlc.Open>
+  <PersonalChronicle.Economy.Stock.Ohlc.High>高</PersonalChronicle.Economy.Stock.Ohlc.High>
+  <PersonalChronicle.Economy.Stock.Ohlc.Low>低</PersonalChronicle.Economy.Stock.Ohlc.Low>
+  <PersonalChronicle.Economy.Stock.Ohlc.Close>收</PersonalChronicle.Economy.Stock.Ohlc.Close>
+  <!-- 五档 = 统一周期基准（Domain/EconomyPeriodTier，全中心唯一真相）
+       ⚠ 60分 档已于 2026-09-21 用户裁决退役（槽位保留 = 存档双向兼容，但不再显示 ⇒ 删除其键，零孤儿键） -->
+  <PersonalChronicle.Economy.Stock.Tier.d>日</PersonalChronicle.Economy.Stock.Tier.d>
+  <PersonalChronicle.Economy.Stock.Tier.w>周</PersonalChronicle.Economy.Stock.Tier.w>
+  <PersonalChronicle.Economy.Stock.Tier.mo>月</PersonalChronicle.Economy.Stock.Tier.mo>
+  <PersonalChronicle.Economy.Stock.Tier.q>季</PersonalChronicle.Economy.Stock.Tier.q>
+  <PersonalChronicle.Economy.Stock.Tier.y>年</PersonalChronicle.Economy.Stock.Tier.y>
+</LanguageData>

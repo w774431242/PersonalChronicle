@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!--
+    CHG-20261004-STAFF · 工作类型列名「车间」→「员工」。
+
+    玩家口径（2026-10-04）：这套体系是「一套现代化工业岗位体系」，不是"某个车间的岗位表"，
+    所以**工作类型列名**用【员工】而非【车间】——它与原版的
+    种田 / 采矿 / 搬运 / 清洁 / 研究 并列时，语义是"从事工业生产劳动"，
+    而不是"在某个叫车间的地方"。
+    场景名（车间）仍然保留在 description 与 verb 里，那描述的是工作地点，不是工作种类。
+  -->
+  <PC_WorkshopOperation.labelShort>员工</PC_WorkshopOperation.labelShort>
+  <PC_WorkshopOperation.pawnLabel>员工</PC_WorkshopOperation.pawnLabel>
+  <PC_WorkshopOperation.gerundLabel>在车间上班</PC_WorkshopOperation.gerundLabel>
+  <PC_WorkshopOperation.description>在被指派的车间内上班：操作、看护并维护自动化产线。员工是公司通用的岗位角色，挂在哪个车间、承接哪些工序由排班决定。</PC_WorkshopOperation.description>
+  <PC_WorkshopOperation.verb>在车间上班</PC_WorkshopOperation.verb>
+
+  <!--
+    工时分档标签（visible=false，不出现在工作标签页）。
+    CHG-20261004-STAFF：术语随主类型统一为「员工」；这三个标签是**工时统计的分桶名**，
+    档案馆会按 defName 取这里的文本，所以它们与主类型保持同一套说法。
+  -->
+  <PC_WorkshopMaintenance.labelShort>员工·维护</PC_WorkshopMaintenance.labelShort>
+  <PC_WorkshopMaintenance.pawnLabel>维护员工</PC_WorkshopMaintenance.pawnLabel>
+  <PC_WorkshopMaintenance.gerundLabel>维护设备</PC_WorkshopMaintenance.gerundLabel>
+  <PC_WorkshopMaintenance.description>按「维护」任务类型上岗的员工（仅用于工时分档统计）。</PC_WorkshopMaintenance.description>
+  <PC_WorkshopMaintenance.verb>维护设备</PC_WorkshopMaintenance.verb>
+
+  <PC_WorkshopQualityCheck.labelShort>员工·质检</PC_WorkshopQualityCheck.labelShort>
+  <PC_WorkshopQualityCheck.pawnLabel>质检员工</PC_WorkshopQualityCheck.pawnLabel>
+  <PC_WorkshopQualityCheck.gerundLabel>质检产出</PC_WorkshopQualityCheck.gerundLabel>
+  <PC_WorkshopQualityCheck.description>按「质检」任务类型上岗的员工（仅用于工时分档统计）。</PC_WorkshopQualityCheck.description>
+  <PC_WorkshopQualityCheck.verb>质检产出</PC_WorkshopQualityCheck.verb>
+
+  <PC_WorkshopStandby.labelShort>员工·待命</PC_WorkshopStandby.labelShort>
+  <PC_WorkshopStandby.pawnLabel>待命员工</PC_WorkshopStandby.pawnLabel>
+  <PC_WorkshopStandby.gerundLabel>在岗待命</PC_WorkshopStandby.gerundLabel>
+  <PC_WorkshopStandby.description>按「待命」任务类型上岗的员工（仅用于工时分档统计）。</PC_WorkshopStandby.description>
+  <PC_WorkshopStandby.verb>在岗待命</PC_WorkshopStandby.verb>
+
+  <!--
+    CHG-20261004-MEALSCHEDULE · 三餐作息。
+    该类型不出现在工作优先级面板（1.6 面板列来自原版静态 XML，PC 不新增 PawnColumnDef），
+    这些键用于玩家在设置页/提示中看到的名称与说明。
+  -->
+  <PC_MealBreak.labelShort>用餐</PC_MealBreak.labelShort>
+  <PC_MealBreak.pawnLabel>用餐</PC_MealBreak.pawnLabel>
+  <PC_MealBreak.gerundLabel>用餐</PC_MealBreak.gerundLabel>
+  <PC_MealBreak.description>在设定好的三餐时段去进食。非用餐时段本类型完全不生效，饥饿仍由原版需求系统处理。</PC_MealBreak.description>
+  <PC_MealBreak.verb>去吃</PC_MealBreak.verb>
+</LanguageData>

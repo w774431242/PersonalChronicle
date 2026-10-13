@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef Name="PC_EconomyStorageBase" ParentName="StorageShelfBase" Abstract="True">
+    <thingClass>PersonalChronicle.Economy.PawnEconomy.Building_EconomyStorage</thingClass>
+    <designationCategory>PC_PEA_Institutions</designationCategory>
+    <graphicData>
+      <texPath>Things/Building/Furniture/Shelf</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3,2)</drawSize>
+    </graphicData>
+    <size>(2,1)</size>
+    <costStuffCount>20</costStuffCount>
+    <statBases><MaxHitPoints>100</MaxHitPoints><Mass>8</Mass><WorkToBuild>500</WorkToBuild></statBases>
+  </ThingDef>
+  <ThingDef ParentName="PC_EconomyStorageBase">
+    <defName>PC_PublicStorage</defName>
+    <label>共有物资架</label>
+    <description>共有物资存储。启用经济制度后，人物须按本架公布的每营养价格付款才能摄入食品，费用进入公有国库。选中物资架设置食品价格，默认未报价。食品搬走、落地或拆堆后仍保留共有归属。普通未分类库存仍沿用原版规则。</description>
+    <graphicData><color>(0.64,0.78,0.61)</color></graphicData>
+    <building><storageGroupTag>PC_PublicStorage</storageGroupTag></building>
+    <modExtensions><li Class="PersonalChronicle.Economy.PawnEconomy.EconomyStorageExtension"><privateStorage>false</privateStorage></li></modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="PC_EconomyStorageBase">
+    <defName>PC_PrivateStorage</defName>
+    <label>私人物资架</label>
+    <description>个人物资存储。空架需先指派所属人物，人物可自动寻找并食用自己的食品，其他人物不能食用。物品拆堆、搬运及落地后保留归属；不同人物的物品不能合堆。未付款的共有食品放入本架仍然是共有食品，不能通过搬运绕过购买。本阶段自动购买与使用权限覆盖食品。</description>
+    <graphicData><color>(0.58,0.70,0.87)</color></graphicData>
+    <building><storageGroupTag>PC_PrivateStorage</storageGroupTag></building>
+    <modExtensions><li Class="PersonalChronicle.Economy.PawnEconomy.EconomyStorageExtension"><privateStorage>true</privateStorage></li></modExtensions>
+  </ThingDef>
+</Defs>

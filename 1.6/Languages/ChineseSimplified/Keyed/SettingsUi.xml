@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!--
+    CHG-20261005-SETTINGS-UI · Mod 设置页重做（分节 / 来源角标 / 可展开用途与代价）。
+    CHG-20261005-SETTINGS · 发布前收口：
+      · 页签 5 → 4（「作息与三餐」空页并入车间页；诊断页改为开发者模式才出现）
+      · 「在班自动回写」默认化 ⇒ 其本页专用文案一并删除
+      · 修 D3/D4 披露错误；清孤儿键；合并重复定义的 Detail.AutoDetect
+
+    本文件只放**本页专用**文案。既有标题键（EnableRecording / MaxEventsPerPawn /
+    AutoArchive* / WorkshopSection / IdleSplitEnabled / AutoDetectWorkshopType /
+    ReplayTimetablesOnDayChange / Theme 等）继续从 Automation.xml / Archive.xml 复用，
+    不重复定义（同一句话只留一份）。
+  -->
+  <PersonalChronicle.Settings.SectionGeneral>常规</PersonalChronicle.Settings.SectionGeneral>
+  <PersonalChronicle.Settings.SectionUi>界面</PersonalChronicle.Settings.SectionUi>
+  <PersonalChronicle.Settings.SectionDiag>诊断（正常游玩不需要改）</PersonalChronicle.Settings.SectionDiag>
+
+  <!-- ── 页签（4 个；「诊断」仅在开发者模式下出现）── -->
+  <PersonalChronicle.Settings.Tab.Archive>档案</PersonalChronicle.Settings.Tab.Archive>
+  <PersonalChronicle.Settings.Tab.Workshop>车间</PersonalChronicle.Settings.Tab.Workshop>
+  <PersonalChronicle.Settings.Tab.Ui>界面</PersonalChronicle.Settings.Tab.Ui>
+  <PersonalChronicle.Settings.Tab.Diag>诊断</PersonalChronicle.Settings.Tab.Diag>
+
+  <!-- ── 通用小件 ── -->
+  <PersonalChronicle.Settings.TooSmall>窗口太小 —— 请拉大 Mod 设置窗口</PersonalChronicle.Settings.TooSmall>
+  <PersonalChronicle.Settings.RowFailed>该行绘制异常，已隔离（详见日志）</PersonalChronicle.Settings.RowFailed>
+  <PersonalChronicle.Settings.ReadOnly>（只读）</PersonalChronicle.Settings.ReadOnly>
+  <PersonalChronicle.Settings.HiddenWorkTabNone>无隐藏成员</PersonalChronicle.Settings.HiddenWorkTabNone>
+  <PersonalChronicle.Settings.WorkTabHiddenTitle>工作面板隐藏名单</PersonalChronicle.Settings.WorkTabHiddenTitle>
+  <!-- 受父开关门控的行（当前唯一一处：自动归档关闭 ⇒ 两个阈值只读） -->
+  <PersonalChronicle.Settings.NeedParentOn>需先开启上一项才会生效</PersonalChronicle.Settings.NeedParentOn>
+  <!-- 滑块范围提示：{0} = 下限，{1} = 上限（滑块不再画原版 min/max 标签，范围改由悬停提供） -->
+  <PersonalChronicle.Settings.RangeFmt>可调范围：{0} – {1}</PersonalChronicle.Settings.RangeFmt>
+
+  <!-- ── 档案页 · 用途 ── -->
+  <PersonalChronicle.Settings.Use.Recording>关闭后不再为殖民者记录任何档案事件（已有档案保留）。</PersonalChronicle.Settings.Use.Recording>
+  <!-- D3 修正：实现是"到达上限后不再记录新事件"，没有淘汰逻辑（原文案误写为"淘汰最旧"） -->
+  <PersonalChronicle.Settings.Use.MaxEvents>每位殖民者最多保留多少条事件；到达上限后不再记录新事件（已有记录不会被删除）。</PersonalChronicle.Settings.Use.MaxEvents>
+  <PersonalChronicle.Settings.Use.AutoArchive>死亡且价值过低的档案在保留期满后自动清理，避免存档里堆积无用记录。</PersonalChronicle.Settings.Use.AutoArchive>
+  <PersonalChronicle.Settings.Use.AutoArchiveSilver>按健康估值折算的银币价值；低于它的死亡档案才会被标记归档。</PersonalChronicle.Settings.Use.AutoArchiveSilver>
+  <PersonalChronicle.Settings.Use.AutoArchivePurgeDays>标记归档后仍保留这么多天，到期才真正删除（留出后悔余地）。</PersonalChronicle.Settings.Use.AutoArchivePurgeDays>
+
+  <!-- ── 车间页 · 用途 / 代价 ── -->
+  <!-- CHG-20261005-SETTINGS-REMOVE2：「离班停工」默认化移除（恒开）⇒ 本页专用文案一并删除。
+       注意 `PersonalChronicle.Settings.EnableOffShiftCancel`（长文案键，在 Archive.xml）
+       仍被同文件 legacy 绘制块引用，故**保留**。 -->
+
+  <PersonalChronicle.Settings.Use.IdleSplit>员工多于设备时，多出来的人在班次内改为去娱乐（摸鱼），而不是站着发呆。</PersonalChronicle.Settings.Use.IdleSplit>
+  <PersonalChronicle.Settings.Detail.IdleSplit>默认开。关闭则全员照常写"工作"时段 —— 适合"我就要所有人站岗"的玩法。</PersonalChronicle.Settings.Detail.IdleSplit>
+  <PersonalChronicle.Settings.Use.AutoDetect>按车间内设备的风格占比自动判定车间类型，省去逐车间手选。</PersonalChronicle.Settings.Use.AutoDetect>
+  <PersonalChronicle.Settings.Detail.AutoDetect>默认开。设备风格混杂时判定可能给不出答案 —— 此时请到车间管理的「设置」页手动指定类型（该车间会被记为"已手动指定"，不再自动改）。</PersonalChronicle.Settings.Detail.AutoDetect>
+  <PersonalChronicle.Settings.Use.ReplayTimetables>每天重刷一次作息表，修掉历史残留的错格。</PersonalChronicle.Settings.Use.ReplayTimetables>
+  <PersonalChronicle.Settings.Detail.ReplayTimetables>默认开。代价：会覆盖在编成员手工排的作息；关闭后只在你改排班/设备时才写作息表。</PersonalChronicle.Settings.Detail.ReplayTimetables>
+  <PersonalChronicle.Settings.Use.RestPolicy>新车间默认采用哪种作息策略（单个车间里仍可单独覆盖）。</PersonalChronicle.Settings.Use.RestPolicy>
+  <PersonalChronicle.Settings.Detail.RestPolicy>优先级：车间自己的选择 &gt; 本设置 &gt; Def 缺省（固定班）。「按天轮换」会翻转睡眠节律，选它后会在下方显示警告。</PersonalChronicle.Settings.Detail.RestPolicy>
+  <PersonalChronicle.Settings.RestShort.Fixed>固定班</PersonalChronicle.Settings.RestShort.Fixed>
+  <PersonalChronicle.Settings.RestShort.Natural>自然休息</PersonalChronicle.Settings.RestShort.Natural>
+  <PersonalChronicle.Settings.RestShort.Rotate>按天轮换</PersonalChronicle.Settings.RestShort.Rotate>
+
+  <!-- CHG-20261005-SETTINGS-REMOVE2：原「三餐已移到班次里配置」只读指路行已按 PM 裁决删除
+       ⇒ Title/Use.MealMovedToShift 一并删除（分节标题键 MealSection 见 Archive.xml）。 -->
+
+  <!-- ── 界面页 · 用途 ── -->
+  <PersonalChronicle.Settings.Use.Theme>整个 Mod 界面的配色主题。</PersonalChronicle.Settings.Use.Theme>
+  <PersonalChronicle.Settings.Use.HiddenWorkTab>从原版「工作」面板隐藏殖民者后，这里是唯一的恢复入口。</PersonalChronicle.Settings.Use.HiddenWorkTab>
+
+  <!-- ── 诊断页 · 用途 / 代价（该页仅在开发者模式下出现）── -->
+  <PersonalChronicle.Settings.Use.PerfProbe>打开后每 60 秒把关键入口的实测耗时打进日志，用于性能对比。</PersonalChronicle.Settings.Use.PerfProbe>
+  <PersonalChronicle.Settings.Detail.PerfProbe>默认关。关闭时开销为零；只在排查卡顿、需要 before/after 数据时打开。</PersonalChronicle.Settings.Detail.PerfProbe>
+  <!-- D4 修正：实现是"把计数写进日志"，不是"在界面上显示" -->
+  <PersonalChronicle.Settings.Use.DebugLiveCount>把调试计数写进日志（调试用），界面上不会显示任何东西。</PersonalChronicle.Settings.Use.DebugLiveCount>
+  <PersonalChronicle.Settings.Use.StartupSelfTest>进游戏后跑一次自检并弹出报告（需要先开开发者模式）。</PersonalChronicle.Settings.Use.StartupSelfTest>
+  <PersonalChronicle.Settings.Detail.StartupSelfTest>默认开。每局只弹一次；未开开发者模式时永远看不到。出问题时它是最快的自证途径。</PersonalChronicle.Settings.Detail.StartupSelfTest>
+
+  <!--
+    ── 本页专用「短标题」（实机截图修正，2026-10-05）──
+    Mod 设置窗口实测只有约 590px 宽，完整标题（如「离班时自动取消班组工作类型（默认开启…）」）
+    必然被截断成半句。标题只承担"这是哪一项"，完整解释在用途/详情行
+    ⇒ 这里用本页短标题，**不改动既有长标题键**（车间面板等其它界面继续用它们）。
+  -->
+  <PersonalChronicle.Settings.Title.Recording>启用档案记录</PersonalChronicle.Settings.Title.Recording>
+  <PersonalChronicle.Settings.Title.AutoArchive>低价值档案自动归档</PersonalChronicle.Settings.Title.AutoArchive>
+  <!-- CHG-20261005-SETTINGS-REMOVE2：Title.OffShiftCancel 已随该项默认化一并删除 -->
+  <PersonalChronicle.Settings.Title.IdleSplit>冗余员工去娱乐（摸鱼）</PersonalChronicle.Settings.Title.IdleSplit>
+  <PersonalChronicle.Settings.Title.AutoDetect>自动判定车间类型</PersonalChronicle.Settings.Title.AutoDetect>
+  <PersonalChronicle.Settings.Title.Replay>跨天重放作息表</PersonalChronicle.Settings.Title.Replay>
+  <PersonalChronicle.Settings.Title.RestPolicy>新车间作息策略</PersonalChronicle.Settings.Title.RestPolicy>
+  <PersonalChronicle.Settings.Title.Theme>界面主题</PersonalChronicle.Settings.Title.Theme>
+  <PersonalChronicle.Settings.Title.PerfProbe>性能探针</PersonalChronicle.Settings.Title.PerfProbe>
+  <PersonalChronicle.Settings.Title.DebugLive>调试日志</PersonalChronicle.Settings.Title.DebugLive>
+  <PersonalChronicle.Settings.Title.StartupSelfTest>启动自检</PersonalChronicle.Settings.Title.StartupSelfTest>
+
+</LanguageData>

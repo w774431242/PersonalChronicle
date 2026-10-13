@@ -1,0 +1,149 @@
+{
+  "changeId": "CHG-20261008-ECON-ART",
+  "deployed": true,
+  "gameVerified": false,
+  "checkedUtc": "2026-10-08T11:39:11.7962689Z",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\economy-art-deploy_20261008_193911_555",
+  "files": [
+    {
+      "path": "Defs/PawnEconomy_Institutions.xml",
+      "sha256": "642761DE9E45E5CB8E43D85FDBD33C89C4F9F1CC2CE0A095458ED2243857C751",
+      "bytes": 6240,
+      "targetExisted": true
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png",
+      "sha256": "3BBF71ED3AD9336E915F5BBEF9D433E5750649853392CB80D9B349E0B437AE50",
+      "bytes": 742787,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_east.png",
+      "sha256": "083A2C732E5B241AEA78F739B3C98E82150BB69AA68323410816A6B88AF3454E",
+      "bytes": 819137,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_south.png",
+      "sha256": "6B635147CF11627A5274101BB652E5940F9E51FF0DB2386F0FAE184C8EFA9EF3",
+      "bytes": 720443,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_west.png",
+      "sha256": "6BE89CE929B7EF57FD78B642F41DDB59DA32C19A77DEA772B21808D1773690B4",
+      "bytes": 709479,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north.png",
+      "sha256": "E61A7326D5561DE0638E2D4BAA9079C097EAAB5FA7EC53C3147704D411DC06A8",
+      "bytes": 823779,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_east.png",
+      "sha256": "E4F4E7546280104CB7B80F7C475CCEFA8ED058F5172A06667C925274EEE1601F",
+      "bytes": 864132,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_south.png",
+      "sha256": "E558F5BECC6E8243AB53BC91E17F1DECDB8146A836FD3D5D905AEA1881AAF97A",
+      "bytes": 763378,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_west.png",
+      "sha256": "34E432C1967CC3F712213070D7056D22D9593FD0C739EC4B1781BD53C5AF32A5",
+      "bytes": 856715,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png",
+      "sha256": "09C05A7B35F445D9579D3344CD8AA39D28722CD2E470610B2B565F6A3CF12DD2",
+      "bytes": 845764,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_east.png",
+      "sha256": "CD3D15CE12407A7128A40487EF1597D02F680F98FFD26807EAED5CB2996A2FED",
+      "bytes": 777312,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_south.png",
+      "sha256": "17014E94E77B2E210BF6B26886CF0AA90D6CC51E84B9B13008FCE479A81FFF29",
+      "bytes": 824325,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_west.png",
+      "sha256": "5E71778E9EBB2C105D105EA60408B32075434D6611353578737FEDBD5280E0C5",
+      "bytes": 878256,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_north.png",
+      "sha256": "372343F4D2333CE5C05D68CAB0C36ABC0674FEED966ECA05563653F2D6021D01",
+      "bytes": 820848,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_east.png",
+      "sha256": "E82C0505CA628C28E775F6B8C2C83D52CE73B0606F2AEC7C0EF6F71D14503D29",
+      "bytes": 716961,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_south.png",
+      "sha256": "21220E7C1BE3F11FEF63358C8BB651958F8D06158BEA09367ABB5B9BB7382525",
+      "bytes": 784081,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_Shop_west.png",
+      "sha256": "0AB2746F602F1C2F75F2091508170DADD7A4B85A25818849F529C6545C152596",
+      "bytes": 739162,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_north.png",
+      "sha256": "D54E73E4203CDFE8DCA1251F4F28AE81BD8F1C2CE5DBBA750B571231E3F92EED",
+      "bytes": 871407,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_east.png",
+      "sha256": "DB656B2F07EE25EFA6EA9E312F26518A8DB39B0076AA6BAF03491E8DF9F143CB",
+      "bytes": 906012,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_south.png",
+      "sha256": "6259E54D2935E598919837481AFFDF6D1F0785D23F8DAE6A13F5D0B35C12D250",
+      "bytes": 778984,
+      "targetExisted": false
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PEA_ExamCenter_west.png",
+      "sha256": "8C474070E383F373A0F5ECA6304C89DDB622C7C2081526093ABE69BA2A910DF0",
+      "bytes": 834744,
+      "targetExisted": false
+    }
+  ],
+  "fileCount": 21,
+  "originalRuntimeResourcesVerified": 210,
+  "targetFileCount": 232,
+  "totalBytes": 48912947.0,
+  "logicDllSha256": "F72561366C7959388678D27CE4C61DB23EE2E84B87AB365F96885E4E84FF5FEE",
+  "unchangedLogicDll": true,
+  "workshopIdentityPreserved": true,
+  "runningGameProcesses": [],
+  "restartRequired": true,
+  "buildRerun": false,
+  "logicalTestsRerun": false,
+  "globalGateAvailable": false,
+  "note": "Art-only local deployment; PNG/Def/native signatures checked. No gameplay acceptance or fee capability unlock."
+}

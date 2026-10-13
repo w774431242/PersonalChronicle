@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <!-- 12 一级专业 → 原版技能权重矩阵。每行 fitWeights 权重和必须 = 100。
+       [GOV-006] 已修复 7 处 Medical→Medicine（原版无 Medical defName）。键为原版 SkillDef.defName。 -->
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Engineering</defName>
+    <major>Engineering</major>
+    <fitWeights>
+      <li><skillDefName>Construction</skillDefName><weight>35</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>25</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>20</weight></li>
+      <li><skillDefName>Mining</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Artistic</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Plants</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Manufacturing</defName>
+    <major>Manufacturing</major>
+    <fitWeights>
+      <li><skillDefName>Crafting</skillDefName><weight>50</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>15</weight></li>
+      <li><skillDefName>Construction</skillDefName><weight>15</weight></li>
+      <li><skillDefName>Mining</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Artistic</skillDefName><weight>10</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Agriculture</defName>
+    <major>Agriculture</major>
+    <fitWeights>
+      <li><skillDefName>Plants</skillDefName><weight>60</weight></li>
+      <li><skillDefName>Animals</skillDefName><weight>15</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Construction</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Medicine</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Forestry</defName>
+    <major>Forestry</major>
+    <fitWeights>
+      <li><skillDefName>Plants</skillDefName><weight>50</weight></li>
+      <li><skillDefName>Construction</skillDefName><weight>15</weight></li>
+      <li><skillDefName>Mining</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Animals</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_AnimalHusbandry</defName>
+    <major>AnimalHusbandry</major>
+    <fitWeights>
+      <li><skillDefName>Animals</skillDefName><weight>60</weight></li>
+      <li><skillDefName>Plants</skillDefName><weight>15</weight></li>
+      <li><skillDefName>Medicine</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Social</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Medicine</defName>
+    <major>Medicine</major>
+    <fitWeights>
+      <li><skillDefName>Medicine</skillDefName><weight>55</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>25</weight></li>
+      <li><skillDefName>Social</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Animals</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Plants</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Weapons</defName>
+    <major>Weapons</major>
+    <fitWeights>
+      <li><skillDefName>Shooting</skillDefName><weight>30</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>25</weight></li>
+      <li><skillDefName>Melee</skillDefName><weight>20</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Construction</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Mining</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Medicine</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Mining</defName>
+    <major>Mining</major>
+    <fitWeights>
+      <li><skillDefName>Mining</skillDefName><weight>65</weight></li>
+      <li><skillDefName>Construction</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Plants</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Research</defName>
+    <major>Research</major>
+    <fitWeights>
+      <li><skillDefName>Intellectual</skillDefName><weight>70</weight></li>
+      <li><skillDefName>Medicine</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Construction</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Artistic</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Social</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Cooking</defName>
+    <major>Cooking</major>
+    <fitWeights>
+      <li><skillDefName>Cooking</skillDefName><weight>70</weight></li>
+      <li><skillDefName>Plants</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Animals</skillDefName><weight>10</weight></li>
+      <li><skillDefName>Medicine</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Art</defName>
+    <major>Art</major>
+    <fitWeights>
+      <li><skillDefName>Artistic</skillDefName><weight>70</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>15</weight></li>
+      <li><skillDefName>Social</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Construction</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+
+  <PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+    <defName>MajorFit_Management</defName>
+    <major>Management</major>
+    <fitWeights>
+      <li><skillDefName>Social</skillDefName><weight>45</weight></li>
+      <li><skillDefName>Intellectual</skillDefName><weight>25</weight></li>
+      <li><skillDefName>Medicine</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Crafting</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Construction</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Animals</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Plants</skillDefName><weight>5</weight></li>
+      <li><skillDefName>Shooting</skillDefName><weight>5</weight></li>
+    </fitWeights>
+  </PersonalChronicle.Domain.Profession.ProfessionalMajorFitDef>
+</Defs>

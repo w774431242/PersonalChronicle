@@ -1,0 +1,6097 @@
+{
+ "totalTradeableThingDefs": 405,
+ "topCategories": 8,
+ "categories": [
+  {
+   "category": "Animals",
+   "label": "animals",
+   "thingDefCount": 107,
+   "avgMarketValue": 355.47,
+   "packs": [
+    "Biotech",
+    "Core",
+    "Odyssey"
+   ],
+   "samples": [
+    [
+     "Bear_Grizzly",
+     700.0
+    ],
+    [
+     "Bear_Polar",
+     700.0
+    ],
+    [
+     "Ostrich",
+     250.0
+    ],
+    [
+     "Emu",
+     200.0
+    ],
+    [
+     "Cassowary",
+     200.0
+    ],
+    [
+     "Cougar",
+     400.0
+    ],
+    [
+     "Panther",
+     400.0
+    ],
+    [
+     "Lynx",
+     250.0
+    ]
+   ]
+  },
+  {
+   "category": "Foods",
+   "label": "foods",
+   "thingDefCount": 87,
+   "avgMarketValue": 13.27,
+   "packs": [
+    "Anomaly",
+    "Biotech",
+    "Core",
+    "Odyssey"
+   ],
+   "samples": [
+    [
+     "MealSurvivalPack",
+     24.0
+    ],
+    [
+     "MealNutrientPaste",
+     10.0
+    ],
+    [
+     "MealSimple",
+     15.0
+    ],
+    [
+     "MealFine",
+     20.0
+    ],
+    [
+     "MealFine_Veg",
+     20.0
+    ],
+    [
+     "MealFine_Meat",
+     20.0
+    ],
+    [
+     "MealLavish",
+     40.0
+    ],
+    [
+     "MealLavish_Veg",
+     40.0
+    ]
+   ]
+  },
+  {
+   "category": "Manufactured",
+   "label": "manufactured",
+   "thingDefCount": 83,
+   "avgMarketValue": 192.51,
+   "packs": [
+    "Anomaly",
+    "Biotech",
+    "Core",
+    "Odyssey"
+   ],
+   "samples": [
+    [
+     "Beer",
+     12.0
+    ],
+    [
+     "Wort",
+     2.5
+    ],
+    [
+     "Ambrosia",
+     15.0
+    ],
+    [
+     "GoJuice",
+     53.0
+    ],
+    [
+     "Luciferium",
+     70.0
+    ],
+    [
+     "Penoxycyline",
+     18.0
+    ],
+    [
+     "Flake",
+     14.0
+    ],
+    [
+     "PsychiteTea",
+     10.0
+    ]
+   ]
+  },
+  {
+   "category": "Items",
+   "label": "items",
+   "thingDefCount": 59,
+   "avgMarketValue": 898.31,
+   "packs": [
+    "Anomaly",
+    "Biotech",
+    "Core",
+    "Ideology",
+    "Odyssey",
+    "Royalty"
+   ],
+   "samples": [
+    [
+     "TextBook",
+     160.0
+    ],
+    [
+     "Schematic",
+     150.0
+    ],
+    [
+     "Novel",
+     160.0
+    ],
+    [
+     "PsychicAmplifier",
+     2600.0
+    ],
+    [
+     "ArchotechEye",
+     2800.0
+    ],
+    [
+     "ArchotechArm",
+     2800.0
+    ],
+    [
+     "ArchotechLeg",
+     2800.0
+    ],
+    [
+     "DeathAcidifier",
+     400.0
+    ]
+   ]
+  },
+  {
+   "category": "Weapons",
+   "label": "weapons",
+   "thingDefCount": 24,
+   "avgMarketValue": 1506.04,
+   "packs": [
+    "Biotech",
+    "Core",
+    "Odyssey",
+    "Royalty"
+   ],
+   "samples": [
+    [
+     "Gun_ChargeBlasterHeavyTurret",
+     1400.0
+    ],
+    [
+     "Gun_InfernoCannonTurret",
+     1400.0
+    ],
+    [
+     "Gun_TripleRocket",
+     1000.0
+    ],
+    [
+     "Gun_DoomsdayRocket",
+     1000.0
+    ],
+    [
+     "Gun_ChargeBlasterHeavy",
+     1400.0
+    ],
+    [
+     "Gun_InfernoCannon",
+     1400.0
+    ],
+    [
+     "Gun_Needle",
+     1400.0
+    ],
+    [
+     "Gun_ThumpCannon",
+     1400.0
+    ]
+   ]
+  },
+  {
+   "category": "ResourcesRaw",
+   "label": "raw resources",
+   "thingDefCount": 20,
+   "avgMarketValue": 2.89,
+   "packs": [
+    "Anomaly",
+    "Core",
+    "Odyssey"
+   ],
+   "samples": [
+    [
+     "RawHops",
+     1.3
+    ],
+    [
+     "PsychoidLeaves",
+     1.9
+    ],
+    [
+     "SmokeleafLeaves",
+     1.6
+    ],
+    [
+     "Silver",
+     1.0
+    ],
+    [
+     "Gold",
+     10.0
+    ],
+    [
+     "Steel",
+     1.9
+    ],
+    [
+     "Plasteel",
+     9.0
+    ],
+    [
+     "WoodLog",
+     1.2
+    ]
+   ]
+  },
+  {
+   "category": "Apparel",
+   "label": "apparel",
+   "thingDefCount": 14,
+   "avgMarketValue": 1014.29,
+   "packs": [
+    "Anomaly",
+    "Core",
+    "Odyssey",
+    "Royalty"
+   ],
+   "samples": [
+    [
+     "Apparel_PsychicFoilHelmet",
+     250.0
+    ],
+    [
+     "Apparel_PsychicShockLance",
+     550.0
+    ],
+    [
+     "Apparel_PsychicInsanityLance",
+     650.0
+    ],
+    [
+     "OrbitalTargeterBombardment",
+     1200.0
+    ],
+    [
+     "OrbitalTargeterPowerBeam",
+     1200.0
+    ],
+    [
+     "TornadoGenerator",
+     800.0
+    ],
+    [
+     "Apparel_PsyfocusHelmet",
+     500.0
+    ],
+    [
+     "Apparel_EltexSkullcap",
+     500.0
+    ]
+   ]
+  },
+  {
+   "category": "Buildings",
+   "label": "buildings",
+   "thingDefCount": 11,
+   "avgMarketValue": 1116.36,
+   "packs": [
+    "Core",
+    "Odyssey",
+    "Royalty"
+   ],
+   "samples": [
+    [
+     "Telescope",
+     350.0
+    ],
+    [
+     "Gloomlight",
+     200.0
+    ],
+    [
+     "GlowPod",
+     50.0
+    ],
+    [
+     "PsychicEmanator",
+     1300.0
+    ],
+    [
+     "VanometricPowerCell",
+     1200.0
+    ],
+    [
+     "InfiniteChemreactor",
+     1500.0
+    ],
+    [
+     "UnstablePowerCell",
+     400.0
+    ],
+    [
+     "AnimusStone",
+     5000.0
+    ]
+   ]
+  }
+ ],
+ "allRows": [
+  {
+   "defName": "TextBook",
+   "top": "Items",
+   "mv": 160.0,
+   "pack": "Core",
+   "cats": [
+    "Books"
+   ],
+   "path": [
+    "Books",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Schematic",
+   "top": "Items",
+   "mv": 150.0,
+   "pack": "Core",
+   "cats": [
+    "Books"
+   ],
+   "path": [
+    "Books",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Novel",
+   "top": "Items",
+   "mv": 160.0,
+   "pack": "Core",
+   "cats": [
+    "Books"
+   ],
+   "path": [
+    "Books",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Beer",
+   "top": "Manufactured",
+   "mv": 12.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Wort",
+   "top": "Manufactured",
+   "mv": 2.5,
+   "pack": "Core",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Ambrosia",
+   "top": "Manufactured",
+   "mv": 15.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "GoJuice",
+   "top": "Manufactured",
+   "mv": 53.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Luciferium",
+   "top": "Manufactured",
+   "mv": 70.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Penoxycyline",
+   "top": "Manufactured",
+   "mv": 18.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Flake",
+   "top": "Manufactured",
+   "mv": 14.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychiteTea",
+   "top": "Manufactured",
+   "mv": 10.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Yayo",
+   "top": "Manufactured",
+   "mv": 21.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SmokeleafJoint",
+   "top": "Manufactured",
+   "mv": 11.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WakeUp",
+   "top": "Manufactured",
+   "mv": 35.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychicAmplifier",
+   "top": "Items",
+   "mv": 2600.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsArchotech"
+   ],
+   "path": [
+    "BodyPartsArchotech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ArchotechEye",
+   "top": "Items",
+   "mv": 2800.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsArchotech"
+   ],
+   "path": [
+    "BodyPartsArchotech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ArchotechArm",
+   "top": "Items",
+   "mv": 2800.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsArchotech"
+   ],
+   "path": [
+    "BodyPartsArchotech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ArchotechLeg",
+   "top": "Items",
+   "mv": 2800.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsArchotech"
+   ],
+   "path": [
+    "BodyPartsArchotech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "DeathAcidifier",
+   "top": "Items",
+   "mv": 400.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsBionic"
+   ],
+   "path": [
+    "BodyPartsBionic",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Heart",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsNatural"
+   ],
+   "path": [
+    "BodyPartsNatural",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Lung",
+   "top": "Items",
+   "mv": 1000.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsNatural"
+   ],
+   "path": [
+    "BodyPartsNatural",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Kidney",
+   "top": "Items",
+   "mv": 900.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsNatural"
+   ],
+   "path": [
+    "BodyPartsNatural",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Liver",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Core",
+   "cats": [
+    "BodyPartsNatural"
+   ],
+   "path": [
+    "BodyPartsNatural",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Telescope",
+   "top": "Buildings",
+   "mv": 350.0,
+   "pack": "Core",
+   "cats": [
+    "BuildingsJoy"
+   ],
+   "path": [
+    "BuildingsJoy",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gloomlight",
+   "top": "Buildings",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "BuildingsSpecial"
+   ],
+   "path": [
+    "BuildingsSpecial",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_ChargeBlasterHeavyTurret",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Core",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_InfernoCannonTurret",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Core",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "GlowPod",
+   "top": "Buildings",
+   "mv": 50.0,
+   "pack": "Core",
+   "cats": [
+    "BuildingsSpecial"
+   ],
+   "path": [
+    "BuildingsSpecial",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychicEmanator",
+   "top": "Buildings",
+   "mv": 1300.0,
+   "pack": "Core",
+   "cats": [
+    "BuildingsSpecial"
+   ],
+   "path": [
+    "BuildingsSpecial",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "VanometricPowerCell",
+   "top": "Buildings",
+   "mv": 1200.0,
+   "pack": "Core",
+   "cats": [
+    "BuildingsSpecial"
+   ],
+   "path": [
+    "BuildingsSpecial",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "InfiniteChemreactor",
+   "top": "Buildings",
+   "mv": 1500.0,
+   "pack": "Core",
+   "cats": [
+    "BuildingsSpecial"
+   ],
+   "path": [
+    "BuildingsSpecial",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychicAnimalPulser",
+   "top": "Items",
+   "mv": 700.0,
+   "pack": "Core",
+   "cats": [
+    "Artifacts"
+   ],
+   "path": [
+    "Artifacts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychicSoothePulser",
+   "top": "Items",
+   "mv": 600.0,
+   "pack": "Core",
+   "cats": [
+    "Artifacts"
+   ],
+   "path": [
+    "Artifacts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "AIPersonaCore",
+   "top": "Items",
+   "mv": 4000.0,
+   "pack": "Core",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MechSerumHealer",
+   "top": "Manufactured",
+   "mv": 1300.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MechSerumResurrector",
+   "top": "Manufactured",
+   "mv": 1700.0,
+   "pack": "Core",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "TechprofSubpersonaCore",
+   "top": "Items",
+   "mv": 1000.0,
+   "pack": "Core",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ThrumboHorn",
+   "top": "Items",
+   "mv": 800.0,
+   "pack": "Core",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ElephantTusk",
+   "top": "Items",
+   "mv": 80.0,
+   "pack": "Core",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealSurvivalPack",
+   "top": "Foods",
+   "mv": 24.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealNutrientPaste",
+   "top": "Foods",
+   "mv": 10.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealSimple",
+   "top": "Foods",
+   "mv": 15.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealFine",
+   "top": "Foods",
+   "mv": 20.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealFine_Veg",
+   "top": "Foods",
+   "mv": 20.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealFine_Meat",
+   "top": "Foods",
+   "mv": 20.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealLavish",
+   "top": "Foods",
+   "mv": 40.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealLavish_Veg",
+   "top": "Foods",
+   "mv": 40.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MealLavish_Meat",
+   "top": "Foods",
+   "mv": 40.0,
+   "pack": "Core",
+   "cats": [
+    "FoodMeals"
+   ],
+   "path": [
+    "FoodMeals",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Kibble",
+   "top": "Foods",
+   "mv": 1.1,
+   "pack": "Core",
+   "cats": [
+    "Foods"
+   ],
+   "path": [
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Pemmican",
+   "top": "Foods",
+   "mv": 1.4,
+   "pack": "Core",
+   "cats": [
+    "Foods"
+   ],
+   "path": [
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Chocolate",
+   "top": "Foods",
+   "mv": 3.0,
+   "pack": "Core",
+   "cats": [
+    "Foods"
+   ],
+   "path": [
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Milk",
+   "top": "Foods",
+   "mv": 1.9,
+   "pack": "Core",
+   "cats": [
+    "AnimalProductRaw"
+   ],
+   "path": [
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "InsectJelly",
+   "top": "Foods",
+   "mv": 8.0,
+   "pack": "Core",
+   "cats": [
+    "AnimalProductRaw"
+   ],
+   "path": [
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Skull",
+   "top": "Items",
+   "mv": 5.0,
+   "pack": "Core",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggChickenUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggChickenFertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggCobraFertilized",
+   "top": "Foods",
+   "mv": 20.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggCobraUnfertilized",
+   "top": "Foods",
+   "mv": 14.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggIguanaFertilized",
+   "top": "Foods",
+   "mv": 25.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggIguanaUnfertilized",
+   "top": "Foods",
+   "mv": 17.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggTortoiseFertilized",
+   "top": "Foods",
+   "mv": 23.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggTortoiseUnfertilized",
+   "top": "Foods",
+   "mv": 17.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggCassowaryFertilized",
+   "top": "Foods",
+   "mv": 19.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggCassowaryUnfertilized",
+   "top": "Foods",
+   "mv": 14.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggEmuFertilized",
+   "top": "Foods",
+   "mv": 18.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggEmuUnfertilized",
+   "top": "Foods",
+   "mv": 12.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggOstrichFertilized",
+   "top": "Foods",
+   "mv": 23.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggOstrichUnfertilized",
+   "top": "Foods",
+   "mv": 15.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggTurkeyFertilized",
+   "top": "Foods",
+   "mv": 11.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggTurkeyUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggDuckUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggDuckFertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggGooseUnfertilized",
+   "top": "Foods",
+   "mv": 9.0,
+   "pack": "Core",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggGooseFertilized",
+   "top": "Foods",
+   "mv": 11.0,
+   "pack": "Core",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MedicineHerbal",
+   "top": "Manufactured",
+   "mv": 10.0,
+   "pack": "Core",
+   "cats": [
+    "Medicine"
+   ],
+   "path": [
+    "Medicine",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MedicineIndustrial",
+   "top": "Manufactured",
+   "mv": 18.0,
+   "pack": "Core",
+   "cats": [
+    "Medicine"
+   ],
+   "path": [
+    "Medicine",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MedicineUltratech",
+   "top": "Manufactured",
+   "mv": 50.0,
+   "pack": "Core",
+   "cats": [
+    "Medicine"
+   ],
+   "path": [
+    "Medicine",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ComponentIndustrial",
+   "top": "Manufactured",
+   "mv": 32.0,
+   "pack": "Core",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ComponentSpacer",
+   "top": "Manufactured",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Neutroamine",
+   "top": "Manufactured",
+   "mv": 6.0,
+   "pack": "Core",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Chemfuel",
+   "top": "Manufactured",
+   "mv": 2.3,
+   "pack": "Core",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ReinforcedBarrel",
+   "top": "Items",
+   "mv": 600.0,
+   "pack": "Core",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RawPotatoes",
+   "top": "Foods",
+   "mv": 1.1,
+   "pack": "Core",
+   "cats": [
+    "PlantFoodRaw"
+   ],
+   "path": [
+    "PlantFoodRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RawFungus",
+   "top": "Foods",
+   "mv": 1.1,
+   "pack": "Core",
+   "cats": [
+    "PlantFoodRaw"
+   ],
+   "path": [
+    "PlantFoodRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RawRice",
+   "top": "Foods",
+   "mv": 1.1,
+   "pack": "Core",
+   "cats": [
+    "PlantFoodRaw"
+   ],
+   "path": [
+    "PlantFoodRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RawAgave",
+   "top": "Foods",
+   "mv": 1.1,
+   "pack": "Core",
+   "cats": [
+    "PlantFoodRaw"
+   ],
+   "path": [
+    "PlantFoodRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RawCorn",
+   "top": "Foods",
+   "mv": 1.1,
+   "pack": "Core",
+   "cats": [
+    "PlantFoodRaw"
+   ],
+   "path": [
+    "PlantFoodRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RawBerries",
+   "top": "Foods",
+   "mv": 1.2,
+   "pack": "Core",
+   "cats": [
+    "PlantFoodRaw"
+   ],
+   "path": [
+    "PlantFoodRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Hay",
+   "top": "Foods",
+   "mv": 0.6,
+   "pack": "Core",
+   "cats": [
+    "Foods"
+   ],
+   "path": [
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RawHops",
+   "top": "ResourcesRaw",
+   "mv": 1.3,
+   "pack": "Core",
+   "cats": [
+    "PlantMatter"
+   ],
+   "path": [
+    "PlantMatter",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychoidLeaves",
+   "top": "ResourcesRaw",
+   "mv": 1.9,
+   "pack": "Core",
+   "cats": [
+    "PlantMatter"
+   ],
+   "path": [
+    "PlantMatter",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SmokeleafLeaves",
+   "top": "ResourcesRaw",
+   "mv": 1.6,
+   "pack": "Core",
+   "cats": [
+    "PlantMatter"
+   ],
+   "path": [
+    "PlantMatter",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shell_HighExplosive",
+   "top": "Manufactured",
+   "mv": 55.0,
+   "pack": "Core",
+   "cats": [
+    "MortarShells"
+   ],
+   "path": [
+    "MortarShells",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shell_Incendiary",
+   "top": "Manufactured",
+   "mv": 55.0,
+   "pack": "Core",
+   "cats": [
+    "MortarShells"
+   ],
+   "path": [
+    "MortarShells",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shell_EMP",
+   "top": "Manufactured",
+   "mv": 55.0,
+   "pack": "Core",
+   "cats": [
+    "MortarShells"
+   ],
+   "path": [
+    "MortarShells",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shell_Smoke",
+   "top": "Manufactured",
+   "mv": 55.0,
+   "pack": "Core",
+   "cats": [
+    "MortarShells"
+   ],
+   "path": [
+    "MortarShells",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shell_Firefoam",
+   "top": "Manufactured",
+   "mv": 55.0,
+   "pack": "Core",
+   "cats": [
+    "MortarShells"
+   ],
+   "path": [
+    "MortarShells",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shell_AntigrainWarhead",
+   "top": "Manufactured",
+   "mv": 1200.0,
+   "pack": "Core",
+   "cats": [
+    "MortarShells"
+   ],
+   "path": [
+    "MortarShells",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Silver",
+   "top": "ResourcesRaw",
+   "mv": 1.0,
+   "pack": "Core",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gold",
+   "top": "ResourcesRaw",
+   "mv": 10.0,
+   "pack": "Core",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Steel",
+   "top": "ResourcesRaw",
+   "mv": 1.9,
+   "pack": "Core",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Plasteel",
+   "top": "ResourcesRaw",
+   "mv": 9.0,
+   "pack": "Core",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WoodLog",
+   "top": "ResourcesRaw",
+   "mv": 1.2,
+   "pack": "Core",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Uranium",
+   "top": "ResourcesRaw",
+   "mv": 6.0,
+   "pack": "Core",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Jade",
+   "top": "ResourcesRaw",
+   "mv": 5.0,
+   "pack": "Core",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Cloth",
+   "top": "Manufactured",
+   "mv": 1.5,
+   "pack": "Core",
+   "cats": [
+    "Textiles"
+   ],
+   "path": [
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Synthread",
+   "top": "Manufactured",
+   "mv": 4.0,
+   "pack": "Core",
+   "cats": [
+    "Textiles"
+   ],
+   "path": [
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "DevilstrandCloth",
+   "top": "Manufactured",
+   "mv": 5.5,
+   "pack": "Core",
+   "cats": [
+    "Textiles"
+   ],
+   "path": [
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Hyperweave",
+   "top": "Manufactured",
+   "mv": 9.0,
+   "pack": "Core",
+   "cats": [
+    "Textiles"
+   ],
+   "path": [
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WoolSheep",
+   "top": "Manufactured",
+   "mv": 2.7,
+   "pack": "Core",
+   "cats": [
+    "Wools"
+   ],
+   "path": [
+    "Wools",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WoolAlpaca",
+   "top": "Manufactured",
+   "mv": 3.8,
+   "pack": "Core",
+   "cats": [
+    "Wools"
+   ],
+   "path": [
+    "Wools",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WoolMegasloth",
+   "top": "Manufactured",
+   "mv": 2.7,
+   "pack": "Core",
+   "cats": [
+    "Wools"
+   ],
+   "path": [
+    "Wools",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WoolMuffalo",
+   "top": "Manufactured",
+   "mv": 2.7,
+   "pack": "Core",
+   "cats": [
+    "Wools"
+   ],
+   "path": [
+    "Wools",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WoolBison",
+   "top": "Manufactured",
+   "mv": 2.7,
+   "pack": "Core",
+   "cats": [
+    "Wools"
+   ],
+   "path": [
+    "Wools",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Plain",
+   "top": "Manufactured",
+   "mv": 2.1,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Dog",
+   "top": "Manufactured",
+   "mv": 2.0,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Wolf",
+   "top": "Manufactured",
+   "mv": 3.0,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Panthera",
+   "top": "Manufactured",
+   "mv": 3.0,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Camel",
+   "top": "Manufactured",
+   "mv": 2.3,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Bluefur",
+   "top": "Manufactured",
+   "mv": 2.3,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Bear",
+   "top": "Manufactured",
+   "mv": 3.4,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_GuineaPig",
+   "top": "Manufactured",
+   "mv": 5.0,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Human",
+   "top": "Manufactured",
+   "mv": 4.2,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Pig",
+   "top": "Manufactured",
+   "mv": 1.9,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Light",
+   "top": "Manufactured",
+   "mv": 1.9,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Bird",
+   "top": "Manufactured",
+   "mv": 1.8,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Chinchilla",
+   "top": "Manufactured",
+   "mv": 6.5,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Fox",
+   "top": "Manufactured",
+   "mv": 3.5,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Lizard",
+   "top": "Manufactured",
+   "mv": 2.1,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Elephant",
+   "top": "Manufactured",
+   "mv": 3.0,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Heavy",
+   "top": "Manufactured",
+   "mv": 3.3,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Rhinoceros",
+   "top": "Manufactured",
+   "mv": 4.2,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Thrumbo",
+   "top": "Manufactured",
+   "mv": 14.0,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Patch",
+   "top": "Manufactured",
+   "mv": 1.5,
+   "pack": "Core",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_PsychicFoilHelmet",
+   "top": "Apparel",
+   "mv": 250.0,
+   "pack": "Core",
+   "cats": [
+    "Headgear"
+   ],
+   "path": [
+    "Headgear",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_PsychicShockLance",
+   "top": "Apparel",
+   "mv": 550.0,
+   "pack": "Core",
+   "cats": [
+    "ApparelUtility"
+   ],
+   "path": [
+    "ApparelUtility",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_PsychicInsanityLance",
+   "top": "Apparel",
+   "mv": 650.0,
+   "pack": "Core",
+   "cats": [
+    "ApparelUtility"
+   ],
+   "path": [
+    "ApparelUtility",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BlocksSandstone",
+   "top": "ResourcesRaw",
+   "mv": 0.9,
+   "pack": "Core",
+   "cats": [
+    "StoneBlocks"
+   ],
+   "path": [
+    "StoneBlocks",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BlocksGranite",
+   "top": "ResourcesRaw",
+   "mv": 0.9,
+   "pack": "Core",
+   "cats": [
+    "StoneBlocks"
+   ],
+   "path": [
+    "StoneBlocks",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BlocksLimestone",
+   "top": "ResourcesRaw",
+   "mv": 0.9,
+   "pack": "Core",
+   "cats": [
+    "StoneBlocks"
+   ],
+   "path": [
+    "StoneBlocks",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BlocksSlate",
+   "top": "ResourcesRaw",
+   "mv": 0.9,
+   "pack": "Core",
+   "cats": [
+    "StoneBlocks"
+   ],
+   "path": [
+    "StoneBlocks",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BlocksMarble",
+   "top": "ResourcesRaw",
+   "mv": 0.9,
+   "pack": "Core",
+   "cats": [
+    "StoneBlocks"
+   ],
+   "path": [
+    "StoneBlocks",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_TripleRocket",
+   "top": "Weapons",
+   "mv": 1000.0,
+   "pack": "Core",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_DoomsdayRocket",
+   "top": "Weapons",
+   "mv": 1000.0,
+   "pack": "Core",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_ChargeBlasterHeavy",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Core",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_InfernoCannon",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Core",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_Needle",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Core",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "OrbitalTargeterBombardment",
+   "top": "Apparel",
+   "mv": 1200.0,
+   "pack": "Core",
+   "cats": [
+    "ApparelUtility"
+   ],
+   "path": [
+    "ApparelUtility",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "OrbitalTargeterPowerBeam",
+   "top": "Apparel",
+   "mv": 1200.0,
+   "pack": "Core",
+   "cats": [
+    "ApparelUtility"
+   ],
+   "path": [
+    "ApparelUtility",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "TornadoGenerator",
+   "top": "Apparel",
+   "mv": 800.0,
+   "pack": "Core",
+   "cats": [
+    "ApparelUtility"
+   ],
+   "path": [
+    "ApparelUtility",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_ThumpCannon",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Core",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Dye",
+   "top": "ResourcesRaw",
+   "mv": 2.65,
+   "pack": "Core",
+   "cats": [
+    "PlantMatter"
+   ],
+   "path": [
+    "PlantMatter",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Bear_Grizzly",
+   "top": "Animals",
+   "mv": 700.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Bear_Polar",
+   "top": "Animals",
+   "mv": 700.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Ostrich",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Emu",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Cassowary",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Cougar",
+   "top": "Animals",
+   "mv": 400.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Panther",
+   "top": "Animals",
+   "mv": 400.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Lynx",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Cat",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "YorkshireTerrier",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "GuineaPig",
+   "top": "Animals",
+   "mv": 150.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "LabradorRetriever",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Husky",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Monkey",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Chicken",
+   "top": "Animals",
+   "mv": 50.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Duck",
+   "top": "Animals",
+   "mv": 60.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Turkey",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Goose",
+   "top": "Animals",
+   "mv": 90.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Cow",
+   "top": "Animals",
+   "mv": 300.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Boomalope",
+   "top": "Animals",
+   "mv": 350.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Muffalo",
+   "top": "Animals",
+   "mv": 300.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Bison",
+   "top": "Animals",
+   "mv": 350.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Dromedary",
+   "top": "Animals",
+   "mv": 300.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Goat",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Elk",
+   "top": "Animals",
+   "mv": 300.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Yak",
+   "top": "Animals",
+   "mv": 320.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Caribou",
+   "top": "Animals",
+   "mv": 300.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Horse",
+   "top": "Animals",
+   "mv": 550.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Donkey",
+   "top": "Animals",
+   "mv": 320.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Elephant",
+   "top": "Animals",
+   "mv": 600.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Rhinoceros",
+   "top": "Animals",
+   "mv": 700.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Hare",
+   "top": "Animals",
+   "mv": 50.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Snowhare",
+   "top": "Animals",
+   "mv": 50.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Megascarab",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Spelopede",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Megaspider",
+   "top": "Animals",
+   "mv": 500.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Thrumbo",
+   "top": "Animals",
+   "mv": 4000.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Cobra",
+   "top": "Animals",
+   "mv": 150.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Tortoise",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Alphabeaver",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Pig",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WildBoar",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Ibex",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Deer",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gazelle",
+   "top": "Animals",
+   "mv": 150.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Chinchilla",
+   "top": "Animals",
+   "mv": 150.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Sheep",
+   "top": "Animals",
+   "mv": 210.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Alpaca",
+   "top": "Animals",
+   "mv": 350.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Megasloth",
+   "top": "Animals",
+   "mv": 700.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Capybara",
+   "top": "Animals",
+   "mv": 150.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Squirrel",
+   "top": "Animals",
+   "mv": 35.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Rat",
+   "top": "Animals",
+   "mv": 35.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Boomrat",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Raccoon",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Iguana",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Warg",
+   "top": "Animals",
+   "mv": 450.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Wolf_Timber",
+   "top": "Animals",
+   "mv": 350.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Wolf_Arctic",
+   "top": "Animals",
+   "mv": 350.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fox_Fennec",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fox_Red",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fox_Arctic",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Core",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychicSensitizer",
+   "top": "Items",
+   "mv": 1000.0,
+   "pack": "Royalty",
+   "cats": [
+    "BodyPartsArchotech"
+   ],
+   "path": [
+    "BodyPartsArchotech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychicHarmonizer",
+   "top": "Items",
+   "mv": 800.0,
+   "pack": "Royalty",
+   "cats": [
+    "BodyPartsArchotech"
+   ],
+   "path": [
+    "BodyPartsArchotech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PsychicReader",
+   "top": "Items",
+   "mv": 1000.0,
+   "pack": "Royalty",
+   "cats": [
+    "BodyPartsArchotech"
+   ],
+   "path": [
+    "BodyPartsArchotech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "UnstablePowerCell",
+   "top": "Buildings",
+   "mv": 400.0,
+   "pack": "Royalty",
+   "cats": [
+    "BuildingsSpecial"
+   ],
+   "path": [
+    "BuildingsSpecial",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "AnimusStone",
+   "top": "Buildings",
+   "mv": 5000.0,
+   "pack": "Royalty",
+   "cats": [
+    "BuildingsMisc"
+   ],
+   "path": [
+    "BuildingsMisc",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_PsyfocusHelmet",
+   "top": "Apparel",
+   "mv": 500.0,
+   "pack": "Royalty",
+   "cats": [
+    "Headgear"
+   ],
+   "path": [
+    "Headgear",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_EltexSkullcap",
+   "top": "Apparel",
+   "mv": 500.0,
+   "pack": "Royalty",
+   "cats": [
+    "Headgear"
+   ],
+   "path": [
+    "Headgear",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_PsyfocusShirt",
+   "top": "Apparel",
+   "mv": 400.0,
+   "pack": "Royalty",
+   "cats": [
+    "ApparelMisc"
+   ],
+   "path": [
+    "ApparelMisc",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_PsyfocusVest",
+   "top": "Apparel",
+   "mv": 500.0,
+   "pack": "Royalty",
+   "cats": [
+    "ApparelMisc"
+   ],
+   "path": [
+    "ApparelMisc",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_PsyfocusRobe",
+   "top": "Apparel",
+   "mv": 600.0,
+   "pack": "Royalty",
+   "cats": [
+    "ApparelMisc"
+   ],
+   "path": [
+    "ApparelMisc",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BroadshieldCore",
+   "top": "Items",
+   "mv": 350.0,
+   "pack": "Royalty",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MeleeWeapon_MonoSwordBladelink",
+   "top": "Weapons",
+   "mv": 3000.0,
+   "pack": "Royalty",
+   "cats": [
+    "WeaponsMeleeBladelink"
+   ],
+   "path": [
+    "WeaponsMeleeBladelink",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MeleeWeapon_ZeusHammerBladelink",
+   "top": "Weapons",
+   "mv": 3000.0,
+   "pack": "Royalty",
+   "cats": [
+    "WeaponsMeleeBladelink"
+   ],
+   "path": [
+    "WeaponsMeleeBladelink",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MeleeWeapon_PlasmaSwordBladelink",
+   "top": "Weapons",
+   "mv": 3000.0,
+   "pack": "Royalty",
+   "cats": [
+    "WeaponsMeleeBladelink"
+   ],
+   "path": [
+    "WeaponsMeleeBladelink",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MeleeWeapon_MonoSword",
+   "top": "Weapons",
+   "mv": 2000.0,
+   "pack": "Royalty",
+   "cats": [
+    "WeaponsMelee"
+   ],
+   "path": [
+    "WeaponsMelee",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MeleeWeapon_Zeushammer",
+   "top": "Weapons",
+   "mv": 2000.0,
+   "pack": "Royalty",
+   "cats": [
+    "WeaponsMelee"
+   ],
+   "path": [
+    "WeaponsMelee",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MeleeWeapon_PlasmaSword",
+   "top": "Weapons",
+   "mv": 2000.0,
+   "pack": "Royalty",
+   "cats": [
+    "WeaponsMelee"
+   ],
+   "path": [
+    "WeaponsMelee",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "OrbitalTargeterMechCluster",
+   "top": "Apparel",
+   "mv": 1200.0,
+   "pack": "Royalty",
+   "cats": [
+    "ApparelUtility"
+   ],
+   "path": [
+    "ApparelUtility",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MeleeWeapon_PsyfocusStaff",
+   "top": "Weapons",
+   "mv": 2000.0,
+   "pack": "Royalty",
+   "cats": [
+    "WeaponsMelee"
+   ],
+   "path": [
+    "WeaponsMelee",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RelicInertCup",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Ideology",
+   "cats": [
+    "InertRelics"
+   ],
+   "path": [
+    "InertRelics",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RelicInertPendant",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Ideology",
+   "cats": [
+    "InertRelics"
+   ],
+   "path": [
+    "InertRelics",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RelicInertBox",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Ideology",
+   "cats": [
+    "InertRelics"
+   ],
+   "path": [
+    "InertRelics",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RelicInertTablet",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Ideology",
+   "cats": [
+    "InertRelics"
+   ],
+   "path": [
+    "InertRelics",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RelicInertFragment",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Ideology",
+   "cats": [
+    "InertRelics"
+   ],
+   "path": [
+    "InertRelics",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RelicInertSwordHandle",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Ideology",
+   "cats": [
+    "InertRelics"
+   ],
+   "path": [
+    "InertRelics",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RelicInertArk",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Ideology",
+   "cats": [
+    "InertRelics"
+   ],
+   "path": [
+    "InertRelics",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RelicInertCube",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Ideology",
+   "cats": [
+    "InertRelics"
+   ],
+   "path": [
+    "InertRelics",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "GauranlenSeed",
+   "top": "Items",
+   "mv": 70.0,
+   "pack": "Ideology",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "DetoxifierLung",
+   "top": "Items",
+   "mv": 925.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsBionic"
+   ],
+   "path": [
+    "BodyPartsBionic",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "DetoxifierKidney",
+   "top": "Items",
+   "mv": 1080.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsBionic"
+   ],
+   "path": [
+    "BodyPartsBionic",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Mechlink",
+   "top": "Items",
+   "mv": 500.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsMechtech"
+   ],
+   "path": [
+    "BodyPartsMechtech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ControlSublink",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsMechtech"
+   ],
+   "path": [
+    "BodyPartsMechtech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ControlSublinkHigh",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsMechtech"
+   ],
+   "path": [
+    "BodyPartsMechtech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RemoteRepairer",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsMechtech"
+   ],
+   "path": [
+    "BodyPartsMechtech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MechFormfeeder",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsMechtech"
+   ],
+   "path": [
+    "BodyPartsMechtech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RemoteShielder",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsMechtech"
+   ],
+   "path": [
+    "BodyPartsMechtech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RepairProbe",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Biotech",
+   "cats": [
+    "BodyPartsMechtech"
+   ],
+   "path": [
+    "BodyPartsMechtech",
+    "BodyParts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BabyFood",
+   "top": "Foods",
+   "mv": 1.25,
+   "pack": "Biotech",
+   "cats": [
+    "Foods"
+   ],
+   "path": [
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "HemogenPack",
+   "top": "Foods",
+   "mv": 5.0,
+   "pack": "Biotech",
+   "cats": [
+    "Foods"
+   ],
+   "path": [
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RawToxipotato",
+   "top": "Foods",
+   "mv": 0.75,
+   "pack": "Biotech",
+   "cats": [
+    "PlantFoodRaw"
+   ],
+   "path": [
+    "PlantFoodRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SubcoreBasic",
+   "top": "Manufactured",
+   "mv": 200.0,
+   "pack": "Biotech",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SubcoreRegular",
+   "top": "Manufactured",
+   "mv": 300.0,
+   "pack": "Biotech",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SubcoreHigh",
+   "top": "Manufactured",
+   "mv": 1000.0,
+   "pack": "Biotech",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SignalChip",
+   "top": "Manufactured",
+   "mv": 500.0,
+   "pack": "Biotech",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PowerfocusChip",
+   "top": "Manufactured",
+   "mv": 1000.0,
+   "pack": "Biotech",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "NanostructuringChip",
+   "top": "Manufactured",
+   "mv": 1500.0,
+   "pack": "Biotech",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "DeathrestCapacitySerum",
+   "top": "Manufactured",
+   "mv": 1000.0,
+   "pack": "Biotech",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shell_Toxic",
+   "top": "Manufactured",
+   "mv": 55.0,
+   "pack": "Biotech",
+   "cats": [
+    "MortarShells"
+   ],
+   "path": [
+    "MortarShells",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Genepack",
+   "top": "Items",
+   "mv": 100.0,
+   "pack": "Biotech",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Xenogerm",
+   "top": "Items",
+   "mv": 20.0,
+   "pack": "Biotech",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ArchiteCapsule",
+   "top": "Items",
+   "mv": 700.0,
+   "pack": "Biotech",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MechanoidTransponder",
+   "top": "Items",
+   "mv": 200.0,
+   "pack": "Biotech",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "HumanOvum",
+   "top": "Items",
+   "mv": 50.0,
+   "pack": "Biotech",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "HumanEmbryo",
+   "top": "Items",
+   "mv": 50.0,
+   "pack": "Biotech",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Flamebow",
+   "top": "Weapons",
+   "mv": 45.0,
+   "pack": "Biotech",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_HellsphereCannon",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Biotech",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_MiniShotgun",
+   "top": "Weapons",
+   "mv": 1000.0,
+   "pack": "Biotech",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_Slugthrower",
+   "top": "Weapons",
+   "mv": 1000.0,
+   "pack": "Biotech",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_Spiner",
+   "top": "Weapons",
+   "mv": 500.0,
+   "pack": "Biotech",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_MiniFlameblaster",
+   "top": "Weapons",
+   "mv": 1000.0,
+   "pack": "Biotech",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_ToxicNeedle",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Biotech",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_NeedleLauncher",
+   "top": "Weapons",
+   "mv": 1400.0,
+   "pack": "Biotech",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PoluxSeed",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Biotech",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WasteRat",
+   "top": "Animals",
+   "mv": 35.0,
+   "pack": "Biotech",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Toxalope",
+   "top": "Animals",
+   "mv": 350.0,
+   "pack": "Biotech",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Tome",
+   "top": "Items",
+   "mv": 250.0,
+   "pack": "Anomaly",
+   "cats": [
+    "Books"
+   ],
+   "path": [
+    "Books",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BiomutationPulser",
+   "top": "Items",
+   "mv": 800.0,
+   "pack": "Anomaly",
+   "cats": [
+    "Artifacts"
+   ],
+   "path": [
+    "Artifacts",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shell_Deadlife",
+   "top": "Manufactured",
+   "mv": 55.0,
+   "pack": "Anomaly",
+   "cats": [
+    "MortarShells"
+   ],
+   "path": [
+    "MortarShells",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "VoidsightSerum",
+   "top": "Manufactured",
+   "mv": 60.0,
+   "pack": "Anomaly",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MetalbloodSerum",
+   "top": "Manufactured",
+   "mv": 200.0,
+   "pack": "Anomaly",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "JuggernautSerum",
+   "top": "Manufactured",
+   "mv": 200.0,
+   "pack": "Anomaly",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MindNumbSerum",
+   "top": "Manufactured",
+   "mv": 80.0,
+   "pack": "Anomaly",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "GhoulResurrectionSerum",
+   "top": "Manufactured",
+   "mv": 60.0,
+   "pack": "Anomaly",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Bioferrite",
+   "top": "ResourcesRaw",
+   "mv": 0.75,
+   "pack": "Anomaly",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Dread",
+   "top": "Manufactured",
+   "mv": 3.5,
+   "pack": "Anomaly",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Shard",
+   "top": "Manufactured",
+   "mv": 400.0,
+   "pack": "Anomaly",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "RevenantSpine",
+   "top": "Items",
+   "mv": 1000.0,
+   "pack": "Anomaly",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Meat_Twisted",
+   "top": "Foods",
+   "mv": 0.5,
+   "pack": "Anomaly",
+   "cats": [
+    "MeatRaw"
+   ],
+   "path": [
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "GoldenCube",
+   "top": "Items",
+   "mv": 1200.0,
+   "pack": "Anomaly",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MonolithFragment",
+   "top": "Items",
+   "mv": 2000.0,
+   "pack": "Anomaly",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_BiomutationLance",
+   "top": "Apparel",
+   "mv": 850.0,
+   "pack": "Anomaly",
+   "cats": [
+    "ApparelUtility"
+   ],
+   "path": [
+    "ApparelUtility",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "HarbingerSeed",
+   "top": "Items",
+   "mv": 600.0,
+   "pack": "Anomaly",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Map",
+   "top": "Items",
+   "mv": 180.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Books"
+   ],
+   "path": [
+    "Books",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Drug_Psilocap",
+   "top": "Manufactured",
+   "mv": 10.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "GravEngine",
+   "top": "Buildings",
+   "mv": 2000.0,
+   "pack": "Odyssey",
+   "cats": [
+    "BuildingsMisc"
+   ],
+   "path": [
+    "BuildingsMisc",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "OxygenPump",
+   "top": "Buildings",
+   "mv": 200.0,
+   "pack": "Odyssey",
+   "cats": [
+    "BuildingsMisc"
+   ],
+   "path": [
+    "BuildingsMisc",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WaspDroneTrap",
+   "top": "Buildings",
+   "mv": 80.0,
+   "pack": "Odyssey",
+   "cats": [
+    "BuildingsSecurity"
+   ],
+   "path": [
+    "BuildingsSecurity",
+    "Buildings",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MastodonTusk",
+   "top": "Items",
+   "mv": 120.0,
+   "pack": "Odyssey",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "AlphaThrumboHorn",
+   "top": "Items",
+   "mv": 3000.0,
+   "pack": "Odyssey",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SentienceCatalyst",
+   "top": "Manufactured",
+   "mv": 400.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Drugs"
+   ],
+   "path": [
+    "Drugs",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggMonitorLizardFertilized",
+   "top": "Foods",
+   "mv": 26.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggMonitorLizardUnfertilized",
+   "top": "Foods",
+   "mv": 9.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggFlamingoFertilized",
+   "top": "Foods",
+   "mv": 26.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggFlamingoUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggHeronFertilized",
+   "top": "Foods",
+   "mv": 18.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggHeronUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggSwanFertilized",
+   "top": "Foods",
+   "mv": 15.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggSwanUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggSparrowFertilized",
+   "top": "Foods",
+   "mv": 11.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggSparrowUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggCrowFertilized",
+   "top": "Foods",
+   "mv": 11.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggCrowUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggBluebirdFertilized",
+   "top": "Foods",
+   "mv": 11.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggBluebirdUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggQuailFertilized",
+   "top": "Foods",
+   "mv": 11.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggQuailUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggMacawFertilized",
+   "top": "Foods",
+   "mv": 11.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggMacawUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggPeacockFertilized",
+   "top": "Foods",
+   "mv": 26.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggPeacockUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggVultureFertilized",
+   "top": "Foods",
+   "mv": 16.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggVultureUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggPenguinFertilized",
+   "top": "Foods",
+   "mv": 25.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggPenguinUnfertilized",
+   "top": "Foods",
+   "mv": 7.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggSeaTurtleFertilized",
+   "top": "Foods",
+   "mv": 20.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggSeaTurtleUnfertilized",
+   "top": "Foods",
+   "mv": 9.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggAlligatorFertilized",
+   "top": "Foods",
+   "mv": 20.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsFertilized"
+   ],
+   "path": [
+    "EggsFertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "EggAlligatorUnfertilized",
+   "top": "Foods",
+   "mv": 17.0,
+   "pack": "Odyssey",
+   "cats": [
+    "EggsUnfertilized"
+   ],
+   "path": [
+    "EggsUnfertilized",
+    "AnimalProductRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WoolMastodon",
+   "top": "Manufactured",
+   "mv": 2.7,
+   "pack": "Odyssey",
+   "cats": [
+    "Wools"
+   ],
+   "path": [
+    "Wools",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "WoolMuskox",
+   "top": "Manufactured",
+   "mv": 2.7,
+   "pack": "Odyssey",
+   "cats": [
+    "Wools"
+   ],
+   "path": [
+    "Wools",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Salmon",
+   "top": "Foods",
+   "mv": 6.5,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Bass",
+   "top": "Foods",
+   "mv": 6.5,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Tilapia",
+   "top": "Foods",
+   "mv": 6.5,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Cod",
+   "top": "Foods",
+   "mv": 6.5,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Bluefish",
+   "top": "Foods",
+   "mv": 6.5,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Guppy",
+   "top": "Foods",
+   "mv": 25.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Frostfish",
+   "top": "Foods",
+   "mv": 34.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Catfish",
+   "top": "Foods",
+   "mv": 26.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Piranha",
+   "top": "Foods",
+   "mv": 40.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Dogfish",
+   "top": "Foods",
+   "mv": 12.5,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Marlin",
+   "top": "Foods",
+   "mv": 28.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Tuna",
+   "top": "Foods",
+   "mv": 32.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Flounder",
+   "top": "Foods",
+   "mv": 22.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Fish_Toxfish",
+   "top": "Foods",
+   "mv": 1.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Fish"
+   ],
+   "path": [
+    "Fish",
+    "MeatRaw",
+    "FoodRaw",
+    "Foods",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gravcore",
+   "top": "Manufactured",
+   "mv": 1250.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "GravlitePanel",
+   "top": "ResourcesRaw",
+   "mv": 4.0,
+   "pack": "Odyssey",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ShuttleEngine",
+   "top": "Manufactured",
+   "mv": 2500.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Manufactured"
+   ],
+   "path": [
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Obsidian",
+   "top": "ResourcesRaw",
+   "mv": 5.0,
+   "pack": "Odyssey",
+   "cats": [
+    "ResourcesRaw"
+   ],
+   "path": [
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Mastodon",
+   "top": "Manufactured",
+   "mv": 3.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Sealskin",
+   "top": "Manufactured",
+   "mv": 4.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_AlphaThrumbo",
+   "top": "Manufactured",
+   "mv": 20.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Mink",
+   "top": "Manufactured",
+   "mv": 5.2,
+   "pack": "Odyssey",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Hippo",
+   "top": "Manufactured",
+   "mv": 3.7,
+   "pack": "Odyssey",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Leather_Armadillo",
+   "top": "Manufactured",
+   "mv": 3.2,
+   "pack": "Odyssey",
+   "cats": [
+    "Leathers"
+   ],
+   "path": [
+    "Leathers",
+    "Textiles",
+    "Manufactured",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Apparel_CerebrexNode",
+   "top": "Apparel",
+   "mv": 5000.0,
+   "pack": "Odyssey",
+   "cats": [
+    "ApparelUtility"
+   ],
+   "path": [
+    "ApparelUtility",
+    "Apparel",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BlocksVacstone",
+   "top": "ResourcesRaw",
+   "mv": 2.0,
+   "pack": "Odyssey",
+   "cats": [
+    "StoneBlocks"
+   ],
+   "path": [
+    "StoneBlocks",
+    "ResourcesRaw",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gun_Scattergun",
+   "top": "Weapons",
+   "mv": 1000.0,
+   "pack": "Odyssey",
+   "cats": [
+    "WeaponsRanged"
+   ],
+   "path": [
+    "WeaponsRanged",
+    "Weapons",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ArcheanSeed",
+   "top": "Items",
+   "mv": 650.0,
+   "pack": "Odyssey",
+   "cats": [
+    "ItemsMisc"
+   ],
+   "path": [
+    "ItemsMisc",
+    "Items",
+    "Root"
+   ]
+  },
+  {
+   "defName": "BogHound",
+   "top": "Animals",
+   "mv": 220.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "MonitorLizard",
+   "top": "Animals",
+   "mv": 175.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "PrairieDog",
+   "top": "Animals",
+   "mv": 30.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Porcupine",
+   "top": "Animals",
+   "mv": 35.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Mastodon",
+   "top": "Animals",
+   "mv": 740.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Cat_Scimitar",
+   "top": "Animals",
+   "mv": 500.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Wolverine",
+   "top": "Animals",
+   "mv": 150.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Wolf_Great",
+   "top": "Animals",
+   "mv": 500.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Moose",
+   "top": "Animals",
+   "mv": 375.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "AlphaThrumbo",
+   "top": "Animals",
+   "mv": 7000.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Muskox",
+   "top": "Animals",
+   "mv": 370.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Tiger",
+   "top": "Animals",
+   "mv": 450.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Mink",
+   "top": "Animals",
+   "mv": 160.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Gorilla",
+   "top": "Animals",
+   "mv": 600.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Badger",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Panda",
+   "top": "Animals",
+   "mv": 400.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Hippo",
+   "top": "Animals",
+   "mv": 600.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Megavole",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Armadillo",
+   "top": "Animals",
+   "mv": 100.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Alligator",
+   "top": "Animals",
+   "mv": 350.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Bullfrog",
+   "top": "Animals",
+   "mv": 60.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "ColossusToad",
+   "top": "Animals",
+   "mv": 220.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "LavaSnail",
+   "top": "Animals",
+   "mv": 180.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Sparrow",
+   "top": "Animals",
+   "mv": 30.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Crow",
+   "top": "Animals",
+   "mv": 30.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Bluebird",
+   "top": "Animals",
+   "mv": 30.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Quail",
+   "top": "Animals",
+   "mv": 30.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Macaw",
+   "top": "Animals",
+   "mv": 90.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Flamingo",
+   "top": "Animals",
+   "mv": 120.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Heron",
+   "top": "Animals",
+   "mv": 120.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Swan",
+   "top": "Animals",
+   "mv": 200.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Peacock",
+   "top": "Animals",
+   "mv": 180.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Vulture",
+   "top": "Animals",
+   "mv": 120.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Penguin",
+   "top": "Animals",
+   "mv": 150.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Walrus",
+   "top": "Animals",
+   "mv": 300.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SeaLion",
+   "top": "Animals",
+   "mv": 320.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Seal",
+   "top": "Animals",
+   "mv": 290.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "HermitCrab",
+   "top": "Animals",
+   "mv": 60.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "StoneCrab",
+   "top": "Animals",
+   "mv": 80.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "SeaTurtle",
+   "top": "Animals",
+   "mv": 250.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Otter",
+   "top": "Animals",
+   "mv": 60.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Larva",
+   "top": "Animals",
+   "mv": 35.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "HiveQueen",
+   "top": "Animals",
+   "mv": 2000.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  },
+  {
+   "defName": "Locust",
+   "top": "Animals",
+   "mv": 120.0,
+   "pack": "Odyssey",
+   "cats": [
+    "Animals"
+   ],
+   "path": [
+    "Animals",
+    "Root"
+   ]
+  }
+ ]
+}

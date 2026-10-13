@@ -13,7 +13,7 @@ using Verse.AI.Group;
 namespace PersonalChronicle.Application
 {
     /// <summary>
-    /// Partial of <see cref="ArchiveService"/> 鈥?see main file for the class doc.
+    /// Partial of <see cref="ArchiveService"/> —see main file for the class doc.
     /// </summary>
     public sealed partial class ArchiveService : IArchiveService, IWorkIntensityService, IWorkTimeCaptureService, IArchiveQueryService, IArchiveEventSink
     {

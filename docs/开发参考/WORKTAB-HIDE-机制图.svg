@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1560" viewBox="0 0 1200 1560" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">
+<title>工作优先级面板隐藏机制 · CHG-20261004-WORKTAB-HIDE</title>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8b98a5"/></marker>
+<style>
+.b{fill:#171c22;stroke:#2a323c;stroke-width:1.5}.t{fill:#e6edf3;font-size:13px;font-weight:700}
+.l{fill:#a9b4c0;font-size:11.5px}.k{fill:#8b98a5;font-size:10.5px}
+.r{fill:#ffb3ae}.w{fill:#3fb950;font-weight:700}.y{fill:#d29922}
+.v{stroke:#4a9eff}.p{stroke:#3fb950}.h{stroke:#a371f7}.d{stroke:#f85149}.n{stroke:#d29922}
+.ln{fill:#6e7a87;font-size:11px;font-weight:700}
+</style>
+</defs>
+<rect width="1200" height="1560" fill="#0f1216"/>
+
+<text x="32" y="42" fill="#e6edf3" font-size="20" font-weight="700">工作优先级面板 · 隐藏指定殖民者 —— 机制图</text>
+<text x="32" y="64" class="k">CHG-20261004-WORKTAB-HIDE · RimWorld 1.6.4871 rev590（Mono.Cecil 逐条 IL 核实）· 编译 0 错 0 警 · GATE-DELTA PASS</text>
+<rect x="32" y="78" width="12" height="12" rx="3" class="b v"/><text x="50" y="88" class="k">原版（只读）</text>
+<rect x="150" y="78" width="12" height="12" rx="3" class="b p"/><text x="168" y="88" class="k">本 mod 新增</text>
+<rect x="270" y="78" width="12" height="12" rx="3" class="b h"/><text x="288" y="88" class="k">Harmony 注入点</text>
+<rect x="400" y="78" width="12" height="12" rx="3" class="b d"/><text x="418" y="88" class="k">禁区 / fail-open</text>
+<rect x="530" y="78" width="12" height="12" rx="3" class="b n"/><text x="548" y="88" class="k">诊断 / 刷新</text>
+
+<text x="32" y="150" class="ln">原版 UI</text>
+<rect x="140" y="108" width="1028" height="80" rx="10" class="b v"/>
+<text x="160" y="132" class="t">MainTabWindow_Work　「工作」主标签 ＝ 工作优先级面板</text>
+<text x="160" y="152" class="l">1.6 中它<tspan class="y">不是独立窗口</tspan>，就是底部主标签本体。证据：DoWindowContents 硬编码「&lt;= HigherPriority」「LowerPriority =&gt;」</text>
+<text x="160" y="170" class="l">DoManualPrioritiesCheckbox 读 Game.playSettings.useWorkPriorities（截图左上角「自定义优先级」绿勾）</text>
+<text x="160" y="184" class="k">该勾只切换 1/2/3/4 数字档 ↔ 禁用/普通/优先 三态，与「隐藏某人」无关 —— 原版确实没有这个功能</text>
+
+<line x1="654" y1="188" x2="654" y2="216" stroke="#8b98a5" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="666" y="207" class="l">get_Pawns（protected virtual）★ 注入点 P1</text>
+
+<text x="32" y="250" class="ln">原版取人链</text>
+<rect x="140" y="218" width="1028" height="204" rx="10" class="b v"/>
+<text x="160" y="242" class="t">原版取人链（PC 一行都不改）</text>
+<rect x="160" y="254" width="480" height="30" rx="6" fill="#12171d" stroke="#2a323c"/><text x="174" y="274" class="l">CreateTable()　pawnsGetter = 闭包 &lt;CreateTable&gt;b__17_0</text>
+<rect x="160" y="290" width="480" height="30" rx="6" fill="#12171d" stroke="#2a323c"/><text x="174" y="310" class="l">b__17_0 → <tspan class="y">callvirt get_Pawns（虚调用）</tspan></text>
+<rect x="160" y="326" width="480" height="30" rx="6" fill="#12171d" stroke="#2a323c"/><text x="174" y="346" class="l">MainTabWindow_PawnTable.get_Pawns()　基类</text>
+<rect x="160" y="362" width="480" height="30" rx="6" fill="#2a1214" stroke="#f85149" stroke-width="1.5"/><text x="174" y="382" class="l r">Find.CurrentMap.mapPawns.FreeColonists　⛔ 禁区</text>
+<rect x="660" y="254" width="488" height="138" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="676" y="276" class="l">FreeHumanlikesOfFaction(Faction.OfPlayer) 谓词：</text>
+<text x="676" y="298" class="l">① Anomaly 激活时排除 IsSubhuman</text>
+<text x="676" y="318" class="l">② Thing.Faction == Faction.OfPlayer</text>
+<text x="676" y="338" class="l">③ HostFaction != null 且 !IsSlave → 跳过（囚犯被排除）</text>
+<text x="676" y="358" class="l">④ RaceProps.Humanlike</text>
+<text x="676" y="380" class="k">派生：MainTabWindow_Work.get_Pawns() = base.Where(!Baby())</text>
+<text x="160" y="410" class="k">→ 返回的是惰性 IEnumerable，不是 List（这决定了 P1 只能换引用）</text>
+
+<line x1="654" y1="422" x2="654" y2="450" stroke="#8b98a5" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="666" y="441" class="l">Postfix</text>
+
+<text x="32" y="484" class="ln">PC 过滤</text>
+<rect x="140" y="452" width="1028" height="146" rx="10" class="b h"/>
+<text x="160" y="476" class="t">P1　Capture/Patch_MainTabWindowWorkPawns.cs</text>
+<text x="160" y="494" class="k">[HarmonyPatch(typeof(MainTabWindow_Work), "get_Pawns")] + [HarmonyPriority(Priority.Low)]　→　字面量，外部无法 nameof 到 protected 成员</text>
+<rect x="160" y="504" width="322" height="30" rx="6" fill="#12171d" stroke="#2a323c"/><text x="174" y="524" class="l">① RevealAll 为真 → 原样 return</text>
+<rect x="492" y="504" width="322" height="30" rx="6" fill="#12171d" stroke="#2a323c"/><text x="506" y="524" class="l">② 名单为空 → 原样 return（零分配）</text>
+<rect x="824" y="504" width="324" height="30" rx="6" fill="#12171d" stroke="#2a323c"/><text x="838" y="524" class="l">③ 组件缺失 → return</text>
+<rect x="160" y="542" width="988" height="44" rx="6" fill="#12171d" stroke="#3fb950"/>
+<text x="174" y="562" class="l">④ 手写 foreach 建新 List&lt;Pawn&gt;（不用 LINQ）　→　<tspan class="w">__result = kept;</tspan>　<tspan class="r">绝不原地 RemoveAll</tspan></text>
+<text x="174" y="580" class="k">fail-open：任何异常 → 原样返回「不隐藏任何人」，绝不出现空表 / 崩溃 / 改上游</text>
+
+<line x1="654" y1="598" x2="654" y2="626" stroke="#8b98a5" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="666" y="617" class="l">Current.Game?.GetComponent&lt;T&gt;()　现取，不缓存窗口实例</text>
+
+<text x="32" y="660" class="ln">PC 存档</text>
+<rect x="140" y="628" width="1028" height="168" rx="10" class="b p"/>
+<text x="160" y="652" class="t">Data/ChronicleGameComponent.WorkTabHide.cs　（存档层 partial）</text>
+<rect x="160" y="664" width="480" height="52" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="174" y="684" class="l">HashSet&lt;string&gt; hiddenWorkTabColonists　<tspan class="y">内联初始化</tspan>（GATE-SAVE P0-1）</text>
+<text x="174" y="704" class="l">Scribe key <tspan class="y">"hiddenWorkTabColonists"</tspan>　LookMode.Value</text>
+<rect x="660" y="664" width="488" height="52" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="674" y="684" class="l">只存 ThingID 字符串，<tspan class="y">不存 Pawn 引用</tspan>（避免读档悬挂引用）</text>
+<text x="674" y="704" class="l">上限 MaxHiddenColonists = 256（PERF-001 有界）</text>
+<rect x="160" y="726" width="988" height="58" rx="6" fill="#2a1214" stroke="#f85149" stroke-width="1.5"/>
+<text x="174" y="748" class="l r">⛔ Saving 阶段先 SanitizeKey（复用 WorkshopWorkDemotionLedger.SanitizeKey）</text>
+<text x="174" y="770" class="l r">　 非法 XML 字符会让 XmlWellFormedWriter 进入 error 态 ⇒ 整个存档保存失败（2026-10-02 P0 事故同源）</text>
+
+<line x1="654" y1="796" x2="654" y2="824" stroke="#8b98a5" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="666" y="815" class="l">Toggle / SetHiddenFromWorkTab</text>
+
+<text x="32" y="858" class="ln">PC 入口</text>
+<rect x="140" y="826" width="1028" height="152" rx="10" class="b h"/>
+<text x="160" y="850" class="t">P2　Capture/Patch_PawnWorkTabGizmo.cs　（唯一操作入口）</text>
+<text x="160" y="868" class="k">[HarmonyPatch(typeof(Pawn), nameof(Pawn.GetGizmos))]　→　public virtual，可 nameof，无裸字符串</text>
+<rect x="160" y="878" width="322" height="48" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="174" y="898" class="l">守卫：非 Dead</text><text x="174" y="918" class="l">Faction != null &amp;&amp; IsPlayer</text>
+<rect x="492" y="878" width="322" height="48" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="506" y="898" class="l">排除 Baby（本来就不在面板）</text><text x="506" y="918" class="l">排除动物 / 敌人 / 访客</text>
+<rect x="824" y="878" width="324" height="48" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="838" y="898" class="l">追加 1 个 Command_Action</text><text x="838" y="918" class="l">原版图标 + TexButton 兜底</text>
+<rect x="160" y="936" width="988" height="32" rx="6" fill="#12171d" stroke="#a371f7"/>
+<text x="174" y="957" class="l">IL 实测：GetGizmos 是<tspan class="y">迭代器状态机</tspan> ⇒ <tspan class="r">禁止 as IList&lt;Gizmo&gt;().Add()</tspan>，必须换引用</text>
+
+<line x1="654" y1="978" x2="654" y2="1006" stroke="#8b98a5" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="666" y="997" class="l">NotifyWorkTabChanged()</text>
+
+<text x="32" y="1040" class="ln">刷新</text>
+<rect x="140" y="1008" width="1028" height="92" rx="10" class="b n"/>
+<text x="160" y="1032" class="t">刷新链路（不通知则 UI 不变）</text>
+<text x="160" y="1054" class="l">NotifyWorkTabChanged() →遍历 Find.WindowStack.Windows（<tspan class="y">WindowStack 不实现 IEnumerable，实测 CS1929</tspan>）</text>
+<text x="160" y="1074" class="l">→对每个 MainTabWindow_PawnTable 调 <tspan class="y">Notify_PawnsChanged()</tspan>（唯一公开入口，SetDirty() 是 protected）</text>
+<text x="160" y="1092" class="k">→ PawnTable.SetDirty() → RecachePawns 重算 cachedPawns（只在 dirty 时重算，非每帧）</text>
+
+<text x="32" y="1134" class="ln">禁区</text>
+<rect x="140" y="1102" width="1028" height="146" rx="10" class="b d"/>
+<text x="160" y="1126" class="t r">⛔ 红线：MapPawns.get_FreeColonists —— 被 63 处消费，且返回内部复用的缓存 List</text>
+<rect x="160" y="1138" width="322" height="44" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="174" y="1158" class="l">ColonistBar.CheckRecacheEntries</text><text x="174" y="1176" class="l">（顶部殖民者条）</text>
+<rect x="492" y="1138" width="322" height="44" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="506" y="1158" class="l">CompAssignableToPawn*</text><text x="506" y="1176" class="l">.AssigningCandidates（床位）</text>
+<rect x="824" y="1138" width="324" height="44" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="838" y="1158" class="l">PawnsFinder.get_AllMaps_FreeColonists</text><text x="838" y="1176" class="l">StrengthWatcher.get_StrengthRating</text>
+<text x="160" y="1200" class="l">QuestNode_GetMap / ThingUtility.FindAllOfType / Dialog_GiveName / CompHackable / 任务与事件生成 …… 共 63 处</text>
+<text x="160" y="1222" class="l r">⇒ 对它 RemoveAll 会污染原版缓存 → 殖民者条 / 床位 / 任务 / 评级全线出错。PC 只过滤自己的返回值，一根手指都不碰它。</text>
+
+<text x="32" y="1284" class="ln">诊断</text>
+<rect x="140" y="1252" width="1028" height="164" rx="10" class="b n"/>
+<text x="160" y="1276" class="t">漂移检测与降级（补偿 Harmony 的头号弱点：静默不生效）</text>
+<rect x="160" y="1288" width="322" height="52" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="174" y="1308" class="l">L1 / L2　CapturePatchDiagnostics</text><text x="174" y="1330" class="l">追加 2 条 AccessTools.Method 反射</text>
+<rect x="492" y="1288" width="322" height="52" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="506" y="1308" class="l">失败即 Player.log 报</text><text x="506" y="1330" class="l">capture target missing: ...</text>
+<rect x="824" y="1288" width="324" height="52" rx="6" fill="#12171d" stroke="#2a323c"/>
+<text x="838" y="1308" class="l">RevealAll 会话开关 + Reset()</text><text x="838" y="1330" class="l">（跨档防污染，同PawnTakeDamage）</text>
+<rect x="160" y="1348" width="988" height="58" rx="6" fill="#2a1214" stroke="#f85149" stroke-width="1.5"/>
+<text x="174" y="1370" class="l r">残余风险 D-1：原版若重构取人链不再消费 get_Pawns ⇒ 自检全绿但功能无效。</text>
+<text x="174" y="1392" class="l r">　 启动时不可行、无法完全补偿 —— 这是选 XML 扩展点会没有的代价，已如实登记。</text>
+
+<text x="32" y="1450" class="k">图例对应关系：紫色框 = Harmony 注入点；绿色框 = 本 mod 新增；蓝色框 = 原版只读；红色 = 禁区 / fail-open 降级；黄色 = 诊断与刷新。</text>
+<text x="32" y="1470" class="k">未实现（已批准项）：热键「临时显示全部」需新增 KeyBindingDef + DefInjected 中英双份 + 第 3 处基类补丁（Window.WindowUpdate）。</text>
+<text x="32" y="1490" class="k">恢复出口 = 同一 Gizmo 切回（殖民者在任何位置被选中都能点），故核心可用性已覆盖。</text>
+</svg>

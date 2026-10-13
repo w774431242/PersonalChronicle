@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "机制 05 · 多需求仲裁",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" }
+  },
+  "lanes": [
+    { "id": "gate", "label": "闸门序列（顺序即优先级）" },
+    { "id": "rank", "label": "排序与取舍" },
+    { "id": "note", "label": "非闸门事实", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "p1", "label": "入口校验", "fromCol": 0, "toCol": 0 },
+    { "id": "p2", "label": "让路", "fromCol": 1, "toCol": 2, "variant": "emphasis" },
+    { "id": "p3", "label": "资格与预算", "fromCol": 3, "toCol": 4 },
+    { "id": "p4", "label": "择优出口", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["facts", "yield", "need", "budget", "timetable", "decision"],
+  "semanticChecks": { "allowedRoots": ["facts", "rank"], "allowedTerminals": ["decision", "streak", "blocked"] },
+  "nodes": [
+    { "id": "facts", "lane": "gate", "col": 0, "type": "security", "label": "事实与范围", "sublabel": "范围 / 事实可用性", "tag": "≤ 300 tick", "width": 124 },
+    { "id": "yield", "lane": "gate", "col": 1, "type": "security", "label": "让路", "sublabel": "紧急 / 玩家 / 倒地", "tag": "未知也让路", "width": 124 },
+    { "id": "need", "lane": "gate", "col": 2, "type": "security", "label": "基本需求", "sublabel": "Priority ≤ 1", "tag": "BasicNeedFirst" },
+    { "id": "budget", "lane": "gate", "col": 3, "type": "security", "label": "资格与预算", "sublabel": "劳动 / 预算 / 补储", "width": 124 },
+    { "id": "timetable", "lane": "gate", "col": 4, "type": "security", "label": "作息与时限", "sublabel": "非 Anything / Work", "tag": "同时限内择岗", "width": 124 },
+    { "id": "decision", "lane": "gate", "col": 5, "type": "messagebus", "label": "决策出口", "sublabel": "SeekWork / 等待", "tag": "16 道闸门" },
+    { "id": "rank", "lane": "rank", "col": 4, "type": "backend", "label": "目标排序", "sublabel": "五级键 · 含 slack", "tag": "等级先于等待", "width": 124 },
+    { "id": "avoid", "lane": "rank", "col": 5, "type": "security", "label": "低可信度回避", "sublabel": "只避一次", "tag": "偏好 > 0.5", "width": 124 },
+    { "id": "blocked", "lane": "note", "col": 3, "type": "database", "label": "制度性受阻", "sublabel": "仅出口字段", "tag": "不是闸门" },
+    { "id": "streak", "lane": "note", "col": 4, "type": "database", "label": "基本保障时长", "sublabel": "连续占满 tick", "tag": "不可持续反馈" }
+  ],
+  "edges": [
+    { "from": "facts", "to": "yield", "label": "可用" },
+    { "from": "yield", "to": "need", "label": "无让路" },
+    { "from": "need", "to": "budget", "label": "无基本需求" },
+    { "from": "budget", "to": "timetable", "label": "就绪" },
+    { "from": "timetable", "to": "decision", "label": "候选择优" },
+    { "from": "rank", "to": "decision", "label": "决定次序", "role": "branch" },
+    { "from": "rank", "to": "avoid", "label": "首选低可信", "role": "branch" },
+    { "from": "avoid", "to": "decision", "label": "换排名内替代" },
+    { "from": "budget", "to": "blocked", "label": "记键", "role": "error", "variant": "dashed" },
+    { "from": "need", "to": "streak", "label": "仅基本保障", "role": "branch", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "闸门顺序（16 道）",
+      "items": [
+        "事实与范围 → 让路（紧急 / 玩家 / 倒地 / 精神 / 原生保护）→ 基本需求 → 资格 → 预算 → 补储 → 作息 → 岗位",
+        "任何一步命中即返回该决策与原因码，不再往下走",
+        "紧急线（Food .35 / Rest .25）优先于一切需求等级"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "排序键（代码实际序）",
+      "items": [
+        "① Priority 升序 ② slack 可估优先 ③ slack 升序 ④ 等待降序 ⑤ 需求键稳定序",
+        "等待加权不能突破等级：等级先于等待",
+        "低可信度回避须偏好 > 0.5 且有替代；只避一次，无替代仍签约并标注风险"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "与注释不符",
+      "items": [
+        "类注释写「等级 → 等待 → 稳定键」，代码在等待前插入 slack 两级",
+        "制度性受阻不是闸门：仅作为出口字段，早退路径恒为空列表",
+        "部分捕获（Partial）与完整同等可用；超过 300 tick 陈旧一律拒绝"
+      ]
+    }
+  ]
+}

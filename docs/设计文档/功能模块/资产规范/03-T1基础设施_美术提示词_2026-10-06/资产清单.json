@@ -1,0 +1,1732 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-06",
+  "status": "design_only_no_png_generated",
+  "asset_class": "D_building",
+  "items": [
+    {
+      "name": "智能燃油发电机",
+      "proposed_defName": "PC_T1_FuelGenerator",
+      "group": "能源",
+      "batch": "A",
+      "footprint_north": [
+        3,
+        2
+      ],
+      "role": "一台低矮工业化合燃料发电机，采用宽底盘，整体长轴横向，机体顶面占主视觉",
+      "parts": [
+        [
+          "发动机护罩",
+          -1,
+          0
+        ],
+        [
+          "圆角发电机壳",
+          0,
+          0
+        ],
+        [
+          "内置燃料箱和加油盖",
+          1,
+          0
+        ],
+        [
+          "紧凑实体排气罩",
+          -1,
+          -1
+        ],
+        [
+          "检修控制面",
+          1,
+          1
+        ]
+      ],
+      "extra": "发动机、油箱和排气都是安装在机体上的固定部件；没有外接油桶，没有燃烧火焰，没有烟雾，不画需要持续站人加工的工作台。控制面有一小块暗青仪表和两个实体按钮。",
+      "proposed_stats": {
+        "output_w": 2400,
+        "chemfuel_per_day": 10.8,
+        "fuel_capacity": 60,
+        "steel": 260,
+        "components": 6,
+        "work_to_build": 5000,
+        "hp": 300
+      },
+      "proposed_draw_size_north": [
+        3.5,
+        2.5
+      ],
+      "source_size_north": [
+        896,
+        640
+      ],
+      "game_size_north": [
+        448,
+        320
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_FuelGenerator",
+      "combined_prompt_file": "按设备合并/智能燃油发电机.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/智能燃油发电机_北向.txt",
+          "prompt_sha256": "60D7D88921C461E46BC0C6BC297CD5D5D2BE9F23787047832B4E428A57F3F2DA",
+          "proposed_png_file": "PC_T1_FuelGenerator_north.png",
+          "source_size": [
+            896,
+            640
+          ],
+          "game_size": [
+            448,
+            320
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/智能燃油发电机_东向.txt",
+          "prompt_sha256": "0C9A7B02485980EAF71ADC5C7A209D8D9CF8B126DC7BD3801171C01CE8F8F206",
+          "proposed_png_file": "PC_T1_FuelGenerator_east.png",
+          "source_size": [
+            640,
+            896
+          ],
+          "game_size": [
+            320,
+            448
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/智能燃油发电机_南向.txt",
+          "prompt_sha256": "266C9C16B804F8F8CC21DA4D5243447801F54D2BA40FC58456DF3C24DE18CD92",
+          "proposed_png_file": "PC_T1_FuelGenerator_south.png",
+          "source_size": [
+            896,
+            640
+          ],
+          "game_size": [
+            448,
+            320
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/智能燃油发电机_西向.txt",
+          "prompt_sha256": "93B0A44009149FC5FB7F6DE2310F857CAEBA3425DA35FCB055CCFA8DBC32D517",
+          "proposed_png_file": "PC_T1_FuelGenerator_west.png",
+          "source_size": [
+            640,
+            896
+          ],
+          "game_size": [
+            320,
+            448
+          ]
+        }
+      ]
+    },
+    {
+      "name": "工业光伏阵列",
+      "proposed_defName": "PC_T1_SolarArray",
+      "group": "能源",
+      "batch": "A",
+      "footprint_north": [
+        4,
+        3
+      ],
+      "role": "一组贴近地面、排列紧凑的工业光伏板阵列，由两块大面板与灰钢边框组成，整体北向宽于深",
+      "parts": [
+        [
+          "第一块宽面板",
+          -1,
+          0
+        ],
+        [
+          "第二块宽面板",
+          1,
+          0
+        ],
+        [
+          "低矮逆变器盒",
+          1,
+          1
+        ],
+        [
+          "电缆连接槽",
+          0,
+          1
+        ]
+      ],
+      "extra": "面板采用低饱和暗钢蓝，深蓝只表示真实光伏材料，可占主体面积；电池片只画少量粗分格，不画密集银线。顶视下不露出高脚支架，不画斜立的大板，不画太阳、阳光束、反光天空或追日机构。",
+      "proposed_stats": {
+        "peak_output_w": 2600,
+        "steel": 260,
+        "components": 6,
+        "work_to_build": 4800,
+        "hp": 220
+      },
+      "proposed_draw_size_north": [
+        4.5,
+        3.5
+      ],
+      "source_size_north": [
+        1152,
+        896
+      ],
+      "game_size_north": [
+        432,
+        336
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_SolarArray",
+      "combined_prompt_file": "按设备合并/工业光伏阵列.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/工业光伏阵列_北向.txt",
+          "prompt_sha256": "1C9954F854877C6688F9DBA82914BAEED16248514339D912620C27D988004271",
+          "proposed_png_file": "PC_T1_SolarArray_north.png",
+          "source_size": [
+            1152,
+            896
+          ],
+          "game_size": [
+            432,
+            336
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/工业光伏阵列_东向.txt",
+          "prompt_sha256": "48A8F952F7C231D58E7C7AAF0312CFD6ADA2F7F6EBAF2465AAE051118E5260A8",
+          "proposed_png_file": "PC_T1_SolarArray_east.png",
+          "source_size": [
+            896,
+            1152
+          ],
+          "game_size": [
+            336,
+            432
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/工业光伏阵列_南向.txt",
+          "prompt_sha256": "B004AE0512B2795284A814EFC1D15F861DB44FACBB59D982452BE1EBB9016ABA",
+          "proposed_png_file": "PC_T1_SolarArray_south.png",
+          "source_size": [
+            1152,
+            896
+          ],
+          "game_size": [
+            432,
+            336
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/工业光伏阵列_西向.txt",
+          "prompt_sha256": "52606A7A1F856CFB131468FF40F7E431E176DC4B90CF516D59D2C19B8E9AB50D",
+          "proposed_png_file": "PC_T1_SolarArray_west.png",
+          "source_size": [
+            896,
+            1152
+          ],
+          "game_size": [
+            336,
+            432
+          ]
+        }
+      ]
+    },
+    {
+      "name": "工业蓄电池组",
+      "proposed_defName": "PC_T1_BatteryBank",
+      "group": "储能",
+      "batch": "A",
+      "footprint_north": [
+        2,
+        2
+      ],
+      "role": "一台低矮方形钢制工业电池组，宽深接近，顶面可见四块固定电芯盖板，具有厚实机体与维修边缘",
+      "parts": [
+        [
+          "电芯盖板一",
+          -1,
+          -1
+        ],
+        [
+          "电芯盖板二",
+          1,
+          -1
+        ],
+        [
+          "电芯盖板三",
+          -1,
+          1
+        ],
+        [
+          "电芯盖板四",
+          1,
+          1
+        ],
+        [
+          "前沿检修条",
+          0,
+          1
+        ],
+        [
+          "绝缘接线盒",
+          1,
+          -1
+        ]
+      ],
+      "extra": "电芯不是开放的酸液池，盖板全封闭。检修条只留小型无字暗青读数窗，不画固定满电条或百分比；无电弧、能量球、发光电芯和科幻磁悬浮。",
+      "proposed_stats": {
+        "capacity_wd": 2400,
+        "charge_efficiency": 0.75,
+        "steel": 240,
+        "components": 6,
+        "work_to_build": 4200,
+        "hp": 240
+      },
+      "proposed_draw_size_north": [
+        2.5,
+        2.5
+      ],
+      "source_size_north": [
+        640,
+        640
+      ],
+      "game_size_north": [
+        320,
+        320
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_BatteryBank",
+      "combined_prompt_file": "按设备合并/工业蓄电池组.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/工业蓄电池组_北向.txt",
+          "prompt_sha256": "9B5C394899CE408933447DC1F8455F3D9B768EFE723237C536CF68AA7E105CBC",
+          "proposed_png_file": "PC_T1_BatteryBank_north.png",
+          "source_size": [
+            640,
+            640
+          ],
+          "game_size": [
+            320,
+            320
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/工业蓄电池组_东向.txt",
+          "prompt_sha256": "D55AED9678485CD26BC41ED5EC868FE8A992F773C68E11813517B687AB67DE41",
+          "proposed_png_file": "PC_T1_BatteryBank_east.png",
+          "source_size": [
+            640,
+            640
+          ],
+          "game_size": [
+            320,
+            320
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/工业蓄电池组_南向.txt",
+          "prompt_sha256": "84E7226929A94B96AB9811FA02E369C81D078879DC97127E874028CA181CFF54",
+          "proposed_png_file": "PC_T1_BatteryBank_south.png",
+          "source_size": [
+            640,
+            640
+          ],
+          "game_size": [
+            320,
+            320
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/工业蓄电池组_西向.txt",
+          "prompt_sha256": "6DC6E6B40680B4705F4EF5673476D32A8D1B6F35737437F8873B65DA91FBDCD8",
+          "proposed_png_file": "PC_T1_BatteryBank_west.png",
+          "source_size": [
+            640,
+            640
+          ],
+          "game_size": [
+            320,
+            320
+          ]
+        }
+      ]
+    },
+    {
+      "name": "车间配电柜",
+      "proposed_defName": "PC_T1_Switchboard",
+      "group": "配电",
+      "batch": "A",
+      "footprint_north": [
+        1,
+        1
+      ],
+      "role": "一个低矮单格车间配电箱，采用嵌在底座上的顶置接线箱和可从上方查看的维修盖，不能画成站立高柜",
+      "parts": [
+        [
+          "接线盖板",
+          0,
+          -1
+        ],
+        [
+          "机械拨杆和小读数窗",
+          0,
+          1
+        ],
+        [
+          "短电缆压线槽",
+          1,
+          0
+        ]
+      ],
+      "extra": "机体紧贴地面，轮廓紧凑，不遮挡一格通行。读数窗是深色无字玻璃，机械拨杆是固定组件；不绘制贯穿多格的电缆，不画发电装置、变电站或大屏监控墙。",
+      "proposed_stats": {
+        "power_w": 0,
+        "steel": 60,
+        "components": 2,
+        "work_to_build": 1400,
+        "hp": 220
+      },
+      "proposed_draw_size_north": [
+        1.5,
+        1.5
+      ],
+      "source_size_north": [
+        384,
+        384
+      ],
+      "game_size_north": [
+        192,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_Switchboard",
+      "combined_prompt_file": "按设备合并/车间配电柜.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/车间配电柜_北向.txt",
+          "prompt_sha256": "462121BB01D66571BCF697AB6AEDB082FB0737D8B28C1F32D9FF3687FAD850B0",
+          "proposed_png_file": "PC_T1_Switchboard_north.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/车间配电柜_东向.txt",
+          "prompt_sha256": "C5BCDC19ACEF98BEFE6885BDEB603D79C10472BF6F524BAE9C957F91E8B2C3A9",
+          "proposed_png_file": "PC_T1_Switchboard_east.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/车间配电柜_南向.txt",
+          "prompt_sha256": "1D5D6BB6B4FFC1C5F60A60D1946D8B0F29F6EFD1CD5DEE1DA4958EF92ACC1D64",
+          "proposed_png_file": "PC_T1_Switchboard_south.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/车间配电柜_西向.txt",
+          "prompt_sha256": "EFBE25A7EB2044D86791D141687503A5EC8186FCB75480862F1B488A54F17974",
+          "proposed_png_file": "PC_T1_Switchboard_west.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        }
+      ]
+    },
+    {
+      "name": "工业通用货架",
+      "proposed_defName": "PC_T1_StorageRack",
+      "group": "仓储",
+      "batch": "A",
+      "footprint_north": [
+        2,
+        1
+      ],
+      "role": "一座两格宽、单格深的低矮工业金属货架，从正上方能看到三个开放浅储物分区与加强层板，保持宽而扁的轮廓",
+      "parts": [
+        [
+          "左储物分区",
+          -1,
+          0
+        ],
+        [
+          "中央储物分区",
+          0,
+          0
+        ],
+        [
+          "右储物分区",
+          1,
+          0
+        ],
+        [
+          "前沿标签槽",
+          0,
+          1
+        ],
+        [
+          "后沿加强梁",
+          0,
+          -1
+        ]
+      ],
+      "extra": "所有储物分区留空，库存由游戏另行绘制；不烘焙钢材、食品、箱子和货物。标签槽内没有文字，也不是发光屏幕。不用站立高货架的正面透视，不露出长腿。",
+      "proposed_stats": {
+        "power_w": 0,
+        "stacks_per_cell": 5,
+        "total_stacks": 10,
+        "steel": 90,
+        "components": 1,
+        "work_to_build": 1800,
+        "hp": 200
+      },
+      "proposed_draw_size_north": [
+        2.5,
+        1.5
+      ],
+      "source_size_north": [
+        640,
+        384
+      ],
+      "game_size_north": [
+        320,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_StorageRack",
+      "combined_prompt_file": "按设备合并/工业通用货架.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/工业通用货架_北向.txt",
+          "prompt_sha256": "9DE04B775B3FE67EEA427A96E9E540E9B865865041B3017D6D531D2FBA4668AF",
+          "proposed_png_file": "PC_T1_StorageRack_north.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/工业通用货架_东向.txt",
+          "prompt_sha256": "501A05FF7738121A32EB7C5B84C09470818F8EB85CDAB916FF341AC08984F147",
+          "proposed_png_file": "PC_T1_StorageRack_east.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/工业通用货架_南向.txt",
+          "prompt_sha256": "BE62D12E97DF9C42158522EA978BA694E6C3C9C77A52FBA1A35DDB7E6D2E1FB2",
+          "proposed_png_file": "PC_T1_StorageRack_south.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/工业通用货架_西向.txt",
+          "prompt_sha256": "A589095D67B817DFB67438A30ED4C0AEDD32F5D753E7C2AADFEF113FC12BEE04",
+          "proposed_png_file": "PC_T1_StorageRack_west.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        }
+      ]
+    },
+    {
+      "name": "重载原料架",
+      "proposed_defName": "PC_T1_BulkRack",
+      "group": "仓储",
+      "batch": "A",
+      "footprint_north": [
+        3,
+        1
+      ],
+      "role": "一座三格宽、单格深的低矮重载工业托架，具有粗钢加强梁、大型固定侧挡和开放承重托盘，外形明显比普通货架结实",
+      "parts": [
+        [
+          "左端固定挡板",
+          -1,
+          0
+        ],
+        [
+          "中部开放承重托盘",
+          0,
+          0
+        ],
+        [
+          "右端固定挡板",
+          1,
+          0
+        ],
+        [
+          "前沿防滚挡条",
+          0,
+          1
+        ],
+        [
+          "后沿承重梁",
+          0,
+          -1
+        ]
+      ],
+      "extra": "托盘留空，不预画任何钢锭、圆木或石块；侧挡为机体固定结构，不是装载货物。用结构粗细表达重载能力，不用机械吊臂、叉车、绞盘或自动输送口。无电子屏幕。",
+      "proposed_stats": {
+        "power_w": 0,
+        "stacks_per_cell": 4,
+        "total_stacks": 12,
+        "steel": 150,
+        "components": 1,
+        "work_to_build": 2600,
+        "hp": 300
+      },
+      "proposed_draw_size_north": [
+        3.5,
+        1.5
+      ],
+      "source_size_north": [
+        896,
+        384
+      ],
+      "game_size_north": [
+        448,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_BulkRack",
+      "combined_prompt_file": "按设备合并/重载原料架.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/重载原料架_北向.txt",
+          "prompt_sha256": "7ED4A1BA75D9CAD86C6D2D6AAF115D88CE0F0972BE89F579D3B39DC966291B6A",
+          "proposed_png_file": "PC_T1_BulkRack_north.png",
+          "source_size": [
+            896,
+            384
+          ],
+          "game_size": [
+            448,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/重载原料架_东向.txt",
+          "prompt_sha256": "1A7E0FA97605C5BC51855FE8F8CACDA8F212811B7D89E42826220671D2A3599E",
+          "proposed_png_file": "PC_T1_BulkRack_east.png",
+          "source_size": [
+            384,
+            896
+          ],
+          "game_size": [
+            192,
+            448
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/重载原料架_南向.txt",
+          "prompt_sha256": "7FFDCEC62E03BCC58612172FB8C0516D74394772A3BFDB1CD812BA85E924D078",
+          "proposed_png_file": "PC_T1_BulkRack_south.png",
+          "source_size": [
+            896,
+            384
+          ],
+          "game_size": [
+            448,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/重载原料架_西向.txt",
+          "prompt_sha256": "220C2CDE51BA85DD922068FFB876165BE7E7A52841BC916AE8C050A43BFA898F",
+          "proposed_png_file": "PC_T1_BulkRack_west.png",
+          "source_size": [
+            384,
+            896
+          ],
+          "game_size": [
+            192,
+            448
+          ]
+        }
+      ]
+    },
+    {
+      "name": "工业物资柜",
+      "proposed_defName": "PC_T1_SupplyCabinet",
+      "group": "仓储",
+      "batch": "A",
+      "footprint_north": [
+        2,
+        1
+      ],
+      "role": "一座两格宽、单格深的低矮工业分类物资柜，以平整可见顶面、很薄的前沿柜门暗边和固定分格结构表达收纳用途",
+      "parts": [
+        [
+          "左分类区",
+          -1,
+          0
+        ],
+        [
+          "右分类区",
+          1,
+          0
+        ],
+        [
+          "前沿机械标签槽",
+          0,
+          1
+        ],
+        [
+          "后沿铰链短条",
+          0,
+          -1
+        ]
+      ],
+      "extra": "柜顶留有干净空间，实际库存由游戏另行显示；不画药瓶、衣服、武器或药品图标。前沿标签槽无字，无发光显示屏；不画站立衣柜的正面视图，不画保险库大门、医疗床或十字标志。",
+      "proposed_stats": {
+        "power_w": 0,
+        "stacks_per_cell": 3,
+        "total_stacks": 6,
+        "steel": 110,
+        "components": 2,
+        "work_to_build": 2200,
+        "hp": 240
+      },
+      "proposed_draw_size_north": [
+        2.5,
+        1.5
+      ],
+      "source_size_north": [
+        640,
+        384
+      ],
+      "game_size_north": [
+        320,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_SupplyCabinet",
+      "combined_prompt_file": "按设备合并/工业物资柜.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/工业物资柜_北向.txt",
+          "prompt_sha256": "3CFAA222E624BE5E313C00DF8FBAA9065BFD7C27A5C69D52F45ABC98424B8674",
+          "proposed_png_file": "PC_T1_SupplyCabinet_north.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/工业物资柜_东向.txt",
+          "prompt_sha256": "4AF876A4F8611CB65CFD054F1FB93738A349D26C7F16791CBE2E19787A22150E",
+          "proposed_png_file": "PC_T1_SupplyCabinet_east.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/工业物资柜_南向.txt",
+          "prompt_sha256": "5F6C2C7D3F0EE2F88B476058ACAD08B42070E983F522006DA7AAB37A27682B47",
+          "proposed_png_file": "PC_T1_SupplyCabinet_south.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/工业物资柜_西向.txt",
+          "prompt_sha256": "B3598A4703F4EA7DF427F0A9684DA3308C54AE88B4BE0B29A4B58BA9B8598EA9",
+          "proposed_png_file": "PC_T1_SupplyCabinet_west.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        }
+      ]
+    },
+    {
+      "name": "小型冷藏柜",
+      "proposed_defName": "PC_T1_ColdLocker",
+      "group": "仓储",
+      "batch": "C",
+      "footprint_north": [
+        2,
+        1
+      ],
+      "role": "一台两格宽、单格深的低矮卧式工业冷藏柜，封闭双盖、明显的隔热盖边和一侧压缩机维修区，具有冷柜而非普通货架的轮廓",
+      "parts": [
+        [
+          "左侧隔热盖",
+          -1,
+          0
+        ],
+        [
+          "右侧压缩机维修盖",
+          1,
+          0
+        ],
+        [
+          "前沿无字温度窗",
+          0,
+          1
+        ],
+        [
+          "后沿散热格栅",
+          1,
+          -1
+        ]
+      ],
+      "extra": "隔热盖关闭，不画柜内食物；固定温度窗是小型暗青玻璃，没有数字、温度刻度或冰霜贴纸。不画冰块、外喷冷雾、积雪、发光蓝色内舱或整间冷库。",
+      "proposed_stats": {
+        "power_w": 200,
+        "total_real_stacks": 6,
+        "target_temperature_c": -5,
+        "steel": 160,
+        "components": 4,
+        "work_to_build": 3600,
+        "hp": 220
+      },
+      "proposed_draw_size_north": [
+        2.5,
+        1.5
+      ],
+      "source_size_north": [
+        640,
+        384
+      ],
+      "game_size_north": [
+        320,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_ColdLocker",
+      "combined_prompt_file": "按设备合并/小型冷藏柜.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/小型冷藏柜_北向.txt",
+          "prompt_sha256": "C655B82DCBE7A988F768A9F3E34B3207C426D8AE6C89E8ECCA5D3D3638B62A0C",
+          "proposed_png_file": "PC_T1_ColdLocker_north.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/小型冷藏柜_东向.txt",
+          "prompt_sha256": "A12D3416EB8D62A78F0CC0A663AE83507F8B6CD50E15C7A1C60D7B9E6F1E500D",
+          "proposed_png_file": "PC_T1_ColdLocker_east.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/小型冷藏柜_南向.txt",
+          "prompt_sha256": "262B806A7BB3349317BFA41EF6051C4475E2750F65E792FA54E956C5EE4B6492",
+          "proposed_png_file": "PC_T1_ColdLocker_south.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/小型冷藏柜_西向.txt",
+          "prompt_sha256": "75F12CE9B5B59FDE46462AB294D2E7F7A1D92398339B2F460CED91EA89574126",
+          "proposed_png_file": "PC_T1_ColdLocker_west.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        }
+      ]
+    },
+    {
+      "name": "车间备料架",
+      "proposed_defName": "PC_T1_StagingRack",
+      "group": "备料",
+      "batch": "A",
+      "footprint_north": [
+        2,
+        1
+      ],
+      "role": "一座两格宽、单格深的浅型车间备料托架，两个开放浅托盘、前沿易取缺口和简单固定底架，外观轻于通用货架",
+      "parts": [
+        [
+          "左浅托盘",
+          -1,
+          0
+        ],
+        [
+          "右浅托盘",
+          1,
+          0
+        ],
+        [
+          "前沿取料缺口",
+          0,
+          1
+        ],
+        [
+          "后沿低挡边",
+          0,
+          -1
+        ]
+      ],
+      "extra": "托盘完全空置，不预画零件和成品；没有机械臂、送料带、连接管嘴或自动取料器。前沿只用两小段暗黄导向色，不能画字母、数字和文本标签。无电子读数屏。",
+      "proposed_stats": {
+        "power_w": 0,
+        "stacks_per_cell": 3,
+        "total_stacks": 6,
+        "steel": 70,
+        "components": 0,
+        "work_to_build": 1200,
+        "hp": 180
+      },
+      "proposed_draw_size_north": [
+        2.5,
+        1.5
+      ],
+      "source_size_north": [
+        640,
+        384
+      ],
+      "game_size_north": [
+        320,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_StagingRack",
+      "combined_prompt_file": "按设备合并/车间备料架.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/车间备料架_北向.txt",
+          "prompt_sha256": "1BC4738D7D2E40E35782127BF356FC22663FE285E0F36F5075509D99BE490FB1",
+          "proposed_png_file": "PC_T1_StagingRack_north.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/车间备料架_东向.txt",
+          "prompt_sha256": "539A6CA28DF6336B4CF6A44C6DD2625F4AE36E2DBA72FB2217B1CA7381DBA554",
+          "proposed_png_file": "PC_T1_StagingRack_east.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/车间备料架_南向.txt",
+          "prompt_sha256": "5710CF2B2640E22CAACE50B5FF067F0AEF156F7F1D2D66842831B3205B9E05FA",
+          "proposed_png_file": "PC_T1_StagingRack_south.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/车间备料架_西向.txt",
+          "prompt_sha256": "1E2761CA0EFBF47CAD343DD9EDE47FFE7A6A7ECFEB22EAB9B13CEB02354920D0",
+          "proposed_png_file": "PC_T1_StagingRack_west.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        }
+      ]
+    },
+    {
+      "name": "工业工具柜",
+      "proposed_defName": "PC_T1_ToolCabinet",
+      "group": "辅助",
+      "batch": "B",
+      "footprint_north": [
+        2,
+        1
+      ],
+      "role": "一座两格宽、单格深的低矮工具设施柜，开放的浅工具盘与抽屉顶面并排，呈现为辅助设施而非加工台",
+      "parts": [
+        [
+          "左侧固定扳手工具座",
+          -1,
+          0
+        ],
+        [
+          "右侧固定夹具工具座",
+          1,
+          0
+        ],
+        [
+          "前沿短抽屉把手",
+          0,
+          1
+        ],
+        [
+          "后沿窄工具挡条",
+          0,
+          -1
+        ]
+      ],
+      "extra": "扳手与夹具固定在柜体的工具座中，是设备装饰部件；只保留三四个粗轮廓，不铺满细碎工具。没有电机、工作主轴、火炉或大型屏幕，不画装备生产中的原料。",
+      "proposed_stats": {
+        "power_w": 0,
+        "work_speed_stat_offset": 0.2,
+        "max_linked_cabinets_combined": 2,
+        "steel": 130,
+        "components": 2,
+        "work_to_build": 2600,
+        "hp": 240
+      },
+      "proposed_draw_size_north": [
+        2.5,
+        1.5
+      ],
+      "source_size_north": [
+        640,
+        384
+      ],
+      "game_size_north": [
+        320,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_ToolCabinet",
+      "combined_prompt_file": "按设备合并/工业工具柜.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/工业工具柜_北向.txt",
+          "prompt_sha256": "45559BE3949FC7DDEE73D3322402F034AB0D3407865C9DD55F99CAC42A8E7101",
+          "proposed_png_file": "PC_T1_ToolCabinet_north.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/工业工具柜_东向.txt",
+          "prompt_sha256": "27487DC543044680488EDD3A05762224E3CC814E2BF59D7E6392C11B9E01C058",
+          "proposed_png_file": "PC_T1_ToolCabinet_east.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/工业工具柜_南向.txt",
+          "prompt_sha256": "D78C8ADFF0432E3C95CAB02D998028DC0842F843B5C64C923019EBE93E56E8D8",
+          "proposed_png_file": "PC_T1_ToolCabinet_south.png",
+          "source_size": [
+            640,
+            384
+          ],
+          "game_size": [
+            320,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/工业工具柜_西向.txt",
+          "prompt_sha256": "333EE0F22916BF59B1B8B083994A74E3467BCA4FA34AAB30266A72476BD9FFE6",
+          "proposed_png_file": "PC_T1_ToolCabinet_west.png",
+          "source_size": [
+            384,
+            640
+          ],
+          "game_size": [
+            192,
+            320
+          ]
+        }
+      ]
+    },
+    {
+      "name": "车间工作灯",
+      "proposed_defName": "PC_T1_WorkLamp",
+      "group": "照明",
+      "batch": "A",
+      "footprint_north": [
+        1,
+        1
+      ],
+      "role": "一盏单格宽的低矮工业工作灯，宽灯罩、平面磨砂灯面和固定短支座，在俯视下显示灯罩顶面与很短的侧边",
+      "parts": [
+        [
+          "磨砂灯面",
+          0,
+          1
+        ],
+        [
+          "后侧短支座",
+          0,
+          -1
+        ],
+        [
+          "右側固定接线盒",
+          1,
+          0
+        ]
+      ],
+      "extra": "灯面采用克制的暖灰白，明亮但不纯白过曝；不画高杆、不画地面光圈、灯光射线、光雾或悬浮光球。灯面是固定结构，灯光效果交给游戏引擎。",
+      "proposed_stats": {
+        "power_w": 40,
+        "glow_radius_tiles": 8,
+        "steel": 35,
+        "components": 1,
+        "work_to_build": 1000,
+        "hp": 100
+      },
+      "proposed_draw_size_north": [
+        1.5,
+        1.5
+      ],
+      "source_size_north": [
+        384,
+        384
+      ],
+      "game_size_north": [
+        192,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_WorkLamp",
+      "combined_prompt_file": "按设备合并/车间工作灯.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/车间工作灯_北向.txt",
+          "prompt_sha256": "3014562161DFBC7F8D4B1235884AC15F287F89B9F7BCFC9C9C1F00302388B205",
+          "proposed_png_file": "PC_T1_WorkLamp_north.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/车间工作灯_东向.txt",
+          "prompt_sha256": "A99961E4444BF4F58018231609E72E94A4CB60FF186047B255093C08ACB4EDBE",
+          "proposed_png_file": "PC_T1_WorkLamp_east.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/车间工作灯_南向.txt",
+          "prompt_sha256": "95931913D03E4B34198A5EFE9FE807617A52940E577E70D78996CC5A8907726D",
+          "proposed_png_file": "PC_T1_WorkLamp_south.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/车间工作灯_西向.txt",
+          "prompt_sha256": "AC8B58E3E50257ECA83605BF4D55D23308836A4820B58FE26204DE1012D5D4DF",
+          "proposed_png_file": "PC_T1_WorkLamp_west.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        }
+      ]
+    },
+    {
+      "name": "工业冷却器",
+      "proposed_defName": "PC_T1_WorkshopCooler",
+      "group": "温控",
+      "batch": "B",
+      "footprint_north": [
+        1,
+        1
+      ],
+      "role": "一台嵌入墙体的一格工业冷却器，顶面短厚矩形壳体，冷端出风槽与热端散热格栅有不同固定造型，冷热两侧清晰可辨",
+      "parts": [
+        [
+          "冷端出风槽",
+          0,
+          1
+        ],
+        [
+          "热端粗散热格栅",
+          0,
+          -1
+        ],
+        [
+          "压缩机维修盖",
+          1,
+          0
+        ]
+      ],
+      "extra": "冷端只点缀一条暗钢蓝识别线，热端用粗灰格栅，不画红蓝箭头或任何文字。冷热端必须相对，不画地面风场、蒸汽、雪花和火焰，也不要把它画成同侧出风的台式电扇。",
+      "proposed_stats": {
+        "high_power_w": 350,
+        "energy_per_second": -31.5,
+        "steel": 140,
+        "components": 4,
+        "work_to_build": 3200,
+        "hp": 220
+      },
+      "proposed_draw_size_north": [
+        1.5,
+        1.5
+      ],
+      "source_size_north": [
+        384,
+        384
+      ],
+      "game_size_north": [
+        192,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_WorkshopCooler",
+      "combined_prompt_file": "按设备合并/工业冷却器.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/工业冷却器_北向.txt",
+          "prompt_sha256": "FBF2F0CE90D33441F71265CB313CF9935C2C20224DD5B263B9246DA8E6537786",
+          "proposed_png_file": "PC_T1_WorkshopCooler_north.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/工业冷却器_东向.txt",
+          "prompt_sha256": "73833CDEE194F4959AB939C3D8678F449D140AEE50AE70844C57091AA2CC3B3E",
+          "proposed_png_file": "PC_T1_WorkshopCooler_east.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/工业冷却器_南向.txt",
+          "prompt_sha256": "2D52AE55CB9D01C2AAC0846E578D3B9B781BA16D563933B33FDA897E867E8860",
+          "proposed_png_file": "PC_T1_WorkshopCooler_south.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/工业冷却器_西向.txt",
+          "prompt_sha256": "CE986650585F2B39B605823CA4EA2D997995DE77BA381B26F6A44063A7E157B9",
+          "proposed_png_file": "PC_T1_WorkshopCooler_west.png",
+          "source_size": [
+            384,
+            384
+          ],
+          "game_size": [
+            192,
+            192
+          ]
+        }
+      ]
+    },
+    {
+      "name": "智能燃料炼制台",
+      "proposed_defName": "PC_T1_FuelRefinery",
+      "group": "燃料生产",
+      "batch": "B",
+      "footprint_north": [
+        3,
+        1
+      ],
+      "role": "一台三格宽、单格深的人工操作智能燃料炼制台，开放前沿与封闭低矮反应罐并存，保持与现有 T1 生产台一致的宽扁外形",
+      "parts": [
+        [
+          "左进料托盘",
+          -1,
+          0
+        ],
+        [
+          "中央矮反应罐",
+          0,
+          0
+        ],
+        [
+          "右侧固定冷凝组件",
+          1,
+          0
+        ],
+        [
+          "前沿人工控制板",
+          1,
+          1
+        ]
+      ],
+      "extra": "固定短管只连接本机罐体和冷凝器，不向相邻格延伸；托盘空置，不画桶装燃料和流淌液体。前沿人工控制板有小型无字暗青读数屏；无自动传送带、机械臂或无人密闭生产舱。",
+      "proposed_stats": {
+        "power_w": 500,
+        "work_speed_factor": 4.0,
+        "steel": 220,
+        "components": 5,
+        "work_to_build": 4400,
+        "hp": 260
+      },
+      "proposed_draw_size_north": [
+        3.5,
+        1.5
+      ],
+      "source_size_north": [
+        896,
+        384
+      ],
+      "game_size_north": [
+        448,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_FuelRefinery",
+      "combined_prompt_file": "按设备合并/智能燃料炼制台.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/智能燃料炼制台_北向.txt",
+          "prompt_sha256": "E2F0ACF47B5BE4A9BABBD5C76787D05FE501229ED62187AEED6AB9747D51DCE5",
+          "proposed_png_file": "PC_T1_FuelRefinery_north.png",
+          "source_size": [
+            896,
+            384
+          ],
+          "game_size": [
+            448,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/智能燃料炼制台_东向.txt",
+          "prompt_sha256": "AE7B2455D08FDABB7D9ED02F093B32F47CE22BFBE40D204860CA7DBDA26BE52A",
+          "proposed_png_file": "PC_T1_FuelRefinery_east.png",
+          "source_size": [
+            384,
+            896
+          ],
+          "game_size": [
+            192,
+            448
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/智能燃料炼制台_南向.txt",
+          "prompt_sha256": "A4BB3ABA0E69DFBA8D12F5258D7A3023CCE3911DA32875DF2771853F87023513",
+          "proposed_png_file": "PC_T1_FuelRefinery_south.png",
+          "source_size": [
+            896,
+            384
+          ],
+          "game_size": [
+            448,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/智能燃料炼制台_西向.txt",
+          "prompt_sha256": "CC24AA1ED516C4C443895B899B5337120A87CFF17503401AF6676452600054B2",
+          "proposed_png_file": "PC_T1_FuelRefinery_west.png",
+          "source_size": [
+            384,
+            896
+          ],
+          "game_size": [
+            192,
+            448
+          ]
+        }
+      ]
+    },
+    {
+      "name": "智能研究台",
+      "proposed_defName": "PC_T1_ResearchBench",
+      "group": "研究",
+      "batch": "B",
+      "footprint_north": [
+        3,
+        1
+      ],
+      "role": "一台三格宽、单格深的单人智能研究台，左侧固定测量仪器、中部开放研究工作面、右侧小型读数屏，沿用 T1 人工操作工业工作台造型",
+      "parts": [
+        [
+          "左固定测量仪",
+          -1,
+          0
+        ],
+        [
+          "中部开放工作面",
+          0,
+          0
+        ],
+        [
+          "右小型读数屏",
+          1,
+          0
+        ],
+        [
+          "前沿少量按钮",
+          1,
+          1
+        ]
+      ],
+      "extra": "工作面留空，不画文字、笔记页上的字迹或会被误认为真实库存的书本。固定仪器只有简洁旋钮和传感探头，不画全息图、大电脑墙、医疗实验舱或无人科研机械。",
+      "proposed_stats": {
+        "power_w": 250,
+        "research_speed_factor": 1.0,
+        "research_qualification": "basic_only",
+        "steel": 180,
+        "components": 4,
+        "work_to_build": 4000,
+        "hp": 220
+      },
+      "proposed_draw_size_north": [
+        3.5,
+        1.5
+      ],
+      "source_size_north": [
+        896,
+        384
+      ],
+      "game_size_north": [
+        448,
+        192
+      ],
+      "proposed_texture_base": "Things/Building/T1Infrastructure/PC_T1_ResearchBench",
+      "combined_prompt_file": "按设备合并/智能研究台.txt",
+      "directions": [
+        {
+          "direction": "north",
+          "direction_cn": "北",
+          "front_screen_side": "下",
+          "prompt_file": "分方向提示词/智能研究台_北向.txt",
+          "prompt_sha256": "D364AB91C4503DAC093FB8A3E19D1394AE9D3823379020E1F4A52EA0EF90C7F4",
+          "proposed_png_file": "PC_T1_ResearchBench_north.png",
+          "source_size": [
+            896,
+            384
+          ],
+          "game_size": [
+            448,
+            192
+          ]
+        },
+        {
+          "direction": "east",
+          "direction_cn": "东",
+          "front_screen_side": "左",
+          "prompt_file": "分方向提示词/智能研究台_东向.txt",
+          "prompt_sha256": "6BD78254C8984012ED3F8386EA810652243818E775B1EB473843EB016729BBF7",
+          "proposed_png_file": "PC_T1_ResearchBench_east.png",
+          "source_size": [
+            384,
+            896
+          ],
+          "game_size": [
+            192,
+            448
+          ]
+        },
+        {
+          "direction": "south",
+          "direction_cn": "南",
+          "front_screen_side": "上",
+          "prompt_file": "分方向提示词/智能研究台_南向.txt",
+          "prompt_sha256": "947A984FC225E78348F22C796880E702245B75E8BDB02872A2BD3F56075E1FB1",
+          "proposed_png_file": "PC_T1_ResearchBench_south.png",
+          "source_size": [
+            896,
+            384
+          ],
+          "game_size": [
+            448,
+            192
+          ]
+        },
+        {
+          "direction": "west",
+          "direction_cn": "西",
+          "front_screen_side": "右",
+          "prompt_file": "分方向提示词/智能研究台_西向.txt",
+          "prompt_sha256": "1E74A2823E7A60539FBC1EFFB15BDE50A164FE6E41E9A5C251F976570045F384",
+          "proposed_png_file": "PC_T1_ResearchBench_west.png",
+          "source_size": [
+            384,
+            896
+          ],
+          "game_size": [
+            192,
+            448
+          ]
+        }
+      ]
+    }
+  ]
+}

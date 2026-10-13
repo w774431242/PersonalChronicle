@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "机制 03 · 目标与阈值",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" }
+  },
+  "lanes": [
+    { "id": "rail", "label": "目标求解主轨" },
+    { "id": "aux", "label": "政策与跨周期" },
+    { "id": "risk", "label": "风险与等待", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "p1", "label": "输入", "fromCol": 0, "toCol": 0 },
+    { "id": "p2", "label": "激活判定", "fromCol": 1, "toCol": 2, "variant": "emphasis" },
+    { "id": "p3", "label": "风险与排序量", "fromCol": 3, "toCol": 4 },
+    { "id": "p4", "label": "出口", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["ratio", "enter", "active", "safety", "out"],
+  "semanticChecks": { "allowedRoots": ["ratio", "policy", "latch"], "allowedTerminals": ["slack", "unknown", "out"] },
+  "nodes": [
+    { "id": "ratio", "lane": "rail", "col": 0, "type": "backend", "label": "读数", "sublabel": "ratio + target", "tag": "缺口投影出口" },
+    { "id": "enter", "lane": "rail", "col": 1, "type": "security", "label": "进入阈值", "sublabel": "Food .55 · Rest .45 · Joy .35", "width": 132 },
+    { "id": "active", "lane": "rail", "col": 2, "type": "security", "label": "激活判定", "sublabel": "双阈值迟滞", "tag": "布尔式" },
+    { "id": "safety", "lane": "rail", "col": 3, "type": "security", "label": "安全线", "sublabel": "Food .35 · Rest .25", "tag": "独立于 active", "width": 124 },
+    { "id": "slack", "lane": "rail", "col": 4, "type": "backend", "label": "slack", "sublabel": "时限 − 帮助时延", "tag": "排序键" },
+    { "id": "out", "lane": "rail", "col": 5, "type": "database", "label": "目标态出口", "sublabel": "Active · Priority", "tag": "≤ 1 = 基本需求" },
+    { "id": "policy", "lane": "aux", "col": 1, "type": "database", "label": "生活政策", "sublabel": "目标值", "tag": "LifePolicy" },
+    { "id": "latch", "lane": "aux", "col": 2, "type": "database", "label": "上周期活跃集", "sublabel": "wasActive", "tag": "seed / previous" },
+    { "id": "deadline", "lane": "risk", "col": 3, "type": "backend", "label": "风险时限", "sublabel": "差分估算", "tag": "无经验常量" },
+    { "id": "unknown", "lane": "risk", "col": 5, "type": "external", "label": "不可估 −1", "sublabel": "六种情形", "tag": "不填常量" }
+  ],
+  "edges": [
+    { "from": "ratio", "to": "enter", "label": "比较" },
+    { "from": "policy", "to": "enter", "label": "取阈值", "role": "branch" },
+    { "from": "enter", "to": "active", "label": "低于进入线" },
+    { "from": "latch", "to": "active", "label": "上周期活跃", "role": "branch" },
+    { "from": "policy", "to": "active", "label": "完成线", "role": "branch" },
+    { "from": "active", "to": "safety", "label": "独立判定" },
+    { "from": "ratio", "to": "deadline", "label": "消耗速率", "role": "branch" },
+    { "from": "deadline", "to": "slack", "label": "可估" },
+    { "from": "deadline", "to": "unknown", "label": "六种不可估", "role": "error", "variant": "dashed" },
+    { "from": "safety", "to": "out", "label": "紧急优先" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "激活式",
+      "items": [
+        "active = 已知 ∧ ¬frozen ∧ (ratio < 进入线 ∨ (wasActive ∧ ratio < 目标值))",
+        "进入用 Enter，退出用目标比率 ⇒ 迟滞，不抖动",
+        "安全线（.35 / .25）与 active 独立，命中即 urgent"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "等待与风险",
+      "items": [
+        "等待加权上限 6000 tick：硬截断；仅 seed/previous 可续算，跨会话从 0 起",
+        "非 active 项不累计等待；风险时限由前后周期差分实时估算",
+        "slack = 时限 − 帮助时延；不可估或无来源时返回 −1（仍参与排序）"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "与描述不符",
+      "items": [
+        "不存在 Complete 常量：退出阈值 = 目标比率（.85 / .90 / .70）",
+        "不存在风险时限常量：只有 MinimumDrainRatePerTick 兜底",
+        "类注释的排序键序与实际代码不符（实际含 slack 两级）"
+      ]
+    }
+  ]
+}

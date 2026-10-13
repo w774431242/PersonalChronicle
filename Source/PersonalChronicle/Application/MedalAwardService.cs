@@ -101,9 +101,16 @@ namespace PersonalChronicle.Data
         /// <param name="def">要授予的勋章 Def（须为 Threshold + Pawn 类，与判定范围一致）。</param>
         /// <param name="component">持久化组件，用于取 PawnObject 与触发 MarkChanged。</param>
         /// <returns>true=本次成功授予并写入；false=被校验拦截（已授予/未达标/入参非法）。</returns>
-        public static bool AwardManual(Pawn pawn, MedalDef def, ChronicleGameComponent component)
+        public static bool AwardManual(Pawn pawn, MedalDef def)
         {
-            if (pawn == null || def == null || component == null)
+            if (pawn == null || def == null)
+            {
+                return false;
+            }
+            ChronicleGameComponent component = Current.Game != null
+                ? Current.Game.GetComponent<ChronicleGameComponent>()
+                : null;
+            if (component == null)
             {
                 return false;
             }
@@ -151,7 +158,7 @@ namespace PersonalChronicle.Data
 
         /// <summary>
         /// 金质勋章授勋公告（架构方案 §6.9 公告 Letter，仅首次、恰好一次）。
-        /// 标题 = 勋章 Label 翻译（如「劳动模范·金质」）；正文 = UI.Medal.Gold.Letter
+        /// 标题 = 勋章 Label 翻译（如「劳动模范·金质」）；正文 = PersonalChronicle.UI.Medal.Gold.Letter
         /// （{0} = 人物名，{1} = 无材质称号名）；LookTargets 指向受勋者。
         /// 签名经引擎反射核验（1.6：ReceiveLetter(TaggedString, TaggedString, LetterDef,
         /// LookTargets, Faction, Quest, List&lt;ThingDef&gt;, string, int, bool)）。

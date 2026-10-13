@@ -1,0 +1,103 @@
+{
+  "checkedUtc": "2026-10-08T04:12:08.895000+00:00",
+  "scope": "Document UTF-8, local links, current evidence fingerprints, coverage markers, hypothetical accounting and stock arithmetic. Not runtime tests, economic simulation, UI verification or gameplay acceptance.",
+  "documentCount": 5,
+  "localLinksChecked": 39,
+  "fingerprintsChecked": 11,
+  "documents": [
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\公有机构与外贸循环_优化方案_v0.7.md",
+      "sha256": "0da75f64d63e88efcc6462bbb4d0c38c94791bb6b6b60d3679c9a011e630b607"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\游戏代码设计\\00-公有经济第一批代码设计.md",
+      "sha256": "2bd61bb3af8ecca5e15a3e800e29b0ba78a6bfd92f117b3ecdf6bd94cb747d8b"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\玩法完整度评估与设计准入_v0.6.md",
+      "sha256": "e85a243df3925de846dd5acbff32fb693f33a43358aca8bf62ffe2b9f7ebb122"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\自主经济社会与玩家角色_总体设计_v0.5.md",
+      "sha256": "f801ab9cef798179ae6cd1b1763eb260c4ced55ee8ba36c884f556899b9fad96"
+    },
+    {
+      "path": "docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\模块化实装指导手册\\00-总册与实施路线.md",
+      "sha256": "2e266f83d27ecc7bd2b756d5af60791fc3bc1154388259739614e544cbb784ef"
+    }
+  ],
+  "examples": {
+    "currency": {
+      "initialDeposit": 300,
+      "transfers": [
+        {
+          "from": "Treasury",
+          "to": "Workshop",
+          "amount": 200,
+          "totalAfter": 300
+        },
+        {
+          "from": "Treasury",
+          "to": "Shop",
+          "amount": 100,
+          "totalAfter": 300
+        },
+        {
+          "from": "Workshop",
+          "to": "Pawn",
+          "amount": 60,
+          "totalAfter": 300
+        },
+        {
+          "from": "Pawn",
+          "to": "Shop",
+          "amount": 40,
+          "totalAfter": 300
+        },
+        {
+          "from": "Shop",
+          "to": "Workshop",
+          "amount": 20,
+          "totalAfter": 300
+        }
+      ],
+      "uniqueExternalDeposit": 80,
+      "duplicateDepositApplied": false,
+      "publicWithdrawal": 30,
+      "finalBalances": {
+        "Treasury": 50,
+        "Workshop": 160,
+        "Shop": 120,
+        "Pawn": 20
+      },
+      "finalReserve": 350,
+      "finalTotal": 350
+    },
+    "replenishment": {
+      "confirmedUndelivered": 8,
+      "targetFreeStock": 10,
+      "authorizedExport": 5,
+      "usableStock": 6,
+      "existingCompletableWip": 4,
+      "newPlan": 13,
+      "nextPlanAfterRegisteringWip": 0
+    },
+    "tradeOutage": {
+      "startingUncommittedFunds": 120,
+      "dailyCommittedPayroll": 40,
+      "cashOnlyCoverageDays": 3,
+      "claim": "No automatic re-issuance or guarantee of recovery; real material and labour feasibility require separate checks."
+    },
+    "serviceCapacity": {
+      "demandPerDay": 8,
+      "capacityPerDay": 5,
+      "unservedPerDay": 3,
+      "claim": "Money circulation does not remove real service capacity limits."
+    }
+  },
+  "passed": true,
+  "runtimeModified": false,
+  "buildRun": false,
+  "deployed": false,
+  "gameplayVerified": false
+}

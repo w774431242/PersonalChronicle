@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- English override for SocialRelationPolicyDef (CHG-20261006-TRKEY · LOC-01). Base Def text is Chinese. -->
+<LanguageData>
+  <PersonalChronicleSocialRelationPolicy.label>Social Relations Archive Policy</PersonalChronicleSocialRelationPolicy.label>
+</LanguageData>

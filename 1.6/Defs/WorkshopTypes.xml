@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ===================================================================
+       车间类型 WorkshopTypeDef —— 基于环世界原版生产设备风格分类（2026-09-25 重定义）
+       仅用于「分类 / 设备匹配概览 / 排班 / 专向风格 buff」，不影响原版生产机制。
+
+       字段说明：
+         processStage        —— 工序/风格标签（仅用于俯视图着色）。
+         skillDefNames      —— 该类型用于「上岗优先级评分」的代表技能（原版 SkillDef）。
+         expectedDeviceDefNames —— 原生锚点设备（ThingDef），仅供概览算设备匹配度。
+         workSpeedBonusPct  —— 工作速度加成（百分点，10 = +10%），对在岗人员生效。
+         qualityBonus       —— 品质加成（档位，1 = +1 品质）。
+         researchSpeedBonusPct —— 研究速度加成（百分点，研发车间专用）。
+         *WorkTypeDefNames  —— 「岗位 → 原版工作类型」映射（2026-10-02 新增）：
+                               班次设置里选定岗位后，原版「工作」面板会自动勾选这里列出的
+                               WorkTypeDef，并把它提升到**最高档（1）**，让被排班的成员
+                               优先去做车间里的活（而不是站着闲置）。
+                               ★ 覆盖规则：0 → 1（含玩家显式关闭后的重开）、2/3/4 → 1；
+                                 绝不反向关闭、不重排其它类型。
+                               ★ 值勤类型 PC_WorkshopOperation 不在此列、不参与提升
+                                 （它只做 Enable，依据 Defs/Automation_WorkType.xml:9-19）。
+                               ★ 原版仅在「手动优先级」模式下读取档位 —— 简单模式下只做
+                                 Enable 并保持关闭档位写入；管理面板「设置」页有状态行与
+                                 一键开启出口。
+                                 （EXC-2026-012 受控 Enable + EXC-2026-013 受控档位提升）
+                               qualityCheck / standby 原版无对应工作类型 ⇒ 常态留空 = 不联动。
+
+       注（2026-09-26）：加成体系已恢复为「专向风格固定 buff」—— 数值即面板显示数值
+       （显示 = 生效，无技能缩放），由 WorkshopBonusResolver 直读本 Def 换算。
+       =================================================================== -->
+
+  <!-- ① 伐木坊：木材采集/粗加工（原版无专用台，风格化归类） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Logging</defName>
+    <label>伐木坊</label>
+    <description>木材采集与粗加工区域。锚定原版「手工加工点 / 锯木」类作业，按 Plants 技能评估上岗优先级；在坊内作业 +10% 工作速度。</description>
+    <processStage>Logging</processStage>
+    <skillDefNames>
+      <li>Plants</li>
+    </skillDefNames>
+    <productionWorkTypeDefNames>
+      <li>PlantCutting</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Logging_Production</li>
+      <li>WP_Logging_Maintenance</li>
+    </processKeys>
+    <workSpeedBonusPct>10</workSpeedBonusPct>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ② 制作坊：通用制造（手工加工点 / 制作台） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Crafting</defName>
+    <label>制作坊</label>
+    <description>通用制造区域。锚定原版「制作台 / 手工加工点」，覆盖多数基础制品的配方；在坊内作业 +10% 工作速度。</description>
+    <processStage>Crafting</processStage>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>CraftingSpot</li>
+    </expectedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Crafting</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Crafting_Production</li>
+      <li>WP_Crafting_Maintenance</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Crafting</li>
+    </deviceWorkTypeDefNames>
+    <workSpeedBonusPct>10</workSpeedBonusPct>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ③ 锻造坊：金属锻造（燃料/电力锻炉） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Smithing</defName>
+    <label>锻造坊</label>
+    <description>金属锻造区域。锚定原版「燃料锻炉 / 电力锻炉」，用于金属坯料与锻件；在坊内作业 +12% 工作速度、+1 品质。</description>
+    <processStage>Smithing</processStage>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>FueledSmithy</li>
+      <li>ElectricSmithy</li>
+    </expectedDeviceDefNames>
+    <acceptedDeviceDefNames>
+      <li>ElectricSmelter</li>
+    </acceptedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Smithing</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Smithing_Production</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Smithing</li>
+    </deviceWorkTypeDefNames>
+    <workSpeedBonusPct>12</workSpeedBonusPct>
+    <qualityBonus>1</qualityBonus>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ④ 机械加工坊：精密机加（机械加工台） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Machining</defName>
+    <label>机械加工坊</label>
+    <description>机械加工区域。锚定原版「机械加工台」，用于零件与组件的精密加工；在坊内作业 +10% 工作速度、+1 品质。</description>
+    <processStage>Machining</processStage>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>TableMachining</li>
+    </expectedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Smithing</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Machining_Production</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Smithing</li>
+    </deviceWorkTypeDefNames>
+    <workSpeedBonusPct>10</workSpeedBonusPct>
+    <qualityBonus>1</qualityBonus>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ⑤ 烹饪坊：食物烹饪（电力炉灶） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Cooking</defName>
+    <label>烹饪坊</label>
+    <description>食物烹饪区域。锚定原版「电力炉灶」，用于餐食与食材加工；在坊内作业 +10% 工作速度。</description>
+    <processStage>Cooking</processStage>
+    <skillDefNames>
+      <li>Cooking</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>ElectricStove</li>
+    </expectedDeviceDefNames>
+    <acceptedDeviceDefNames>
+      <li>TableButcher</li>
+    </acceptedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Cooking</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Cooking_Production</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Cooking</li>
+    </deviceWorkTypeDefNames>
+    <workSpeedBonusPct>10</workSpeedBonusPct>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ⑥ 缝纫坊：衣物缝制（缝纫台） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Tailoring</defName>
+    <label>缝纫坊</label>
+    <description>衣物缝制区域。锚定原版「缝纫台 / 电力缝纫台」，用于衣物与布料制品；在坊内作业 +10% 工作速度、+1 品质。</description>
+    <processStage>Tailoring</processStage>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>HandTailoringBench</li>
+      <li>ElectricTailoringBench</li>
+    </expectedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Tailoring</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Tailoring_Production</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Tailoring</li>
+    </deviceWorkTypeDefNames>
+    <workSpeedBonusPct>10</workSpeedBonusPct>
+    <qualityBonus>1</qualityBonus>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ⑦ 制药坊：药品制备（制药台） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_DrugCrafting</defName>
+    <label>制药坊</label>
+    <description>药品制备区域。锚定原版「制药台」，用于药品与化学品；在坊内作业 +10% 工作速度、+1 品质。</description>
+    <processStage>DrugCrafting</processStage>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>DrugLab</li>
+    </expectedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Crafting</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_DrugCrafting_Production</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Crafting</li>
+    </deviceWorkTypeDefNames>
+    <workSpeedBonusPct>10</workSpeedBonusPct>
+    <qualityBonus>1</qualityBonus>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ⑧ 石工坊：石料切割（石工台） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Stonecutting</defName>
+    <label>石工坊</label>
+    <description>石料切割区域。锚定原版「石工台」，用于砖块与石制品；在坊内作业 +10% 工作速度。</description>
+    <processStage>Stonecutting</processStage>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>TableStonecutter</li>
+    </expectedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Crafting</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Stonecutting_Production</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Crafting</li>
+    </deviceWorkTypeDefNames>
+    <workSpeedBonusPct>10</workSpeedBonusPct>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ⑨ 雕塑坊：艺术品雕刻（雕塑台） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Sculpting</defName>
+    <label>雕塑坊</label>
+    <description>艺术品雕刻区域。锚定原版「雕塑台 / 电力雕塑台」，用于雕塑与艺术品；在坊内作业 +10% 工作速度、+1 品质。</description>
+    <processStage>Sculpting</processStage>
+    <skillDefNames>
+      <li>Art</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>TableSculpting</li>
+    </expectedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Art</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Sculpting_Production</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Art</li>
+    </deviceWorkTypeDefNames>
+    <workSpeedBonusPct>10</workSpeedBonusPct>
+    <qualityBonus>1</qualityBonus>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+  <!-- ⑩ 研究坊：科技研究（研究台） -->
+  <PersonalChronicle.Automation.WorkshopTypeDef>
+    <defName>WT_Research</defName>
+    <label>研究坊</label>
+    <description>科技研究区域。锚定原版「简易 / 高科技研究台」，用于项目研究；在坊内研究 +20% 研究速度。</description>
+    <processStage>Research</processStage>
+    <skillDefNames>
+      <li>Intellectual</li>
+    </skillDefNames>
+    <expectedDeviceDefNames>
+      <li>SimpleResearchBench</li>
+      <li>HiTechResearchBench</li>
+    </expectedDeviceDefNames>
+    <productionWorkTypeDefNames>
+      <li>Research</li>
+    </productionWorkTypeDefNames>
+    <maintenanceWorkTypeDefNames>
+      <li>Construction</li>
+    </maintenanceWorkTypeDefNames>
+    <processKeys>
+      <li>WP_Research_Production</li>
+    </processKeys>
+    <deviceWorkTypeDefNames>
+      <li>Research</li>
+    </deviceWorkTypeDefNames>
+    <researchSpeedBonusPct>20</researchSpeedBonusPct>
+  </PersonalChronicle.Automation.WorkshopTypeDef>
+
+</Defs>

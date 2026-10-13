@@ -1,0 +1,138 @@
+{
+  "changeId": "CHG-20261008-PAWN-ECONOMY",
+  "verifiedUtc": "2026-10-08T01:18:32.3490073Z",
+  "runtimeImplemented": true,
+  "game": "1.6.4871 rev590",
+  "ruif": "1.3.0",
+  "schema": 1,
+  "build": {
+    "errors": 0,
+    "result": "Passed",
+    "warnings": 0
+  },
+  "tests": {
+    "total": 579,
+    "newEconomyTests": 30,
+    "newEconomyPassed": 30,
+    "skipped": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "passed": 578,
+    "failed": 0
+  },
+  "defs": {
+    "bilingualKeys": 69,
+    "jobs": 4,
+    "exactVanillaXPathMatches": 1,
+    "nodes": 12,
+    "physicalInstitutions": 5,
+    "result": "Passed"
+  },
+  "deployment": {
+    "initialBackup": "_backups\\release-deploy\\deploy_20261008_091554_538",
+    "verifiedHashes": [
+      {
+        "path": "Assemblies\\PersonalChronicle.dll",
+        "sha256": "88F116A9C791191F7635E4F1D9EFB6E215AA5765793352EAA4E845A72C334B3E",
+        "deployedMatch": true
+      },
+      {
+        "path": "Defs\\PawnEconomy_Institutions.xml",
+        "sha256": "9BF41FCEB8550B12CB6B004B02E6D6D21918AA929843955A052C56B5FBB56B90",
+        "deployedMatch": true
+      },
+      {
+        "path": "Patches\\PawnEconomy_ThinkTree.xml",
+        "sha256": "AC97EFE8093C5D9CAE5FFBB62D17852A6F8A3CB9912AA7F8971E146811367803",
+        "deployedMatch": true
+      },
+      {
+        "path": "Languages\\ChineseSimplified\\Keyed\\PawnEconomy.xml",
+        "sha256": "FA80A3570132DC5C3E08DC742FF297438954A16311AE4AA4832ECC86AE0A3F51",
+        "deployedMatch": true
+      },
+      {
+        "path": "Languages\\English\\Keyed\\PawnEconomy.xml",
+        "sha256": "BDDA34F3461587015E26449EA77E61A20257073A5B9EAE1BA122C279B3CAA81F",
+        "deployedMatch": true
+      },
+      {
+        "path": "Languages\\English\\DefInjected\\ThingDef\\PawnEconomy.xml",
+        "sha256": "ED31C796220A7B9FC28252FA41005BE93CECDF368A676FBE2BD17B21203E26B6",
+        "deployedMatch": true
+      },
+      {
+        "path": "Languages\\English\\DefInjected\\JobDef\\PawnEconomy.xml",
+        "sha256": "5F59AFB2AA04A9477780695A74474CD7C84970E24F931CE06B815A996A99CE72",
+        "deployedMatch": true
+      },
+      {
+        "path": "Languages\\English\\DefInjected\\WorkGiverDef\\PawnEconomy.xml",
+        "sha256": "6E372025D0A51914174CC94E83D7950E80B3B9FA6FD3D56E7FC50677C4DEC891",
+        "deployedMatch": true
+      },
+      {
+        "path": "Languages\\English\\DefInjected\\DesignationCategoryDef\\PawnEconomy.xml",
+        "sha256": "45F32772AEED0C24C3B3B11AE486FC94D614A0548871A2064AD880D01DE3C126",
+        "deployedMatch": true
+      },
+      {
+        "path": "README.md",
+        "sha256": "E9BEBB6B901EE673B8D59BE73D535241C08C7FCE069F9C02628F64180455B994",
+        "deployedMatch": true
+      }
+    ],
+    "copiedFiles": 202,
+    "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+    "backup": "_backups\\release-deploy\\deploy_20261008_091757_610",
+    "result": "Passed"
+  },
+  "newSourceHashes": [
+    {
+      "path": "Source\\PersonalChronicle\\Domain\\PawnEconomy\\EconomyModel.cs",
+      "sha256": "F4C8FE6748B7FBE98741C722389541FF3BF4F4CC151E08F8332885B40E4D3123"
+    },
+    {
+      "path": "Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyService.cs",
+      "sha256": "B70313BD863639CA9C4C19D0BC8FBC47092D361692F4752A283EFE76D13AAD6C"
+    },
+    {
+      "path": "Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyView.cs",
+      "sha256": "90B3D9BB14531194736D0D51991461E9A8A24ACD09A2B168F16702D39538DACE"
+    },
+    {
+      "path": "Source\\PersonalChronicle\\Economy\\PawnEconomy\\Dialog_PawnEconomy.cs",
+      "sha256": "573D57A662C3D9EAB609F6D57A383DEE17FC141EC2178D02698ABE59957F8631"
+    },
+    {
+      "path": "Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyCommands.cs",
+      "sha256": "A534105FC057044FDF6A2C5826E533BFC9CC31AD8326AF526F13F3AECC5765EE"
+    },
+    {
+      "path": "Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyRuntime.cs",
+      "sha256": "83CDDF5000215CB251D82C7E9EC4F6E6111DAE47B95DDB5C88F073528B687182"
+    },
+    {
+      "path": "Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyWorld.cs",
+      "sha256": "D2E0DF803BEFE4A77791B0C84298DC1FACBEB96559D2E868258FF2A0090ABAA9"
+    },
+    {
+      "path": "Source\\PersonalChronicle\\Data\\PawnEconomySaveData.cs",
+      "sha256": "426BCB3119FEB5E6105D10D3AA7D4EC8FAAF0FD23DB089BBEFBF22CA03DF3FA9"
+    },
+    {
+      "path": "Tests\\PawnEconomyTests.cs",
+      "sha256": "EEB42C0F6117A1ED3B4DF7E8457514E1705BE66C796289F8F1D45DF781A53C4D"
+    },
+    {
+      "path": "Tests\\PawnEconomyScribeTests.cs",
+      "sha256": "AB27DF993DF090835AC83522B5AB9D9F2F7464F7787A04C1D59AD415A7D8F340"
+    },
+    {
+      "path": "_scripts\\verify-pawn-economy.ps1",
+      "sha256": "3624970A3A6DAC6E8273BE070B988A11E13CADD789D4E07FB6C936F0BAA07CF6"
+    }
+  ],
+  "gameplayValidated": false,
+  "gameRestartRequired": true
+}

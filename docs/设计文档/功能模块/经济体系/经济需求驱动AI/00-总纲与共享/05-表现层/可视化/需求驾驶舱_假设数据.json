@@ -1,0 +1,113 @@
+{
+  "status": "Hypothetical design fixture; not game telemetry, not RUIF runtime screenshot.",
+  "population": 12,
+  "forecastHours": 24,
+  "food": {
+    "grossQuantity": 36,
+    "reliablePublicCover": 6,
+    "paidCandidate": 30,
+    "needsAfterPublicCover": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "foodBudgetsAfterOtherNecessaryCosts": [
+      9,
+      9,
+      9,
+      9,
+      9,
+      6,
+      3,
+      0,
+      0,
+      0
+    ],
+    "price": 3,
+    "budgetIntent": 18,
+    "confirmedOpen": 12,
+    "forecastSupply": 24,
+    "moneyBlockedPeople": 5,
+    "moneyBlockedQuantity": 12
+  },
+  "scenarios": {
+    "newPrice": {
+      "scope": "Next equal-needs and equal-budget window, new orders only; current confirmed orders are not repriced.",
+      "price": 2,
+      "intent": 19,
+      "cashIfAllIntentDelivered": 38,
+      "baselineCashIfAllIntentDelivered": 54,
+      "zeroBudgetPeopleUnaffected": 3
+    },
+    "publicPurchase": {
+      "quantity": 6,
+      "unitPrice": 3,
+      "publicCost": 18,
+      "personalIntentUnchanged": 18,
+      "paidCandidateCoverageIfDelivered": 24,
+      "totalLifeCoverageIfAllDelivered": 30
+    }
+  },
+  "rows": [
+    [
+      "食品",
+      "30 份",
+      "18 份",
+      "12 份",
+      "24 份",
+      "购买力不足"
+    ],
+    [
+      "衣物",
+      "2 件",
+      "1 件",
+      "1 件",
+      "4 件",
+      "部分买不起"
+    ],
+    [
+      "医疗",
+      "3 人次",
+      "公共",
+      "—",
+      "1 人次",
+      "缺可用医生"
+    ],
+    [
+      "托育",
+      "8 小时",
+      "公共",
+      "—",
+      "2 小时",
+      "人手与时段不足"
+    ],
+    [
+      "睡眠",
+      "3 时段",
+      "公共",
+      "—",
+      "3 时段",
+      "尚未安排休息"
+    ],
+    [
+      "娱乐",
+      "4 人",
+      "公共",
+      "—",
+      "可用",
+      "生活时间冲突"
+    ]
+  ],
+  "notes": [
+    "Amounts cannot be added across units. Public services have no commercial orders in this fixture.",
+    "Budget intent includes confirmed orders; do not add them.",
+    "All quantities, population and windows are illustrative, not vanilla balance constants."
+  ]
+}

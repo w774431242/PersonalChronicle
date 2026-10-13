@@ -1,0 +1,569 @@
+Mono path[0] = 'E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/Managed'
+Mono config path = 'E:/SteamLibrary/steamapps/common/RimWorld/MonoBleedingEdge/etc'
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001ED90667010.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001ED9068B010.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001ED906A1020.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001ED906A8430.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001ED929DD040.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001ED90722860.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001ED92370080.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001ED923F40E0.dll
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Initialize engine version: 2022.3.35f1 (011206c7a712)
+[Subsystems] Discovering subsystems at path E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/UnitySubsystems
+GfxDevice: creating device client; threaded=1; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 5060 Ti (ID=0x2d04)
+    Vendor:   NVIDIA
+    VRAM:     7891 MB
+    Driver:   32.0.16.1742
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.075 seconds
+- Finished resetting the current domain, in  0.001 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+UnloadTime: 0.467800 ms
+Command line arguments: -disable-compute-shaders
+RimWorld 1.6.4871 rev591
+Mod RUIF · 组件验证台（开发用） dependency (PersonalChronicle.RUIFramework) needs to have <downloadUrl> and/or <steamWorkshopUrl> specified.
+Mod Rocket's Ranks-zh pack dependency (rockets.ranks) needs to have <downloadUrl> and/or <steamWorkshopUrl> specified.
+Mod Rocket's Ranks dependency (brrainz.harmony) needs to have <downloadUrl> and/or <steamWorkshopUrl> specified.
+Mod RimRomance dependency (brrainz.harmony) needs to have <downloadUrl> and/or <steamWorkshopUrl> specified.
+[Info] loading E:\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001EEA9B6B040.dll
+[Info] loading E:\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\HarmonyMod.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001EEA8E39030.dll
+[Info] loading E:\SteamLibrary\steamapps\workshop\content\294100\1874644848\v1.6\Assemblies\CharacterEditor.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001EEAADF4040.dll
+[Info] loading E:\SteamLibrary\steamapps\workshop\content\294100\2142743468\1.6\Assemblies\DevInYourLanguage.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001EEAA107020.dll
+[Info] loading E:\SteamLibrary\steamapps\common\RimWorld\Mods\RUIF\Assemblies\RUIF.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001EEAA123010.dll
+[Info] loading E:\SteamLibrary\steamapps\common\RimWorld\Mods\RUIF_Demo\Assemblies\RUIF_Demo.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001EEAA16A690.dll
+[Info] loading E:\SteamLibrary\steamapps\common\RimWorld\Mods\殖民地综合管理系统\Assemblies\PersonalChronicle.dll
+Fallback handler could not load library E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/MonoBleedingEdge/data-000001EEA17C8040.dll
+[PersonalChronicle] RUIF detected — RUIF-backed UI enabled.
+Failed to find Verse.WorkTypeDef named Fishing. There are 27 defs of this type loaded.
+Failed to find RimWorld.ThoughtDef named DestroyedMechhiveMainPawn. There are 927 defs of this type loaded.
+Failed to find Verse.JobDef named LeaveShip. There are 332 defs of this type loaded.
+Failed to find RimWorld.HistoryEventDef named DestroyedMechhive. There are 171 defs of this type loaded.
+Failed to find Verse.TerrainDef named AncientHeavyBridge. There are 386 defs of this type loaded.
+Key binding conflict: MainTab_RUIF_DemoBench and TakeScreenshot are both bound to F10.
+Key binding conflict: TakeScreenshot and MainTab_RUIF_DemoBench are both bound to F10.
+Could not load Texture2D at 'Terrain/Misc/BridgeSpaceProps_Loop' in any active mod or in base resources.
+MatFrom with null sourceTex.
+Could not load Texture2D at 'Terrain/Misc/BridgeSpaceProps_Right' in any active mod or in base resources.
+MatFrom with null sourceTex.
+Translation data for language Simplified Chinese has 11 errors. Generate translation report for more info.
+[PersonalChronicle] build 2026-10-10 10:58 UTC
+[PersonalChronicle] Harmony PatchAll failed: HarmonyLib.HarmonyException: Patching exception in method virtual System.Void RimWorld.Plant::PlantCollected(Verse.Pawn by, RimWorld.PlantDestructionMode plantDestructionMode) ---> System.Exception: Parameter "mode" not found in method virtual System.Void RimWorld.Plant::PlantCollected(Verse.Pawn by, RimWorld.PlantDestructionMode plantDestructionMode)
+[Ref 9C326C2C]
+  at HarmonyLib.MethodCreatorTools.EmitCallParameter (HarmonyLib.MethodCreator creator, System.Reflection.MethodInfo patch, System.Boolean allowFirsParamPassthrough, System.Reflection.Emit.LocalBuilder& tmpInstanceBoxingVar, System.Reflection.Emit.LocalBuilder& tmpObjectVar, System.Boolean& refResultUsed, System.Collections.Generic.List`1[T] tmpBoxVars) [0x00a37] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.MethodCreator.AddPrefixes () [0x0009c] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.MethodCreator.CreateReplacement () [0x0033a] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.PatchFunctions.UpdateWrapper (System.Reflection.MethodBase original, HarmonyLib.PatchInfo patchInfo) [0x0007c] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.PatchClassProcessor.ProcessPatchJob (HarmonyLib.PatchJobs`1+Job[T] job) [0x000f8] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+   --- End of inner exception stack trace ---
+[Ref 14263724]
+  at HarmonyLib.PatchClassProcessor.ReportException (System.Exception exception, System.Reflection.MethodBase original) [0x0013c] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.PatchClassProcessor.Patch () [0x00096] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.Harmony.<PatchAll>b__10_1 (System.Type type) [0x00007] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.CollectionExtensions.Do[T] (System.Collections.Generic.IEnumerable`1[T] sequence, System.Action`1[T] action) [0x00014] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.CollectionExtensions.DoIf[T] (System.Collections.Generic.IEnumerable`1[T] sequence, System.Func`2[T,TResult] condition, System.Action`1[T] action) [0x00007] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+  at HarmonyLib.Harmony.PatchAll (System.Reflection.Assembly assembly) [0x00006] in <e53399289d9b419d83f9f5b02c5cf609>:0 
+PersonalChronicle.ChronicleStartup..cctor()
+[PersonalChronicle] T1 manual equipment initialized: 10
+[PersonalChronicle][Ui] chronicle inspect tab injected into 12 humanlike def(s).
+Type GameComponent_PawnEconomy probably needs a StaticConstructorOnStartup attribute, because it has a field speechTailTexture of type Texture2D. All assets must be loaded in the main thread.
+Unloading 5 Unused Serialized files (Serialized files now loaded: 5)
+Unloading 97 unused Assets to reduce memory usage. Loaded Objects now: 27148.
+Total: 139.140400 ms (FindLiveObjects: 1.193800 ms CreateObjectMapping: 0.472200 ms MarkObjects: 137.096800 ms  DeleteObjects: 0.377200 ms)
+
+CharacterEditor v1.6.3 initializing...
+updating labels for simplified chinese...
+loading pawn slot content from file...
+character editor instance created
+checking editor settings...
+bodysizes genes are active
+CharacterEditor v1.6.3 ...done
+CE is trying to create default parameter lists ...
+creating default parameter list for genes...
+249 default entities for genes created
+creating default parameter list for objects...
+1739 default entities for objects created
+creating default parameter list for turrets...
+12 default entities for turrets created
+...lists created
+CE is trying to apply modified parameters...
+no modifications for genes
+no modifications for objects
+no modifications for lifestages
+...done
+Unloading 3 Unused Serialized files (Serialized files now loaded: 5)
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+UnloadTime: 0.697600 ms
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 27350.
+Total: 111.865400 ms (FindLiveObjects: 1.174900 ms CreateObjectMapping: 0.717600 ms MarkObjects: 109.926400 ms  DeleteObjects: 0.046400 ms)
+
+Loading game from file 新移民6 with mods:
+  - brrainz.harmony
+  - Ludeon.RimWorld
+  - Ludeon.RimWorld.Royalty
+  - Ludeon.RimWorld.Ideology
+  - Ludeon.RimWorld.Biotech
+  - Ludeon.RimWorld.Anomaly
+  - Ludeon.RimWorld.Odyssey
+  - void.charactereditor
+  - latta.devl10n
+  - Baldman47.dev1.6.zh
+  - PersonalChronicle.RUIFramework
+  - Lysh.MagicSoil
+  - PersonalChronicle.RUIF.DemoBench
+  - colony.integratedmanagement
+Tried to register the same load ID twice: null, pathRelToParent=/parentThing, parent=PC_AutoFarm_S40779
+Could not get load ID. We're asking for something which was never added during LoadingVars. pathRelToParent=/parentThing, parent=PC_AutoFarm_S40779
+[PersonalChronicle][Automation] AutoFarm load PC_AutoFarm_S40779: target=ZeroSoilMagic cells=80 original=80 applied=80
+[PersonalChronicle][Automation] PipeNet register @(145, 0, 131) total=1
+[PersonalChronicle][Automation] PipeNet register @(146, 0, 131) total=2
+[PersonalChronicle][Automation] PipeNet register @(147, 0, 131) total=3
+[PersonalChronicle][Automation] PipeNet register @(148, 0, 131) total=4
+[PersonalChronicle][Automation] PipeNet register @(149, 0, 131) total=5
+[PersonalChronicle][Automation] PipeNet register @(150, 0, 131) total=6
+[PersonalChronicle][Automation] PipeNet register @(151, 0, 131) total=7
+checking editor settings...
+bodysizes genes are active
+[PersonalChronicle][Ui] == PersonalChronicle Self-Test ==
+pass=40 fail=1
+[PASS] A1 专业技能 Def 已加载 :: count=48
+[PASS] A2 方向引用有效 :: ok
+[PASS] A3 效果引用有效 :: ok
+[PASS] A4 实践工作类型有效 :: ok
+[PASS] A5 原版技能来源有效 :: ok
+[PASS] A6 XP 曲线策略 Def :: ok
+[PASS] A7 评级 Def 已注册 :: ok
+[PASS] A8 二级方向已挂技能 :: dirs=48 emptySkill=0
+[PASS] A9 方向→技能引用有效 :: ok
+[PASS] B1 明细与聚合同源 :: sum=1.02085 aggregate=1.02085 lines=1
+[PASS] B2 命中白名单时生效 :: ActiveNow=True
+[PASS] B3 无上下文时不误算 :: gated=True
+[PASS] B4 工时量子=1游戏小时 :: quantum=2500
+[PASS] C1 职业账本结构 :: career=3 null=0 negTick=0 countMismatch=0
+[FAIL] D0 已归档样本 :: 0/10 battles=0 events=1
+[PASS] D 工时 WorkTime :: 0/0 无样本
+[PASS] D 产出 Production :: 0/0 无样本
+[PASS] D 损耗 Consumption :: 0/0 无样本
+[PASS] D 击杀 Kills :: 0/0 无样本
+[PASS] D 战役 Participated :: 0/0 无样本
+[PASS] D 社交关系 Relations :: 0/0 无样本
+[PASS] D 足迹 PlaceHistory :: 0/0 无样本
+[PASS] D 工坊 Workplace :: 0/0 无样本
+[PASS] D 住所 Residence :: 0/0 无样本
+[PASS] D 勋章 GrantedMedals :: 0/0 无样本
+[PASS] D 职业事实 CareerEvents :: 0/0 无样本
+[PASS] D 专业等级 Professional :: 0/0 无样本
+[PASS] D 职称 GrantedTitles :: 0/0 无样本
+[PASS] D 资格 Qualification :: 0/0 无样本
+[PASS] D 书籍 Books :: 0/0 无样本
+[PASS] D 考试/论文/答辩 Exams :: 0/0 无样本
+[PASS] D 专业技能全量 ProfSkillsAll :: 0/0 无样本
+[PASS] D 主方向 PrimaryDirection :: 0/0 无样本
+[PASS] D 显示称号 DisplayedHonor :: 0/0 无样本
+[PASS] D 技能快照 SkillSnapshot :: 0/0 无样本
+[PASS] D 背景故事 Backstory :: 0/0 无样本
+[PASS] D 工坊历史 WorkplaceHistory :: 0/0 无样本
+[PASS] D 损耗类目 ConsumptionCats :: 0/0 无样本
+[PASS] D 物品档案 ThingObject :: 0/1 空缺
+[PASS] D 地点 LocationObject :: 1/1 全覆盖
+[PASS] D 工坊别名 Aliases :: 0/1 空缺
+Unloading 1 Unused Serialized files (Serialized files now loaded: 5)
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 33264.
+Total: 141.555100 ms (FindLiveObjects: 1.219600 ms CreateObjectMapping: 0.448700 ms MarkObjects: 139.813500 ms  DeleteObjects: 0.073200 ms)
+
+[PersonalChronicle][ECON-PERF] planning ticks=1 subjects=2 avgMs=20.531 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=601 subjects=9 avgMs=0.04 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=1201 subjects=15 avgMs=0.022 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=1801 subjects=24 avgMs=0.017 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=2401 subjects=30 avgMs=0.014 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=3001 subjects=38 avgMs=0.012 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=3601 subjects=45 avgMs=0.011 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=4201 subjects=51 avgMs=0.01 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=4801 subjects=60 avgMs=0.009 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=5401 subjects=66 avgMs=0.008 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=6001 subjects=74 avgMs=0.008 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=6601 subjects=81 avgMs=0.008 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=7201 subjects=87 avgMs=0.007 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=7801 subjects=96 avgMs=0.007 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=8401 subjects=102 avgMs=0.007 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=9001 subjects=110 avgMs=0.007 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=9601 subjects=117 avgMs=0.007 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=10201 subjects=123 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=10801 subjects=132 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][Automation] AutoAgri sowed Plant_Potato runtimeType=Plant hasPlantProps=True growth=0.000 lifeStage=Sowing
+[PersonalChronicle][ECON-PERF] planning ticks=11401 subjects=138 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][Automation] AutoAgri sowed Plant_Potato runtimeType=Plant hasPlantProps=True growth=0.000 lifeStage=Sowing
+[PersonalChronicle][ECON-PERF] planning ticks=12001 subjects=146 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=12601 subjects=153 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=13201 subjects=159 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=13801 subjects=168 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=14401 subjects=174 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=15001 subjects=182 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=15601 subjects=189 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=16201 subjects=195 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=16801 subjects=204 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=17401 subjects=210 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=18001 subjects=218 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=18601 subjects=225 avgMs=0.006 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=19201 subjects=231 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=19801 subjects=240 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=20401 subjects=246 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=21001 subjects=254 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=21601 subjects=261 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][ECON-PERF] planning ticks=22201 subjects=267 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+[PersonalChronicle][Automation] AutoAgri sowed Plant_Potato runtimeType=Plant hasPlantProps=True growth=0.000 lifeStage=Sowing
+[PersonalChronicle][ECON-PERF] planning ticks=22801 subjects=276 avgMs=0.005 maxMs=20.531 slow>2ms=1 sourceErrors=0
+Memory Statistics:
+[ALLOC_TEMP_TLS] TLS Allocator
+  StackAllocators : 
+    [ALLOC_TEMP_MAIN]
+      Peak usage frame count: [0-1.0 KB]: 3987 frames, [1.0 KB-2.0 KB]: 3 frames, [2.0 KB-4.0 KB]: 3 frames, [4.0 KB-8.0 KB]: 10993 frames, [8.0 KB-16.0 KB]: 11450 frames, [32.0 KB-64.0 KB]: 1 frames, [64.0 KB-128.0 KB]: 3 frames, [128.0 KB-256.0 KB]: 1 frames, [256.0 KB-0.5 MB]: 2 frames, [2.0 MB-4.0 MB]: 1 frames, [4.0 MB-8.0 MB]: 4 frames
+      Initial Block Size 4.0 MB
+      Current Block Size 5.3 MB
+      Peak Allocated Bytes 5.3 MB
+      Overflow Count 3
+    [ALLOC_TEMP_Job.Worker 18]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 144 B
+      Overflow Count 0
+    [ALLOC_TEMP_Loading.PreloadManager]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 3.8 KB
+      Overflow Count 8
+    [ALLOC_TEMP_Loading.AsyncRead]
+      Initial Block Size 64.0 KB
+      Current Block Size 120.0 KB
+      Peak Allocated Bytes 116.5 KB
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 8]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 9]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 0]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 10]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 6]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 14]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 5]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 176 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 16]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 6]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 4]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 14]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 17]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 3]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 144 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 13]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 12]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_EnlightenWorker] x 10
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 15]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 1]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 2]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 7]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_UnityGfxDeviceWorker]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 10.3 KB
+      Overflow Count 0
+    [ALLOC_TEMP_AssetGarbageCollectorHelper] x 19
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 138 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 5]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 9]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 144 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 13]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 8]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 7]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 1]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 507 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 2]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 480 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 3]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 11]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 10]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 0]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 15]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 144 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 11]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 160 B
+      Overflow Count 0
+    [ALLOC_TEMP_Job.Worker 12]
+      Initial Block Size 256.0 KB
+      Current Block Size 256.0 KB
+      Peak Allocated Bytes 144 B
+      Overflow Count 0
+    [ALLOC_TEMP_Background Job.Worker 4]
+      Initial Block Size 32.0 KB
+      Current Block Size 32.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+    [ALLOC_TEMP_BatchDeleteObjects]
+      Initial Block Size 64.0 KB
+      Current Block Size 64.0 KB
+      Peak Allocated Bytes 54 B
+      Overflow Count 0
+[ALLOC_DEFAULT] Dual Thread Allocator
+  Peak main deferred allocation count 30263
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 4.0 MB
+      Failed Allocations. Bucket layout:
+        16B: 4 Subsections = 4096 buckets. Failed count: 124021
+        32B: 34 Subsections = 17408 buckets. Failed count: 105477
+        48B: 49 Subsections = 16725 buckets. Failed count: 107040
+        64B: 40 Subsections = 10240 buckets. Failed count: 37920
+        80B: 85 Subsections = 17408 buckets. Failed count: 136635
+        96B: 28 Subsections = 4778 buckets. Failed count: 46092
+        112B: 10 Subsections = 1462 buckets. Failed count: 15416
+        128B: 6 Subsections = 768 buckets. Failed count: 12078
+    [ALLOC_DEFAULT_MAIN]
+      Peak usage frame count: [16.0 MB-32.0 MB]: 2168 frames, [32.0 MB-64.0 MB]: 1 frames, [128.0 MB-256.0 MB]: 24279 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 12
+      Peak Allocated memory 199.2 MB
+      Peak Large allocation bytes 35.9 MB
+    [ALLOC_DEFAULT_THREAD]
+      Peak usage frame count: [8.0 MB-16.0 MB]: 3483 frames, [16.0 MB-32.0 MB]: 52 frames, [32.0 MB-64.0 MB]: 143 frames, [64.0 MB-128.0 MB]: 22770 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 7
+      Peak Allocated memory 92.9 MB
+      Peak Large allocation bytes 0 B
+[ALLOC_TEMP_JOB_1_FRAME]
+  Initial Block Size 2.0 MB
+  Used Block Count 0
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_2_FRAMES]
+  Initial Block Size 2.0 MB
+  Used Block Count 0
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_4_FRAMES (JobTemp)]
+  Initial Block Size 2.0 MB
+  Used Block Count 1
+  Overflow Count (too large) 2
+  Overflow Count (full) 0
+[ALLOC_TEMP_JOB_ASYNC (Background)]
+  Initial Block Size 1.0 MB
+  Used Block Count 1
+  Overflow Count (too large) 0
+  Overflow Count (full) 0
+[ALLOC_GFX] Dual Thread Allocator
+  Peak main deferred allocation count 109
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 4.0 MB
+      Failed Allocations. Bucket layout:
+        16B: 4 Subsections = 4096 buckets. Failed count: 124021
+        32B: 34 Subsections = 17408 buckets. Failed count: 105477
+        48B: 49 Subsections = 16725 buckets. Failed count: 107040
+        64B: 40 Subsections = 10240 buckets. Failed count: 37920
+        80B: 85 Subsections = 17408 buckets. Failed count: 136635
+        96B: 28 Subsections = 4778 buckets. Failed count: 46092
+        112B: 10 Subsections = 1462 buckets. Failed count: 15416
+        128B: 6 Subsections = 768 buckets. Failed count: 12078
+    [ALLOC_GFX_MAIN]
+      Peak usage frame count: [128.0 KB-256.0 KB]: 1 frames, [2.0 MB-4.0 MB]: 4000 frames, [4.0 MB-8.0 MB]: 1 frames, [32.0 MB-64.0 MB]: 22445 frames, [0.50 GB-1.00 GB]: 1 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 3
+      Peak Allocated memory 0.54 GB
+      Peak Large allocation bytes 0.54 GB
+    [ALLOC_GFX_THREAD]
+      Peak usage frame count: [0-1.0 KB]: 2216 frames, [1.0 KB-2.0 KB]: 197 frames, [2.0 KB-4.0 KB]: 753 frames, [4.0 KB-8.0 KB]: 838 frames, [16.0 KB-32.0 KB]: 22444 frames
+      Requested Block Size 16.0 MB
+      Peak Block count 1
+      Peak Allocated memory 27.9 KB
+      Peak Large allocation bytes 0 B
+[ALLOC_CACHEOBJECTS] Dual Thread Allocator
+  Peak main deferred allocation count 101
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 4.0 MB
+      Failed Allocations. Bucket layout:
+        16B: 4 Subsections = 4096 buckets. Failed count: 124021
+        32B: 34 Subsections = 17408 buckets. Failed count: 105477
+        48B: 49 Subsections = 16725 buckets. Failed count: 107040
+        64B: 40 Subsections = 10240 buckets. Failed count: 37920
+        80B: 85 Subsections = 17408 buckets. Failed count: 136635
+        96B: 28 Subsections = 4778 buckets. Failed count: 46092
+        112B: 10 Subsections = 1462 buckets. Failed count: 15416
+        128B: 6 Subsections = 768 buckets. Failed count: 12078
+    [ALLOC_CACHEOBJECTS_MAIN]
+      Peak usage frame count: [4.0 MB-8.0 MB]: 1 frames, [8.0 MB-16.0 MB]: 2168 frames, [16.0 MB-32.0 MB]: 24279 frames
+      Requested Block Size 4.0 MB
+      Peak Block count 5
+      Peak Allocated memory 17.0 MB
+      Peak Large allocation bytes 0 B
+    [ALLOC_CACHEOBJECTS_THREAD]
+      Peak usage frame count: [4.0 KB-8.0 KB]: 3252 frames, [32.0 KB-64.0 KB]: 1 frames, [64.0 KB-128.0 KB]: 23193 frames, [256.0 KB-0.5 MB]: 1 frames, [0.5 MB-1.0 MB]: 1 frames
+      Requested Block Size 4.0 MB
+      Peak Block count 1
+      Peak Allocated memory 0.6 MB
+      Peak Large allocation bytes 0 B
+[ALLOC_TYPETREE] Dual Thread Allocator
+  Peak main deferred allocation count 0
+    [ALLOC_BUCKET]
+      Large Block size 4.0 MB
+      Used Block count 1
+      Peak Allocated bytes 4.0 MB
+      Failed Allocations. Bucket layout:
+        16B: 4 Subsections = 4096 buckets. Failed count: 124021
+        32B: 34 Subsections = 17408 buckets. Failed count: 105477
+        48B: 49 Subsections = 16725 buckets. Failed count: 107040
+        64B: 40 Subsections = 10240 buckets. Failed count: 37920
+        80B: 85 Subsections = 17408 buckets. Failed count: 136635
+        96B: 28 Subsections = 4778 buckets. Failed count: 46092
+        112B: 10 Subsections = 1462 buckets. Failed count: 15416
+        128B: 6 Subsections = 768 buckets. Failed count: 12078
+    [ALLOC_TYPETREE_MAIN]
+      Peak usage frame count: [4.0 KB-8.0 KB]: 1 frames, [8.0 KB-16.0 KB]: 2168 frames, [32.0 KB-64.0 KB]: 24279 frames
+      Requested Block Size 2.0 MB
+      Peak Block count 1
+      Peak Allocated memory 49.8 KB
+      Peak Large allocation bytes 0 B
+    [ALLOC_TYPETREE_THREAD]
+      Peak usage frame count: [0-1.0 KB]: 26448 frames
+      Requested Block Size 2.0 MB
+      Peak Block count 0
+      Peak Allocated memory 0 B
+      Peak Large allocation bytes 0 B

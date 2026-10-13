@@ -1,0 +1,445 @@
+{
+  "changeId": "CHG-20261008-ECON-SILVER-RESERVE",
+  "batch": "B2.2",
+  "state": "CodeVerified",
+  "checkedUtc": "2026-10-08T08:40:08.4793568Z",
+  "modSha256": "6EF4220FC993D895696C6C4ACC9B9ACA20E9EABA84B3241811A3FB1233802952",
+  "gameAssemblyVersion": "1.6.9676.17735",
+  "gameSha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+  "compiledChecks": {
+    "pureDomain": true,
+    "noItemCreation": true,
+    "noGameplayOrGameSaveRoute": true,
+    "mergingDisabled": true,
+    "gameplayReadyFalse": true,
+    "parentHolderNull": true,
+    "noIHaulSource": true,
+    "independentScribe": true,
+    "orbitalEntryCalls": [
+      "System.Void System.Object::.ctor()",
+      "System.Int32 System.Environment::get_CurrentManagedThreadId()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally3()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally4()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally5()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally2()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally1()",
+      "System.Void System.Collections.Generic.HashSet`1<Verse.Thing>::.ctor()",
+      "System.Collections.Generic.IEnumerable`1<RimWorld.Building_OrbitalTradeBeacon> RimWorld.Building_OrbitalTradeBeacon::AllPowered(Verse.Map)",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<RimWorld.Building_OrbitalTradeBeacon>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<RimWorld.Building_OrbitalTradeBeacon>::get_Current()",
+      "System.Collections.Generic.IEnumerable`1<Verse.IntVec3> RimWorld.Building_OrbitalTradeBeacon::get_TradeableCells()",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Verse.IntVec3>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<Verse.IntVec3>::get_Current()",
+      "System.Collections.Generic.List`1<Verse.Thing> Verse.GridsUtility::GetThingList(Verse.IntVec3,Verse.Map)",
+      "!0 System.Collections.Generic.List`1<Verse.Thing>::get_Item(System.Int32)",
+      "System.Boolean Verse.ModsConfig::get_BiotechActive()",
+      "T Verse.ThingCompUtility::TryGetComp<RimWorld.CompGenepackContainer>(Verse.Thing)",
+      "System.Collections.Generic.List`1<RimWorld.Genepack> RimWorld.CompGenepackContainer::get_ContainedGenepacks()",
+      "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<RimWorld.Genepack>::GetEnumerator()",
+      "!0 System.Collections.Generic.List`1/Enumerator<RimWorld.Genepack>::get_Current()",
+      "System.Boolean RimWorld.TradeUtility::PlayerSellableNow(Verse.Thing,RimWorld.ITrader)",
+      "System.Boolean System.Collections.Generic.HashSet`1<Verse.Thing>::Contains(!0)",
+      "System.Boolean System.Collections.Generic.HashSet`1<Verse.Thing>::Add(!0)",
+      "System.Boolean System.Collections.Generic.List`1/Enumerator<RimWorld.Genepack>::MoveNext()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally3()",
+      "System.Collections.Generic.IReadOnlyList`1<Verse.Book> RimWorld.Building_Bookcase::get_HeldBooks()",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Verse.Book>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<Verse.Book>::get_Current()",
+      "System.Boolean RimWorld.TradeUtility::PlayerSellableNow(Verse.Thing,RimWorld.ITrader)",
+      "System.Boolean System.Collections.Generic.HashSet`1<Verse.Thing>::Contains(!0)",
+      "System.Boolean System.Collections.Generic.HashSet`1<Verse.Thing>::Add(!0)",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally4()",
+      "System.Collections.Generic.IReadOnlyList`1<Verse.Thing> RimWorld.Building_OutfitStand::get_HeldItems()",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Verse.Thing>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<Verse.Thing>::get_Current()",
+      "System.Boolean RimWorld.TradeUtility::PlayerSellableNow(Verse.Thing,RimWorld.ITrader)",
+      "System.Boolean System.Collections.Generic.HashSet`1<Verse.Thing>::Contains(!0)",
+      "System.Boolean System.Collections.Generic.HashSet`1<Verse.Thing>::Add(!0)",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally5()",
+      "System.Boolean RimWorld.TradeUtility::PlayerSellableNow(Verse.Thing,RimWorld.ITrader)",
+      "System.Boolean System.Collections.Generic.HashSet`1<Verse.Thing>::Contains(!0)",
+      "System.Boolean System.Collections.Generic.HashSet`1<Verse.Thing>::Add(!0)",
+      "System.Int32 System.Collections.Generic.List`1<Verse.Thing>::get_Count()",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally2()",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::<>m__Finally1()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::System.IDisposable.Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.NotSupportedException::.ctor()",
+      "System.Int32 System.Environment::get_CurrentManagedThreadId()",
+      "System.Void RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::.ctor(System.Int32)",
+      "System.Collections.Generic.IEnumerator`1<Verse.Thing> RimWorld.TradeUtility/<AllLaunchableThingsForTrade>d__7::System.Collections.Generic.IEnumerable<Verse.Thing>.GetEnumerator()"
+    ],
+    "groundEntryCalls": [
+      "System.Void System.Object::.ctor()",
+      "System.Int32 System.Environment::get_CurrentManagedThreadId()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally1()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally3()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally2()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally5()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally4()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally6()",
+      "Verse.Map Verse.Thing::get_Map()",
+      "System.Collections.Generic.List`1<Verse.Thing> Verse.ListerThings::get_AllThings()",
+      "System.Boolean RimWorld.Pawn_TraderTracker::<ColonyThingsWillingToBuy>b__13_0(Verse.Thing)",
+      "System.Void System.Func`2<Verse.Thing,System.Boolean>::.ctor(System.Object,System.IntPtr)",
+      "System.Collections.Generic.IEnumerable`1<!!0> System.Linq.Enumerable::Where<Verse.Thing>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,System.Boolean>)",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Verse.Thing>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<Verse.Thing>::get_Current()",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally1()",
+      "System.Boolean Verse.ModsConfig::get_BiotechActive()",
+      "Verse.Map Verse.Thing::get_Map()",
+      "System.Collections.Generic.List`1<Verse.Building> Verse.ListerBuildings::AllBuildingsColonistOfDef(Verse.ThingDef)",
+      "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<Verse.Building>::GetEnumerator()",
+      "!0 System.Collections.Generic.List`1/Enumerator<Verse.Building>::get_Current()",
+      "System.Boolean RimWorld.Pawn_TraderTracker::ReachableForTrade(Verse.Thing)",
+      "T Verse.ThingCompUtility::TryGetComp<RimWorld.CompGenepackContainer>(Verse.Thing)",
+      "System.Collections.Generic.List`1<RimWorld.Genepack> RimWorld.CompGenepackContainer::get_ContainedGenepacks()",
+      "System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<RimWorld.Genepack>::GetEnumerator()",
+      "!0 System.Collections.Generic.List`1/Enumerator<RimWorld.Genepack>::get_Current()",
+      "System.Boolean System.Collections.Generic.List`1/Enumerator<RimWorld.Genepack>::MoveNext()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally3()",
+      "System.Boolean System.Collections.Generic.List`1/Enumerator<Verse.Building>::MoveNext()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally2()",
+      "Verse.Map Verse.Thing::get_Map()",
+      "System.Collections.Generic.IEnumerable`1<T> Verse.ListerBuildings::AllColonistBuildingsOfType<RimWorld.IHaulSource>()",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<RimWorld.IHaulSource>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<RimWorld.IHaulSource>::get_Current()",
+      "System.Boolean RimWorld.Pawn_TraderTracker::ReachableForTrade(Verse.Thing)",
+      "Verse.ThingOwner Verse.IThingHolder::GetDirectlyHeldThings()",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Verse.Thing>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<Verse.Thing>::get_Current()",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally5()",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally4()",
+      "Verse.AI.Group.Lord Verse.AI.Group.LordUtility::GetLord(Verse.Pawn)",
+      "Verse.Map Verse.Thing::get_Map()",
+      "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.TradeUtility::AllSellableColonyPawns(Verse.Map,System.Boolean)",
+      "System.Boolean RimWorld.Pawn_TraderTracker::<ColonyThingsWillingToBuy>b__13_1(Verse.Pawn)",
+      "System.Void System.Func`2<Verse.Pawn,System.Boolean>::.ctor(System.Object,System.IntPtr)",
+      "System.Collections.Generic.IEnumerable`1<!!0> System.Linq.Enumerable::Where<Verse.Pawn>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,System.Boolean>)",
+      "System.Collections.Generic.IEnumerator`1<!0> System.Collections.Generic.IEnumerable`1<Verse.Pawn>::GetEnumerator()",
+      "!0 System.Collections.Generic.IEnumerator`1<Verse.Pawn>::get_Current()",
+      "System.Boolean System.Collections.IEnumerator::MoveNext()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::<>m__Finally6()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::System.IDisposable.Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.IDisposable::Dispose()",
+      "System.Void System.NotSupportedException::.ctor()",
+      "System.Int32 System.Environment::get_CurrentManagedThreadId()",
+      "System.Void RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::.ctor(System.Int32)",
+      "System.Collections.Generic.IEnumerator`1<Verse.Thing> RimWorld.Pawn_TraderTracker/<ColonyThingsWillingToBuy>d__13::System.Collections.Generic.IEnumerable<Verse.Thing>.GetEnumerator()"
+    ],
+    "haulCalls": [
+      "Verse.Map Verse.Thing::get_Map()",
+      "System.Collections.Generic.ICollection`1<Verse.Thing> RimWorld.ListerHaulables::ThingsPotentiallyNeedingHauling()"
+    ]
+  },
+  "tests": {
+    "path": "Tests/TestResults/EconomyLanding-B22-Full.trx",
+    "sha256": "F81671FC123EFD57F91A9A6359C3120CA962F41A4D41E96E2C1A816B4CA9ACB0",
+    "passed": 788,
+    "failed": 0,
+    "skipped": 1,
+    "skippedNames": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "newCases": 42
+  },
+  "files": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/SilverReserveContracts.cs",
+      "sha256": "D942973BC2182380B78708558AA6721A105DF89BD9CC670B77CB7AD204E980BA",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "public enum ReserveMovementKind { Deposit, Withdrawal }"
+        },
+        {
+          "line": 8,
+          "text": "public enum ReserveMovementPhase { Prepared, Completed, ReconciliationRequired }"
+        },
+        {
+          "line": 9,
+          "text": "public enum ReserveResultCode"
+        },
+        {
+          "line": 14,
+          "text": "public sealed class ReserveMovementIntent"
+        },
+        {
+          "line": 35,
+          "text": "public sealed class ReserveMovementEvidence"
+        },
+        {
+          "line": 65,
+          "text": "public sealed class ReserveMovementResult"
+        },
+        {
+          "line": 73,
+          "text": "public sealed class ReserveStackSnapshot"
+        },
+        {
+          "line": 79,
+          "text": "public sealed class ReserveAuditSnapshot"
+        },
+        {
+          "line": 100,
+          "text": "public sealed class ReserveWithdrawalPlan"
+        },
+        {
+          "line": 111,
+          "text": "public static class ReserveWithdrawalRules"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/ReserveJournalCodec.cs",
+      "sha256": "B8671F9F0924296C4EB914A850D4A5D1294A7DA67027E28E23654BDDEA1FE5CA",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "internal sealed class ReserveJournalLoad"
+        },
+        {
+          "line": 22,
+          "text": "internal static class ReserveJournalCodec"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/SettlementReservePrototype.cs",
+      "sha256": "5AE6C1D2E65F02408415AC6E497450493DE0AF060DB357349E177425405E3005",
+      "anchors": [
+        {
+          "line": 16,
+          "text": "internal sealed class SettlementReservePrototype : IThingHolder, IExposable"
+        },
+        {
+          "line": 52,
+          "text": "public ReserveAuditSnapshot ReadAudit()"
+        },
+        {
+          "line": 77,
+          "text": "public ReserveMovementResult Execute(ReserveMovementIntent intent, ThingOwner counterparty)"
+        },
+        {
+          "line": 155,
+          "text": "public void ExposeData()"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnSilverReserveTests.cs",
+      "sha256": "ECCA35DC51844DDBED17FCD1F5F8AC375EEA25C2BFF8102E764AF970A65883B5",
+      "anchors": [
+        {
+          "line": 20,
+          "text": "public sealed class PawnSilverReserveTests"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PersonalChronicle.Tests.csproj",
+      "sha256": "5FA0DE3DF0D8AA462D2E62B0AE74AA7D9D5F62D19AE9EFABB63A35393930CB73",
+      "anchors": []
+    },
+    {
+      "path": "_scripts/verify-pawn-silver-reserve.ps1",
+      "sha256": "D2C4C1DFF038D0776E5AF3728DC8173E91230C2F6FD7F48174D105B88EBF0243",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/05-B2.2_实物银币储备原型_实装记录.md",
+      "sha256": "9C4BE95FEEA2BF6CB02CC3B7CFD6BB4608F4C22CDCD7C4F9EA8E3643EEE1767A",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. Intake / ADR（编码前）"
+        },
+        {
+          "line": 17,
+          "text": "## 2. 保存契约（编码前）"
+        },
+        {
+          "line": 27,
+          "text": "## 3. 本批已实装"
+        },
+        {
+          "line": 43,
+          "text": "## 4. 当前原版依据"
+        },
+        {
+          "line": 55,
+          "text": "## 5. 验证与宿主边界"
+        },
+        {
+          "line": 75,
+          "text": "## 6. 变更、回滚与后续"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实施批次状态.json",
+      "sha256": "C3C0CEF6F6F85E2BFA54C14FFFA1EB766B267D9956949D723908A382571CA20C",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/00-实装落地计划_v1.0.md",
+      "sha256": "2C2E46FFBE845708A4C946F9DA9169EA9EB2E5F4600D0A20C6602693B1E2FFE6",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "## 1. 目标、范围与交付纪律"
+        },
+        {
+          "line": 15,
+          "text": "## 2. 当前代码基线及迁移差异"
+        },
+        {
+          "line": 34,
+          "text": "## 3. 架构决策与数据边界"
+        },
+        {
+          "line": 46,
+          "text": "## 4. 批次总览与依赖"
+        },
+        {
+          "line": 63,
+          "text": "## 5. B1：需求感知与 RUIF 最小闭环"
+        },
+        {
+          "line": 91,
+          "text": "## 6. B2：实资、迁移与制度开关"
+        },
+        {
+          "line": 107,
+          "text": "## 7. B3：生活规划、储蓄与影子决策"
+        },
+        {
+          "line": 115,
+          "text": "## 8. B4：第一条自主经济闭环"
+        },
+        {
+          "line": 129,
+          "text": "## 9. B5：家庭与服务分项落地"
+        },
+        {
+          "line": 139,
+          "text": "## 10. B6：机构再生产与有限学习"
+        },
+        {
+          "line": 149,
+          "text": "## 11. B7：RUIF 治理与综合验收"
+        },
+        {
+          "line": 157,
+          "text": "## 12. 每批证据与检查命令"
+        },
+        {
+          "line": 173,
+          "text": "## 13. 迁移与回滚纪律"
+        },
+        {
+          "line": 179,
+          "text": "## 14. 完成定义与下一步"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/04-实装指导手册/00-总册与实施路线.md",
+      "sha256": "DE7DB3D5F792FCE704F25548950A7C4B513EAB49D790C2426AE72166ABCF70F4",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "## 1. 本手册回答什么"
+        },
+        {
+          "line": 18,
+          "text": "## 2. 阅读与交付索引"
+        },
+        {
+          "line": 54,
+          "text": "## 3. 当前核验基线"
+        },
+        {
+          "line": 67,
+          "text": "## 4. 模块划分"
+        },
+        {
+          "line": 86,
+          "text": "## 5. 架构和数据流"
+        },
+        {
+          "line": 114,
+          "text": "## 6. 首版具体闭环"
+        },
+        {
+          "line": 132,
+          "text": "## 7. 实施里程碑和退出条件"
+        },
+        {
+          "line": 144,
+          "text": "## 8. 开发工作包写法"
+        }
+      ]
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI实物储备原型.md",
+      "sha256": "A99E808DCA92BE8DBD451F1277C14D1B0DF69AD40889203051F8812643C41726",
+      "anchors": []
+    }
+  ],
+  "gameSourceEvidence": [
+    {
+      "path": "Verse/ThingOwner.cs",
+      "sha256": "60E57E3A2E929438DC1B8736A84D4E835FAB62B3AE806B2F465D0290C3088F93"
+    },
+    {
+      "path": "Verse/ThingOwner.2.cs",
+      "sha256": "E7DC95516321DBA08A98B5B09959F5B8C97202EE9346D47749630AE527A0F1BF"
+    },
+    {
+      "path": "Verse/Thing.cs",
+      "sha256": "1BCED9493E0ED74249F83DE6EDA2324EED31D17C656108604484E46876218B5F"
+    },
+    {
+      "path": "Verse/IThingHolder.cs",
+      "sha256": "FE5BC2AD255B26B31A8AEFBFE2A8834117CA0B81AED106A1C958AD4145FDF41D"
+    },
+    {
+      "path": "RimWorld/TradeUtility.cs",
+      "sha256": "480BD8690A93D6341980DE9BB7228D1A67401ECD6CAD3A118D0B44DCCAE50310"
+    },
+    {
+      "path": "RimWorld/Pawn_TraderTracker.cs",
+      "sha256": "87411928A2FD361747FD5D5E9E66917AC4CB4226BFAB439FCE85B53D57009552"
+    },
+    {
+      "path": "RimWorld/WorkGiver_Haul.cs",
+      "sha256": "D8E9F320C591E133546629615DEFCD9F0D4BF0D14254721A8E6E5900CE2A353B"
+    }
+  ],
+  "limits": [
+    "Internal standalone physical prototype, not attached to GameComponent, map, caravan, UI or game payment routing.",
+    "Offline real ThingOwner/ThingMaker/SplitOff/Destroy/Scribe are used with a minimal uninitialized Silver Def fixture.",
+    "Test-only shims: Log, DeepProfiler, Find.UniqueIDsManager/Maps/FactionManager and GenTypes.AllTypes; an assembly inventory is registered and restored. No physical transfer or Scribe core methods are patched.",
+    "CLR-incompatible engine types are excluded only from the offline type inventory; this is not full game initialization or compatibility acceptance.",
+    "Journal net deposits are not account liabilities. Treasury authorization, v2 ledger recovery, original legacy backup/migration and institutional switch remain B2.3/B2.4.",
+    "Single source stack per movement. No merge, ground extraction, multi-stack atomic withdrawal, authorized UI, or external trade automation.",
+    "Vanilla isolation is source/current-IL evidence plus holder properties; live trade/haul, third-party scans, full game saves, performance and deployment not executed."
+  ]
+}

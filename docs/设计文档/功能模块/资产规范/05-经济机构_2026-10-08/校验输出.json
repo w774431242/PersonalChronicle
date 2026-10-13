@@ -1,0 +1,15 @@
+{
+  "changeId": "CHG-20261008-ECON-ART",
+  "checks": [
+    {
+      "name": "native-four-direction-art",
+      "exitCode": 0,
+      "output": "PASS: 20 unique RGBA views, five north-master sets, explicit graphic/icon binding, native Graphic_Multi, unchanged footprint and nonvisual Def content. In-game placement pending.\r\n"
+    },
+    {
+      "name": "economy-def-thinktree-ruif",
+      "exitCode": 0,
+      "output": "PASS: 12 Def nodes; 5 institutions; 4 Jobs; exact ThinkTree XPath; compiled classes; 69 bilingual keys; RUIF frontend.\r\n"
+    }
+  ]
+}

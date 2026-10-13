@@ -1,0 +1,69 @@
+{
+  "script_cases": [
+    {
+      "case": "valid-dag",
+      "passed": true
+    },
+    {
+      "case": "reject-cycle",
+      "passed": true
+    },
+    {
+      "case": "reject-missing-dependency",
+      "passed": true
+    },
+    {
+      "case": "reject-start-before-contract",
+      "passed": true
+    },
+    {
+      "case": "allow-independent-writers",
+      "passed": true
+    },
+    {
+      "case": "reject-windows-same-file",
+      "passed": true
+    },
+    {
+      "case": "reject-directory-file-overlap",
+      "passed": true
+    },
+    {
+      "case": "allow-readonly-peer",
+      "passed": true
+    },
+    {
+      "case": "reject-duplicate-id",
+      "passed": true
+    }
+  ],
+  "reference_links": [
+    {
+      "file": "SKILL.md",
+      "target": "references/closed-loop.md",
+      "passed": true
+    },
+    {
+      "file": "SKILL.md",
+      "target": "references/dispatch.md",
+      "passed": true
+    },
+    {
+      "file": "SKILL.md",
+      "target": "assets/task-contract.md",
+      "passed": true
+    },
+    {
+      "file": "SKILL.md",
+      "target": "references/codebuddy.md",
+      "passed": true
+    },
+    {
+      "file": "SKILL.md",
+      "target": "references/verification.md",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "limit": "Structural and deterministic helper verification only."
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PersonalChronicle.Settings.Tab.Economy>Economy</PersonalChronicle.Settings.Tab.Economy>
+  <PersonalChronicle.Settings.SectionEconomy>Economic institution</PersonalChronicle.Settings.SectionEconomy>
+  <PersonalChronicle.Settings.Title.EconomicInstitution>Needs-driven economy</PersonalChronicle.Settings.Title.EconomicInstitution>
+  <PersonalChronicle.Settings.Use.EconomicInstitution>Toggle the preparation request for the economic institution (on by default: requested automatically when a new or existing game loads; a save that explicitly turned it off is never re-enabled).</PersonalChronicle.Settings.Use.EconomicInstitution>
+  <PersonalChronicle.Settings.Detail.EconomicInstitution>On by default. Loading begins preparation automatically: the economy page provides public treasury deposits, withdrawals and legacy entitlement adoption. The first activation also needs one save and reload to complete the ledger recovery proof before the institution turns active; the gates still closed and their next action are shown at the top of the economy page. Disabling preserves funds and old rights; unresolved items remain awaiting clearance.</PersonalChronicle.Settings.Detail.EconomicInstitution>
+  <PC_PEA.Mode.Phase.Off>Off</PC_PEA.Mode.Phase.Off>
+  <PC_PEA.Mode.Phase.Preparing>Preparing</PC_PEA.Mode.Phase.Preparing>
+  <PC_PEA.Mode.Phase.Active>Active</PC_PEA.Mode.Phase.Active>
+  <PC_PEA.Mode.Phase.Draining>Awaiting clearance</PC_PEA.Mode.Phase.Draining>
+  <PC_PEA.Mode.Phase.Faulted>Reconciliation required</PC_PEA.Mode.Phase.Faulted>
+  <PC_PEA.Mode.Explanation>The only institution switch is in Mod Settings → Economy. Enabling requests preparation; paid actions require verified capabilities. Vanilla life and demand observation continue.</PC_PEA.Mode.Explanation>
+  <PC_PEA.Mode.LegacyReadOnly>These retained legacy records are for reconciliation. Old activation, payroll and fees are suspended; historical amounts are not new spendable funds.</PC_PEA.Mode.LegacyReadOnly>
+  <PC_PEA.Mode.Outstanding>Deliveries in flight, unreconciled rows or legacy entitlements still require handling. Account balances and the dedicated reserve are normal retained assets: they are not outstanding items and never have to be zeroed. Disabling or re-enabling neither clears these items nor marks them completed.</PC_PEA.Mode.Outstanding>
+  <PC_PEA.Mode.FaultHint>A save or reserve check needs reconciliation. Paid routes are closed; original data and physical items remain preserved. Toggling the setting cannot clear the fault.</PC_PEA.Mode.FaultHint>
+  <PC_PEA.Mode.Blocker.LegacyFreeze>Pending: freeze the latest legacy state at cutover.</PC_PEA.Mode.Blocker.LegacyFreeze>
+  <PC_PEA.Mode.Blocker.LegacyRights>Pending: review and assume each legacy entitlement.</PC_PEA.Mode.Blocker.LegacyRights>
+  <PC_PEA.Mode.Blocker.Backing>Pending: verify the dedicated physical reserve and funded ledger.</PC_PEA.Mode.Blocker.Backing>
+  <PC_PEA.Mode.Blocker.Delivery>Pending: restore verifiable physical delivery capability.</PC_PEA.Mode.Blocker.Delivery>
+  <PC_PEA.Mode.Blocker.Authority>Pending: player, public institution and payer authorization.</PC_PEA.Mode.Blocker.Authority>
+  <PC_PEA.Mode.Blocker.SaveAcceptance>Pending: one save and recovery round trip to prove ledger health (this gate proves the ledger recovery reading only, not full in-game acceptance).</PC_PEA.Mode.Blocker.SaveAcceptance>
+  <PC_PEA.Mode.Blocker.Routing>Pending: verify exclusive old and new payment routing.</PC_PEA.Mode.Blocker.Routing>
+  <PC_PEA.Mode.PhaseLabel>Institution phase</PC_PEA.Mode.PhaseLabel>
+  <PC_PEA.Mode.Cap.Yes>available</PC_PEA.Mode.Cap.Yes>
+  <PC_PEA.Mode.InstitutionNone>No public institution is registered on this map; one registers automatically once built.</PC_PEA.Mode.InstitutionNone>
+  <PC_PEA.Mode.LegacyArchive>legacy reconciliation (archived)</PC_PEA.Mode.LegacyArchive>
+  <PC_PEA.Mode.FaultCode>Fault</PC_PEA.Mode.FaultCode>
+  <PC_PEA.Mode.Reverified>Cleared by last re-verification</PC_PEA.Mode.Reverified>
+  <PC_PEA.Mode.Reverify>Re-verify</PC_PEA.Mode.Reverify>
+  <PC_PEA.Mode.ReverifyHint>A fault is only cleared by an explicit re-verification: any remaining fault source refuses it, and neither toggling the setting nor reloading clears it.</PC_PEA.Mode.ReverifyHint>
+  <PC_PEA.Mode.Step.LegacyFreeze>Action: open Mod Settings and enable the institution switch in the economy section to freeze the legacy snapshot.</PC_PEA.Mode.Step.LegacyFreeze>
+  <PC_PEA.Mode.Step.LegacyRights>Action: assume each legacy entitlement in the reconciliation section; new payments stay closed until that is complete.</PC_PEA.Mode.Step.LegacyRights>
+  <PC_PEA.Mode.Step.Backing>Action: confirm the dedicated reserve reconciles with no fault, deposits and withdrawals consistent.</PC_PEA.Mode.Step.Backing>
+  <PC_PEA.Mode.Step.Delivery>Action: confirm the physical delivery evidence chain is readable, with no delivery awaiting reconciliation.</PC_PEA.Mode.Step.Delivery>
+  <PC_PEA.Mode.Step.Authority>Action: confirm player and institution authorization.</PC_PEA.Mode.Step.Authority>
+  <PC_PEA.Mode.Step.SaveAcceptance>Action: save the game and load it once; the ledger recovery proof is then completed automatically. This gate only proves ledger health, not full in-game acceptance.</PC_PEA.Mode.Step.SaveAcceptance>
+  <PC_PEA.Mode.Step.Routing>Action: none; exclusive old/new routing is fixed at compile time (the legacy fee path is closed).</PC_PEA.Mode.Step.Routing>
+  <PC_PEA.Policy.Reverify.Code.Cleared>Re-verification passed, fault cleared</PC_PEA.Policy.Reverify.Code.Cleared>
+  <PC_PEA.Policy.Reverify.Code.NotFaulted>Not in a faulted phase, nothing to re-verify</PC_PEA.Policy.Reverify.Code.NotFaulted>
+  <PC_PEA.Policy.Reverify.Code.StillFaulted>Fault sources remain, clearing refused</PC_PEA.Policy.Reverify.Code.StillFaulted>
+  <PC_PEA.Policy.Reverify.Code.Unavailable>Cannot re-verify while saving or loading</PC_PEA.Policy.Reverify.Code.Unavailable>
+  <PC_PEA.Policy.Cap.Name.Work>Jobs</PC_PEA.Policy.Cap.Name.Work>
+  <PC_PEA.Policy.Cap.Name.Food>Food</PC_PEA.Policy.Cap.Name.Food>
+  <PC_PEA.Policy.Cap.Name.Apparel>Apparel</PC_PEA.Policy.Cap.Name.Apparel>
+  <PC_PEA.Policy.Cap.Name.Service>Care and services</PC_PEA.Policy.Cap.Name.Service>
+  <PC_PEA.Policy.Cap.Reason.Unset>not configured</PC_PEA.Policy.Cap.Reason.Unset>
+  <PC_PEA.Policy.Cap.Reason.NotPublished>no quote published</PC_PEA.Policy.Cap.Reason.NotPublished>
+  <PC_PEA.Policy.Cap.Reason.Closed>institution closed</PC_PEA.Policy.Cap.Reason.Closed>
+  <PC_PEA.Policy.Cap.Reason.OutOfHours>outside hours</PC_PEA.Policy.Cap.Reason.OutOfHours>
+  <PC_PEA.Policy.Cap.Reason.ModeNotOpen>institution phase not open</PC_PEA.Policy.Cap.Reason.ModeNotOpen>
+  <PC_PEA.Policy.Reason.ProposalDuplicate>duplicate proposal: the same proposal already exists</PC_PEA.Policy.Reason.ProposalDuplicate>
+  <PC_PEA.Policy.Reason.ProductionExecutorUnavailable>production executor unavailable</PC_PEA.Policy.Reason.ProductionExecutorUnavailable>
+</LanguageData>

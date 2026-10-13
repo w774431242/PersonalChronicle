@@ -1,0 +1,19 @@
+{
+  "kind": "LaborOffice",
+  "defName": "PC_PEA_LaborOffice",
+  "direction": "west",
+  "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_west.png",
+  "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-d12688d5-1171-4c08-9bd0-73bb0ea5c243.png",
+  "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png",
+  "northReferenceSha256": "3BBF71ED3AD9336E915F5BBEF9D433E5750649853392CB80D9B349E0B437AE50",
+  "promptFile": "PC_PEA_LaborOffice_west.prompt.txt",
+  "sha256": "6be89ce929b7ef57fd78b642f41ddb59da32c19a77dea772b21808d1773690b4",
+  "generator": "built-in image_gen",
+  "generationMode": "north-reference generation or targeted reference edit",
+  "externalPixelEditsPerformed": false,
+  "inputReferences": [
+    "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-e16cb0e6-04a1-48af-b492-006203b89293.png",
+    "E:/SteamLibrary/steamapps/common/RimWorld/11/殖民地综合管理系统/Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png"
+  ],
+  "repairTargetSha256": "740e70a24e8b35f3a713349ed82214d7ab32f13199e8937bce8a077f1ac98206"
+}

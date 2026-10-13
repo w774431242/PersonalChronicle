@@ -1,9 +1,10 @@
+using PersonalChronicle.MasterControl.Population;
 // ITab_Pawn_Career partial：履历子页（工作经历 resume-block + 工坊汇总 + 当前就职）。
 // ARC-013 文件治理，物理切片零契约改动；见主文件 ITab_Pawn_Career.cs 类文档。
 using System;
 using System.Collections.Generic;
 using PersonalChronicle.Application;
-using PersonalChronicle.Archive.ReadModels;
+using PersonalChronicle.Application.ReadModels;
 using PersonalChronicle.Archive.UI;
 using PersonalChronicle.Data;
 using PersonalChronicle.Domain;
@@ -19,7 +20,7 @@ namespace PersonalChronicle.Archive
         // ================= 子页：履历 =================
         private void DrawCareerResumeTab(Rect rect, DetailSnapshot snap)
         {
-            // 原生 BeginScrollView 用法（对齐 ArchiveMainTabWindow）：不自定义背景，
+            // 原生 BeginScrollView 用法（对齐 PersonnelArchivePanel）：不自定义背景，
             // 让 rimworld 窗口默认背景生效——避免自定义 TintedBox 干扰造成的白屏。
             Rect view = new Rect(rect.x, rect.y, rect.width, rect.height);
             float innerW = view.width - 16f;

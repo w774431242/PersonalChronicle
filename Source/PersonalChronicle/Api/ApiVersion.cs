@@ -54,7 +54,7 @@ namespace PersonalChronicle.Api
         /// so callers should use <c>Supports(major, minMinor)</c> rather than
         /// comparing against <see cref="Current"/> directly.
         /// </summary>
-        public static ApiVersion Current { get; } = new ApiVersion(1, 1, 4);
+        public static ApiVersion Current { get; } = new ApiVersion(1, 2, 0);
 
         /// <summary>
         /// Returns true when this version satisfies a (major, minMinor) contract,

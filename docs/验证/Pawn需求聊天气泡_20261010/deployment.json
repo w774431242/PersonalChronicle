@@ -1,0 +1,27 @@
+{
+  "changeId": "CHG-20261010-PAWN-NEED-SPEECH",
+  "verifiedUtc": "2026-10-10T08:53:51.7070916Z",
+  "source": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\pawn-need-speech_20261010_165351_206",
+  "files": [
+    {
+      "path": "Assemblies/PersonalChronicle.dll",
+      "sha256": "974A8FEB227F10101C137192555800D3CAE8BC30D50AF8F816D30D5E323B8F8F",
+      "previousSha256": "2276A50792B7282C35EB32F2633F841AFB12A19F15A0E87297162622CF43556B"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnNeedSpeech.xml",
+      "sha256": "83C17375255729F5CFF285BC4E89261BD10A8CBDB6338A1A474EA79EF82F44C1",
+      "previousSha256": "83C17375255729F5CFF285BC4E89261BD10A8CBDB6338A1A474EA79EF82F44C1"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnNeedSpeech.xml",
+      "sha256": "05D50F1E7CB34E36609D3B9F0B41570559EC6FA17F9A1D5254134D5803F5AB16",
+      "previousSha256": "05D50F1E7CB34E36609D3B9F0B41570559EC6FA17F9A1D5254134D5803F5AB16"
+    }
+  ],
+  "unchangedFilesVerified": 233,
+  "deployed": true,
+  "gameVerified": false
+}

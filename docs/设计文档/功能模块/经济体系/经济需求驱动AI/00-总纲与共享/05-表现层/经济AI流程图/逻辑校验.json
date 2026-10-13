@@ -1,0 +1,8 @@
+{
+  "result": "Passed",
+  "flowNodes": 46,
+  "edges": 69,
+  "allNodesReachable": true,
+  "allNodesReturnToState": true,
+  "scope": "current runtime; no gameplay validation"
+}

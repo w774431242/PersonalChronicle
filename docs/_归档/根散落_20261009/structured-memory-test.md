@@ -1,0 +1,38 @@
+# 结构化记忆测试输出（由 structured-memory skill 生成）
+
+> 源：用户级 MEMORY.md（2026-10-08 版，142 行扁平文档）+ 本工作区 2026-10-09.md
+> 用途：验证 structured-memory skill 的"分域 + 时间戳 + 有效期 + 按需召回"能否消化真实记忆
+> 生成日期：2026-10-09
+
+## [DOMAIN: 长期偏好]
+- [2026-07-12 | valid:长期] 技能需泛用化、去项目品牌前缀；交付要求中文/面向零基础/动手前先做架构规划/复杂模块总+子系统分层/交付前查缺补漏清单
+- [2026-07-23 | valid:长期] 用户身份：独立游戏开发者(solo/indie)，关注 3D 游戏；偏好引擎 Godot(MIT、零版税)，默认面向单人/低成本/零后端
+- [2026-07-24 | valid:长期] 数据权威性硬规则：公司披露优先→机构预估→标未披露不臆造；只列事实+标注口径，删主观研判标签
+- [2026-08-01 | valid:长期] 对话中文一律简体，不混繁体；技术标识符 ASCII 保持原样
+- [2026-08-05 | valid:长期] 实用工具集中存 D:\toolbox；自包含单文件工具交付到 D:\toolbox 并用简体中文命名
+- [2026-08-03 | valid:长期] 安全原则：密钥明文不写入任何记忆/日志文件，恢复配置查 Windows 环境变量
+- [2026-09-14 | valid:长期] Edit 同消息多调用改同文件会静默丢改（仅最后一个落盘）；对策：单条 Edit 或单次 Python 原子替换
+- [2026-09-17 | valid:长期] 全局文件命名约定 A-B-C：A=受控词表(UI/API/HOOK/SAVE/ASSET/SYS/DAT/DOC)+B=YYYY-MM-DD+C=kebab；活文件用 A-C.ext 不带日期
+
+## [DOMAIN: 项目约定]
+- [2026-07-24 | valid:长期] AI科技链仪表盘：源 html 在 C:/Users/Administrator/WorkBuddy/2026-07-24-13-25-18/outputs/ai-tech-chain-dashboard.html；页面含概览/产业链/资本支出/财务/头部/范式/区域/校验；数据直抽 SEC EDGAR 原始 XBRL
+- [2026-07-30 | valid:长期] 自包含 HTML 报告禁止依赖外部 CDN（chart.js 等），必须内联第三方 JS（CSP 白名单会拦 script-src）
+- [2026-10-08 | valid:长期] RimWorld「殖民地综合管理系统」mod 开发工作区已迁至 E:\SteamLibrary\steamapps\common\RimWorld\11\殖民地综合管理系统；详尽铁律见该工作区 .workbuddy/memory/MEMORY.md；发布区 RimWorld/Mods/ 须手动同步 dll+XML
+
+## [DOMAIN: 工具链基线]
+- [2026-08-03 | valid:长期] 已配置环境变量 EM_API_KEY(东方财富妙想)、PINGAN_SKILL_APIKEY(平安证券)；mx-finance-data/news-search 脚本用 venv python(C:/Users/Administrator/.workbuddy/binaries/python/envs/default/Scripts/python.exe) 跑
+- [2026-08-08 | valid:长期] 本机无 VS/msbuild；.NET SDK 在 D:\toolbox\dotnet\dotnet.exe(8.0.424)；编译用绝对路径 /d/toolbox/dotnet/dotnet.exe build -c Release
+- [2026-09-16 | valid:长期] [Reflection.Assembly]::LoadFrom 被沙箱硬拦截；替代：用 Python 直读 PE/CLI 元数据表(#~ 表头行计数自 +24 起)拿程序集引用
+- [2026-09-17 | valid:长期] 宿主 PowerShell 7.6.5(Core)；写 .ps1 用 5.1 兼容语法(禁 &&/||/三元/??)；Bash 不能调 PowerShell；PS stdout 恒空需写文件再 Read
+- [2026-09-17 | valid:长期] 沙箱拦截：命令含 csc 字样 / ls "C:/Program Files..." 路径组合；HTML 原型无头校验用 managed node + playwright-core(chromium 在 AppData/Local/ms-playwright)
+- [2026-08-16 | valid:长期] WorkBuddy 安全删除 shim：批量删超阈值需确认；绕过=命令前 unset CODEBUDDY_SESSION_ID CLAUDE_SESSION_ID；PowerShell 同进程先 Remove-Item Env: 两变量再删
+- [2026-08-21 | valid:长期] CodeBuddy CN 安装位 C:\Users\Administrator\AppData\Local\Programs\CodeBuddy CN\；自动更新通道损坏，手动更新走 copilot.tencent.com/v2/update 直链 + setup.exe /VERYSILENT
+- [2026-09-17 | valid:长期] Steam MCP(chaosman42/steam-mcp) 源码 D:\toolbox\steam-mcp\server.py，独立 venv(mcp 1.30.0，只兼容 mcp<2)；STEAM_API_KEY 留空仅公开工具可用；steamcmd 在 D:\toolbox\steamcmd
+- [2026-09-17 | valid:长期] D:\toolbox 顶层只留工具链(dotnet/python/node/jdk/npm-global/bin/steam-mcp/steamcmd 等)；辅助工具归 D:\toolbox\辅助工具\
+- [2026-09-17 | valid:长期] WorkBuddy 自定义 MCP 排查6步：服务端自检→配置读到→信任状态→下发配置→进程起来→会话内调工具；trustLevel=gray 正常
+- [2026-09-19 | valid:长期] skills CLI(npx skills@latest) 不支持 WorkBuddy，装技能须 clone→拷 SKILL.md 到 ~/.workbuddy/skills/；AI 推荐清单星数普遍失真，须 GitHub API 验真
+- [2026-09-19 | valid:长期] Three.js 技能集已整合成 9 个(threejs-game-director 主入口 + threejs-api-reference 伞 + threejs-asset-generator 合并 + 6 个保持 + 自建单文件3D场景)；原 17 个第三方备份在 ~/.workbuddy/.skill-backups/20260919/
+- [2026-10-09 | valid:长期] structured-memory skill 创建于 ~/.workbuddy/skills/structured-memory（分域+时间戳+过期+按需召回，替代扁平 memory.md）
+
+## [DOMAIN: 临时事项]
+- [2026-10-09 | valid:临时 | until:2026-10-16] 正在把记忆体系迁移到结构化 skill（测试期）

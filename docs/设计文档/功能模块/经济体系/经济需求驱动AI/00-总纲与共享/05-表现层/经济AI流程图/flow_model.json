@@ -1,0 +1,1960 @@
+{
+  "width": 3300,
+  "height": 3340,
+  "scale": 2,
+  "nodes": [
+    {
+      "id": "state",
+      "x": 200,
+      "y": 310,
+      "w": 640,
+      "h": 110,
+      "text": "更新 Pawn 事实\n需求 · 健康 · 衣物 · 账户 · 合同",
+      "tone": "blue",
+      "shape": "rect",
+      "size": 31
+    },
+    {
+      "id": "vanilla",
+      "x": 200,
+      "y": 480,
+      "w": 640,
+      "h": 110,
+      "text": "原版自然决策点\nThinkTree 判断需求与工作",
+      "tone": "blue",
+      "shape": "rect",
+      "size": 31
+    },
+    {
+      "id": "gate",
+      "x": 200,
+      "y": 650,
+      "w": 640,
+      "h": 150,
+      "text": "经济活动可参与？\n系统有效 · 自由时段 · 安全",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 30
+    },
+    {
+      "id": "pending",
+      "x": 200,
+      "y": 870,
+      "w": 640,
+      "h": 150,
+      "text": "有未结订单？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 31
+    },
+    {
+      "id": "new",
+      "x": 200,
+      "y": 1090,
+      "w": 640,
+      "h": 110,
+      "text": "允许发起新决策？\n自主开启 · 冷却结束",
+      "tone": "purple",
+      "shape": "rect",
+      "size": 31
+    },
+    {
+      "id": "owned",
+      "x": 200,
+      "y": 1270,
+      "w": 640,
+      "h": 150,
+      "text": "有已购待穿或\n合适的自有衣物？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 31
+    },
+    {
+      "id": "supply",
+      "x": 200,
+      "y": 1490,
+      "w": 640,
+      "h": 150,
+      "text": "营业商店有\n合适且可穿的衣物？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 31
+    },
+    {
+      "id": "money",
+      "x": 200,
+      "y": 1710,
+      "w": 640,
+      "h": 150,
+      "text": "个人可用余额足够？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 31
+    },
+    {
+      "id": "A_out",
+      "x": 302,
+      "y": 1977,
+      "w": 66,
+      "h": 66,
+      "text": "A",
+      "tone": "teal",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "B_out",
+      "x": 672,
+      "y": 1977,
+      "w": 66,
+      "h": 66,
+      "text": "B",
+      "tone": "orange",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "C_out",
+      "x": 892,
+      "y": 1312,
+      "w": 66,
+      "h": 66,
+      "text": "C",
+      "tone": "teal",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "fallback",
+      "x": 200,
+      "y": 2120,
+      "w": 640,
+      "h": 105,
+      "text": "交回原版 / 等待条件变化\n需求、缺货或冷却后再评估",
+      "tone": "blue",
+      "shape": "rect",
+      "size": 29
+    },
+    {
+      "id": "resume",
+      "x": 200,
+      "y": 2280,
+      "w": 640,
+      "h": 110,
+      "text": "续办原订单：购物 / 体检 / 签约\n结果回写；不重复计费",
+      "tone": "blue",
+      "shape": "rect",
+      "size": 29
+    },
+    {
+      "id": "R_fallback",
+      "x": 892,
+      "y": 2140,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "R_resume",
+      "x": 892,
+      "y": 2302,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "A_in",
+      "x": 1537,
+      "y": 287,
+      "w": 66,
+      "h": 66,
+      "text": "A",
+      "tone": "teal",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "reserve",
+      "x": 1210,
+      "y": 420,
+      "w": 720,
+      "h": 125,
+      "text": "准备购物订单\n冻结资金 · 锁定真实商品",
+      "tone": "teal",
+      "shape": "rect",
+      "size": 31
+    },
+    {
+      "id": "visit",
+      "x": 1210,
+      "y": 630,
+      "w": 720,
+      "h": 125,
+      "text": "购物 Job：预约 → 寻路 → 到店\n复核商品、价格、资金与穿戴条件",
+      "tone": "teal",
+      "shape": "rect",
+      "size": 29
+    },
+    {
+      "id": "trade",
+      "x": 1210,
+      "y": 840,
+      "w": 720,
+      "h": 140,
+      "text": "交付真实衣物并提交交易\n转账 · 登记产权 · 记录已购待穿",
+      "tone": "teal",
+      "shape": "rect",
+      "size": 30
+    },
+    {
+      "id": "C_in",
+      "x": 1537,
+      "y": 1057,
+      "w": 66,
+      "h": 66,
+      "text": "C",
+      "tone": "teal",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "wearable",
+      "x": 1240,
+      "y": 1200,
+      "w": 660,
+      "h": 160,
+      "text": "现在可以穿戴？\n策略 · 部位 · 编码 · 锁定检查",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 29
+    },
+    {
+      "id": "wear",
+      "x": 1220,
+      "y": 1450,
+      "w": 700,
+      "h": 130,
+      "text": "执行穿戴 Job / 阶段\n原版 Wear 改变装备与实际属性",
+      "tone": "teal",
+      "shape": "rect",
+      "size": 30
+    },
+    {
+      "id": "keep",
+      "x": 1210,
+      "y": 1780,
+      "w": 720,
+      "h": 130,
+      "text": "保留私人物品，等待可穿条件\n已购待穿，不再次扣款",
+      "tone": "amber",
+      "shape": "rect",
+      "size": 30
+    },
+    {
+      "id": "R_wear",
+      "x": 1537,
+      "y": 1637,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "R_keep",
+      "x": 1537,
+      "y": 1977,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "public_legend",
+      "x": 1200,
+      "y": 2290,
+      "w": 270,
+      "h": 85,
+      "text": "公共账户",
+      "tone": "blue",
+      "shape": "rect",
+      "size": 29
+    },
+    {
+      "id": "private_legend",
+      "x": 1640,
+      "y": 2290,
+      "w": 270,
+      "h": 85,
+      "text": "个人账户",
+      "tone": "teal",
+      "shape": "rect",
+      "size": 29
+    },
+    {
+      "id": "B_in",
+      "x": 2627,
+      "y": 287,
+      "w": 66,
+      "h": 66,
+      "text": "B",
+      "tone": "orange",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "contract",
+      "x": 2300,
+      "y": 410,
+      "w": 720,
+      "h": 145,
+      "text": "已有有效劳动合同？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 31
+    },
+    {
+      "id": "offer",
+      "x": 2300,
+      "y": 650,
+      "w": 720,
+      "h": 145,
+      "text": "有可加入的有效岗位？\n名额 · 工作启用 · 无排班冲突",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 29
+    },
+    {
+      "id": "report",
+      "x": 2300,
+      "y": 890,
+      "w": 720,
+      "h": 145,
+      "text": "无需体检，或已有合格报告？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 29
+    },
+    {
+      "id": "clinic",
+      "x": 2300,
+      "y": 1130,
+      "w": 720,
+      "h": 145,
+      "text": "体检医生、预约与资金可用？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 29
+    },
+    {
+      "id": "exam",
+      "x": 2290,
+      "y": 1365,
+      "w": 740,
+      "h": 145,
+      "text": "体检 Job：医患到场，检查600 tick\n生成报告并结算；回决策复核报告",
+      "tone": "orange",
+      "shape": "rect",
+      "size": 29
+    },
+    {
+      "id": "R_exam",
+      "x": 3067,
+      "y": 1405,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "sign",
+      "x": 2290,
+      "y": 1640,
+      "w": 740,
+      "h": 120,
+      "text": "劳务站 Job：到场复核并签约\n占用名额 · 创建经济工坊排班",
+      "tone": "orange",
+      "shape": "rect",
+      "size": 30
+    },
+    {
+      "id": "work",
+      "x": 2290,
+      "y": 1835,
+      "w": 740,
+      "h": 120,
+      "text": "原版 DoBill：取料 → 制作 → 产出\n保留原版工单、技能、身体与预约限制",
+      "tone": "orange",
+      "shape": "rect",
+      "size": 28
+    },
+    {
+      "id": "complete",
+      "x": 2300,
+      "y": 2020,
+      "w": 720,
+      "h": 140,
+      "text": "收到合法生产完成事实？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 30
+    },
+    {
+      "id": "R_incomplete",
+      "x": 2177,
+      "y": 2057,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "payable",
+      "x": 2300,
+      "y": 2210,
+      "w": 720,
+      "h": 140,
+      "text": "公共账户足以支付工资？",
+      "tone": "purple",
+      "shape": "diamond",
+      "size": 30
+    },
+    {
+      "id": "pay",
+      "x": 2290,
+      "y": 2400,
+      "w": 740,
+      "h": 105,
+      "text": "按真实完成结薪，更新账户\nJob ID 去重，不重复发放",
+      "tone": "orange",
+      "shape": "rect",
+      "size": 29
+    },
+    {
+      "id": "arrears",
+      "x": 2290,
+      "y": 2550,
+      "w": 740,
+      "h": 100,
+      "text": "保留一次欠薪，停岗解约\n补发后需重新发布岗位与签约",
+      "tone": "amber",
+      "shape": "rect",
+      "size": 28
+    },
+    {
+      "id": "wait",
+      "x": 2290,
+      "y": 2690,
+      "w": 740,
+      "h": 95,
+      "text": "等待收入 / 岗位 / 体检条件\n原版活动继续，条件变化后复评",
+      "tone": "amber",
+      "shape": "rect",
+      "size": 28
+    },
+    {
+      "id": "R_pay",
+      "x": 3067,
+      "y": 2420,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "R_arrears",
+      "x": 3067,
+      "y": 2567,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "R_wait",
+      "x": 3067,
+      "y": 2705,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "recover",
+      "x": 170,
+      "y": 2850,
+      "w": 2960,
+      "h": 135,
+      "text": "全局恢复（覆盖全部机构 Job）\n未提交：取消并释放冻结款｜已提交：保留商品、工资与报告｜读档：取消未结单；坏档保留原数据并停用经济",
+      "tone": "red",
+      "shape": "rect",
+      "size": 30
+    },
+    {
+      "id": "R_hub",
+      "x": 617,
+      "y": 3062,
+      "w": 66,
+      "h": 66,
+      "text": "R",
+      "tone": "green",
+      "shape": "circle",
+      "size": 37
+    },
+    {
+      "id": "feedback",
+      "x": 760,
+      "y": 3040,
+      "w": 1850,
+      "h": 110,
+      "text": "回写事实、目标与收支 → 重新评估需求缺口\n成功、等待、中断、欠薪均回到循环；不会跳过原版调度",
+      "tone": "green",
+      "shape": "rect",
+      "size": 33
+    }
+  ],
+  "edges": [
+    {
+      "a": "state",
+      "b": "vanilla",
+      "points": [
+        [
+          520,
+          420
+        ],
+        [
+          520,
+          480
+        ]
+      ],
+      "label": "",
+      "lx": 578,
+      "ly": 450.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "vanilla",
+      "b": "gate",
+      "points": [
+        [
+          520,
+          590
+        ],
+        [
+          520,
+          650
+        ]
+      ],
+      "label": "",
+      "lx": 578,
+      "ly": 620.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "gate",
+      "b": "pending",
+      "points": [
+        [
+          520,
+          800
+        ],
+        [
+          520,
+          870
+        ]
+      ],
+      "label": "是",
+      "lx": 578,
+      "ly": 835.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "gate",
+      "b": "fallback",
+      "points": [
+        [
+          200,
+          725
+        ],
+        [
+          100,
+          725
+        ],
+        [
+          100,
+          2173
+        ],
+        [
+          200,
+          2173
+        ]
+      ],
+      "label": "否",
+      "lx": 143,
+      "ly": 685,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "pending",
+      "b": "new",
+      "points": [
+        [
+          520,
+          1020
+        ],
+        [
+          520,
+          1090
+        ]
+      ],
+      "label": "否",
+      "lx": 578,
+      "ly": 1055.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "pending",
+      "b": "resume",
+      "points": [
+        [
+          840,
+          945
+        ],
+        [
+          970,
+          945
+        ],
+        [
+          970,
+          2245
+        ],
+        [
+          520,
+          2245
+        ],
+        [
+          520,
+          2280
+        ]
+      ],
+      "label": "是",
+      "lx": 895,
+      "ly": 905,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "new",
+      "b": "owned",
+      "points": [
+        [
+          520,
+          1200
+        ],
+        [
+          520,
+          1270
+        ]
+      ],
+      "label": "是",
+      "lx": 578,
+      "ly": 1235.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "new",
+      "b": "fallback",
+      "points": [
+        [
+          200,
+          1145
+        ],
+        [
+          100,
+          1145
+        ],
+        [
+          100,
+          2173
+        ],
+        [
+          200,
+          2173
+        ]
+      ],
+      "label": "否",
+      "lx": 145,
+      "ly": 1110,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "owned",
+      "b": "supply",
+      "points": [
+        [
+          520,
+          1420
+        ],
+        [
+          520,
+          1490
+        ]
+      ],
+      "label": "否",
+      "lx": 578,
+      "ly": 1455.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "owned",
+      "b": "C_out",
+      "points": [
+        [
+          840,
+          1345
+        ],
+        [
+          892,
+          1345
+        ]
+      ],
+      "label": "是",
+      "lx": 865,
+      "ly": 1305,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "supply",
+      "b": "money",
+      "points": [
+        [
+          520,
+          1640
+        ],
+        [
+          520,
+          1710
+        ]
+      ],
+      "label": "是",
+      "lx": 578,
+      "ly": 1675.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "supply",
+      "b": "fallback",
+      "points": [
+        [
+          200,
+          1565
+        ],
+        [
+          100,
+          1565
+        ],
+        [
+          100,
+          2173
+        ],
+        [
+          200,
+          2173
+        ]
+      ],
+      "label": "无",
+      "lx": 145,
+      "ly": 1525,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "money",
+      "b": "A_out",
+      "points": [
+        [
+          520,
+          1860
+        ],
+        [
+          520,
+          1930
+        ],
+        [
+          335,
+          1930
+        ],
+        [
+          335,
+          1977
+        ]
+      ],
+      "label": "足够",
+      "lx": 355,
+      "ly": 1890,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "money",
+      "b": "B_out",
+      "points": [
+        [
+          520,
+          1860
+        ],
+        [
+          520,
+          1930
+        ],
+        [
+          705,
+          1930
+        ],
+        [
+          705,
+          1977
+        ]
+      ],
+      "label": "不足",
+      "lx": 695,
+      "ly": 1890,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "fallback",
+      "b": "R_fallback",
+      "points": [
+        [
+          840,
+          2173
+        ],
+        [
+          892,
+          2173
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "resume",
+      "b": "R_resume",
+      "points": [
+        [
+          840,
+          2335
+        ],
+        [
+          892,
+          2335
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "A_in",
+      "b": "reserve",
+      "points": [
+        [
+          1570,
+          353
+        ],
+        [
+          1570,
+          420
+        ]
+      ],
+      "label": "",
+      "lx": 1628,
+      "ly": 386.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "reserve",
+      "b": "visit",
+      "points": [
+        [
+          1570,
+          545
+        ],
+        [
+          1570,
+          630
+        ]
+      ],
+      "label": "",
+      "lx": 1628,
+      "ly": 587.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "visit",
+      "b": "trade",
+      "points": [
+        [
+          1570,
+          755
+        ],
+        [
+          1570,
+          840
+        ]
+      ],
+      "label": "",
+      "lx": 1628,
+      "ly": 797.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "trade",
+      "b": "C_in",
+      "points": [
+        [
+          1570,
+          980
+        ],
+        [
+          1570,
+          1057
+        ]
+      ],
+      "label": "",
+      "lx": 1628,
+      "ly": 1018.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "C_in",
+      "b": "wearable",
+      "points": [
+        [
+          1570,
+          1123
+        ],
+        [
+          1570,
+          1200
+        ]
+      ],
+      "label": "",
+      "lx": 1628,
+      "ly": 1161.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "wearable",
+      "b": "wear",
+      "points": [
+        [
+          1570,
+          1360
+        ],
+        [
+          1570,
+          1450
+        ]
+      ],
+      "label": "是",
+      "lx": 1628,
+      "ly": 1405.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "wearable",
+      "b": "keep",
+      "points": [
+        [
+          1900,
+          1280
+        ],
+        [
+          1990,
+          1280
+        ],
+        [
+          1990,
+          1845
+        ],
+        [
+          1930,
+          1845
+        ]
+      ],
+      "label": "否",
+      "lx": 1950,
+      "ly": 1230,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "wear",
+      "b": "R_wear",
+      "points": [
+        [
+          1570,
+          1580
+        ],
+        [
+          1570,
+          1637
+        ]
+      ],
+      "label": "",
+      "lx": 1628,
+      "ly": 1608.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "keep",
+      "b": "R_keep",
+      "points": [
+        [
+          1570,
+          1910
+        ],
+        [
+          1570,
+          1977
+        ]
+      ],
+      "label": "",
+      "lx": 1628,
+      "ly": 1943.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "public_legend",
+      "b": "private_legend",
+      "points": [
+        [
+          1470,
+          2310
+        ],
+        [
+          1640,
+          2310
+        ]
+      ],
+      "label": "工资",
+      "lx": 1555,
+      "ly": 2275,
+      "tone": "teal",
+      "virtual": false
+    },
+    {
+      "a": "private_legend",
+      "b": "public_legend",
+      "points": [
+        [
+          1640,
+          2355
+        ],
+        [
+          1470,
+          2355
+        ]
+      ],
+      "label": "购衣款",
+      "lx": 1555,
+      "ly": 2405,
+      "tone": "teal",
+      "virtual": false
+    },
+    {
+      "a": "B_in",
+      "b": "contract",
+      "points": [
+        [
+          2660,
+          353
+        ],
+        [
+          2660,
+          410
+        ]
+      ],
+      "label": "",
+      "lx": 2718,
+      "ly": 381.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "contract",
+      "b": "offer",
+      "points": [
+        [
+          2660,
+          555
+        ],
+        [
+          2660,
+          650
+        ]
+      ],
+      "label": "无",
+      "lx": 2718,
+      "ly": 602.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "contract",
+      "b": "work",
+      "points": [
+        [
+          2300,
+          482
+        ],
+        [
+          2160,
+          482
+        ],
+        [
+          2160,
+          1895
+        ],
+        [
+          2290,
+          1895
+        ]
+      ],
+      "label": "有",
+      "lx": 2210,
+      "ly": 443,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "offer",
+      "b": "report",
+      "points": [
+        [
+          2660,
+          795
+        ],
+        [
+          2660,
+          890
+        ]
+      ],
+      "label": "有",
+      "lx": 2718,
+      "ly": 842.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "offer",
+      "b": "wait",
+      "points": [
+        [
+          3020,
+          722
+        ],
+        [
+          3210,
+          722
+        ],
+        [
+          3210,
+          2670
+        ],
+        [
+          2660,
+          2670
+        ],
+        [
+          2660,
+          2690
+        ]
+      ],
+      "label": "无",
+      "lx": 3105,
+      "ly": 682,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "report",
+      "b": "clinic",
+      "points": [
+        [
+          2660,
+          1035
+        ],
+        [
+          2660,
+          1130
+        ]
+      ],
+      "label": "需体检",
+      "lx": 2718,
+      "ly": 1082.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "report",
+      "b": "sign",
+      "points": [
+        [
+          2300,
+          962
+        ],
+        [
+          2200,
+          962
+        ],
+        [
+          2200,
+          1700
+        ],
+        [
+          2290,
+          1700
+        ]
+      ],
+      "label": "是",
+      "lx": 2240,
+      "ly": 920,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "clinic",
+      "b": "exam",
+      "points": [
+        [
+          2660,
+          1275
+        ],
+        [
+          2660,
+          1365
+        ]
+      ],
+      "label": "可用",
+      "lx": 2718,
+      "ly": 1320.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "clinic",
+      "b": "wait",
+      "points": [
+        [
+          3020,
+          1202
+        ],
+        [
+          3210,
+          1202
+        ],
+        [
+          3210,
+          2670
+        ],
+        [
+          2660,
+          2670
+        ],
+        [
+          2660,
+          2690
+        ]
+      ],
+      "label": "不可用",
+      "lx": 3090,
+      "ly": 1162,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "exam",
+      "b": "R_exam",
+      "points": [
+        [
+          3030,
+          1438
+        ],
+        [
+          3067,
+          1438
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "sign",
+      "b": "work",
+      "points": [
+        [
+          2660,
+          1760
+        ],
+        [
+          2660,
+          1835
+        ]
+      ],
+      "label": "",
+      "lx": 2718,
+      "ly": 1797.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "work",
+      "b": "complete",
+      "points": [
+        [
+          2660,
+          1955
+        ],
+        [
+          2660,
+          2020
+        ]
+      ],
+      "label": "",
+      "lx": 2718,
+      "ly": 1987.5,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "complete",
+      "b": "R_incomplete",
+      "points": [
+        [
+          2300,
+          2090
+        ],
+        [
+          2243,
+          2090
+        ]
+      ],
+      "label": "否",
+      "lx": 2260,
+      "ly": 2050,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "complete",
+      "b": "payable",
+      "points": [
+        [
+          2660,
+          2160
+        ],
+        [
+          2660,
+          2210
+        ]
+      ],
+      "label": "是",
+      "lx": 2718,
+      "ly": 2185.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "payable",
+      "b": "pay",
+      "points": [
+        [
+          2660,
+          2350
+        ],
+        [
+          2660,
+          2400
+        ]
+      ],
+      "label": "足够",
+      "lx": 2718,
+      "ly": 2375.0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "payable",
+      "b": "arrears",
+      "points": [
+        [
+          2300,
+          2280
+        ],
+        [
+          2200,
+          2280
+        ],
+        [
+          2200,
+          2600
+        ],
+        [
+          2290,
+          2600
+        ]
+      ],
+      "label": "不足",
+      "lx": 2240,
+      "ly": 2245,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "pay",
+      "b": "R_pay",
+      "points": [
+        [
+          3030,
+          2453
+        ],
+        [
+          3067,
+          2453
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "arrears",
+      "b": "R_arrears",
+      "points": [
+        [
+          3030,
+          2600
+        ],
+        [
+          3067,
+          2600
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "wait",
+      "b": "R_wait",
+      "points": [
+        [
+          3030,
+          2738
+        ],
+        [
+          3067,
+          2738
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "R_hub",
+      "b": "feedback",
+      "points": [
+        [
+          683,
+          3095
+        ],
+        [
+          760,
+          3095
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "green",
+      "virtual": false
+    },
+    {
+      "a": "recover",
+      "b": "feedback",
+      "points": [
+        [
+          1650,
+          2985
+        ],
+        [
+          1650,
+          3040
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "red",
+      "virtual": false
+    },
+    {
+      "a": "feedback",
+      "b": "state",
+      "points": [
+        [
+          2610,
+          3095
+        ],
+        [
+          3270,
+          3095
+        ],
+        [
+          3270,
+          275
+        ],
+        [
+          520,
+          275
+        ],
+        [
+          520,
+          310
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "green",
+      "virtual": false
+    },
+    {
+      "a": "A_out",
+      "b": "A_in",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "B_out",
+      "b": "B_in",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "C_out",
+      "b": "C_in",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_fallback",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_resume",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_wear",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_keep",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_exam",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_incomplete",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_pay",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_arrears",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "R_wait",
+      "b": "R_hub",
+      "points": [],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "resume",
+      "b": "recover",
+      "points": [],
+      "label": "中断/失效/超时/读档",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "reserve",
+      "b": "recover",
+      "points": [],
+      "label": "中断/失效/超时/读档",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "visit",
+      "b": "recover",
+      "points": [],
+      "label": "中断/失效/超时/读档",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "trade",
+      "b": "recover",
+      "points": [],
+      "label": "中断/失效/超时/读档",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "wear",
+      "b": "recover",
+      "points": [],
+      "label": "中断/失效/超时/读档",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "exam",
+      "b": "recover",
+      "points": [],
+      "label": "中断/失效/超时/读档",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "sign",
+      "b": "recover",
+      "points": [],
+      "label": "中断/失效/超时/读档",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    },
+    {
+      "a": "work",
+      "b": "recover",
+      "points": [],
+      "label": "中断/失效/超时/读档",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": true
+    }
+  ],
+  "notes": [
+    {
+      "x": 100,
+      "y": 70,
+      "text": "Pawn 经济 AI · 完整闭环",
+      "size": 62,
+      "tone": "ink",
+      "align": "left",
+      "bold": true
+    },
+    {
+      "x": 103,
+      "y": 137,
+      "text": "当前实装逻辑｜原版 ThinkTree + 自研经济决策 + 原版 Job 执行",
+      "size": 30,
+      "tone": "muted",
+      "align": "left",
+      "bold": false
+    },
+    {
+      "x": 335,
+      "y": 2070,
+      "text": "购买",
+      "size": 29,
+      "tone": "teal",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 705,
+      "y": 2070,
+      "text": "就业与收入",
+      "size": 29,
+      "tone": "orange",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 925,
+      "y": 1405,
+      "text": "先用",
+      "size": 25,
+      "tone": "teal",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 520,
+      "y": 2530,
+      "text": "准入与中断",
+      "size": 32,
+      "tone": "ink",
+      "align": "center",
+      "bold": true
+    },
+    {
+      "x": 520,
+      "y": 2600,
+      "text": "自由时间 · 食物≥50% · 休息≥40%\n征召、失能、火灾及救治需求等阻止介入\n服务中食物<35%或休息<25%则退出",
+      "size": 27,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 520,
+      "y": 2730,
+      "text": "原版寻路、需求与强制任务继续生效",
+      "size": 26,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 1690,
+      "y": 1090,
+      "text": "已购 / 自有衣物",
+      "size": 27,
+      "tone": "teal",
+      "align": "left",
+      "bold": false
+    },
+    {
+      "x": 1570,
+      "y": 2180,
+      "text": "资金回路",
+      "size": 35,
+      "tone": "ink",
+      "align": "center",
+      "bold": true
+    },
+    {
+      "x": 1570,
+      "y": 2515,
+      "text": "体检费用：付款方 → 机构 → 医生\n医生获得60%，机构留存40%",
+      "size": 29,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 1570,
+      "y": 2660,
+      "text": "启动拨款仅一次；正常交易只转账\n购买不会自动终止劳动合同",
+      "size": 28,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 2220,
+      "y": 2160,
+      "text": "未完成\n不计薪",
+      "size": 24,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 1630,
+      "y": 275,
+      "text": "下一次原版自然决策",
+      "size": 25,
+      "tone": "green",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 1650,
+      "y": 3210,
+      "text": "同字母圆点相连：A 购买入口 · B 收入入口 · C 穿戴入口 · R 统一反馈；各机构 Job 共用原版预约、寻路与 Toil。",
+      "size": 27,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 1650,
+      "y": 3275,
+      "text": "范围：衣物消费、计件就业、入职体检的当前代码逻辑；完整游戏内闭环仍待实机验收。",
+      "size": 26,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    }
+  ],
+  "panels": [
+    {
+      "x": 60,
+      "y": 190,
+      "w": 960,
+      "h": 2620,
+      "title": "01  原版调度与经济决策",
+      "tone": "blue"
+    },
+    {
+      "x": 1070,
+      "y": 190,
+      "w": 1000,
+      "h": 2620,
+      "title": "02  购买、产权与穿戴",
+      "tone": "teal"
+    },
+    {
+      "x": 2120,
+      "y": 190,
+      "w": 1120,
+      "h": 2620,
+      "title": "03  就业、体检与收入",
+      "tone": "orange"
+    }
+  ]
+}

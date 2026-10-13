@@ -123,6 +123,9 @@ namespace PersonalChronicle.Domain.Career
         /// <summary>P5 实践/理论考试通过（事实记录，不承载评分数值）。</summary>
         public const string ExamPassed = "ExamPassed";
 
+        /// <summary>P6 论文完成（事实记录，装订成论文物前的事实锚点）。</summary>
+        public const string ThesisCompleted = "ThesisCompleted";
+
         /// <summary>P6 论文答辩通过（事实记录）。</summary>
         public const string ThesisDefended = "ThesisDefended";
 
@@ -136,7 +139,7 @@ namespace PersonalChronicle.Domain.Career
         public static readonly IReadOnlyList<string> Allowed = new[]
         {
             WorkCompleted, ItemProduced, ConstructionCompleted, ResearchCompleted, BookProduced,
-            ExamPassed, ThesisDefended, TitleGranted, MedalGranted
+            ExamPassed, ThesisCompleted, ThesisDefended, TitleGranted, MedalGranted
         };
 
         /// <summary>判定该类型是否在 P1 白名单内（防止误写未授权事件）。</summary>
@@ -196,6 +199,13 @@ namespace PersonalChronicle.Domain.Career
         /// <summary>P7 已授予职称记录（append-only）。</summary>
         public List<PersonalChronicle.Domain.Honor.GrantedTitle> GrantedTitles;
 
+        /// <summary>
+        /// 地图名牌 / 殖民者栏显示的唯一称号。空 = 自动；
+        /// <see cref="PersonalChronicle.Domain.Honor.HonorDisplayKeys.None"/> = 隐藏；
+        /// 其余为 title:/medal: 前缀键。append-only（旧档 null-safe，不 bump schema）。
+        /// </summary>
+        public string DisplayedHonorKey;
+
         public CareerData()
         {
         }
@@ -210,6 +220,7 @@ namespace PersonalChronicle.Domain.Career
             Scribe_Collections.Look(ref Books, "books", LookMode.Deep);
             Scribe_Deep.Look(ref Thesis, "thesis");
             Scribe_Collections.Look(ref GrantedTitles, "grantedTitles", LookMode.Deep);
+            Scribe_Values.Look(ref DisplayedHonorKey, "displayedHonorKey");
             if (Events == null) Events = new List<CareerEvent>();
             if (RecordCountByType == null) RecordCountByType = new Dictionary<string, int>();
         }

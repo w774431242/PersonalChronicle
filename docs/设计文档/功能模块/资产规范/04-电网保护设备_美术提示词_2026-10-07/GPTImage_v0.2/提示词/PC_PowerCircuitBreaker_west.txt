@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Asset type: RimWorld building directional sprite, west view.
+Input image: approved north structural master, the ONLY edit target. Preserve exact same object design, material color, silhouette proportions, terminal shape, four corner bolts, FOUR vent slots, one lever, one yellow square.
+Primary request: Rotate actual device CLOCKWISE by exactly 270 degrees in the image plane. Front lever at RIGHT; terminals TOP and BOTTOM; vent a VERTICAL strip at LEFT with FOUR horizontal slots; mustard square immediately ABOVE vent. Housing VERTICAL, long axis top-bottom.
+Keep camera strictly overhead orthographic; do not mirror, tilt, invent new details or show tall sides. Rerender only minimal restrained rim shading consistently with game sprite. One centered object on same square transparent canvas; preserve relative object scale and center. No text, numbers, glow, floor, drop shadow, white matte, checkerboard or extra objects. Healthy normal closed condition. Genuine transparent RGBA background. Match master exactly in visual complexity and proportions.

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>终局管理系统 · 总控制中心（RUIF 预览）</title>
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#101318;color:#d8dee6;font:14px/1.6 "Segoe UI","Microsoft YaHei",sans-serif}
+#cbar{position:fixed;top:0;left:0;height:3px;width:0;background:#d9a441;z-index:99}
+#top{position:fixed;top:0;left:0;right:0;height:52px;background:#161a20;border-bottom:1px solid #2a303a;
+     display:flex;align-items:center;gap:14px;padding:0 16px;z-index:50}
+#top .brand{font-size:14.5px;white-space:nowrap}
+#top .brand b{color:#d9a441}
+#top .ver{font-size:10.5px;color:#6b7482;margin-left:8px}
+.themes{display:flex;gap:5px}
+.tbtn{background:#1f242b;border:1px solid #2a303a;color:#aeb7c4;font:11.5px/1.6 inherit;
+      padding:4px 10px;border-radius:6px;cursor:pointer}
+.tbtn:hover{border-color:#d9a441;color:#d9a441}
+.tbtn.on{background:#2a3040;border-color:#d9a441;color:#d9a441}
+#q{flex:1;max-width:340px;margin-left:auto;background:#1b2027;border:1px solid #2a303a;color:#d8dee6;
+   border-radius:7px;padding:6px 12px;font:12.5px inherit;outline:none}
+#q:focus{border-color:#d9a441}
+#wrap{display:flex;padding-top:52px}
+#side{position:fixed;top:52px;bottom:0;left:0;width:292px;background:#141820;border-right:1px solid #222833;
+      display:flex;flex-direction:column}
+.sidecap{padding:12px 14px 6px;font-size:11px;color:#6b7482;letter-spacing:2px}
+#nav{flex:1;overflow-y:auto;padding:0 8px 12px}
+.grp{margin:12px 6px 0;font-size:12.5px;font-weight:600;color:#d8dee6}
+.grp-sub{margin:0 6px 4px;font-size:10px;color:#5b6472}
+.it{display:block;width:100%;text-align:left;background:none;border:0;color:#aeb7c4;
+    padding:6px 10px;border-radius:6px;cursor:pointer;font:12.5px/1.5 inherit}
+.it:hover{background:#1b212b;color:#d8dee6}
+.it.on{background:#232a35;color:#d9a441;box-shadow:inset 2px 0 0 #d9a441}
+.it .s{display:block;font-size:10.5px;color:#6b7482;line-height:1.4}
+.sidefoot{padding:9px 14px;border-top:1px solid #222833;font-size:10px;color:#5b6472;line-height:1.7}
+#content{flex:1;margin-left:292px;padding:0 0 60px}
+.domain{border-bottom:1px solid #1c222c;padding:26px 34px 40px}
+.dhead h2{font-size:21px;color:#d9a441;margin-bottom:2px}
+.dhead .api{font-size:11.5px;color:#7d8796;font-family:Consolas,monospace;margin-bottom:6px}
+.dhead .intro{font-size:12.5px;color:#8a94a3;max-width:880px;margin-bottom:14px}
+.frag-head{font-size:11px;color:#6b7482;margin:10px 0 6px}
+/* —— 三卷 scope 容器基线（承接各自原 body 规则的兜底）—— */
+.v-main,.v-chart,.v-new{font:14px/1.65 "Segoe UI",system-ui,"Microsoft YaHei",sans-serif}
+.v-main h2,.v-chart h2,.v-new h2{scroll-margin-top:64px}
+#foot{text-align:center;color:#5b6472;font-size:11px;padding:30px 0 10px}
+.v-main[data-theme="vanilla"]{
+  --window:#C9C4B0;--panel:#D5D1BE;--raised:#DFDBC8;--card:#E2DECB;--hover:#EAE6D3;
+  --border:#75705C;--border-soft:#A9A48E;--hair:#B7B29C;
+  --text:#2B2921;--muted:#5D5949;--dim:#847F6C;
+  --accent:#8A6D2F;--info:#5B6E9E;--alive:#3E7A48;--dead:#A63325;--warn:#B4551E;
+  --code:#F2EFE2;--soft:rgba(0,0,0,.05)
+}.v-main[data-theme="dark"]{
+  --window:#16181D;--panel:#1D2026;--raised:#242830;--card:#22262E;--hover:#2C313B;
+  --border:#454B56;--border-soft:#31363F;--hair:#2A2E36;
+  --text:#D9DDE3;--muted:#8F96A0;--dim:#5F6670;
+  --accent:#4E9AF0;--info:#7AB8E8;--alive:#58B368;--dead:#D9534F;--warn:#E0A03C;
+  --code:#0B0D11;--soft:rgba(255,255,255,.05)
+}.v-main[data-theme="epic"]{
+  --window:#0E1322;--panel:#151B2E;--raised:#1C2338;--card:#1A2136;--hover:#252D44;
+  --border:#8A7740;--border-soft:#3C4060;--hair:#323652;
+  --text:#F1EBD8;--muted:#B8B199;--dim:#7D7A8D;
+  --accent:#D4AF37;--info:#DAB457;--alive:#75C57F;--dead:#C04732;--warn:#FF4B33;
+  --code:#080B12;--soft:rgba(255,255,255,.04)
+}.v-main[data-theme="gothic"]{
+  --window:#0A0A0D;--panel:#121216;--raised:#1C1C22;--card:#16161C;--hover:#1E1A26;
+  --border:#4A3059;--border-soft:#2A2130;--hair:#201929;
+  --text:#CFC8D8;--muted:#847693;--dim:#5C5468;
+  --accent:#A83232;--info:#7A7AB0;--alive:#5F9B6A;--dead:#C84040;--warn:#D9912F;
+  --code:#07070A;--soft:rgba(255,255,255,.04)
+}.v-main[data-theme="steampunk"]{
+  --window:#14120D;--panel:#1C1A12;--raised:#252118;--card:#1E1D14;--hover:#2D2A1C;
+  --border:#8A7A3A;--border-soft:#4A422A;--hair:#3B3524;
+  --text:#E0D6AE;--muted:#9A9071;--dim:#6A6452;
+  --accent:#4A9A7A;--info:#7AA0D0;--alive:#7FCA8A;--dead:#B85A4A;--warn:#E0A03C;
+  --code:#0D0B07;--soft:rgba(255,255,255,.04)
+}.v-main{--radius:8px}.v-main *{box-sizing:border-box}.v-main{scroll-behavior:smooth}.v-main{margin:0;background:var(--window);color:var(--text);
+font:14px/1.65 "Segoe UI",system-ui,"Microsoft YaHei",sans-serif;transition:background .35s,color .35s}.v-main #bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;
+background:linear-gradient(90deg,var(--accent),var(--info),var(--alive))}.v-main .hero{padding:34px 40px 22px;border-bottom:1px solid var(--border);
+background:
+ radial-gradient(900px 240px at 10% -40%,color-mix(in srgb,var(--accent) 20%,transparent),transparent 70%),
+ radial-gradient(700px 200px at 90% -30%,color-mix(in srgb,var(--info) 15%,transparent),transparent 70%),
+ linear-gradient(180deg,var(--panel),var(--window))}.v-main .hero h1{margin:0;font-size:30px;
+background:linear-gradient(92deg,var(--text),var(--accent) 60%);-webkit-background-clip:text;background-clip:text;color:transparent}.v-main .hero p{margin:8px 0 0;color:var(--muted);max-width:980px;font-size:13.5px}.v-main .switcher{display:inline-flex;gap:5px;margin-top:15px;background:var(--panel);
+border:1px solid var(--border);border-radius:99px;padding:4px;flex-wrap:wrap}.v-main .switcher button{border:0;background:none;color:var(--muted);font:inherit;font-size:12px;
+padding:5px 13px;border-radius:99px;cursor:pointer;transition:.25s}.v-main .switcher button.on{background:var(--accent);color:var(--window);font-weight:700}.v-main .app{display:grid;grid-template-columns:236px 1fr;align-items:start}.v-main .side{position:sticky;top:0;height:100vh;overflow:auto;border-right:1px solid var(--border);
+background:var(--window);padding:16px 12px}.v-main .side input{width:100%;padding:8px 10px;background:var(--panel);border:1px solid var(--border);
+border-radius:7px;color:var(--text);font:inherit;font-size:13px}.v-main .side a{display:block;padding:5px 10px;color:var(--muted);text-decoration:none;border-radius:6px;font-size:12.5px}.v-main .side a:hover, .v-main .side a.on{background:var(--raised);color:var(--accent)}.v-main .grp{color:var(--dim);font-size:10px;text-transform:uppercase;letter-spacing:1px;margin:14px 8px 4px}.v-main .main{max-width:1300px;padding:24px 30px 90px;min-width:0}.v-main h2{font-size:19px;margin:42px 0 6px;padding-bottom:8px;border-bottom:1px solid var(--border);
+color:var(--accent);scroll-margin-top:14px}.v-main h2:first-of-type{margin-top:6px}.v-main h3{font-size:15px;color:var(--accent);margin:26px 0 8px;scroll-margin-top:14px}.v-main .sub{color:var(--muted);font-size:13px;margin:0 0 14px}.v-main .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(392px,1fr));gap:15px}.v-main .comp{border:1px solid var(--border);border-radius:var(--radius);background:var(--panel);
+overflow:hidden;transition:.25s}.v-main .comp:hover{transform:translateY(-2px);border-color:var(--accent)}.v-main .ch{padding:10px 13px;border-bottom:1px solid var(--border);background:var(--raised);
+display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.v-main .ch b{font-size:14px}.v-main .sig{display:block;color:var(--info);font:11.5px Consolas,monospace;margin-top:2px;word-break:break-all}.v-main .tag{flex:0 0 auto;font-size:10px;padding:2px 7px;border-radius:99px;white-space:nowrap;
+border:1px solid var(--border-soft);color:var(--muted)}.v-main .demo{margin:11px 13px;padding:13px;background:color-mix(in srgb,var(--window) 55%,var(--panel));
+border:1px dashed var(--border-soft);border-radius:6px}.v-main .comp p.desc{margin:0;padding:9px 13px 2px;color:var(--muted);font-size:12.3px}.v-main .mut{color:var(--muted)}.v-main .tiny{font-size:11px;color:var(--dim)}.v-main .badge{display:inline-block;font-size:10px;font-weight:700;padding:1px 8px;border-radius:10px}.v-main .b-ok{background:color-mix(in srgb,var(--alive) 16%,transparent);color:var(--alive);border:1px solid var(--alive)}.v-main .b-part{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn);border:1px solid var(--warn)}.v-main .callout{border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent);
+padding:12px 16px;border-radius:6px;margin:14px 0;font-size:13px}.v-main table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12.5px}.v-main th, .v-main td{border:1px solid var(--border-soft);padding:7px 10px;text-align:left;vertical-align:top}.v-main th{background:var(--raised);color:var(--info)}.v-main footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--border);color:var(--dim);font-size:12px}.v-main .hide{display:none!important}.v-main .kbtn{border:1px solid var(--border-soft);background:var(--raised);color:var(--text);
+border-radius:5px;padding:5px 13px;font:inherit;font-size:12.5px;cursor:pointer;transition:.2s}.v-main .kbtn:hover{background:var(--hover);border-color:var(--accent)}.v-main .kbtn.pri{background:var(--accent);color:var(--window);border-color:var(--accent);font-weight:600}.v-main .kcard{background:var(--card);border:1px solid var(--border-soft);border-radius:6px;
+padding:9px 11px;border-left:3px solid var(--accent)}.v-main .kbar{height:12px;background:var(--soft);border-radius:3px;overflow:hidden}.v-main .kbar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--info));animation:km-grow 1.4s ease}@keyframes km-grow{from{width:0!important}}@keyframes km-pulse{0%,100%{opacity:.45}50%{opacity:.9}}@keyframes km-slidein{from{transform:translateX(24px);opacity:0}}.v-main .kpill{display:inline-block;font-size:11px;padding:1px 9px;border-radius:99px;
+background:color-mix(in srgb,var(--alive) 15%,transparent);color:var(--alive);border:1px solid var(--alive)}.v-main .krow{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 6px}.v-main .krow:nth-child(odd){background:var(--soft)}.v-main .ksec{display:flex;align-items:center;gap:7px;font-size:13px}.v-main .ksec i{width:4px;height:15px;background:var(--accent)}.v-main .ksec u{flex:1;height:1px;background:var(--border-soft)}.v-main .chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--border-soft);
+border-radius:6px;padding:3px 9px;font-size:11.5px;background:var(--card)}.v-main .chip b{font-size:13px}.v-main .up{color:var(--alive)}.v-main .dn{color:var(--dead)}.v-main .avatar{width:38px;height:38px;border-radius:50%;flex:0 0 auto;
+background:linear-gradient(135deg,var(--info),var(--accent));display:flex;align-items:center;
+justify-content:center;font-weight:800;color:var(--window);font-size:13px;
+box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--accent)}.v-main .star{color:var(--accent);letter-spacing:1px;font-size:12px}.v-main .key{font:11px Consolas,monospace;background:var(--raised);border:1px solid var(--border);
+border-bottom-width:2px;border-radius:4px;padding:1px 6px}.v-main .seg{display:inline-flex;border:1px solid var(--border-soft);border-radius:6px;overflow:hidden}.v-main .seg span{padding:4px 12px;font-size:12px;cursor:pointer;background:var(--raised)}.v-main .seg .on{background:var(--accent);color:var(--window);font-weight:600}.v-main .tgl{width:36px;height:19px;border-radius:99px;background:var(--border-soft);position:relative;display:inline-block;vertical-align:middle}.v-main .tgl i{position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:var(--card);transition:.2s}.v-main .tgl.on{background:var(--alive)}.v-main .tgl.on i{left:19px}.v-main .stepper{display:inline-flex;align-items:center;border:1px solid var(--border-soft);border-radius:6px;overflow:hidden}.v-main .stepper button{border:0;background:var(--raised);color:var(--text);width:26px;height:26px;cursor:pointer;font-size:14px}.v-main .stepper b{min-width:44px;text-align:center;font-size:13px}.v-main .skl{display:flex;align-items:center;gap:7px;font-size:11.5px;margin:3px 0}.v-main .skl span:first-child{width:38px;color:var(--muted)}.v-main .skl .tr{flex:1;height:9px;background:var(--soft);border-radius:2px;overflow:hidden}.v-main .skl .tr i{display:block;height:100%}.v-main .skl b{width:20px;text-align:right;font-size:11px}.v-main .need{display:flex;align-items:center;gap:7px;font-size:11.5px;margin:4px 0}.v-main .need span:first-child{width:56px;color:var(--muted)}.v-main .need .tr{flex:1;height:10px;border-radius:2px;overflow:hidden;background:var(--soft)}.v-main .need .tr i{display:block;height:100%}.v-main .gauge{display:flex;align-items:center;gap:14px}.v-main .gauge .arc{width:86px;height:43px;border-radius:86px 86px 0 0;
+background:conic-gradient(from -90deg at 50% 100%,var(--alive) 0 65%,var(--soft) 65% 100%);
+display:flex;align-items:flex-end;justify-content:center;font-weight:800;font-size:13px;padding-bottom:4px}.v-main .toast{display:flex;gap:9px;align-items:flex-start;background:var(--card);border:1px solid var(--border-soft);
+border-left:3px solid var(--alive);border-radius:6px;padding:8px 11px;margin-bottom:6px;animation:km-slidein .5s ease}.v-main .ttab{display:flex;gap:2px;border-bottom:2px solid var(--border-soft)}.v-main .ttab span{padding:6px 16px;font-size:12.5px;color:var(--muted);cursor:pointer;position:relative}.v-main .ttab .on{color:var(--text);font-weight:600}.v-main .ttab .on::after{content:"";position:absolute;left:10%;right:10%;bottom:-2px;height:2px;background:var(--accent)}.v-main .crumb{font-size:12px;color:var(--muted)}.v-main .crumb b{color:var(--text)}.v-main .pager{display:inline-flex;gap:4px}.v-main .pager span{min-width:26px;text-align:center;padding:3px 7px;border:1px solid var(--border-soft);
+border-radius:5px;font-size:12px;cursor:pointer;background:var(--raised)}.v-main .pager .on{background:var(--accent);color:var(--window);font-weight:700}.v-main .tree{font-size:12.5px}.v-main .tree div{padding:2px 0 2px 18px;position:relative}.v-main .tree div::before{content:"";position:absolute;left:6px;top:0;bottom:0;width:1px;background:var(--border-soft)}.v-main .tree div::after{content:"";position:absolute;left:6px;top:12px;width:9px;height:1px;background:var(--border-soft)}.v-main .tree .root{padding-left:2px}.v-main .tree .root::before, .v-main .tree .root::after{display:none}.v-main .tree .dead{color:var(--dim);text-decoration:line-through}.v-main .wiz{display:flex;align-items:center;margin:6px 0}.v-main .wiz .st{display:flex;flex-direction:column;align-items:center;font-size:10.5px;color:var(--muted);width:64px}.v-main .wiz .dot{width:24px;height:24px;border-radius:50%;background:var(--raised);border:2px solid var(--border-soft);
+display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-bottom:4px}.v-main .wiz .st.on .dot{background:var(--accent);border-color:var(--accent);color:var(--window)}.v-main .wiz .st.done .dot{background:var(--alive);border-color:var(--alive);color:var(--window)}.v-main .wiz .ln{flex:1;height:2px;background:var(--border-soft);margin:0 2px 16px}.v-main .wiz .ln.done{background:var(--alive)}.v-main .cpal{background:var(--window);border:1px solid var(--border);border-radius:8px;
+box-shadow:0 18px 40px color-mix(in srgb,#000 40%,transparent);padding:10px;max-width:420px}.v-main .cpal input{width:100%;margin-bottom:8px}.v-main .cpal .it{display:flex;justify-content:space-between;padding:5px 8px;font-size:12.5px;border-radius:5px}.v-main .cpal .it.sel{background:var(--accent);color:var(--window)}.v-main .cpal .kbd-hint{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:8px}.v-main .page{border:1px solid var(--border);border-radius:10px;background:var(--window);
+overflow:hidden;box-shadow:0 14px 40px color-mix(in srgb,#000 30%,transparent);margin:14px 0}.v-main .page .ph{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;
+background:linear-gradient(90deg,var(--raised),var(--panel));border-bottom:1px solid var(--border);font-size:13px}.v-main .page .pb{padding:12px;display:grid;gap:10px}.v-main .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.v-main .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.v-main .row23{display:grid;grid-template-columns:1.6fr 1fr;gap:10px}.v-main .legend{font-size:10px;color:var(--dim);margin:-4px 2px 6px;user-select:none}.v-main .mk{display:inline-block;width:10px;font-size:10px;color:var(--dim)}.v-main .mk.ok{color:var(--alive)}.v-main .mk.doc{color:var(--info)}.v-main .mk.part{color:var(--warn)}.v-main .cnt{float:right;font-size:10px;color:var(--dim);font-variant-numeric:tabular-nums}.v-main .side a.done{color:var(--text)}.v-main .sidewrap{display:flex;flex:1;min-height:0;gap:6px;margin-top:9px}.v-main .vtabs{flex:0 0 64px;display:flex;flex-direction:column;gap:3px;overflow:auto;padding-right:2px}.v-main .vtabs button{border:1px solid var(--border-soft);background:var(--panel);color:var(--muted);
+font:inherit;font-size:10.5px;padding:6px 3px;border-radius:6px;cursor:pointer;text-align:center;
+line-height:1.2;word-break:break-all;transition:.2s}.v-main .vtabs button:hover{color:var(--accent);border-color:var(--accent)}.v-main .vtabs button.on{background:var(--accent);color:var(--window);border-color:var(--accent);font-weight:700}.v-main .vpane{flex:1;overflow:auto;min-width:0;padding-right:2px}.v-main .phead{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.6px;margin:2px 4px 6px}.v-main .vpane a.hit::before{content:"· ";color:var(--accent)}.v-main .side{display:flex;flex-direction:column}@media(max-width:960px){.v-main .vpane{max-height:58vh}}@media(max-width:960px){.v-main .app{grid-template-columns:1fr}.v-main .side{position:relative;height:auto}.v-main .grid{grid-template-columns:1fr}.v-main .row2, .v-main .row3, .v-main .row23{grid-template-columns:1fr}}@keyframes km-spin{to{transform:rotate(360deg)}}.v-main .ring{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+font-weight:800;font-size:13px}.v-main .dots{display:inline-flex;gap:3px;vertical-align:middle}.v-main .dots i{width:8px;height:8px;border-radius:50%;background:var(--soft)}.v-main .dots i.on{background:var(--accent)}.v-main .ribbon{position:relative;overflow:hidden}.v-main .ribbon::after{content:"NEW";position:absolute;top:6px;right:-22px;transform:rotate(38deg);
+background:var(--accent);color:var(--window);font-size:9px;font-weight:800;padding:2px 24px}.v-main .wheel{position:relative;width:110px;height:110px;border-radius:50%;background:var(--panel);
+border:1px solid var(--border);margin:0 auto}.v-main .wheel span{position:absolute;width:34px;height:34px;border-radius:50%;background:var(--raised);
+border:1px solid var(--border-soft);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer}.v-main .wheel span:hover{background:var(--accent);color:var(--window)}.v-main .wheel .c{position:absolute;left:38px;top:38px;width:34px;height:34px;border-radius:50%;
+background:var(--accent);color:var(--window);display:flex;align-items:center;justify-content:center;font-size:12px;z-index:2}.v-main .matrix{display:grid;grid-template-columns:repeat(24,1fr);gap:1px}.v-main .matrix i{aspect-ratio:1;background:var(--soft);border-radius:1px;cursor:pointer}.v-main .matrix i.on{background:var(--accent)}.v-main .pgrid{display:grid;grid-template-columns:44px 1fr;gap:3px;font-size:10.5px;align-items:center}.v-main .pgrid .pcell{display:flex;gap:2px}.v-main .pgrid .p{width:16px;height:16px;border-radius:3px;background:var(--soft);display:flex;
+align-items:center;justify-content:center;font-size:9px;color:var(--dim);cursor:pointer}.v-main .pgrid .p.on{background:var(--accent);color:var(--window);font-weight:700}@keyframes km-tick{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.v-chart{ --bg:#16181f; --panel:#1a1d24; --card:#22252e; --text:#d9dbe2; --muted:#8f97a3; --border:#2b3038; --accent:#4e9bf0; }.v-chart *{box-sizing:border-box;}.v-chart{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.55;}.v-chart header{padding:22px 26px 16px;border-bottom:1px solid var(--border);background:var(--panel);}.v-chart header h1{margin:0;font-size:20px;font-weight:600;letter-spacing:.5px;}.v-chart header .sub{color:var(--muted);font-size:13px;margin-top:6px;}.v-chart .toolbar{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap;}.v-chart .toolbar .lbl{color:var(--muted);font-size:12px;}.v-chart .btn{cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text);padding:5px 13px;border-radius:6px;font-size:13px;transition:.15s;}.v-chart .btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}.v-chart .btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}.v-chart .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}.v-chart .chip{font-size:11.5px;padding:3px 10px;border-radius:12px;border:1px solid var(--border);color:var(--muted);background:var(--card);}.v-chart .chip b{color:var(--text);}.v-chart main{padding:22px 26px 60px;max-width:1360px;margin:0 auto;}.v-chart h2{font-size:15px;font-weight:600;margin:30px 0 12px;padding-left:10px;border-left:3px solid var(--accent);}.v-chart .note{color:var(--muted);font-size:12.5px;margin:-6px 0 14px;}.v-chart table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--panel);border:1px solid var(--border);}.v-chart th, .v-chart td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);}.v-chart th{background:var(--card);color:var(--muted);font-weight:600;font-size:11.5px;}.v-chart tr:last-child td{border-bottom:none;}.v-chart .tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:600;}.v-chart .t-yes{background:rgba(78,179,66,.16);color:#5ec46a;}.v-chart .t-warn{background:rgba(224,160,60,.18);color:#e6b659;}.v-chart .t-no{background:rgba(216,80,70,.18);color:#e87266;}.v-chart .t-re{background:rgba(78,155,240,.16);color:#6aa9e8;}.v-chart .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}.v-chart .chart-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;}.v-chart .chart-card .head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;gap:6px;flex-wrap:wrap;}.v-chart .chart-card .title{font-size:13px;font-weight:600;}.v-chart .chart-card .head .right{display:flex;gap:6px;align-items:center;}.v-chart .cost{font-size:10.5px;padding:1px 7px;border-radius:9px;background:var(--card);color:var(--muted);border:1px solid var(--border);}.v-chart .chart-card .body{padding:8px 10px;background:var(--card);}.v-chart canvas{display:block;width:100%;height:150px;}.v-chart .chart-card .foot{padding:7px 12px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);}.v-chart footer{color:var(--muted);font-size:12px;text-align:center;padding:24px;border-top:1px solid var(--border);margin-top:30px;}.v-chart code{background:var(--card);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--accent);}.v-chart .tier-band{display:flex;gap:10px;align-items:baseline;margin:26px 0 10px;flex-wrap:wrap;}.v-chart .tier-band .tn{font-size:15px;font-weight:700;}.v-chart .tier-band .td{color:var(--muted);font-size:12px;}
+
+.v-new{ --bg:#16181f; --panel:#1a1d24; --card:#22252e; --text:#d9dbe2; --muted:#8f97a3; --border:#2b3038; --accent:#4e9bf0; }.v-new *{box-sizing:border-box;}.v-new{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.55;}.v-new header{padding:22px 26px 16px;border-bottom:1px solid var(--border);background:var(--panel);}.v-new header h1{margin:0;font-size:20px;font-weight:600;letter-spacing:.5px;}.v-new header .sub{color:var(--muted);font-size:13px;margin-top:6px;}.v-new .toolbar{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap;}.v-new .toolbar .lbl{color:var(--muted);font-size:12px;}.v-new .btn{cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text);padding:5px 13px;border-radius:6px;font-size:13px;transition:.15s;}.v-new .btn:hover{border-color:var(--accent);color:var(--accent);}.v-new .btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}.v-new .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}.v-new .chip{font-size:11.5px;padding:3px 10px;border-radius:12px;border:1px solid var(--border);color:var(--muted);background:var(--card);}.v-new .chip b{color:var(--text);}.v-new main{padding:22px 26px 60px;max-width:1360px;margin:0 auto;}.v-new h2{font-size:15px;font-weight:600;margin:30px 0 12px;padding-left:10px;border-left:3px solid var(--accent);}.v-new .note{color:var(--muted);font-size:12.5px;margin:-6px 0 14px;}.v-new table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--panel);border:1px solid var(--border);}.v-new th, .v-new td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);}.v-new th{background:var(--card);color:var(--muted);font-weight:600;font-size:11.5px;}.v-new tr:last-child td{border-bottom:none;}.v-new .tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:600;}.v-new .t-yes{background:rgba(78,179,66,.16);color:#5ec46a;}.v-new .t-no{background:rgba(216,80,70,.18);color:#e87266;}.v-new .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;}.v-new .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;}.v-new .card .head{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;gap:6px;flex-wrap:wrap;}.v-new .card .title{font-size:13px;font-weight:600;}.v-new .cost{font-size:10.5px;padding:1px 7px;border-radius:9px;background:var(--card);color:var(--muted);border:1px solid var(--border);}.v-new .card .body{padding:8px 10px;background:var(--card);}.v-new canvas{display:block;width:100%;height:160px;}.v-new .card .foot{padding:7px 12px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);}.v-new .card .foot code{background:var(--card);padding:0 4px;border-radius:3px;color:var(--accent);font-size:10.5px;}.v-new footer{color:var(--muted);font-size:12px;text-align:center;padding:24px;border-top:1px solid var(--border);margin-top:30px;}.v-new code{background:var(--card);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--accent);}.v-new /* DataBridge 架构图 */
+  .bridge{display:flex;gap:0;align-items:stretch;flex-wrap:wrap;margin:6px 0 18px;}.v-new .bridge .stage{flex:1;min-width:150px;background:var(--panel);border:1px solid var(--border);padding:12px 14px;position:relative;}.v-new .bridge .stage:not(:last-child){border-right:none;}.v-new .bridge .stage h4{margin:0 0 6px;font-size:12.5px;color:var(--accent);}.v-new .bridge .stage p{margin:0;font-size:11.5px;color:var(--muted);}.v-new .bridge .stage .api{margin-top:8px;font-size:10.5px;color:var(--text);opacity:.8;}.v-new .bridge .arrow{align-self:center;color:var(--muted);padding:0 4px;font-size:16px;}
+
+
+/* ===== 总控中心增量样式（x- 前缀，不与宝典冲突）===== */
+#content{padding:26px 34px 60px}
+.x-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0 8px}
+.x-stats .kcard b{display:block;font-size:22px;margin-top:3px;font-weight:700}
+.x-cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:1100px){.x-cols2{grid-template-columns:1fr}.x-stats{grid-template-columns:repeat(2,1fr)}}
+.x-meta{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 6px;align-items:center}
+.x-meta .chip code{font-family:Consolas,monospace;font-size:12px;color:var(--text)}
+.badge.b-hold{background:color-mix(in srgb,var(--muted) 14%,transparent);color:var(--muted);border:1px solid var(--muted)}
+.comp[data-v]{cursor:pointer}
+.comp[data-v]:hover .ch b{color:var(--accent)}
+.x-na{display:block;font-size:13px;font-weight:400;color:var(--dim);margin-top:5px}
+.x-mono{font-family:Consolas,monospace;font-size:11.5px}
+.x-foot{margin-top:26px}
+.x-en{font-size:12px;color:var(--dim);font-weight:400;margin-left:8px}
+/* 语气色（全主题可读） */
+:root{--x-good:#4fae67;--x-warn:#cf9a35;--x-bad:#cf5a50}
+.tone-good{color:var(--x-good)} .tone-warn{color:var(--x-warn)} .tone-bad{color:var(--x-bad)}
+.tone-flat{color:var(--text)}
+/* KPI 实值卡 */
+.x-kpigrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.x-kpi .v{display:block;font-size:20px;font-weight:700;margin-top:4px}
+.x-kpi .d{display:block;font-size:11.5px;margin-top:2px;color:var(--dim)}
+.x-kpi .d.tone-good,.x-kpi .d.tone-warn,.x-kpi .d.tone-bad{font-weight:600}
+/* 事件流 */
+.x-evt{display:flex;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--border)}
+.x-evt:last-child{border-bottom:0}
+.x-evt .t{font-family:Consolas,monospace;font-size:11px;color:var(--dim);min-width:148px;flex:none}
+.x-evt .badge{flex:none;min-width:34px;text-align:center}
+.x-evt .tx{font-size:13px;color:var(--text);line-height:1.5}
+.x-evt .rt{font-family:Consolas,monospace;font-size:11px;color:var(--accent);min-width:150px;flex:none}
+/* 明细表 */
+.x-grid{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 4px}
+.x-grid th{color:var(--dim);text-align:left;font-weight:600;padding:6px 18px 6px 0;border-bottom:1px solid var(--border);white-space:nowrap;font-size:12px}
+.x-grid td{padding:8px 18px 8px 0;border-bottom:1px dashed var(--border);color:var(--text)}
+.x-grid tr:last-child td{border-bottom:0}
+.x-grid td.mono{font-family:Consolas,monospace;font-size:12px}
+/* 居民名册 chips */
+.x-roster{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<header id="top">
+  <div class="brand">终局管理系统 <b>总控制中心</b><span class="ver">RUIF 组件化 · 环世界风味样例数据 · 2026-09-10</span></div>
+  <div class="themes">
+    <button class="tbtn" data-t="vanilla">Vanilla</button>
+    <button class="tbtn on" data-t="dark">Dark</button>
+    <button class="tbtn" data-t="epic">Epic</button>
+    <button class="tbtn" data-t="gothic">Gothic</button>
+    <button class="tbtn" data-t="steampunk">Steampunk</button>
+  </div>
+  <input id="q" placeholder="搜索中心 / 事件 / 能力…（Enter 跳转）">
+</header>
+<div id="wrap">
+<aside id="side">
+  <div class="sidecap">系统中心注册表</div>
+  <nav id="nav"></nav>
+  <div class="sidefoot">调度层 ScheduleBus 唯一 · 中心接入须符合 CenterManifest</div>
+</aside>
+<main id="content"><div class="v-main" id="vroot" data-theme="dark"></div></main>
+</div>
+
+<script>
+const CENTERS = [{"id": "manufacturing_center", "name_zh": "制造系统中心", "name_en": "Manufacturing", "group": "initial", "tier": 10, "version": "draft", "responsible": ["配方管理", "产线编排", "产能核算", "原料消耗", "成品入库"], "delegated": ["搬运入库 → 内务中心", "贸易结算 → 经济中心"], "kpi": [{"k": "产能利用率", "v": "87%", "d": "+3.2", "tone": "good"}, {"k": "在制品", "v": "9 件", "d": "+1", "tone": ""}, {"k": "单位耗时", "v": "0.42 日", "d": "-0.05", "tone": "good"}, {"k": "良品率", "v": "96.4%", "d": "+0.8", "tone": "good"}, {"k": "故障停机", "v": "0.8 h/日", "d": "+0.3", "tone": "warn"}], "emits": ["evt.manufacturing.product_ready"], "consumes": ["evt.economy.reorder", "evt.logistics.space_available"], "depends_on": ["logistics_center"], "provides": ["cap.manufacturing.production"], "hooks": ["OnTick", "OnPhase(produce)"], "status": "运行中", "table": {"title": "在产订单", "cols": ["订单", "产物", "数量", "进度", "状态"], "rows": [["MO-1024", "零部件", "12", "100%", "入库中"], ["MO-1025", "战术背心", "2", "64%", "缝纫台 · Rosa"], ["MO-1026", "栓动步枪", "1", "31%", "机床 · Kia"], ["MO-1027", "精致餐", "5", "0%", "等待原料（委托内务）"], ["MO-1028", "简易头盔", "4", "82%", "装配台 · Dmitri"]]}, "events": [{"t": "Y3·春·D17 06:10", "text": "深钻机床产出 钢铁 ×180，转入原料区", "kind": "ok"}, {"t": "Y3·春·D17 07:02", "text": "装配台完成 零部件 ×12，良品率 100%", "kind": "ok"}, {"t": "Y3·春·D17 07:58", "text": "evt.manufacturing.product_ready 已广播（零部件 ×12）", "kind": "info"}, {"t": "Y3·春·D17 09:14", "text": "炉灶队列阻塞：精致餐 ×5 等待原料，已委托内务中心", "kind": "warn"}, {"t": "Y3·春·D16 22:40", "text": "夜间断电 0.2h，熔炉批次质量 -1", "kind": "bad"}, {"t": "Y3·春·D16 18:05", "text": "拆解 机械蜈蚣残骸 → 零部件 ×26、金属 ×40", "kind": "ok"}]}, {"id": "logistics_center", "name_zh": "内务系统中心", "name_en": "Logistics", "group": "initial", "tier": 15, "version": "draft", "responsible": ["仓储管理", "搬运调度", "资源分配", "清洁维护", "内部运转"], "delegated": ["成品生产 → 制造中心", "伤员处置 → 医疗中心"], "kpi": [{"k": "仓储占用率", "v": "63%", "d": "+5", "tone": "warn"}, {"k": "在途任务", "v": "23 项", "d": "-4", "tone": "good"}, {"k": "平均搬运耗时", "v": "1.4 h", "d": "-0.2", "tone": "good"}, {"k": "缺货告警", "v": "2 项", "d": "+1", "tone": "bad"}], "emits": ["evt.logistics.space_available", "evt.logistics.delivered"], "consumes": ["evt.manufacturing.product_ready", "evt.economy.reorder"], "depends_on": [], "provides": ["cap.logistics.hauling"], "hooks": ["OnTick"], "status": "运行中", "table": {"title": "库存快照", "cols": ["物资", "存量", "容量", "状态"], "rows": [["钢铁", "320", "1200", "偏低"], ["木料", "540", "800", "正常"], ["零部件", "46", "200", "正常"], ["银（货币池）", "2,140", "—", "稳定"], ["精致餐（冷藏）", "18", "30", "正常"], ["特效医药", "8", "20", "低于阈值"]]}, "events": [{"t": "Y3·春·D17 08:20", "text": "货架 B-07 清空：钢铁存量降至 320/1200", "kind": "warn"}, {"t": "Y3·春·D17 07:55", "text": "搬运任务分派 ×3（入库 / 补货 / 医疗支援）", "kind": "info"}, {"t": "Y3·春·D17 06:30", "text": "冷藏库温度 -4°C，易腐食品处于安全区", "kind": "ok"}, {"t": "Y3·春·D16 15:48", "text": "野生浣熊偷走 简单餐 ×2，已加设围栏", "kind": "warn"}, {"t": "Y3·春·D16 11:02", "text": "缺货告警：特效医药 8/20，转发经济中心", "kind": "bad"}, {"t": "Y3·春·D16 09:35", "text": "C 区扩建规划通过：货架 2×3", "kind": "info"}]}, {"id": "economy_center", "name_zh": "经济系统中心", "name_en": "Economy", "group": "initial", "tier": 20, "version": "draft", "responsible": ["货币管理", "贸易结算", "定价", "收支", "市场"], "delegated": ["成品生产 → 制造中心", "搬运入库 → 内务中心", "医疗支付 → 医疗中心"], "kpi": [{"k": "库存总值", "v": "48,320 银", "d": "+2.1%", "tone": "good"}, {"k": "周期成交额", "v": "3,860 银", "d": "+840", "tone": "good"}, {"k": "通胀率", "v": "1.8%", "d": "+0.3", "tone": "warn"}, {"k": "贸易顺差", "v": "+940 银", "d": "-120", "tone": "good"}], "emits": ["evt.economy.trade_settled", "evt.economy.reorder"], "consumes": ["evt.manufacturing.product_ready"], "depends_on": ["logistics_center"], "provides": ["cap.economy.pricing"], "hooks": ["OnPhase(settle)"], "status": "运行中", "table": {"title": "市场行情", "cols": ["货物", "收购单价", "市价", "趋势"], "rows": [["零部件", "22 银", "19 银", "高于市价"], ["精致餐", "31 银", "28 银", "高于市价"], ["皮革", "8 银", "9 银", "低于市价"], ["小型雕塑", "410 银", "380 银", "高于市价"], ["草药", "14 银", "12 银", "持平"]]}, "events": [{"t": "Y3·春·D17 08:32", "text": "evt.economy.reorder → 内务：特效医药 ×12", "kind": "info"}, {"t": "Y3·春·D17 04:33", "text": "东方联合商队预告：预计 0.6 日后抵达", "kind": "info"}, {"t": "Y3·春·D16 19:20", "text": "售出 精致餐 ×40 → +1,240 银（贸易顺差扩大）", "kind": "ok"}, {"t": "Y3·春·D16 16:05", "text": "通胀率上行至 1.8%，奢侈品定价上调", "kind": "warn"}, {"t": "Y3·春·D15 13:11", "text": "拍卖「远古雕塑」流拍，底价 3,200 银", "kind": "warn"}]}, {"id": "medical_center", "name_zh": "医疗系统中心", "name_en": "Medical", "group": "initial", "tier": 12, "version": "draft", "responsible": ["伤病处置", "治疗调度", "药品管理", "防疫"], "delegated": ["搬运伤员 → 内务中心", "医疗支付 → 经济中心"], "kpi": [{"k": "床位占用", "v": "3 / 6", "d": "+1", "tone": ""}, {"k": "治愈率", "v": "89.2%", "d": "+1.4", "tone": "good"}, {"k": "特效医药", "v": "8 剂", "d": "低于阈值 10", "tone": "bad"}, {"k": "疫情风险", "v": "中", "d": "流感季", "tone": "warn"}], "emits": ["evt.medical.treated", "evt.medical.supply_low"], "consumes": ["evt.logistics.delivered"], "depends_on": ["logistics_center"], "provides": ["cap.medical.treatment"], "hooks": ["OnTick", "OnPhase(triage)"], "status": "运行中", "table": {"title": "伤员与患者", "cols": ["患者", "伤情 / 病症", "进展", "处置"], "rows": [["Rosa", "瘟疫", "免疫 71%", "卧床 · 抗生素"], ["Hank", "枪伤（左腿）", "康复 64%", "治疗完成"], ["Aiko", "流感（早期）", "进展 12%", "观察中"], ["Nia", "割伤", "已愈合", "出院"]]}, "events": [{"t": "Y3·春·D17 08:20", "text": "evt.medical.supply_low：特效医药 8/20，已通报经济中心", "kind": "bad"}, {"t": "Y3·春·D17 07:10", "text": "Rosa 瘟疫进入进展期，免疫率 71%，强制卧床", "kind": "warn"}, {"t": "Y3·春·D16 21:44", "text": "Hank 枪伤（左腿）治疗完成，康复 64%", "kind": "ok"}, {"t": "Y3·春·D16 14:26", "text": "手术排程：移除弹片（Kia），成功率 92%", "kind": "info"}, {"t": "Y3·春·D16 08:00", "text": "流感季开始：2 名殖民者出现早期症状", "kind": "warn"}]}, {"id": "policy_center", "name_zh": "政策系统中心", "name_en": "Policy", "group": "initial", "tier": 30, "version": "draft", "responsible": ["律令制定", "分配政策", "权限管理", "激励"], "delegated": ["执行调度 → 各业务中心"], "kpi": [{"k": "政策覆盖率", "v": "100%", "d": "", "tone": "good"}, {"k": "合规率", "v": "94%", "d": "-2", "tone": "warn"}, {"k": "满意度影响", "v": "+6", "d": "+1", "tone": "good"}, {"k": "执行延迟", "v": "0.3 日", "d": "-0.1", "tone": "good"}], "emits": ["evt.policy.law_changed", "evt.policy.ration_set"], "consumes": [], "depends_on": [], "provides": ["cap.policy.governance"], "hooks": ["OnPhase(govern)"], "status": "运行中", "table": {"title": "现行律令", "cols": ["律令", "范围", "影响", "状态"], "rows": [["夜间禁音 22:00–06:00", "全员", "睡眠质量 +", "生效"], ["精致餐配给 ×1 / 日", "全员", "营养稳定", "生效"], ["木墙禁令", "建造", "火灾风险下降", "生效"], ["战时征召优先", "防御", "集结响应加快", "表决中"]]}, "events": [{"t": "Y3·春·D17 06:40", "text": "evt.policy.law_changed：夜间禁音已生效", "kind": "info"}, {"t": "Y3·春·D16 20:15", "text": "配给政策调整：精致餐限每人每日 1 份", "kind": "warn"}, {"t": "Y3·春·D16 17:00", "text": "表决通过：建筑禁用易燃材料（木墙禁令）", "kind": "ok"}, {"t": "Y3·春·D15 10:30", "text": "冲突检测：「战时征召」与「斋戒戒律」冲突，标记待裁决", "kind": "warn"}]}, {"id": "population_center", "name_zh": "人口系统中心", "name_en": "Population", "group": "reserved", "tier": 18, "version": "-", "responsible": ["个体档案", "需求", "情绪", "成长"], "delegated": [], "kpi": [{"k": "殖民者", "v": "7 人", "d": "+1 本季", "tone": "good"}, {"k": "平均心情", "v": "72%", "d": "+3", "tone": "good"}, {"k": "增长率", "v": "+1 / 季", "d": "", "tone": ""}], "emits": ["evt.population.mood_changed"], "consumes": ["evt.policy.law_changed"], "depends_on": [], "provides": ["cap.population.profile"], "hooks": ["OnTick"], "status": "预留 · 样例数据", "table": {"title": "居民名册", "cols": ["居民", "职业", "心情", "状态"], "rows": [["Kia", "厨师", "68%", "工作中"], ["Rosa", "农夫 / 种植", "54%", "瘟疫卧床"], ["Dmitri", "工匠", "76%", "灵感：疯狂创作"], ["Hank", "矿工", "61%", "康复中"], ["Aiko", "研究员", "81%", "研究中"], ["Nia", "驯兽师", "73%", "巡逻"], ["Mei", "医生", "66%", "值守"]]}, "events": [{"t": "Y3·春·D17 08:00", "text": "Kia 心情 +6（精致环境加成）", "kind": "ok"}, {"t": "Y3·春·D16 23:50", "text": "Dmitri 进入灵感：疯狂创作（持续 1.2 日）", "kind": "ok"}, {"t": "Y3·春·D16 12:00", "text": "Rosa 心情 -14（瘟疫卧床）", "kind": "bad"}]}, {"id": "diplomacy_center", "name_zh": "外交系统中心", "name_en": "Diplomacy", "group": "reserved", "tier": 25, "version": "-", "responsible": ["派系", "声望", "条约"], "delegated": [], "kpi": [{"k": "声望", "v": "312", "d": "+12", "tone": "good"}, {"k": "有效条约", "v": "2", "d": "+1", "tone": "good"}, {"k": "宣战", "v": "1", "d": "血爪帮", "tone": "bad"}], "emits": ["evt.diplomacy.relation_changed"], "consumes": [], "depends_on": [], "provides": ["cap.diplomacy.relations"], "hooks": ["OnPhase(govern)"], "status": "预留 · 样例数据", "table": {"title": "派系关系", "cols": ["派系", "关系", "状态"], "rows": [["东方联合", "+12", "友好 · 商队常来"], ["蓝岭部族", "+34", "中立偏友"], ["血爪帮（海盗）", "-85", "宣战"], ["机械体集群", "敌对", "威胁常驻"]]}, "events": [{"t": "Y3·春·D17 04:33", "text": "东方联合 关系 +12（近期两次成功贸易）", "kind": "ok"}, {"t": "Y3·春·D16 09:00", "text": "血爪帮 宣战：预计袭击规模持续上升", "kind": "bad"}, {"t": "Y3·春·D15 15:20", "text": "与蓝岭部族签订 互市条约", "kind": "ok"}]}, {"id": "research_center", "name_zh": "科研系统中心", "name_en": "Research", "group": "reserved", "tier": 22, "version": "-", "responsible": ["项目", "进度", "解锁"], "delegated": [], "kpi": [{"k": "在研项目", "v": "1", "d": "精密装配", "tone": ""}, {"k": "周进度", "v": "62%", "d": "+9", "tone": "good"}, {"k": "已解锁", "v": "18 项", "d": "+2", "tone": "good"}], "emits": ["evt.research.completed"], "consumes": [], "depends_on": [], "provides": ["cap.research.unlock"], "hooks": ["OnTick"], "status": "预留 · 样例数据", "table": {"title": "在研项目", "cols": ["项目", "进度", "负责", "前置"], "rows": [["精密装配", "62%", "Aiko", "电力"], ["微电子", "12%", "Aiko", "需先完成精密装配"], ["多分析台", "待启动", "—", "微电子"]]}, "events": [{"t": "Y3·春·D17 07:30", "text": "精密装配 进度 62%（+9% 本周）", "kind": "ok"}, {"t": "Y3·春·D15 19:00", "text": "完成「电池」研究：蓄电池解锁", "kind": "ok"}]}, {"id": "defense_center", "name_zh": "防御系统中心", "name_en": "Defense", "group": "reserved", "tier": 8, "version": "-", "responsible": ["威胁", "布防", "征召"], "delegated": [], "kpi": [{"k": "威胁等级", "v": "高", "d": "袭击团逼近", "tone": "bad"}, {"k": "火力评分", "v": "340", "d": "+20", "tone": "good"}, {"k": "防御就绪", "v": "92%", "d": "+4", "tone": "good"}], "emits": ["evt.defense.threat"], "consumes": ["evt.diplomacy.relation_changed"], "depends_on": [], "provides": ["cap.defense.posture"], "hooks": ["OnTick"], "status": "预留 · 样例数据", "table": {"title": "布防清单", "cols": ["单位", "数量", "状态", "覆盖"], "rows": [["机枪塔", "4", "就绪", "主闸口"], ["迫击炮", "1", "就绪", "高地阵地"], ["雷电陷阱", "6", "已布设", "走廊"], ["动员殖民者", "5", "待命", "集结 90 秒"]]}, "events": [{"t": "Y3·春·D17 03:05", "text": "雷达信号：8 人袭击团，预计 1.2 日后抵达", "kind": "bad"}, {"t": "Y3·春·D16 18:40", "text": "evt.defense.threat 已广播，征召预案生成", "kind": "warn"}, {"t": "Y3·春·D16 10:00", "text": "机枪塔 ×4 自检通过，弹药充足", "kind": "ok"}]}, {"id": "environment_center", "name_zh": "环境系统中心", "name_en": "Environment", "group": "reserved", "tier": 28, "version": "-", "responsible": ["气候", "灾害", "资源点"], "delegated": [], "kpi": [{"k": "活跃预警", "v": "1", "d": "寒潮", "tone": "warn"}, {"k": "资源丰度", "v": "78%", "d": "+2", "tone": "good"}, {"k": "平均温度", "v": "12°C", "d": "-6", "tone": "warn"}], "emits": ["evt.environment.alert"], "consumes": [], "depends_on": [], "provides": ["cap.environment.forecast"], "hooks": ["OnTick"], "status": "预留 · 样例数据", "table": {"title": "环境事件", "cols": ["事件", "倒计时", "等级"], "rows": [["寒潮", "1.8 日", "橙色预警"], ["陨铁坠落", "已标记落点", "无害"], ["毒雾", "已过境", "结束"], ["日食", "未排期", "—"]]}, "events": [{"t": "Y3·春·D17 05:12", "text": "寒潮预警：48h 内气温降至 -12°C", "kind": "warn"}, {"t": "Y3·春·D16 13:00", "text": "毒雾过境结束，户外作业恢复", "kind": "ok"}, {"t": "Y3·春·D15 08:45", "text": "陨铁坠落，落点已标记（钢铁 ×120）", "kind": "info"}]}];
+const GAME = {"colonists": 7, "mood": "72%", "threat": "高（袭击团 1.2 日后抵达）", "treasury": "48,320 银"};
+const STREAM = [{"t": "Y3·春·D17 08:32", "route": "economy → logistics", "text": "evt.economy.reorder { 特效医药 ×12 }", "kind": "info"}, {"t": "Y3·春·D17 08:20", "route": "medical", "text": "evt.medical.supply_low { 特效医药 8/20 }", "kind": "bad"}, {"t": "Y3·春·D17 07:58", "route": "manufacturing", "text": "evt.manufacturing.product_ready { 零部件 ×12 }", "kind": "ok"}, {"t": "Y3·春·D17 07:55", "route": "logistics", "text": "搬运任务分派 ×3（入库 / 补货 / 医疗支援）", "kind": "info"}, {"t": "Y3·春·D17 06:40", "route": "policy", "text": "evt.policy.law_changed { 夜间禁音 }", "kind": "info"}, {"t": "Y3·春·D17 05:12", "route": "environment", "text": "evt.environment.alert { 寒潮 · 48h }", "kind": "warn"}, {"t": "Y3·春·D17 04:33", "route": "diplomacy", "text": "东方联合商队 ETA 0.6 日", "kind": "info"}, {"t": "Y3·春·D17 03:05", "route": "defense", "text": "evt.defense.threat { 袭击团 ×8 · 1.2 日 }", "kind": "bad"}];
+const ROSTER = ["Kia · 厨师", "Rosa · 农夫", "Dmitri · 工匠", "Hank · 矿工", "Aiko · 研究员", "Nia · 驯兽师", "Mei · 医生", "宠物：拉布拉多「饼干」", "宠物：雪橇犬「暴风」"];
+const BUS = [{"name": "Clock 时钟", "sig": "tick / phase / round", "desc": "推进时间，触发三级循环。中心按 Manifest 声明订阅钩子，调度层不感知玩法。"}, {"name": "EventBus 事件总线", "sig": "evt.* 不可变信封", "desc": "中心间唯一通信渠道。事件含 type / source / tick / payload，按 consumes 清单订阅，运行时校验一致性。"}, {"name": "CommandRouter 指令路由", "sig": "cmd.* → HandleCommand", "desc": "将外部与中心指令路由至目标中心，支持幂等校验与结果回执。"}, {"name": "StateRegistry 状态中心", "sig": "只读快照 + 受控写入", "desc": "全局快照供观测与存档；写入只能经所属中心，外部持快照不持引用。"}, {"name": "Supervisor 监管", "sig": "拓扑 / 仲裁 / 熔断", "desc": "启动期按 depends_on 拓扑排序；同 tick 争用按 Tier+动态权重仲裁；连续失败熔断降级，可回滚快照。"}];
+
+const vroot = document.getElementById('vroot');
+const navEl = document.getElementById('nav');
+let view = 'overview';
+
+// ===== 侧栏 =====
+function renderNav(){
+  let h = '<div class="grp">调度域</div><div class="grp-sub">ScheduleBus 统一调度层</div>';
+  h += itBtn('overview','总览','CenterRegistry · 全局视图');
+  h += itBtn('bus','统一调度总线','Clock / EventBus / Supervisor');
+  h += '<div class="grp">初始中心</div><div class="grp-sub">5 个已规划控制中枢</div>';
+  CENTERS.filter(c=>c.group==='initial').forEach(c=> h += itBtn(c.id, c.name_zh, c.id+' · Tier '+c.tier));
+  h += '<div class="grp">预留中心</div><div class="grp-sub">待宝典对齐后启用</div>';
+  CENTERS.filter(c=>c.group==='reserved').forEach(c=> h += itBtn(c.id, c.name_zh, c.id+' · Tier '+c.tier));
+  navEl.innerHTML = h;
+  navEl.querySelectorAll('.it').forEach(b=> b.onclick = ()=> go(b.dataset.v));
+}
+function itBtn(v, t, s){
+  return '<button class="it" data-v="'+v+'" data-k="'+(t+s).toLowerCase()+'"><span class="t">'+t+'</span><span class="s">'+s+'</span></button>';
+}
+function go(v){ view = v; render(); window.scrollTo(0,0); }
+
+// ===== 组件小件（全部取自宝典类）=====
+function badge(status){
+  return status.indexOf('预留')===0
+    ? '<span class="badge b-hold">'+status+'</span>'
+    : '<span class="badge b-ok">'+status+'</span>';
+}
+function evtBadge(kind){
+  const m = {ok:['b-ok','正常'], warn:['b-warn','警告'], bad:['b-no','危急'], info:['b-hold','资讯']};
+  const x = m[kind]||m.info;
+  return '<span class="badge '+x[0]+'">'+x[1]+'</span>';
+}
+function tags(arr){ return arr.map(x=>'<span class="tag x-mono">'+x+'</span>').join(''); }
+function ksec(t){ return '<div class="ksec"><i></i>'+t+'<u></u></div>'; }
+function head(crumb, title, en, api, sub){
+  return '<div class="crumb">'+crumb+'</div>'
+    + '<div class="dhead"><h2>'+title+'<span class="x-en">'+en+'</span></h2>'
+    + '<div class="api">'+api+'</div><div class="intro">'+sub+'</div></div>';
+}
+function kpiCard(k){
+  return '<div class="kcard x-kpi"><span class="tiny">'+k.k+'</span>'
+    + '<b class="v tone-'+(k.tone||'flat')+'">'+k.v+'</b>'
+    + (k.d ? '<span class="d tone-'+(k.tone||'flat')+'">'+k.d+'</span>' : '')
+    + '</div>';
+}
+
+// ===== 视图：总览 =====
+function vOverview(){
+  const init = CENTERS.filter(c=>c.group==='initial');
+  const res  = CENTERS.filter(c=>c.group==='reserved');
+  let h = head('注册表 / 总览','系统中心总览','System Center Overview',
+    'CenterRegistry · '+CENTERS.length+' centers · ScheduleBus v0.1',
+    '统一调度层（ScheduleBus）之上的全部控制中枢。点击卡片或侧栏进入中心详情。');
+  h += '<h3>殖民地快照</h3><div class="x-stats">'
+    + stat('殖民者', GAME.colonists) + stat('平均心情', GAME.mood)
+    + stat('威胁等级', '<span class="tone-bad" style="font-size:16px">'+GAME.threat+'</span>')
+    + stat('库存总值', GAME.treasury) + '</div>';
+  h += '<h3>初始中心</h3><div class="grid">' + init.map(compCard).join('') + '</div>';
+  h += '<h3>预留中心</h3><div class="grid">' + res.map(c=>compCard(c,true)).join('') + '</div>';
+  h += '<h3>殖民地居民</h3><div class="kcard"><div class="x-roster">'
+    + ROSTER.map(r=>'<span class="tag">'+r+'</span>').join('') + '</div></div>';
+  h += '<div class="callout x-foot">本页为 RUIF 化预览：组件类与主题令牌取自《终极宝典 v1.0》；殖民者 / 事件 / 数值为随机生成的环世界风味样例（SEED='+SEED_LABEL+'），仅用于 UI 布局打磨。</div>';
+  return h;
+}
+const SEED_LABEL = 20260910;
+function stat(k,v){ return '<div class="kcard"><span class="tiny">'+k+'</span><b>'+v+'</b></div>'; }
+function compCard(c, reserved){
+  const k0 = c.kpi && c.kpi[0];
+  return '<div class="comp" data-v="'+c.id+'" data-k="'+(c.name_zh+c.id).toLowerCase()+'">'
+    + '<div class="ch"><div><b>'+c.name_zh+'</b><span class="sig">'+c.id+' · Tier '+c.tier+'</span></div>'
+    + badge(c.status) + '</div>'
+    + '<p class="desc">'+c.responsible.join(' · ')+'</p>'
+    + '<div class="demo">'
+    + (k0 ? '<span class="tag">'+k0.k+' <b class="tone-'+(k0.tone||'flat')+'">'+k0.v+'</b></span>' : '')
+    + tags(c.provides) + ' ' + tags(c.emits)
+    + (c.depends_on.length ? '<span class="tag">依赖 '+c.depends_on.map(d=>CENTERS.find(x=>x.id===d).name_zh).join('/')+'</span>' : '')
+    + '<span class="tag">事件 '+c.events.length+'</span></div></div>';
+}
+
+// ===== 视图：调度总线 =====
+function vBus(){
+  let h = head('调度域 / 统一调度总线','统一调度总线','ScheduleBus',
+    'Clock · EventBus · CommandRouter · StateRegistry · Supervisor',
+    '唯一中枢：时间推进、事件分发、指令路由、依赖排序、优先级仲裁、失败隔离。不含任何玩法逻辑。');
+  h += '<h3>核心组件</h3><div class="grid">' + BUS.map(b=>
+    '<div class="comp"><div class="ch"><div><b>'+b.name+'</b><span class="sig">'+b.sig+'</span></div>'
+    + '<span class="badge b-ok">核心</span></div><p class="desc">'+b.desc+'</p></div>').join('') + '</div>';
+  h += '<h3>实时事件流（本日样例）</h3><div class="kcard">' + STREAM.map(e=>
+    '<div class="x-evt"><span class="t">'+e.t+'</span><span class="rt">'+e.route+'</span>'
+    + evtBadge(e.kind) + '<span class="tx">'+e.text+'</span></div>').join('') + '</div>';
+  h += '<h3>三层时间模型</h3><table>'
+    + '<tr><th>L1 Tick</th><td>最小推进单位（真实粒度由宝典定，本层留接口）</td></tr>'
+    + '<tr><th>L2 Phase</th><td>周期内阶段，如 生产 → 结算 → 治理，由调度层编排</td></tr>'
+    + '<tr><th>L3 Round</th><td>完整循环，支持中心在 Round 边界启停与快照恢复</td></tr></table>';
+  h += '<h3>优先级仲裁</h3><table>'
+    + '<tr><th>规则 1</th><td>按 priority_tier 升序（数值小者先）</td></tr>'
+    + '<tr><th>规则 2</th><td>同档位按中心自报动态权重降序</td></tr>'
+    + '<tr><th>规则 3</th><td>仍冲突进入仲裁队列，下一 tick 补偿</td></tr></table>';
+  h += '<h3>失败隔离</h3><table>'
+    + '<tr><th>OnTick 抛错</th><td>捕获并记录，该 tick 跳过该中心，不向外传播</td></tr>'
+    + '<tr><th>连续失败</th><td>熔断该中心进入降级，只读快照仍可用</td></tr>'
+    + '<tr><th>状态写坏</th><td>回滚至上一轮快照</td></tr>'
+    + '<tr><th>依赖缺失</th><td>启动期拓扑校验拦截，禁止半启动</td></tr></table>';
+  return h;
+}
+
+// ===== 视图：中心详情 =====
+function vCenter(c){
+  let h = '<div class="crumb">注册表 / '+c.name_zh+'</div>'
+    + '<div class="dhead"><h2>'+c.name_zh+'<span class="x-en">'+c.name_en+'</span></h2>'
+    + '<div class="api">'+c.id+' · Tier '+c.tier+' · version '+c.version+'</div>'
+    + '<div class="intro">中心详情 —— 按《标准化规范书》§4 模板渲染，组件取自宝典，数据为环世界风味样例。</div></div>';
+  h += '<div class="x-meta"><span class="chip"><code>'+c.id+'</code></span>'
+    + '<span class="chip">Tier <b>'+c.tier+'</b></span>'
+    + '<span class="chip">版本 <b>'+c.version+'</b></span>' + badge(c.status) + '</div>';
+
+  h += '<h3>KPI 指标</h3><div class="x-kpigrid">' + c.kpi.map(kpiCard).join('') + '</div>';
+
+  h += '<h3>职责边界</h3><div class="x-cols2">';
+  h += '<div class="kcard">'+ksec('负责') + c.responsible.map(r=>'<div class="krow"><span>'+r+'</span><span class="tag">own</span></div>').join('') + '</div>';
+  h += '<div class="kcard">'+ksec('不负责（委托）')
+    + (c.delegated.length ? c.delegated.map(r=>'<div class="krow"><span>'+r+'</span><span class="tag">delegated</span></div>').join('') : '<span class="x-na">暂无</span>')
+    + '</div></div>';
+
+  h += '<h3>'+c.table.title+'</h3><table class="x-grid"><tr>'
+    + c.table.cols.map(x=>'<th>'+x+'</th>').join('') + '</tr>'
+    + c.table.rows.map(r=>'<tr>'+r.map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('') + '</table>';
+
+  h += '<h3>近期事件流</h3><div class="kcard">' + c.events.map(e=>
+    '<div class="x-evt"><span class="t">'+e.t+'</span>'+evtBadge(e.kind)
+    + '<span class="tx">'+e.text+'</span></div>').join('') + '</div>';
+
+  h += '<h3>事件契约</h3><table>'
+    + '<tr><th>发出 emit</th><td>'+(c.emits.length?tags(c.emits):'<span class="x-na">暂无</span>')+'</td></tr>'
+    + '<tr><th>订阅 consume</th><td>'+(c.consumes.length?tags(c.consumes):'<span class="x-na">暂无</span>')+'</td></tr></table>';
+
+  h += '<h3>依赖与能力</h3><table>'
+    + '<tr><th>depends_on</th><td>'+(c.depends_on.length?tags(c.depends_on):'<span class="x-na">无（可独立启动）</span>')+'</td></tr>'
+    + '<tr><th>provides</th><td>'+(c.provides.length?tags(c.provides):'<span class="x-na">暂无</span>')+'</td></tr>'
+    + '<tr><th>调度钩子</th><td>'+(c.hooks.length?tags(c.hooks):'<span class="x-na">暂无</span>')+'</td></tr></table>';
+
+  h += '<div class="callout x-foot">本页数据为随机生成的环世界风味样例（SEED='+SEED_LABEL+'），字段结构对齐《标准化规范书》§4；真实数值待《终局宝典》对齐附录 B 后替换。</div>';
+  return h;
+}
+
+// ===== 渲染 & 事件 =====
+function render(){
+  navEl.querySelectorAll('.it').forEach(b=> b.classList.toggle('on', b.dataset.v===view));
+  const c = CENTERS.find(x=>x.id===view);
+  vroot.innerHTML = view==='overview' ? vOverview()
+                  : view==='bus' ? vBus()
+                  : c ? vCenter(c) : '';
+  vroot.querySelectorAll('.comp[data-v]').forEach(el=> el.onclick = ()=> go(el.dataset.v));
+}
+
+// 主题切换（宝典 5 主题，作用于 .v-main 令牌作用域）
+document.querySelectorAll('.tbtn').forEach(b=> b.onclick = ()=>{
+  document.querySelectorAll('.tbtn').forEach(x=>x.classList.toggle('on', x===b));
+  vroot.dataset.theme = b.dataset.t;
+});
+
+// 搜索：过滤侧栏 + Enter 跳第一个匹配
+const q = document.getElementById('q');
+q.oninput = ()=>{
+  const k = q.value.trim().toLowerCase();
+  navEl.querySelectorAll('.it').forEach(b=>{
+    b.style.display = (!k || (b.dataset.k||'').indexOf(k)>=0) ? '' : 'none';
+  });
+};
+q.onkeydown = e=>{
+  if(e.key!=='Enter') return;
+  const first = navEl.querySelector('.it:not([style*="none"])');
+  if(first && q.value.trim()){ go(first.dataset.v); q.value=''; q.oninput(); }
+};
+
+renderNav();
+render();
+</script>
+</body>
+</html>

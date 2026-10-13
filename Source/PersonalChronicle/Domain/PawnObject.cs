@@ -62,6 +62,13 @@ namespace PersonalChronicle.Domain
         public WorkplaceSnapshot Workplace;
 
         /// <summary>
+        /// v1.1.6 多工坊历史：该殖民者使用过的每台制作台各一条（按 BuildingStableId 去重）。
+        /// 供六宫格工坊卡左键弹窗「全部工作 room」列表（历史优先 + 当前地图其他制作台补充）。
+        /// 仅存稳定键与坐标；append-only，旧存档 null-safe。
+        /// </summary>
+        public List<WorkplaceHistoryEntry> WorkplaceHistory = new List<WorkplaceHistoryEntry>();
+
+        /// <summary>
         /// v1.1.4 劳模住所/工坊检测：住所快照（方案 B 定期采样 pawn.ownership.OwnedRoom.Role）。
         /// 只存 RoomRoleDef.defName 稳定键；append-only（旧存档 null-safe）。
         /// </summary>
@@ -122,6 +129,7 @@ namespace PersonalChronicle.Domain
             Scribe_Values.Look(ref RangedKills, "rangedKills", 0);
             Scribe_Deep.Look(ref Consumption, "consumption");
             Scribe_Deep.Look(ref Workplace, "workplace");
+            Scribe_Collections.Look(ref WorkplaceHistory, "workplaceHistory", LookMode.Deep);
             Scribe_Deep.Look(ref Residence, "residence");
             Scribe_Collections.Look(ref GrantedMedals, "grantedMedals", LookMode.Value);
             Scribe_Deep.Look(ref CareerData, "careerData");
@@ -131,6 +139,7 @@ namespace PersonalChronicle.Domain
             if (WorkTime == null) WorkTime = new WorkTimeAccumulator();
             if (Production == null) Production = new ProductionAccumulator();
             if (Consumption == null) Consumption = new ConsumptionAccumulator();
+            if (WorkplaceHistory == null) WorkplaceHistory = new List<WorkplaceHistoryEntry>();
             if (PlaceHistory == null) PlaceHistory = new List<PlaceVisit>();
             if (Relations == null) Relations = new List<SignificantRelation>();
             if (GrantedMedals == null) GrantedMedals = new List<string>();

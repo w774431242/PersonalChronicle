@@ -1,0 +1,239 @@
+<Defs>
+<ThingDef Name="PC_AutoFarmBase" Abstract="True">
+  <thingClass>PersonalChronicle.Automation.Building_AutoFarm</thingClass>
+  <category>Building</category>
+  <tickerType>Normal</tickerType>
+  <!-- 本基类不继承原版 BuildingBase，必须显式补齐其关键字段：
+       selectable 缺失（默认 false）= 建筑无法选中/无法交互（实机 bug）；
+       altitudeLayer 缺失会掉到 Item 层被地面装饰压住。 -->
+  <altitudeLayer>Building</altitudeLayer>
+  <selectable>true</selectable>
+  <drawerType>MapMeshOnly</drawerType>
+  <repairEffect>Repair</repairEffect>
+  <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+  <filthLeaving>Filth_RubbleBuilding</filthLeaving>
+  <passability>Impassable</passability>
+  <rotatable>false</rotatable>
+  <blockWind>true</blockWind>
+  <castEdgeShadows>true</castEdgeShadows>
+  <fillPercent>1</fillPercent>
+  <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  <designationCategory>PC_Automation</designationCategory>
+  <constructEffect>ConstructMetal</constructEffect>
+  <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
+  <minifiedDef>MinifiedThing</minifiedDef>
+  <thingCategories>
+    <li>BuildingsMisc</li>
+  </thingCategories>
+  <statBases>
+    <SellPriceFactor>0.70</SellPriceFactor>
+  </statBases>
+  <comps>
+    <li Class="CompProperties_Flickable"/>
+    <li Class="CompProperties_Breakdownable"/>
+    <li Class="CompProperties_Refuelable">
+      <fuelCapacity>50</fuelCapacity>
+      <fuelConsumptionRate>4</fuelConsumptionRate>
+      <fuelFilter>
+        <categories>
+          <li>Chemfuel</li>
+        </categories>
+      </fuelFilter>
+      <initialFuelPercent>1</initialFuelPercent>
+    </li>
+  </comps>
+</ThingDef>
+
+<ThingDef ParentName="PC_AutoFarmBase">
+  <defName>PC_AutoFarm_S</defName>
+  <label>auto farm (small)</label>
+  <!-- 建造菜单下拉分组：三档合并为单个「自动农场」项（PM 2026-09-07） -->
+  <designatorDropdown>PC_AutoFarm</designatorDropdown>
+  <description>A small automated farm machine. It automatically tends a 9x9 square centred on itself: inside your growing zones it sows the zone's designated crop (no seeds or resources used) and harvests ripe plants, dropping the goods beside the plants for haulers or conveyor belts. A small built-in grow light keeps crops growing through the night. Where you draw a growing zone, it also enriches that soil into rich soil, spreading outward ring by ring from the machine. HOW TO USE: draw a growing zone inside the coverage and pick a crop. Runs only while powered AND fueled (chemfuel) AND switched on. Machine labour does not count as colonist work.</description>
+  <graphicData>
+    <texPath>Things/Building/AutoFarm/PC_AutoFarm_S</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+    <drawSize>(1,1)</drawSize>
+  </graphicData>
+  <size>(1,1)</size>
+  <statBases>
+    <MaxHitPoints>150</MaxHitPoints>
+    <WorkToBuild>1200</WorkToBuild>
+    <Mass>20</Mass>
+    <Flammability>0.5</Flammability>
+    <MarketValue>900</MarketValue>
+  </statBases>
+  <comps>
+    <!-- ⭐ 电力（PM 2026-09-07 规格定稿）：光伏+本体功耗一体 comp（发电恒小于功耗，
+         光伏只抵扣不成永动机）；应急电池独立 CompProperties_Battery（无 powerOutput 竞争）。 -->
+    <li Class="PersonalChronicle.Automation.CompProperties_PowerTraderWithSolar">
+      <compClass>PersonalChronicle.Automation.CompPowerTraderWithSolar</compClass>
+      <!-- 光伏峰值 100W（≈本体功耗 300W 的 1/3，白天抵扣、差额电网补） -->
+      <basePowerConsumption>-100</basePowerConsumption>
+      <extraPowerConsumption>300</extraPowerConsumption>
+      <!-- 1×1 transmitter 与原版开关同构：设备即电网节点 -->
+      <transmitsPower>true</transmitsPower>
+    </li>
+    <li Class="CompProperties_Battery">
+      <storedEnergyMax>200</storedEnergyMax>
+      <efficiency>0.5</efficiency>
+      <transmitsPower>true</transmitsPower>
+    </li>
+    <!-- 小型也内置一盏基础生长灯，实现 24h 全天候生长。
+         覆盖 9×9 → 最远角距离 ≈ 5.7，glowRadius 必须 ≥ 9 才能让边角作物
+         夜间光照 ≥ growMinGlow（约 0.51）。-->
+    <li Class="CompProperties_Glower">
+      <overlightRadius>4.0</overlightRadius>
+      <glowRadius>9</glowRadius>
+      <glowColor>(370,370,370,0)</glowColor>
+    </li>
+    <li Class="PersonalChronicle.Automation.CompProperties_AutoAgriculture">
+      <coverageRadius>4</coverageRadius>
+      <fertilize>true</fertilize>
+    </li>
+    <!-- 物品储物仓（自动化产出缓冲）：收获先进仓、满了才落地；
+         实现 PersonalChronicle.Automation.IItemStorage —— 未来管道运输的预留接入口 -->
+    <li Class="PersonalChronicle.Automation.CompProperties_ItemStorage">
+      <capacity>0</capacity>
+    <cropOnly>true</cropOnly>
+    </li>
+    <!-- 物品输出端口（管线 v0.2：输出端内建，配合管道即定向输出，无需独立交接件） -->
+    <li Class="PersonalChronicle.Automation.CompProperties_ItemPort">
+      <pushIntervalTicks>90</pushIntervalTicks>
+    </li>
+  </comps>
+  <!-- ⚠️ 开发测试期（PM 2026-09-05 要求一）：0 成本直造，生产分类直接放置。
+       正式发布前必须恢复组装链（v2.1 §15.5）：
+       S 档 = PC_FarmFrame 1 + PC_SowerModule 1 + PC_HarvesterModule 1
+            + researchPrerequisites[PC_Research_AutomationBasics] + constructionSkillPrerequisite 4 -->
+</ThingDef>
+
+<ThingDef ParentName="PC_AutoFarmBase">
+  <defName>PC_AutoFarm_M</defName>
+  <label>auto farm (medium)</label>
+  <designatorDropdown>PC_AutoFarm</designatorDropdown>
+  <description>A medium automated farm machine. It automatically tends a 15x15 square centred on itself, sowing growing-zone crops and harvesting ripe plants like the small model. Its integrated grow lights supplement sunlight after dark, and it plays an irrigation water effect. Where you draw a growing zone, it also enriches that soil into rich soil, spreading outward ring by ring from the machine. HOW TO USE: draw a growing zone inside the coverage and pick a crop. Runs only while powered AND fueled (chemfuel) AND switched on. Machine labour does not count as colonist work.</description>
+  <graphicData>
+    <texPath>Things/Building/AutoFarm/PC_AutoFarm_M</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+    <drawSize>(2,2)</drawSize>
+  </graphicData>
+  <size>(2,2)</size>
+  <statBases>
+    <MaxHitPoints>200</MaxHitPoints>
+    <WorkToBuild>2000</WorkToBuild>
+    <Mass>32</Mass>
+    <Flammability>0.5</Flammability>
+    <MarketValue>1850</MarketValue>
+  </statBases>
+  <comps>
+    <!-- ⭐ 电力（同 S 档结构）：光伏 400W（≈功耗 1200W 的 1/3）+ 本体功耗 1200W -->
+    <li Class="PersonalChronicle.Automation.CompProperties_PowerTraderWithSolar">
+      <compClass>PersonalChronicle.Automation.CompPowerTraderWithSolar</compClass>
+      <basePowerConsumption>-400</basePowerConsumption>
+      <extraPowerConsumption>1200</extraPowerConsumption>
+      <transmitsPower>true</transmitsPower>
+    </li>
+    <!-- 生长灯必须对齐原版太阳灯语义：glowRadius 产生的光照强度
+         必须 ≥ 作物 growMinGlow（≈0.51）才能阻止夜间休眠。
+         M 覆盖 15×15 → 最远角距离 ≈ 9.9，经验公式 glowRadius ≥ 距离/0.648，
+         取 16 才能保全覆盖区夜间都长。overlightRadius ≤ glowRadius，取 10。
+         参数基准 = 原版 SunLamp（glowColor 370,370,370,0）。 -->
+    <li Class="CompProperties_Glower">
+      <overlightRadius>10.0</overlightRadius>
+      <glowRadius>16</glowRadius>
+      <glowColor>(370,370,370,0)</glowColor>
+    </li>
+    <li Class="PersonalChronicle.Automation.CompProperties_AutoAgriculture">
+      <coverageRadius>7</coverageRadius>
+      <irrigationVisual>true</irrigationVisual>
+      <fertilize>true</fertilize>
+    </li>
+    <!-- 物品储物仓（同 S 档说明）：管道运输预留接口 -->
+    <li Class="PersonalChronicle.Automation.CompProperties_ItemStorage">
+      <capacity>0</capacity>
+    <cropOnly>true</cropOnly>
+    </li>
+    <!-- 物品输出端口（管线 v0.2：输出端内建，配合管道即定向输出，无需独立交接件） -->
+    <li Class="PersonalChronicle.Automation.CompProperties_ItemPort">
+      <pushIntervalTicks>90</pushIntervalTicks>
+    </li>
+    <!-- 电力模块（M 装备）：并入电网储能，电网断供时反向放电 = 应急电力。
+         ⚠️ 与原版蓄电池同机制：满电状态下淋雨/起火会短路爆炸。
+         ⭐ transmitsPower=true（2026-09-07 修复）：原版电池 def 也设此项——
+         不设则电池永远不并入任何电网，「应急放电」从未真正生效。 -->
+    <li Class="CompProperties_Battery">
+      <storedEnergyMax>400</storedEnergyMax>
+      <efficiency>0.5</efficiency>
+      <transmitsPower>true</transmitsPower>
+    </li>
+  </comps>
+  <!-- ⚠️ 开发测试期：0 成本直造。正式发布前恢复组装链（v2.1 §15.5）：
+       M 档 = PC_FarmFrame 1 + PC_GrowLightModule 1 + PC_IrrigationModule 1
+            + PC_SowerModule 1 + PC_HarvesterModule 1 + PC_PowerModule 1
+            + researchPrerequisites[PC_Research_AutomationAdvanced] + constructionSkillPrerequisite 6 -->
+</ThingDef>
+
+<ThingDef ParentName="PC_AutoFarmBase">
+  <defName>PC_AutoFarm_L</defName>
+  <label>auto farm (large)</label>
+  <designatorDropdown>PC_AutoFarm</designatorDropdown>
+  <description>A large automated farm machine. It automatically tends a 21x21 square centred on itself, with everything the medium model does (night grow lights, irrigation effect). FERTILIZER: like every tier, the soil in your growing zones is enriched into rich soil (+40% growth speed), spreading outward ring by ring from the machine. Player-built floors are never altered, and the original ground is restored whenever the machine is uninstalled, destroyed or moved. HOW TO USE: draw a growing zone inside the coverage and pick a crop. Runs only while powered AND fueled (chemfuel) AND switched on. Machine labour does not count as colonist work.</description>
+  <graphicData>
+    <texPath>Things/Building/AutoFarm/PC_AutoFarm_L</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+    <drawSize>(4,4)</drawSize>
+  </graphicData>
+  <size>(4,4)</size>
+  <statBases>
+    <MaxHitPoints>260</MaxHitPoints>
+    <WorkToBuild>3200</WorkToBuild>
+    <Mass>48</Mass>
+    <Flammability>0.5</Flammability>
+    <MarketValue>3350</MarketValue>
+  </statBases>
+  <comps>
+    <!-- ⭐ 电力（同 S/M 档结构）：光伏 700W（≈功耗 2000W 的 35%）+ 本体功耗 2000W。
+         与原版 SolarGenerator 4×4 同构（transmitsPower=true 的多格发电+传导）。 -->
+    <li Class="PersonalChronicle.Automation.CompProperties_PowerTraderWithSolar">
+      <compClass>PersonalChronicle.Automation.CompPowerTraderWithSolar</compClass>
+      <basePowerConsumption>-700</basePowerConsumption>
+      <extraPowerConsumption>2000</extraPowerConsumption>
+      <transmitsPower>true</transmitsPower>
+    </li>
+    <!-- 同 M 档：glowRadius 须能覆盖整个作业区。
+         L 覆盖 21×21 → 最远角距离 ≈ 14.1，经验 glowRadius ≥ 14.1/0.648，取 22。
+         overlightRadius ≤ glowRadius，取 14。 -->
+    <li Class="CompProperties_Glower">
+      <overlightRadius>14.0</overlightRadius>
+      <glowRadius>22</glowRadius>
+      <glowColor>(370,370,370,0)</glowColor>
+    </li>
+    <li Class="PersonalChronicle.Automation.CompProperties_AutoAgriculture">
+      <coverageRadius>10</coverageRadius>
+      <irrigationVisual>true</irrigationVisual>
+      <fertilize>true</fertilize>
+    </li>
+    <!-- 物品储物仓（同 S 档说明）：管道运输预留接口 -->
+    <li Class="PersonalChronicle.Automation.CompProperties_ItemStorage">
+      <capacity>0</capacity>
+    <cropOnly>true</cropOnly>
+    </li>
+    <!-- 物品输出端口（管线 v0.2：输出端内建，配合管道即定向输出，无需独立交接件） -->
+    <li Class="PersonalChronicle.Automation.CompProperties_ItemPort">
+      <pushIntervalTicks>90</pushIntervalTicks>
+    </li>
+    <!-- 应急电池（三档标配）：夜间/电网断供时反向放电 -->
+    <li Class="CompProperties_Battery">
+      <storedEnergyMax>600</storedEnergyMax>
+      <efficiency>0.5</efficiency>
+      <transmitsPower>true</transmitsPower>
+    </li>
+  </comps>
+  <!-- ⚠️ 开发测试期：0 成本直造。正式发布前恢复组装链（v2.1 §15.5）：
+       L 档 = PC_FarmFrame 1 + PC_GrowLightModule 2 + PC_IrrigationModule 2
+            + PC_FertilizerModule 1 + PC_SowerModule 2 + PC_HarvesterModule 2
+            + PC_PowerModule 2
+            + researchPrerequisites[PC_Research_AutomationAdvanced] + constructionSkillPrerequisite 8 -->
+</ThingDef>
+</Defs>

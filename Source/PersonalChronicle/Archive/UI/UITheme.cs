@@ -32,11 +32,10 @@ namespace PersonalChronicle.Archive.UI
 
         public const string ThemeEpic = "epic";          // 经典史诗奇幻（默认）
         public const string ThemeGothic = "gothic";      // 暗黑哥特
-        public const string ThemeWuxia = "wuxia";        // 东方武侠水墨（浅色）
         public const string ThemeSteampunk = "steampunk";// 蒸汽朋克
 
         /// <summary>All selectable theme ids, in display order (button cycle order).</summary>
-        internal static readonly string[] ThemeIds = { ThemeEpic, ThemeGothic, ThemeWuxia, ThemeSteampunk };
+        internal static readonly string[] ThemeIds = { ThemeEpic, ThemeGothic, ThemeSteampunk };
 
         /// <summary>Text shadow colour used by <see cref="UIComponents.ShadowLabel"/>.
         /// Centralised here (Design System Layer 1) so the shadow tint is a single
@@ -54,7 +53,10 @@ namespace PersonalChronicle.Archive.UI
         {
             if (string.IsNullOrEmpty(themeId)) return "";
             string key = "PersonalChronicle.UI.Theme." + char.ToUpper(themeId[0]) + (themeId.Length > 1 ? themeId.Substring(1) : "");
-            string translated = key.Translate().ToString();
+            // ⚠ 2026-09-19（CHG-20260919-ECON-UI-010）：改走语言级缓存。
+            // 键是**动态拼**出来的（`Theme.Xxx`）—— `UIComponents.Loc` 自带容量兜底
+            // （超出即清表，绝不无界增长）且随语言失效 ⇒ 安全。
+            string translated = UIComponents.Loc(key);
             return string.IsNullOrEmpty(translated) || translated == key ? themeId : translated;
         }
 
@@ -67,6 +69,20 @@ namespace PersonalChronicle.Archive.UI
         }
 
         /// <summary>
+        /// 把任意主题 id 规范化为 <see cref="ThemeIds"/> 中的合法值（未知 / null ⇒ <c>ThemeIds[0]</c>）。
+        /// ⚠ 2026-09-15（审计 UI-001）：存档里的主题 id 若来自旧版本 / 第三方写入，可能不在当前
+        /// 主题集内；规范化后 `Apply` 的「已应用状态」与「实际调色板」才一致（无则点击循环会错位）。
+        /// </summary>
+        internal static string NormalizeThemeId(string themeId)
+        {
+            if (string.IsNullOrEmpty(themeId))
+            {
+                return ThemeIds[0];
+            }
+            return Array.IndexOf(ThemeIds, themeId) >= 0 ? themeId : ThemeIds[0];
+        }
+
+        /// <summary>
         /// Applies the named palette to every mutable colour token and re-syncs the
         /// <see cref="ArchiveUiStyle"/> forwards. Unknown id silently keeps the current
         /// palette (so a corrupt save never bricks the UI). Safe to call every frame;
@@ -74,16 +90,46 @@ namespace PersonalChronicle.Archive.UI
         /// </summary>
         internal static void Apply(string themeId)
         {
+            // ⚠ 2026-09-15（审计 UI-001 修复）：**未知 id 先规范化为合法值** ——
+            // 旧实现「调色板回落 Epic、但 `ActiveThemeId` 仍写入未知值」⇒ 会出现
+            // ① 状态与显示不一致；② `NextThemeId(未知)` 走 `idx < 0 → ThemeIds[0]`，
+            // 若当前恰是第一个主题则点击**表现为无反应**（用户可感知的交互缺陷）。
+            string normalized = NormalizeThemeId(themeId);
             Palette p;
-            switch (themeId)
+            switch (normalized)
             {
                 case ThemeGothic: p = Palette.Gothic; break;
-                case ThemeWuxia: p = Palette.Wuxia; break;
                 case ThemeSteampunk: p = Palette.Steampunk; break;
                 default: p = Palette.Epic; break;
             }
             Assign(p);
-            ActiveThemeId = themeId;
+            ActiveThemeId = normalized;
+
+            // ⭐ 2026-09-12 RUIF 软依赖（改造 P1「令牌层」）：
+            //   装了 RUIF ⇒ 用其**统一令牌**覆盖同名令牌（字段名一个不改 ⇒ 全部调用点零改动即完成换皮）；
+            //   没装 RUIF ⇒ 上面 Assign 的三套自有主题照常生效（回落路径，GATE-COMP）。
+            if (RuifBridge.TryGetTokens(out RuifBridge.TokenSet ruif))
+            {
+                ruifTokensApplied = true;
+                Window = ruif.Window;
+                Panel = ruif.Panel;
+                PanelRaised = ruif.PanelRaised;
+                Card = ruif.Card;
+                CardHover = ruif.CardHover;
+                Border = ruif.Border;
+                BorderSoft = ruif.BorderSoft;
+                BorderHair = ruif.BorderHair;
+                Text = ruif.Text;
+                Muted = ruif.Muted;
+                Dim = ruif.Dim;
+                Accent = ruif.Accent;
+                Info = ruif.Info;
+                Alive = ruif.Alive;
+                Dead = ruif.Dead;
+                Warn = ruif.Warn;
+                // 强调色柔化档跟随（与上面 Epic 分支同式）
+                AccentSoft = new Color(ruif.Accent.r, ruif.Accent.g, ruif.Accent.b, 0.28f);
+            }
 
             // v1.1.5: texture-backed themes need stronger nav highlight so the
             // selected sidebar item is visible against the panel texture.
@@ -98,6 +144,25 @@ namespace PersonalChronicle.Archive.UI
         /// <summary>Re-asserts the current palette (used at startup after Def load).</summary>
         internal static void RefreshCurrent()
         {
+            Apply(ActiveThemeId);
+        }
+
+        /// <summary>RUIF 令牌是否已成功套用（置位后不再重复尝试）。</summary>
+        private static bool ruifTokensApplied;
+
+        /// <summary>
+        /// **RUIF 晚于 PC 加载时的补应用入口**（由 <see cref="RuifBridge"/> 在探测成功那一刻回调）。
+        ///
+        /// <para>启动期 <see cref="Apply"/> 执行时 RUIF 往往**尚未进入 AppDomain**（1.6 的 Mod 类创建
+        /// 按类型枚举顺序、不是加载顺序）⇒ 那一刻套用的是本工程调色板，且**不会自动重试** ——
+        /// 实机表现就是"装/没装 RUIF 看起来一样"。本方法在 RUIF 就绪后**幂等补一次**。</para>
+        /// </summary>
+        internal static void ReapplyForRuif()
+        {
+            if (ruifTokensApplied)
+            {
+                return;
+            }
             Apply(ActiveThemeId);
         }
 
@@ -196,6 +261,16 @@ namespace PersonalChronicle.Archive.UI
         /// <summary>Dark fill for the "mid-install / incomplete" badge.</summary>
         internal static Color BadgeIncompleteFill;
 
+        /// <summary>
+        /// 画布对齐吸附的参考线色（车间俯视编排画布拖拽 Shift 时显示）。
+        ///
+        /// <para>**刻意做成派生属性而非 Apply 里赋值的字段**：它完全由 <see cref="Accent"/> 决定，
+        /// 派生写法保证任何主题切换（含 RUIF 晚加载的补应用、ThemeSwitch 内嵌切换）都
+        /// 自动同步，**不可能出现"切了主题参考线还是旧颜色"**。同时把「0.85 alpha」这个
+        /// 魔法值收在 Theme 令牌里，调用方不再散落 <c>new Color(...)</c>（GATE-UI 第 3 条）。</para>
+        /// </summary>
+        internal static Color AlignGuide => WithAlpha(Accent, 0.85f);
+
         /// <summary>Returns <paramref name="c"/> with its alpha overridden (RGB kept).</summary>
         internal static Color WithAlpha(Color c, float alpha) => new Color(c.r, c.g, c.b, alpha);
 
@@ -289,17 +364,28 @@ namespace PersonalChronicle.Archive.UI
             }
         }
 
-        // ---- v1.1.5: professional title tier tint (员/助/中/副高/正高), derived from palette ----
+        // ---- v1.1.5: professional title tier tint (员/助/中/副高/正高) ----
+        // 用户定稿（2026-08-22）：职称 5 档色值对齐 RimWorld 品质色阶
+        // （QualityColors 风格：Awful→Legendary 的常规映射），跨主题固定不随皮肤漂移，
+        // 让玩家在任意主题下都凭色一眼识别档位。固定十六进制：
+        //   员级=灰  助理=白  中级=绿  副高=蓝  正高=金
+        internal static readonly Color TitleTier0 = new Color(0.502f, 0.502f, 0.502f, 1f); // #808080 员级灰
+        internal static readonly Color TitleTier1 = new Color(1.000f, 1.000f, 1.000f, 1f); // #FFFFFF 助理白
+        internal static readonly Color TitleTier2 = new Color(0.298f, 0.686f, 0.314f, 1f); // #4CAF50 中级绿
+        internal static readonly Color TitleTier3 = new Color(0.133f, 0.588f, 0.953f, 1f); // #2196F3 副高蓝
+        internal static readonly Color TitleTier4 = new Color(1.000f, 0.757f, 0.027f, 1f); // #FFC107 正高金
+
+        /// <summary>职称档位色（固定品质色阶，跨主题一致）。tier 越界回退 Tier0 灰。</summary>
         internal static Color TitleTierColor(int tier)
         {
             switch (tier)
             {
-                case 0: return TimelineCraft;       // 员级 (铜)
-                case 1: return TimelineCraft;       // 助理级 (铜)
-                case 2: return SecondaryText;       // 中级 (银)
-                case 3: return PillGold;            // 副高级 (金)
-                case 4: return Dead;                // 正高级 (橙红)
-                default: return SecondaryText;
+                case 0: return TitleTier0;
+                case 1: return TitleTier1;
+                case 2: return TitleTier2;
+                case 3: return TitleTier3;
+                case 4: return TitleTier4;
+                default: return TitleTier0;
             }
         }
 
@@ -375,7 +461,12 @@ namespace PersonalChronicle.Archive.UI
                 alive: new Color(0.459f, 0.773f, 0.498f, 1f),       // emerald (was mint)
                 dead: new Color(0.753f, 0.278f, 0.196f, 1f),        // deep crimson (was coral)
                 warn: new Color(1.000f, 0.000f, 0.000f, 1f),
-                threat: new Color(0.784f, 0.353f, 0.290f, 1f),
+                // ⚠ 2026-09-19（审计 §2.6）：旧值 (0.784,0.353,0.290) 与同主题 `dead`
+                // (0.753,0.278,0.196) 的距离仅 **0.12** —— 两个**语义不同**的令牌几乎同色
+                // ⇒ 任何区分"死亡/失败"与"威胁/危险"的界面都传达不出差异。
+                // ⇒ 改为**偏橙的危险色**（保留"警示"语义，与深红的 dead 拉开到 **0.25**），
+                //   同时与纯红的 `warn`(1.0,0,0) 距离 0.55，三者互不混淆。
+                threat: new Color(0.878f, 0.494f, 0.196f, 1f),
                 ally: new Color(0.400f, 1.000f, 0.500f, 1f),
                 hostile: new Color(1.000f, 0.250f, 0.200f, 1f),
                 neutral: new Color(0.350f, 0.700f, 1.000f, 1f),
@@ -399,13 +490,21 @@ namespace PersonalChronicle.Archive.UI
                 hair: new Color(0.125f, 0.102f, 0.145f, 1f),
                 text: new Color(0.812f, 0.784f, 0.847f, 1f),
                 muted: new Color(0.518f, 0.463f, 0.557f, 1f),
-                dim: new Color(0.361f, 0.329f, 0.408f, 1f),
+                // ⚠ 2026-09-19（审计 §2.7）：旧值 (0.361,0.329,0.408) 对 `card`(0.086,0.086,0.110)
+                // 的 **WCAG 对比度仅 ≈2.5:1**（按相对亮度公式复算确认），远低于小字号文本要求的 4.5:1
+                // ⇒ Gothic 主题下次要文字**基本读不清**。
+                // ⇒ 提到 (0.540,0.490,0.610)：对 `card` ≈ **4.7:1**、对 `panel` ≈ **4.9:1**（均达标），
+                //   色相仍是紫族（与 Epic 的紫灰 dim 同族），在近黑底上仍属"次级"视觉档。
+                dim: new Color(0.540f, 0.490f, 0.610f, 1f),
                 accent: new Color(0.659f, 0.196f, 0.196f, 1f),
                 info: new Color(0.478f, 0.478f, 0.690f, 1f),
                 alive: new Color(0.373f, 0.604f, 0.416f, 1f),
                 dead: new Color(0.784f, 0.251f, 0.251f, 1f),
                 warn: new Color(1.000f, 0.100f, 0.100f, 1f),
-                threat: new Color(0.784f, 0.251f, 0.251f, 1f),
+                // ⚠ 2026-09-19（审计 §2.6）：旧值与同主题 `dead` **逐通道完全相同**
+                // (0.784,0.251,0.251) ⇒ 两个语义不同的令牌在界面上**不可能被区分**。
+                // ⇒ 改为偏橙的危险色（与 dead 距离 **0.36**、与纯红 `warn`(1.0,0.1,0.1) 距离 0.36）。
+                threat: new Color(0.902f, 0.435f, 0.180f, 1f),
                 ally: new Color(0.400f, 0.900f, 0.500f, 1f),
                 hostile: new Color(1.000f, 0.200f, 0.200f, 1f),
                 neutral: new Color(0.500f, 0.500f, 0.900f, 1f),
@@ -416,36 +515,6 @@ namespace PersonalChronicle.Archive.UI
                 timelineSocial: new Color(0.48f, 0.42f, 0.78f, 1f),
                 timelineCraft: new Color(0.60f, 0.48f, 0.29f, 1f),
                 timelineBuilt: new Color(0.36f, 0.35f, 0.45f, 1f));
-
-            /// <summary>Wuxia 东方武侠水墨：宣纸米白底 + 墨色 + 朱红印章（浅色主题）。</summary>
-            internal static readonly Palette Wuxia = new Palette(
-                window: new Color(0.910f, 0.886f, 0.816f, 1f),
-                panel: new Color(0.871f, 0.839f, 0.749f, 1f),
-                raised: new Color(0.835f, 0.800f, 0.710f, 1f),
-                card: new Color(0.886f, 0.855f, 0.769f, 1f),
-                hover: new Color(0.800f, 0.761f, 0.663f, 1f),
-                border: new Color(0.227f, 0.200f, 0.169f, 1f),
-                borderSoft: new Color(0.435f, 0.400f, 0.341f, 1f),
-                hair: new Color(0.380f, 0.345f, 0.290f, 1f),
-                text: new Color(0.169f, 0.149f, 0.125f, 1f),
-                muted: new Color(0.373f, 0.345f, 0.298f, 1f),
-                dim: new Color(0.478f, 0.447f, 0.392f, 1f),
-                accent: new Color(0.651f, 0.227f, 0.180f, 1f),
-                info: new Color(0.227f, 0.416f, 0.541f, 1f),
-                alive: new Color(0.310f, 0.478f, 0.333f, 1f),
-                dead: new Color(0.541f, 0.184f, 0.184f, 1f),
-                warn: new Color(0.700f, 0.100f, 0.050f, 1f),
-                threat: new Color(0.541f, 0.184f, 0.184f, 1f),
-                ally: new Color(0.200f, 0.600f, 0.300f, 1f),
-                hostile: new Color(0.700f, 0.200f, 0.150f, 1f),
-                neutral: new Color(0.200f, 0.450f, 0.700f, 1f),
-                timelineSpine: new Color(0.42f, 0.38f, 0.30f, 1f),
-                timelineJoin: new Color(0.31f, 0.48f, 0.33f, 1f),
-                timelineDeath: new Color(0.54f, 0.18f, 0.18f, 1f),
-                timelineBattle: new Color(0.65f, 0.23f, 0.18f, 1f),
-                timelineSocial: new Color(0.29f, 0.35f, 0.48f, 1f),
-                timelineCraft: new Color(0.54f, 0.42f, 0.16f, 1f),
-                timelineBuilt: new Color(0.42f, 0.42f, 0.35f, 1f));
 
             /// <summary>Steampunk 蒸汽朋克：黄铜棕 + 宝石绿（羞辱/雾都孤儿风）。</summary>
             internal static readonly Palette Steampunk = new Palette(
@@ -459,13 +528,23 @@ namespace PersonalChronicle.Archive.UI
                 hair: new Color(0.235f, 0.208f, 0.145f, 1f),
                 text: new Color(0.878f, 0.839f, 0.682f, 1f),
                 muted: new Color(0.604f, 0.565f, 0.471f, 1f),
-                dim: new Color(0.416f, 0.400f, 0.322f, 1f),
+                // ⚠ 2026-09-19（审计 §2.7 **续**）：审计只点了 Gothic 的 `dim`，但按同一公式复算，
+                // **本主题同样不达标**：该值对 `card`(0.125,0.114,0.078) ≈ **2.92:1**，
+                // 在 `WithAlpha(dim, 0.15)` 的徽章底上更是 ≈ **2.65:1**（`Embedded.cs:226` 的口径徽章
+                // 正是"dim 文字画在 dim 底色上"）。
+                // ⇒ 提到 (0.545,0.525,0.425)：对 `card` ≈ **4.6:1**、对 `panel` ≈ **4.7:1**（均达标），
+                //   色相仍是黄铜族（与主题一致），在深底上仍属"次级"视觉档。
+                // 📌 **审计没点到不等于达标** —— 同一缺陷要按公式**逐主题**过一遍。
+                dim: new Color(0.545f, 0.525f, 0.425f, 1f),
                 accent: new Color(0.290f, 0.604f, 0.478f, 1f),
                 info: new Color(0.478f, 0.627f, 0.816f, 1f),
                 alive: new Color(0.498f, 0.792f, 0.541f, 1f),
                 dead: new Color(0.722f, 0.353f, 0.290f, 1f),
                 warn: new Color(1.000f, 0.300f, 0.100f, 1f),
-                threat: new Color(0.722f, 0.353f, 0.290f, 1f),
+                // ⚠ 2026-09-19（审计 §2.6）：旧值与同主题 `dead` **逐通道完全相同**
+                // (0.722,0.353,0.290) ⇒ 同上，语义被颜色抹平。
+                // ⇒ 改为偏橙的危险色（与 dead 距离 **0.26**、与橙 `warn`(1.0,0.3,0.1) 距离 0.26）。
+                threat: new Color(0.878f, 0.510f, 0.196f, 1f),
                 ally: new Color(0.350f, 0.850f, 0.450f, 1f),
                 hostile: new Color(1.000f, 0.300f, 0.200f, 1f),
                 neutral: new Color(0.400f, 0.650f, 1.000f, 1f),

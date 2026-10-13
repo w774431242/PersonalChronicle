@@ -42,6 +42,9 @@ namespace PersonalChronicle.Domain.Qualification
         /// <summary>综合评分门槛（0~100）。</summary>
         public float minimumScore;
 
+        /// <summary>所属一级专业键（如 "Manufacturing"），用于论文分方向消耗书籍/研究文献与殖民地加成。</summary>
+        public string majorKey;
+
         /// <summary>
         /// 评级评审工作日数（2026-08-19：结算评级以工作日答复，不自动即时授予）。
         /// 资格满足（含答辩）后进入评审期，N 个工作日后答复授予；0 = 默认 3。

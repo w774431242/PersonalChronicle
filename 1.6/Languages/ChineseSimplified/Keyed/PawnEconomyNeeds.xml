@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Needs.Title>需求观察</PC_PEA.Needs.Title>
+  <PC_PEA.Needs.TabTitle>个人需求</PC_PEA.Needs.TabTitle>
+  <PC_PEA.Needs.ReadOnly>只读观察 · 关闭收费仍采样</PC_PEA.Needs.ReadOnly>
+  <PC_PEA.Needs.Limits>食品、休息、娱乐目标与只读生活规划已接入。费用与岗位尚未发布时，预算和收入保持未知；不会自动签约或勾选工种。陈旧读数不授予行动权限。</PC_PEA.Needs.Limits>
+  <PC_PEA.Needs.Empty>暂无数值需求</PC_PEA.Needs.Empty>
+  <PC_PEA.Needs.EmptyHint>请选择成员或等待采样。</PC_PEA.Needs.EmptyHint>
+  <PC_PEA.Needs.Unavailable>观察不可用</PC_PEA.Needs.Unavailable>
+  <PC_PEA.Needs.UnavailableHint>请先进入殖民地地图。</PC_PEA.Needs.UnavailableHint>
+  <PC_PEA.Needs.Previous>上一页</PC_PEA.Needs.Previous>
+  <PC_PEA.Needs.Next>下一页</PC_PEA.Needs.Next>
+  <PC_PEA.Needs.Page>第 {0} / {1} 页</PC_PEA.Needs.Page>
+  <PC_PEA.Needs.NoSelection>未选择成员</PC_PEA.Needs.NoSelection>
+  <PC_PEA.Needs.NoSubjects>该地图暂无观察成员</PC_PEA.Needs.NoSubjects>
+  <PC_PEA.Needs.Unconfigured>未配置</PC_PEA.Needs.Unconfigured>
+  <PC_PEA.Needs.Yes>是</PC_PEA.Needs.Yes>
+  <PC_PEA.Needs.No>否</PC_PEA.Needs.No>
+  <PC_PEA.Needs.Fact.Unknown>未知</PC_PEA.Needs.Fact.Unknown>
+  <PC_PEA.Needs.Fact.Known>已知</PC_PEA.Needs.Fact.Known>
+  <PC_PEA.Needs.Fact.NotApplicable>不适用</PC_PEA.Needs.Fact.NotApplicable>
+  <PC_PEA.Needs.Fact.Unsupported>未适配</PC_PEA.Needs.Fact.Unsupported>
+  <PC_PEA.Needs.Fact.Error>读取错误</PC_PEA.Needs.Fact.Error>
+  <PC_PEA.Needs.Readiness.Unknown>未知</PC_PEA.Needs.Readiness.Unknown>
+  <PC_PEA.Needs.Readiness.Loading>等待采样</PC_PEA.Needs.Readiness.Loading>
+  <PC_PEA.Needs.Readiness.Ready>新鲜</PC_PEA.Needs.Readiness.Ready>
+  <PC_PEA.Needs.Readiness.Partial>部分可用</PC_PEA.Needs.Readiness.Partial>
+  <PC_PEA.Needs.Readiness.Stale>数据陈旧</PC_PEA.Needs.Readiness.Stale>
+  <PC_PEA.Needs.Readiness.OutOfScope>离开范围</PC_PEA.Needs.Readiness.OutOfScope>
+  <PC_PEA.Needs.Readiness.Error>读取错误</PC_PEA.Needs.Readiness.Error>
+  <PC_PEA.Needs.Capture.Unknown>未知</PC_PEA.Needs.Capture.Unknown>
+  <PC_PEA.Needs.Capture.Complete>完整</PC_PEA.Needs.Capture.Complete>
+  <PC_PEA.Needs.Capture.Partial>部分</PC_PEA.Needs.Capture.Partial>
+  <PC_PEA.Needs.Capture.NotApplicable>不适用</PC_PEA.Needs.Capture.NotApplicable>
+  <PC_PEA.Needs.Capture.Error>读取错误</PC_PEA.Needs.Capture.Error>
+  <PC_PEA.Needs.Group.Context>身份与控制</PC_PEA.Needs.Group.Context>
+  <PC_PEA.Needs.Group.Needs>原版需求</PC_PEA.Needs.Group.Needs>
+  <PC_PEA.Needs.Group.Body>身体与生活条件</PC_PEA.Needs.Group.Body>
+  <PC_PEA.Needs.Group.Relationships>直接关系</PC_PEA.Needs.Group.Relationships>
+  <PC_PEA.Needs.AgeTicks>{0} Tick 前</PC_PEA.Needs.AgeTicks>
+  <PC_PEA.Needs.Person>{0} · {1}</PC_PEA.Needs.Person>
+  <PC_PEA.Needs.Coverage>本图已观察 {0} 人 / 全局已观察 {1} 人 · 人口目录：{2} · 未检查项 {3} · 目录年龄 {4}</PC_PEA.Needs.Coverage>
+  <PC_PEA.Needs.CensusComplete>完整</PC_PEA.Needs.CensusComplete>
+  <PC_PEA.Needs.CensusPartial>等待或部分（非完整人口数）</PC_PEA.Needs.CensusPartial>
+  <PC_PEA.Needs.Column.Need>需求</PC_PEA.Needs.Column.Need>
+  <PC_PEA.Needs.Column.Current>当前比例 / 原始量</PC_PEA.Needs.Column.Current>
+  <PC_PEA.Needs.Column.Target>目标</PC_PEA.Needs.Column.Target>
+  <PC_PEA.Needs.Column.LongTarget>长期目标</PC_PEA.Needs.Column.LongTarget>
+  <PC_PEA.Needs.Column.Gap>缺口（百分点）</PC_PEA.Needs.Column.Gap>
+  <PC_PEA.Needs.Column.Source>来源</PC_PEA.Needs.Column.Source>
+  <PC_PEA.Needs.Column.Age>数据年龄</PC_PEA.Needs.Column.Age>
+  <PC_PEA.Needs.Column.Status>事实状态</PC_PEA.Needs.Column.Status>
+  <PC_PEA.Needs.CurrentRaw>{0}
+{1} / {2}</PC_PEA.Needs.CurrentRaw>
+  <PC_PEA.Needs.SourceVanilla>原版 Need
+{0}</PC_PEA.Needs.SourceVanilla>
+  <PC_PEA.Needs.SourceUnadapted>未验证语义
+{0}</PC_PEA.Needs.SourceUnadapted>
+  <PC_PEA.Needs.GroupState>{0} · {1}</PC_PEA.Needs.GroupState>
+  <PC_PEA.Needs.Mood>心情（结果，非消费目标）</PC_PEA.Needs.Mood>
+  <PC_PEA.Needs.NeedCoverage>需要覆盖情况</PC_PEA.Needs.NeedCoverage>
+  <PC_PEA.Needs.NeedCounts>实际 {0} 项，未适配 {1} 项，失败 {2} 项，未读 {3} 项</PC_PEA.Needs.NeedCounts>
+  <PC_PEA.Needs.Location>观察位置</PC_PEA.Needs.Location>
+  <PC_PEA.Needs.Location.Unknown>未知</PC_PEA.Needs.Location.Unknown>
+  <PC_PEA.Needs.Location.SpawnedMap>地图上</PC_PEA.Needs.Location.SpawnedMap>
+  <PC_PEA.Needs.Location.HeldOnMap>地图内被抱持或容纳</PC_PEA.Needs.Location.HeldOnMap>
+  <PC_PEA.Needs.Location.OffMap>离开地图范围</PC_PEA.Needs.Location.OffMap>
+  <PC_PEA.Needs.Location.Dead>死亡</PC_PEA.Needs.Location.Dead>
+  <PC_PEA.Needs.Downed>倒地</PC_PEA.Needs.Downed>
+  <PC_PEA.Needs.Drafted>征召</PC_PEA.Needs.Drafted>
+  <PC_PEA.Needs.PlayerForced>当前玩家强制任务</PC_PEA.Needs.PlayerForced>
+  <PC_PEA.Needs.Health>可见健康记录</PC_PEA.Needs.Health>
+  <PC_PEA.Needs.Apparel>实际穿戴记录</PC_PEA.Needs.Apparel>
+  <PC_PEA.Needs.Collection>已读 {0} 项 · {1} · 未读 {2} 项</PC_PEA.Needs.Collection>
+  <PC_PEA.Needs.Temperature>环境温度（°C）</PC_PEA.Needs.Temperature>
+  <PC_PEA.Needs.ComfortRange>舒适温区（°C）</PC_PEA.Needs.ComfortRange>
+  <PC_PEA.Needs.Range>{0} – {1}</PC_PEA.Needs.Range>
+  <PC_PEA.Needs.OwnedBed>已分配床位 ID</PC_PEA.Needs.OwnedBed>
+  <PC_PEA.Needs.CurrentBed>当前床位 ID</PC_PEA.Needs.CurrentBed>
+  <PC_PEA.Needs.Pregnancy>可见怀孕事实</PC_PEA.Needs.Pregnancy>
+  <PC_PEA.Needs.Conditions>环境条件采集</PC_PEA.Needs.Conditions>
+  <PC_PEA.Needs.Condition>{0}：瞬时条件</PC_PEA.Needs.Condition>
+  <PC_PEA.Needs.Relations>直接关系（不代表监护或付款授权）</PC_PEA.Needs.Relations>
+  <PC_PEA.Needs.RelationCount>{0} 项</PC_PEA.Needs.RelationCount>
+  <PC_PEA.Needs.Cycle.Section.Planning>仲裁与预算（影子）</PC_PEA.Needs.Cycle.Section.Planning>
+  <PC_PEA.Needs.Cycle.Error>本页暂时无法读取</PC_PEA.Needs.Cycle.Error>
+  <PC_PEA.Needs.Cycle.Section.LongTerm>长期生活规划</PC_PEA.Needs.Cycle.Section.LongTerm>
+  <PC_PEA.Needs.Cycle.Section.Cycles>四个业务循环</PC_PEA.Needs.Cycle.Section.Cycles>
+  <PC_PEA.Needs.Cycle.Section.Budget>预算与储蓄</PC_PEA.Needs.Cycle.Section.Budget>
+  <PC_PEA.Needs.Cycle.Section.Arbitration>影子仲裁</PC_PEA.Needs.Cycle.Section.Arbitration>
+  <PC_PEA.Needs.Cycle.GoalEmpty>尚无目标态</PC_PEA.Needs.Cycle.GoalEmpty>
+  <PC_PEA.Needs.Cycle.GoalEmptyHint>影子规划构建后，此处会给出每条需求的进入阈值、目标值与缺口三口径。</PC_PEA.Needs.Cycle.GoalEmptyHint>
+  <PC_PEA.Needs.Cycle.Section.Opportunities>候选岗位（全部未签约）</PC_PEA.Needs.Cycle.Section.Opportunities>
+  <PC_PEA.Needs.Cycle.Alloc.Immediate>即时</PC_PEA.Needs.Cycle.Alloc.Immediate>
+  <PC_PEA.Needs.Cycle.Alloc.Saving>储蓄</PC_PEA.Needs.Cycle.Alloc.Saving>
+  <PC_PEA.Needs.Cycle.Alloc.Optional>可选</PC_PEA.Needs.Cycle.Alloc.Optional>
+  <PC_PEA.Needs.Cycle.Gap.Relative>相对</PC_PEA.Needs.Cycle.Gap.Relative>
+  <PC_PEA.Needs.Cycle.Gap.Absolute>绝对</PC_PEA.Needs.Cycle.Gap.Absolute>
+  <PC_PEA.Needs.Cycle.Gap.Raw>原始</PC_PEA.Needs.Cycle.Gap.Raw>
+  <PC_PEA.Needs.Cycle.Details>观测明细</PC_PEA.Needs.Cycle.Details>
+  <PC_PEA.Needs.Cycle.Tab.Demand>需求</PC_PEA.Needs.Cycle.Tab.Demand>
+  <PC_PEA.Needs.Cycle.Tab.Decision>决策</PC_PEA.Needs.Cycle.Tab.Decision>
+  <PC_PEA.Needs.Cycle.Tab.Goal>目标</PC_PEA.Needs.Cycle.Tab.Goal>
+  <PC_PEA.Needs.Cycle.Section.Satisfaction>需求满足度</PC_PEA.Needs.Cycle.Section.Satisfaction>
+  <PC_PEA.Needs.Cycle.Section.Goal>目标与缺口</PC_PEA.Needs.Cycle.Section.Goal>
+  <PC_PEA.Needs.Cycle.Section.Status>状态条件</PC_PEA.Needs.Cycle.Section.Status>
+  <PC_PEA.Needs.Cycle.Overview.Mood>心情</PC_PEA.Needs.Cycle.Overview.Mood>
+  <PC_PEA.Needs.Cycle.Section.OtherNeeds>其它需要（原版不显示）</PC_PEA.Needs.Cycle.Section.OtherNeeds>
+  <PC_PEA.Needs.Cycle.Hidden>隐藏 {0} 项</PC_PEA.Needs.Cycle.Hidden>
+  <PC_PEA.Needs.Cycle.PlannedCount>{0} / {1}</PC_PEA.Needs.Cycle.PlannedCount>
+  <PC_PEA.Needs.Label.Gap>缺口</PC_PEA.Needs.Label.Gap>
+  <PC_PEA.Needs.Label.Satisfaction>满足度</PC_PEA.Needs.Label.Satisfaction>
+  <PC_PEA.Needs.Cycle.Overview>生活保障</PC_PEA.Needs.Cycle.Overview>
+  <PC_PEA.Needs.Cycle.ObserveOnly>仅观察（未纳入规划）</PC_PEA.Needs.Cycle.ObserveOnly>
+  <PC_PEA.Needs.Cycle.Summary>已规划 {0} 项 · 仅观察 {1} 项</PC_PEA.Needs.Cycle.Summary>
+  <PC_PEA.Needs.Cycle.Section.Employment>劳动与合同</PC_PEA.Needs.Cycle.Section.Employment>
+  <PC_PEA.Needs.Cycle.Section.Care>照护与服务</PC_PEA.Needs.Cycle.Section.Care>
+  <PC_PEA.Needs.Cycle.Waiting>已等待 {0} / 上限 {1} tick</PC_PEA.Needs.Cycle.Waiting>
+  <PC_PEA.Needs.Cycle.Account.Title>个人账户</PC_PEA.Needs.Cycle.Account.Title>
+  <PC_PEA.Needs.Cycle.Account.AvailableValue>可用余额 {0}</PC_PEA.Needs.Cycle.Account.AvailableValue>
+  <PC_PEA.Needs.Cycle.Account.Balance>账户总额</PC_PEA.Needs.Cycle.Account.Balance>
+  <PC_PEA.Needs.Cycle.Account.Reserved>预留金额</PC_PEA.Needs.Cycle.Account.Reserved>
+  <PC_PEA.Needs.Cycle.Account.Target>生活储备目标</PC_PEA.Needs.Cycle.Account.Target>
+  <PC_PEA.Needs.Cycle.Account.Gap>补储缺口</PC_PEA.Needs.Cycle.Account.Gap>
+  <PC_PEA.Needs.Cycle.Account.IncomeValue>收入状态：{0}</PC_PEA.Needs.Cycle.Account.IncomeValue>
+  <PC_PEA.Needs.Cycle.Account.Details>查看决策详情</PC_PEA.Needs.Cycle.Account.Details>
+  <PC_PEA.Needs.Cycle.Account.DetailsShort>详情</PC_PEA.Needs.Cycle.Account.DetailsShort>
+  <PC_PEA.Needs.Cycle.Account.AvailableShort>可用余额</PC_PEA.Needs.Cycle.Account.AvailableShort>
+  <PC_PEA.Needs.Cycle.Account.Totals>总额 {0} · 预留 {1}</PC_PEA.Needs.Cycle.Account.Totals>
+  <PC_PEA.Needs.Cycle.Account.ReserveSummary>生活储备 {0} · 缺口 {1}</PC_PEA.Needs.Cycle.Account.ReserveSummary>
+  <PC_PEA.Needs.Cycle.Account.DecisionValue>当前决策  {0}</PC_PEA.Needs.Cycle.Account.DecisionValue>
+  <PC_PEA.Needs.Cycle.Account.ReasonValue>主要原因  {0}</PC_PEA.Needs.Cycle.Account.ReasonValue>
+  <PC_PEA.Needs.Cycle.Account.NextValue>下一步  {0}</PC_PEA.Needs.Cycle.Account.NextValue>
+  <PC_PEA.Needs.Cycle.Account.ModelName>需求规划 · 事实 → 缺口 → 选择 → 执行</PC_PEA.Needs.Cycle.Account.ModelName>
+  <PC_PEA.Needs.Cycle.Account.FocusValue>目标  {0}</PC_PEA.Needs.Cycle.Account.FocusValue>
+  <PC_PEA.Needs.Cycle.Account.ExecutionValue>执行反馈  {0}</PC_PEA.Needs.Cycle.Account.ExecutionValue>
+</LanguageData>

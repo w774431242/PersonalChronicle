@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PersonalChronicle.Settings.Tab.Economy>经济</PersonalChronicle.Settings.Tab.Economy>
+  <PersonalChronicle.Settings.SectionEconomy>经济制度</PersonalChronicle.Settings.SectionEconomy>
+  <PersonalChronicle.Settings.Title.EconomicInstitution>需求驱动经济</PersonalChronicle.Settings.Title.EconomicInstitution>
+  <PersonalChronicle.Settings.Use.EconomicInstitution>开关经济制度的准备请求（默认开启：新档与旧档载入时自动请求；显式关闭过的存档不会被重新打开）。</PersonalChronicle.Settings.Use.EconomicInstitution>
+  <PersonalChronicle.Settings.Detail.EconomicInstitution>默认开启。载入后自动进入准备中：可在经济页办理公有国库缴存、提取与旧权益承接。首次启用还需要保存并重新载入一次才能完成账本恢复证明，之后制度才会转为运行中；未通过的门与下一步操作显示在经济页顶部。关闭时保留资金和旧权益，有待处理事项则等待清理。</PersonalChronicle.Settings.Detail.EconomicInstitution>
+  <PC_PEA.Mode.Phase.Off>已关闭</PC_PEA.Mode.Phase.Off>
+  <PC_PEA.Mode.Phase.Preparing>准备中</PC_PEA.Mode.Phase.Preparing>
+  <PC_PEA.Mode.Phase.Active>运行中</PC_PEA.Mode.Phase.Active>
+  <PC_PEA.Mode.Phase.Draining>等待清理</PC_PEA.Mode.Phase.Draining>
+  <PC_PEA.Mode.Phase.Faulted>等待对账修复</PC_PEA.Mode.Phase.Faulted>
+  <PC_PEA.Mode.Explanation>唯一制度开关位于 Mod 设置 → 经济。开启是准备请求，只有实际能力验证齐备才开始付费行为；原版生活与需求观察继续运行。</PC_PEA.Mode.Explanation>
+  <PC_PEA.Mode.LegacyReadOnly>以下是保留的旧制度记录，只供对账查看；旧开关、发薪和收费已经暂停，历史金额不等于新可用资金。</PC_PEA.Mode.LegacyReadOnly>
+  <PC_PEA.Mode.Outstanding>仍有在途交割、未清对账或旧权益待承接。账户余额与专用储备属于正常保留资产，不算未完成事项，也不要求归零。关闭或重新开启都不会清零这些事项，也不会自动宣告完成。</PC_PEA.Mode.Outstanding>
+  <PC_PEA.Mode.FaultHint>保存或账实核验存在问题，已关闭付费路由并保留原文和实物；切换设置不能清除问题。</PC_PEA.Mode.FaultHint>
+  <PC_PEA.Mode.Blocker.LegacyFreeze>待完成：冻结切换时的最新旧账。</PC_PEA.Mode.Blocker.LegacyFreeze>
+  <PC_PEA.Mode.Blocker.LegacyRights>待完成：逐项核对并承接旧权益。</PC_PEA.Mode.Blocker.LegacyRights>
+  <PC_PEA.Mode.Blocker.Backing>待完成：核验真实专用储备与新账资金。</PC_PEA.Mode.Blocker.Backing>
+  <PC_PEA.Mode.Blocker.Delivery>待完成：恢复可核验的实物交付能力。</PC_PEA.Mode.Blocker.Delivery>
+  <PC_PEA.Mode.Blocker.Authority>待完成：玩家、公有机构和付款人的授权。</PC_PEA.Mode.Blocker.Authority>
+  <PC_PEA.Mode.Blocker.SaveAcceptance>待完成：一次存档与恢复往返，以证明账本健康（此门只证明账本恢复读数，不等于完整实机验收）。</PC_PEA.Mode.Blocker.SaveAcceptance>
+  <PC_PEA.Mode.Blocker.Routing>待完成：验证新旧支付互斥。</PC_PEA.Mode.Blocker.Routing>
+  <PC_PEA.Mode.PhaseLabel>制度</PC_PEA.Mode.PhaseLabel>
+  <PC_PEA.Mode.Cap.Yes>可用</PC_PEA.Mode.Cap.Yes>
+  <PC_PEA.Mode.InstitutionNone>本图没有已注册的公有机构；建成经济柜台后会自动注册。</PC_PEA.Mode.InstitutionNone>
+  <PC_PEA.Mode.LegacyArchive>历史对账 · 归档</PC_PEA.Mode.LegacyArchive>
+  <PC_PEA.Mode.FaultCode>故障码</PC_PEA.Mode.FaultCode>
+  <PC_PEA.Mode.Reverified>上次重新核验已解除</PC_PEA.Mode.Reverified>
+  <PC_PEA.Mode.Reverify>重新核验</PC_PEA.Mode.Reverify>
+  <PC_PEA.Mode.ReverifyHint>故障只由显式重新核验解除：仍存在的故障源会拒绝解除，切换设置或读档都不会清除它。</PC_PEA.Mode.ReverifyHint>
+  <PC_PEA.Mode.Step.LegacyFreeze>操作：打开 Mod 设置，在经济学节开启制度开关以冻结旧账快照。</PC_PEA.Mode.Step.LegacyFreeze>
+  <PC_PEA.Mode.Step.LegacyRights>操作：在历史对账区逐项承接旧权益；承接完成前不开放新支付。</PC_PEA.Mode.Step.LegacyRights>
+  <PC_PEA.Mode.Step.Backing>操作：确认专用储备账实核验无异常，缴存与提取记录一致。</PC_PEA.Mode.Step.Backing>
+  <PC_PEA.Mode.Step.Delivery>操作：确认实物交付证据链可读，没有待对账的搬运行。</PC_PEA.Mode.Step.Delivery>
+  <PC_PEA.Mode.Step.Authority>操作：确认玩家与机构授权。</PC_PEA.Mode.Step.Authority>
+  <PC_PEA.Mode.Step.SaveAcceptance>操作：保存游戏并重新载入一次，载入后自动完成账本恢复证明；此门只证明账本健康，不等于完整实机验收。</PC_PEA.Mode.Step.SaveAcceptance>
+  <PC_PEA.Mode.Step.Routing>操作：无需操作，新旧支付互斥已由编译期固定为旧收费路径关闭。</PC_PEA.Mode.Step.Routing>
+  <PC_PEA.Policy.Reverify.Code.Cleared>重新核验通过，故障已解除</PC_PEA.Policy.Reverify.Code.Cleared>
+  <PC_PEA.Policy.Reverify.Code.NotFaulted>当前不在故障态，无需核验</PC_PEA.Policy.Reverify.Code.NotFaulted>
+  <PC_PEA.Policy.Reverify.Code.StillFaulted>仍有故障源存在，拒绝解除</PC_PEA.Policy.Reverify.Code.StillFaulted>
+  <PC_PEA.Policy.Reverify.Code.Unavailable>当前无法核验，正在保存或读档</PC_PEA.Policy.Reverify.Code.Unavailable>
+  <PC_PEA.Policy.Cap.Name.Work>岗位</PC_PEA.Policy.Cap.Name.Work>
+  <PC_PEA.Policy.Cap.Name.Food>食品</PC_PEA.Policy.Cap.Name.Food>
+  <PC_PEA.Policy.Cap.Name.Apparel>衣物</PC_PEA.Policy.Cap.Name.Apparel>
+  <PC_PEA.Policy.Cap.Name.Service>医疗与服务</PC_PEA.Policy.Cap.Name.Service>
+  <PC_PEA.Policy.Cap.Reason.Unset>未配置</PC_PEA.Policy.Cap.Reason.Unset>
+  <PC_PEA.Policy.Cap.Reason.NotPublished>未挂牌</PC_PEA.Policy.Cap.Reason.NotPublished>
+  <PC_PEA.Policy.Cap.Reason.Closed>机构停业</PC_PEA.Policy.Cap.Reason.Closed>
+  <PC_PEA.Policy.Cap.Reason.OutOfHours>非营业时段</PC_PEA.Policy.Cap.Reason.OutOfHours>
+  <PC_PEA.Policy.Cap.Reason.ModeNotOpen>制度未开放</PC_PEA.Policy.Cap.Reason.ModeNotOpen>
+  <PC_PEA.Policy.Reason.ProposalDuplicate>提案重复：同一提案已存在</PC_PEA.Policy.Reason.ProposalDuplicate>
+  <PC_PEA.Policy.Reason.ProductionExecutorUnavailable>生产执行者不可用</PC_PEA.Policy.Reason.ProductionExecutorUnavailable>
+</LanguageData>

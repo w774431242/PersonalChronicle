@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    自动化研究链（v2.1 §15.5「解锁：组件与设备各挂 ResearchProjectDef，建议两档」）。
+
+    独立标签页 PC_AutomationTab：原版 Main 标签页的研究网格 X 以 1 递增、Y 以 0.7 递增，
+    多 mod 抢同一格会视觉错位。自建标签页彻底规避坐标冲突。
+    ⚠️ 字段名是 <prerequisites>（正确拼写），不是某些旧资料里的 preqrequisites。
+  -->
+  <ResearchTabDef>
+    <defName>PC_AutomationTab</defName>
+    <label>automation</label>
+    <generalTitle>Automation research projects</generalTitle>
+    <generalDescription>Research automated workshop equipment: farm machines, conveyor lines and the modules they are assembled from.</generalDescription>
+  </ResearchTabDef>
+
+  <ResearchProjectDef>
+    <defName>PC_Research_AutomationBasics</defName>
+    <label>basic agricultural automation</label>
+    <description>Unlocks the workshop assembly chain: conveyor segments, farm machine modules and the small automated farm machine.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Electricity</li>
+      <li>Machining</li>
+    </prerequisites>
+    <tab>PC_AutomationTab</tab>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>PC_Research_AutomationAdvanced</defName>
+    <label>advanced agricultural automation</label>
+    <description>Unlocks medium and large automated farm machines with grow lights, irrigation and fertilizer spreaders.</description>
+    <baseCost>2400</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>PC_Research_AutomationBasics</li>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <tab>PC_AutomationTab</tab>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

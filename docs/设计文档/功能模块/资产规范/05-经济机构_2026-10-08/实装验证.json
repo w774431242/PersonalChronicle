@@ -1,0 +1,34 @@
+{
+  "changeId": "CHG-20261008-ECON-ART",
+  "state": "DeployedPendingGameAcceptance",
+  "imageCount": 20,
+  "nativeResolution": [
+    1254,
+    1254
+  ],
+  "northMasterCount": 5,
+  "imageChecksPassed": true,
+  "generatedImageVisualReviewPassed": true,
+  "visualReviewer": "assistant",
+  "gameVerified": false,
+  "logicalTestsRerun": false,
+  "buildRerun": false,
+  "globalGateAvailable": false,
+  "checks": [
+    {
+      "name": "native-four-direction-art",
+      "exitCode": 0,
+      "output": "PASS: 20 unique RGBA views, five north-master sets, explicit graphic/icon binding, native Graphic_Multi, unchanged footprint and nonvisual Def content. In-game placement pending.\r\n"
+    },
+    {
+      "name": "economy-def-thinktree-ruif",
+      "exitCode": 0,
+      "output": "PASS: 12 Def nodes; 5 institutions; 4 Jobs; exact ThinkTree XPath; compiled classes; 69 bilingual keys; RUIF frontend.\r\n"
+    }
+  ],
+  "deployment": "部署验证.json",
+  "manualGameRows": 20,
+  "borderAlphaMaximum": 1,
+  "strictZeroBorderCount": 8,
+  "note": "Independent north-reference redraws and image_gen repairs. Visual review permits documented minor line/placement differences, not pixel identity or guaranteed gameplay quality. Border alpha <=1/255; strict-zero status remains explicit."
+}

@@ -1,0 +1,13 @@
+{
+  "kind": "LaborOffice",
+  "defName": "PC_PEA_LaborOffice",
+  "direction": "south",
+  "path": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_south.png",
+  "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-dd0d917a-575d-40a4-bcbc-c0938fbd8254.png",
+  "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_LaborOffice_north.png",
+  "northReferenceSha256": "3BBF71ED3AD9336E915F5BBEF9D433E5750649853392CB80D9B349E0B437AE50",
+  "promptFile": "PC_PEA_LaborOffice_south.prompt.txt",
+  "sha256": "6b635147cf11627a5274101bb652e5940f9e51ff0db2386f0fae184c8efa9ef3",
+  "generator": "built-in image_gen",
+  "imageEditsPerformed": false
+}

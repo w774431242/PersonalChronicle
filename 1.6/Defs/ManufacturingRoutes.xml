@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    RouteDef —— 工艺路线（车间俯视「工序链路层」的静态定义，对应预览的 ROUTES）。
+    - steps = 车间格序号（0 起，对应 WorkshopFloorLayout 的 12 格栅格，行优先排列）；
+      折线由格中心自动生成，因此**不写坐标**（布局改了链路自动跟随）。
+    - 流量 / 在制数不是 Def 字段：它们是运行态，来自工单与产出 ledger。
+    - label 是中文基线，英文覆盖见 Languages/English/DefInjected/RouteDef/。
+  -->
+  <PersonalChronicle.Domain.RouteDef>
+    <defName>PC_Route_Standard</defName>
+    <label>标准工艺路线</label>
+    <nameEn>STANDARD ROUTE</nameEn>
+    <cycleSeconds>6</cycleSeconds>
+    <feedFromRawStore>true</feedFromRawStore>
+    <steps>
+      <li>0</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+      <li>7</li>
+      <li>8</li>
+      <li>9</li>
+      <li>10</li>
+      <li>11</li>
+    </steps>
+  </PersonalChronicle.Domain.RouteDef>
+</Defs>

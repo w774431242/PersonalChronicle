@@ -1,0 +1,24 @@
+<Defs>
+  <!-- 「自动化」建造分类（PM 2026-09-06）：自动化设备与物流管道统一归口，
+       与原版"生产/电力"等并列，不再散落在生产分类里。 -->
+  <DesignationCategoryDef>
+    <defName>PC_Automation</defName>
+    <label>automation</label>
+    <description>Manually operated production equipment, automated farm machines and logistics pipes.</description>
+    <order>90</order>
+    <!-- 拆除物流管道（含隐藏式）：隐藏管全透明，专用设计器激活时全图高亮显示 -->
+    <specialDesignatorClasses>
+      <li>PersonalChronicle.Automation.Designator_DeconstructPipe</li>
+    </specialDesignatorClasses>
+  </DesignationCategoryDef>
+
+  <!-- ⭐ 自动农场三档（S/M/L）在建造菜单合并为单个下拉项（PM 2026-09-07：
+       「不要展示 3 个建造项目，点击一个项目后再选档位」）——1.6 原生
+       DesignatorDropdownGroupDef 机制（同原版地板/落地灯下拉分组）。
+       ThingDef 侧用 <designatorDropdown> 挂载（反射核实：ThingDef.designatorDropdown）。 -->
+  <DesignatorDropdownGroupDef>
+    <defName>PC_AutoFarm</defName>
+    <label>auto farm</label>
+  </DesignatorDropdownGroupDef>
+</Defs>
+

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "机制 09 · 购买尝试与退避",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [940, 570]
+  },
+  "lanes": [
+    { "id": "main", "label": "退避相位" }
+  ],
+  "states": [
+    { "id": "ready", "type": "start", "label": "Ready", "sublabel": "可尝试", "lane": "main", "col": 0, "step": "01", "tag": "计数 0" },
+    { "id": "attempt", "type": "active", "label": "尝试购买", "sublabel": "TryPurchaseFood", "lane": "main", "col": 1, "step": "02", "tag": "食物链" },
+    { "id": "resolve", "type": "decision", "label": "判决", "sublabel": "ResolvePurchaseAttempt", "lane": "main", "col": 2, "step": "03", "tag": "取最靠后为真档" },
+    { "id": "cooling", "type": "active", "label": "CoolingDown", "sublabel": "150 × 2^(n−1) ≤ 6000", "lane": "main", "col": 3, "step": "04", "tag": "FNV-1a 抖动" },
+    { "id": "blocked", "type": "failure", "label": "PersistentBlocked", "sublabel": "第 5 次起平坦 6000", "lane": "main", "col": 4, "step": "05", "tag": "兜底探测" }
+  ],
+  "transitions": [
+    { "id": "s1", "from": "ready", "to": "attempt" },
+    { "id": "s2", "from": "attempt", "to": "resolve", "variant": "emphasis" },
+    { "id": "s3", "from": "resolve", "to": "cooling" },
+    { "id": "s4", "from": "cooling", "to": "ready", "variant": "emphasis", "route": "top-channel" },
+    { "id": "s5", "from": "cooling", "to": "blocked", "variant": "security" },
+    { "id": "s6", "from": "blocked", "to": "ready", "variant": "dashed", "route": "bottom-channel" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "退避公式",
+      "items": [
+        "退避 = min(6000, 150 × 2^min(n−1, 6))；抖动 = FNV-1a 指纹哈希 % (退避/8 + 1)",
+        "刻意不用随机数：同条件必须同相位，否则读档后相位跳变、退避不可复现",
+        "指纹 = 报价 | 库存 | 现金 | 资格 | 地图版本，结构性不含 Tick"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "谁不记账（零记录路径）",
+      "items": [
+        "已结算（最靠后为真档）⇒ 零记录；对账 / 结构性 ⇒ 记 1 条并分类",
+        "Backoff=false 的七类让路码零记录：原生控制 / 作息 / 未到场 / 玩家指令等",
+        "未知原因一律归 GetterError（宁少记不错记）"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "与描述不符",
+      "items": [
+        "第 5 次判定键是 (pawn, actionClass, reason)，不是「同指纹」",
+        "MayRetry 的紧急保护与真实变化放行当前恒传 false（尚未接通）",
+        "写入点全仓仅两处（购买链与车间中断）；活跃重试账 ≤16 条，未清对账义务者不裁"
+      ]
+    }
+  ]
+}

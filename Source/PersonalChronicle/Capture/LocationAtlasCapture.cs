@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using PersonalChronicle.Data;
 using PersonalChronicle.Domain;
+   // SettlementTradeReader（REQ-MVS-009：精确选贸易者）
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -534,10 +535,32 @@ namespace PersonalChronicle.Capture
             if (traderKinds == null || traderKinds.Count == 0)
             {
                 loc.CanTrade = false;
+                // ⚠ 2026-09-20（REQ-MVS-009）：**必须清空三个残留字段**。
+                //   旧实现只置 `CanTrade = false` 就 return ⇒ 派系 Def 改了 / Mod 卸载后，
+                //   快照里仍留着**上一次的** TraderKindDefName / PermitRequiredDefName / TradeKindKeys
+                //   ⇒ 面板会显示一个**已经不存在**的贸易者（"陈旧值冒充当前值"，与本线反复修的同族）。
+                loc.TraderKindDefName = null;
+                loc.PermitRequiredDefName = null;
+                loc.TradeKindKeys = new List<string>();
                 return;
             }
             loc.CanTrade = true;
-            ApplyTraderKindSnapshot(loc, traderKinds[0]);
+            // ⚠ 2026-09-20（REQ-MVS-009 → CHG-LCE-001 移植核验）：**不再用 `traderKinds[0]` 近似**。
+            //
+            //   兜底路径（地图 / 非据点的世界对象）**该地点自身没有确定的贸易者**（原版的确定性选择
+            //   需要据点实例：`baseTraderKinds[|HashOffset(settlement)| % Count]`）⇒ 挑第一个是**编造**。
+            //
+            //   ⚠ 2026-09-20（CHG-LCE-001）：原实现经 `SettlementTradeReader.PickTraderKind(faction, null)`
+            //   判定 —— 该调用在无据点上下文时**恒返回 null**（移植时逐字核验其分支：
+            //   `settlement == null` ⇒ 直接 return null）⇒ 这里内联其恒等结果，语义与移植前逐字一致，
+            //   同时去掉对已删除的 MVS 命名空间的依赖（地点图鉴"此地卖什么"行为不变）。
+            //
+            //   三个"此地卖什么"的字段**一律清空**（与上面空列表分支同规）：
+            //   旧值（若本 loc 是重采集）会变成"陈旧值冒充当前值"。
+            //   ⚠ 只留 `CanTrade` —— 那是**确实成立**的事实（该派系有贸易接口）。
+            loc.TraderKindDefName = null;
+            loc.PermitRequiredDefName = null;
+            loc.TradeKindKeys = new List<string>();
         }
 
         /// <summary>Applies a trader kind snapshot (trader def + permit + sell categories).</summary>

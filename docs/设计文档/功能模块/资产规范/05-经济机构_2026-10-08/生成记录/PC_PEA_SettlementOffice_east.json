@@ -1,0 +1,19 @@
+{
+  "kind": "SettlementOffice",
+  "defName": "PC_PEA_SettlementOffice",
+  "direction": "east",
+  "path": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_east.png",
+  "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-08821ac8-b5b4-4eee-ba4a-10c9eb526dde.png",
+  "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png",
+  "northReferenceSha256": "09C05A7B35F445D9579D3344CD8AA39D28722CD2E470610B2B565F6A3CF12DD2",
+  "promptFile": "PC_PEA_SettlementOffice_east.prompt.txt",
+  "sha256": "cd3d15ce12407a7128a40487ef1597d02f680f98ffd26807eaed5cb2996a2fed",
+  "generator": "built-in image_gen",
+  "generationMode": "north-reference generation or targeted reference edit",
+  "externalPixelEditsPerformed": false,
+  "inputReferences": [
+    "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-3a16c75d-4fb4-4657-8565-203d4cb1cda0.png",
+    "E:/SteamLibrary/steamapps/common/RimWorld/11/殖民地综合管理系统/Textures/Things/Building/PawnEconomy/PC_PEA_SettlementOffice_north.png"
+  ],
+  "repairTargetSha256": "d793faa2f158962abb828079523953e0f1eb970294db914a73636b74edd8c5e9"
+}

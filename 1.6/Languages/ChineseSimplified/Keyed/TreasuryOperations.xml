@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Treasury.Title>公有国库准备与旧权益承接</PC_PEA.Treasury.Title>
+  <PC_PEA.Treasury.Funds>国库未拨款 {0} · 已锁定 {1} · 全账户实物储备 {2}</PC_PEA.Treasury.Funds>
+  <PC_PEA.Treasury.Unknown>未知</PC_PEA.Treasury.Unknown>
+  <PC_PEA.Treasury.Hint>公有储存区的银币由成年殖民者在安全空闲时自主交存，也可选择结算处和殖民者手动发起指令。提取将公有银币放回搬运者身边。筹备阶段请按本页提示完成旧权益处理并保存、重载；制度运行后才能发薪和购买。</PC_PEA.Treasury.Hint>
+  <PC_PEA.Treasury.Pending>交付 #{0}：{1} {2} 枚银币，搬运者 {3}</PC_PEA.Treasury.Pending>
+  <PC_PEA.Treasury.Kind.Deposit>缴存</PC_PEA.Treasury.Kind.Deposit>
+  <PC_PEA.Treasury.Kind.Withdrawal>提取</PC_PEA.Treasury.Kind.Withdrawal>
+  <PC_PEA.Treasury.DeliveryRecord>#{0} · {1} {2} 枚银币 · {3}</PC_PEA.Treasury.DeliveryRecord>
+  <PC_PEA.Treasury.Status.Waiting>等待安全空闲</PC_PEA.Treasury.Status.Waiting>
+  <PC_PEA.Treasury.Status.Carrying>搬运中</PC_PEA.Treasury.Status.Carrying>
+  <PC_PEA.Treasury.Status.Completed>交付完成</PC_PEA.Treasury.Status.Completed>
+  <PC_PEA.Treasury.Status.Cancelled>已取消</PC_PEA.Treasury.Status.Cancelled>
+  <PC_PEA.Treasury.Status.Faulted>等待对账</PC_PEA.Treasury.Status.Faulted>
+  <PC_PEA.Treasury.ClaimKind.Balance>旧余额</PC_PEA.Treasury.ClaimKind.Balance>
+  <PC_PEA.Treasury.ClaimKind.UnpaidWage>欠薪</PC_PEA.Treasury.ClaimKind.UnpaidWage>
+  <PC_PEA.Treasury.OriginalOnly>仅首次归档中存在，保留历史凭证</PC_PEA.Treasury.OriginalOnly>
+  <PC_PEA.Treasury.Cancel>取消交付</PC_PEA.Treasury.Cancel>
+  <PC_PEA.Treasury.DepositText>向国库缴存 {0} 枚公有银币</PC_PEA.Treasury.DepositText>
+  <PC_PEA.Treasury.WithdrawText>将国库可用的 {0} 枚银币放回殖民地</PC_PEA.Treasury.WithdrawText>
+  <PC_PEA.Treasury.Deposit>申请缴存</PC_PEA.Treasury.Deposit>
+  <PC_PEA.Treasury.Withdraw>申请提取</PC_PEA.Treasury.Withdraw>
+  <PC_PEA.Treasury.SelectBank>请先在机构页选择公有工资结算处。</PC_PEA.Treasury.SelectBank>
+  <PC_PEA.Treasury.Account>已承接账户：{0} · {1}</PC_PEA.Treasury.Account>
+  <PC_PEA.Treasury.FreezeFirst>请先在唯一 Mod 设置中请求启用，以冻结最新旧账。</PC_PEA.Treasury.FreezeFirst>
+  <PC_PEA.Treasury.CutoverSummary>旧权益：{0} 项记录待确认，尚有 {1} 资金待承接。资金承接使用真实国库；逐项确认表示采纳所列处理方式，原记录仍保留。</PC_PEA.Treasury.CutoverSummary>
+  <PC_PEA.Treasury.Conflict>旧权益或交付保存记录存在冲突，已阻止出资承接与确认；原文和资金保留，等待对账。</PC_PEA.Treasury.Conflict>
+  <PC_PEA.Treasury.Claim>债权 #{0} · 收款方 {1} · 待承接 {2}</PC_PEA.Treasury.Claim>
+  <PC_PEA.Treasury.Fund>出资承接余款</PC_PEA.Treasury.Fund>
+  <PC_PEA.Treasury.Acknowledge>确认此处理</PC_PEA.Treasury.Acknowledge>
+  <PC_PEA.Treasury.Changed>与首次归档存在差异</PC_PEA.Treasury.Changed>
+  <PC_PEA.Treasury.CutoverComplete>旧记录已逐项确认，债权已足额承接；这不代表工资或收费已启用。承接后的个人及机构余额仍是负债，关闭设置后保留在等待清理阶段。</PC_PEA.Treasury.CutoverComplete>
+  <PC_PEA.Treasury.Disposition.PreserveHistory>保留身份、配置或历史凭证，旧付费通道继续暂停</PC_PEA.Treasury.Disposition.PreserveHistory>
+  <PC_PEA.Treasury.Disposition.CancelOrderReleaseReservation>取消旧待办服务，在承接余额中释放旧预约资金，原订单留档</PC_PEA.Treasury.Disposition.CancelOrderReleaseReservation>
+  <PC_PEA.Treasury.Disposition.EndContractPreserveWage>结束旧劳动安排，保留全部欠薪债权</PC_PEA.Treasury.Disposition.EndContractPreserveWage>
+  <PC_PEA.Treasury.Disposition.RetainOwnership>保留原所有者权属及已付衣物使用权</PC_PEA.Treasury.Disposition.RetainOwnership>
+  <PC_PEA.Treasury.Record.EconomyAccount>账户</PC_PEA.Treasury.Record.EconomyAccount>
+  <PC_PEA.Treasury.Record.EconomyPerson>个人</PC_PEA.Treasury.Record.EconomyPerson>
+  <PC_PEA.Treasury.Record.EconomyInstitution>公有机构</PC_PEA.Treasury.Record.EconomyInstitution>
+  <PC_PEA.Treasury.Record.EconomyPosition>岗位</PC_PEA.Treasury.Record.EconomyPosition>
+  <PC_PEA.Treasury.Record.EconomyContract>劳动合同</PC_PEA.Treasury.Record.EconomyContract>
+  <PC_PEA.Treasury.Record.EconomyOrder>订单</PC_PEA.Treasury.Record.EconomyOrder>
+  <PC_PEA.Treasury.Record.EconomyReceipt>凭证或欠薪</PC_PEA.Treasury.Record.EconomyReceipt>
+  <PC_PEA.Treasury.Record.EconomyReport>体检报告</PC_PEA.Treasury.Record.EconomyReport>
+  <PC_PEA.Treasury.Record.EconomyOwnership>资产所有权</PC_PEA.Treasury.Record.EconomyOwnership>
+</LanguageData>

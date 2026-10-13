@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>市场经济框架 · 玩家预览（RUIF 单页统一版）— PersonalChronicle</title>
+<!--
+  市场经济框架（Market Economy Framework）· 面向玩家的模组预览 · v5
+  （派系列表＝字段规则驱动 · 全 31 派系 · 兼容第三方 · 社会/市场/状态＝通用字段反推模板，Empire 仅为 royal 一行）
+  ─────────────────────────────────────────────────────────────────────────────
+  真源（全部为工程内既有实现；本页不发明视觉取值）：
+    · 令牌   RUIF Source/Core/Tokens.cs（16 色 + 间距 + 字号，固定只读）
+             Archive/UI/UITheme.cs → Palette.Epic（默认 · 暗色 + 金色 accent）/ Gothic / Steampunk
+    · 度量   Tokens.cs（Gap 12 / PanelPadding 12 / ProgressbarH 12）
+             MasterControlTabWindow.Detail.cs（KpiCardHeight 34 / KpiBarHeight 8 / KpiCardGap 10）
+    · 组件   Components/OfficialDataAtoms.cs · Components/DataCandAtoms.cs · Charts.cs
+    · 派系判据 原版 RimWorld.FactionDef 全字段（构造默认值经 IL 实测）：
+             humanlikeFaction 默认 true · canRequestTraders 默认 true · hidden 默认 false ·
+             permanentEnemy 默认 false · displayInFactionSelection 默认 true
+    · 派系数据 原版 Data 各 DLC 的 Defs/FactionDefs（31 个具体 FactionDef，继承已归并）
+    · 帝国背景 Royalty/Defs/FactionDefs/Faction_Empire.xml（逐字段取证）
+  渲染要求：Chromium 111+（使用 color-mix）。整页适配一屏，无页面级滚动。
+  ⚠ LAND-009：未接入 / 未验证的读数一律显示「—」。
+  ⚠ 数据分级：原版实测 / 官方推导 / 设计假设 / 未核实。
+  ⚠ 游戏内落地时：派系取自 DefDatabase<FactionDef>.AllDefs 并套同一套字段判据
+     ⇒ 第三方 Mod 派系自动纳入，无需白名单（本页为静态预览，数据为原版快照）。
+
+  面板顺序（严格左 → 右）：社会背景 → 派系状态 → 市场面板 → 总库存
+  第 2 行由总库存独占（原派系贸易 / 派系档案已移除，空间让给库存）
+  总库存含「上下游库存结构图」：上游原料显示消费流向最大的前三个下游；中游成品显示上游原料 + 下游市场
+  市场面板＝原「市场结构·供应」+「市场结构·需求」合并，改用干净数据表（复用 RUIF .dt 原子；GAP-UI-DUALBAR 退役）
+  派系列表＝选择器，固定最右栏跨两行，不参与左→右编号。
+-->
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--window);color:var(--text);font-family:var(--font-ui);font-size:13px;line-height:1.45;
+  overflow:hidden;transition:background-color .3s,color .3s;-webkit-font-smoothing:antialiased}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+::-webkit-scrollbar{width:16px;height:16px}
+::-webkit-scrollbar-track{background:var(--window)}
+::-webkit-scrollbar-thumb{background:var(--border-soft);border:4px solid var(--window);border-radius:8px}
+::-webkit-scrollbar-thumb:hover{background:var(--border)}
+
+:root{
+  --window:#0E1322; --panel:#151B2E; --raised:#1C2338; --card:#1A2136; --hover:#252D44;
+  --border:#8A7740; --border-soft:#3C4060; --hair:#323652;
+  --text:#F1EBD8; --muted:#B8B199; --dim:#7D7A8D;
+  --accent:#D4AF37; --accent-soft:rgba(212,175,55,.28);
+  --info:#DAB457; --alive:#75C57F; --dead:#C04732; --warn:#FF0000; --blood:#C04732;
+  --gain:#75C57F; --loss:#C04732; --silver:#C7CDD6;
+  --t-items:#D4AF37; --t-build:#8C879E; --t-pawns:#75C57F; --t-floor:#967EBC;
+  --halo:0 8px 26px rgba(0,0,0,.5);
+  --gap:12px; --progress-h:12px; --kpi-h:34px; --kpi-bar:8px; --kpi-gap:10px;
+  --font-ui:"Inter","Segoe UI","Microsoft YaHei",system-ui,sans-serif;
+  --font-display:"Cinzel","Noto Serif SC","Songti SC","STSong",serif;
+  --font-mono:"JetBrains Mono","Cascadia Mono","Consolas",monospace;
+}
+body.theme-gothic{
+  --window:#0A0A0D; --panel:#121216; --raised:#1C1C22; --card:#16161C; --hover:#1F1C25;
+  --border:#4A3038; --border-soft:#2A2230; --hair:#1F1A25;
+  --text:#CFC8D8; --muted:#84768E; --dim:#5C5468;
+  --accent:#A83232; --accent-soft:rgba(168,50,50,.15);
+  --info:#7A7AB0; --alive:#5F9A6A; --dead:#C84040; --warn:#FF1A1A; --blood:#C84040;
+  --gain:#5F9A6A; --loss:#C84040; --silver:#B9B4C4;
+  --t-items:#A83232; --t-build:#5C5973; --t-pawns:#5F9A6A; --t-floor:#7A6BC7;
+}
+body.theme-steampunk{
+  --window:#14120D; --panel:#1C1A12; --raised:#252218; --card:#201D14; --hover:#2D281C;
+  --border:#8A7A3A; --border-soft:#4A4230; --hair:#3C3525;
+  --text:#E0D6AE; --muted:#9A9078; --dim:#6A6652;
+  --accent:#4A9A7A; --accent-soft:rgba(74,154,122,.15);
+  --info:#7AA0D0; --alive:#7FCA8A; --dead:#B85A4A; --warn:#FF4D1A; --blood:#B85A4A;
+  --gain:#7FCA8A; --loss:#B85A4A; --silver:#CFC7A8;
+  --t-items:#C9A847; --t-build:#7A7A59; --t-pawns:#7FC98A; --t-floor:#7A8AD1;
+}
+body.theme-ruif{
+  --window:#16181D; --panel:#1D2026; --raised:#242830; --card:#22262E; --hover:#2C313B;
+  --border:#454B56; --border-soft:#31363F; --hair:#2A2E36;
+  --text:#D9DDE3; --muted:#8F96A0; --dim:#6E7682;
+  --accent:#4E9AF0; --accent-soft:rgba(78,154,240,.28);
+  --info:#7AB8E8; --alive:#58B368; --dead:#D9534F; --warn:#E0A03C; --blood:#D9534F;
+  --gain:#58B368; --loss:#D9534F; --silver:#C7CDD6;
+  --t-items:#4E9AF0; --t-build:#8C879E; --t-pawns:#58B368; --t-floor:#967EBC;
+}
+
+#wrap{height:100%;max-width:1880px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding:9px 14px 8px}
+#pagehead{flex:0 0 46px;height:46px;display:flex;align-items:center;gap:12px;padding:0 14px;
+  border:1px solid var(--border-soft);border-radius:8px;
+  background:linear-gradient(90deg,var(--accent-soft),transparent 46%),var(--panel);box-shadow:var(--halo)}
+#pagehead .big{font-size:18px;font-weight:800;letter-spacing:.16em;font-family:var(--font-display)}
+#pagehead .tag{font-size:9.5px;letter-spacing:2.4px;color:var(--dim);font-family:var(--font-mono)}
+#pagehead .desc{font-size:11px;color:var(--muted)}
+#pagehead .right{margin-left:auto;display:flex;align-items:center;gap:10px}
+#pagehead .ts{font-size:10px;letter-spacing:1px;color:var(--muted);font-family:var(--font-mono);white-space:nowrap}
+#pagehead .btn{font-family:inherit;font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--accent);
+  border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border-radius:5px;padding:4px 10px;cursor:pointer;transition:.15s}
+#pagehead .btn:hover{background:color-mix(in srgb,var(--accent) 22%,transparent)}
+#pagehead .btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+#sop{flex:1;min-height:0;display:grid;grid-template-columns:repeat(12,1fr);
+  grid-template-rows:minmax(0,1.3fr) minmax(0,1fr);gap:var(--gap)}
+.p3{grid-column:span 3}
+.p9{grid-column:span 9}
+/* 派系状态·事件流：按原版 IncidentWorker 9 类归并为 战争/灾害/人口 三大宏维度（窄 p2 面板） */
+.evg{display:flex;flex-direction:column;gap:5px;margin-top:2px}
+.evr{border:1px solid var(--hair);border-radius:6px;background:var(--window);padding:5px 7px}
+.evr .eh{display:flex;align-items:baseline;gap:6px;margin-bottom:2px}
+.evr .tg{font-size:9.5px;font-weight:800;letter-spacing:.1em}
+.evr .tg.bad{color:var(--loss)}.evr .tg.info{color:var(--info)}.evr .tg.ok{color:var(--gain)}
+.evr .ct{font-size:8.5px;color:var(--dim);font-family:var(--font-mono)}
+.evr .chips{font-size:8.5px;line-height:1.45;color:var(--muted)}
+#factionPanel{grid-column:10 / 13;grid-row:1 / span 2}
+
+.panel{position:relative;background:var(--panel);border:1px solid var(--border-soft);border-radius:8px;
+  box-shadow:var(--halo);display:flex;flex-direction:column;min-height:0;transition:border-color .2s,background-color .3s}
+.panel::before,.panel::after{content:"";position:absolute;width:10px;height:10px;pointer-events:none;
+  border-color:color-mix(in srgb,var(--accent) 58%,transparent)}
+.panel::before{top:4px;left:4px;border-top:2px solid;border-left:2px solid}
+.panel::after{bottom:4px;right:4px;border-bottom:2px solid;border-right:2px solid}
+.panel.accent{border-color:color-mix(in srgb,var(--accent) 42%,transparent)}
+.ptitle{display:flex;align-items:center;gap:8px;padding:7px 13px;flex:0 0 auto;border-bottom:1px solid var(--hair);
+  background:linear-gradient(90deg,var(--accent-soft),transparent 58%);font-size:12px;font-weight:800;letter-spacing:.12em}
+.ptitle .mark{width:3px;height:13px;background:var(--accent);border-radius:1px;flex:0 0 3px}
+.ptitle .stencil{font-size:8.5px;letter-spacing:2px;color:var(--dim);font-family:var(--font-mono);font-weight:400}
+.ptitle .sub{margin-left:auto;font-size:10px;font-weight:400;letter-spacing:0;color:var(--dim)}
+.ptitle .ruif{font-size:8.5px;letter-spacing:1.1px;color:var(--info);font-weight:400;
+  border:1px solid color-mix(in srgb,var(--info) 40%,transparent);border-radius:4px;padding:1px 5px;font-family:var(--font-mono)}
+.pbody{padding:10px 12px;flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.pbody.tight{padding:7px 10px;gap:6px}
+
+.sec-h{display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+.sec-h::before{content:"";width:3px;height:10px;background:var(--info);border-radius:1px}
+.sec-h .n{margin-left:auto;font-size:9.5px;font-weight:400;color:var(--dim);letter-spacing:0}
+.bdg{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:.06em;
+  padding:1px 6px;border-radius:99px;border:1px solid currentColor;color:var(--muted);white-space:nowrap}
+.bdg.ok{color:var(--alive)}.bdg.info{color:var(--info)}.bdg.bad{color:var(--dead)}
+.bdg.dim{color:var(--dim)}.bdg.gold{color:var(--accent)}
+.bdg.solid{background:color-mix(in srgb,currentColor 15%,transparent)}
+.bar{height:var(--progress-h);background:var(--border-soft);border:1px solid var(--hair);border-radius:3px;overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:2px;transition:width .45s cubic-bezier(.2,.7,.3,1)}
+.bar.sm{height:6px;border:none}
+/* ── 市场面板 · 干净数据表（复用 RUIF .dt 原子；GAP-UI-DUALBAR 已退役）──
+   品种 | 供应 | 需求 | 差额；差额用语义色 gain/loss/dim（净出口/净进口/持平）。
+   ⚠ 行高硬约束（GATE-UI 裁决 UI-001）：落地 EconomyMarketPanel.RowHeight = 18f。
+   原写法 td{line-height:1.3} 实测仅 16.39px，与落地差 −1.61px ⇒ 违反 1:1。
+   改为显式 height:18px + box-sizing:border-box，使「预览 == 落地」可实测成立。 */
+.dt .mk-lv{font-size:8px;color:var(--dim);font-family:var(--font-mono);margin-left:4px;letter-spacing:0}
+.dt .num.gain{color:var(--gain)}.dt .num.loss{color:var(--loss)}.dt .num.eq{color:var(--dim)}
+.seg{display:inline-flex;border:1px solid var(--border-soft);border-radius:6px;overflow:hidden;background:var(--window)}
+.seg button{font-family:inherit;font-size:10px;padding:3px 9px;border:0;cursor:pointer;background:transparent;
+  color:var(--dim);border-right:1px solid var(--hair);transition:.15s}
+.seg button:last-child{border-right:0}
+.seg button:hover{color:var(--text)}
+.seg button.on{background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent);font-weight:800;
+  box-shadow:inset 0 -2px 0 var(--accent)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+#kstrip{flex:0 0 34px;display:grid;grid-template-columns:repeat(7,1fr);gap:var(--kpi-gap)}
+.kpiw{height:var(--kpi-h);padding:0 11px;display:flex;align-items:center;gap:var(--kpi-gap);
+  background:var(--card);border:1px solid var(--hair);border-radius:5px;position:relative;overflow:hidden;min-width:0}
+.kpiw::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:currentColor;opacity:.85}
+.kpiw .v{font-family:var(--font-mono);font-size:12.5px;font-weight:800;line-height:1;flex:0 0 auto;padding-left:4px;color:var(--text)}
+.kpiw .tx{min-width:0;flex:0 0 auto;max-width:60%}
+.kpiw .tx .l{display:block;font-size:8.5px;color:var(--text);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpiw .tx .n{display:block;font-size:8.5px;color:var(--dim);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpiw .bar{flex:1;height:var(--kpi-bar);min-width:14px;background:var(--border-soft);border:1px solid var(--hair);border-radius:2px;overflow:hidden}
+.kpiw .bar>i{display:block;height:100%;background:currentColor;opacity:.8}
+.kpiw.t-gold{color:var(--accent)}.kpiw.t-mut{color:var(--muted)}.kpiw.t-info{color:var(--info)}
+.kpiw.t-ok{color:var(--gain)}.kpiw.t-bad{color:var(--loss)}
+.kpiw.t-gold .v{color:var(--accent)}.kpiw.t-info .v{color:var(--info)}
+.kpiw.t-ok .v{color:var(--gain)}.kpiw.t-bad .v{color:var(--loss)}
+
+.fltbl{border:1px solid var(--hair);border-radius:6px;overflow:hidden;background:var(--window);flex:none}
+.fltbl .hd,.fltbl .rw{display:grid;grid-template-columns:1.5fr .78fr 1fr;align-items:center;gap:5px;padding:0 7px;height:19px}
+.fltbl .hd{background:var(--raised);color:var(--dim);font-size:8.5px;letter-spacing:.05em;border-bottom:1px solid var(--border-soft)}
+.fltbl .rw{font-size:9.5px;color:var(--text);cursor:pointer;position:relative;border:0;background:transparent;
+  font-family:inherit;text-align:left;width:100%;transition:background-color .12s,box-shadow .12s}
+.fltbl .rw:nth-child(even){background:color-mix(in srgb,var(--text) 4%,transparent)}
+.fltbl .rw:hover{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.fltbl .rw.sel{background:color-mix(in srgb,var(--accent) 13%,transparent);box-shadow:inset 3px 0 0 var(--accent)}
+.fltbl .rw:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.fltbl .rw.off{opacity:.55}
+.fltbl .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px;min-width:0}
+.fltbl .dot{width:6px;height:6px;flex:0 0 6px;border-radius:1px;background:currentColor;opacity:.9}
+.fltbl .tech{font-family:var(--font-mono);font-size:8.6px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fltbl .tech.hi{color:var(--accent)}
+.fltbl .trd{font-family:var(--font-mono);font-size:8.6px;text-align:right;color:var(--muted);white-space:nowrap}
+.fltbl .trd.y{color:var(--gain)}
+.fltbl .grp{display:block;line-height:19px;padding:0 7px;background:color-mix(in srgb,var(--accent) 13%,transparent);
+  color:var(--accent);font-size:8.8px;letter-spacing:.04em}
+.fempty{padding:12px 10px;text-align:center;font-size:10px;color:var(--dim);
+  border:1px dashed var(--hair);border-radius:6px;background:var(--window)}
+.rulebox{border:1px solid var(--hair);border-radius:6px;background:var(--window);padding:6px 8px;
+  font-size:8.8px;line-height:1.6;color:var(--muted)}
+.rulebox b{color:var(--text)}
+
+.drow{display:flex;justify-content:space-between;gap:10px;padding:2.5px 0;font-size:10.5px;
+  border-bottom:1px dashed color-mix(in srgb,var(--hair) 75%,transparent)}
+.drow:last-child{border-bottom:0}
+.drow .k{color:var(--dim)}
+.drow .v{font-family:var(--font-mono);color:var(--text);text-align:right}
+.drow .v.pos{color:var(--gain)}.drow .v.neg{color:var(--loss)}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.lg-cell{padding:6px 9px;border:1px solid var(--hair);border-radius:6px;background:var(--card);min-width:0}
+.lg-cell .l{font-size:9.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lg-cell .v{font-family:var(--font-mono);font-size:16px;font-weight:800;margin-top:1px;line-height:1.15}
+.lg-cell .u{font-size:9.5px;color:var(--dim);font-weight:400;margin-left:2px}
+.lg-cell .s{font-size:9px;color:var(--muted);margin-top:1px}
+.tier{position:relative;border:1px solid var(--hair);border-radius:5px;padding:5px 9px 5px 11px;background:var(--card);
+  display:flex;align-items:center;gap:9px}
+.tier::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:currentColor;opacity:.85}
+.tier .nm{font-size:10px;font-weight:700;color:var(--text);flex:0 0 62px}
+.tier .fx{font-size:9px;color:var(--muted);flex:1;min-width:0}
+.tier .mg{font-size:9.5px;font-family:var(--font-mono);color:var(--dim);flex:0 0 40px;text-align:right}
+.tier.t1{color:var(--t-floor)}.tier.t2{color:var(--info)}.tier.t3{color:var(--gain)}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:5px;align-items:stretch}
+.fcol{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fbox{border:1px solid var(--hair);border-radius:5px;padding:4px 7px;background:var(--card);font-size:9px;line-height:1.35;min-width:0}
+.fbox b{display:block;font-size:9.5px;font-weight:700;color:var(--text)}
+.fbox span{color:var(--dim)}
+.fbox.in{border-left:3px solid var(--gain)}
+.fbox.out{border-left:3px solid var(--loss)}
+.fbox.core{border-left:3px solid var(--t-items);background:color-mix(in srgb,var(--accent) 8%,var(--card))}
+.farw{display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:12px;font-family:var(--font-mono)}
+.fnote{border:1px dashed color-mix(in srgb,var(--accent) 40%,transparent);border-radius:5px;padding:4px 8px;
+  font-size:9px;color:var(--muted);line-height:1.5}
+.fnote.solid{border-style:solid}
+.verdict{border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);border-radius:6px;
+  background:color-mix(in srgb,var(--accent) 8%,var(--card));padding:7px 9px}
+.verdict .q{font-size:11.5px;font-weight:800;color:var(--accent);line-height:1.35}
+.verdict .p{font-size:9.5px;color:var(--muted);margin-top:3px;line-height:1.5}
+.qa{display:flex;gap:8px;align-items:baseline;padding:3px 0;border-bottom:1px dashed color-mix(in srgb,var(--hair) 70%,transparent)}
+.qa:last-child{border-bottom:0}
+.qa .q{font-size:9.5px;color:var(--dim);flex:0 0 74px}
+.qa .a{font-size:10px;color:var(--text);flex:1;min-width:0;line-height:1.4}
+.qa .a em{font-style:normal;color:var(--accent)}
+.em{font-style:normal;color:var(--accent);font-weight:700}
+.chip{font-size:9px;padding:1px 6px;border-radius:4px;background:var(--raised);color:var(--muted);border:1px solid var(--hair)}
+.dt{width:100%;border-collapse:separate;border-spacing:4px 0;font-size:10px;table-layout:fixed}
+/* ── 列宽（落地侧 shares 的来源）────────────────────────────────────
+   落地用 RUIF StatTable(shares) —— shares 是**纯比例**，没有 px 概念。
+   ⚠ 这里写的是固定 px，但 table-layout:fixed + width:100% 下浏览器会把
+     总指定宽（124 + 52×4 = 332px）**按比例放大**填满容器。
+     实测（428px 表宽）：品种 150.891px / 指标各 63.266~63.313px
+     ⇒ 真实比例 = 124:52 = **2.385 : 1 : 1 : 1 : 1.001**。
+   落地 shares 必须用这个实测比例，**不能**把 px 数字直接当比例
+     （曾误写 4:1，导致品种列宽 68%、指标列各窄 8px）。
+   实测脚本：_scripts/measure_market_columns_1to1.js（puppeteer，非估算）。 */
+.dt th:nth-child(1),.dt td:nth-child(1){width:124px}
+.dt th:nth-child(n+2),.dt td:nth-child(n+2){width:52px}
+.dt thead th{text-align:left;white-space:nowrap;font-size:8.5px;letter-spacing:.08em;font-weight:700;color:var(--dim);
+  padding:2px 6px;background:var(--raised);border-bottom:1px solid var(--border-soft)}
+.dt td{padding:0 6px;box-sizing:border-box;border-bottom:1px solid color-mix(in srgb,var(--hair) 65%,transparent);white-space:nowrap}
+/* ── 行高硬约束（GATE-UI 裁决 UI-001）──────────────────────────────
+   落地侧取 RuifBridge.StatRowHeight() = RUIF Measure.RowHeight(Tokens.FontLabel)
+   —— 引擎真值，**不再是硬编码 18f**（2026-09-18 修订，见 GAP-UI-ROWH-15）。
+   取真值的理由：StatTable 的 IL 在行循环前做
+       minH = Mathf.Min(rowH, Measure.RowHeight(Tokens.FontLabel))
+   传小于真值的 rowH 会被**静默压扁**（色带与文字重叠）。硬编码 18f 只是
+   "默认字体下恰好等于真值"，玩家改字体即失效。
+   预览侧原为 td{line-height:1.3}，实测 16.39px ⇒ 与落地差 −1.61px，违反 1:1。
+   标定结果（_scripts/calib_rowH.js 实测，非估算）：
+       td.line-height  13/14/15 -> 整行 18px
+                       16/17    -> 整行 19px
+                       18       -> 整行 21px
+   故取 line-height:15px 使整行恰为 18px（= 默认字体下的引擎真值）。
+   回归校验：_scripts/measure_rowH_1to1.js（断言 |偏差| < 0.5px）。 */
+.dt tbody tr{height:18px}
+.dt tbody td{line-height:15px}
+.dt tbody tr:hover td{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.dt .num{font-family:var(--font-mono);text-align:right;font-variant-numeric:tabular-nums}
+.dt .mono{font-family:var(--font-mono)}
+.dt .chg{font-size:8.5px;margin-left:3px;font-weight:700;white-space:nowrap}
+.msum{display:flex;flex-wrap:wrap;gap:3px 12px;padding:1px 0 3px;font-size:9.5px;color:var(--muted)}
+.msum b{color:var(--text);font-weight:700;margin-right:3px;font-family:var(--font-mono)}
+.msum .neg{color:var(--loss)}.msum .pos{color:var(--gain)}
+
+/* ── 上下游库存结构图 ───────────────────────────────── */
+.invwrap{display:flex;gap:10px;align-items:stretch;min-height:0}
+.invmain{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.invside{flex:0 0 236px;width:236px;display:flex;flex-direction:column;gap:2px;
+  border-left:1px solid var(--hair);padding-left:10px;overflow:auto}
+.chnav{display:flex;flex-wrap:wrap;gap:4px}
+.chnav button{font-size:9.5px;line-height:1.2;padding:2px 9px;border-radius:4px;cursor:pointer;
+  font-family:var(--font-ui);background:var(--raised);color:var(--muted);border:1px solid var(--hair)}
+.chnav button:hover{background:var(--hover);color:var(--text)}
+.chnav button.on{background:var(--accent-soft);color:var(--text);border-color:var(--border);font-weight:700}
+.chcols{display:grid;grid-template-columns:1fr 18px 172px 18px 1.32fr;align-items:stretch;gap:0}
+.chcol{min-width:0;display:flex;flex-direction:column;gap:4px;justify-content:center}
+.charw{display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:14px;line-height:1}
+.chlbl{font-size:8.5px;letter-spacing:.09em;color:var(--dim);font-weight:700}
+.chnode{align-self:center;width:100%;background:var(--card);border:1px solid var(--border);border-radius:6px;
+  padding:7px 8px;box-shadow:var(--halo);display:flex;flex-direction:column;gap:2px;text-align:center}
+.chnode .nm{font-size:12.5px;font-weight:700;color:var(--text);font-family:var(--font-display)}
+.chnode .tier{font-size:8.5px;color:var(--accent);letter-spacing:.06em}
+.chnode .stk{font-family:var(--font-mono);font-size:9.5px;color:var(--muted)}
+.chi{background:var(--raised);border:1px solid var(--hair);border-radius:5px;padding:3px 7px;
+  display:flex;flex-direction:column;gap:2px}
+.chi .hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.chi .hd b{font-size:10px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chi .hd .fl{font-family:var(--font-mono);font-size:9.5px;color:var(--accent);white-space:nowrap}
+.chbar{height:4px;border-radius:2px;background:var(--hover);overflow:hidden}
+.chbar i{display:block;height:100%;border-radius:2px;background:var(--accent)}
+.chi.dn .chbar i{background:var(--info)}
+.chi .nt{font-size:8.3px;color:var(--dim);line-height:1.32}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+  <div id="pagehead">
+    <span class="big">市场经济框架</span>
+    <span class="tag">MARKET ECONOMY FRAMEWORK · v1</span>
+    <span class="desc">派系经济背景 × 供需市场 · 社会背景 → 市场 → 总库存 → 派系贸易 → 派系档案</span>
+    <div class="right">
+      <span class="bdg dim solid">MVS</span>
+      <span class="bdg info solid">economy_center</span>
+      <span class="bdg gold solid">1.6.4871 rev590</span>
+      <span style="width:1px;height:18px;background:var(--border-soft)"></span>
+      <span style="font-size:9.5px;letter-spacing:1.4px;color:var(--dim);font-family:var(--font-mono)">主题</span>
+      <div class="seg" id="themeSeg">
+        <button class="on" data-th="">Epic</button>
+        <button data-th="theme-gothic">Gothic</button>
+        <button data-th="theme-steampunk">Steampunk</button>
+        <button data-th="theme-ruif">RUIF</button>
+      </div>
+      <button class="btn" id="btnRandom" title="随机派系 + 随机市场量，用于快速测试布局">随机数据</button>
+      <span id="tshot" class="ts" title="截图时间（精准到分钟）">—</span>
+    </div>
+  </div>
+
+  <div id="kstrip">
+    <div class="kpiw t-gold"><span class="v" id="k-tech">Ultra</span><span class="tx"><span class="l" id="k-tech-l">科技等级</span><span class="n">选中派系</span></span><span class="bar"><i id="k-tech-b" style="width:100%"></i></span></div>
+    <div class="kpiw t-info"><span class="v" id="k-people">—</span><span class="tx"><span class="l">总人数</span><span class="n">官方推导 · 未核实</span></span><span class="bar"><i style="width:0%"></i></span></div>
+    <div class="kpiw t-info"><span class="v" id="k-host">中立</span><span class="tx"><span class="l">立场</span><span class="n">permanentEnemy</span></span><span class="bar"><i id="k-host-b" style="width:12%"></i></span></div>
+    <div class="kpiw t-ok"><span class="v">25</span><span class="tx"><span class="l">每棵树产木</span><span class="n">harvestYield</span></span><span class="bar"><i style="width:62%"></i></span></div>
+    <div class="kpiw t-bad"><span class="v">76</span><span class="tx"><span class="l">消耗木材品类</span><span class="n">含 Woody</span></span><span class="bar"><i style="width:88%"></i></span></div>
+    <div class="kpiw t-bad"><span class="v">5310</span><span class="tx"><span class="l">材料用量合计</span><span class="n">costStuffCount</span></span><span class="bar"><i style="width:100%"></i></span></div>
+    <div class="kpiw t-mut"><span class="v" id="k-ftr">9/31</span><span class="tx"><span class="l">可贸易派系</span><span class="n">字段规则判定</span></span><span class="bar"><i id="k-ftr-b" style="width:29%"></i></span></div>
+  </div>
+
+  <div id="sop">
+
+    <section class="panel accent p3">
+      <div class="ptitle"><i class="mark"></i>社会背景<span class="stencil">SOCIETY</span>
+        <span class="ruif" title="PanelAtoms.SectionBar(rect,title,count,expanded) · PanelAtoms.StatRow(rect,label,value,bar01,barColor)">StatRow</span><span class="sub" id="so-id">—</span></div>
+      <div class="pbody" id="soBody"></div>
+    </section>
+
+    <section class="panel accent p3" id="fstatusPanel">
+      <div class="ptitle"><i class="mark"></i>派系状态<span class="stencil">STATUS</span>
+        <span class="ruif" title="OfficialDataAtoms.HistoryFeed(rect,dates[],texts[],kinds[]) · 事件流按原版 61 个 IncidentWorker 归并">HistoryFeed</span><span class="sub" id="fs-id">—</span></div>
+      <div class="pbody" id="fstatusBody"></div>
+    </section>
+
+    <section class="panel accent p3" id="marketPanel">
+      <div class="ptitle"><i class="mark"></i>市场面板<span class="stencil">SUPPLY × DEMAND</span>
+        <span class="ruif" title="DataAtoms.StatTable(rect,headers,rows,shares,rowH) · shares=[2.38,1,1,1,1]（品种列:四个数值列）· rowH=15">StatTable</span><span class="sub" id="mk-sub">—</span></div>
+      <div class="pbody" id="mkBody"></div>
+    </section>
+
+    <section class="panel accent p9" id="invPanel">
+      <div class="ptitle"><i class="mark"></i>总库存<span class="stencil">INVENTORY · CHAIN</span>
+        <span class="ruif" title="ChartCandAtoms.Sankey(rect,SankeyNode[]{label,side,value},SankeyLink[]{from,to,value}) · 左侧 side=0 / 右侧 side≠0（二分）">Sankey</span><span class="sub" id="inv-sub">—</span></div>
+      <div class="pbody">
+        <div class="invwrap">
+          <div class="invmain">
+            <div class="chnav" id="chnav" role="tablist" aria-label="库存节点切换"></div>
+            <div class="chcols" id="chcols"></div>
+            <div class="fnote" id="chnote"></div>
+          </div>
+          <div class="invside">
+            <div class="sec-h">库存演化式<span class="n">数值待验证</span></div>
+            <div class="drow"><span class="k mono" style="color:var(--gain)">+ 自产产能　+ 进口</span><span class="v">流入</span></div>
+            <div class="drow"><span class="k mono" style="color:var(--loss)">− 下游消耗　− 出口</span><span class="v">流出</span></div>
+            <div class="sec-h" style="margin-top:4px">软校正锚</div>
+            <div class="fnote">定期用 <span class="mono" style="color:var(--text)">StockListForReading</span>
+              实际库存做有限幅校正，防止自建库存与原版漂移</div>
+            <div class="sec-h" style="margin-top:4px">守恒要求</div>
+            <div class="fnote">流入 − 流出 = 增量须成立；木材不腐 ⇒ 需自建出口 sink 防单调累积</div>
+            <div class="fnote solid" style="margin-top:4px"><b style="color:var(--accent)">设计闭环</b>　帝国「净进口 ＋ 高奢侈消耗」⇒ 均衡价应
+              高于原版 <b style="color:var(--text)">1.2 银/木</b>；无爵位不交易构成门槛 ——
+              <b style="color:var(--text)">要赚这笔钱，先得有爵位</b>。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel p3" id="factionPanel">
+      <div class="ptitle"><i class="mark"></i>派系列表<span class="stencil">SELECTOR</span>
+        <span class="ruif" title="NavAtoms.TabBar(rect,tabs,ref sel,ref indicatorX) · 筛选分段 + 列表行">TabBar</span><span class="sub" id="fl-count">—</span></div>
+      <div class="pbody tight">
+        <div class="seg" id="flFilter" role="tablist" style="align-self:flex-start">
+          <button class="on" data-f="all">全部</button>
+          <button data-f="tradeable">可贸易</button>
+          <button data-f="blocked">不可贸易</button>
+          <button data-f="base">有基地商人</button>
+        </div>
+        <div class="fltbl" id="flList" role="listbox" tabindex="0" aria-label="派系列表，方向键选择，回车确认">
+          <div class="hd"><span>派系</span><span>科技</span><span style="text-align:right">商·基·轨·访</span></div>
+          <div id="flRows"></div>
+        </div>
+        <div class="sec-h">可贸易判据<span class="n">纯字段规则 · 兼容第三方</span></div>
+        <div class="rulebox">
+          ① <b>!isPlayer</b>　② <b>humanlikeFaction</b>（稳定社会）<br>
+          ③ <b>settlementGenerationWeight &gt; 0</b>（有地盘）　④ <b>!permanentEnemy</b>　⑤ <b>!hidden</b><br>
+          ⑥ 四条 <b>traderKinds</b> 至少一条非空（有贸易接口）<br>
+          <span style="color:var(--dim)">游戏内取自 <b>DefDatabase&lt;FactionDef&gt;.AllDefs</b> 套同一判据
+          ⇒ 第三方 Mod 派系<b>自动纳入</b>，无需白名单。</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span class="bdg ok solid">可贸易</span>
+          <span class="bdg bad solid">不可贸易</span>
+          <span class="bdg dim solid">悬停行看判定理由</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ── 派系数据：由原版 FactionDef 全字段按规则导出（31 个具体派系，继承已归并） ──
+     c = [商队, 基地, 轨道, 访客] 四条 traderKinds 的条目数
+     tr = 可贸易判定结果　why = 不可贸易的字段级理由 */
+  var ZH = {
+    Empire:'帝国', TradersGuild:'商人公会', OutlanderCivil:'文明外来者', OutlanderRough:'粗野外来者',
+    OutlanderRoughPig:'猪人联盟', OutlanderRefugee:'外来者难民', Sanguophages:'血族',
+    TribeCivil:'温和部落', TribeRough:'凶悍部落', TribeSavage:'野蛮部落',
+    TribeRoughNeanderthal:'尼安德特部落', TribeSavageImpid:'暴躁野蛮部落', NudistTribe:'裸体部落',
+    TribeCannibal:'食人部落', Pilgrims:'朝圣者', Beggars:'乞讨者', Pirate:'海盗团',
+    PirateWaster:'废土海盗', PirateYttakin:'伊塔金海盗', CannibalPirate:'食人海盗',
+    Salvagers:'掠拾者', HoraxCult:'霍拉克斯教团', Mechanoid:'机械族', Ancients:'先民',
+    AncientsHostile:'敌对先民', Insect:'虫族', Entities:'暗黑实体', GravshipCrew:'重力船船员',
+    ResearchExpedition:'科考远征队', PlayerColony:'新移民（玩家）', PlayerTribe:'新部落（玩家）'
+  };
+  var FD = [{"id":"Empire","cat":"Empire","tech":"Ultra","dlc":"Royalty","c":[1,1,0,0],"tr":true,"royal":true,"why":[]},{"id":"NudistTribe","cat":"Tribal","tech":"Neolithic","dlc":"Ideology","c":[4,1,0,1],"tr":true,"why":[]},{"id":"OutlanderCivil","cat":"Outlander","tech":"Industrial","dlc":"Core","c":[4,1,0,1],"tr":true,"why":[]},{"id":"OutlanderRough","cat":"Outlander","tech":"Industrial","dlc":"Core","c":[4,1,0,1],"tr":true,"why":[]},{"id":"OutlanderRoughPig","cat":"Outlander","tech":"Industrial","dlc":"Biotech","c":[4,1,0,1],"tr":true,"why":[]},{"id":"TradersGuild","cat":"TradersGuild","tech":"Spacer","dlc":"Odyssey","c":[0,0,4,0],"tr":true,"why":[]},{"id":"TribeCivil","cat":"Tribal","tech":"Neolithic","dlc":"Core","c":[4,1,0,1],"tr":true,"why":[]},{"id":"TribeRough","cat":"Tribal","tech":"Neolithic","dlc":"Core","c":[4,1,0,1],"tr":true,"why":[]},{"id":"TribeRoughNeanderthal","cat":"Tribal","tech":"Neolithic","dlc":"Biotech","c":[4,1,0,1],"tr":true,"why":[]},{"id":"Ancients","cat":"Ancient","tech":"Spacer","dlc":"Core","c":[0,0,0,0],"tr":false,"why":["隐藏派系","无贸易接口"]},{"id":"AncientsHostile","cat":"Ancient","tech":"Spacer","dlc":"Core","c":[0,0,0,0],"tr":false,"why":["永久敌对","隐藏派系","无贸易接口"]},{"id":"Beggars","cat":"Beggars","tech":"Neolithic","dlc":"Ideology","c":[0,0,0,0],"tr":false,"why":["隐藏派系","无贸易接口"]},{"id":"CannibalPirate","cat":"-","tech":"Spacer","dlc":"Ideology","c":[0,0,0,0],"tr":false,"why":["永久敌对","无贸易接口"]},{"id":"Entities","cat":"-","tech":"Animal","dlc":"Anomaly","c":[0,0,0,0],"tr":false,"why":["非人形社会","隐藏派系","无贸易接口"]},{"id":"GravshipCrew","cat":"-","tech":"Industrial","dlc":"Odyssey","c":[0,0,0,0],"tr":false,"why":["玩家派系","无贸易接口"]},{"id":"HoraxCult","cat":"HoraxCult","tech":"Spacer","dlc":"Anomaly","c":[0,0,0,0],"tr":false,"why":["永久敌对","隐藏派系","无贸易接口"]},{"id":"Insect","cat":"-","tech":"Animal","dlc":"Core","c":[0,0,0,0],"tr":false,"why":["非人形社会","隐藏派系","无贸易接口"]},{"id":"Mechanoid","cat":"-","tech":"Ultra","dlc":"Core","c":[0,0,0,0],"tr":false,"why":["非人形社会","永久敌对","隐藏派系","无贸易接口"]},{"id":"OutlanderRefugee","cat":"OutlanderRefugee","tech":"Industrial","dlc":"Royalty","c":[0,0,0,0],"tr":false,"why":["隐藏派系","无贸易接口"]},{"id":"Pilgrims","cat":"Pilgrims","tech":"Neolithic","dlc":"Ideology","c":[0,0,0,0],"tr":false,"why":["隐藏派系","无贸易接口"]},{"id":"Pirate","cat":"-","tech":"Spacer","dlc":"Core","c":[0,0,0,0],"tr":false,"why":["永久敌对","无贸易接口"]},{"id":"PirateWaster","cat":"-","tech":"Spacer","dlc":"Biotech","c":[0,0,0,0],"tr":false,"why":["永久敌对","无贸易接口"]},{"id":"PirateYttakin","cat":"-","tech":"Spacer","dlc":"Biotech","c":[0,0,0,0],"tr":false,"why":["永久敌对","无贸易接口"]},{"id":"PlayerColony","cat":"-","tech":"Industrial","dlc":"Core","c":[0,0,0,0],"tr":false,"why":["玩家派系","无贸易接口"]},{"id":"PlayerTribe","cat":"Tribal","tech":"Neolithic","dlc":"Core","c":[0,0,0,0],"tr":false,"why":["玩家派系","无贸易接口"]},{"id":"ResearchExpedition","cat":"-","tech":"Industrial","dlc":"Anomaly","c":[0,0,0,0],"tr":false,"why":["玩家派系","无贸易接口"]},{"id":"Salvagers","cat":"Salvager","tech":"Spacer","dlc":"Odyssey","c":[0,0,0,0],"tr":false,"why":["永久敌对","隐藏派系","无贸易接口"]},{"id":"Sanguophages","cat":"Sanguophages","tech":"Spacer","dlc":"Biotech","c":[0,0,0,0],"tr":false,"why":["隐藏派系","无贸易接口"]},{"id":"TribeCannibal","cat":"Tribal","tech":"Neolithic","dlc":"Ideology","c":[4,1,0,1],"tr":false,"why":["永久敌对"]},{"id":"TribeSavage","cat":"Tribal","tech":"Neolithic","dlc":"Core","c":[4,1,0,1],"tr":false,"why":["永久敌对"]},{"id":"TribeSavageImpid","cat":"Tribal","tech":"Neolithic","dlc":"Biotech","c":[4,1,0,1],"tr":false,"why":["永久敌对"]}];
+
+  var CAT_COLOR = { Outlander:'var(--t-items)', Tribal:'var(--t-pawns)', Ancient:'var(--t-floor)',
+                    Empire:'var(--accent)', TradersGuild:'var(--info)', Salvager:'var(--dead)' };
+  var TECH_RANK = { Animal:0, Neolithic:1, Medieval:2, Industrial:3, Spacer:4, Ultra:5 };
+
+  var state = { sel:'Empire', filter:'all', focusIdx:0 };
+  var rowsEl = document.getElementById('flRows');
+  var listEl = document.getElementById('flList');
+  var IDX = {}; FD.forEach(function(f){ IDX[f.id] = f; });
+
+  function visible(){
+    return FD.filter(function(f){
+      if(state.filter==='tradeable') return f.tr;
+      if(state.filter==='blocked')   return !f.tr;
+      if(state.filter==='base')      return f.c[1] > 0 || f.c[2] > 0;
+      return true;
+    });
+  }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+    return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
+  function renderList(){
+    var list = visible();
+    if(!list.length){ rowsEl.innerHTML = '<div class="fempty">— 无匹配派系</div>';
+      document.getElementById('fl-count').textContent = '0'; return; }
+    var html = '', lastTr = null;
+    list.forEach(function(f){
+      if(state.filter === 'all' && f.tr !== lastTr){
+        html += '<div class="grp">' + (f.tr ? '可贸易 · 有稳定社会与地盘' : '不可贸易 · 已过滤') + '</div>';
+        lastTr = f.tr;
+      }
+      var sel = (f.id === state.sel) ? ' sel' : '';
+      var techCls = TECH_RANK[f.tech] >= 4 ? ' hi' : '';
+      var tsum = f.c.join('·');
+      html += '<div class="rw' + sel + (f.tr ? '' : ' off') + '" role="option" tabindex="-1"'
+           +  ' aria-selected="' + (f.id===state.sel) + '" data-id="' + esc(f.id) + '"'
+           +  ' title="' + esc(f.id + (f.tr ? '｜可贸易' : '｜不可贸易：' + f.why.join('、'))) + '">'
+           +    '<span class="nm" style="color:' + (CAT_COLOR[f.cat]||'var(--dim)') + '">'
+           +      '<i class="dot"></i><span style="color:var(--text)">' + esc(ZH[f.id] || f.id) + '</span></span>'
+           +    '<span class="tech' + techCls + '">' + esc(f.tech) + '</span>'
+           +    '<span class="trd' + (f.tr?' y':'') + '">' + (tsum === '0·0·0·0' ? '—' : tsum) + '</span></div>';
+    });
+    rowsEl.innerHTML = html;
+    document.getElementById('fl-count').textContent = list.length + ' / ' + FD.length;
+  }
+
+  /* ── 派系经济画像：策略 B（纯 FactionDef 字段反推）＋ 第三方 API 预留（设计文档 §5）──
+     ③ 设计假设常数集中于 buildProfile；UI 不出现 Empire 字面量分支（Empire 仅作 royal 特征一行）。
+     非经济派系（!tr）→ 诚实 NotModeled（LAND-009）。 */
+  function buildProfile(f){
+    var T = TECH_RANK[f.tech] || 0;
+    var mil = (f.c && f.c[0] > 0);          // 有商队→有军事集团
+    var royal = !!f.royal;
+    var society;
+    if(royal){
+      society = {
+        verdictQ:'残存舰队 · 严酷阶级 · 强制停滞',
+        verdictP:'世袭爵位维持阶层、<b style="color:var(--text)">军民合一</b>；高价值产出 ＋ 高奢侈消费 ＋ 进口低级原料。',
+        tiers:[
+          {nm:'上层 · 贵族', fx:'零生产 · 极端消费 · 世袭', pct:'6%', n:'13 人'},
+          {nm:'中层 · 军人', fx:'精锐 ＋ 近卫 · 高附加值产出', pct:'21%', n:'45 人'},
+          {nm:'底层 · 劳力', fx:'步兵 ＋ 平民劳工 · 不扩张', pct:'73%', n:'156 人'}
+        ],
+        peopleLine:'45 人/据点 × 据点 3 × 社会因子 1.58',
+        people:214,
+        chips:['产能过剩 ×1.5','贸易净进口 ×1.2','军事化 ×1.15','社会停滞 ×0.85','灾后残存 ×0.9'],
+        mktDir:'净进口低级原料；输出高价值制成品（Ultra 科技）',
+        mktDemand:'奢侈与<em>象征性建造</em>为主；材质仅 <em>Metallic＋Fabric</em>（对 Woody 无偏好）',
+        mktThr:'Silver＋Favor；<em>无爵位不交易</em>；人口少 ⇒ 单笔冲击<em>高</em>'
+      };
+    } else {
+      var headPer = Math.max(8, Math.round(45 * (0.4 + 0.12 * T)));
+      var settlements = (T <= 1) ? 4 : 3;
+      var socFactor = (T <= 1) ? 1.1 : 1.0;
+      var people = Math.round(headPer * settlements * socFactor);
+      var vQ, vP;
+      if(f.cat === 'Tribal'){ vQ='部落共产 · 低科技 · 自给自足'; vP='封闭部落按 <b style="color:var(--text)">'+esc(f.tech)+'</b> 科技档自给；贸易接口＝'+f.c.join('·')+'。'; }
+      else if(f.cat === 'Outlander'){ vQ='外来定居 · 工业社会 · 贸易活跃'; vP='工业社会按 <b style="color:var(--text)">'+esc(f.tech)+'</b> 科技档反推产能；商队接口＝'+f.c.join('·')+'。'; }
+      else if(f.cat === 'TradersGuild'){ vQ='商业行会 · 太空科技 · 纯贸易'; vP='行会按 <b style="color:var(--text)">'+esc(f.tech)+'</b> 科技档运作；轨道商队＝'+f.c.join('·')+'。'; }
+      else { vQ='稳定社会 · 按科技档自给'; vP='按 <b style="color:var(--text)">'+esc(f.tech)+'</b> 科技档反推产能与消费。'; }
+      society = {
+        verdictQ:vQ, verdictP:vP,
+        tiers:[
+          {nm:'武装阶层', fx: mil ? '战斗集团为主 · 高武器需求' : '平民自卫 · 低武器需求', pct:'30%', n:'—'},
+          {nm:'平民劳力', fx:'生产 ＋ 消费主体', pct:'70%', n:'—'}
+        ],
+        peopleLine: headPer + ' 人/据点 × 据点 ' + settlements + ' × 社会因子 ' + socFactor,
+        people:people,
+        chips:(function(){ var a=[]; a.push('贸易'+(f.tr?'开放':'关闭')); if(mil) a.push('军事化'); if(T<=1) a.push('自给 ×1.4'); if(T>=4) a.push('出口导向 ×1.3'); return a; })(),
+        mktDir: T<=1 ? '近自给 · 少量出口原料' : '净进口高级制成品',
+        mktDemand: f.cat==='Tribal' ? '基础生存品为主；对 Spacer 货无需求' : '工业品 ＋ 消费品；材质依科技档',
+        mktThr: f.cat==='Tribal' ? '以物易物；无复杂货币门槛' : 'Silver；单笔冲击中等'
+      };
+    }
+    var factors, events;
+    if(royal){
+      factors=[
+        {k:'战争态势', t:'多线交战', lv:'bad',  why:'pirate+mech'},
+        {k:'灾害频率', t:'中',       lv:'info', why:'raid'},
+        {k:'人口增减', t:'+12 / 季', lv:'ok',   why:'growth'},
+        {k:'贸易状态', t:'开放',     lv:'ok',   why:'tradeable'},
+        {k:'好感',     t:'中立 0',   lv:'dim',  why:'goodwill'},
+        {k:'经济压力', t:'净进口',   lv:'bad',  why:'net import'}
+      ];
+      events=[
+        {lv:'bad', t:'战争', n:'12', c:'机械族集群 · 敌袭 · 深渊之门 · 蹒跚者袭击'},
+        {lv:'info',t:'灾害', n:'25', c:'寒潮 · 热浪 · 电暴 · 虫巢 · 瘟疫'},
+        {lv:'ok',  t:'人口', n:'24', c:'流浪者加入 · 商队 · 野人 · 资源坠落'}
+      ];
+    } else {
+      factors=[
+        {k:'战争态势', t: mil?'交战':'低', lv: mil?'bad':'dim', why:'pawnGroup'},
+        {k:'灾害频率', t:'中',       lv:'info', why:'raid'},
+        {k:'人口增减', t:(T<=1?'+6 / 季':'+9 / 季'), lv:'ok', why:'growth'},
+        {k:'贸易状态', t:'开放',     lv:'ok',   why:'tradeable'},
+        {k:'好感',     t:'中立 0',   lv:'dim',  why:'goodwill'},
+        {k:'经济压力', t: T<=1?'自给':'净进口', lv: T<=1?'ok':'bad', why:'net'}
+      ];
+      events=[
+        {lv:'bad', t:'战争', n: mil?'10':'4', c:'敌袭 · 蹒跚者袭击 · 掠夺'},
+        {lv:'info',t:'灾害', n:'25', c:'寒潮 · 热浪 · 电暴 · 虫巢 · 瘟疫'},
+        {lv:'ok',  t:'人口', n:'22', c:'流浪者加入 · 商队 · 野人 · 资源坠落'}
+      ];
+    }
+    return { society:society, status:{factors:factors, events:events} };
+  }
+  var PROFILE = {};
+  FD.forEach(function(f){ if(f.tr) PROFILE[f.id] = buildProfile(f); });
+
+  function notModeledSociety(f){
+    return '<div class="verdict"><div class="q">— 非经济派系 · 未建模</div>'
+      + '<div class="p">已建模：所有可贸易派系（通用字段反推模板）。当前派系不满足可贸易门禁'
+      + '（'+(f.why&&f.why.length?f.why.join('、'):'非稳定社会')+'），按 <b style="color:var(--text)">LAND-009</b> 不填占位数值。</div></div>'
+      + '<div class="fnote" style="margin-top:8px">还原方法＝读取该派系的 leaderTitle / fixedLeaderKinds / '
+      + 'royalTitleTags / backstoryFilters / pawnGroupMakers 等官方字段；本面板<b style="color:var(--text)">只给结论</b>，'
+      + '字段级证据收在「派系档案」。</div>';
+  }
+
+  /* ── 社会背景：一页式精简；所有可贸易派系由 buildProfile 通用模板渲染 ── */
+  function renderSociety(f){
+    var el = document.getElementById('soBody');
+    if(!f.tr){ el.innerHTML = notModeledSociety(f); return; }
+    var p = PROFILE[f.id];
+    var h = '<div class="verdict"><div class="q">'+esc(p.society.verdictQ)+'</div>'
+          + '<div class="p">'+p.society.verdictP+'</div></div>'
+          + '<div class="sec-h">社会结构占比<span class="n"><span class="bdg info">设计假设</span> 合计 100%</span></div>';
+    p.society.tiers.forEach(function(t, i){
+      h += '<div class="tier t'+(i+1)+'"><span class="nm">'+esc(t.nm)+'</span>'
+         + '<span class="fx">'+t.fx+'</span>'
+         + '<span class="mg" style="flex:0 0 66px"><em class="em">'+esc(t.pct)+'</em> · '+esc(t.n)+'</span></div>';
+    });
+    h += '<div class="sec-h">具体人数<span class="n"><span class="bdg bad">未核实</span> 官方无人口字段</span></div>'
+       + '<div class="drow"><span class="k">'+p.society.peopleLine+'</span><span class="v pos">≈ '+p.society.people+'</span></div>'
+       + '<div class="chips">'+ p.society.chips.map(function(c){ return '<span class="chip">'+esc(c)+'</span>'; }).join('') +'</div>'
+       + '<div class="sec-h">市场特征<span class="n">由官方背景推导</span></div>'
+       + '<div class="qa"><span class="q">方向</span><span class="a">'+p.society.mktDir+'</span></div>'
+       + '<div class="qa"><span class="q">需求</span><span class="a">'+p.society.mktDemand+'</span></div>'
+       + '<div class="qa"><span class="q">门槛·敏感度</span><span class="a">'+p.society.mktThr+'</span></div>';
+    el.innerHTML = h;
+  }
+
+
+  /* ── 市场品种表（17 个品种 · 由机制研发部按原版 ThingCategoryDef 归并裁定）──
+     s=供应 d=需求，单位「件/日」；lv = 数据级别 ①原版锚 ②官方推导 ③设计假设。
+     量纲锚：Need_Food 每人每日 1.0 nutrition；CookMealSimple = 0.5 nutrition/餐 ⇒ 2 餐/日；
+     生食材 nutrition 0.05/单位 ⇒ 214 人 ≈ 4280 件/日总食材需求（素 60% / 荤 40%）。
+     品种口径由 CommodityDef 三轴（thingDefs / thingCategories 含后代 / stuffCategories）命中。 */
+  var MK = [
+    {id:'BasicRaw', n:'基础原料',   s: 150,   d: 240,   lv:3, tc:'ResourcesRaw'},
+    {id:'Textile',  n:'织物与皮革', s:  80,   d: 150,   lv:3, tc:'Textiles'},
+    {id:'Meat',     n:'生肉',       s: 620,   d: 900,   lv:1, tc:'MeatRaw'},
+    {id:'Egg',      n:'食用蛋',     s:  90,   d: 130,   lv:3, tc:'EggsUnfertilized'},
+    {id:'Crop',     n:'农作物',     s:1180,   d:1538,   lv:1, tc:'PlantFoodRaw'},
+    {id:'Meal',     n:'餐食',       s: 428,   d: 428,   lv:1, tc:'FoodMeals'},
+    {id:'ProcFood', n:'加工食品',   s:  60,   d:  95,   lv:3, tc:'thingDefs×6'},
+    {id:'Drug',     n:'成瘾品',     s: 140,   d:  60,   lv:3, tc:'Drugs'},
+    {id:'Medicine', n:'药品',       s:  12,   d:  24,   lv:3, tc:'Medicine'},
+    {id:'Weapon',   n:'武器',       s:   6,   d:   3,   lv:2, tc:'Weapons'},
+    {id:'Shell',    n:'炮弹',       s:  24,   d:  12,   lv:3, tc:'MortarShells'},
+    {id:'Apparel',  n:'服装护甲',   s:   5,   d: 2.5,   lv:2, tc:'Apparel'},
+    {id:'Bionic',   n:'义体',       s: 3.6,   d: 1.2,   lv:3, tc:'BodyParts'},
+    {id:'IndGoods', n:'工业制成品', s:  45,   d:  70,   lv:3, tc:'thingDefs×14'},
+    {id:'Relic',    n:'圣物神器',   s: 0.9,   d: 0.4,   lv:3, tc:'Artifacts+InertRelics'},
+    {id:'Book',     n:'书籍',       s:   2,   d:   1,   lv:3, tc:'Books'},
+    {id:'Precious', n:'贵重杂项',   s: 1.5,   d: 0.6,   lv:3, tc:'ItemsMisc'}
+  ];
+
+  /* ── 品种可见性门槛（§10 视图过滤）：techMin = 该派系需达到的科技档才触碰此品种 ──
+     ③ 设计假设：Neolithic 不显示 Medicine/义体/圣物；Ultra 全显示。 */
+  var COMMODITY_TM = { BasicRaw:1, Textile:1, Meat:1, Egg:1, Crop:1, Meal:1, ProcFood:2,
+    Drug:1, Medicine:3, Weapon:1, Shell:3, Apparel:1, Bionic:5, IndGoods:3, Relic:4, Book:3, Precious:1 };
+  MK.forEach(function(m){ m.tm = COMMODITY_TM[m.id] || 1; });
+
+  function mkFmt(v){
+    if (v >= 1000) return String(Math.round(v));
+    if (v >= 100)  return v.toFixed(v % 1 ? 1 : 0);
+    if (v >= 10)   return v.toFixed(v % 1 ? 1 : 0);
+    if (v >= 1)    return v.toFixed(1);
+    return v.toFixed(1);
+  }
+  var MK_LV = ['①', '②', '③'];
+
+  /* 截图时间（精准到分钟）——嵌入页面，任何截图天然带时间 */
+  function stampTime(){
+    var d = new Date(), p = function(n){ return (n < 10 ? '0' : '') + n; };
+    var s = d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate())
+          + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+    var el = document.getElementById('tshot'); if(el) el.textContent = s;
+  }
+
+  /* 随机数据：随机派系 + 随机市场量，用于快速测试布局（无折叠/溢出） */
+  function randomize(){
+    var i = Math.floor(Math.random() * FD.length);
+    state.sel = FD[i].id;
+    MK.forEach(function(m){
+      var base = Math.pow(10, Math.random() * 3.3);           // 1 ~ ~2000 量级
+      var r = function(){ return Math.round(base * (0.3 + Math.random()*1.4) * 10) / 10; };
+      m.s = r(); m.d = r();
+    });
+    renderList(); renderDetail(); stampTime();
+  }
+
+  function renderMarket(f){
+    var el = document.getElementById('mkBody');
+    var sub = document.getElementById('mk-sub');
+
+    if(!f.tr){
+      sub.textContent = (ZH[f.id] || f.id) + ' · 非经济派系';
+      el.innerHTML = '<div class="verdict"><div class="q">尚未建立经济画像</div>'
+        + '<div class="p">本面板的品种市场量只对<b style="color:var(--text)">可贸易派系</b>显示。'
+        + '当前派系未建立供需结构，按 <b style="color:var(--text)">LAND-009</b> 不填占位数值。</div></div>'
+        + '<div class="sec-h">还原方法<span class="n">两步</span></div>'
+        + '<div class="qa"><span class="q">① 定体量</span><span class="a">据点数为<em>运行时真值</em>'
+        + '（<span class="mono">WorldObjects.Settlements</span>），人口按 <em>45 人/据点 × 社会因子</em></span></div>'
+        + '<div class="qa"><span class="q">② 定结构</span><span class="a">按 <em>techLevel</em> 映射自给率与偏好；'
+        + '军事化派系上调 <em>Weapons / Apparel</em>，封闭社会下调 <em>Drug</em> 流通</span></div>';
+      return;
+    }
+
+    // §10 视图过滤：只列 techLevel 达门槛的品种；偏置：经济规模随科技档缩放（Ultra=1.0）
+    var T = TECH_RANK[f.tech] || 0;
+    var scale = f.royal ? 1 : (T / 5 * 0.6 + 0.4);
+    var vis = MK.filter(function(m){ return T >= m.tm; });
+
+    var totS = 0, totD = 0;
+    vis.forEach(function(m){ totS += m.s * scale; totD += m.d * scale; });
+    var netAll = totD - totS;
+    var mktIdx = totD / totS;                       // 市场均价指数（消费/生产，基线 1.00）
+    var mktChg = (mktIdx - 1) * 100;               // 市场涨幅（%）
+    sub.textContent = '单位 件/日 · 品种 ' + vis.length;
+
+    var h = '<div class="msum">'
+          +   '<span><b>总生产</b>' + mkFmt(totS) + '</span>'
+          +   '<span><b>总消费</b>' + mkFmt(totD) + '</span>'
+          +   '<span class="' + (netAll >= 0 ? 'neg' : 'pos') + '"><b>净值</b>'
+          +     (netAll >= 0 ? '−' : '+') + mkFmt(Math.abs(netAll)) + '</span>'
+          +   '<span><b>均价</b>' + mktIdx.toFixed(2) + ' '
+          +     '<span class="chg" style="color:var(--' + (mktChg >= 0 ? 'loss' : 'gain') + ')">'
+          +     (mktChg >= 0 ? '▲' : '▼') + (mktChg >= 0 ? '+' : '') + mktChg.toFixed(0) + '%</span></span>'
+          + '</div>';
+
+    h += '<table class="dt" role="table" aria-label="' + esc((ZH[f.id] || f.id) + ' ' + vis.length + ' 品种市场量：生产、消费、净值、价格') + '">'
+          +   '<thead><tr>'
+          +     '<th>品种</th><th class="num">生产</th><th class="num">消费</th>'
+          +     '<th class="num">净值</th><th class="num">价格 · 涨幅</th>'
+          +   '</tr></thead><tbody>';
+
+    vis.forEach(function(m){
+      var s = m.s * scale, d = m.d * scale;
+      var gap = d - s;
+      var eq  = Math.abs(gap) < 1e-9;
+      var netCls = eq ? 'eq' : (gap > 0 ? 'loss' : 'gain');
+      var netSign = eq ? '±' : (gap > 0 ? '−' : '+');
+      var p = d / s;                               // 相对价（消费/生产，基线 1.00）
+      var chg = (p - 1) * 100;                     // 涨幅（%）
+      var up = chg >= 0;
+      var chgCls = eq ? 'eq' : (up ? 'loss' : 'gain');   // 价涨＝净进口压力（红）
+      h += '<tr>'
+        +   '<td>' + esc(m.n) + '<span class="mk-lv">' + MK_LV[m.lv - 1] + '</span></td>'
+        +   '<td class="num">' + mkFmt(s) + '</td>'
+        +   '<td class="num">' + mkFmt(d) + '</td>'
+        +   '<td class="num ' + netCls + '">' + netSign + mkFmt(Math.abs(gap)) + '</td>'
+        +   '<td class="num ' + chgCls + '">' + p.toFixed(2)
+        +     ' <span class="chg">' + (up ? '▲' : '▼') + (up ? '+' : '') + chg.toFixed(0) + '%</span></td>'
+        + '</tr>';
+    });
+    h += '</tbody></table>';
+
+    h += '<div class="fnote" style="margin-top:6px">'
+      +   '品种名后圈码＝数据级别 <b style="color:var(--text)">①原版锚 ②官方推导 ③设计假设</b>；'
+      +   '净值 <b style="color:var(--loss)">−</b> 净进口 · <b style="color:var(--gain)">+</b> 净出口；'
+      +   '价格＝消费/生产 相对指数（基线 1.00），涨幅＝相对基线偏离 · <b style="color:var(--text)">设计假设</b>。'
+      +   '视野过滤：仅列该派系 <em>techLevel</em> 可触碰品种（'+vis.length+'/'+MK.length+'）。'
+      + '</div>';
+    el.innerHTML = h;
+  }
+
+  function renderFactionStatus(f){
+    var el = document.getElementById('fstatusBody');
+    if(!f.tr){
+      el.innerHTML = '<div class="verdict"><div class="q">— 非经济派系 · 未建模</div>'
+        + '<div class="p">已建模：所有可贸易派系（通用字段反推模板）。当前派系不满足可贸易门禁，'
+        + '按 <b style="color:var(--text)">LAND-009</b> 不填占位数值。</div></div>'
+        + '<div class="fnote" style="margin-top:8px">还原方法＝读取该派系的 <b style="color:var(--text)">goodwill / HostileTo / def.permanentEnemy</b> 等官方字段；'
+        + '本面板<b style="color:var(--text)">只给状态结论</b>，事件流为设计假设。</div>';
+      return;
+    }
+    var p = PROFILE[f.id];
+    var h = '<div class="sec-h">人口影响因子<span class="n"><span class="bdg dim">设计假设</span></span></div>';
+    p.status.factors.forEach(function(x){
+      h += '<div class="drow"><span class="k">' + esc(x.k) + '</span>'
+         +   '<span class="v"><span class="bdg ' + x.lv + ' solid">' + esc(x.t) + '</span></span></div>';
+    });
+    h += '<div class="sec-h">事件流 · 原版分类<span class="n"><span class="bdg dim">①原版</span><span class="bdg dim">③示例</span></span></div>';
+    h += '<div class="evg">';
+    p.status.events.forEach(function(g){
+      h += '<div class="evr"><div class="eh"><span class="tg ' + g.lv + '">' + esc(g.t) + '</span>'
+         +   '<span class="ct">' + esc(g.n) + ' 类</span></div>'
+         +   '<div class="chips">' + esc(g.c) + '</div></div>';
+    });
+    h += '</div>';
+    h += '<div class="fnote" style="margin-top:6px">类别＝原版 61 个 IncidentWorker 直接子类归并（①实测）；'
+      + '「近期具体触发」为 ③ 设计假设，原型化后读实际派发记录动态聚合。</div>';
+    el.innerHTML = h;
+  }
+
+  /* ── 上下游库存结构 ─────────────────────────────────────────────
+     up = 上游投入（上游原料取其产出源；中游成品取其原料）
+     dn = 下游消费流向，按 fl 降序取 TOP3
+     fl = 等效消费流向（件/日）　lv = 数据级别 1/2/3 → ①原版实测 ②官方推导 ③设计假设
+     ⚠ 本页为静态预览：流向值多数为 ③ 设计假设，游戏内原型化后由实际生产/消费记录驱动。 */
+  var CHAIN = {
+    wood:{ nm:'原木', tier:'上游原料',
+      up:[ {n:'树木采伐', fl:0, lv:1, d:'TreeBase · harvestYield 25 件/株 · growDays 2.5~35 · plantDensity：冻原 0.19 / 寒林 0.40 / 温带林 0.65 / 雨林 0.90'} ],
+      dn:[ {n:'建造与家具', fl:1860, lv:1, d:'Woody 材料 ThingDef 76 个 · costStuffCount 合计 5310'},
+           {n:'燃料消耗',   fl:520,  lv:1, d:'10 个含 WoodLog 燃料建筑 · fuelConsumptionRate＝单位/游戏日（FueledStove 160 / FueledSmithy 80 / WoodFiredGenerator 22）'},
+           {n:'权力象征品', fl:180,  lv:1, d:'SculptureGrand 400 / Altar_Grand 300 / NatureShrine_Large 300 / Throne 125（costStuffCount）'},
+           {n:'出口 sink',  fl:140,  lv:3, d:'木材不腐 · 无天然消耗通道 · 需自建出口防单调累积'} ],
+      note:'木材不腐 ⇒ 天然无 sink，出口通道必须自建，否则库存单调累积（见《数值稳定性仿真报告》export 项）。' },
+    crop:{ nm:'农作物', tier:'上游原料',
+      up:[ {n:'种植收获', fl:0, lv:1, d:'growDays 依作物而异 · plantDensity 依生物群系'} ],
+      dn:[ {n:'烹饪投料', fl:2140, lv:1, d:'CookMealSimple 用 IngredientValueGetter_Nutrition · count 0.5 ⇒ 1 餐＝0.5 nutrition'},
+           {n:'直接生食', fl:1280, lv:2, d:'生食材 0.05 nutrition/单位 ⇒ 每人每日约 20 件'},
+           {n:'加工与制酒', fl:360, lv:3, d:'次级加工链；具体配方比例待游戏内核实'},
+           {n:'出口盈余', fl:220, lv:3, d:'产出超出食用需求后的贸易出口'} ],
+      note:'农作物是餐食的营养上游，也是 214 人规模下件数体量最大的流向。' },
+    meal:{ nm:'餐食', tier:'中游成品',
+      up:[ {n:'农作物',   fl:2140, lv:1, d:'经 CookMealSimple 转化 · 1 餐＝0.5 nutrition'},
+           {n:'肉·蛋·奶', fl:1070, lv:2, d:'同为 0.5 nutrition 计价的替代投料'} ],
+      dn:[ {n:'人口食用', fl:214, lv:1, d:'214 人 × Need_Food 1.0 nutrition/日'},
+           {n:'变质损耗', fl:26,  lv:2, d:'餐食会腐坏，取决于存储温度与库存时长'},
+           {n:'出口市场', fl:18,  lv:3, d:'帝国「无爵位不交易」构成政策门槛'} ],
+      note:'中游成品同时显示上游原料与下游市场，是上下游结构的完整形态。' },
+    med:{ nm:'药品', tier:'中游成品',
+      up:[ {n:'草药 Healroot', fl:96, lv:1, d:'药草 → 草药 → 药品 三级链的上端'},
+           {n:'中立氨基剂',    fl:48, lv:3, d:'Neutroamine · 精制药品必需输入（用量待核实）'} ],
+      dn:[ {n:'手术与伤病治疗', fl:12, lv:3, d:'治疗消耗；单次用量待游戏内观测'},
+           {n:'军备储备',      fl:6,  lv:3, d:'战损预备库存'},
+           {n:'出口市场',      fl:3,  lv:3, d:'高品级药品出口受政策限制'} ],
+      note:'药品链多数中间量尚未落锚，属典型的「待观测参数」（仿真报告参数 6–8 / 13 / 16）。' }
+  };
+  var CORDER = ['wood','crop','meal','med'];
+
+  function renderChain(){
+    if(!state.chain) state.chain = CORDER[0];
+    var n = CHAIN[state.chain] || CHAIN[CORDER[0]];
+
+    var nav = '';
+    CORDER.forEach(function(k){
+      nav += '<button type="button" data-c="' + k + '"' + (k===state.chain ? ' class="on"' : '')
+           + ' aria-selected="' + (k===state.chain) + '">' + esc(CHAIN[k].nm) + '</button>';
+    });
+    document.getElementById('chnav').innerHTML = nav;
+
+    /* 下游按消费流向降序，只取前三条最大的 */
+    var dn = n.dn.slice().sort(function(a,b){ return b.fl - a.fl; }).slice(0,3);
+    var dnMax  = dn.length ? dn[0].fl : 1;
+    var upMax  = Math.max.apply(null, n.up.map(function(x){ return x.fl; }).concat([1]));
+
+    function box(x, isDown, mx){
+      var pct = (x.fl > 0) ? Math.max(1, Math.round(x.fl / mx * 100)) : 0;
+      return '<div class="chi' + (isDown ? ' dn' : '') + '">'
+        + '<div class="hd"><b>' + esc(x.n) + '</b><span class="fl">'
+        + (x.fl > 0 ? x.fl.toLocaleString('zh-CN') + ' 件/日' : '—') + '</span></div>'
+        + (x.fl > 0 ? '<div class="chbar"><i style="width:' + pct + '%"></i></div>' : '')
+        + '<div class="nt">' + MK_LV[x.lv - 1] + ' ' + esc(x.d) + '</div>'
+        + '</div>';
+    }
+    var upHtml = '', dnHtml = '';
+    n.up.forEach(function(x){ upHtml += box(x, false, upMax); });
+    dn.forEach(function(x){ dnHtml += box(x, true, dnMax); });
+
+    var upLabel = (n.tier.indexOf('上游') >= 0) ? '产出源' : '上游原料';
+    document.getElementById('chcols').innerHTML =
+        '<div class="chcol"><div class="chlbl">' + upLabel + '</div>' + upHtml + '</div>'
+      + '<div class="charw" aria-hidden="true">›</div>'
+      + '<div class="chnode"><div class="nm">' + esc(n.nm) + '</div>'
+      +   '<div class="tier">' + esc(n.tier) + '</div>'
+      +   '<div class="stk">虚拟库存 · 待建模</div></div>'
+      + '<div class="charw" aria-hidden="true">›</div>'
+      + '<div class="chcol"><div class="chlbl">下游流向 · TOP3</div>' + dnHtml + '</div>';
+
+    document.getElementById('chnote').innerHTML =
+        '<b style="color:var(--accent)">' + esc(n.nm) + '</b>　' + esc(n.note)
+      + '<br><span style="color:var(--dim)">流向为<b style="color:var(--text)">等效值（件/日）</b>，游戏内原型化后改由实际生产/消费记录驱动；'
+      + '<b style="color:var(--text)">①＝原版实测锚点　②＝官方推导　③＝设计假设</b>。</span>'
+      + '<br><span style="color:var(--dim)">RUIF 映射 <b style="color:var(--text)">ChartCandAtoms.Sankey</b>：'
+      + '左列 side=0 / 右列 side≠0，带宽＝value —— 该原子为<b style="color:var(--text)">二分图</b>，'
+      + '本图「中心节点」为其扩展，落地需补 <b style="color:var(--text)">GAP-UI-SANKEY-CENTER</b>。</span>';
+
+    document.getElementById('inv-sub').textContent = n.nm + ' · 上下游结构';
+  }
+
+  document.getElementById('chnav').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-c]'); if(!b) return;
+    state.chain = b.getAttribute('data-c');
+    renderChain(); stampTime();
+  });
+
+  function renderDetail(){
+    var f = IDX[state.sel] || FD[0];
+    document.getElementById('so-id').textContent = f.id;
+    document.getElementById('fs-id').textContent = f.id;
+
+    document.getElementById('k-tech').textContent = f.tech;
+    document.getElementById('k-tech-l').textContent = '科技等级';
+    document.getElementById('k-tech-b').style.width = Math.round(((TECH_RANK[f.tech]||0)/5)*100) + '%';
+    var hostile = f.why.indexOf('永久敌对') >= 0;
+    document.getElementById('k-host').textContent = hostile ? '敌对' : '中立';
+    document.getElementById('k-host-b').style.width = hostile ? '100%' : '12%';
+
+    renderSociety(f);
+    renderMarket(f);
+    renderFactionStatus(f);
+
+    var n = FD.filter(function(x){ return x.tr; }).length;
+    document.getElementById('k-ftr').textContent = n + '/' + FD.length;
+    document.getElementById('k-ftr-b').style.width = Math.round(n / FD.length * 100) + '%';
+
+    renderChain();
+  }
+
+  function render(){ renderList(); renderDetail(); }
+
+  rowsEl.addEventListener('click', function(e){
+    var r = e.target.closest('.rw'); if(!r) return;
+    var id = r.getAttribute('data-id'); if(!id) return;
+    /* 同步 roving 焦点下标：鼠标选中后，方向键从该行继续，而不是跳回列表首行 */
+    var list = visible();
+    for(var i = 0; i < list.length; i++){ if(list[i].id === id){ state.focusIdx = i; break; } }
+    if(id === state.sel) return;
+    state.sel = id; renderList(); renderDetail();
+  });
+
+  document.getElementById('flFilter').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    Array.prototype.forEach.call(this.querySelectorAll('button'), function(x){ x.classList.remove('on'); });
+    b.classList.add('on'); state.filter = b.getAttribute('data-f'); state.focusIdx = 0; renderList();
+  });
+
+  listEl.addEventListener('keydown', function(e){
+    var list = visible(); if(!list.length) return;
+    var k = e.key;
+    if(k==='ArrowDown'||k==='ArrowUp'||k==='Home'||k==='End'){
+      e.preventDefault();
+      if(k==='Home') state.focusIdx = 0;
+      else if(k==='End') state.focusIdx = list.length - 1;
+      else state.focusIdx = (state.focusIdx + (k==='ArrowDown'?1:-1) + list.length) % list.length;
+      var t = rowsEl.querySelectorAll('.rw')[state.focusIdx]; if(t) t.focus();
+    } else if(k==='Enter'||k===' '){
+      e.preventDefault();
+      var cur = document.activeElement;
+      var id = (cur && cur.classList && cur.classList.contains('rw')) ? cur.getAttribute('data-id') : list[state.focusIdx].id;
+      if(id && id !== state.sel){ state.sel = id; renderList(); renderDetail();
+        var n = rowsEl.querySelector('.rw.sel'); if(n) n.focus(); }
+    }
+  });
+
+  document.getElementById('themeSeg').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    Array.prototype.forEach.call(this.querySelectorAll('button'), function(x){ x.classList.remove('on'); });
+    b.classList.add('on'); document.body.className = b.getAttribute('data-th') || '';
+  });
+
+  document.getElementById('btnRandom').addEventListener('click', randomize);
+  stampTime();
+  render();
+})();
+</script>
+</body>
+</html>

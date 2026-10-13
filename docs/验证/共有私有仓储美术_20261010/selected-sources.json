@@ -1,0 +1,10 @@
+[
+  {"name":"PC_PublicStorage_north","source":"原始母图/PC_PublicStorage_north.png"},
+  {"name":"PC_PublicStorage_east","source":"原始母图/PC_PublicStorage_east.png"},
+  {"name":"PC_PublicStorage_south","source":"原始母图/PC_PublicStorage_south.png"},
+  {"name":"PC_PublicStorage_west","source":"原始母图/PC_PublicStorage_west.png"},
+  {"name":"PC_PrivateStorage_north","source":"原始母图/PC_PrivateStorage_north.png"},
+  {"name":"PC_PrivateStorage_east","source":"原始母图/PC_PrivateStorage_east.png"},
+  {"name":"PC_PrivateStorage_south","source":"原始母图/PC_PrivateStorage_south.png"},
+  {"name":"PC_PrivateStorage_west","source":"原始母图/PC_PrivateStorage_west.png"}
+]

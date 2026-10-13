@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PersonalChronicle.NeedSpeech.Food.Gap>肚子有点饿了。</PersonalChronicle.NeedSpeech.Food.Gap>
+  <PersonalChronicle.NeedSpeech.Food.Urgent>好饿啊，得赶紧吃点东西。</PersonalChronicle.NeedSpeech.Food.Urgent>
+  <PersonalChronicle.NeedSpeech.Food.Action>好饿啊，先吃饭了。</PersonalChronicle.NeedSpeech.Food.Action>
+  <PersonalChronicle.NeedSpeech.Rest.Gap>有点困了，想歇一会儿。</PersonalChronicle.NeedSpeech.Rest.Gap>
+  <PersonalChronicle.NeedSpeech.Rest.Urgent>困得快撑不住了。</PersonalChronicle.NeedSpeech.Rest.Urgent>
+  <PersonalChronicle.NeedSpeech.Rest.Action>好困啊，先休息一会儿。</PersonalChronicle.NeedSpeech.Rest.Action>
+  <PersonalChronicle.NeedSpeech.Joy.Gap>一直忙着，想找点乐子。</PersonalChronicle.NeedSpeech.Joy.Gap>
+  <PersonalChronicle.NeedSpeech.Joy.Urgent>太无聊了，好想放松一下。</PersonalChronicle.NeedSpeech.Joy.Urgent>
+  <PersonalChronicle.NeedSpeech.Joy.Action>放松一下，玩一会儿。</PersonalChronicle.NeedSpeech.Joy.Action>
+  <PersonalChronicle.NeedSpeech.Comfort.Gap>有点不舒服，想找个舒服的地方。</PersonalChronicle.NeedSpeech.Comfort.Gap>
+  <PersonalChronicle.NeedSpeech.Comfort.Urgent>浑身不舒服，真想好好歇歇。</PersonalChronicle.NeedSpeech.Comfort.Urgent>
+  <PersonalChronicle.NeedSpeech.Outdoors.Gap>待在屋里太久了，想出去透透气。</PersonalChronicle.NeedSpeech.Outdoors.Gap>
+  <PersonalChronicle.NeedSpeech.Outdoors.Urgent>好久没出门了，真想出去走走。</PersonalChronicle.NeedSpeech.Outdoors.Urgent>
+  <PersonalChronicle.Settings.Title.PawnNeedSpeech>Pawn 需求聊天气泡</PersonalChronicle.Settings.Title.PawnNeedSpeech>
+  <PersonalChronicle.Settings.Use.PawnNeedSpeech>需求不足或开始吃饭、休息、娱乐时，在人物头顶显示一句短话。</PersonalChronicle.Settings.Use.PawnNeedSpeech>
+  <PersonalChronicle.Settings.Detail.PawnNeedSpeech>默认开启；同一缺口不重复刷屏，最多同时显示 4 条，可在此关闭。</PersonalChronicle.Settings.Detail.PawnNeedSpeech>
+</LanguageData>

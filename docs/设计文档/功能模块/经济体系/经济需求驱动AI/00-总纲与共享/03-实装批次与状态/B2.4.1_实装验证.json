@@ -1,0 +1,468 @@
+{
+  "changeId": "CHG-20261008-ECON-MODE-GATES",
+  "batch": "B2.4.1",
+  "state": "CodeVerified",
+  "parentBatchState": "InProgress",
+  "checkedUtc": "2026-10-12T15:34:12.7139952Z",
+  "modSha256": "CCD71B96D81847F8436656A94A26E00DABF8EBFD84C14E0DA1EE33B0944A82C0",
+  "gameSha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+  "gameAssemblyVersion": "1.6.9676.17735",
+  "compiledChecks": {
+    "pureGovernanceTypesIncludingGenerated": 5,
+    "guardedLegacyEntrypoints": [
+      "Execute",
+      "Plan",
+      "Register",
+      "Unregister",
+      "FinalizeInit",
+      "GameComponentTick",
+      "OrderActive",
+      "JobOrderValid",
+      "CancelJob",
+      "DoctorJob",
+      "Clinics",
+      "OnProduction",
+      "WearOwned"
+    ],
+    "legacyFeeRouteAlwaysClosed": true,
+    "legacyLoadCancellationRetired": true,
+    "modeSaveWired": true,
+    "finalLegacyFreezeWired": true,
+    "legacyRightsFullyAssumed": false,
+    "physicalPaymentRuntimeWired": false,
+    "actualReadinessIncomplete": true,
+    "legacySlotsPaused": true,
+    "ownedAssetUseWithoutPayment": true,
+    "bilingualKeys": 51,
+    "ruifDependency": true,
+    "nativeSettingsConstructorVerified": true
+  },
+  "tests": {
+    "path": "Tests/TestResults/EconomyLanding-B241-Full.trx",
+    "sha256": "910743A83AEA1183DA98EB21F92AAE228BA6FA6FB227727B8586CA47D544A3DA",
+    "passed": 866,
+    "failed": 0,
+    "skipped": 1,
+    "skippedNames": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "newCases": 38
+  },
+  "deployedThisChange": false,
+  "gameVerifiedThisChange": false,
+  "activeAvailableInGame": false,
+  "globalGateAvailable": false,
+  "files": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Governance/InstitutionModeContracts.cs",
+      "sha256": "A78D1258F13D9E458F2E0D7027496950CFC68FA4677E97B7A1D03E54FF1BB02F",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "public enum InstitutionPhase { Off, Preparing, Active, Draining, Faulted }"
+        },
+        {
+          "line": 8,
+          "text": "internal sealed class InstitutionModeState"
+        },
+        {
+          "line": 22,
+          "text": "internal sealed class InstitutionReadiness"
+        },
+        {
+          "line": 54,
+          "text": "public sealed class InstitutionModeSnapshot"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Governance/InstitutionModeService.cs",
+      "sha256": "71D79433C36DBC97CD331C7633E6DD04B43E9E1D70FDA90E1EE0D45BCC9C6966",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "internal sealed class InstitutionModeService"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/InstitutionModeSaveData.cs",
+      "sha256": "B258A3E67BA3FB489E58E6F81AB09B082221930C3997FB967680CFB47D58190E",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "internal sealed class InstitutionModeSaveData : IExposable"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyInstitutionMode.cs",
+      "sha256": "020D72335E0A9EDF38D3DC21FEB6865B8A25143CE355DB724C5C603094DA0F66",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "public sealed partial class GameComponent_PawnEconomy"
+        },
+        {
+          "line": 163,
+          "text": "internal enum InstitutionReverifyCode { Cleared, NotFaulted, StillFaulted, Unavailable }"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyPreservedAssets.cs",
+      "sha256": "D1185181ED1FF2FA5F73E77DFA70167024DCF40AF581D47D18AF53E8BFAFFAFA",
+      "anchors": [
+        {
+          "line": 8,
+          "text": "public sealed partial class GameComponent_PawnEconomy"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "sha256": "3E82BFE60648655369702860D9CE1BD7C0E16E5E84DD31009A9A9768AE9C9BD4",
+      "anchors": [
+        {
+          "line": 14,
+          "text": "public sealed partial class GameComponent_PawnEconomy : GameComponent"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyCommands.cs",
+      "sha256": "ACBA30C2B06CB00AE0B02CBBDE88417CC1187C8889B2E9E199990D543B202E9E",
+      "anchors": [
+        {
+          "line": 17,
+          "text": "public sealed partial class GameComponent_PawnEconomy"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Dialog_WorkContract.cs",
+      "sha256": "E77F6853ABEBE2842E04D9FB84215953EC13BE4F0227F000146438A3906B9D49",
+      "anchors": [
+        {
+          "line": 23,
+          "text": "internal sealed class Dialog_WorkContract : Window"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/WorkshopSchedule.cs",
+      "sha256": "166DE126FE05B898EA6166D91A135499560BF4EDCF9102EE64A4B819478B4079",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "public enum WorkshopTaskType : byte"
+        },
+        {
+          "line": 21,
+          "text": "public enum RotationMode : byte"
+        },
+        {
+          "line": 42,
+          "text": "public static class WorkshopHours"
+        },
+        {
+          "line": 75,
+          "text": "public sealed class WorkshopSlot : IExposable"
+        },
+        {
+          "line": 159,
+          "text": "public sealed class RotationRule : IExposable"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MapComponent_WorkshopManager.Runtime.cs",
+      "sha256": "6DE44FFD14620B37BEC7CFC7180F9888A5599C3BD800DE7198DFB7F2068334E2",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "public partial class MapComponent_WorkshopManager"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/ChronicleSettings.cs",
+      "sha256": "7A3523C0D58957655E287D985ABD503F85F6F3406091750CB671C6773343CC5D",
+      "anchors": [
+        {
+          "line": 16,
+          "text": "public sealed class ChronicleSettings : ModSettings"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Settings/SettingsCatalog.cs",
+      "sha256": "2256EF40FFE4B0B1FB791CF5491A2D2E58E94A16FEE311D3601ADC762AAD68E0",
+      "anchors": [
+        {
+          "line": 8,
+          "text": "internal enum SettingsTab"
+        },
+        {
+          "line": 22,
+          "text": "internal enum SettingKind"
+        },
+        {
+          "line": 43,
+          "text": "internal enum SettingTone"
+        },
+        {
+          "line": 62,
+          "text": "internal sealed class SettingDef"
+        },
+        {
+          "line": 112,
+          "text": "internal enum SettingId"
+        },
+        {
+          "line": 161,
+          "text": "internal static class SettingsCatalog"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Settings/SettingsDrawer.cs",
+      "sha256": "2E59289ED272F682D386E3FEE6CA84775EC4B194705CA1C0B7CA2FE9E6A8523B",
+      "anchors": [
+        {
+          "line": 31,
+          "text": "internal static class SettingsDrawer"
+        }
+      ]
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/EconomyMode.xml",
+      "sha256": "C757715E05FCA9E737D6A5D067631FA3B5CC52C4F941B37CE60D5BE1A06AF375",
+      "anchors": []
+    },
+    {
+      "path": "Languages/English/Keyed/EconomyMode.xml",
+      "sha256": "0066FED898C6094D93738FCF3EDDFBD82B108711A0023C3A8FC3390CEBCCEFB8",
+      "anchors": []
+    },
+    {
+      "path": "Tests/PawnInstitutionModeTests.cs",
+      "sha256": "4D2800130AE8532B1CE5B7D4C803EB2EE8A92D787F61C1C100B0AE077E14E14F",
+      "anchors": [
+        {
+          "line": 17,
+          "text": "public sealed partial class PawnSilverReserveTests"
+        },
+        {
+          "line": 254,
+          "text": "public sealed class PawnInstitutionModeRulesTests"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnSettlementPersistenceTests.cs",
+      "sha256": "A4A4F296E44E418C3256373A01406ADB765D26E2969F8074C0ABA74949B27A3C",
+      "anchors": [
+        {
+          "line": 19,
+          "text": "public sealed partial class PawnSilverReserveTests"
+        },
+        {
+          "line": 309,
+          "text": "public sealed class PawnSettlementLedgerTests"
+        }
+      ]
+    },
+    {
+      "path": "_scripts/verify-pawn-institution-mode.ps1",
+      "sha256": "0C715FE882CAB9F2C944372DD358938FBB48764E683ABE9110ABF591ACD8D2B4",
+      "anchors": []
+    },
+    {
+      "path": "_scripts/verify-pawn-needs-ui.ps1",
+      "sha256": "A919C543131888B46182DC5412313B35E57D5EEADE00E75A14C010BE7FE90054",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/07-B2.4.1_制度设置与互斥门禁_实装记录.md",
+      "sha256": "6432DC11940D801A4924BF230FADDB67CD9277123359F47335B0EE7F5397D38E",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. Intake / Architecture Review"
+        },
+        {
+          "line": 13,
+          "text": "## 2. Save Review / ADR"
+        },
+        {
+          "line": 27,
+          "text": "## 3. 实装与验证"
+        },
+        {
+          "line": 56,
+          "text": "## 4. 下一子批 B2.4.2"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实施批次状态.json",
+      "sha256": "0E4DBFAB61D3CBC0F5BB19F59D5497AD696DBA49778531FA40D0DB9BD61996EC",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/00-实装落地计划_v1.0.md",
+      "sha256": "80103803099F17BEB546056331AFB511F95CD8E6EE57274895B7934F58DA66BC",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "## 1. 目标、范围与交付纪律"
+        },
+        {
+          "line": 15,
+          "text": "## 2. 当前代码基线及迁移差异"
+        },
+        {
+          "line": 34,
+          "text": "## 3. 架构决策与数据边界"
+        },
+        {
+          "line": 46,
+          "text": "## 4. 批次总览与依赖"
+        },
+        {
+          "line": 63,
+          "text": "## 5. B1：需求感知与 RUIF 最小闭环"
+        },
+        {
+          "line": 91,
+          "text": "## 6. B2：实资、迁移与制度开关"
+        },
+        {
+          "line": 107,
+          "text": "## 7. B3：生活规划、储蓄与影子决策"
+        },
+        {
+          "line": 115,
+          "text": "## 8. B4：第一条自主经济闭环"
+        },
+        {
+          "line": 129,
+          "text": "## 9. B5：家庭与服务分项落地"
+        },
+        {
+          "line": 139,
+          "text": "## 10. B6：机构再生产与有限学习"
+        },
+        {
+          "line": 149,
+          "text": "## 11. B7：RUIF 治理与综合验收"
+        },
+        {
+          "line": 157,
+          "text": "## 12. 每批证据与检查命令"
+        },
+        {
+          "line": 173,
+          "text": "## 13. 迁移与回滚纪律"
+        },
+        {
+          "line": 179,
+          "text": "## 14. 完成定义与下一步"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/04-实装指导手册/00-总册与实施路线.md",
+      "sha256": "F147F3745CE9D081A980EC46C83AC98DE597B84CCF9779B9F0CDEAED92F859E0",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "## 1. 本手册回答什么"
+        },
+        {
+          "line": 18,
+          "text": "## 2. 阅读与交付索引"
+        },
+        {
+          "line": 57,
+          "text": "## 3. 当前核验基线"
+        },
+        {
+          "line": 70,
+          "text": "## 4. 模块划分"
+        },
+        {
+          "line": 89,
+          "text": "## 5. 架构和数据流"
+        },
+        {
+          "line": 117,
+          "text": "## 6. 首版具体闭环"
+        },
+        {
+          "line": 135,
+          "text": "## 7. 实施里程碑和退出条件"
+        },
+        {
+          "line": 147,
+          "text": "## 8. 开发工作包写法"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/M11-资金资源权利与制度协调/11-资金资源权利与制度协调_代码设计方案.md",
+      "sha256": "DFCA0D0B6CCE4DFFC25EFE2D07287865CF01696D526119581B1CE85223A12E87",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. 输入输出与职责"
+        },
+        {
+          "line": 11,
+          "text": "## 2. 共同数据与不变量"
+        },
+        {
+          "line": 27,
+          "text": "## 3. 银币缴存、提取与外贸"
+        },
+        {
+          "line": 39,
+          "text": "## 4. 账户与借贷腿"
+        },
+        {
+          "line": 54,
+          "text": "## 5. 资源权利与谱系"
+        },
+        {
+          "line": 64,
+          "text": "## 6. 原子准备与交易恢复"
+        },
+        {
+          "line": 74,
+          "text": "## 7. 开关、迁移与能力路由"
+        },
+        {
+          "line": 86,
+          "text": "## 8. 接口、落点与原版依据"
+        },
+        {
+          "line": 102,
+          "text": "## 9. 验收"
+        }
+      ]
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI制度设置与互斥门禁.md",
+      "sha256": "36DB7307B6F5AD58EE43FB824E6F4605919CC82AAFA376F063BC508B0E2F5719",
+      "anchors": []
+    }
+  ],
+  "limits": [
+    "Preparing is the highest actual runtime activation state; pure readiness fixtures do not authorize gameplay.",
+    "Physical deposit/withdrawal Jobs, payer authority and final legacy rights mapping remain B2.4.2 work.",
+    "Legacy slots retain identity and data; pause and owned apparel routing are structurally checked, not accepted in a running game.",
+    "B2.3 historical reports describe the then-current cancellation behavior; B2.4.1 explicitly retires that behavior without rewriting historical evidence.",
+    "Offline Scribe tests use a minimal engine fixture; actual save compatibility, paused UI, fonts and layout still need game acceptance."
+  ]
+}

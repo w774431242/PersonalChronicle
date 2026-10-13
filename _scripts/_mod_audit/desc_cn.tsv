@@ -1,0 +1,218 @@
+ludeon.rimworld	RimWorld 游戏本体：殖民地模拟经营 + 故事生成器，管理小人的建造、战斗、种植、社交与生存
+ludeon.rimworld.royalty	DLC 皇权 Royalty：帝国势力与贵族爵位体系、灵能超能力、心灵同调与皇权任务线
+ludeon.rimworld.ideology	DLC 文化 Ideology：自定义意识形态/教派、仪式与戒律、信仰建筑、德莱德树精
+ludeon.rimworld.biotech	DLC 生物科技 Biotech：基因编辑与异种人、机械体指挥官、婴儿与育儿系统
+ludeon.rimworld.anomaly	DLC 异象 Anomaly：超自然恐怖事件、异常研究、心灵狩猎与黑暗实体
+ludeon.rimworld.odyssey	DLC 奥德赛 Odyssey：太空探索与星际开拓、新星球环境与系列剧情
+zetrith.prepatcher	Prepatcher 框架：程序集级重写/注入库，内置 Harmony 2.4.2 与 PrepatcherAPI，为 mod 提供高性能补丁能力
+brrainz.harmony	Harmony 补丁库：RimWorld mod 生态最核心的前置，几乎所有功能 mod 都依赖它
+ilyvion.loadingprogress	启动进度窗：启动时可视化展示每个加载阶段与当前步骤，mod 多时让等待更有趣
+vortex.purepatcher	PurePatcher：结构化程序集重写框架，mod 开发者可对游戏程序集做可配置重写
+adaptive.storage.framework	自适应存储框架：为 mod 作者提供统一可扩展的储物容器体系，众多存储类 mod 的共同地基
+smashphil.vehicleframework	载具框架：真实载具系统——属性/部件血量/操作员/动力源，多格寻路 + 远行队旅行
+imranfish.xmlextensions	XML 扩展：扩展 XML 补丁操作能力 + 轻松创建 mod 设置界面，XML 错误会转成提示
+unlimitedhugs.hugslib	HugsLib 核心库：为大量 mod 提供共享功能（设置/日志/通知等）的通用库
+oskarpotocki.vanillafactionsexpanded.core	原版扩展框架（VEF）：VFE/VCE/VIE 系列 mod 的公共核心，提供共享代码与功能
+aitranslation.pack	AI 智能汉化语言包：配合 AI 翻译引擎使用的本地翻译资源包（本机安装）
+krkr.rule56	CAI 5000：强化战斗 AI（战术协同）+ 战争迷雾，显著提升战斗难度与真实性
+sbz.neatstoragefridge	整洁冰箱：新增 7 种基于自适应存储框架的冰箱，冷藏保鲜更方便
+kearril.qualityrecastingtable	品质重铸台：花少许白银重铸物品品质，低成本提升装备/物品评级
+tw.cwp.chineseweaponpack	中式武器包：大量中国风武器（刀剑/枪戟等）+ 独立研究项目，数值经社区平衡
+adaptive.ideology.storage	文化存储扩展：把文化 DLC 的储物对象改造为可用储物容器（适配自适应框架）
+adaptive.primitivestorage	原始存储：LWM 深存储「原始风格」移植版，适配自适应存储框架并重新贴图
+adaptive.simplestorage	简易存储：JDS 简易储物架移植版，适配自适应存储框架并重新贴图
+adaptive.storage.neolithic	新石器存储：远古科技时代风格的新储物容器，丰富早期游戏存储手段
+auto.aitranslation.core	AI 智能汉化网络：AI 自动补位 + 繁简转换的翻译引擎，让英文 mod 自动出中文
+7f.alienworlds	异星世界框架：框架级 mod，可创建全新类型行星（地形/气候/生态自定义），完全融入世界生成
+kattalisk.allproductionxp	所有生产均给经验：让原本不给 XP 的任务也能获得对应技能经验
+ancot.ancotlibrary	Ancot 库：Ancot 系列种族 mod 的共同前置框架
+ruina99.battlefieldvkillfeed	战地5风格击杀反馈：三层显示（击杀图标/敌人名+武器/得分数字），支持爆头特效与多连杀动画
+seti.transportation	自行车与更多：新增自行车/轮椅/悬浮滑板/蜘蛛腿等出行装备，装备在小人身上使用
+yk.bicyclesandmore.zh	自行车与更多简繁汉化包
+void.charactereditor	角色编辑器：游戏内直接编辑任意人类角色的能力/健康/外观/关系/物品等全部属性
+navyseal5.cleaningstation	清洁站：放置建筑自动清洁周边地面，减轻殖民者清扫负担（需 HugsLib）
+avilmask.commonsense	常识：让殖民者行为更聪明——用前先装填、不做无效劳动、烹饪前取料、整理库存等
+costel.customroomnames	自定义房间名：放置房间门牌即可命名房间，支持自定义颜色与文字
+lingluo.customizeroomrole	自定义房间类型：放置门牌建筑手动指定当前房间类型，绕过原版房间类型判定
+vortex.customizeweapon	武器定制：内置框架深度定制武器——属性/模块/词条改造，是武器自定义玩法的基础
+alendio.daycounter	天数计数器：屏幕常驻显示殖民地已度过的天数，可配置显示样式
+latta.devl10n	开发者模式本地化：把开发者模式的操作项与视图设置本地化
+baldman47.dev1.6.zh	Dev In Your Language 简体中文翻译（开发者模式控制台）
+v1024.ebframework	精英仿生框架：统一框架，可修改身体部位最大生命值，仿生强化类 mod 前置
+xiaotudouzh.ebframework	精英仿生框架简中翻译
+slimesenpai.endlessgrowth	无尽成长：解除技能 20 级上限（最高可到 100+ 级），经验需求合理增长
+endlessgrowth.zh	无尽成长汉化包
+custom.evolutionarygene	进化基因：携带者通过活动逐渐提升生物属性，分阶段进化、越用越强的基因
+boksu.rimthreadedttr	FPS+ RimThreaded：多线程化游戏逻辑 + 全面性能优化套件，大幅提升 FPS 与流畅度
+latta.fsharp.core	F# 核心库：F# 程序集 mod 的基础前置库
+lingluo.giantcrop	巨型作物：矩形种植成熟时有概率生成巨型作物，美观值高，拆除产出大量对应物品
+lingluo.giantcropex	巨型作物扩展：部分巨型作物可变成特殊功能建筑（南瓜车可飞行、土豆服务器强化机械师等）
+sunsetmoderteam.growthweaponsnew	成长武器：武器随击杀数成长变强，性能与特效逐步解锁
+sk.hideunloadedmoderors	隐藏未启用 Mod 的启动报错：消除无效加载项警告，日志更干净
+rwzh.chinesepack.hugslib	HugsLib 中文汉化包（边缘汉化组）
+custom.immortalregenerant	不朽再生基因：断肢再生、伤口加速痊愈、不易死亡，配合进化基因效果更佳
+jaxe.bubbles	互动气泡：小人社交互动时头顶弹出文字气泡，暂停时气泡不消失，可点击查看
+kazepsi.irbm	弹道导弹：跨地图远程打击系统，可发射导弹轰炸地图任意位置
+zal.killcounter	击杀计数器（续作）：统计击杀数据并实时显示，含多种显示样式
+kahdeg.killfeed	击杀信息流：击杀/死亡信息滚动显示，点击通知可跳转到事发地点
+ilyvion.loadingprogress.zh	Loading Progress 简中汉化
+asf.deepstorage	LWM 深度储物移植版：深储物系统适配自适应框架，大量深储容器（重新贴图）
+lwop.corpsecollector.standalone	LWOP 收尸机独立版：敌对单位死亡后自动回收尸体 + 符合规则的掉落物/围攻物资，净化战场
+andromeda.milkyway	银河框架：Andromeda 系列 UI mod 的共享底层框架
+rabiosus.minesight	采矿高亮：激活采矿工具时高亮矿脉，按住 Shift 圈选整条矿脉一键标记
+veterano.mythicages.megafaunabestiary	神话纪元：巨型生物图鉴——史前巨兽与神话生物，可狩猎/驯服/培育，配套研究
+andromeda.nicebilltab	更好工作清单：手绘风重新设计工作清单界面，条目清晰美观
+andromeda.nicehealthtab	更好健康面板：为健康选项卡绘制精美手绘部位图标
+andromeda.niceinventorytab	更好装备栏：手绘风美化角色装备栏界面
+baldman47.nit.zh	Nice Inventory Tab 简繁中文翻译
+andromeda.niceplantsmenu	更好作物菜单：手绘风美化种植/作物选择菜单
+mlie.noversionwarning	不再显示版本警告：去除版本号不匹配导致的红字提示（mod 实际正常时）
+ogre.ogrestack	OgreStack：高度可自定义堆叠上限，可针对单种物品精细设置，即时生效无需重开
+turnovus.submod.backpacksarenotbelts	背包不是腰带：跳跃背包/低护盾等移入躯干层，可与腰带同穿，配装更多元
+andromeda.pawnquickinfo	小人快速信息：快速评估选中角色的技能等级与健康状况
+lan.pawnquickinfo.zh	小人快速信息汉化包
+personalchronicle.archive	本 Mod：给殖民地请「史官」——自动记录人物/物品/战役/地点，总览统计、事件流、KPI 仪表盘，职业档案（12专业48方向）、资格职称与勋章体系
+issaczhuang.pla.armory	PLA 军火库：中国人民解放军风格武器包（步枪/机枪/火箭筒等）
+dawnsglow.qualcolor	品质颜色：交易列表按品质着色，可配置颜色，一眼分辨优劣
+jaeger972.questgenerationtweaks	任务生成调整：调整任务生成数量与节奏，让任务更符合游玩节奏
+petetimessix.researchreinvented	研究重铸：重构研究机制——摆脱挂机盯桌，研究升级/解锁与建造一体化
+mlie.resourcegenerator	资源生成器：消耗少量电力（300-450W）自动生成矿物/织物/零部件等资源
+maiya.rimdigitallife.core	边缘数码生活：完整数码生态系统——刷短视频/社交软件/网购/数码产品与生活方式
+yimu.rimbattlefield	Rimbattlefield：战地风格武器，坠落的战地货船带来全新武器线
+jaxe.rimhud	RimHUD：选中角色显示详尽 HUD（技能/健康/需求/心情/装备多栏，可高度配置）
+daylight.rlevvcultivationplus	RimLife 栽培扩展：新增 6 种可栽培蔬菜（青梗菜/陆稻/番茄/洋葱/彩椒/玉米），无专属料理
+reo.rimrelations	边缘关系：多维关系系统——喜爱/尊重/信任/竞争/愤怒/钦佩/保护独立羁绊，事件影响关系历史
+chezhou.framework.rimsimmanagementframework	边缘模拟经营框架：商店/经营系统底层框架——开店卖货、雇佣店员、管理顾客流量
+sierra.rt.generaltraits	边缘特性：大量新增通用特质（数百个），丰富人物性格与玩法选择
+rockets.ranks	军衔系统：为殖民者授衔（列兵/下士/中士等），军衔绑定专属服饰穿戴
+apeanutazh.rockets.ranks	军衔系统中文汉化包
+sandy.rpgstyleinventory	RPG 风格装备栏：以 RPG 游戏风格图形化展示角色装备栏
+memegoddess.runandgun	边跑边打：征召状态下可移动射击，人人都能当兰博
+pb3n.simplewarrants	简易悬赏：完成其他派系悬赏赚报酬，或自己发布悬赏（寻物/杀俘/捕兽）
+al9000.tastycore	美味军械库核心：Tasty Armory 系列武器 mod 的公共核心（工作台 + 研究）
+hope.terrainmaker	地形生成：自定义地形生成工具，可自由铺设/修改地形
+hobtook.tradeui	交易 UI 重制：双栏布局清晰展示我方/商队物品、价格与货币，右键快捷操作
+timmyliang.tradehelper	交易助手：愿望清单（配置想买的物品）、自动补货提醒等交易增强
+trigger.universalblueprints	通用蓝图：内置蓝图浏览器，可浏览/保存/一键铺设基地蓝图，终极建筑工具
+vanillaexpanded.vcooke	原版烹饪扩展：新美食系列核心——上百种新食材/菜品/厨房设备，烹饪玩法大扩充
+rwzh.chinesepack.vanillafactionsexpandedcore	原版扩展框架中文汉化包（边缘汉化组）
+aliza.vanillafiremodes	原版射击模式：为原版远程战斗添加可选的射击模式（点射/三连/全自动等）
+vanillaexpanded.vfecore	原版家具扩展：大幅扩充家具数量与深度——数百新家具/照明/座椅/存储等
+vanillaexpanded.vfearchitect	原版家具扩展-建筑师：新地板/栅栏/墙/门等建筑模块，丰富建造选择
+vanillaexpanded.vfeart	原版家具扩展-艺术：大量新雕塑与艺术品，丰富艺术创作与装饰
+vanillaexpanded.vfefarming	原版家具扩展-农业：种植/温室/灌溉等农业设施，提升种田效率
+vanillaexpanded.vfemedical	原版家具扩展-医疗：医疗床/消毒柜/器械等医疗家具，改善治疗条件
+vanillaexpanded.vfepower	原版家具扩展-电力：太阳能塔/地热/反应堆等新型发电与用电设备
+vanillaexpanded.vfeproduction	原版家具扩展-生产：后期大型生产工具（工具架/增强工作台等），填补后期生产空缺
+vanillaexpanded.vfesecurity	原版家具扩展-安全：防御设施全面重做——新炮塔/拒马/陷阱/加固墙体
+vanillaexpanded.vfespacer	原版家具扩展-太空：高科技太空时代家具升级线（医疗/生产/起居）
+vanillaexpanded.ideo.dryads	原版文化扩展-德莱德：新增多种高兰草树精类型，各具独特产出
+vanillaexpanded.viehar	原版文化扩展-帽与布：40+ 文化风格帽子与布料衣物（汉服/古罗马等风格）
+vanillaexpanded.ideo.relicsandartifacts	原版文化扩展-遗物与神器：新增 40 种遗物物品（圣杯/方舟/剑碎片等），探索获取
+vanillaexpanded.ideo.sophianstyle	原版文化扩展-索菲安风格：帝国风格全新文化外观贴图（建筑/武器/服饰统一风格）
+vanillaexpanded.viesas	原版文化扩展-分裂与教派：文化分裂与异端机制，让意识形态更具挑战与变数
+aliza.vanillameleemodes	原版近战模式：为原版近战添加可选模式（格挡/反击/连招等）
+oskarpotocki.vanillavehiclesexpanded	原版载具扩展：基于载具框架的系列载具——T1 越野车/旅行车/货车，研发+制造零件+组装
+shavius.vehicleframework.zh	载具框架简繁汉化包（载具属性/部件血量/操作员/动力源/多格寻路/远行队）
+oels.vehiclemapframework	载具地图框架：给载具内部加可建造地板与建筑的小地图，支持移动基地玩法
+vin.warehouse.storage	仓库储物：把古代遗迹储物物件改造为可用储物容器（适配自适应存储框架）
+sk.weaponmastery	武器精通：使用同一武器越久越熟练，获得经验与精通加成，可高度自定义
+lotusland.weaponupgrade	武器升级：合并同种武器打造更高品质（多把换一把更好的）
+tixiv.whoshotmylegoff	谁打掉我的腿：追溯角色每处疤痕/缺失部位的受伤来源与原因
+asavikle.xml.extensions.cn	XML Extensions 简繁中文汉化
+sz.yaopt	Yet Another Optimizer：高性能优化 mod，大幅提升 FPS/TPS，降低卡顿与掉帧
+codex.randompawnnamepool	人物随机名称池：三模式中文命名（全随机/黄巢/半随机），支持自定义姓氏/批量随机/派系开关
+baal.cultureandfaith	巴尔：文化与信仰——基于巴尔设定的宗教与公民文化，纯 XML，配合意识形态 DLC
+almw.mod.azurlanemeleepack	碧蓝航线近战武器包：舰娘题材的近战武器
+shenpc.vegetablebasketproject	菜篮子工程：买菜/卖菜商店经营玩法（进货、定价、顾客服务）
+golden.governancesystem	边缘政务系统：政务办公桌自由更改法律/发布法令/指定计划，宏观规划殖民地
+zuoyao.universalimplantcompat	通用义体兼容：重构义体系统——同部位多义体共存、可单独移除单个义体
+qing.more.traits2	青的更多特性 2：大量新增中文特质，特色鲜明
+lysh.magicsoil	魔力土壤：200%/800% 肥力耕地 + 深水坑地形 + 4 种新作物（肉肉树/血原树等）
+zh.mzmgow.sbz.neatstoragefridge	整洁冰箱简繁汉化
+zh.adaptive.storage.neolithic	自适应存储系列简繁汉化
+fruitytrump.chinesepack.7f.alienworlds	异星世界框架简中汉化
+vincentz.cpap	CAPF 武警装备：武警制服/头盔/防弹背心/胸挂/军衔肩章/制式武器整套主题装备
+costel.customroomnames.zh	自定义房间名汉化包（边缘汉化组）
+feliperathal.customizeweaponexpanded	定制武器扩展：为武器定制框架新增模块/弹药类型/武器词条/主动技能，兼容大量武器 mod
+cyberware.2077	赛博义体 2077：赛博朋克 2077 风格义体植入物——攻速/命中/近战/护甲等增益叠加，含崩溃机制
+jaxe.bubbles.zh.hc	互动气泡汉化包
+drog.irbmretex	弹道导弹贴图重置
+jellycreative.isekaileveling	异世界 RPG 升级：小人打怪升级 R 级系统——升级获属性点/技能点，装备强化/精炼/附魔
+zh.kahdeg.killfeed	击杀信息流汉化包
+chinesepack.veterano.mythicages.megafaunabestiary	神话纪元巨兽图鉴中文汉化包
+veterano.mythicages.megafaunabestiary.zhmiz	神话纪元巨兽图鉴事件翻译补丁（暗穴熊苏醒等 3 事件）
+andromeda.nicebilltab.zh	更好工作清单汉化包（边缘汉化组）
+day29zh.nicehealthtab	更好健康面板简中汉化
+andromeda.niceinventorytab.zh	更好装备栏汉化包（边缘汉化组）
+andromeda.niceplantsmenu.zh	更好作物菜单汉化包（边缘汉化组）
+andromeda.niceresearchtab	更好研究面板：手绘风美化研究界面
+rwzh.chinesepack.ogrestack	OgreStack 中文汉化包（边缘汉化组）
+fuopaxy.backpacksarenotbelts.zh	背包不是腰带简繁中文汉化
+tianti.pla.customizeweapon	PLA 武器定制补丁：PLA 武器接入武器定制框架，可模块化改装
+assassinsbro.qualitybionicsremastered	高品质仿生重制：高级/神械仿生大幅强化，工匠等级影响植入品品质，加入罕见高级仿生
+day29zh.qualcolor	品质颜色简中汉化
+cc.chinese.rimworld.questgenerationtweaks	任务生成调整汉化
+meandssh.tsltn.zhcn.researchreinvented	研究重铸简中汉化
+petetimessix.researchreinvented.steppingstones	研究重铸-进阶研究：重构原版研究树为更合理逻辑进阶
+cncg779.resourcegenerator.zhcn	资源生成器简繁中文汉化
+shouer.chinesepack.rimhud	RimHUD 简中汉化包
+translator.daylight.rlevvcultivationplus.20260303172146	RimLife 栽培扩展翻译（AI 自动翻译生成）
+reisende.rimrelations.zh	边缘关系简体汉化
+wstlst.rimromance	边缘浪漫：基于边缘关系的恋爱吸引系统——浪漫吸引度、22 个影响特质、新羁绊模式
+rwzh.chinesepack.rimtraits	边缘特性汉化包（边缘汉化组）
+jianyuan.rsmf.expandedcustomerpack	模拟经营框架扩展顾客包：8 类 34 个顾客档案（旅行/生产/医疗/应急/机构采购等）
+jianyuan.rsmf.restockstaffexpander	模拟经营框架补货与店员扩展：修复补货逻辑，机械体可独立补货，收银/补货人数上限 99999
+jianyuan.rsmf.storagecapacitypatch	模拟经营框架货柜超大容量补丁：货柜容量 99999，支持带品质/材质商品上架
+zh.pb3n.simplewarrants	简易悬赏简繁汉化
+al9000.fireandsteel	美味军械库-火与钢：中世纪/奇幻风格武器（剑/锤/火器等）
+al9000.highmedieval	美味军械库-高中世纪：骑士风武器与鸢盾等盾牌
+al9000.shiningarmor	美味军械库-闪亮盔甲：全身甲/板甲等护具装备
+al9000.sengoku	美味军械库-战国：日本战国风格武器（武士刀/薙刀等）
+al9000.tastysteppe	美味军械库-草原战士：游牧草原风格武器（弯刀/弓等）
+princeofpluto.vehicles.trains	边缘火车：基于载具框架的火车系统（车头+车厢编组）
+andromeda.usefulmarks	实用标记：给地图单位（殖民者/囚犯/敌人/盟友）智能添加图标标记，可配置自动规则
+vanillaexpanded.vcookebakery	原版烹饪扩展-烘焙：创意烘焙模块——蛋糕/面包/甜点等装饰烘焙美食
+vanillaexpanded.vcookehaute	原版烹饪扩展-高级料理：精致料理模块——高难度高级菜品与宴席
+vanillaexpanded.vcookestews	原版烹饪扩展-炖菜：中世纪炖菜模块，多食材慢炖风味菜
+rwzh.chinesepack.vfe	原版家具扩展系列中文汉化包（边缘汉化组）
+vanillaexpanded.vmemese	原版文化扩展-迷因与建筑：新增迷因、建筑风格与文化结构，丰富意识形态选择
+vanillaexpanded.skills	原版技能扩展：给原版宽泛技能引入专精子技能 + 兴趣度系统，技能成长更有层次
+oskarpotocki.vanillavehiclesexpandedtier3	原版载具扩展-Tier3：更高阶高科技载具（悬浮/飞行载具等）
+oskarpotocki.vanillavehiclesexpandedupgrades	原版载具扩展-升级：载具升级系统——装甲/引擎/武器模块化改装升级
+chaotic.rvinterior	载具内饰框架：带内饰的房车——车内可建地板/家具/床，游牧玩法新体验
+zh.mzmgow.vin.warehouse.storage	仓库储物简繁汉化
+deko.weaponfitting	武器配件框架：给独特武器添加可装配件（导轨/瞄具/握把等），改变属性
+zh.sk.weaponmastery	武器精通简繁汉化
+baal.partiesandcurrents	巴尔：国政与邦交——货币外交/国家经营/证券市场/司法宪制/正式外交，政治经济系统库
+shenpc.vegetablebasketproject.chefmeowstall	菜篮子工程-外卖扩展：加入外卖/外送经营玩法（需模拟经营框架）
+nekotee.irbmldr	边缘弹道导弹-地球科技：为弹道导弹添加史实导弹弹体（飞毛腿/潘兴等）
+frozensnowfox.advancedbionicsexpansion	高级仿生扩展：补齐原版缺失全部仿生 + 高级仿生系列 + 强化神械仿生
+feliperathal.customizeweaponexpanded.zh	定制武器扩展汉化包
+cyberware.2077.retexture.lk	赛博义体贴图重置：26 张新贴图重绘义体外观
+zh.cyberware2077	赛博义体 2077 汉化
+poupun.guildfactionaddon	冒险者公会派系：异世界升级的派系扩展——把冒险者公会变成真实可互动的派系
+cgf1.gunsgalorecore	枪械满仓-核心：提供工作台与研究项目（不含武器本体），其他武器模块的组装前置
+jellycreative.isekaileveling.chinesesimplified	异世界升级简体中文汉化
+lvkavidya.isekaileveling.forgepatch	异世界升级锻造优化：精炼失败不再摧毁装备，改为「重大失败」惩罚系统
+jellycreative.isekaileveling.zh	异世界升级汉化包（边缘汉化组）
+andromeda.legendaryboss	传奇 Boss：地图上刷传奇 Boss，击杀获得传说级战利品
+local.niceresearchtab.zh	更好研究面板简体中文汉化
+tianti.pla.weapon.fitting	PLA 武器配件：PLA 武器可装配件（接入武器配件框架）
+cc.chinese.rimworld.researchreinvented	研究重铸系列汉化
+meandssh.tsltn.zhcn.researchreinvented.steppingstones	研究重铸-进阶研究简中汉化
+zh.minzo.tastyarmory	美味军械库系列简体中文汉化
+princeofpluto.vehicles.trains.zh	边缘火车汉化包
+hours.usefulmarks.zh	实用标记简中汉化
+shavius.vce.zh	原版烹饪扩展汉化包（边缘汉化组）
+shavius.vie.zh	原版文化扩展简繁汉化包（边缘汉化组）
+zh.vanillaexpanded.skills	原版技能扩展简繁汉化
+shavius.vve.zh	原版载具扩展简繁汉化包
+baal.peopleandrepublic	巴尔：人民与共和国——巴尔政治民族派系（废奴/公民誓约/公共制度），政治与共和国玩法主 mod
+nikeh.fsfabe.translation	高级仿生扩展简体中文汉化
+cgf1.meleegalore.medieval.i	中世纪武器满仓：73 种中世纪近战/远程武器（长剑/弓/弩/战锤等）
+automatic.bionicicons	仿生图标：为身体部位栏框添加图标，直观显示已植入部位
+poupun.guildfactionaddon.zh	冒险者公会派系汉化包（边缘汉化组）
+mika.guildfactionaddon.chinesesimplified	冒险者公会派系简体中文汉化
+bionicicons.hd	仿生图标高清版：高清放大贴图
+cgf1.meleegalore.medieval.i.cn	中世纪武器满仓中文汉化

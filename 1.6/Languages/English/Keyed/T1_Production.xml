@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PersonalChronicle.T1.Manual>T1 - manual operation with smart assistance</PersonalChronicle.T1.Manual>
+  <PersonalChronicle.T1.Speed>Current worktable speed factor: {0}</PersonalChronicle.T1.Speed>
+  <PersonalChronicle.T1.State>Equipment state: {0}</PersonalChronicle.T1.State>
+  <PersonalChronicle.T1.Waiting>Waiting for work</PersonalChronicle.T1.Waiting>
+  <PersonalChronicle.T1.WaitHint>Pending bills; processing has not started. Check workers, ingredients and access.</PersonalChronicle.T1.WaitHint>
+  <PersonalChronicle.ProductionCard.T1>T1</PersonalChronicle.ProductionCard.T1>
+  <PersonalChronicle.ProductionCard.T2>T2</PersonalChronicle.ProductionCard.T2>
+  <PersonalChronicle.ProductionCard.T3>T3</PersonalChronicle.ProductionCard.T3>
+  <PersonalChronicle.ProductionCard.Speed>Worktable speed factor ×{0}</PersonalChronicle.ProductionCard.Speed>
+</LanguageData>

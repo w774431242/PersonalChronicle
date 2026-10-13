@@ -30,10 +30,24 @@ namespace PersonalChronicle.Domain
             get { return ArchiveCategoryKeys.Pawn; }
         }
 
+        /// <summary>Legacy: dead (DeathTick > 0). v4.x+ prefer <see cref="ArchiveStatus"/>.</summary>
         public bool IsArchived
         {
             get { return DeathTick > 0L; }
         }
+
+        /// <summary>
+        /// v4.x 档案生命周期状态。默认 Active；死亡后由自动归档逻辑评估价值，
+        /// 低价值 → Archived（30 天后 PendingPurge → 销毁）；高价值保持 Archived 不销毁。
+        /// </summary>
+        public PawnArchiveStatus ArchiveStatus = PawnArchiveStatus.Active;
+
+        /// <summary>
+        /// 归档过期 tick（仅 Archived/PendingPurge 有意义）。
+        /// 设为 DeathTick + AutoArchivePurgeTicks（30 天 = 180000 ticks @ 60 tps）。
+        /// 到期后 GameComponentTick 将状态推进为 PendingPurge 并在下一次 purge pass 真正删除。
+        /// </summary>
+        public long ArchiveExpiryTick = -1L;
 
         public PawnRecord()
         {
@@ -51,6 +65,11 @@ namespace PersonalChronicle.Domain
             int role = (int)Role;
             Scribe_Values.Look(ref role, "role", (int)PawnRole.FreeColonist);
             Role = (PawnRole)role;
+            // v4.x 归档状态（新字段，老存档缺省 Active）
+            int status = (int)ArchiveStatus;
+            Scribe_Values.Look(ref status, "archiveStatus", (int)PawnArchiveStatus.Active);
+            ArchiveStatus = (PawnArchiveStatus)status;
+            Scribe_Values.Look(ref ArchiveExpiryTick, "archiveExpiryTick", -1L);
         }
     }
 }

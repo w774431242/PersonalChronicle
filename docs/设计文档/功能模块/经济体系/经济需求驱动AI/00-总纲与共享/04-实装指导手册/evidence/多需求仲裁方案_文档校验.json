@@ -1,0 +1,7 @@
+{
+  "result": "Passed",
+  "conflictScenarios": 22,
+  "localLinks": "Passed",
+  "utf8": "Passed",
+  "scope": "Design document structure only; no runtime code or gameplay validation"
+}

@@ -1,0 +1,399 @@
+{
+  "changeId": "ART-20261010-ECONOMY-STORAGE",
+  "tool": "built-in image_gen",
+  "files": [
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PublicStorage_north.png",
+      "source": "原始母图/PC_PublicStorage_north.png",
+      "sourceSha256": "44EDA363D65A2274778F8B38DED9D4EDDBC2C7C804B40D5AD6AF7586DD3E4CBE",
+      "sha256": "F2E36E876989CA78B609880D0944DBE4708051D952DBB1EC8A5615740450291D",
+      "width": 192,
+      "height": 128,
+      "sourceBounds": {
+        "left": 244,
+        "top": 149,
+        "width": 1287,
+        "height": 584
+      },
+      "opaqueSourceBounds": {
+        "left": 245,
+        "top": 150,
+        "width": 1285,
+        "height": 582
+      },
+      "sourceAspect": 2.2079037800687287,
+      "edgeRatioTolerance": 0.0075872982132946,
+      "cropAlphaThreshold": 8,
+      "exportBounds": {
+        "left": 32,
+        "top": 35,
+        "width": 128,
+        "height": 58
+      },
+      "connectedComponentSizes": [
+        7308
+      ],
+      "borderFullyTransparent": true,
+      "transparentFraction": 0.7014973958333334,
+      "format": "RGBA PNG",
+      "export": "visible rectangular crop, uniform resize and transparent framing only; retained alpha unchanged",
+      "visualReviewed": true,
+      "gameVerified": false,
+      "category": "D building texture",
+      "defName": "PC_PublicStorage",
+      "prompts": [
+        {
+          "path": "生成提示词/PC_PublicStorage_north.txt",
+          "sha256": "745D05900B2410DE645F51B085733C6C37B3E96A2DD501B3021B0AD3824D1A53"
+        }
+      ]
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PublicStorage_east.png",
+      "source": "原始母图/PC_PublicStorage_east.png",
+      "sourceSha256": "48E26D8F47F9D1C4C176E840540C733A58CE1D6BF406569BBAEB76C0D83C285D",
+      "sha256": "818204F59439FCC647CE42553D2D40903B8BE7CFD80E28BBEF04B80C76DD4A1B",
+      "width": 128,
+      "height": 192,
+      "sourceBounds": {
+        "left": 158,
+        "top": 81,
+        "width": 709,
+        "height": 1349
+      },
+      "opaqueSourceBounds": {
+        "left": 159,
+        "top": 82,
+        "width": 707,
+        "height": 1347
+      },
+      "sourceAspect": 1.9052333804809052,
+      "edgeRatioTolerance": 0.005389627667555602,
+      "cropAlphaThreshold": 8,
+      "exportBounds": {
+        "left": 30,
+        "top": 32,
+        "width": 67,
+        "height": 128
+      },
+      "connectedComponentSizes": [
+        8316
+      ],
+      "borderFullyTransparent": true,
+      "transparentFraction": 0.6553141276041666,
+      "format": "RGBA PNG",
+      "export": "visible rectangular crop, uniform resize and transparent framing only; retained alpha unchanged",
+      "visualReviewed": true,
+      "gameVerified": false,
+      "category": "D building texture",
+      "defName": "PC_PublicStorage",
+      "prompts": [
+        {
+          "path": "生成提示词/PC_PublicStorage_east.txt",
+          "sha256": "019E063645B756E74DBE24E5811A26A7576F3FFDE34766A64233C7345D7D4115"
+        },
+        {
+          "path": "生成提示词/PC_PublicStorage_east_纹理修正.txt",
+          "sha256": "9DEAE85E0CF38D0E7AEF807F7E18D35453E41BCEDA606564FD4901DAD43B6B3C"
+        }
+      ]
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PublicStorage_south.png",
+      "source": "原始母图/PC_PublicStorage_south.png",
+      "sourceSha256": "763646162DA6D1B8717AF2A2CAF5D2503C3F1E4406794F67278F9D83EC7A8989",
+      "sha256": "41F8F48682AEDA4E9C1BC5EA99DB4DC7E38E5E18C3CFC76A3EA7E6C24AE8E848",
+      "width": 192,
+      "height": 128,
+      "sourceBounds": {
+        "left": 216,
+        "top": 145,
+        "width": 1342,
+        "height": 596
+      },
+      "opaqueSourceBounds": {
+        "left": 217,
+        "top": 146,
+        "width": 1340,
+        "height": 593
+      },
+      "sourceAspect": 2.259696458684654,
+      "edgeRatioTolerance": 0.00762123594834622,
+      "cropAlphaThreshold": 8,
+      "exportBounds": {
+        "left": 32,
+        "top": 35,
+        "width": 128,
+        "height": 57
+      },
+      "connectedComponentSizes": [
+        7196
+      ],
+      "borderFullyTransparent": true,
+      "transparentFraction": 0.7065022786458334,
+      "format": "RGBA PNG",
+      "export": "visible rectangular crop, uniform resize and transparent framing only; retained alpha unchanged",
+      "visualReviewed": true,
+      "gameVerified": false,
+      "category": "D building texture",
+      "defName": "PC_PublicStorage",
+      "prompts": [
+        {
+          "path": "生成提示词/PC_PublicStorage_south.txt",
+          "sha256": "AE1CF3E4F7575E16F6FC14C8943CCF272B710BC2EA6EF8F12011407C47E81AC5"
+        }
+      ]
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PublicStorage_west.png",
+      "source": "原始母图/PC_PublicStorage_west.png",
+      "sourceSha256": "FC8D9631EEAA11C49D70236C73B68F309C33EB5E1160FBC38C75004D2D09634A",
+      "sha256": "305C36C70BE7EDF8287F7032638589A147A29B152CA25CC739D0CE89685B5C70",
+      "width": 128,
+      "height": 192,
+      "sourceBounds": {
+        "left": 198,
+        "top": 129,
+        "width": 639,
+        "height": 1273
+      },
+      "opaqueSourceBounds": {
+        "left": 199,
+        "top": 130,
+        "width": 637,
+        "height": 1270
+      },
+      "sourceAspect": 1.9937205651491365,
+      "edgeRatioTolerance": 0.006259719199840303,
+      "cropAlphaThreshold": 8,
+      "exportBounds": {
+        "left": 32,
+        "top": 32,
+        "width": 64,
+        "height": 128
+      },
+      "connectedComponentSizes": [
+        8026
+      ],
+      "borderFullyTransparent": true,
+      "transparentFraction": 0.6715087890625,
+      "format": "RGBA PNG",
+      "export": "visible rectangular crop, uniform resize and transparent framing only; retained alpha unchanged",
+      "visualReviewed": true,
+      "gameVerified": false,
+      "category": "D building texture",
+      "defName": "PC_PublicStorage",
+      "prompts": [
+        {
+          "path": "生成提示词/PC_PublicStorage_west.txt",
+          "sha256": "6A4491405FC5D9506BF55D09C38F5A20B1956E1CB8ABC06DC106139F80E9E8C0"
+        }
+      ]
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PrivateStorage_north.png",
+      "source": "原始母图/PC_PrivateStorage_north.png",
+      "sourceSha256": "F80D878D222D25CC32C30971D13762B47C47DBA011A153CABBB4962D572802C1",
+      "sha256": "CC2C8AA61E10DBD1DFF859F5B95A256815A1486DC3D962DEE8DC01E28449CC26",
+      "width": 192,
+      "height": 128,
+      "sourceBounds": {
+        "left": 222,
+        "top": 160,
+        "width": 1331,
+        "height": 580
+      },
+      "opaqueSourceBounds": {
+        "left": 223,
+        "top": 161,
+        "width": 1329,
+        "height": 578
+      },
+      "sourceAspect": 2.2993079584775087,
+      "edgeRatioTolerance": 0.007956082901306259,
+      "cropAlphaThreshold": 8,
+      "exportBounds": {
+        "left": 32,
+        "top": 36,
+        "width": 128,
+        "height": 56
+      },
+      "connectedComponentSizes": [
+        7063
+      ],
+      "borderFullyTransparent": true,
+      "transparentFraction": 0.7116292317708334,
+      "format": "RGBA PNG",
+      "export": "visible rectangular crop, uniform resize and transparent framing only; retained alpha unchanged",
+      "visualReviewed": true,
+      "gameVerified": false,
+      "category": "D building texture",
+      "defName": "PC_PrivateStorage",
+      "prompts": [
+        {
+          "path": "生成提示词/PC_PrivateStorage_north.txt",
+          "sha256": "F2C83980D56FECB4EDBBF0871E306EFB1CDFC8795186F055C4A18622A8D6B0B3"
+        }
+      ]
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PrivateStorage_east.png",
+      "source": "原始母图/PC_PrivateStorage_east.png",
+      "sourceSha256": "A192369742B99EFBEC929C876054D7880FC3EA469DBE93BDFE2E7C9C22907919",
+      "sha256": "FCE260F28736B53B4C0B05819F902756C6B4263DFBFEBD9AB3B745025501B36B",
+      "width": 128,
+      "height": 192,
+      "sourceBounds": {
+        "left": 163,
+        "top": 142,
+        "width": 699,
+        "height": 1228
+      },
+      "opaqueSourceBounds": {
+        "left": 163,
+        "top": 142,
+        "width": 698,
+        "height": 1227
+      },
+      "sourceAspect": 1.7578796561604584,
+      "edgeRatioTolerance": 0.005036904458912488,
+      "cropAlphaThreshold": 8,
+      "exportBounds": {
+        "left": 27,
+        "top": 32,
+        "width": 73,
+        "height": 128
+      },
+      "connectedComponentSizes": [
+        9066
+      ],
+      "borderFullyTransparent": true,
+      "transparentFraction": 0.6286214192708334,
+      "format": "RGBA PNG",
+      "export": "visible rectangular crop, uniform resize and transparent framing only; retained alpha unchanged",
+      "visualReviewed": true,
+      "gameVerified": false,
+      "category": "D building texture",
+      "defName": "PC_PrivateStorage",
+      "prompts": [
+        {
+          "path": "生成提示词/PC_PrivateStorage_east_v1.txt",
+          "sha256": "0EEB2B73476A4740D8509A7C4744F8B81F597BBBF1445940F37E977D8AA3B082"
+        },
+        {
+          "path": "生成提示词/PC_PrivateStorage_east.txt",
+          "sha256": "E1A0D059D2F90DC1CF348C0361471B1968357B0FF8ED5F8743BC7C537BC60C09"
+        }
+      ]
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PrivateStorage_south.png",
+      "source": "原始母图/PC_PrivateStorage_south.png",
+      "sourceSha256": "D861F673E4C7EEAE75D6CDE5BC2E2768D59E0C87308C2EFB449CA754B517AFED",
+      "sha256": "7D2B3C5077EA85AFDA4AD597C70DAF0A5FC19C97E08C8824F4C3119C118671DB",
+      "width": 192,
+      "height": 128,
+      "sourceBounds": {
+        "left": 221,
+        "top": 163,
+        "width": 1333,
+        "height": 578
+      },
+      "opaqueSourceBounds": {
+        "left": 222,
+        "top": 164,
+        "width": 1331,
+        "height": 577
+      },
+      "sourceAspect": 2.3067590987868285,
+      "edgeRatioTolerance": 0.007995698782623323,
+      "cropAlphaThreshold": 8,
+      "exportBounds": {
+        "left": 32,
+        "top": 36,
+        "width": 128,
+        "height": 56
+      },
+      "connectedComponentSizes": [
+        6982
+      ],
+      "borderFullyTransparent": true,
+      "transparentFraction": 0.71240234375,
+      "format": "RGBA PNG",
+      "export": "visible rectangular crop, uniform resize and transparent framing only; retained alpha unchanged",
+      "visualReviewed": true,
+      "gameVerified": false,
+      "category": "D building texture",
+      "defName": "PC_PrivateStorage",
+      "prompts": [
+        {
+          "path": "生成提示词/PC_PrivateStorage_south.txt",
+          "sha256": "80F430652E5D20DDBAB62633C057674409A0DFD85E933DD734388D8C8CEE5192"
+        }
+      ]
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PrivateStorage_west.png",
+      "source": "原始母图/PC_PrivateStorage_west.png",
+      "sourceSha256": "D13C684C8E9DD43BDC1CF200676DAB6C555D01A417C2362330CF7DD162A6CD08",
+      "sha256": "4C52CCF508C6C3B0FDC58E6502AFF445FA5E85D15B4682AFBB2166CD1D6325D8",
+      "width": 128,
+      "height": 192,
+      "sourceBounds": {
+        "left": 162,
+        "top": 136,
+        "width": 703,
+        "height": 1232
+      },
+      "opaqueSourceBounds": {
+        "left": 164,
+        "top": 136,
+        "width": 701,
+        "height": 1231
+      },
+      "sourceAspect": 1.7560627674750358,
+      "edgeRatioTolerance": 0.005010164814479417,
+      "cropAlphaThreshold": 8,
+      "exportBounds": {
+        "left": 27,
+        "top": 32,
+        "width": 73,
+        "height": 128
+      },
+      "connectedComponentSizes": [
+        9063
+      ],
+      "borderFullyTransparent": true,
+      "transparentFraction": 0.6286214192708334,
+      "format": "RGBA PNG",
+      "export": "visible rectangular crop, uniform resize and transparent framing only; retained alpha unchanged",
+      "visualReviewed": true,
+      "gameVerified": false,
+      "category": "D building texture",
+      "defName": "PC_PrivateStorage",
+      "prompts": [
+        {
+          "path": "生成提示词/PC_PrivateStorage_west.txt",
+          "sha256": "4469F498106DDDB0F8A118118CAF0DCD1879650353BAE56951A982FDA52A0991"
+        }
+      ]
+    }
+  ],
+  "technicalChecksPassed": true,
+  "visualReviewed": true,
+  "gameVerified": false,
+  "defSha256": "9DF7A7D92E2DD6E6FA1A2690547D1B5848972CA01A1B00F5F49296D32268F027",
+  "exportScriptSha256": "FAE29489A2F50896841353EB64FC87CE873310B838C10B6B88FA275015F61D71",
+  "reviewedUtc": "2026-10-10T10:35:08.6042358Z",
+  "visualChecks": {
+    "backgrounds": [
+      "dark",
+      "light"
+    ],
+    "partsAndFrontBackPositions": true,
+    "readableTextBaked": false,
+    "inventoryBaked": false,
+    "falsePaymentOrStatusBaked": false,
+    "manualReviewIsNotIdentityProof": true
+  }
+}

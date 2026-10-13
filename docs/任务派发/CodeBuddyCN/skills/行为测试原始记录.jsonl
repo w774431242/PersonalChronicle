@@ -1,0 +1,21 @@
+I've loaded the skill, but I need to flag two blockers before I can analyze anything.
+
+**1. `Read` is denied by the permission system**
+Both attempts failed:
+- `Read SKILL.md` → denied (permission prompts unavailable in non-interactive mode)
+- `Read references/closed-loop.md` → denied (same)
+
+I did recover the main `SKILL.md` body by invoking the `Skill` tool for `engineering-orchestrator`, so I have the top-level method. But the referenced material it points to for detail — `references/closed-loop.md`, `references/dispatch.md`, `assets/task-contract.md`, `scripts/check_plan.py`, `references/codebuddy.md`, `references/verification.md` — I **cannot** read, so I cannot follow the "按需读取其引用" part of your instruction.
+
+To unblock, either re-run with `-p -y` / `--permission-mode bypassPermissions`, or add `Read` to `permissions.allow`.
+
+**2. No synthetic scenario was actually included**
+Your message says *"只分析下面的合成场景"*, but nothing follows that line — the scenario text is missing from the prompt. I won't invent one or claim to have analyzed it.
+
+Once you paste the scenario, I'll analyze it strictly read-only under the skill's method: define the deliverable behavior in one reproducible scenario, group by root cause / right boundary before ordering dependencies, separate "broken link vs. rule error vs. false fact vs. recovery defect vs. capacity lifecycle vs. presentation error" using minimal-reproduction evidence, and keep the required distinction between Implemented / CodeVerified / RuntimeVerified / Released — writing `NOT RUN` / `UNKNOWN` where evidence is absent.
+
+Please provide:
+- the synthetic scenario text, and
+- (if you want me to use the skill's deeper references) Read permission.
+
+I will not modify files, run builds, dispatch sub-agents, or claim any fix was completed.

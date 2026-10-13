@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "机制 10 · 结算与学习",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [930, 500]
+  },
+  "stages": [
+    { "label": "结算证据" },
+    { "label": "判决" },
+    { "label": "账本" },
+    { "label": "回写与消费" }
+  ],
+  "nodes": [
+    { "id": "settle", "type": "database", "label": "结算结果", "sublabel": "按时 / 延误 / 失败", "stage": 0, "row": 2, "tag": "真实结算" },
+    { "id": "rules", "type": "security", "label": "摘要判决", "sublabel": "四道前置拒绝", "stage": 1, "row": 2, "tag": "StyleLearningRules" },
+    { "id": "ledger", "type": "database", "label": "学习账本", "sublabel": "偏移 · 额度 · 去重", "stage": 2, "row": 2, "tag": "每 Pawn 一本" },
+    { "id": "policy", "type": "backend", "label": "八维策略", "sublabel": "p = clamp01(base + offset)", "stage": 3, "row": 2, "tag": "回写 LifePolicy" },
+    { "id": "use", "type": "frontend", "label": "实际消费方", "sublabel": "工作小时 / 食物目标 / 选岗", "stage": 3, "row": 0, "tag": "仅 3 处" }
+  ],
+  "flows": [
+    { "id": "settle-rules", "from": "settle", "to": "rules", "label": "摘要", "classification": "按时 / 延误 / 失败", "variant": "emphasis" },
+    { "id": "rules-ledger", "from": "rules", "to": "ledger", "label": "入账", "classification": "0.10 × 0.03", "variant": "emphasis", "labelDy": 29 },
+    { "id": "ledger-policy", "from": "ledger", "to": "policy", "label": "八维偏移", "classification": "有界慢速", "variant": "emphasis", "labelDy": 24 },
+    { "id": "policy-use", "from": "policy", "to": "use", "label": "生效", "classification": "3 处接入", "variant": "emphasis", "fromSide": "top", "toSide": "bottom", "route": "straight", "labelDy": -30 }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "额度与增量",
+      "items": [
+        "0.10 = 单条摘要的融合系数；0.03 = 每日每维额度上限（两者分工不同）",
+        "判决顺序：维禁用 → 摘要重复 → 时间回退 → 额度耗尽，任一命中即拒且变化量为 0",
+        "被拒摘要不加入已处理集合 ⇒ 不消耗其唯一性"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "可信度通道（并行）",
+      "items": [
+        "可信度估计 = Beta(1,1) 后验：mean = (1 + 按时) / (2 + 已知结果数)，无样本 = 5000 中性",
+        "低可信标记（阈值 0.5）驱动选岗回避：偏好 > 0.5 且有替代时才换",
+        "时长平滑 α = 0.20；先验权重与样本数一并暴露，不发明门槛"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "落盘与接入面（与描述不符）",
+      "items": [
+        "BeginDay 只在游戏日前进时清额度；读档走 Restore 不清额度（读档 ≠ 新的一天）",
+        "只有 ReliabilityPreference 有投递入口；其余七维偏移实际恒为 0",
+        "八维中 5 维全仓无消费方；实际生效仅 3 处（工作小时 / 食物目标 / 选岗）"
+      ]
+    }
+  ]
+}

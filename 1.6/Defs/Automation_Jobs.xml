@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    车间岗位 Job 与 WorkGiver（参考文档 §3.2/§3.3，按 1.6 权威字段修正）。
+
+    岗位优先复用原版设备工单，PC_WorkshopDuty 只用于无活时限时待命（300 tick）。
+    作息边界由地图 60-tick 对账结束自动岗位，原版进食、睡眠和紧急任务继续正常运行。
+    WorkGiverDef 的 scanThings=false / scanCells=false，对应 NonScanJob 入口。
+
+    ⚠⚠ 字段名已按 RimWorld 1.6 实机字段表修正（2026-09-18，Player.log 128-130 行报错 + Cecil 核实）：
+      · `<JobDef>` **没有** `workType` 字段 —— `workType` 仅存在于 `RimWorld.WorkGiverDef`
+        （IL 实证字段表：WorkGiverDef{workType, workTags, verb, gerund, …}；JobDef 无 workType）
+        ⇒ 该节点写在 JobDef 里被**静默丢弃**。岗位与工作类型的绑定**只由 WorkGiverDef 承担**，
+          故此处删除 JobDef 内的 workType（WorkGiverDef 里那份是正确的、保留）。
+      · `<JobDef>` **没有** `alwaysStartableInDebug` 字段 —— 该名在 1.6 全程序集字段搜索中
+        **零命中**（fieldsearch "alwaysStartable" / "StartableInDebug" / "Debug" 均无）⇒ 从未存在过，
+        属历史误写，删除。
+      · `WorkGiverDef` 的字段名是 **`gerund`（名词）不是 `gerundLabel`**（IL 字段表实证）
+        ⇒ 旧写法 `<gerundLabel>` 被静默丢弃、岗位在 Work 面板显示时会回退到 label。
+  -->
+  <JobDef>
+    <defName>PC_WorkshopDuty</defName>
+    <driverClass>PersonalChronicle.Automation.JobDriver_WorkshopDuty</driverClass>
+    <reportString>waiting for executable workshop work.</reportString>
+    <playerInterruptible>true</playerInterruptible>
+    <casualInterruptible>true</casualInterruptible>
+    <suspendable>true</suspendable>
+  </JobDef>
+
+  <WorkGiverDef>
+    <defName>PC_WorkshopDutyGiver</defName>
+    <label>workshop duty</label>
+    <verb>work the workshop</verb>
+    <gerund>standing workshop duty</gerund>
+    <workType>PC_WorkshopOperation</workType>
+    <giverClass>PersonalChronicle.Automation.WorkGiver_Workshop</giverClass>
+    <priorityInType>100</priorityInType>
+    <scanThings>false</scanThings>
+    <scanCells>false</scanCells>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneWhileDrafted>false</canBeDoneWhileDrafted>
+  </WorkGiverDef>
+
+  <!--
+    CHG-20261004-MEALSCHEDULE · 三餐作息 WorkGiver。
+
+    scanThings=false + scanCells=false：与 PC_WorkshopDutyGiver 同理 —— 食物由
+    WorkGiver_Meal 主动按原版判据（category==Item && IngestibleNow && CanEverEat && 可预约）
+    搜索后交给原版 JobDefOf.Ingest，**不需要** Scanner 机制。
+    若误设 scanThings=true 而不给 scannerDef，原版将找不到任何 Thing。
+
+    requiredCapacities 留空：吃饭不消耗特定身体能力；能否进食已由
+    RaceProps.CanEverEat（种族级）与 PawnCapacityWorker_Eating 兜住，
+    在此再声明 Manipulation 只会把"手部失能"误判成"不能吃饭"。
+  -->
+  <WorkGiverDef>
+    <defName>PC_MealGiver</defName>
+    <label>meal break</label>
+    <verb>eat a meal</verb>
+    <gerund>having a meal</gerund>
+    <workType>PC_MealBreak</workType>
+    <giverClass>PersonalChronicle.Automation.WorkGiver_Meal</giverClass>
+    <priorityInType>100</priorityInType>
+    <scanThings>false</scanThings>
+    <scanCells>false</scanCells>
+    <canBeDoneWhileDrafted>false</canBeDoneWhileDrafted>
+  </WorkGiverDef>
+</Defs>

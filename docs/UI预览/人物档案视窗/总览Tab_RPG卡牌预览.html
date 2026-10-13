@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>职业档案·总览 — RPG 卡牌 + 纯文本数据面板</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --panel: #1a1a2e;
+    --panel-2: #16213e;
+    --border: #2a2a4a;
+    --gold: #d4af37;
+    --gold-soft: #e8c766;
+    --cyan: #4ecdc4;
+    --green: #6bcf7f;
+    --accent: #c89b3c;
+    --text: #e6e6f0;
+    --muted: #9a9ab0;
+    --dim: #6a6a80;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    padding: 24px; line-height: 1.5;
+  }
+  .page { max-width: 720px; margin: 0 auto 40px; }
+  .window {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 8px; padding: 18px;
+  }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .tab { padding: 7px 16px; color: var(--muted); font-size: 13px; border-radius: 6px 6px 0 0; }
+  .tab.active { color: var(--gold); background: var(--panel-2); border: 1px solid var(--border); border-bottom: none; margin-bottom: -1px; }
+
+  /* ===== 单张 RPG 职业身份卡牌 ===== */
+  .hero-card { position: relative; background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 14px 14px 26px; overflow: hidden; }
+  .hero-card::before { content: ""; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--accent); }
+  .hero-top { display: flex; gap: 12px; }
+  .portrait { width: 64px; height: 64px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 4px;
+    background: radial-gradient(circle at 50% 38%, #c9b08a 0 18%, transparent 19%), radial-gradient(ellipse at 50% 75%, #6a5a44 0 40%, transparent 41%), linear-gradient(160deg, #2a3550, #1a2238); position: relative; }
+  .portrait::after { content: "🧍"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; opacity: .85; }
+  .hero-id { flex: 1; }
+  .hero-title-row { display: flex; justify-content: space-between; align-items: center; height: 24px; }
+  .hero-name { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .hero-promo { font-size: 16px; font-weight: 700; color: var(--gold); text-align: right; }
+  .lv-row { display: flex; align-items: center; gap: 8px; height: 16px; margin-top: 6px; }
+  .lv-label { font-size: 12px; color: var(--text); white-space: nowrap; }
+  .lv-bar-bg { flex: 1; height: 10px; background: #0f0f1a; border: 1px solid var(--border); border-radius: 5px; overflow: hidden; }
+  .lv-bar-fill { height: 100%; background: var(--accent); }
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px; }
+  .metric { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 6px 2px; text-align: center; }
+  .metric .num { font-size: 15px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+  .metric .lab { font-size: 10px; color: var(--dim); margin-top: 2px; }
+  .major-row { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
+  .major-box { flex: 1; display: flex; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; height: 30px; }
+  .badge { font-size: 11px; font-weight: 800; color: #0f0f1a; background: var(--green); border-radius: 4px; padding: 2px 6px; flex-shrink: 0; }
+  .major-name { font-size: 13px; color: var(--text); }
+  .plan-btn { font-size: 13px; color: #0f0f1a; background: var(--accent); border: none; border-radius: 6px; padding: 0 16px; height: 30px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+
+  /* ===== 纯文本数据面板 ===== */
+  .attr-head { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px; }
+  .attr-title { font-size: 13px; color: var(--gold); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .attr-title::before { content: ""; width: 4px; height: 15px; background: var(--gold); border-radius: 2px; }
+  .cfg-btn { font-size: 12px; color: var(--muted); background: var(--panel); border: 1px solid var(--border); border-radius: 5px; padding: 3px 12px; cursor: pointer; }
+  .attr-list { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; }
+  .attr-line { font-size: 13px; color: var(--text); padding: 3px 0; font-variant-numeric: tabular-nums; }
+  .attr-line .k { color: var(--text); }
+  .attr-line .v { color: var(--gold-soft); font-weight: 600; }
+  .attr-line.mod .k { color: var(--cyan); }
+
+  /* ===== 自定义字段对话框预览 ===== */
+  .dialog { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; max-width: 420px; margin: 0 auto; }
+  .dialog h2 { font-size: 16px; color: var(--gold); margin-bottom: 8px; }
+  .crumb { font-size: 12px; color: var(--dim); margin-bottom: 10px; min-height: 16px; }
+  .crumb .back { color: var(--gold); cursor: pointer; font-weight: 600; }
+  .crumb .back:hover { text-decoration: underline; }
+  .src-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 10px; margin-bottom: 6px;
+    background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text); }
+  .src-row:hover { border-color: var(--accent); }
+  .src-name { font-weight: 600; }
+  .src-count { font-size: 12px; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .grp-title { font-size: 13px; font-weight: 700; margin: 8px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border); color: var(--gold-soft); }
+  .opt { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 2px; color: var(--text); cursor: pointer; }
+  .opt:hover { background: var(--panel-2); }
+  .box { width: 15px; height: 15px; border: 1px solid var(--border); border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #0f0f1a; }
+  .box.on { background: var(--accent); border-color: var(--accent); }
+  .opt.dim { color: var(--dim); }
+  .opt.dim .box { background: transparent; }
+  .dlg-btns { display: flex; gap: 10px; margin-top: 16px; }
+  .dlg-btns button { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-size: 13px; cursor: pointer; }
+  .btn-reset { background: var(--panel-2); color: var(--muted); }
+  .btn-done { background: var(--accent); color: #0f0f1a; font-weight: 700; border: none; }
+  .note { font-size: 11px; color: var(--dim); margin-top: 10px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- ============ 视窗：总览 Tab ============ -->
+<div class="page">
+<div class="window">
+  <div class="tabs">
+    <div class="tab active">总览</div>
+    <div class="tab">资质</div>
+    <div class="tab">适配</div>
+    <div class="tab">履历</div>
+    <div class="tab">荣誉</div>
+  </div>
+
+  <!-- 单张 RPG 职业身份卡牌 -->
+  <div class="hero-card">
+    <div class="hero-top">
+      <div class="portrait"></div>
+      <div class="hero-id">
+        <div class="hero-title-row">
+          <div class="hero-name">未评定工程师</div>
+          <div class="hero-promo">66%</div>
+        </div>
+        <div class="lv-row">
+          <span class="lv-label">Lv.7 工程师</span>
+          <div class="lv-bar-bg"><div class="lv-bar-fill" style="width:14%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="num">515h</div><div class="lab">工时</div></div>
+      <div class="metric"><div class="num">312</div><div class="lab">制造</div></div>
+      <div class="metric"><div class="num">8</div><div class="lab">论文</div></div>
+      <div class="metric"><div class="num">B+</div><div class="lab">评级</div></div>
+    </div>
+
+    <div class="major-row">
+      <div class="major-box">
+        <span class="badge">荐</span>
+        <span class="major-name">工程师 · 适配度 82%</span>
+      </div>
+      <button class="plan-btn">规划</button>
+    </div>
+  </div>
+
+  <!-- 纯文本数据面板（按来源着色：本Mod字段青色） -->
+  <div class="attr-head">
+    <div class="attr-title">属性</div>
+    <button class="cfg-btn">自定义字段</button>
+  </div>
+  <div class="attr-list">
+    <div class="attr-line"><span class="k">全局工作效率</span>：<span class="v">1.12×</span></div>
+    <div class="attr-line"><span class="k">研究速度</span>：<span class="v">0.95×</span></div>
+    <div class="attr-line"><span class="k">移动速度</span>：<span class="v">4.6 格/s</span></div>
+    <div class="attr-line"><span class="k">搬运上限</span>：<span class="v">35 kg</span></div>
+    <div class="attr-line"><span class="k">综合健康分</span>：<span class="v">87 /100</span></div>
+    <div class="attr-line"><span class="k">心情</span>：<span class="v">78 %</span></div>
+    <div class="attr-line"><span class="k">精力</span>：<span class="v">64 %</span></div>
+    <div class="attr-line mod"><span class="k">总工时</span>：<span class="v">515h</span></div>
+    <div class="attr-line mod"><span class="k">制造数</span>：<span class="v">312 件</span></div>
+    <div class="attr-line mod"><span class="k">著作数</span>：<span class="v">8 本</span></div>
+    <div class="attr-line mod"><span class="k">专业等级</span>：<span class="v">7 Lv</span></div>
+    <div class="attr-line mod"><span class="k">最佳适配度</span>：<span class="v">82 %</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 唤起：自定义字段对话框（二级钻取） ============ -->
+<div class="page">
+  <div class="dialog">
+    <h2>自定义属性面板字段</h2>
+    <div id="crumb" class="crumb">选择来源分类以编辑其字段</div>
+
+    <!-- 第一层：来源分类列表 -->
+    <div id="sourceList"></div>
+    <!-- 第二层：某来源的字段勾选 -->
+    <div id="fieldList" style="display:none;"></div>
+
+    <div class="dlg-btns">
+      <button class="btn-reset" onclick="resetDefault()">恢复默认</button>
+      <button class="btn-done" onclick="closeDlg()">完成</button>
+    </div>
+    <div class="note">来源自动按 Mod 注册分类：原版 = RimWorld 原生 StatDef / Need；PersonalChronicle = 本 Mod 派生；其余 Mod 通过 RegisterExternal(其 PackageId) 注册，各自独立成组。点击分类钻取进入具体字段。</div>
+  </div>
+</div>
+
+<script>
+// 数据源：模拟注册表（sourceId → 字段清单）
+const SOURCES = [
+  { id: "vanilla", label: "原版属性", order: 0, fields: [
+    { k: "全局工作效率", on: true }, { k: "研究速度", on: true }, { k: "移动速度", on: true },
+    { k: "搬运上限", on: true }, { k: "综合健康分", on: true }, { k: "心情", on: true }, { k: "精力", on: true },
+    { k: "建造速度", on: false }, { k: "种植速度", on: false }, { k: "采矿速度", on: false },
+    { k: "烹饪速度", on: false }, { k: "近战 DPS", on: false }, { k: "射击精度", on: false },
+    { k: "社交影响力", on: false }, { k: "谈判能力", on: false }, { k: "食物 / 娱乐", on: false },
+  ]},
+  { id: "PersonalChronicle", label: "本 Mod 属性", order: 1, fields: [
+    { k: "总工时", on: true }, { k: "制造数", on: true }, { k: "著作数", on: true }, { k: "专业等级", on: true },
+    { k: "建筑数", on: false }, { k: "研究项数", on: false }, { k: "最佳适配度", on: false },
+  ]},
+  { id: "dubs.bathygiene", label: "Dubs Bad Hygiene", order: 2, fields: [
+    { k: "清洁度", on: false }, { k: "卫生需求", on: false }, { k: "饮水需求", on: false },
+  ]},
+  { id: "alpha.mechs", label: "Alpha Mechs", order: 3, fields: [
+    { k: "机甲维护", on: false }, { k: "能量核心", on: false },
+  ]},
+];
+const idx = id => SOURCES.findIndex(s => s.id === id);
+let drill = null;
+
+function renderSources() {
+  const el = document.getElementById("sourceList");
+  el.style.display = ""; document.getElementById("fieldList").style.display = "none";
+  document.getElementById("crumb").textContent = "选择来源分类以编辑其字段";
+  el.innerHTML = "";
+  [...SOURCES].sort((a,b)=>a.order-b.order).forEach(s => {
+    const sel = s.fields.filter(f=>f.on).length;
+    const row = document.createElement("div");
+    row.className = "src-row";
+    row.innerHTML = `<span class="src-name">${s.label}</span><span class="src-count">${sel} / ${s.fields.length}</span>`;
+    row.onclick = () => renderFields(s.id);
+    el.appendChild(row);
+  });
+}
+function renderFields(id) {
+  const s = SOURCES[idx(id)];
+  document.getElementById("sourceList").style.display = "none";
+  const fl = document.getElementById("fieldList"); fl.style.display = "";
+  document.getElementById("crumb").innerHTML = `<span class="back" onclick="renderSources()">&lt; 返回</span>`;
+  fl.innerHTML = "";
+  const title = document.createElement("div");
+  title.className = "grp-title"; title.textContent = s.label;
+  fl.appendChild(title);
+  s.fields.forEach((f, fi) => {
+    const opt = document.createElement("div");
+    opt.className = "opt" + (f.on ? "" : " dim");
+    opt.innerHTML = `<div class="box ${f.on?'on':''}">${f.on?'✓':''}</div>${f.k}`;
+    opt.onclick = () => { f.on = !f.on; renderFields(id); };
+    fl.appendChild(opt);
+  });
+}
+function resetDefault() { SOURCES.forEach(s=>s.fields.forEach(f=>f.on = f.k!=="" && ["全局工作效率","研究速度","移动速度","搬运上限","综合健康分","心情","精力","总工时","制造数","著作数","专业等级"].includes(f.k))); renderSources(); }
+function closeDlg() { /* 演示：无操作 */ }
+
+renderSources();
+</script>
+
+</body>
+</html>

@@ -27,18 +27,21 @@ namespace PersonalChronicle.Archive
         /// <summary>
         /// Runs once after the DefDatabase is fully populated. Idempotent: safe to
         /// call again (e.g. after a def reload) without duplicating tabs.
+        /// <paramref name="tabTypes"/> 由组合根（ChronicleMod）提供，按序注入且顺序敏感；
+        /// 本类不引用任何业务域类型（ARCH：Economy 已引用 Archive.UI，反向直引会构成循环）。
         /// </summary>
-        public static void InjectAll()
+        public static void InjectAll(IReadOnlyList<Type> tabTypes)
         {
             if (injected)
             {
                 return;
             }
             injected = true;
+            if (tabTypes == null)
+            {
+                return;
+            }
 
-            Type tabType = typeof(ITab_Pawn_Chronicle);
-            // 职业档案 ITab：与六宫格 ITab 并列的第二个 Pawn inspect 页（P1 落地，履历真实数据）。
-            Type careerTabType = typeof(ITab_Pawn_Career);
             int count = 0;
 
             foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
@@ -61,9 +64,11 @@ namespace PersonalChronicle.Archive
                         def.inspectorTabsResolved = new List<InspectTabBase>();
                     }
 
-                    // 注入两个 Tab（六宫格档案 + 职业档案），各自幂等去重。
-                    InjectTab(def, tabType, ref count);
-                    InjectTab(def, careerTabType, ref count);
+                    // 逐一注入（各自幂等去重）。顺序 = 参数顺序。
+                    for (int i = 0; i < tabTypes.Count; i++)
+                    {
+                        InjectTab(def, tabTypes[i], ref count);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -88,8 +93,16 @@ namespace PersonalChronicle.Archive
             {
                 return;
             }
-            def.inspectorTabs.Add(tabType);
-            def.inspectorTabsResolved.Add(InspectTabManager.GetSharedInstance(tabType));
+
+            // v1.1.5 起固定插入 index 1（不追加到列表末尾）。幂等性不受影响。
+            // 2026-10-08 实证更正（原注释称"前移到左侧、紧邻角色"，与实机不符）：
+            // 原版 BasePawn.inspectorTabs 顺序为 [Health, Needs, Character, …, Gear, Log]
+            // （Core/Defs/ThingDefs_Races/Races_Animal_Base.xml），而 inspect pane 按该列表
+            // **逆序**铺开 ⇒ index 1 实际落在视觉最右端、紧邻「健康」；连续插入形成
+            // 「档案｜职业档案｜个人需求｜健康」的右侧聚簇（见实机截图）。
+            int index = Math.Min(1, def.inspectorTabs.Count);
+            def.inspectorTabs.Insert(index, tabType);
+            def.inspectorTabsResolved.Insert(index, InspectTabManager.GetSharedInstance(tabType));
             count++;
         }
     }

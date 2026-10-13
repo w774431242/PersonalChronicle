@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "机制 07 · 计划发布与执行接线",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" }
+  },
+  "lanes": [
+    { "id": "rail", "label": "协调器与发布" },
+    { "id": "aux", "label": "持久化（滞回）" },
+    { "id": "sink", "label": "执行侧动作", "variant": "exception" }
+  ],
+  "phases": [
+    { "id": "p1", "label": "调度", "fromCol": 0, "toCol": 1 },
+    { "id": "p2", "label": "建计划", "fromCol": 2, "toCol": 2, "variant": "emphasis" },
+    { "id": "p3", "label": "发布", "fromCol": 3, "toCol": 3, "variant": "emphasis" },
+    { "id": "p4", "label": "执行接线", "fromCol": 4, "toCol": 5 }
+  ],
+  "mainPath": ["tick", "pop", "build", "publish", "review", "act"],
+  "semanticChecks": { "allowedRoots": ["tick", "latch"], "allowedTerminals": ["act", "store"] },
+  "nodes": [
+    { "id": "tick", "lane": "rail", "col": 0, "type": "backend", "label": "Tick 节流", "sublabel": "2 人 / tick", "tag": "复查 250 tick" },
+    { "id": "pop", "lane": "rail", "col": 1, "type": "database", "label": "人口名册", "sublabel": "≤ 4096", "tag": "600 tick 重扫" },
+    { "id": "build", "lane": "rail", "col": 2, "type": "backend", "label": "建计划", "sublabel": "Build / BuildSeeded", "tag": "唯一构建点" },
+    { "id": "publish", "lane": "rail", "col": 3, "type": "messagebus", "label": "发布", "sublabel": "报告 → latch → sink", "tag": "顺序固定", "height": 64 },
+    { "id": "review", "lane": "rail", "col": 4, "type": "backend", "label": "① 合同复查", "sublabel": "MaintainContract", "tag": "先于制度门" },
+    { "id": "act", "lane": "rail", "col": 5, "type": "backend", "label": "④ 购买 / 求职", "sublabel": "退避 → 计数 → 签约", "tag": "SeekWork 才签" },
+    { "id": "latch", "lane": "aux", "col": 1, "type": "database", "label": "读 latch", "sublabel": "仅本会话无报告", "tag": "seed" },
+    { "id": "store", "lane": "aux", "col": 3, "type": "database", "label": "写 latch", "sublabel": "仅 Budget Ready", "tag": "有界 64 / 4096" },
+    { "id": "pay", "lane": "sink", "col": 4, "type": "backend", "label": "② 日切 + 补付", "sublabel": "BeginDay · 应付 ≤16", "tag": "幂等" },
+    { "id": "guard", "lane": "sink", "col": 5, "type": "security", "label": "③ 门 / 早退", "sublabel": "制度门 · ECON-R04 · 复核", "height": 64, "width": 132 }
+  ],
+  "edges": [
+    { "from": "tick", "to": "pop", "label": "到期者" },
+    { "from": "pop", "to": "build", "label": "逐人" },
+    { "from": "latch", "to": "build", "label": "喂 seed", "role": "branch" },
+    { "from": "build", "to": "publish", "label": "发布" },
+    { "from": "build", "to": "store", "label": "落盘", "role": "async", "variant": "dashed" },
+    { "from": "publish", "to": "review", "label": "发布即复查" },
+    { "from": "publish", "to": "pay", "label": "账务前置", "role": "branch" },
+    { "from": "pay", "to": "guard", "label": "已补付" },
+    { "from": "guard", "to": "act", "label": "放行" },
+    { "from": "review", "to": "act", "label": "通过" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "调度与只读契约",
+      "items": [
+        "Tick 节流：每 tick 至多 2 人，每人 250 tick 复查，名册上限 4096 且 600 tick 重扫",
+        "Query 只读：不采集、不规划、不写盘；时间回退 / epoch 不符 / 地图不符 / 计划比 now 新一律返回 null",
+        "发布顺序固定：读 latch → 建计划 → 写内存报告 → 写 latch → 通知 sink"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "执行侧顺序（11 步）",
+      "items": [
+        "① 合同复查（先于制度门）→ ② 学习日切 + 补付（≤16 条幂等）→ ③ 制度门 → 日志 → ECON-R04 早退 → 状态复核 → ④ 购买链 → 求职",
+        "ECON-R04 早退只认 NativeYield / WaitingFacts（NativeNeed 不在列）",
+        "购买走退避账；衣物链不接退避账"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "顺序即正确性",
+      "items": [
+        "合同复查必须早于制度门：否则制度关闭后已签合同永久占用工作类型",
+        "latch 只在 Budget Ready 时落盘（证明过水位才值得记）",
+        "计划源异常 ⇒ 以 Error / PlanningSourceFailed 覆盖旧成功报告"
+      ]
+    }
+  ]
+}

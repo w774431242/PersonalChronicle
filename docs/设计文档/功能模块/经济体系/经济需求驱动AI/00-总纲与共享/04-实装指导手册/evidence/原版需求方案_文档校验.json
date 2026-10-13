@@ -1,0 +1,10 @@
+{
+  "result": "Passed",
+  "scope": "Design document structure and current-source availability only; no runtime implementation or gameplay tests",
+  "lifeDomains": 12,
+  "mappedVanillaNeedTypes": 10,
+  "verifiedGameTypes": 31,
+  "evidenceFiles": 35,
+  "localDocumentLinks": "Passed",
+  "utf8": "Passed"
+}

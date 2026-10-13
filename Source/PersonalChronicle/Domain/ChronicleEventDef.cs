@@ -16,7 +16,16 @@ namespace PersonalChronicle.Domain
         Join,
         Built,
         /// <summary>v3.1 P3: social relation events (formed / ended).</summary>
-        Social
+        Social,
+        /// <summary>
+        /// 2026-09-15：**离档**（离开 / 被俘 / 死亡移出殖民地）—— 与 <see cref="Join"/> 配对
+        /// 可算「净在册人数」。⚠ 追加在末尾：枚举顺序是存档兼容契约，不得插队。
+        /// </summary>
+        Leave,
+        /// <summary>
+        /// 2026-09-15：**身份变更**（自由 ↔ 奴隶 ↔ 囚犯）—— 分身份存量趋势的必要语义。
+        /// </summary>
+        RoleChanged
     }
 
     /// <summary>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!--
+    CHG-20261005-SETTINGS-UI · Mod settings page rebuild
+    (sections / source badges / expandable use-and-cost details).
+    CHG-PRERELEASE-SETTINGS · pre-release pass:
+      * tabs 5 -> 4 ("Meals & Schedule" empty page merged into Workshop;
+        Diagnostics only appears in dev mode)
+      * "Restore on shift" defaulted => its page-only copy removed
+      * fixed D3/D4 disclosure errors; removed orphan keys; merged the
+        duplicated Detail.AutoDetect definition
+
+    Only PAGE-ONLY strings live here; existing title keys are reused from
+    Automation.xml / Archive.xml and not redefined.
+  -->
+  <PersonalChronicle.Settings.SectionGeneral>General</PersonalChronicle.Settings.SectionGeneral>
+  <PersonalChronicle.Settings.SectionUi>Interface</PersonalChronicle.Settings.SectionUi>
+  <PersonalChronicle.Settings.SectionDiag>Diagnostics (no need to change for normal play)</PersonalChronicle.Settings.SectionDiag>
+
+  <!-- ── Tabs (4; "Diagnostics" only shows in dev mode) ── -->
+  <PersonalChronicle.Settings.Tab.Archive>Archive</PersonalChronicle.Settings.Tab.Archive>
+  <PersonalChronicle.Settings.Tab.Workshop>Workshop</PersonalChronicle.Settings.Tab.Workshop>
+  <PersonalChronicle.Settings.Tab.Ui>Interface</PersonalChronicle.Settings.Tab.Ui>
+  <PersonalChronicle.Settings.Tab.Diag>Diagnostics</PersonalChronicle.Settings.Tab.Diag>
+
+  <!-- ── Shared bits ── -->
+  <PersonalChronicle.Settings.TooSmall>Window too small - please enlarge the mod settings window</PersonalChronicle.Settings.TooSmall>
+  <PersonalChronicle.Settings.RowFailed>This row failed to draw (isolated, see log)</PersonalChronicle.Settings.RowFailed>
+  <PersonalChronicle.Settings.ReadOnly>(read-only)</PersonalChronicle.Settings.ReadOnly>
+  <PersonalChronicle.Settings.HiddenWorkTabNone>Nothing hidden</PersonalChronicle.Settings.HiddenWorkTabNone>
+  <PersonalChronicle.Settings.WorkTabHiddenTitle>Hidden from Work tab</PersonalChronicle.Settings.WorkTabHiddenTitle>
+  <!-- Rows gated by a parent toggle (currently only: auto-archive off => thresholds read-only) -->
+  <PersonalChronicle.Settings.NeedParentOn>Turn the row above on for this to take effect</PersonalChronicle.Settings.NeedParentOn>
+  <!-- Slider range hint: {0} = min, {1} = max (sliders no longer draw vanilla min/max labels) -->
+  <PersonalChronicle.Settings.RangeFmt>Range: {0} - {1}</PersonalChronicle.Settings.RangeFmt>
+
+  <!-- ── Archive · use ── -->
+  <PersonalChronicle.Settings.Use.Recording>When off, no new archive events are recorded (existing archives are kept).</PersonalChronicle.Settings.Use.Recording>
+  <!-- D3 fix: the implementation stops accepting new events at the cap; nothing is dropped/evicted -->
+  <PersonalChronicle.Settings.Use.MaxEvents>How many events are kept per colonist; once the cap is reached no new events are recorded (existing entries are never deleted).</PersonalChronicle.Settings.Use.MaxEvents>
+  <PersonalChronicle.Settings.Use.AutoArchive>Low-value archives of the dead are purged after the retention period, keeping saves small.</PersonalChronicle.Settings.Use.AutoArchive>
+  <PersonalChronicle.Settings.Use.AutoArchiveSilver>Health-based silver value; dead archives below it become eligible for archiving.</PersonalChronicle.Settings.Use.AutoArchiveSilver>
+  <PersonalChronicle.Settings.Use.AutoArchivePurgeDays>Days kept after being marked, before actual deletion.</PersonalChronicle.Settings.Use.AutoArchivePurgeDays>
+
+  <!-- ── Workshop · use / cost ── -->
+  <!-- CHG-20261005-SETTINGS-REMOVE2: "stop work off shift" is now defaulted on and no longer a
+       setting, so its page-only strings are removed. The long key
+       `PersonalChronicle.Settings.EnableOffShiftCancel` (Archive.xml) is kept because the legacy
+       drawing block in the same file still references it. -->
+
+  <PersonalChronicle.Settings.Use.IdleSplit>When workers exceed devices, the surplus goes to joy (idling) instead of standing around.</PersonalChronicle.Settings.Use.IdleSplit>
+  <PersonalChronicle.Settings.Detail.IdleSplit>Default on. Turn off if you want everyone on duty regardless of capacity.</PersonalChronicle.Settings.Detail.IdleSplit>
+  <PersonalChronicle.Settings.Use.AutoDetect>Detects the workshop type from the mix of devices inside it, so you do not have to pick per workshop.</PersonalChronicle.Settings.Use.AutoDetect>
+  <PersonalChronicle.Settings.Detail.AutoDetect>Default on. Mixed device styles may be undecidable - then pick the type manually on the workshop's Settings page (that workshop is then marked as manually chosen).</PersonalChronicle.Settings.Detail.AutoDetect>
+  <PersonalChronicle.Settings.Use.ReplayTimetables>Refreshes timetables once per day to clear leftover wrong cells.</PersonalChronicle.Settings.Use.ReplayTimetables>
+  <PersonalChronicle.Settings.Detail.ReplayTimetables>Default on. Cost: it overwrites hand-edited timetables; when off, timetables are written only on roster/device changes.</PersonalChronicle.Settings.Detail.ReplayTimetables>
+  <PersonalChronicle.Settings.Use.RestPolicy>Default rest policy for new workshops (a workshop can still override it).</PersonalChronicle.Settings.Use.RestPolicy>
+  <PersonalChronicle.Settings.Detail.RestPolicy>Priority: workshop setting &gt; this &gt; def default (fixed per shift). "Rotate daily" flips sleep rhythm and shows a warning below.</PersonalChronicle.Settings.Detail.RestPolicy>
+  <PersonalChronicle.Settings.RestShort.Fixed>Fixed</PersonalChronicle.Settings.RestShort.Fixed>
+  <PersonalChronicle.Settings.RestShort.Natural>Natural</PersonalChronicle.Settings.RestShort.Natural>
+  <PersonalChronicle.Settings.RestShort.Rotate>Rotating</PersonalChronicle.Settings.RestShort.Rotate>
+
+  <!-- CHG-20261005-SETTINGS-REMOVE2: the read-only "meals moved to shifts" pointer row was removed
+       by PM decision; its strings are removed too (section title key MealSection lives in Archive.xml). -->
+
+  <!-- ── Interface · use ── -->
+  <PersonalChronicle.Settings.Use.Theme>Colour theme for all mod interfaces.</PersonalChronicle.Settings.Use.Theme>
+  <PersonalChronicle.Settings.Use.HiddenWorkTab>Colonists hidden from the vanilla Work tab can only be restored here.</PersonalChronicle.Settings.Use.HiddenWorkTab>
+
+  <!-- ── Diagnostics · use / cost (this page only appears in dev mode) ── -->
+  <PersonalChronicle.Settings.Use.PerfProbe>Every 60 seconds, logs measured timings of key entry points for performance comparison.</PersonalChronicle.Settings.Use.PerfProbe>
+  <PersonalChronicle.Settings.Detail.PerfProbe>Default off, zero overhead when off. Enable only when profiling stutter and you need before/after numbers.</PersonalChronicle.Settings.Detail.PerfProbe>
+  <!-- D4 fix: the implementation writes counters to the log; it does not display anything on screen -->
+  <PersonalChronicle.Settings.Use.DebugLiveCount>Writes debug counters to the log (debug); nothing is shown on screen.</PersonalChronicle.Settings.Use.DebugLiveCount>
+  <PersonalChronicle.Settings.Use.StartupSelfTest>Runs a self-test on load and reports it (requires dev mode).</PersonalChronicle.Settings.Use.StartupSelfTest>
+  <PersonalChronicle.Settings.Detail.StartupSelfTest>Default on, shown at most once per session, invisible without dev mode. Fastest way to self-verify when something breaks.</PersonalChronicle.Settings.Detail.StartupSelfTest>
+
+  <!-- ── Short titles for THIS page only (mod settings window is only ~590px wide) ── -->
+  <PersonalChronicle.Settings.Title.Recording>Enable recording</PersonalChronicle.Settings.Title.Recording>
+  <PersonalChronicle.Settings.Title.AutoArchive>Auto-archive low value</PersonalChronicle.Settings.Title.AutoArchive>
+  <!-- CHG-20261005-SETTINGS-REMOVE2: Title.OffShiftCancel removed with the setting itself -->
+
+  <PersonalChronicle.Settings.Title.IdleSplit>Surplus workers idle</PersonalChronicle.Settings.Title.IdleSplit>
+  <PersonalChronicle.Settings.Title.AutoDetect>Auto-detect type</PersonalChronicle.Settings.Title.AutoDetect>
+  <PersonalChronicle.Settings.Title.Replay>Daily timetable replay</PersonalChronicle.Settings.Title.Replay>
+  <PersonalChronicle.Settings.Title.RestPolicy>Default rest policy</PersonalChronicle.Settings.Title.RestPolicy>
+  <PersonalChronicle.Settings.Title.Theme>Interface theme</PersonalChronicle.Settings.Title.Theme>
+  <PersonalChronicle.Settings.Title.PerfProbe>Performance probe</PersonalChronicle.Settings.Title.PerfProbe>
+  <PersonalChronicle.Settings.Title.DebugLive>Debug counters</PersonalChronicle.Settings.Title.DebugLive>
+  <PersonalChronicle.Settings.Title.StartupSelfTest>Startup self-test</PersonalChronicle.Settings.Title.StartupSelfTest>
+
+</LanguageData>

@@ -1,0 +1,5301 @@
+{
+  "collectedUtc": "2026-10-08T05:18:45.8240578Z",
+  "gameVersion": "1.6.4871 rev590",
+  "method": "Read-only current DLL metadata, installed NeedDefs and source fingerprints; no game code executed. Decompiled source semantics are explanatory, not guaranteed identical to this DLL.",
+  "assembly": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\RimWorldWin64_Data\\Managed\\Assembly-CSharp.dll",
+    "sha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "mvid": "61e41735-6189-4da4-9d21-0260257b5097"
+  },
+  "types": [
+    {
+      "type": "Verse.Pawn",
+      "baseType": "Verse.ThingWithComps",
+      "publicFields": [
+        "Verse.PawnKindDef Verse.Pawn::kindDef",
+        "Verse.Gender Verse.Pawn::gender",
+        "Verse.Pawn_AgeTracker Verse.Pawn::ageTracker",
+        "Verse.Pawn_HealthTracker Verse.Pawn::health",
+        "RimWorld.Pawn_RecordsTracker Verse.Pawn::records",
+        "Verse.Pawn_InventoryTracker Verse.Pawn::inventory",
+        "RimWorld.Pawn_MeleeVerbs Verse.Pawn::meleeVerbs",
+        "Verse.VerbTracker Verse.Pawn::verbTracker",
+        "RimWorld.Pawn_Ownership Verse.Pawn::ownership",
+        "Verse.Pawn_CarryTracker Verse.Pawn::carryTracker",
+        "RimWorld.Pawn_NeedsTracker Verse.Pawn::needs",
+        "Verse.AI.Pawn_MindState Verse.Pawn::mindState",
+        "RimWorld.Pawn_SurroundingsTracker Verse.Pawn::surroundings",
+        "Verse.AI.Pawn_Thinker Verse.Pawn::thinker",
+        "Verse.AI.Pawn_JobTracker Verse.Pawn::jobs",
+        "Verse.Pawn_StanceTracker Verse.Pawn::stances",
+        "Verse.Pawn_InfectionVectorTracker Verse.Pawn::infectionVectors",
+        "RimWorld.Pawn_DuplicateTracker Verse.Pawn::duplicate",
+        "Verse.Pawn_RotationTracker Verse.Pawn::rotationTracker",
+        "Verse.AI.Pawn_PathFollower Verse.Pawn::pather",
+        "RimWorld.Pawn_NativeVerbs Verse.Pawn::natives",
+        "RimWorld.Pawn_FilthTracker Verse.Pawn::filth",
+        "RimWorld.Pawn_RopeTracker Verse.Pawn::roping",
+        "RimWorld.Pawn_FlightTracker Verse.Pawn::flight",
+        "Verse.Pawn_EquipmentTracker Verse.Pawn::equipment",
+        "RimWorld.Pawn_ApparelTracker Verse.Pawn::apparel",
+        "RimWorld.Pawn_SkillTracker Verse.Pawn::skills",
+        "RimWorld.Pawn_StoryTracker Verse.Pawn::story",
+        "RimWorld.Pawn_GuestTracker Verse.Pawn::guest",
+        "RimWorld.Pawn_GuiltTracker Verse.Pawn::guilt",
+        "RimWorld.Pawn_RoyaltyTracker Verse.Pawn::royalty",
+        "RimWorld.Pawn_AbilityTracker Verse.Pawn::abilities",
+        "RimWorld.Pawn_IdeoTracker Verse.Pawn::ideo",
+        "RimWorld.Pawn_GeneTracker Verse.Pawn::genes",
+        "RimWorld.Pawn_CreepJoinerTracker Verse.Pawn::creepjoiner",
+        "RimWorld.Pawn_WorkSettings Verse.Pawn::workSettings",
+        "RimWorld.Pawn_TraderTracker Verse.Pawn::trader",
+        "RimWorld.Pawn_StyleTracker Verse.Pawn::style",
+        "RimWorld.Pawn_StyleObserverTracker Verse.Pawn::styleObserver",
+        "RimWorld.Pawn_ConnectionsTracker Verse.Pawn::connections",
+        "RimWorld.Pawn_TrainingTracker Verse.Pawn::training",
+        "Verse.Pawn_CallTracker Verse.Pawn::caller",
+        "RimWorld.Pawn_PsychicEntropyTracker Verse.Pawn::psychicEntropy",
+        "RimWorld.Pawn_MutantTracker Verse.Pawn::mutant",
+        "RimWorld.Pawn_RelationsTracker Verse.Pawn::relations",
+        "RimWorld.Pawn_InteractionsTracker Verse.Pawn::interactions",
+        "RimWorld.Pawn_PlayerSettings Verse.Pawn::playerSettings",
+        "RimWorld.Pawn_OutfitTracker Verse.Pawn::outfits",
+        "RimWorld.Pawn_DrugPolicyTracker Verse.Pawn::drugs",
+        "RimWorld.Pawn_FoodRestrictionTracker Verse.Pawn::foodRestriction",
+        "RimWorld.Pawn_TimetableTracker Verse.Pawn::timetable",
+        "RimWorld.Pawn_InventoryStockTracker Verse.Pawn::inventoryStock",
+        "RimWorld.Pawn_MechanitorTracker Verse.Pawn::mechanitor",
+        "RimWorld.Pawn_LearningTracker Verse.Pawn::learning",
+        "RimWorld.Pawn_ReadingTracker Verse.Pawn::reading",
+        "RimWorld.Pawn_DraftController Verse.Pawn::drafter",
+        "Verse.AI.Group.Lord Verse.Pawn::lord",
+        "System.Boolean Verse.Pawn::markedForDiscard",
+        "System.Int32 Verse.Pawn::becameWorldPawnTickAbs",
+        "System.Boolean Verse.Pawn::teleporting",
+        "System.Boolean Verse.Pawn::forceNoDeathNotification",
+        "System.Int32 Verse.Pawn::showNamePromptOnTick",
+        "System.Int32 Verse.Pawn::babyNamingDeadline",
+        "System.Boolean Verse.Pawn::addCorpseToLord",
+        "System.Int32 Verse.Pawn::timesRaisedAsShambler",
+        "System.Int32 Verse.Pawn::lastVacuumBurntTick",
+        "Verse.Map Verse.Pawn::prevMap",
+        "System.Boolean Verse.Pawn::wasLeftBehindStartingPawn",
+        "System.Boolean Verse.Pawn::debugMaxMoveSpeed",
+        "System.Boolean Verse.Pawn::wasDraftedBeforeSkip",
+        "System.Boolean Verse.Pawn::dontGivePreArrivalPathway",
+        "System.Boolean Verse.Pawn::everLostEgo",
+        "System.Int32 Verse.Pawn::DefaultBabyNamingPeriod",
+        "System.Int32 Verse.Pawn::DefaultGrowthMomentChoicePeriod",
+        "System.Int32 Verse.Pawn::MaxMoveTicks",
+        "RimWorld.CompCanBeDormant Verse.Pawn::canBeDormant",
+        "RimWorld.CompActivity Verse.Pawn::activity"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.Name Verse.Pawn::get_Name()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::set_Name(Verse.Name)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.RaceProperties Verse.Pawn::get_RaceProps()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job Verse.Pawn::get_CurJob()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.JobDef Verse.Pawn::get_CurJobDef()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Downed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Crawling()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_CanAttackWhileCrawling()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Flying()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Swimming()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Dead()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_DeadOrDowned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Pawn::get_KindLabel()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_InMentalState()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.MentalState Verse.Pawn::get_MentalState()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.MentalStateDef Verse.Pawn::get_MentalStateDef()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_InAggroMentalState()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Inspired()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Inspiration Verse.Pawn::get_Inspiration()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.InspirationDef Verse.Pawn::get_InspirationDef()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Vector3 Verse.Pawn::get_DrawPos()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.VerbTracker Verse.Pawn::get_VerbTracker()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.VerbProperties> Verse.Pawn::get_VerbProperties()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Tool> Verse.Pawn::get_Tools()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_ShouldAvoidFences()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Nullable`1<System.Single> Verse.Pawn::get_RoamMtbDays()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Roamer()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_FenceBlocked()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_CanPassFences()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_DrawNonHumanlikeSwimmingGraphic()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_DrawNonHumanlikeStationaryGraphic()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_CanOpenDoors()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_CanOpenAnyDoor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Nullable`1<System.Int32> Verse.Pawn::get_WaterCellCost()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsColonist()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsFreeColonist()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsFreeNonSlaveColonist()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_CanTakeOrder()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsCreepJoiner()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Faction Verse.Pawn::get_HostFaction()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Faction Verse.Pawn::get_SlaveFaction()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Ideo Verse.Pawn::get_Ideo()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_ShouldHaveIdeo()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Drafted()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsPrisoner()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsPrisonerOfColony()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsSlave()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsSlaveOfColony()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsFreeman()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsMutant()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsSubhuman()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsDuplicate()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsEntity()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsShambler()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsGhoul()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsAwokenCorpse()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsAnimal()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_HasShowGizmosOnCorpseHediff()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.DevelopmentalStage Verse.Pawn::get_DevelopmentalStage()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Nullable`1<RimWorld.GuestStatus> Verse.Pawn::get_GuestStatus()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsColonistPlayerControlled()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsColonyMech()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsColonyMechPlayerControlled()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsColonySubhuman()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsColonySubhumanPlayerControlled()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsColonyAnimal()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_IsPlayerControlled()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.IntVec3> Verse.Pawn::get_IngredientStackCells()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_InContainerEnclosed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Corpse Verse.Pawn::get_Corpse()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn Verse.Pawn::get_CarriedBy()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_CanAttackWhenPathingBlocked()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_HarmedByVacuum()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_ConcernedByVacuum()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Pawn::get_LabelNoCount()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Pawn::get_LabelShort()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.TaggedString Verse.Pawn::get_LabelNoCountColored()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.TaggedString Verse.Pawn::get_NameShortColored()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.TaggedString Verse.Pawn::get_NameFullColored()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.TaggedString Verse.Pawn::get_LegalStatus()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.Pawn::get_TicksPerMoveCardinal()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.Pawn::get_TicksPerMoveDiagonal()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Pawn::get_DescriptionDetailed()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Pawn::get_DescriptionFlavor()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.DefHyperlink> Verse.Pawn::get_DescriptionHyperlinks()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Pawn_DrawTracker Verse.Pawn::get_Drawer()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Faction Verse.Pawn::get_HomeFaction()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Deathresting()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_HasDeathRefusalOrResurrecting()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_Suspended()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.Faction Verse.Pawn::get_DeadlifeDustFaction()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_HasPsylink()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.CompOverseerSubject Verse.Pawn::get_OverseerSubject()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::ShouldShowQuestionMark()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Pawn::get_UpdateRateTicks()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Pawn::GetKindLabelSingular()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Pawn::GetKindLabelPlural(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ResetStaticData()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_DefsHotReloaded()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_Unfogged()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::MarkDeadlifeDustForFaction(RimWorld.Faction)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::SpawnSetup(Verse.Map,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::PostMake()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::PostMapInit()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::DrawShadowAt(UnityEngine.Vector3)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::DynamicDrawPhaseAt(Verse.DrawPhase,UnityEngine.Vector3,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::DrawAt(UnityEngine.Vector3,System.Boolean)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::DrawGUIOverlay()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::DrawExtraSelectionOverlays()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::TickRare()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Tick()",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::TickInterval(System.Int32)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ProcessPostTickVisuals(System.Int32,Verse.CellRect)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::TickMothballed(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_Teleported(System.Boolean,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.SurgicalInspectionOutcome Verse.Pawn::DoSurgicalInspection(Verse.Pawn,System.String&)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_BecameVisible()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_BecameInvisible()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_ForcedVisible()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_PassedToWorld()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_LeftBehind()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_AddBedThoughts()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::PreApplyDamage(Verse.DamageInfo&,System.Boolean&)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::PostApplyDamage(Verse.DamageInfo,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Thing Verse.Pawn::SplitOff(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Kill(System.Nullable`1<Verse.DamageInfo>,Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Destroy(Verse.DestroyMode)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::DeSpawn(Verse.DestroyMode)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Discard(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Corpse Verse.Pawn::MakeCorpse(RimWorld.Building_Grave,RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Corpse Verse.Pawn::MakeCorpse(RimWorld.Building_Grave,System.Boolean,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ExitMap(System.Boolean,Verse.Rot4)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::PreTraded(RimWorld.TradeAction,Verse.Pawn,RimWorld.ITrader)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::PreKidnapped(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::PreSwapMap()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AcceptanceReport Verse.Pawn::ClaimableBy(RimWorld.Faction)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::AdoptableBy(RimWorld.Faction,System.Text.StringBuilder)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::SetFaction(RimWorld.Faction,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ClearMind(System.Boolean,System.Boolean,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ClearMind_NewTemp(System.Boolean,System.Boolean,System.Boolean,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ClearAllReservations(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ClearReservationsForJob(Verse.AI.Job)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::VerifyReservations(Verse.AI.Job)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::DropAndForbidEverything(System.Boolean,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::GenerateNecessaryName()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Verb Verse.Pawn::TryGetAttackVerb(Verse.Thing,System.Boolean,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::TryStartAttack(Verse.LocalTargetInfo)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.Pawn::ButcherProducts(Verse.Pawn,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.TaggedString Verse.Pawn::FactionDesc(Verse.TaggedString,System.Boolean,System.String,System.String)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Pawn::MainDesc(System.Boolean,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Pawn::GetJobReport()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Pawn::GetInspectString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Gizmo> Verse.Pawn::GetGizmos()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.FloatMenuOption> Verse.Pawn::GetExtraFloatMenuOptionsFor(Verse.IntVec3)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.FloatMenuOption> Verse.Pawn::GetFloatMenuOptions(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.TipSignal Verse.Pawn::GetTooltip()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<RimWorld.StatDrawEntry> Verse.Pawn::SpecialDisplayStats()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.PathingContext Verse.Pawn::GetPathContext(Verse.AI.Pathing)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::Sterile()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::AnythingToStrip()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Strip(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.Thought_Memory Verse.Pawn::GiveObservedThought(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.HistoryEventDef Verse.Pawn::GiveObservedHistoryEvent(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::HearClamor(Verse.Thing,Verse.ClamorDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_UsedVerb(Verse.Pawn,Verse.Verb)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_Explosion(Verse.Explosion)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_BulletImpactNearby(RimWorld.BulletImpactData)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_Downed()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_Released()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_PrisonBreakout()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_DuplicatedFrom(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Pawn::GetAcceptArrestChance(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::CheckAcceptArrest(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::ThreatDisabled(Verse.AI.IAttackTargetSearcher)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::ThreatDisabledBecauseNonAggressiveRoamer(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.WorkTypeDef> Verse.Pawn::GetDisabledWorkTypes(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<System.String> Verse.Pawn::GetReasonsForDisabledWorkType(Verse.WorkTypeDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::WorkTypeIsDisabled(Verse.WorkTypeDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::OneOfWorkTypesIsDisabled(System.Collections.Generic.List`1<Verse.WorkTypeDef>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_DisabledWorkTypesChanged()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.WorkTags Verse.Pawn::get_CombinedDisabledWorkTags()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::WorkTagIsDisabled(Verse.WorkTags)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::PreventPlayerSellingThingsNearby(System.String&)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ChangeKind(Verse.PawnKindDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::CompsWantHoldWeapon()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Pawn::ToString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.TraderKindDef Verse.Pawn::get_TraderKind()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.TradeCurrency Verse.Pawn::get_TradeCurrency()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.Pawn::get_Goods()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Pawn::get_RandomPriceFactorSeed()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Pawn::get_TraderName()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::get_CanTradeNow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Pawn::get_TradePriceImprovementOffsetForPlayer()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Pawn::get_BodySize()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.Pawn::get_HealthScale()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.Pawn::get_EquippedWornOrInventoryThings()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> Verse.Pawn::ColonyThingsWillingToBuy(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::GiveSoldThingToTrader(Verse.Thing,System.Int32,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::GiveSoldThingToPlayer(Verse.Thing,System.Int32,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Pawn::get_TargetPriorityFactor()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.LocalTargetInfo Verse.Pawn::get_TargetCurrentlyAimingAt()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.LocalTargetInfo Verse.Pawn::get_LastAttackedTarget()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Pawn::get_LastAttackTargetTick()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Verb Verse.Pawn::get_CurrentEffectiveVerb()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.Planet.PlanetTile Verse.Pawn::GetRootTile()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.ThingOwner Verse.Pawn::GetDirectlyHeldThings()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::GetChildHolders(System.Collections.Generic.List`1<Verse.IThingHolder>)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.BillStack Verse.Pawn::get_BillStack()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.IntVec3 Verse.Pawn::get_InteractionCell()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::CurrentlyUsableForBills()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::UsableForBillsAfterFueling()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::Notify_BillDeleted(RimWorld.Bill)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn::Equals(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.ThingOwner Verse.Pawn::get_SearchableContents()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Pawn::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.MapPawns",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_AllPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_AllPawnsUnspawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonists()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_PrisonersOfColony()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_AllHumanlike()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_AllHumanlikeSpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonistsAndPrisoners()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_ColonistCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_AllPawnsCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_AllPawnsUnspawnedCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_FreeColonistsCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_PrisonersOfColonyCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_FreeColonistsAndPrisonersCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.MapPawns::get_AnyPawnBlockingMapRemoval()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IReadOnlyList`1<Verse.Pawn> Verse.MapPawns::get_AllPawnsSpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonistsSpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeAdultColonistsSpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_PrisonersOfColonySpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SlavesOfColonySpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_FreeColonistsAndPrisonersSpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedPawnsWithAnyHediff()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedHumanlikesWithAnyHediff()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedAnimalsWithAnyHediff()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedHungryPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedPawnsWithMiscNeeds()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_ColonyAnimals()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedColonyAnimals()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedColonyMechs()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_ColonySubhumansControllable()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedColonySubhumansPlayerControlled()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedDownedPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedPawnsWhoShouldHaveSurgeryDoneNow()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedPawnsWhoShouldHaveInventoryUnloaded()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_AllPawnsSpawnedCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_FreeColonistsSpawnedCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_FreeAdultColonistsSpawnedCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_PrisonersOfColonySpawnedCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_FreeColonistsAndPrisonersSpawnedCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_ColonistsSpawnedCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_FreeColonistsSpawnedOrInPlayerEjectablePodsCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.MapPawns::get_SlavesAndPrisonersOfColonySpawnedCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.MapPawns::get_AnyColonistSpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.MapPawns::get_AnyFreeColonistSpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SlavesAndPrisonersOfColonySpawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.MapPawns::.ctor(Verse.Map)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Faction> Verse.MapPawns::FactionsOnMap()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::PawnsInFaction(RimWorld.Faction)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::SpawnedPawnsInFaction(RimWorld.Faction)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::FreeHumanlikesOfFaction(RimWorld.Faction)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::FreeHumanlikesSpawnedOfFaction(RimWorld.Faction)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::SpawnedBabiesInFaction(RimWorld.Faction)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.MapPawns::RegisterPawn(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.MapPawns::DeRegisterPawn(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.MapPawns::UpdateRegistryForPawn(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> Verse.MapPawns::get_SpawnedShamblers()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.MapPawns::RegisterShambler(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.MapPawns::DeregisterShambler(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.MapPawns::LogListedPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need",
+      "baseType": "System.Object",
+      "publicFields": [
+        "RimWorld.NeedDef RimWorld.Need::def",
+        "System.Single RimWorld.Need::MaxDrawHeight"
+      ],
+      "methods": [
+        {
+          "signature": "System.String RimWorld.Need::get_LabelCap()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_CurInstantLevelPercentage()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_MaxLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_CurLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::set_CurLevel(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_CurLevelPercentage()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need::set_CurLevelPercentage(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need::get_IsFrozen()",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need::get_ShowOnNeedList()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::OnNeedRemoved()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::OffsetDebugPercent(System.Single)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::DrawOnGUI(UnityEngine.Rect,System.Int32,System.Single,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.Rect>,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::DrawBarInstantMarkerAt(UnityEngine.Rect,System.Single)",
+          "public": false,
+          "family": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need::DrawBarThreshold(UnityEngine.Rect,System.Single)",
+          "public": false,
+          "family": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Seeker",
+      "baseType": "RimWorld.Need",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.Need_Seeker::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Seeker::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Seeker::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_NeedsTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "RimWorld.Need_Mood RimWorld.Pawn_NeedsTracker::mood",
+        "RimWorld.Need_Food RimWorld.Pawn_NeedsTracker::food",
+        "RimWorld.Need_MechEnergy RimWorld.Pawn_NeedsTracker::energy",
+        "RimWorld.Need_Rest RimWorld.Pawn_NeedsTracker::rest",
+        "RimWorld.Need_Joy RimWorld.Pawn_NeedsTracker::joy",
+        "RimWorld.Need_Beauty RimWorld.Pawn_NeedsTracker::beauty",
+        "RimWorld.Need_RoomSize RimWorld.Pawn_NeedsTracker::roomsize",
+        "RimWorld.Need_Outdoors RimWorld.Pawn_NeedsTracker::outdoors",
+        "RimWorld.Need_Indoors RimWorld.Pawn_NeedsTracker::indoors",
+        "RimWorld.Need_Chemical_Any RimWorld.Pawn_NeedsTracker::drugsDesire",
+        "RimWorld.Need_Comfort RimWorld.Pawn_NeedsTracker::comfort",
+        "RimWorld.Need_Learning RimWorld.Pawn_NeedsTracker::learning",
+        "RimWorld.Need_Play RimWorld.Pawn_NeedsTracker::play"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Need> RimWorld.Pawn_NeedsTracker::get_AllNeeds()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Need> RimWorld.Pawn_NeedsTracker::get_MiscNeeds()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::BindDirectNeedFields()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::NeedsTrackerTickInterval(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "T RimWorld.Pawn_NeedsTracker::TryGetNeed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_NeedsTracker::TryGetNeed(T&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Need RimWorld.Pawn_NeedsTracker::TryGetNeed(RimWorld.NeedDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_NeedsTracker::TryGetNeed(RimWorld.NeedDef,RimWorld.Need&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::SetInitialLevels()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::AddOrRemoveNeedsAsAppropriate()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_NeedsTracker::get_PrefersOutdoors()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_NeedsTracker::get_PrefersIndoors()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Gizmo> RimWorld.Pawn_NeedsTracker::GetGizmos()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Food",
+      "baseType": "RimWorld.Need",
+      "publicFields": [
+        "System.Int32 RimWorld.Need_Food::lastNonStarvingTick",
+        "System.Single RimWorld.Need_Food::BaseFoodFallPerTick"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Food::get_Starving()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_PercentageThreshUrgentlyHungry()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_PercentageThreshHungry()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_NutritionBetweenHungryAndFed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.HungerCategory RimWorld.Need_Food::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_FoodFallPerTick()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Food::get_TicksUntilHungryWhenFed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Food::get_TicksUntilHungryWhenFedIgnoringMalnutrition()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Food::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_MaxLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_NutritionWanted()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Food::get_TicksStarving()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Food::get_IsFrozen()",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Food::GainingFood()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::FoodFallPerTickAssumingCategory(RimWorld.HungerCategory,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::OnNeedRemoved()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Food::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::DrawOnGUI(UnityEngine.Rect,System.Int32,System.Single,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.Rect>,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::BaseHungerRate(RimWorld.LifeStageDef,Verse.ThingDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Rest",
+      "baseType": "RimWorld.Need",
+      "publicFields": [
+        "System.Single RimWorld.Need_Rest::BaseRestGainPerTick",
+        "System.Single RimWorld.Need_Rest::ThreshTired",
+        "System.Single RimWorld.Need_Rest::ThreshVeryTired",
+        "System.Single RimWorld.Need_Rest::DefaultFallAsleepMaxLevel",
+        "System.Single RimWorld.Need_Rest::DefaultNaturalWakeThreshold",
+        "System.Single RimWorld.Need_Rest::CanWakeThreshold"
+      ],
+      "methods": [
+        {
+          "signature": "RimWorld.RestCategory RimWorld.Need_Rest::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Rest::get_RestFallPerTick()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Rest::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Rest::get_TicksAtZero()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Rest::get_Resting()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::TickResting(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Joy",
+      "baseType": "RimWorld.Need",
+      "publicFields": [
+        "RimWorld.JoyToleranceSet RimWorld.Need_Joy::tolerances"
+      ],
+      "methods": [
+        {
+          "signature": "RimWorld.JoyCategory RimWorld.Need_Joy::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Joy::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::GainJoy(System.Single,RimWorld.JoyKindDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Joy::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Comfort",
+      "baseType": "RimWorld.Need_Seeker",
+      "publicFields": [
+        "System.Single RimWorld.Need_Comfort::lastComfortUsed",
+        "System.Int32 RimWorld.Need_Comfort::lastComfortUseTick",
+        "System.Int32 RimWorld.Need_Comfort::ComfortUseInterval"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_Comfort::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.ComfortCategory RimWorld.Need_Comfort::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Comfort::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Comfort::ComfortUsed(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Beauty",
+      "baseType": "RimWorld.Need_Seeker",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_Beauty::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.BeautyCategory RimWorld.Need_Beauty::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Beauty::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Beauty::CurrentInstantBeauty()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_RoomSize",
+      "baseType": "RimWorld.Need_Seeker",
+      "publicFields": [
+        "System.Int32 RimWorld.Need_RoomSize::SampleNumCells"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_RoomSize::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.RoomSizeCategory RimWorld.Need_RoomSize::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_RoomSize::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_RoomSize::SpacePerceptibleNow()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Outdoors",
+      "baseType": "RimWorld.Need",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.Need_Outdoors::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.OutdoorsCategory RimWorld.Need_Outdoors::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Outdoors::get_ShowOnNeedList()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Outdoors::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Outdoors::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Outdoors::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Indoors",
+      "baseType": "RimWorld.Need",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Indoors::get_ShowOnNeedList()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Indoors::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.IndoorsCategory RimWorld.Need_Indoors::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Indoors::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Indoors::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Indoors::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Play",
+      "baseType": "RimWorld.Need",
+      "publicFields": [
+        "System.Single RimWorld.Need_Play::BaseFallPerInterval",
+        "System.Single RimWorld.Need_Play::ThresholdEmpty",
+        "System.Single RimWorld.Need_Play::ThresholdLow",
+        "System.Single RimWorld.Need_Play::ThresholdSatisfied",
+        "System.Single RimWorld.Need_Play::ThresholdHigh",
+        "System.Single RimWorld.Need_Play::ThresholdVeryHigh"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Play::get_IsLow()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.PlayCategory RimWorld.Need_Play::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Play::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Play::Play(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Play::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Learning",
+      "baseType": "RimWorld.Need",
+      "publicFields": [
+        "System.Single RimWorld.Need_Learning::BaseFallPerTick",
+        "System.Single RimWorld.Need_Learning::BaseFallPerInterval",
+        "System.Single RimWorld.Need_Learning::ThresholdEmpty",
+        "System.Single RimWorld.Need_Learning::ThresholdLow",
+        "System.Single RimWorld.Need_Learning::ThresholdSatisfied",
+        "System.Single RimWorld.Need_Learning::ThresholdHigh",
+        "System.Single RimWorld.Need_Learning::ThresholdVeryHigh",
+        "System.Single RimWorld.Need_Learning::IconSize",
+        "System.Single RimWorld.Need_Learning::IconPad"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Learning::get_IsFrozen()",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Learning::get_Suspended()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.LearningCategory RimWorld.Need_Learning::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Learning::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Learning::Learn(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Learning::DrawOnGUI(UnityEngine.Rect,System.Int32,System.Single,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.Rect>,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Learning::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Learning::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "Verse.Pawn_HealthTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.Effecter Verse.Pawn_HealthTracker::woundedEffecter",
+        "Verse.Effecter Verse.Pawn_HealthTracker::deflectionEffecter",
+        "System.Boolean Verse.Pawn_HealthTracker::forceDowned",
+        "System.Boolean Verse.Pawn_HealthTracker::beCarriedByCaravanIfSick",
+        "System.Boolean Verse.Pawn_HealthTracker::killedByRitual",
+        "System.Int32 Verse.Pawn_HealthTracker::lastReceivedNeuralSuperchargeTick",
+        "System.Single Verse.Pawn_HealthTracker::overrideDeathOnDownedChance",
+        "System.Boolean Verse.Pawn_HealthTracker::isBeingKilled",
+        "System.Boolean Verse.Pawn_HealthTracker::couldCrawl",
+        "Verse.HediffSet Verse.Pawn_HealthTracker::hediffSet",
+        "Verse.PawnCapacitiesHandler Verse.Pawn_HealthTracker::capacities",
+        "RimWorld.BillStack Verse.Pawn_HealthTracker::surgeryBills",
+        "Verse.SummaryHealthHandler Verse.Pawn_HealthTracker::summaryHealth",
+        "Verse.ImmunityHandler Verse.Pawn_HealthTracker::immunity"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.PawnHealthState Verse.Pawn_HealthTracker::get_State()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::get_Downed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::get_Dead()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.Pawn_HealthTracker::get_LethalDamageThreshold()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::get_CanBleed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::get_InPainShock()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::get_CanCrawlOrMove()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::get_CanCrawl()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::Reset()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Hediff Verse.Pawn_HealthTracker::AddHediff(Verse.HediffDef,Verse.BodyPartRecord,System.Nullable`1<Verse.DamageInfo>,Verse.DamageWorker/DamageResult)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Hediff Verse.Pawn_HealthTracker::GetOrAddHediff(Verse.HediffDef,Verse.BodyPartRecord,System.Nullable`1<Verse.DamageInfo>,Verse.DamageWorker/DamageResult)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::AddHediff(Verse.Hediff,Verse.BodyPartRecord,System.Nullable`1<Verse.DamageInfo>,Verse.DamageWorker/DamageResult)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::RemoveHediff(Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::RemoveAllHediffs()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::Notify_HediffChanged(Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::Notify_UsedVerb(Verse.Verb,Verse.LocalTargetInfo)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::Notify_Spawned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::Notify_PawnCorpseDestroyed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::PreApplyDamage(Verse.DamageInfo,System.Boolean&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::PostApplyDamage(Verse.DamageInfo,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::RestorePart(Verse.BodyPartRecord,Verse.Hediff,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.Pawn_HealthTracker::FactorForDamage(Verse.DamageInfo)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::CheckForStateChange(System.Nullable`1<Verse.DamageInfo>,Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.WorkTypeDef> Verse.Pawn_HealthTracker::get_DisabledWorkTypes()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::ShouldBeDowned()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::ShouldBeDead()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.PawnCapacityDef Verse.Pawn_HealthTracker::ShouldBeDeadFromRequiredCapacity()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::ShouldBeDeadFromLethalDamageThreshold()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::WouldLosePartAfterAddingHediff(Verse.HediffDef,Verse.BodyPartRecord,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::WouldDieAfterAddingHediff(Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::WouldDieAfterAddingHediff(Verse.HediffDef,Verse.BodyPartRecord,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::WouldBeDownedAfterAddingHediff(Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::WouldBeDownedAfterAddingHediff(Verse.HediffDef,Verse.BodyPartRecord,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::SetDead()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::NotifyPlayerOfKilled(System.Nullable`1<Verse.DamageInfo>,Verse.Hediff,RimWorld.Planet.Caravan)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::Notify_Resurrected(System.Boolean,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::HealthTick()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::HealthTickInterval(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::HasHediffsNeedingTend(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Pawn_HealthTracker::HasHediffsNeedingTendByPlayer(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::DropBloodFilth()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Pawn_HealthTracker::DropBloodSmear()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Gizmo> Verse.Pawn_HealthTracker::GetGizmos()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.HediffSet",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.Pawn Verse.HediffSet::pawn",
+        "System.Collections.Generic.List`1<Verse.Hediff> Verse.HediffSet::hediffs"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single Verse.HediffSet::get_PainTotal()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.HediffSet::get_BleedRateTotal()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::get_HasHead()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::get_PreventVacuumBurns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::get_HasRegeneration()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::get_RemoveRoamMtb()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::get_HasPreventsDeath()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::get_AnyHediffPreventsCrawling()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.HediffSet::get_HungerRateFactor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.HediffSet::get_RestFallFactor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Nullable`1<System.Single> Verse.HediffSet::get_OverrideMoodBase()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.HediffSet::FactorForDamage(Verse.DamageInfo)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasBodyPart(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::AddDirect(Verse.Hediff,System.Nullable`1<Verse.DamageInfo>,Verse.DamageWorker/DamageResult)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::DirtyCache()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::DirtyPainCache()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::Notify_PawnDied(System.Nullable`1<Verse.DamageInfo>,Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::Notify_Regenerated(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.HediffSet::GetHungerRateFactor(Verse.HediffDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 Verse.HediffSet::GetHediffCount(Verse.HediffDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::GetHediffs(System.Collections.Generic.List`1<T>&,System.Predicate`1<T>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Hediff Verse.HediffSet::GetMostRecentHediff(Verse.HediffDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "T Verse.HediffSet::GetFirstHediff()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::TryGetHediff(Verse.HediffDef,Verse.Hediff&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::TryGetHediff(T&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Hediff Verse.HediffSet::GetFirstHediffOfDef(Verse.HediffDef,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<T> Verse.HediffSet::GetHediffComps()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "T Verse.HediffSet::GetFirstHediffMatchingPart(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::PartIsMissing(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.HediffSet::GetPartHealth(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.BodyPartRecord Verse.HediffSet::GetBrain()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasHediff(Verse.HediffDef,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasHediff(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::TryGetNeedEnablingHediff(RimWorld.NeedDef,Verse.Hediff&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::TryGetNeedDisablingHediff(RimWorld.NeedDef,Verse.Hediff&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::EnablesNeed(RimWorld.NeedDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::DisablesNeed(RimWorld.NeedDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasHediffOrWillBecome(Verse.HediffDef,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasHediff(Verse.HediffDef,Verse.BodyPartRecord,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::TryGetBodyPartRecord(Verse.BodyPartDef,Verse.BodyPartRecord&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.BodyPartRecord Verse.HediffSet::GetBodyPartRecord(Verse.BodyPartDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::IsBionicOrImplant(Verse.BodyPartDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Verb> Verse.HediffSet::GetHediffsVerbs()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Hediff> Verse.HediffSet::GetHediffsTendable()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasTendableHediff(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasHediffBlocksSleeping()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasHediffPreventsPregnancy()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasPregnancyHediff()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.HediffComp> Verse.HediffSet::GetAllComps()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasHediffShowGizmosOnCorpse()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasNaturallyHealingInjury()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasTendedAndHealingInjury()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasTemperatureInjury(Verse.TemperatureInjuryStage)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.BodyPartRecord> Verse.HediffSet::GetInjuredParts()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.BodyPartRecord> Verse.HediffSet::GetNaturallyHealingInjuredParts()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Hediff_MissingPart> Verse.HediffSet::GetMissingPartsCommonAncestors()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasMissingPartFor(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Hediff Verse.HediffSet::GetMissingPartFor(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.BodyPartRecord> Verse.HediffSet::GetNotMissingParts(Verse.BodyPartHeight,Verse.BodyPartDepth,Verse.BodyPartTagDef,Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.BodyPartRecord Verse.HediffSet::GetRandomNotMissingPart(Verse.DamageDef,Verse.BodyPartHeight,Verse.BodyPartDepth,Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.HediffSet::GetCoverageOfNotMissingNaturalParts(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::CacheThoughtsNullified()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Hediff Verse.HediffSet::ThoughtNullifyingHediff(RimWorld.ThoughtDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasDirectlyAddedPartFor(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Hediff Verse.HediffSet::GetDirectlyAddedPartFor(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::TryGetDirectlyAddedPartFor(Verse.BodyPartRecord,Verse.Hediff&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::PartOrAnyAncestorHasDirectlyAddedParts(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::AncestorHasDirectlyAddedParts(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Hediff> Verse.HediffSet::GetTendableNonInjuryNonMissingPartHediffs()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasTendableNonInjuryNonMissingPartHediff(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::HasImmunizableNotImmuneHediff()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::get_AnyHediffMakesSickThought()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::InLabor(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.HediffSet::get_IsPsychicallySuppressed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Color Verse.HediffSet::GetSkinColor(UnityEngine.Color)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.HediffSet::Clear()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.Hediff",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.HediffDef Verse.Hediff::def",
+        "System.Int32 Verse.Hediff::ageTicks",
+        "System.Int32 Verse.Hediff::tickAdded",
+        "System.String Verse.Hediff::sourceLabel",
+        "Verse.ThingDef Verse.Hediff::sourceDef",
+        "Verse.BodyPartGroupDef Verse.Hediff::sourceBodyPartGroup",
+        "System.String Verse.Hediff::sourceToolLabel",
+        "Verse.HediffDef Verse.Hediff::sourceHediffDef",
+        "System.Int32 Verse.Hediff::loadID",
+        "Verse.WeakReference`1<Verse.LogEntry> Verse.Hediff::combatLogEntry",
+        "System.String Verse.Hediff::combatLogText",
+        "System.Int32 Verse.Hediff::temp_partIndexToSetLater",
+        "System.Boolean Verse.Hediff::canBeThreateningToPart",
+        "Verse.Pawn Verse.Hediff::pawn"
+      ],
+      "methods": [
+        {
+          "signature": "System.String Verse.Hediff::get_LabelBase()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::get_LabelBaseCap()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.Hediff::get_Label()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::get_LabelCap()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Color Verse.Hediff::get_LabelColor()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::get_LabelInBrackets()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::get_SeverityLabel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Hediff::get_UIGroupKey()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::get_TipStringExtra()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.HediffStage Verse.Hediff::get_CurStage()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::get_ShouldRemove()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::get_Visible()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Hediff::get_BleedRate()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Hediff::get_BleedRateScaled()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::get_Bleeding()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.Hediff::get_PainOffset()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Hediff::get_PainFactor()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.PawnCapacityModifier> Verse.Hediff::get_CapMods()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.Hediff::get_SummaryHealthPercentImpact()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Hediff::get_TendPriority()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.TextureAndColor Verse.Hediff::get_StateIcon()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 Verse.Hediff::get_CurStageIndex()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single Verse.Hediff::get_Severity()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::set_Severity(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.BodyPartRecord Verse.Hediff::get_Part()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Hediff::set_Part(Verse.BodyPartRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::get_IsLethal()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::get_IsCurrentlyLifeThreatening()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Ability> Verse.Hediff::get_AllAbilitiesForReading()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::TendableNow(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::IsStageLifeThreatening(Verse.HediffStage)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::IsAnyStageLifeThreatening()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::CanEverKill()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Hediff::SetVisible()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.Hediff::OnStageIndexChanged(System.Int32)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Tick()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::TickInterval(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::PostMake()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::PostAdd(System.Nullable`1<Verse.DamageInfo>)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::PreRemoved()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::PostRemoved()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::PostTick()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::PostTickInterval(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Tended(System.Single,System.Single,System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Heal(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::ModifyChemicalEffect(RimWorld.ChemicalDef,System.Single&)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::TryMergeWith(Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean Verse.Hediff::CauseDeathNow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_Downed()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_PawnDied(System.Nullable`1<Verse.DamageInfo>,Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_PawnKilled()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_PawnPostApplyDamage(Verse.DamageInfo,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_PawnDamagedThing(Verse.Thing,Verse.DamageInfo,Verse.DamageWorker/DamageResult)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_PawnUsedVerb(Verse.Verb,Verse.LocalTargetInfo)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_EntropyGained(System.Single,System.Single,Verse.Thing)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_RelationAdded(Verse.Pawn,RimWorld.PawnRelationDef)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_ImplantUsed(System.String,System.Single,System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_KilledPawn(Verse.Pawn,System.Nullable`1<Verse.DamageInfo>)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_IngestedThing(Verse.Thing,System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_Resurrected()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_PawnCorpseSpawned()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_PawnCorpseDestroyed()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_Regenerated(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_SurgicallyRemoved(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_SurgicallyReplaced(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::Notify_Spawned()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Gizmo> Verse.Hediff::GetGizmos()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::GetInspectString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::get_Description()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::GetTooltip(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::CopyFrom(Verse.Hediff)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::PostDebugAdd()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::DebugString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<RimWorld.StatDrawEntry> Verse.Hediff::SpecialDisplayStats(RimWorld.StatRequest)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::ToString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String Verse.Hediff::GetUniqueLoadID()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void Verse.Hediff::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_ApparelTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.Pawn RimWorld.Pawn_ApparelTracker::pawn"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.IThingHolder RimWorld.Pawn_ApparelTracker::get_ParentHolder()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Apparel> RimWorld.Pawn_ApparelTracker::get_WornApparel()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.ApparelRequirement> RimWorld.Pawn_ApparelTracker::get_ActiveRequirementsForReading()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.ApparelRequirementWithSource> RimWorld.Pawn_ApparelTracker::get_AllRequirements()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_ApparelTracker::get_WornApparelCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::get_AnyApparel()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::get_AnyClothing()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::get_AnyApparelLocked()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::get_AnyApparelUnlocked()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::get_AllApparelLocked()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Apparel> RimWorld.Pawn_ApparelTracker::get_LockedApparel()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<RimWorld.Apparel> RimWorld.Pawn_ApparelTracker::get_UnlockedApparel()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::get_PsychologicallyNude()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::get_AnyApparelNeedsRecoloring()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Verb> RimWorld.Pawn_ApparelTracker::get_AllApparelVerbs()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Verb RimWorld.Pawn_ApparelTracker::get_FirstApparelVerb()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::ApparelTrackerTickRare()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::ApparelTrackerTickInterval(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::IsLocked(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Lock(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Unlock(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::LockAll()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::UnlockAll()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::CanWearWithoutDroppingAnything(Verse.ThingDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Wear(RimWorld.Apparel,System.Boolean,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Remove(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::TryDrop(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::TryDrop(RimWorld.Apparel,RimWorld.Apparel&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::TryDrop(RimWorld.Apparel,RimWorld.Apparel&,Verse.IntVec3,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::TryMoveToInventory(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::DropAll(Verse.IntVec3,System.Boolean,System.Boolean,System.Predicate`1<RimWorld.Apparel>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::MoveAllToInventory(System.Boolean,System.Predicate`1<RimWorld.Apparel>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::DropAllOrMoveAllToInventory(System.Predicate`1<RimWorld.Apparel>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::DestroyAll(Verse.DestroyMode)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::Contains(Verse.Thing)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::Wearing(Verse.Thing)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::WouldReplaceLockedApparel(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_PawnKilled(System.Nullable`1<Verse.DamageInfo>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_LostBodyPart()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_TitleChanged()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_RoleChanged()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_IdeoChanged()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::HasBasicApparel(System.Boolean&,System.Boolean&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Apparel RimWorld.Pawn_ApparelTracker::FirstApparelOnBodyPartGroup(Verse.BodyPartGroupDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::TryGetFirstApparelOnBodyPart(Verse.BodyPartRecord,RimWorld.Apparel&,System.Predicate`1<RimWorld.Apparel>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Apparel RimWorld.Pawn_ApparelTracker::FirstApparelOnBodyPart(Verse.BodyPartRecord,System.Predicate`1<RimWorld.Apparel>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_ApparelTracker::BodyPartGroupIsCovered(Verse.BodyPartGroupDef,System.Predicate`1<RimWorld.Apparel>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Gizmo> RimWorld.Pawn_ApparelTracker::GetGizmos()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_ApparelChanged()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_ApparelAdded(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_ApparelRemoved(RimWorld.Apparel)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::Notify_BulletImpactNearby(RimWorld.BulletImpactData)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.ThingOwner RimWorld.Pawn_ApparelTracker::GetDirectlyHeldThings()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_ApparelTracker::GetChildHolders(System.Collections.Generic.List`1<Verse.IThingHolder>)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_RelationsTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Boolean RimWorld.Pawn_RelationsTracker::everSeenByPlayer",
+        "System.Boolean RimWorld.Pawn_RelationsTracker::canGetRescuedThought",
+        "Verse.Pawn RimWorld.Pawn_RelationsTracker::relativeInvolvedInRescueQuest",
+        "RimWorld.MarriageNameChange RimWorld.Pawn_RelationsTracker::nextMarriageNameChange",
+        "System.Boolean RimWorld.Pawn_RelationsTracker::hidePawnRelations",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::romanceEnableTick",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::FriendOpinionThreshold",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::RivalOpinionThreshold",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::MinLovinAge",
+        "System.Single RimWorld.Pawn_RelationsTracker::PsychicLoveFactor"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.DirectPawnRelation> RimWorld.Pawn_RelationsTracker::get_DirectRelations()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.VirtualPawnRelation> RimWorld.Pawn_RelationsTracker::get_VirtualRelations()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_Children()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::get_ChildrenCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::get_IsTryRomanceOnCooldown()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::get_RelatedToAnyoneOrAnyoneRelatedToMe()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_FamilyByBlood()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_PotentiallyRelatedPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_RelatedPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.PregnancyApproach RimWorld.Pawn_RelationsTracker::GetPregnancyApproachForPartner(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::SetPregnancyApproach(Verse.Pawn,RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RelationsTrackerTickInterval(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.DirectPawnRelation RimWorld.Pawn_RelationsTracker::GetDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn RimWorld.Pawn_RelationsTracker::GetFirstDirectRelationPawn(RimWorld.PawnRelationDef,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::GetDirectRelationsCount(RimWorld.PawnRelationDef,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::DirectRelationExists(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::VirtualRelationExists(RimWorld.PawnRelationDef,RimWorld.RelationshipRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::GetDirectRelations(RimWorld.PawnRelationDef,System.Collections.Generic.List`1<Verse.Pawn>&,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ElevateToVirtualRelation(RimWorld.DirectPawnRelation)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::AddDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveRelation(RimWorld.RelationshipRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveDirectRelation(RimWorld.DirectPawnRelation)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::TryRemoveDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::OpinionOf(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_RelationsTracker::OpinionExplanation(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::SecondaryLovinChanceFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::PrettinessFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::LovinAgeFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::SecondaryRomanceChanceFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::CompatibilityWith(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::ConstantPerPawnsPairCompatibilityOffset(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ClearAllRelations()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ClearAllNonBloodRelations()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnDestroyed(Verse.DestroyMode)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PassedToWorld()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnLeftBehind()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_ExitedMap()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_ChangedFaction()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnSold(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnKidnapped()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_RescuedBy(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_FailedRescueQuest()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::GetFriendDiedThoughtPowerFactor(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::GetRivalDiedThoughtPowerFactor(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::CheckAppendBondedAnimalDiedInfo(Verse.TaggedString&,Verse.TaggedString&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.DirectPawnRelation",
+      "baseType": "System.Object",
+      "publicFields": [
+        "RimWorld.PawnRelationDef RimWorld.DirectPawnRelation::def",
+        "Verse.Pawn RimWorld.DirectPawnRelation::otherPawn",
+        "System.Int32 RimWorld.DirectPawnRelation::startTicks"
+      ],
+      "methods": [
+        {
+          "signature": "System.Void RimWorld.DirectPawnRelation::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.DirectPawnRelation::.ctor(RimWorld.PawnRelationDef,Verse.Pawn,System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.DirectPawnRelation::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_Ownership",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.Pawn_Ownership::get_OwnedBed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Grave RimWorld.Pawn_Ownership::get_AssignedGrave()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Throne RimWorld.Pawn_Ownership::get_AssignedThrone()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Building RimWorld.Pawn_Ownership::get_AssignedMeditationSpot()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.Pawn_Ownership::get_AssignedDeathrestCasket()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Room RimWorld.Pawn_Ownership::get_OwnedRoom()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Room RimWorld.Pawn_Ownership::get_Bedroom()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_Ownership::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_Ownership::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimBedIfNonMedical(RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimBed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimGrave(RimWorld.Building_Grave)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimGrave()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimThrone(RimWorld.Building_Throne)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimThrone()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimMeditationSpot(Verse.Building)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimMeditationSpot()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimDeathrestCasket(RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimDeathrestCasket()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_Ownership::UnclaimAll()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_Ownership::Notify_ChangedGuestStatus()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.RestUtility",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Int32 RimWorld.RestUtility::NoSleepingDurationAfterBeingDisturbed"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.ThingDef> RimWorld.RestUtility::get_AllBedDefBestToWorst()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.RestUtility::Reset()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::BedOwnerWillShare(RimWorld.Building_Bed,Verse.Pawn,System.Nullable`1<RimWorld.GuestStatus>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::CanUseBedNow(Verse.Thing,Verse.Pawn,System.Boolean,System.Boolean,System.Nullable`1<RimWorld.GuestStatus>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::IsValidBedFor(Verse.Thing,Verse.Pawn,Verse.Pawn,System.Boolean,System.Boolean,System.Boolean,System.Nullable`1<RimWorld.GuestStatus>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.RestUtility::TuckIntoBed(RimWorld.Building_Bed,Verse.Pawn,Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.RestUtility::FindBedFor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.RestUtility::FindBedFor(Verse.Pawn,Verse.Pawn,System.Boolean,System.Boolean,System.Nullable`1<RimWorld.GuestStatus>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.RestUtility::FindPatientBedFor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.IntVec3 RimWorld.RestUtility::GetBedSleepingSlotPosFor(Verse.Pawn,RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.RestUtility::KickOutOfBed(Verse.Pawn,RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::CanUseBedEver(Verse.Pawn,Verse.ThingDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::TimetablePreventsLayDown(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::DisturbancePreventsLyingDown(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::Awake(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::IsSelfShutdown(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::IsDeactivated(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::IsActivityDormant(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::IsCharging(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.RestUtility::CurrentBed(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.RestUtility::CurrentBed(Verse.Pawn,System.Nullable`1<System.Int32>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::InBed(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::IsLayingForJobCleanup(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.RestUtility::WakeUp(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::ShouldWakeUp(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.RestUtility::CanFallAsleep(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "Verse.GenTemperature",
+      "baseType": "System.Object",
+      "publicFields": [
+        "UnityEngine.Color Verse.GenTemperature::ColorSpotHot",
+        "UnityEngine.Color Verse.GenTemperature::ColorSpotCold",
+        "UnityEngine.Color Verse.GenTemperature::ColorRoomHot",
+        "UnityEngine.Color Verse.GenTemperature::ColorRoomCold"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single Verse.GenTemperature::AverageTemperatureAtTileForTwelfth(RimWorld.Planet.PlanetTile,RimWorld.Twelfth)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::MinTemperatureAtTile(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::MaxTemperatureAtTile(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.FloatRange Verse.GenTemperature::ComfortableTemperatureRange(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.FloatRange Verse.GenTemperature::ComfortableTemperatureRange(Verse.Pawn,System.Collections.Generic.List`1<RimWorld.ThingStuffPair>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.FloatRange Verse.GenTemperature::ComfortableTemperatureRange(Verse.ThingDef,System.Collections.Generic.List`1<RimWorld.ThingStuffPair>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.FloatRange Verse.GenTemperature::SafeTemperatureRange(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.FloatRange Verse.GenTemperature::SafeTemperatureRange(Verse.Pawn,System.Collections.Generic.List`1<RimWorld.ThingStuffPair>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.GenTemperature::SafeTemperatureAtCell(Verse.Pawn,Verse.IntVec3,Verse.Map)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.GenTemperature::ComfortableTemperatureAtCell(Verse.Pawn,Verse.IntVec3,Verse.Map)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.FloatRange Verse.GenTemperature::SafeTemperatureRange(Verse.ThingDef,System.Collections.Generic.List`1<RimWorld.ThingStuffPair>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::GetTemperatureForCell(Verse.IntVec3,Verse.Map)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.GenTemperature::TryGetTemperatureForCell(Verse.IntVec3,Verse.Map,System.Single&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.GenTemperature::TryGetDirectAirTemperatureForCell(Verse.IntVec3,Verse.Map,System.Single&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.GenTemperature::TryGetAirTemperatureAroundThing(Verse.Thing,System.Single&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::OffsetFromSunCycle(System.Int32,RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::OffsetFromSeasonCycle(System.Int32,RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::GetTemperatureFromSeasonAtTile(System.Int32,RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::GetTemperatureAtTile(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::SeasonalShiftAmplitudeAt(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Twelfth> Verse.GenTemperature::TwelfthsInAverageTemperatureRange(RimWorld.Planet.PlanetTile,System.Single,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Twelfth Verse.GenTemperature::EarliestTwelfthInAverageTemperatureRange(RimWorld.Planet.PlanetTile,System.Single,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.GenTemperature::PushHeat(Verse.IntVec3,Verse.Map,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.GenTemperature::PushHeat(Verse.Thing,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::ControlTemperatureTempChange(Verse.IntVec3,Verse.Map,System.Single,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void Verse.GenTemperature::EqualizeTemperaturesThroughBuilding(Verse.Building,System.Single,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::RotRateAtTemperature(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean Verse.GenTemperature::FactionOwnsPassableRoomInTemperatureRange(RimWorld.Faction,Verse.FloatRange,Verse.Map)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String Verse.GenTemperature::GetAverageTemperatureLabel(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::CelsiusTo(System.Single,Verse.TemperatureDisplayMode)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::CelsiusToOffset(System.Single,Verse.TemperatureDisplayMode)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single Verse.GenTemperature::ConvertTemperatureOffset(System.Single,Verse.TemperatureDisplayMode,Verse.TemperatureDisplayMode)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.PregnancyUtility",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.SimpleCurve RimWorld.PregnancyUtility::DeathChanceFromBirthQuality",
+        "System.Collections.Generic.Dictionary`2<RimWorld.PawnRelationDef,System.Single> RimWorld.PregnancyUtility::BeingFatherWeightPerRelation",
+        "System.Int32 RimWorld.PregnancyUtility::MaxGeneAssignmentTries",
+        "System.Single RimWorld.PregnancyUtility::MinFertileMaleAge",
+        "System.Single RimWorld.PregnancyUtility::ChanceOfNoFatherWithCandidates",
+        "System.Single RimWorld.PregnancyUtility::ChanceToInheritOneParent",
+        "System.Single RimWorld.PregnancyUtility::ChanceToInheritTwoParents",
+        "System.Single RimWorld.PregnancyUtility::IvfPregnancyFactor"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.FloatRange RimWorld.PregnancyUtility::get_GeneratedPawnPregnancyProgressRange()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AcceptanceReport RimWorld.PregnancyUtility::CanEverProduceChild(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::PregnancyChanceForPawn(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::PregnancyChanceImplantEmbryo(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::PregnancyChanceForPartners(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::PregnancyChanceForWoman(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.RitualRoleAssignments RimWorld.PregnancyUtility::RitualAssignmentsForBirth(RimWorld.Precept_Ritual,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::GetBirthQualityFor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<RimWorld.Building_Bed> RimWorld.PregnancyUtility::BedsForBirth(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.PregnancyUtility::IsUsableBedFor(Verse.Pawn,Verse.Pawn,RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::ChanceMomDiesDuringBirth(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing RimWorld.PregnancyUtility::ApplyBirthOutcome(RimWorld.RitualOutcomePossibility,System.Single,RimWorld.Precept_Ritual,System.Collections.Generic.List`1<Verse.GeneDef>,Verse.Pawn,Verse.Thing,Verse.Pawn,Verse.Pawn,RimWorld.LordJob_Ritual,RimWorld.RitualRoleAssignments,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Gizmo RimWorld.PregnancyUtility::BirthQualityGizmo(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.GeneSet RimWorld.PregnancyUtility::GetInheritedGeneSet(Verse.Pawn,Verse.Pawn,System.Boolean&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.GeneSet RimWorld.PregnancyUtility::GetInheritedGeneSet(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.GeneDef> RimWorld.PregnancyUtility::GetInheritedGenes(Verse.Pawn,Verse.Pawn,System.Boolean&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.GeneDef> RimWorld.PregnancyUtility::GetInheritedGenes(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::InbredChanceFromParents(Verse.Pawn,Verse.Pawn,RimWorld.PawnRelationDef&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.PregnancyUtility::TryTerminatePregnancy(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Hediff RimWorld.PregnancyUtility::GetPregnancyHediff(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.PregnancyUtility::ForceEndPregnancy(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.PregnancyUtility::GetLabel(RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::GetPregnancyChanceFactor(RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.PregnancyUtility::GetDescription(RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Texture2D RimWorld.PregnancyUtility::GetIcon(RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    }
+  ],
+  "freezeBoundary": {
+    "signature": "System.Boolean RimWorld.Need::get_IsFrozen()",
+    "public": false,
+    "family": true,
+    "firstBatch": "Unknown without a separately verified freeze adapter; do not call protected getter directly."
+  },
+  "files": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need.cs",
+      "sha256": "17954C2B9B5CA939E38BD94476B363EBEA02502818864190288AB5545783AB60"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Seeker.cs",
+      "sha256": "CF19F91D3420A551C0FD54AB03844B12BD0CC1894DB9145432E9006154C6A317"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Beauty.cs",
+      "sha256": "6ADECBBE44C8F1AAF7912B81BE699F14050A85FD25368B0C076A91AD6360B0A4"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Comfort.cs",
+      "sha256": "E6926BE5DC13DF3E42366D4402D85CA7F6D7F6011FCD915BD50D7E57F22A21EF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_RoomSize.cs",
+      "sha256": "E584BA662C82B28ABC7FF641D490C6512FD5D46553ABF7799F01E70EB0CC052A"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_NeedsTracker.cs",
+      "sha256": "967415F3C4FF956677B74DA9303AEC41AC0084EE35B751C4CBD81EA147908D95"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Food.cs",
+      "sha256": "C9A9136C0AE4B2B3A3F4567C0F04B507F3CF825C50E1621A1F3C3C40591AFE1D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Rest.cs",
+      "sha256": "11684E45702550F9AA834188D1EFA00AB2E6168F3A4990C3F9230C5BB493E3F0"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_Ownership.cs",
+      "sha256": "826F1CCD71C8E7945F963D0E291DD478AC16BD76ED8D1717D0391698354A0317"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_RelationsTracker.cs",
+      "sha256": "FAD014F0F09516168E57E57880E222E2BE57D8D29760C33F5E2264999324AD93"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\PregnancyUtility.cs",
+      "sha256": "1F8A11BDE4CE3DD2DD10EA47AFBE1D815A101D2A23F03173CB520362AD8431D1"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\MapPawns.cs",
+      "sha256": "42F619191059CCFCDDB37C32A3360F8B4EA245EDA5CAF611B3D17F898F1F4811"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\Hediff.cs",
+      "sha256": "C24CA8CC5FB928DC80812C9903F63778C36689987C61FEF2FAF347F38FFC9287"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\HediffSet.cs",
+      "sha256": "C8A6926CB06BCADC722FCE6B587795C241095C4DE2DCEB11C3CFB13FA22F60B0"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\Verse\\GenTemperature.cs",
+      "sha256": "85468298347C741BF3E556B7C5D46E7BF623600430E0D91778C9FA4E283CDE3A"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Core\\Defs\\NeedDefs\\Needs.xml",
+      "sha256": "F0ABFB6E11CF85EC43F55AC2191735C8CD029E7D76BD0411F014F37BE3A3249C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Biotech\\Defs\\NeedDefs\\Needs.xml",
+      "sha256": "EDCB15C0597EDFF2442DF92CFE9BF092BB589FC51EA45CB1EDEEE3E8D661DCEE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Economy\\PawnEconomy\\EconomyRuntime.cs",
+      "sha256": "83CDDF5000215CB251D82C7E9EC4F6E6111DAE47B95DDB5C88F073528B687182"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle.csproj",
+      "sha256": "90BEEC014C69D1A74091462F9B9FB392A501B309770963769743CED9CCDF1F55"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyService.cs",
+      "sha256": "B70313BD863639CA9C4C19D0BC8FBC47092D361692F4752A283EFE76D13AAD6C"
+    }
+  ],
+  "limits": [
+    "Getter visibility does not prove read-only semantics of every getter or third-party override.",
+    "Current and maximum levels must be finite and maximum positive before deriving ratios.",
+    "Need interval scheduling and source caches require runtime ordering/profiling checks.",
+    "No complete capture lifecycle, family responsibility assignment, service quantity forecast or RUIF page was executed."
+  ]
+}

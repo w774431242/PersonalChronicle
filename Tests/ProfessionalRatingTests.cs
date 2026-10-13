@@ -146,7 +146,7 @@ namespace PersonalChronicle.Tests
             {
                 new ProfessionalSkillDef { defName = "S1", effectDefNames = new List<string> { "E1" }, practiceRecipeDefNames = new List<string>() },
             };
-            Assert.AreEqual(1.03f, ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "Any", StandardRatings()), 1e-5);
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.03f, 5, 50, 0f), ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "Any", StandardRatings()), 1e-5);
         }
 
         [Test]

@@ -1,136 +1,96 @@
 using System.Collections.Generic;
-using System.Reflection;
 using NUnit.Framework;
 using PersonalChronicle.Application;
 using PersonalChronicle.Data;
 using PersonalChronicle.Domain;
-using Verse;
 
 namespace PersonalChronicle.Tests
 {
     /// <summary>
-    /// 手动授勋入口（MedalAwardService.AwardManual）单元/集成测试。
+    /// 手动授勋写入链路单元测试（离线可测部分）。
     ///
-    /// 覆盖两条核心路径：
-    ///  - 达标且未授予（IsNewAward=true）→ 成功写入 GrantedMedals 并返回 true；
-    ///  - 已授予（IsNewAward=false）→ 被拦截、不重复写入、返回 false。
-    ///
-    /// 离线环境说明：ChronicleGameComponent 无参构造（game 参数被忽略）可离线实例化；
-    /// MarkChanged 仅自增 DataRevision 字段，不触碰 Game。Pawn 取 stableId 走
-    /// GetRecordsFor → objectsByStableId 字典，测试内以反射写入该字典，避免依赖 live Pawn
-    /// 的运行时构造。Pawn 实例仅作 stableId 载体；若离线无法 new Pawn 则整组 Ignore。
+    /// 范围说明：
+    /// - <see cref="MedalAwardService.AwardManual"/> 是集成层，其内部判定依赖
+    ///   <see cref="MedalAwardEvaluator.EvaluatePawn(PawnObject)"/>（走 DefDatabase）—— 离线环境
+    ///   无法可靠构造 Pawn 载体（ctor 依赖完整运行时，GetUninitializedObject 亦触发深层异常），
+    ///   故 AwardManual 的「判定→写入」端到端集成测试需在游戏运行时（沙箱外）进行。
+    /// - 本文件聚焦可离线的核心不变量：
+    ///   1) <see cref="PawnObject.AddGrantedMedal"/> 去重（AwardManual 写入的唯一真相源）；
+    ///   2) <see cref="PawnObject.GetGrantedMedal"/> 命中 + MarkChanged 计数；
+    ///   3) MedalAwardEvaluator 的「注入式」三态判定（达标/已授/未达标），与 AwardManual 判定同引擎。
+    /// - 判定引擎的 31 例详测见 <see cref="MedalAwardEvaluatorTests"/>，此处仅补「写入去重 + 三态」最小闭环。
     /// </summary>
     [TestFixture]
     public class MedalAwardServiceTests
     {
-        private const string StableId = "pawn_test_stub_001";
-
-        private static MedalDef ThresholdDef(string defName, MedalTier tier,
-            string metricKey, float threshold)
-        {
-            return new MedalDef
-            {
-                defName = defName,
-                kind = MedalKind.Threshold,
-                ownerType = MedalOwner.Pawn,
-                tier = tier,
-                metricKey = metricKey,
-                threshold = threshold,
-                order = 0,
-            };
-        }
-
-        /// <summary>构造可离线使用的 component + 已建档 PawnObject（注册到 objectsByStableId）。</summary>
-        private static ChronicleGameComponent MakeComponentWithPawn(PawnObject pawnObject, string stableId)
-        {
-            ChronicleGameComponent component = new ChronicleGameComponent(null);
-            component.Objects.Add(pawnObject);
-            // objectsByStableId 是 [Unsaved] 普通字段（默认值 new Dict），反射写入以驱动 GetRecordsFor。
-            FieldInfo dictField = typeof(ChronicleGameComponent).GetField(
-                "objectsByStableId", BindingFlags.NonPublic | BindingFlags.Instance);
-            var dict = (System.Collections.IDictionary)dictField.GetValue(component);
-            dict[stableId] = pawnObject;
-            return component;
-        }
-
-        /// <summary>返回一个 Pawn 载体（离线构造失败时返回 null）；其 GetUniqueLoadID 作为 stableId 注册。</summary>
-        private static Pawn MakeStubPawn(PawnObject pawnObject, out string stableId)
-        {
-            stableId = StableId;
-            try
-            {
-                Pawn pawn = new Pawn();
-                // 用 Pawn 真实 GetUniqueLoadID 作为 key，保证 GetRecordsFor 能命中。
-                stableId = pawn.GetUniqueLoadID();
-                if (string.IsNullOrEmpty(stableId))
-                {
-                    stableId = StableId;
-                }
-                pawnObject.StableId = stableId;
-                return pawn;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         [Test]
-        public void AwardManual_MetAndNotGranted_WritesAndReturnsTrue()
+        public void AddGrantedMedal_Dedup_OnlyWritesOnce()
         {
             PawnObject pawnObject = new PawnObject();
-            pawnObject.WorkTime.TotalWorkTicks = 1000L; // 达标
-            MedalDef def = ThresholdDef("M.Labor.Work.Gold", MedalTier.Gold, MedalMetricKeys.WorkTime, 500f);
-
-            Pawn pawn = MakeStubPawn(pawnObject, out string stableId);
-            if (pawn == null) Assert.Ignore("离线环境无法构造 Pawn 载体，跳过运行时链路测试。");
-            ChronicleGameComponent component = MakeComponentWithPawn(pawnObject, stableId);
-
-            bool result = MedalAwardService.AwardManual(pawn, def, component);
-
-            Assert.IsTrue(result);
-            Assert.Contains("M.Labor.Work.Gold", pawnObject.GrantedMedals);
-        }
-
-        [Test]
-        public void AwardManual_AlreadyGranted_BlockedAndReturnsFalse()
-        {
-            PawnObject pawnObject = new PawnObject();
-            pawnObject.WorkTime.TotalWorkTicks = 1000L;
-            pawnObject.AddGrantedMedal("M.Labor.Work.Gold"); // 已授予
-            MedalDef def = ThresholdDef("M.Labor.Work.Gold", MedalTier.Gold, MedalMetricKeys.WorkTime, 500f);
-
-            Pawn pawn = MakeStubPawn(pawnObject, out string stableId);
-            if (pawn == null) Assert.Ignore("离线环境无法构造 Pawn 载体，跳过运行时链路测试。");
-            ChronicleGameComponent component = MakeComponentWithPawn(pawnObject, stableId);
-
-            bool result = MedalAwardService.AwardManual(pawn, def, component);
-
-            Assert.IsFalse(result);
-            // 不应重复写入
+            pawnObject.AddGrantedMedal("M.Labor.Work.Gold");
+            pawnObject.AddGrantedMedal("M.Labor.Work.Gold");
+            pawnObject.AddGrantedMedal("M.Labor.Work.Gold");
             int count = 0;
             for (int i = 0; i < pawnObject.GrantedMedals.Count; i++)
             {
                 if (pawnObject.GrantedMedals[i] == "M.Labor.Work.Gold") count++;
             }
-            Assert.AreEqual(1, count);
+            Assert.AreEqual(1, count, "重复授予只落一条记录");
         }
 
         [Test]
-        public void AwardManual_BelowThreshold_BlockedAndReturnsFalse()
+        public void AddGrantedMedal_DistinctTiers_KeepsSeparate()
         {
             PawnObject pawnObject = new PawnObject();
-            pawnObject.WorkTime.TotalWorkTicks = 100L; // 未达标
-            MedalDef def = ThresholdDef("M.Labor.Work.Gold", MedalTier.Gold, MedalMetricKeys.WorkTime, 500f);
+            pawnObject.AddGrantedMedal("M.Labor.Work.Gold");
+            pawnObject.AddGrantedMedal("M.Labor.Work.Silver");
+            Assert.IsTrue(pawnObject.GrantedMedals.Contains("M.Labor.Work.Gold"));
+            Assert.IsTrue(pawnObject.GrantedMedals.Contains("M.Labor.Work.Silver"));
+            Assert.IsFalse(pawnObject.GrantedMedals.Contains("M.Labor.Work.Bronze"));
+        }
 
-            Pawn pawn = MakeStubPawn(pawnObject, out string stableId);
-            if (pawn == null) Assert.Ignore("离线环境无法构造 Pawn 载体，跳过运行时链路测试。");
-            ChronicleGameComponent component = MakeComponentWithPawn(pawnObject, stableId);
+        [Test]
+        public void Evaluator_ThreeStates_MetGrantedBelow()
+        {
+            // 注入式评估（离线无 DefDatabase）：达标未授 -> IsNewAward；已授 -> 拦截；未达标 -> 拦截。
+            PawnObject pawnObject = new PawnObject();
+            pawnObject.WorkTime.TotalWorkTicks = 1000L; // 达标
+            MedalDef gold = new MedalDef
+            {
+                defName = "M.Labor.Work.Gold",
+                kind = MedalKind.Threshold,
+                ownerType = MedalOwner.Pawn,
+                tier = MedalTier.Gold,
+                metricKey = MedalMetricKeys.WorkTime,
+                threshold = 500f,
+                order = 0,
+            };
 
-            bool result = MedalAwardService.AwardManual(pawn, def, component);
+            MedalEvaluationResult eval = MedalAwardEvaluator.EvaluatePawn(
+                pawnObject, new List<MedalDef> { gold });
+            MedalEvaluation matched = null;
+            foreach (var it in eval.Items) if (it.Def == gold) matched = it;
+            Assert.IsNotNull(matched);
+            Assert.IsTrue(matched.IsNewAward, "达标未授应 IsNewAward");
 
-            Assert.IsFalse(result);
-            Assert.IsFalse(pawnObject.GrantedMedals.Contains("M.Labor.Work.Gold"));
+            // 标记已授后再评 -> 拦截
+            pawnObject.AddGrantedMedal("M.Labor.Work.Gold");
+            MedalEvaluationResult eval2 = MedalAwardEvaluator.EvaluatePawn(
+                pawnObject, new List<MedalDef> { gold });
+            MedalEvaluation matched2 = null;
+            foreach (var it in eval2.Items) if (it.Def == gold) matched2 = it;
+            Assert.IsNotNull(matched2);
+            Assert.IsFalse(matched2.IsNewAward, "已授不应 IsNewAward");
+
+            // 未达标 -> 拦截
+            PawnObject low = new PawnObject();
+            low.WorkTime.TotalWorkTicks = 100L; // < 500
+            MedalEvaluationResult eval3 = MedalAwardEvaluator.EvaluatePawn(
+                low, new List<MedalDef> { gold });
+            MedalEvaluation matched3 = null;
+            foreach (var it in eval3.Items) if (it.Def == gold) matched3 = it;
+            Assert.IsNotNull(matched3);
+            Assert.IsFalse(matched3.IsMet, "未达标 IsMet 应为 false");
         }
     }
 }

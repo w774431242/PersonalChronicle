@@ -1,0 +1,104 @@
+<Defs>
+<!-- ⭐ PM 2026-09-07 架构定稿（第二轮迭代）：管道回归纯物流。
+     历史：曾挂 CompPowerTransmitter + isPowerConduit 实现「管道=电缆」——
+     实测管道进入电力网格层后与原版电缆的常态青线完全混淆（三层调色均无法区分，
+     连线层由引擎按传导物统一绘制）。本轮移除全部电力属性，设备供电回归电缆体系；
+     后续「无线电塔」另立新建筑。本 mod 只保留物流逻辑
+     （MapComponent_PipeNetwork 虚拟货物流）。 -->
+<ThingDef Name="PC_PipeSegment">
+  <defName>PC_PipeSegment</defName>
+  <label>logistics pipe</label>
+  <description>A floor-level logistics pipe for automated production lines. Connect it to a machine equipped with an item output port and bind a target storage cell: goods travel through the pipe network as virtual cargo and materialise only at the destination, landing directly in any vanilla or modded storage that accepts them - no receiving building required. If the target cell's filter rejects the goods, the pipe backs up instead of losing them. Pawns can walk over it.</description>
+  <thingClass>PersonalChronicle.Automation.Building_PipeSegment</thingClass>
+  <category>Building</category>
+  <tickerType>Normal</tickerType>
+  <!-- 视觉/连接：借用原版 PowerConduit_Atlas 连线体系（16 帧 Atlas，
+       linkType=Transmitter 让引擎按 linkGrid 自动选帧；拖拽 ghost 走原版
+       blueprintGraphicData）。管道本身不导电、不进电网层。 -->
+  <graphicData>
+    <texPath>Things/Building/Linked/PowerConduit_Atlas</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+    <linkType>Transmitter</linkType>
+    <linkFlags>
+      <li>PowerConduit</li>
+    </linkFlags>
+    <damageData>
+      <rect>(0,0.35,1,0.3)</rect>
+    </damageData>
+    <drawSize>(1,1)</drawSize>
+    <!-- ⭐ 金黄物流色：与深黑原版电缆双向拉开（贴图本体色，乘法 tint）。 -->
+    <color>(255,200,60,255)</color>
+  </graphicData>
+  <uiIconPath>Things/Building/Linked/PowerConduit_MenuIcon</uiIconPath>
+  <uiIconScale>0.7</uiIconScale>
+  <uiIconColor>(255,200,60,255)</uiIconColor>
+  <altitudeLayer>Conduits</altitudeLayer>
+  <selectable>true</selectable>
+  <building>
+    <isInert>true</isInert>
+    <isEdifice>false</isEdifice>
+    <canConstructInCorner>true</canConstructInCorner>
+    <blueprintGraphicData>
+      <texPath>Things/Building/Linked/PowerConduit_Blueprint_Atlas</texPath>
+    </blueprintGraphicData>
+  </building>
+  <placeWorkers>
+    <li>PersonalChronicle.Automation.PlaceWorker_NoPipeStack</li>
+  </placeWorkers>
+  <drawerType>MapMeshOnly</drawerType>
+  <repairEffect>Repair</repairEffect>
+  <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+  <filthLeaving>Filth_RubbleBuilding</filthLeaving>
+  <passability>Standable</passability>
+  <pathCost>0</pathCost>
+  <rotatable>false</rotatable>
+  <blockWind>false</blockWind>
+  <castEdgeShadows>false</castEdgeShadows>
+  <fillPercent>0</fillPercent>
+  <statBases>
+    <MaxHitPoints>80</MaxHitPoints>
+    <WorkToBuild>300</WorkToBuild>
+    <Flammability>0.3</Flammability>
+    <Mass>5</Mass>
+  </statBases>
+  <size>(1,1)</size>
+  <!-- 允许「埋地」：未开采岩层之上亦可铺 -->
+  <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  <designationCategory>PC_Automation</designationCategory>
+  <drawStyleCategory>Conduits</drawStyleCategory>
+  <constructEffect>ConstructMetal</constructEffect>
+  <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
+  <minifiedDef>MinifiedThing</minifiedDef>
+  <thingCategories>
+    <li>BuildingsMisc</li>
+  </thingCategories>
+  <!-- 任何已存在物体都不阻挡施工（墙/门/机器格子上可直接铺） -->
+  <clearBuildingArea>false</clearBuildingArea>
+  <!-- ⚠️ 开发测试期（PM 2026-09-05 要求一）：0 成本直造。
+       正式发布前恢复：costList[Steel 4] + researchPrerequisites[PC_Research_AutomationBasics]
+       + constructionSkillPrerequisite 3 -->
+</ThingDef>
+<ThingDef ParentName="PC_PipeSegment">
+  <defName>PC_PipeSegmentHidden</defName>
+  <label>hidden logistics pipe</label>
+  <description>A logistics pipe buried under the floor. Nearly invisible, for players who don't want pipes cluttering the look of the base. Works exactly like the visible logistics pipe: same network, same throughput, same backpressure.</description>
+  <!-- 对齐原版 HiddenConduit：同一 Atlas，纯透明材质 → 视觉隐形，选中时仍可见可维护。 -->
+  <thingClass>PersonalChronicle.Automation.Building_PipeSegment</thingClass>
+  <graphicData>
+    <color>(0,0,0,0)</color>
+    <shaderType>Transparent</shaderType>
+  </graphicData>
+  <uiIconPath>Things/Building/Linked/HiddenConduit_MenuIcon</uiIconPath>
+  <uiIconColor>(255,200,60,255)</uiIconColor>
+  <!-- 对齐原版 HiddenConduit：埋地 → 不可燃、不被 AI 当目标 -->
+  <statBases>
+    <Flammability>0</Flammability>
+  </statBases>
+  <building>
+    <isTargetable>false</isTargetable>
+    <canBeDamagedByAttacks>false</canBeDamagedByAttacks>
+    <ai_neverTrashThis>true</ai_neverTrashThis>
+  </building>
+  <!-- ⚠️ 开发测试期：0 成本直造（与可见版同纪律） -->
+</ThingDef>
+</Defs>

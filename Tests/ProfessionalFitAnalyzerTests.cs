@@ -1,7 +1,8 @@
-// 专业适配分析器单测（对齐前端原型 Node 校验项 + 工程回归）：
+// 专业适配分析器单测（内在禀赋主导版公式 + 工程回归）：
 //   · 12 专业权重和 = 100
-//   · skillBase 边际递减（18→19 增益远小于 2→3）
-//   · 五维公式 / 归一化 / 排序 / 优势短板 / 空输入不崩
+//   · skillBase 弱边际递减（单调 + 端点 + 晚段增益 < 早段）
+//   · 六维公式 / 归一化 / 排序 / 优势短板 / 空输入不崩
+//   · [2026-09-03 重构锚点] 背景与特性驱动推荐 / 高战斗 pawn 必荐武器类 / 禁用技能归零
 using System.Collections.Generic;
 using NUnit.Framework;
 using PersonalChronicle.Domain.Profession;
@@ -159,6 +160,95 @@ namespace PersonalChronicle.Tests
             var r = ProfessionalFitAnalyzer.Analyze(input).Find(x => x.Major == ProfessionalMajor.Manufacturing);
             Assert.That(r.Fit, Is.LessThanOrEqualTo(100));
             Assert.That(r.GrowthScore, Is.LessThanOrEqualTo(100));
+        }
+
+        // ---- [2026-09-03 重构锚点：内在禀赋主导] ----
+
+        [Test]
+        public void AptitudeNormClampsAroundNeutral50()
+        {
+            Assert.That(ProfessionalFitAnalyzer.AptitudeNorm(0), Is.EqualTo(50));
+            Assert.That(ProfessionalFitAnalyzer.AptitudeNorm(8), Is.EqualTo(100));
+            Assert.That(ProfessionalFitAnalyzer.AptitudeNorm(-8), Is.EqualTo(0));
+            Assert.That(ProfessionalFitAnalyzer.AptitudeNorm(999), Is.EqualTo(100));
+            Assert.That(ProfessionalFitAnalyzer.AptitudeNorm(-999), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void HighCombatPawnRecommendsWeaponsOverArt()
+        {
+            // 高射击(20,热情满)/格斗(17,热情满)/手工(15,热情满)/医疗(16,兴趣) pawn：
+            // 艺术仅靠 Artistic 热情不得翻盘 → 武器类必须第一。
+            var input = new ProfessionalFitInput();
+            input.SkillLevels["Shooting"] = 20;
+            input.SkillLevels["Melee"] = 17;
+            input.SkillLevels["Crafting"] = 15;
+            input.SkillLevels["Medicine"] = 16;
+            input.Passion["Shooting"] = 100;
+            input.Passion["Melee"] = 100;
+            input.Passion["Crafting"] = 100;
+            input.Passion["Medicine"] = 50;
+            foreach (string s in new[] { "Construction", "Mining", "Cooking", "Plants", "Animals", "Artistic", "Social", "Intellectual" })
+            {
+                input.SkillLevels[s] = 10;
+            }
+
+            List<ProfessionalFitResult> results = ProfessionalFitAnalyzer.Analyze(input);
+            Assert.That(results[0].Major, Is.EqualTo(ProfessionalMajor.Weapons),
+                "高战斗 pawn 应回归武器类而非艺术类");
+        }
+
+        [Test]
+        public void BackstoryAndTraitAptitudeCanDriveRecommendation()
+        {
+            // 全员低等级(8)但背景+特性重仓艺术：内在禀赋应把艺术类顶到第一（aptitude 驱动）。
+            var input = new ProfessionalFitInput();
+            foreach (string s in ProfessionalFitAnalyzer.VanillaSkillKeys)
+            {
+                input.SkillLevels[s] = 8;
+            }
+            input.BackstoryGains["Artistic"] = 8;
+            input.TraitGains["Artistic"] = 4;
+
+            List<ProfessionalFitResult> results = ProfessionalFitAnalyzer.Analyze(input);
+            Assert.That(results[0].Major, Is.EqualTo(ProfessionalMajor.Art),
+                "背景+特性重仓艺术的 pawn 应被荐艺术类（即使当前等级不高）");
+            ProfessionalFitResult art = results.Find(r => r.Major == ProfessionalMajor.Art);
+            Assert.That(art.BackstoryScore, Is.GreaterThan(70));
+            Assert.That(art.TraitScore, Is.GreaterThan(60));
+        }
+
+        [Test]
+        public void DisabledSkillContributesZero()
+        {
+            // Artistic 20 级(热情满)但被禁用：艺术类的等级/热情/加成全按 0 计，fit 应显著回落。
+            var enabled = new ProfessionalFitInput();
+            enabled.SkillLevels["Artistic"] = 20;
+            enabled.Passion["Artistic"] = 100;
+            var disabled = new ProfessionalFitInput();
+            disabled.SkillLevels["Artistic"] = 20;
+            disabled.Passion["Artistic"] = 100;
+            disabled.DisabledSkills.Add("Artistic");
+
+            var a = ProfessionalFitAnalyzer.Analyze(enabled).Find(r => r.Major == ProfessionalMajor.Art);
+            var b = ProfessionalFitAnalyzer.Analyze(disabled).Find(r => r.Major == ProfessionalMajor.Art);
+            Assert.That(b.SkillScore, Is.LessThan(a.SkillScore));
+            Assert.That(b.PassionScore, Is.LessThan(a.PassionScore));
+            Assert.That(b.Fit, Is.LessThan(a.Fit));
+        }
+
+        [Test]
+        public void NegativeTraitGainsLowerFit()
+        {
+            var baseInput = new ProfessionalFitInput();
+            baseInput.SkillLevels["Social"] = 10;
+            var penalized = new ProfessionalFitInput();
+            penalized.SkillLevels["Social"] = 10;
+            penalized.TraitGains["Social"] = -6;
+
+            var a = ProfessionalFitAnalyzer.Analyze(baseInput).Find(r => r.Major == ProfessionalMajor.Management);
+            var b = ProfessionalFitAnalyzer.Analyze(penalized).Find(r => r.Major == ProfessionalMajor.Management);
+            Assert.That(b.Fit, Is.LessThan(a.Fit), "负向特性加成应压低对应专业适配分");
         }
     }
 }

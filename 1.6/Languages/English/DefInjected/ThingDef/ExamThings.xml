@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_Exam_Thesis.label>Thesis Scroll</PC_Exam_Thesis.label>
+  <PC_Exam_Thesis.description>A bound thesis recording the holder's research for a qualification.</PC_Exam_Thesis.description>
+  <PC_Exam_Diploma.label>Diploma</PC_Exam_Diploma.label>
+  <PC_Exam_Diploma.description>A formal diploma certifying the holder passed qualification review and defense; displayable.</PC_Exam_Diploma.description>
+  <PC_Exam_Practical.label>Practical Certificate</PC_Exam_Practical.label>
+  <PC_Exam_Practical.description>A nameplate certifying the holder passed the practical exam; issued by the system or hand-pressed.</PC_Exam_Practical.description>
+  <PC_Exam_PracticeKit.label>Practice Kit</PC_Exam_PracticeKit.label>
+  <PC_Exam_PracticeKit.description>Standard practice-exam workpieces pressed from wood, steel and cloth for examiner verification.</PC_Exam_PracticeKit.description>
+  <PC_Exam_Textbook.label>Exam Textbook</PC_Exam_Textbook.label>
+  <PC_Exam_Textbook.description>Theory-exam textbook on a specialty topic for candidates to study.</PC_Exam_Textbook.description>
+  <PC_Exam_ResearchDoc.label>Research Document</PC_Exam_ResearchDoc.label>
+  <PC_Exam_ResearchDoc.description>Technical document recording completed research projects, matching the theory-exam research-count requirement.</PC_Exam_ResearchDoc.description>
+  <PC_Exam_SkillBook.label>Skill Monograph</PC_Exam_SkillBook.label>
+  <PC_Exam_SkillBook.description>Monograph on a single vanilla skill's growth path, matching the theory-exam skill-score basis.</PC_Exam_SkillBook.description>
+  <PC_Exam_TheoryBook.label>Theory Treatise</PC_Exam_TheoryBook.label>
+  <PC_Exam_TheoryBook.description>Treatise expounding a specialty's theoretical system, matching the theory-exam theory-book requirement.</PC_Exam_TheoryBook.description>
+  <PC_Exam_PracticeKit_Engineering.label>Engineering Practice Kit</PC_Exam_PracticeKit_Engineering.label>
+  <PC_Exam_PracticeKit_Engineering.description>Engineering qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Engineering.description>
+  <PC_Exam_PracticeKit_Manufacturing.label>Manufacturing Practice Kit</PC_Exam_PracticeKit_Manufacturing.label>
+  <PC_Exam_PracticeKit_Manufacturing.description>Manufacturing qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Manufacturing.description>
+  <PC_Exam_PracticeKit_Agriculture.label>Agriculture Practice Kit</PC_Exam_PracticeKit_Agriculture.label>
+  <PC_Exam_PracticeKit_Agriculture.description>Agriculture qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Agriculture.description>
+  <PC_Exam_PracticeKit_Forestry.label>Forestry Practice Kit</PC_Exam_PracticeKit_Forestry.label>
+  <PC_Exam_PracticeKit_Forestry.description>Forestry qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Forestry.description>
+  <PC_Exam_PracticeKit_AnimalHusbandry.label>Animal Husbandry Practice Kit</PC_Exam_PracticeKit_AnimalHusbandry.label>
+  <PC_Exam_PracticeKit_AnimalHusbandry.description>Animal Husbandry qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_AnimalHusbandry.description>
+  <PC_Exam_PracticeKit_Medicine.label>Medicine Practice Kit</PC_Exam_PracticeKit_Medicine.label>
+  <PC_Exam_PracticeKit_Medicine.description>Medicine qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Medicine.description>
+  <PC_Exam_PracticeKit_Weapons.label>Weapons Practice Kit</PC_Exam_PracticeKit_Weapons.label>
+  <PC_Exam_PracticeKit_Weapons.description>Weapons qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Weapons.description>
+  <PC_Exam_PracticeKit_Mining.label>Mining Practice Kit</PC_Exam_PracticeKit_Mining.label>
+  <PC_Exam_PracticeKit_Mining.description>Mining qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Mining.description>
+  <PC_Exam_PracticeKit_Research.label>Research Practice Kit</PC_Exam_PracticeKit_Research.label>
+  <PC_Exam_PracticeKit_Research.description>Research qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Research.description>
+  <PC_Exam_PracticeKit_Cooking.label>Cooking Practice Kit</PC_Exam_PracticeKit_Cooking.label>
+  <PC_Exam_PracticeKit_Cooking.description>Cooking qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Cooking.description>
+  <PC_Exam_PracticeKit_Art.label>Art Practice Kit</PC_Exam_PracticeKit_Art.label>
+  <PC_Exam_PracticeKit_Art.description>Art qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Art.description>
+  <PC_Exam_PracticeKit_Management.label>Management Practice Kit</PC_Exam_PracticeKit_Management.label>
+  <PC_Exam_PracticeKit_Management.description>Management qualification practice workpiece samples made at the crafting spot for examiner verification.</PC_Exam_PracticeKit_Management.description>
+  <PC_Exam_Textbook_Engineering.label>Engineering Exam Textbook</PC_Exam_Textbook_Engineering.label>
+  <PC_Exam_Textbook_Engineering.description>Engineering theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Engineering.description>
+  <PC_Exam_ResearchDoc_Engineering.label>Engineering Research Document</PC_Exam_ResearchDoc_Engineering.label>
+  <PC_Exam_ResearchDoc_Engineering.description>Engineering technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Engineering.description>
+  <PC_Exam_SkillBook_Engineering.label>Engineering Skill Monograph</PC_Exam_SkillBook_Engineering.label>
+  <PC_Exam_SkillBook_Engineering.description>Engineering monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Engineering.description>
+  <PC_Exam_TheoryBook_Engineering.label>Engineering Theory Treatise</PC_Exam_TheoryBook_Engineering.label>
+  <PC_Exam_TheoryBook_Engineering.description>Engineering treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Engineering.description>
+  <PC_Exam_Textbook_Manufacturing.label>Manufacturing Exam Textbook</PC_Exam_Textbook_Manufacturing.label>
+  <PC_Exam_Textbook_Manufacturing.description>Manufacturing theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Manufacturing.description>
+  <PC_Exam_ResearchDoc_Manufacturing.label>Manufacturing Research Document</PC_Exam_ResearchDoc_Manufacturing.label>
+  <PC_Exam_ResearchDoc_Manufacturing.description>Manufacturing technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Manufacturing.description>
+  <PC_Exam_SkillBook_Manufacturing.label>Manufacturing Skill Monograph</PC_Exam_SkillBook_Manufacturing.label>
+  <PC_Exam_SkillBook_Manufacturing.description>Manufacturing monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Manufacturing.description>
+  <PC_Exam_TheoryBook_Manufacturing.label>Manufacturing Theory Treatise</PC_Exam_TheoryBook_Manufacturing.label>
+  <PC_Exam_TheoryBook_Manufacturing.description>Manufacturing treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Manufacturing.description>
+  <PC_Exam_Textbook_Agriculture.label>Agriculture Exam Textbook</PC_Exam_Textbook_Agriculture.label>
+  <PC_Exam_Textbook_Agriculture.description>Agriculture theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Agriculture.description>
+  <PC_Exam_ResearchDoc_Agriculture.label>Agriculture Research Document</PC_Exam_ResearchDoc_Agriculture.label>
+  <PC_Exam_ResearchDoc_Agriculture.description>Agriculture technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Agriculture.description>
+  <PC_Exam_SkillBook_Agriculture.label>Agriculture Skill Monograph</PC_Exam_SkillBook_Agriculture.label>
+  <PC_Exam_SkillBook_Agriculture.description>Agriculture monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Agriculture.description>
+  <PC_Exam_TheoryBook_Agriculture.label>Agriculture Theory Treatise</PC_Exam_TheoryBook_Agriculture.label>
+  <PC_Exam_TheoryBook_Agriculture.description>Agriculture treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Agriculture.description>
+  <PC_Exam_Textbook_Forestry.label>Forestry Exam Textbook</PC_Exam_Textbook_Forestry.label>
+  <PC_Exam_Textbook_Forestry.description>Forestry theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Forestry.description>
+  <PC_Exam_ResearchDoc_Forestry.label>Forestry Research Document</PC_Exam_ResearchDoc_Forestry.label>
+  <PC_Exam_ResearchDoc_Forestry.description>Forestry technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Forestry.description>
+  <PC_Exam_SkillBook_Forestry.label>Forestry Skill Monograph</PC_Exam_SkillBook_Forestry.label>
+  <PC_Exam_SkillBook_Forestry.description>Forestry monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Forestry.description>
+  <PC_Exam_TheoryBook_Forestry.label>Forestry Theory Treatise</PC_Exam_TheoryBook_Forestry.label>
+  <PC_Exam_TheoryBook_Forestry.description>Forestry treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Forestry.description>
+  <PC_Exam_Textbook_AnimalHusbandry.label>Animal Husbandry Exam Textbook</PC_Exam_Textbook_AnimalHusbandry.label>
+  <PC_Exam_Textbook_AnimalHusbandry.description>Animal Husbandry theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_AnimalHusbandry.description>
+  <PC_Exam_ResearchDoc_AnimalHusbandry.label>Animal Husbandry Research Document</PC_Exam_ResearchDoc_AnimalHusbandry.label>
+  <PC_Exam_ResearchDoc_AnimalHusbandry.description>Animal Husbandry technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_AnimalHusbandry.description>
+  <PC_Exam_SkillBook_AnimalHusbandry.label>Animal Husbandry Skill Monograph</PC_Exam_SkillBook_AnimalHusbandry.label>
+  <PC_Exam_SkillBook_AnimalHusbandry.description>Animal Husbandry monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_AnimalHusbandry.description>
+  <PC_Exam_TheoryBook_AnimalHusbandry.label>Animal Husbandry Theory Treatise</PC_Exam_TheoryBook_AnimalHusbandry.label>
+  <PC_Exam_TheoryBook_AnimalHusbandry.description>Animal Husbandry treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_AnimalHusbandry.description>
+  <PC_Exam_Textbook_Medicine.label>Medicine Exam Textbook</PC_Exam_Textbook_Medicine.label>
+  <PC_Exam_Textbook_Medicine.description>Medicine theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Medicine.description>
+  <PC_Exam_ResearchDoc_Medicine.label>Medicine Research Document</PC_Exam_ResearchDoc_Medicine.label>
+  <PC_Exam_ResearchDoc_Medicine.description>Medicine technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Medicine.description>
+  <PC_Exam_SkillBook_Medicine.label>Medicine Skill Monograph</PC_Exam_SkillBook_Medicine.label>
+  <PC_Exam_SkillBook_Medicine.description>Medicine monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Medicine.description>
+  <PC_Exam_TheoryBook_Medicine.label>Medicine Theory Treatise</PC_Exam_TheoryBook_Medicine.label>
+  <PC_Exam_TheoryBook_Medicine.description>Medicine treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Medicine.description>
+  <PC_Exam_Textbook_Weapons.label>Weapons Exam Textbook</PC_Exam_Textbook_Weapons.label>
+  <PC_Exam_Textbook_Weapons.description>Weapons theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Weapons.description>
+  <PC_Exam_ResearchDoc_Weapons.label>Weapons Research Document</PC_Exam_ResearchDoc_Weapons.label>
+  <PC_Exam_ResearchDoc_Weapons.description>Weapons technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Weapons.description>
+  <PC_Exam_SkillBook_Weapons.label>Weapons Skill Monograph</PC_Exam_SkillBook_Weapons.label>
+  <PC_Exam_SkillBook_Weapons.description>Weapons monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Weapons.description>
+  <PC_Exam_TheoryBook_Weapons.label>Weapons Theory Treatise</PC_Exam_TheoryBook_Weapons.label>
+  <PC_Exam_TheoryBook_Weapons.description>Weapons treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Weapons.description>
+  <PC_Exam_Textbook_Mining.label>Mining Exam Textbook</PC_Exam_Textbook_Mining.label>
+  <PC_Exam_Textbook_Mining.description>Mining theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Mining.description>
+  <PC_Exam_ResearchDoc_Mining.label>Mining Research Document</PC_Exam_ResearchDoc_Mining.label>
+  <PC_Exam_ResearchDoc_Mining.description>Mining technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Mining.description>
+  <PC_Exam_SkillBook_Mining.label>Mining Skill Monograph</PC_Exam_SkillBook_Mining.label>
+  <PC_Exam_SkillBook_Mining.description>Mining monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Mining.description>
+  <PC_Exam_TheoryBook_Mining.label>Mining Theory Treatise</PC_Exam_TheoryBook_Mining.label>
+  <PC_Exam_TheoryBook_Mining.description>Mining treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Mining.description>
+  <PC_Exam_Textbook_Research.label>Research Exam Textbook</PC_Exam_Textbook_Research.label>
+  <PC_Exam_Textbook_Research.description>Research theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Research.description>
+  <PC_Exam_ResearchDoc_Research.label>Research Research Document</PC_Exam_ResearchDoc_Research.label>
+  <PC_Exam_ResearchDoc_Research.description>Research technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Research.description>
+  <PC_Exam_SkillBook_Research.label>Research Skill Monograph</PC_Exam_SkillBook_Research.label>
+  <PC_Exam_SkillBook_Research.description>Research monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Research.description>
+  <PC_Exam_TheoryBook_Research.label>Research Theory Treatise</PC_Exam_TheoryBook_Research.label>
+  <PC_Exam_TheoryBook_Research.description>Research treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Research.description>
+  <PC_Exam_Textbook_Cooking.label>Cooking Exam Textbook</PC_Exam_Textbook_Cooking.label>
+  <PC_Exam_Textbook_Cooking.description>Cooking theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Cooking.description>
+  <PC_Exam_ResearchDoc_Cooking.label>Cooking Research Document</PC_Exam_ResearchDoc_Cooking.label>
+  <PC_Exam_ResearchDoc_Cooking.description>Cooking technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Cooking.description>
+  <PC_Exam_SkillBook_Cooking.label>Cooking Skill Monograph</PC_Exam_SkillBook_Cooking.label>
+  <PC_Exam_SkillBook_Cooking.description>Cooking monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Cooking.description>
+  <PC_Exam_TheoryBook_Cooking.label>Cooking Theory Treatise</PC_Exam_TheoryBook_Cooking.label>
+  <PC_Exam_TheoryBook_Cooking.description>Cooking treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Cooking.description>
+  <PC_Exam_Textbook_Art.label>Art Exam Textbook</PC_Exam_Textbook_Art.label>
+  <PC_Exam_Textbook_Art.description>Art theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Art.description>
+  <PC_Exam_ResearchDoc_Art.label>Art Research Document</PC_Exam_ResearchDoc_Art.label>
+  <PC_Exam_ResearchDoc_Art.description>Art technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Art.description>
+  <PC_Exam_SkillBook_Art.label>Art Skill Monograph</PC_Exam_SkillBook_Art.label>
+  <PC_Exam_SkillBook_Art.description>Art monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Art.description>
+  <PC_Exam_TheoryBook_Art.label>Art Theory Treatise</PC_Exam_TheoryBook_Art.label>
+  <PC_Exam_TheoryBook_Art.description>Art treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Art.description>
+  <PC_Exam_Textbook_Management.label>Management Exam Textbook</PC_Exam_Textbook_Management.label>
+  <PC_Exam_Textbook_Management.description>Management theory-exam textbook on the specialty topic, bound at the crafting spot.</PC_Exam_Textbook_Management.description>
+  <PC_Exam_ResearchDoc_Management.label>Management Research Document</PC_Exam_ResearchDoc_Management.label>
+  <PC_Exam_ResearchDoc_Management.description>Management technical document recording completed research projects for the theory exam.</PC_Exam_ResearchDoc_Management.description>
+  <PC_Exam_SkillBook_Management.label>Management Skill Monograph</PC_Exam_SkillBook_Management.label>
+  <PC_Exam_SkillBook_Management.description>Management monograph on a vanilla skill growth path for the specialty, matching theory-exam scoring.</PC_Exam_SkillBook_Management.description>
+  <PC_Exam_TheoryBook_Management.label>Management Theory Treatise</PC_Exam_TheoryBook_Management.label>
+  <PC_Exam_TheoryBook_Management.description>Management treatise expounding the specialty theoretical system for the theory exam.</PC_Exam_TheoryBook_Management.description>
+  <PC_Exam_ThesisProposal.label>Thesis Proposal</PC_Exam_ThesisProposal.label>
+  <PC_Exam_ThesisProposal.description>A thesis skeleton document recording the chosen direction; later book/research/final stages build on it.</PC_Exam_ThesisProposal.description>
+</LanguageData>

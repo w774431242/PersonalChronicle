@@ -47,8 +47,9 @@ namespace PersonalChronicle.Capture
             return found;
         }
 
-        public static void Postfix(Pawn ingester, Thing __instance)
+        public static void Postfix(Pawn ingester, Thing __instance, bool __runOriginal = true)
         {
+            if (!__runOriginal) return; // A denied/replaced ingestion did not consume this original stack.
             try
             {
                 if (ingester == null || __instance == null || __instance.def == null)
@@ -73,6 +74,10 @@ namespace PersonalChronicle.Capture
                     return;
                 }
                 service.OnThingConsumed(ingester, __instance);
+                // REQ-MVS-013：物品级产消读数（摄入 = 1 件）。
+                // ⚠ 固定记 1 而非读 stackCount：Postfix 时原方法可能已扣减该值（读数会失真）。
+                // ⚠ 本路径高频（Patch_ThingIngested 头注已载）⇒ 只做 O(1) 字典累加，零分配。
+                service.RecordItemFlow(__instance.def.defName, 1, false);
             }
             catch (Exception ex)
             {

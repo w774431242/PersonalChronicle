@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PersonalChronicle.Storage.PublicZone>公有化</PersonalChronicle.Storage.PublicZone>
+  <PersonalChronicle.Storage.PublicZoneHelp>将区内无主物资及后续存入的无主物资登记为公有；已有私有归属保持不变。开启后按物品自身市价计费（无需人工设价），启用经济制度时先结算后进食。关闭、缩区或删除储存区不会清除已有物资的公有归属。此开关仅对当前储存区生效。</PersonalChronicle.Storage.PublicZoneHelp>
+  <PersonalChronicle.Storage.PublicZoneActive>公有储存区</PersonalChronicle.Storage.PublicZoneActive>
+  <PersonalChronicle.Storage.AssignOwner>指派所属人物</PersonalChronicle.Storage.AssignOwner>
+  <PersonalChronicle.Storage.OwnerHelp>私人物资架仅所属人物可食用其中食品。先清空架子才能变更所属人物。</PersonalChronicle.Storage.OwnerHelp>
+  <PersonalChronicle.Storage.EmptyFirst>请先清空物资架再更改所属人物；已有物资的归属不会随改名转移。</PersonalChronicle.Storage.EmptyFirst>
+  <PersonalChronicle.Storage.Unassigned>未指派</PersonalChronicle.Storage.Unassigned>
+  <PersonalChronicle.Storage.OwnerValue>所属人物：{0}</PersonalChronicle.Storage.OwnerValue>
+</LanguageData>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Needs.Planning.Mode>经济规划阶段</PC_PEA.Needs.Planning.Mode>
+  <PC_PEA.Needs.Planning.ShadowOnly>只读拟选 · 不签约、不派工、不收费</PC_PEA.Needs.Planning.ShadowOnly>
+  <PC_PEA.Needs.Planning.Decision>拟选行动</PC_PEA.Needs.Planning.Decision>
+  <PC_PEA.Needs.Planning.Waiting>等待规划采样</PC_PEA.Needs.Planning.Waiting>
+  <PC_PEA.Needs.Planning.Stale>历史规划已陈旧，等待重评</PC_PEA.Needs.Planning.Stale>
+  <PC_PEA.Needs.Planning.Age>规划年龄</PC_PEA.Needs.Planning.Age>
+  <PC_PEA.Needs.Planning.AgeTicks>{0} Tick</PC_PEA.Needs.Planning.AgeTicks>
+  <PC_PEA.Needs.Planning.Reason>原因</PC_PEA.Needs.Planning.Reason>
+  <PC_PEA.Needs.Planning.Policy.WorkHours>可用工时</PC_PEA.Needs.Planning.Policy.WorkHours>
+  <PC_PEA.Needs.Planning.Policy.Leisure>保留闲暇</PC_PEA.Needs.Planning.Policy.Leisure>
+  <PC_PEA.Needs.Planning.Policy.Reserve>储备保障期</PC_PEA.Needs.Planning.Policy.Reserve>
+  <PC_PEA.Needs.Planning.Policy.Saving>结余储蓄倾向</PC_PEA.Needs.Planning.Policy.Saving>
+  <PC_PEA.Needs.Planning.HoursPerDay>{0} h/日</PC_PEA.Needs.Planning.HoursPerDay>
+  <PC_PEA.Needs.Planning.Days>{0} 日</PC_PEA.Needs.Planning.Days>
+  <PC_PEA.Needs.Planning.Percent>{0}%</PC_PEA.Needs.Planning.Percent>
+  <PC_PEA.Needs.Planning.Sustainability>生活计划可持续性</PC_PEA.Needs.Planning.Sustainability>
+  <PC_PEA.Needs.Planning.Sustainable>可持续</PC_PEA.Needs.Planning.Sustainable>
+  <PC_PEA.Needs.Planning.Unsustainable>不可持续：基本保障长期占满，应考虑降低可选消费/储蓄、调整工时或增加照护分担</PC_PEA.Needs.Planning.Unsustainable>
+  <PC_PEA.Needs.Planning.Deadline>风险时限</PC_PEA.Needs.Planning.Deadline>
+  <PC_PEA.Needs.Planning.DeadlineTicks>{0} tick</PC_PEA.Needs.Planning.DeadlineTicks>
+  <PC_PEA.Needs.Planning.DeadlineUnknown>不可估（无基线或未在下降）</PC_PEA.Needs.Planning.DeadlineUnknown>
+  <PC_PEA.Needs.Planning.Slack>余量</PC_PEA.Needs.Planning.Slack>
+  <PC_PEA.Needs.Planning.Blocked>制度性受阻</PC_PEA.Needs.Planning.Blocked>
+  <PC_PEA.Needs.Planning.BlockedCount>{0} 项必要需求既缺资金、又无法通过劳动补足（依赖成环，不再重复索取）</PC_PEA.Needs.Planning.BlockedCount>
+  <PC_PEA.Needs.Planning.Options>可选方案</PC_PEA.Needs.Planning.Options>
+  <PC_PEA.Needs.Planning.Reason.SelfHelpNotNeeded>尚未跌破原版自给线</PC_PEA.Needs.Planning.Reason.SelfHelpNotNeeded>
+  <PC_PEA.Needs.Planning.Option.NativeSelfHelp>免费自救</PC_PEA.Needs.Planning.Option.NativeSelfHelp>
+  <PC_PEA.Needs.Planning.Option.SeekWork>劳动</PC_PEA.Needs.Planning.Option.SeekWork>
+  <PC_PEA.Needs.Planning.Option.Purchase>购买</PC_PEA.Needs.Planning.Option.Purchase>
+  <PC_PEA.Needs.Planning.Option.Service>服务</PC_PEA.Needs.Planning.Option.Service>
+  <PC_PEA.Needs.Planning.Sources>风格依据</PC_PEA.Needs.Planning.Sources>
+  <PC_PEA.Needs.Planning.Source.NeutralBaseline>中性默认（非已测人格）</PC_PEA.Needs.Planning.Source.NeutralBaseline>
+  <PC_PEA.Needs.Planning.Source.Industriousness>勤劳特质映射</PC_PEA.Needs.Planning.Source.Industriousness>
+  <PC_PEA.Needs.Planning.Source.Ascetic>苦行特质映射</PC_PEA.Needs.Planning.Source.Ascetic>
+  <PC_PEA.Needs.Planning.Source.Gourmand>美食偏好映射</PC_PEA.Needs.Planning.Source.Gourmand>
+  <PC_PEA.Needs.Planning.Source.NightOwl>夜间偏好映射</PC_PEA.Needs.Planning.Source.NightOwl>
+  <PC_PEA.Needs.Planning.Budget>预算估计</PC_PEA.Needs.Planning.Budget>
+  <PC_PEA.Needs.Planning.Cash>未占用现金（实资账本）</PC_PEA.Needs.Planning.Cash>
+  <PC_PEA.Needs.Planning.Target>有限储备目标</PC_PEA.Needs.Planning.Target>
+  <PC_PEA.Needs.Planning.LowWater>补储下水位</PC_PEA.Needs.Planning.LowWater>
+  <PC_PEA.Needs.Planning.Income>当前收入缺口上限</PC_PEA.Needs.Planning.Income>
+  <PC_PEA.Needs.Planning.Refill>补储是否激活</PC_PEA.Needs.Planning.Refill>
+  <PC_PEA.Needs.Planning.Unknown>未知</PC_PEA.Needs.Planning.Unknown>
+  <PC_PEA.Needs.Planning.NotApplicable>不适用</PC_PEA.Needs.Planning.NotApplicable>
+  <PC_PEA.Needs.Planning.Money>{0} 银币</PC_PEA.Needs.Planning.Money>
+  <PC_PEA.Needs.Planning.Yes>是</PC_PEA.Needs.Planning.Yes>
+  <PC_PEA.Needs.Planning.No>否</PC_PEA.Needs.Planning.No>
+  <PC_PEA.Needs.Planning.Goals>当前已激活需求顺序</PC_PEA.Needs.Planning.Goals>
+  <PC_PEA.Needs.Planning.NoActiveGoals>没有已确认的激活项；未知不代表已满足</PC_PEA.Needs.Planning.NoActiveGoals>
+  <PC_PEA.Needs.Planning.Opportunity>拟选岗位 ID（尚未签约）</PC_PEA.Needs.Planning.Opportunity>
+  <PC_PEA.Needs.Planning.Decision.WaitingFacts>等待新鲜需求事实</PC_PEA.Needs.Planning.Decision.WaitingFacts>
+  <PC_PEA.Needs.Planning.Decision.NativeYield>让原版控制与安全行为先行</PC_PEA.Needs.Planning.Decision.NativeYield>
+  <PC_PEA.Needs.Planning.Decision.NativeNeed>先满足基本进食／休息</PC_PEA.Needs.Planning.Decision.NativeNeed>
+  <PC_PEA.Needs.Planning.Decision.WaitingBudget>等待真实生活费用估计</PC_PEA.Needs.Planning.Decision.WaitingBudget>
+  <PC_PEA.Needs.Planning.Decision.WaitingOpportunity>需要收入，等待可行岗位</PC_PEA.Needs.Planning.Decision.WaitingOpportunity>
+  <PC_PEA.Needs.Planning.Decision.SeekWork>拟申请有效岗位（只读）</PC_PEA.Needs.Planning.Decision.SeekWork>
+  <PC_PEA.Needs.Planning.Decision.MaintainReserve>维持有限储备</PC_PEA.Needs.Planning.Decision.MaintainReserve>
+  <PC_PEA.Needs.Planning.Decision.NoIncomeNeeded>当前无需新增补储劳动</PC_PEA.Needs.Planning.Decision.NoIncomeNeeded>
+  <PC_PEA.Needs.Planning.Decision.OutOfScope>已离开规划范围</PC_PEA.Needs.Planning.Decision.OutOfScope>
+  <PC_PEA.Needs.Planning.Decision.Error>规划输入异常</PC_PEA.Needs.Planning.Decision.Error>
+  <PC_PEA.Needs.Planning.Budget.Unknown>未知</PC_PEA.Needs.Planning.Budget.Unknown>
+  <PC_PEA.Needs.Planning.Budget.Ready>同窗预算可估计（不代表可支付）</PC_PEA.Needs.Planning.Budget.Ready>
+  <PC_PEA.Needs.Planning.Budget.WaitingQuote>缺生活费用／覆盖估计</PC_PEA.Needs.Planning.Budget.WaitingQuote>
+  <PC_PEA.Needs.Planning.Budget.WaitingAccount>缺已核验个人账户</PC_PEA.Needs.Planning.Budget.WaitingAccount>
+  <PC_PEA.Needs.Planning.Budget.Inconsistent>预算证据不一致</PC_PEA.Needs.Planning.Budget.Inconsistent>
+  <PC_PEA.Needs.Planning.Reason.FactsUnavailable>事实缺失、陈旧或来源范围不一致</PC_PEA.Needs.Planning.Reason.FactsUnavailable>
+  <PC_PEA.Needs.Planning.Reason.OutOfScope>主体已离图或死亡</PC_PEA.Needs.Planning.Reason.OutOfScope>
+  <PC_PEA.Needs.Planning.Reason.NativeControlOrSafety>征召、强制任务、失能、危险或紧急需求；未知安全状态也让路</PC_PEA.Needs.Planning.Reason.NativeControlOrSafety>
+  <PC_PEA.Needs.Planning.Reason.BasicNeedFirst>基本进食／休息目标已激活，不能被补储计划挤占</PC_PEA.Needs.Planning.Reason.BasicNeedFirst>
+  <PC_PEA.Needs.Planning.Reason.EmploymentNotPermitted>年龄或行动资格不允许普通就业</PC_PEA.Needs.Planning.Reason.EmploymentNotPermitted>
+  <PC_PEA.Needs.Planning.Reason.CostEstimateUnavailable>尚无同窗、同单位的生活报价与有效覆盖估计，不能伪造收入金额</PC_PEA.Needs.Planning.Reason.CostEstimateUnavailable>
+  <PC_PEA.Needs.Planning.Reason.NoPricedConsumption>尚无已公布的消费报价（同窗、同单位）与库存证据</PC_PEA.Needs.Planning.Reason.NoPricedConsumption>
+  <PC_PEA.Needs.Planning.Reason.ConsumptionUnaffordable>已有已公布消费报价，但自有现金在其覆盖之外仍不足以支付</PC_PEA.Needs.Planning.Reason.ConsumptionUnaffordable>
+  <PC_PEA.Needs.Planning.Reason.ServiceNotImplemented>服务供给机制尚未实装（服务价格字段已存在但无消费方）</PC_PEA.Needs.Planning.Reason.ServiceNotImplemented>
+  <PC_PEA.Needs.Planning.LowWaterWithEmergency>{0}（应急 {1}）</PC_PEA.Needs.Planning.LowWaterWithEmergency>
+  <PC_PEA.Needs.Planning.Reason.FundedOpportunityUnderKnownRisk>该机构有欠薪或延迟到账记录，本次仍签约并按已知风险处理</PC_PEA.Needs.Planning.Reason.FundedOpportunityUnderKnownRisk>
+  <PC_PEA.Needs.Planning.Reason.AccountUnknown>个人实资账户尚未核验，旧余额与未来工资不可代替现金</PC_PEA.Needs.Planning.Reason.AccountUnknown>
+  <PC_PEA.Needs.Planning.Reason.ReserveSufficient>达到储备目标，或尚未跌破补储下水位</PC_PEA.Needs.Planning.Reason.ReserveSufficient>
+  <PC_PEA.Needs.Planning.Reason.ProtectedTimetable>当前时间表保留给休息、娱乐或其他安排</PC_PEA.Needs.Planning.Reason.ProtectedTimetable>
+  <PC_PEA.Needs.Planning.Reason.NoFeasibleOpportunity>已知岗位不满足资金、能力、执行或及时到账条件</PC_PEA.Needs.Planning.Reason.NoFeasibleOpportunity>
+  <PC_PEA.Needs.Planning.Reason.OpportunityNotPublished>真实可执行岗位市场尚未发布</PC_PEA.Needs.Planning.Reason.OpportunityNotPublished>
+  <PC_PEA.Needs.Planning.Reason.FundedOpportunity>存在有资金、可执行并可及时到账的候选；尚未提交合同</PC_PEA.Needs.Planning.Reason.FundedOpportunity>
+  <PC_PEA.Needs.Planning.Reason.InvalidWindow>规划时间窗或策略参数异常</PC_PEA.Needs.Planning.Reason.InvalidWindow>
+  <PC_PEA.Needs.Planning.Reason.InvalidAmount>金额超限或计算溢出</PC_PEA.Needs.Planning.Reason.InvalidAmount>
+  <PC_PEA.Needs.Planning.Reason.DuplicateOrMismatchedSlice>需要费用重复或时间窗不一致</PC_PEA.Needs.Planning.Reason.DuplicateOrMismatchedSlice>
+  <PC_PEA.Needs.Planning.Reason.DuplicateCoverage>同一保障资源被重复使用</PC_PEA.Needs.Planning.Reason.DuplicateCoverage>
+  <PC_PEA.Needs.Planning.Reason.CoverageExceedsCost>保障覆盖超过实际费用</PC_PEA.Needs.Planning.Reason.CoverageExceedsCost>
+  <PC_PEA.Needs.Planning.Reason.UnbackedReservation>费用保护超过账户真实硬预留</PC_PEA.Needs.Planning.Reason.UnbackedReservation>
+  <PC_PEA.Needs.Planning.Reason.PlanningSourceFailed>采集或规划异常，旧成功结果已失效</PC_PEA.Needs.Planning.Reason.PlanningSourceFailed>  <PC_PEA.Needs.Planning.Thresholds>进入 {0} → 目标 {1}</PC_PEA.Needs.Planning.Thresholds>
+  <PC_PEA.Needs.Planning.Cycle.Instant>即时满足</PC_PEA.Needs.Planning.Cycle.Instant>
+  <PC_PEA.Needs.Planning.Cycle.Reserve>储蓄保障</PC_PEA.Needs.Planning.Cycle.Reserve>
+  <PC_PEA.Needs.Planning.Cycle.Labour>劳动收入</PC_PEA.Needs.Planning.Cycle.Labour>
+  <PC_PEA.Needs.Planning.Cycle.Consume>消费与服务</PC_PEA.Needs.Planning.Cycle.Consume>
+  <PC_PEA.Needs.Planning.Cycle.State.Ok>正常</PC_PEA.Needs.Planning.Cycle.State.Ok>
+  <PC_PEA.Needs.Planning.Cycle.State.Pending>等待条件</PC_PEA.Needs.Planning.Cycle.State.Pending>
+  <PC_PEA.Needs.Planning.Cycle.State.Unimplemented>未接通</PC_PEA.Needs.Planning.Cycle.State.Unimplemented>
+  <PC_PEA.Needs.Planning.Cycle.State.Unknown>未知</PC_PEA.Needs.Planning.Cycle.State.Unknown>
+  <PC_PEA.Needs.Planning.Cycle.NoActiveNeed>无激活需求</PC_PEA.Needs.Planning.Cycle.NoActiveNeed>
+  <PC_PEA.Needs.Planning.Cycle.NoOffer>无候选岗位</PC_PEA.Needs.Planning.Cycle.NoOffer>
+  <PC_PEA.Needs.Planning.Offer>工资 {0}；能力 {1}；执行 {2}；资金 {3}；可达 {4}</PC_PEA.Needs.Planning.Offer>
+  <PC_PEA.Needs.Planning.Employment.State.Active>履约中</PC_PEA.Needs.Planning.Employment.State.Active>
+  <PC_PEA.Needs.Planning.Employment.State.None>未签合同</PC_PEA.Needs.Planning.Employment.State.None>
+  <PC_PEA.Needs.Planning.Employment.Position>岗位</PC_PEA.Needs.Planning.Employment.Position>
+  <PC_PEA.Needs.Planning.Employment.Wage>工资与计件</PC_PEA.Needs.Planning.Employment.Wage>
+  <PC_PEA.Needs.Planning.Employment.WageValue>{0} / 件 · 计件 {1} / {2}</PC_PEA.Needs.Planning.Employment.WageValue>
+  <PC_PEA.Needs.Planning.Employment.Term>合同期限</PC_PEA.Needs.Planning.Employment.Term>
+  <PC_PEA.Needs.Planning.Employment.TermValue>剩余 {0} tick · 退出：{1}</PC_PEA.Needs.Planning.Employment.TermValue>
+  <PC_PEA.Needs.Planning.Employment.NoExit>无退出条件</PC_PEA.Needs.Planning.Employment.NoExit>
+  <PC_PEA.Needs.Planning.Employment.Exit.Expired>已到期</PC_PEA.Needs.Planning.Employment.Exit.Expired>
+  <PC_PEA.Needs.Planning.Employment.Exit.JobCapReached>达计件上限</PC_PEA.Needs.Planning.Employment.Exit.JobCapReached>
+  <PC_PEA.Needs.Planning.Employment.Exit.InstitutionClosed>机构已关闭</PC_PEA.Needs.Planning.Employment.Exit.InstitutionClosed>
+  <PC_PEA.Needs.Planning.Employment.Exit.PositionUnavailable>岗位不可用</PC_PEA.Needs.Planning.Employment.Exit.PositionUnavailable>
+  <PC_PEA.Needs.Planning.Employment.Payable>应付工资</PC_PEA.Needs.Planning.Employment.Payable>
+  <PC_PEA.Needs.Planning.Employment.NoPayable>无</PC_PEA.Needs.Planning.Employment.NoPayable>
+  <PC_PEA.Needs.Planning.Employment.PayableValue>{0}（{1} 笔未付）</PC_PEA.Needs.Planning.Employment.PayableValue>
+  <PC_PEA.Needs.Planning.Employment.Backoff>购买退避</PC_PEA.Needs.Planning.Employment.Backoff>
+  <PC_PEA.Needs.Planning.Employment.BackoffNone>无失败记录</PC_PEA.Needs.Planning.Employment.BackoffNone>
+  <PC_PEA.Needs.Planning.Employment.BackoffValue>连续失败 {0} 次</PC_PEA.Needs.Planning.Employment.BackoffValue>
+  <PC_PEA.Needs.Planning.Employment.Credibility>机构工资可信度</PC_PEA.Needs.Planning.Employment.Credibility>
+  <PC_PEA.Needs.Planning.Employment.CredibilityValue>{0}（样本 {1}）</PC_PEA.Needs.Planning.Employment.CredibilityValue>
+  <PC_PEA.Needs.Planning.CredibilityBand.Unproven>样本不足</PC_PEA.Needs.Planning.CredibilityBand.Unproven>
+  <PC_PEA.Needs.Planning.CredibilityBand.Weak>偏弱</PC_PEA.Needs.Planning.CredibilityBand.Weak>
+  <PC_PEA.Needs.Planning.CredibilityBand.Mixed>混合</PC_PEA.Needs.Planning.CredibilityBand.Mixed>
+  <PC_PEA.Needs.Planning.CredibilityBand.Strong>稳定</PC_PEA.Needs.Planning.CredibilityBand.Strong>
+  <PC_PEA.Needs.Planning.Care.Summary>照护授权 {0} 条</PC_PEA.Needs.Planning.Care.Summary>
+  <PC_PEA.Needs.Planning.Care.None>无照护授权</PC_PEA.Needs.Planning.Care.None>
+  <PC_PEA.Needs.Planning.Care.RowValue>已计费 {0} / 上限 {1} · 剩余 {2} tick</PC_PEA.Needs.Planning.Care.RowValue>
+  <PC_PEA.Needs.Planning.Care.Capability>诊疗服务能力</PC_PEA.Needs.Planning.Care.Capability>
+  <PC_PEA.Needs.Planning.Cycle.State.Feasible>可行</PC_PEA.Needs.Planning.Cycle.State.Feasible>
+  <PC_PEA.Needs.Planning.Cycle.State.Blocked>受阻</PC_PEA.Needs.Planning.Cycle.State.Blocked>
+  <PC_PEA.Needs.Planning.OptionUnreported>未报告</PC_PEA.Needs.Planning.OptionUnreported>
+  <PC_PEA.Needs.Planning.Cycle.State.NotAssessed>未评估</PC_PEA.Needs.Planning.Cycle.State.NotAssessed>
+  <PC_PEA.Needs.Planning.Cycle.NotAssessed>本次评估未产出方案比较</PC_PEA.Needs.Planning.Cycle.NotAssessed>
+  <PC_PEA.Needs.Planning.Reason.FundedIncrementalOpportunity>存在有资金的计件机会，可逐件赚取收入补储；尚未覆盖全部预算或实际到账</PC_PEA.Needs.Planning.Reason.FundedIncrementalOpportunity>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteUnpriced>公共食物存在但无法计价（市价或营养不可用）</PC_PEA.Needs.Planning.Reason.FoodQuoteUnpriced>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteFoodUnreachable>公共食物全部够不到（路径不可达）</PC_PEA.Needs.Planning.Reason.FoodQuoteFoodUnreachable>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteFoodPendingTrade>公共食物正被交易占用（有待处理命令）</PC_PEA.Needs.Planning.Reason.FoodQuoteFoodPendingTrade>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteOwnershipNotPublic>食物不在公有储物内（权属非公有）</PC_PEA.Needs.Planning.Reason.FoodQuoteOwnershipNotPublic>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteNotEdible>公有食物里没有这名殖民者能吃的</PC_PEA.Needs.Planning.Reason.FoodQuoteNotEdible>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteNoFood>公有储物可达，但里面没有食物</PC_PEA.Needs.Planning.Reason.FoodQuoteNoFood>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteSourceUnreachable>公有储物建筑全部不可达</PC_PEA.Needs.Planning.Reason.FoodQuoteSourceUnreachable>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteZoneNotEnabled>库存区未启用为公有来源</PC_PEA.Needs.Planning.Reason.FoodQuoteZoneNotEnabled>
+  <PC_PEA.Needs.Planning.Reason.FoodQuoteNoPublicStorage>没有可考察的公有储物或已启用库存区</PC_PEA.Needs.Planning.Reason.FoodQuoteNoPublicStorage>
+  <PC_PEA.Needs.Planning.Account.State.Known>账户已建立</PC_PEA.Needs.Planning.Account.State.Known>
+  <PC_PEA.Needs.Planning.Account.State.NotEstablished>尚未建立个人账户</PC_PEA.Needs.Planning.Account.State.NotEstablished>
+  <PC_PEA.Needs.Planning.Account.State.Unavailable>账本暂不可用（正在存读档或恢复）</PC_PEA.Needs.Planning.Account.State.Unavailable>
+  <PC_PEA.Needs.Planning.Account.State.Unsupported>账本数据版本或编码不受支持（已按原始态保留）</PC_PEA.Needs.Planning.Account.State.Unsupported>
+  <PC_PEA.Needs.Planning.Account.State.Error>个人账户读取失败</PC_PEA.Needs.Planning.Account.State.Error>
+  <PC_PEA.Needs.Planning.Account.State.NotApplicable>本页当前不适用（无可用地图）</PC_PEA.Needs.Planning.Account.State.NotApplicable>
+  <PC_PEA.Needs.Planning.Account.NoPlan>计划待刷新</PC_PEA.Needs.Planning.Account.NoPlan>
+  <PC_PEA.Needs.Planning.Account.Income.NoPlan>计划待刷新</PC_PEA.Needs.Planning.Account.Income.NoPlan>
+  <PC_PEA.Needs.Planning.Account.Income.Stale>计划已过期，等待重评</PC_PEA.Needs.Planning.Account.Income.Stale>
+  <PC_PEA.Needs.Planning.Account.Income.WaitingQuote>等待生活费用报价</PC_PEA.Needs.Planning.Account.Income.WaitingQuote>
+  <PC_PEA.Needs.Planning.Account.Income.WaitingAccount>等待已核验个人账户</PC_PEA.Needs.Planning.Account.Income.WaitingAccount>
+  <PC_PEA.Needs.Planning.Account.Income.Inconsistent>预算证据不一致</PC_PEA.Needs.Planning.Account.Income.Inconsistent>
+  <PC_PEA.Needs.Planning.Account.Income.Unknown>未知</PC_PEA.Needs.Planning.Account.Income.Unknown>
+  <PC_PEA.Needs.Planning.Account.Income.Sufficient>暂不需要补储</PC_PEA.Needs.Planning.Account.Income.Sufficient>
+  <PC_PEA.Needs.Planning.Account.Income.NotPermitted>无法工作：年龄或资格不允许普通就业</PC_PEA.Needs.Planning.Account.Income.NotPermitted>
+  <PC_PEA.Needs.Planning.Account.Income.Refilling>正在补储</PC_PEA.Needs.Planning.Account.Income.Refilling>
+  <PC_PEA.Needs.Planning.Account.Tip.Subject>账户归属：{0}</PC_PEA.Needs.Planning.Account.Tip.Subject>
+  <PC_PEA.Needs.Planning.Account.Tip.SubjectUnknown>当前选中成员</PC_PEA.Needs.Planning.Account.Tip.SubjectUnknown>
+  <PC_PEA.Needs.Planning.Account.Tip.Formula>可用余额 = 账户总额 − 预留金额；金额为现行实资账本的整数 minor 读数（100 minor = 1 银币），固定两位小数。</PC_PEA.Needs.Planning.Account.Tip.Formula>
+  <PC_PEA.Needs.Planning.Account.Tip.Source>资金来源：现行实资账本（非冻结经济账户）。未到账工资、报价与合同金额只是预计收入，不计入余额；只有真实结算才改变余额。</PC_PEA.Needs.Planning.Account.Tip.Source>
+  <PC_PEA.Needs.Planning.Account.Tip.Sampling>账户在本次刷新时读取，随本页 60 tick 刷新更新；它是实时度数，与计划采样时点可能不同。</PC_PEA.Needs.Planning.Account.Tip.Sampling>
+  <PC_PEA.Needs.Planning.Account.Tip.State>当前状态：{0}</PC_PEA.Needs.Planning.Account.Tip.State>
+  <PC_PEA.Needs.Planning.Account.Tip.NoPlan>暂无影子计划采样：账户数字照常显示，储备目标与补储状态等待规划。</PC_PEA.Needs.Planning.Account.Tip.NoPlan>
+  <PC_PEA.Needs.Planning.Account.Tip.PlanAge>计划采样年龄：{0}</PC_PEA.Needs.Planning.Account.Tip.PlanAge>
+  <PC_PEA.Needs.Planning.Account.Tip.Window>预算窗口：未来 {0} 日（并非所有生活项目都已计费适配）。</PC_PEA.Needs.Planning.Account.Tip.Window>
+  <PC_PEA.Needs.Planning.Account.Tip.Objective>储备目标 {0}：必要生活成本扣除有效覆盖后的余额。</PC_PEA.Needs.Planning.Account.Tip.Objective>
+  <PC_PEA.Needs.Planning.Account.Tip.Trigger>启动线 {0} = min(储备目标, 下水位 {1} + 应急额 {2})；低于启动线才启动补储。</PC_PEA.Needs.Planning.Account.Tip.Trigger>
+  <PC_PEA.Needs.Planning.Account.Tip.Exit>已开始补储后持续到储备目标 {0} 才退出；未到启动线时可以留有缺口而暂不求职。</PC_PEA.Needs.Planning.Account.Tip.Exit>
+  <PC_PEA.Needs.Planning.Account.Tip.Decision>当前判定：{0} · 原因：{1}；补储只表示收入需要，实际求职还受征召、吃饭、睡眠、能力、工时与岗位约束。</PC_PEA.Needs.Planning.Account.Tip.Decision>
+  <PC_PEA.Needs.Planning.Account.Income.RefillNeeded>需要收入补储</PC_PEA.Needs.Planning.Account.Income.RefillNeeded>
+  <PC_PEA.Needs.Planning.Model.NoPlan>等待感知数据</PC_PEA.Needs.Planning.Model.NoPlan>
+  <PC_PEA.Needs.Planning.Model.NoReserve>计划值：当前无必要储备目标</PC_PEA.Needs.Planning.Model.NoReserve>
+  <PC_PEA.Needs.Planning.Model.Coverage>计划 {0} / 目标 {1} · 覆盖 {2} · 缺口 {3}</PC_PEA.Needs.Planning.Model.Coverage>
+  <PC_PEA.Needs.Planning.Model.CoverageUnknown>计划值 — · 目标 — · 覆盖 — · {0}</PC_PEA.Needs.Planning.Model.CoverageUnknown>
+  <PC_PEA.Needs.Planning.Model.SampledValue>{0}（已过期）</PC_PEA.Needs.Planning.Model.SampledValue>
+  <PC_PEA.Needs.Planning.Model.Threshold>计划值：低于 {0} 启动 · 达到 {1} 退出</PC_PEA.Needs.Planning.Model.Threshold>
+  <PC_PEA.Needs.Planning.Model.ThresholdUnknown>计划启动线 — · 目标线 —</PC_PEA.Needs.Planning.Model.ThresholdUnknown>
+  <PC_PEA.Needs.Planning.Model.FocusUnknown>目标待感知</PC_PEA.Needs.Planning.Model.FocusUnknown>
+  <PC_PEA.Needs.Planning.Model.FocusReserve>生活储备</PC_PEA.Needs.Planning.Model.FocusReserve>
+  <PC_PEA.Needs.Planning.Model.FocusNone>暂无活跃规划目标</PC_PEA.Needs.Planning.Model.FocusNone>
+  <PC_PEA.Needs.Planning.Model.Input>输入 · 账户</PC_PEA.Needs.Planning.Model.Input>
+  <PC_PEA.Needs.Planning.Model.AccountSample>可用 {0} · 本次账户采样 {1} tick</PC_PEA.Needs.Planning.Model.AccountSample>
+  <PC_PEA.Needs.Planning.Model.PlanSample>输入 · 计划</PC_PEA.Needs.Planning.Model.PlanSample>
+  <PC_PEA.Needs.Planning.Model.PlanSampleValue>采样可用 {0} · 计划 {1} tick · 年龄 {2} tick · {3}</PC_PEA.Needs.Planning.Model.PlanSampleValue>
+  <PC_PEA.Needs.Planning.Model.Fresh>有效采样</PC_PEA.Needs.Planning.Model.Fresh>
+  <PC_PEA.Needs.Planning.Model.Focus>当前目标</PC_PEA.Needs.Planning.Model.Focus>
+  <PC_PEA.Needs.Planning.Model.Gap>缺口 · 储备</PC_PEA.Needs.Planning.Model.Gap>
+  <PC_PEA.Needs.Planning.Model.Trigger>缺口 · 阈值</PC_PEA.Needs.Planning.Model.Trigger>
+  <PC_PEA.Needs.Planning.Model.Arbitration>仲裁 · 当前决策</PC_PEA.Needs.Planning.Model.Arbitration>
+  <PC_PEA.Needs.Planning.Model.NextLabel>下一步条件</PC_PEA.Needs.Planning.Model.NextLabel>
+  <PC_PEA.Needs.Planning.Model.Execution>执行反馈</PC_PEA.Needs.Planning.Model.Execution>
+  <PC_PEA.Needs.Planning.Model.Job>当前工作证据</PC_PEA.Needs.Planning.Model.Job>
+  <PC_PEA.Needs.Planning.Model.Candidates>本次候选</PC_PEA.Needs.Planning.Model.Candidates>
+  <PC_PEA.Needs.Planning.Model.CandidateCount>本次评估 {0} 项；不代表全部岗位</PC_PEA.Needs.Planning.Model.CandidateCount>
+  <PC_PEA.Needs.Planning.Model.Candidate>候选 {0}</PC_PEA.Needs.Planning.Model.Candidate>
+  <PC_PEA.Needs.Planning.Model.CandidatesMore>其余候选</PC_PEA.Needs.Planning.Model.CandidatesMore>
+  <PC_PEA.Needs.Planning.Model.CandidateMoreCount>另外 {0} 项见候选列表</PC_PEA.Needs.Planning.Model.CandidateMoreCount>
+  <PC_PEA.Needs.Planning.Model.ContractEvidence>合同关联证据</PC_PEA.Needs.Planning.Model.ContractEvidence>
+  <PC_PEA.Needs.Planning.Model.ContractValue>{0} · 签订 {1} · 到期 {2} tick · 完成 {3}/{4}</PC_PEA.Needs.Planning.Model.ContractValue>
+  <PC_PEA.Needs.Planning.Model.RecentContract>最近合同反馈（历史事实，非当前行动）</PC_PEA.Needs.Planning.Model.RecentContract>
+  <PC_PEA.Needs.Planning.Model.Execution.Unconfirmed>执行状态未确认</PC_PEA.Needs.Planning.Model.Execution.Unconfirmed>
+  <PC_PEA.Needs.Planning.Model.Execution.Selected>已选择候选 · 待承接结果，尚无合同证据</PC_PEA.Needs.Planning.Model.Execution.Selected>
+  <PC_PEA.Needs.Planning.Model.Execution.Contract>合同履约中 · 当前工作对应关系未确认</PC_PEA.Needs.Planning.Model.Execution.Contract>
+  <PC_PEA.Needs.Planning.Model.Execution.Due>本合同待结算 {0}</PC_PEA.Needs.Planning.Model.Execution.Due>
+  <PC_PEA.Needs.Planning.Model.Execution.Shortfall>本合同支付资金不足 · 未付 {0}</PC_PEA.Needs.Planning.Model.Execution.Shortfall>
+  <PC_PEA.Needs.Planning.Model.Execution.Ended>本合同已结束／等待退出：{0}</PC_PEA.Needs.Planning.Model.Execution.Ended>
+  <PC_PEA.Needs.Planning.Model.Execution.Closed>已撤销或期限已到</PC_PEA.Needs.Planning.Model.Execution.Closed>
+  <PC_PEA.Needs.Planning.Model.Execution.Paid>本合同已到账 {0}（结算记录已确认）</PC_PEA.Needs.Planning.Model.Execution.Paid>
+  <PC_PEA.Needs.Planning.Model.SettlementEvidence>本合同结算证据</PC_PEA.Needs.Planning.Model.SettlementEvidence>
+  <PC_PEA.Needs.Planning.Model.SettlementValue>未付 {0} · 已结算 {1}；仅对应带交易记录的已付义务</PC_PEA.Needs.Planning.Model.SettlementValue>
+  <PC_PEA.Needs.Planning.Model.State.NotAssessed>未评估</PC_PEA.Needs.Planning.Model.State.NotAssessed>
+  <PC_PEA.Needs.Planning.Model.State.Pending>待处理</PC_PEA.Needs.Planning.Model.State.Pending>
+  <PC_PEA.Needs.Planning.Model.State.WaitingFacts>等待事实</PC_PEA.Needs.Planning.Model.State.WaitingFacts>
+  <PC_PEA.Needs.Planning.Model.State.Blocked>受阻</PC_PEA.Needs.Planning.Model.State.Blocked>
+  <PC_PEA.Needs.Planning.Model.State.Feasible>可行</PC_PEA.Needs.Planning.Model.State.Feasible>
+  <PC_PEA.Needs.Planning.Model.State.Executing>执行中</PC_PEA.Needs.Planning.Model.State.Executing>
+  <PC_PEA.Needs.Planning.Model.State.Satisfied>完成／满足</PC_PEA.Needs.Planning.Model.State.Satisfied>
+  <PC_PEA.Needs.Planning.Model.State.NotApplicable>不适用</PC_PEA.Needs.Planning.Model.State.NotApplicable>
+  <PC_PEA.Needs.Planning.Model.State.Stale>过期</PC_PEA.Needs.Planning.Model.State.Stale>
+  <PC_PEA.Needs.Planning.Model.Decision.WaitingFacts>等待感知数据</PC_PEA.Needs.Planning.Model.Decision.WaitingFacts>
+  <PC_PEA.Needs.Planning.Model.Next.WaitingFacts>等待有效感知数据后重评</PC_PEA.Needs.Planning.Model.Next.WaitingFacts>
+  <PC_PEA.Needs.Planning.Model.Decision.NativeYield>让路原版控制</PC_PEA.Needs.Planning.Model.Decision.NativeYield>
+  <PC_PEA.Needs.Planning.Model.Next.NativeYield>等待原版控制与安全保护解除后重评</PC_PEA.Needs.Planning.Model.Next.NativeYield>
+  <PC_PEA.Needs.Planning.Model.Decision.NativeNeed>优先满足基本需要</PC_PEA.Needs.Planning.Model.Decision.NativeNeed>
+  <PC_PEA.Needs.Planning.Model.Next.NativeNeed>满足当前基本需要后重评</PC_PEA.Needs.Planning.Model.Next.NativeNeed>
+  <PC_PEA.Needs.Planning.Model.Decision.WaitingBudget>等待生活预算</PC_PEA.Needs.Planning.Model.Decision.WaitingBudget>
+  <PC_PEA.Needs.Planning.Model.Next.WaitingBudget>等待报价、账户或预算证据恢复后重评</PC_PEA.Needs.Planning.Model.Next.WaitingBudget>
+  <PC_PEA.Needs.Planning.Model.Decision.WaitingOpportunity>等待可行收入机会</PC_PEA.Needs.Planning.Model.Decision.WaitingOpportunity>
+  <PC_PEA.Needs.Planning.Model.Next.WaitingOpportunity>等待符合资格、工时、资金与可达性要求的机会</PC_PEA.Needs.Planning.Model.Next.WaitingOpportunity>
+  <PC_PEA.Needs.Planning.Model.Decision.SeekWork>已选择收入机会</PC_PEA.Needs.Planning.Model.Decision.SeekWork>
+  <PC_PEA.Needs.Planning.Model.Next.SeekWork>等待实际承接结果；签约与工作证据见执行反馈</PC_PEA.Needs.Planning.Model.Next.SeekWork>
+  <PC_PEA.Needs.Planning.Model.Decision.MaintainReserve>维持储备</PC_PEA.Needs.Planning.Model.Decision.MaintainReserve>
+  <PC_PEA.Needs.Planning.Model.Next.MaintainReserve>储备与启动条件变化后重评</PC_PEA.Needs.Planning.Model.Next.MaintainReserve>
+  <PC_PEA.Needs.Planning.Model.Decision.NoIncomeNeeded>暂无收入需要</PC_PEA.Needs.Planning.Model.Decision.NoIncomeNeeded>
+  <PC_PEA.Needs.Planning.Model.Next.NoIncomeNeeded>收入需要或生活目标变化后重评</PC_PEA.Needs.Planning.Model.Next.NoIncomeNeeded>
+  <PC_PEA.Needs.Planning.Model.Decision.OutOfScope>不适用</PC_PEA.Needs.Planning.Model.Decision.OutOfScope>
+  <PC_PEA.Needs.Planning.Model.Next.OutOfScope>等待回到有效观察范围</PC_PEA.Needs.Planning.Model.Next.OutOfScope>
+  <PC_PEA.Needs.Planning.Model.Decision.Error>模型读取异常</PC_PEA.Needs.Planning.Model.Decision.Error>
+  <PC_PEA.Needs.Planning.Model.Next.Error>等待有效模型数据恢复</PC_PEA.Needs.Planning.Model.Next.Error>
+  <PC_PEA.Needs.Planning.Model.Next.Stale>等待新一轮计划采样</PC_PEA.Needs.Planning.Model.Next.Stale>
+  <PC_PEA.Needs.Planning.Model.GoalBelowTarget>目标尚未达成；当前未触发即时行动</PC_PEA.Needs.Planning.Model.GoalBelowTarget>
+  <PC_PEA.Needs.Planning.Model.Next.FoodPublicSource>检查公有食品储物或启用库存区，供给可用后重评</PC_PEA.Needs.Planning.Model.Next.FoodPublicSource>
+  <PC_PEA.Needs.Planning.Model.Next.FoodAccess>检查食品与储物路径、区域限制及可达性</PC_PEA.Needs.Planning.Model.Next.FoodAccess>
+  <PC_PEA.Needs.Planning.Model.Next.FoodTrade>等待当前食品交易完成或取消后重评</PC_PEA.Needs.Planning.Model.Next.FoodTrade>
+  <PC_PEA.Needs.Planning.Model.Next.FoodOwnership>检查食物是否在合法公有储物范围内</PC_PEA.Needs.Planning.Model.Next.FoodOwnership>
+  <PC_PEA.Needs.Planning.Model.Next.FoodSupply>补充这名殖民者可以食用的公有食品</PC_PEA.Needs.Planning.Model.Next.FoodSupply>
+  <PC_PEA.Needs.Planning.Model.Next.FoodPricing>检查食品市价、营养值与价格适配来源</PC_PEA.Needs.Planning.Model.Next.FoodPricing>
+  <PC_PEA.Needs.Planning.Model.Next.Account>等待个人账户与实资账本完成核验</PC_PEA.Needs.Planning.Model.Next.Account>
+  <PC_PEA.Needs.Planning.Model.Next.BudgetConsistency>等待账户、费用与保障证据一致后重评</PC_PEA.Needs.Planning.Model.Next.BudgetConsistency>
+</LanguageData>

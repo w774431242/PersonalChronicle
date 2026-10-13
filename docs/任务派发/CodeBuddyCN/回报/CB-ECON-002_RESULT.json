@@ -1,0 +1,490 @@
+{
+  "taskId": "CB-ECON-002",
+  "changeId": "CHG-20261011-NEEDS-ACCOUNT",
+  "workspace": "E:/SteamLibrary/steamapps/common/RimWorld/11/殖民地综合管理系统",
+  "taskFile": "docs/任务派发/CodeBuddyCN/CB-ECON-002_生活保障个人账户组件_需求单.md",
+  "taskSha256": "F9D0F00A407AB0B33B1DF2C2CDFAC7BEE7B9C2A0C28FB56C647C17A4CBCF15C2",
+  "revision2": {
+    "taskSha256": "3312394495B6541BB744F4FD6C9EAB142F24A05FA93601BE937C926CCA3DF3AA",
+    "scope": "需求单 §11 高密度账户 UI 与 AI 循环状态（§11.1–§11.6）+ 经理复核 §10 的 LR-01~LR-04",
+    "partialCodeBuddyHistory": {
+      "status": "InProgress",
+      "taskSha256": "3312394495B6541BB744F4FD6C9EAB142F24A05FA93601BE937C926CCA3DF3AA",
+      "scope": "需求单 §11 高密度账户 UI 与 AI 循环状态（§11.1–§11.6）+ 经理复核 §10 的 LR-01~LR-04",
+      "delivered": [
+        "LR-01：EconomyNeedDashboard.cs 单人重打包补齐 mood / status / hiddenCount",
+        "LR-03：PawnSettlementSaveHost.ReadLedgerState() 改恢复先行边界（展示查询不驱动 Recover()）",
+        "LR-04 全链：FoodQuoteRefusal 枚举 + FoodQuoteScan 计数（既有循环内计数，零新增遍历）+ DecideFoodQuoteRefusal 主因裁决 + RefusalReason 9 码映射 + 接口/守卫/输入/预算四层透传 + 9 条 Reason.FoodQuote* 中英键",
+        "四份施工规格落盘：.codebuddy/audit/gate-records/GR-CHG-20261011-NEEDS-ACCOUNT-R2-{ORCHESTRATOR,LR04-SPEC,STATE-SPEC,UI-SPEC}.md"
+      ],
+      "verification": "编译 0 error / 0 warning（BuildStamp 2026-10-11 14:21 UTC）；全量回归 1468 通过 / 0 失败 / 1 跳过（Tests/TestResults/NeedsAccount-R2.trx）；页级门禁 PASS（294 双语键 / 40 + 16 用例）",
+      "remainingWork": 12,
+      "remainingP1": [
+        "LR-03 未恢复状态不变测试",
+        "契约层（NeedCycleState 九态 + NeedCycleLine 7 字段 + 执行链契约）",
+        "BuildCycles 三处语义校正",
+        "决策行 + 8 行映射 + Next 方向族 + 执行链装配",
+        "3 条 IL 反回归断言",
+        "§11.6 新增验收",
+        "交付链终检（标注 / gate-runner / doc-guard / round-closure）"
+      ],
+      "remainingP2": [
+        "LR-04 收口（presenter IncomeState 白名单 + 9 键）",
+        "LR-02 账户采样与计划采样余额",
+        "§11.1 六行高密度布局",
+        "§11.2 覆盖率条与阈值标记",
+        "§11.3 四循环单元点击切页",
+        "16 UI 键 + 旧键休眠登记"
+      ],
+      "openQuestion": "U1（不阻塞）：§11.4「正在执行工作」硬证据在只读边界内买不到 ⇒ 按需求单明文允许的降级口径「执行状态未确认」。",
+      "workspaceDll": {
+        "sha256": "5E4566D043CDFD456A2D563D5E67AA11E9EFDB07FA0F9AA1E5C16E533D48E708",
+        "builtAt": "2026-10-11T22:21:39+08:00",
+        "note": "工作区件已含 R2 改动（LR-01/03/04）"
+      },
+      "deployedDll": {
+        "sha256": "FA9DD16BC239B8020C8812A33BADF792BD8C68C732A34EB466025E78CFEDE473",
+        "note": "发布区仍为第 1 轮件 ⇒ 第 2 轮未部署"
+      },
+      "staleWarning": "第 2 轮改动后，本件下文的哈希、DLL 尺寸、测试计数与 changedFiles 均**不再代表当前工作区状态**；不得据其声称第 2 轮已验收或已部署。"
+    },
+    "status": "DeployedRuntimePending",
+    "executor": "Codex",
+    "completedAt": "2026-10-11T23:03:53.5642506+08:00",
+    "delivered": [
+      "LR-01 门面字段转传与反回归",
+      "LR-02 独立账户/计划采样与计划余额",
+      "LR-03 纯展示查询、Prepared及Scribe边界测试与隔离负面对照",
+      "LR-04 9食品原因码、优先级、正文与下一步",
+      "§11.1–11.6 高密度账户、覆盖率、四循环九态、决策与执行证据、有界详情、55项新增测试、双语与三态静态样例",
+      "六席真实最终R2记录与严格DELTA37项通过",
+      "5文件本机部署与备份哈希独立复核"
+    ],
+    "verification": "0 error/0 warning；BuildStamp 2026-10-11 14:57 UTC；Release1523通过/0失败/1跳过；384双语键页级PASS；仅离线与静态证据",
+    "remainingWork": 0,
+    "remainingP1": [],
+    "remainingP2": [],
+    "openQuestion": null,
+    "workspaceDll": {
+      "sha256": "9AEA719E6E544A2F1FF2D6E10B12766B0BD850E33BBBCE2E882000A2639969AB",
+      "buildStamp": "2026-10-11 14:57 UTC",
+      "testedDllMatches": true
+    },
+    "deployedDll": {
+      "sha256": "9AEA719E6E544A2F1FF2D6E10B12766B0BD850E33BBBCE2E882000A2639969AB",
+      "deployedAt": "2026-10-11T23:01:46.8978094+08:00",
+      "sourceMatches": true
+    },
+    "staleWarning": "partialCodeBuddyHistory、顶层旧binary/build/tests/deployment及报告§11均为历史；当前终态以本revision2与报告§12为准。",
+    "tests": {
+      "passed": 1523,
+      "failed": 0,
+      "skipped": 1,
+      "total": 1524,
+      "newCases": 55,
+      "trx": ".codebuddy/tmp/codex-account-r2/account-r2-final.trx",
+      "trxSha256": "6FF3B79D14684D0F038118211180140F85B579CAEE3152E252F2BF452C4A6375",
+      "pageReport": ".codebuddy/tmp/codex-account-r2/needs-verification.json",
+      "bilingualKeys": 384,
+      "negativeCounterfactual": "1 executed / 1 expected failed; production DLL unchanged",
+      "negativeTrx": ".codebuddy/tmp/codex-account-r2/negative/negative.trx"
+    },
+    "gates": {
+      "recordsPrefix": ".codebuddy/audit/gate-records/GR-CHG-20261011-NEEDS-ACCOUNT-R2-",
+      "ARCH": "PASS static",
+      "DATA_SAVE": "PASS Tier B",
+      "UI_LOC": "PASS static UI / bilingual",
+      "COMP": "PASS API and references",
+      "PERF_TEST": "PASS bounded static / offline tests; performance measurement NOT RUN",
+      "REL_DELTA": "PASS reviewable artifacts / 37 files strict delta",
+      "docGuard": "23:05:52 closure snapshot:22 BLOCKED outside account scope (11 older reference documents + 11 concurrent archify visual checks); no baseline refresh",
+      "roundClosure": ".codebuddy/tmp/codex-account-r2/closure.json"
+    },
+    "deployment": {
+      "ChangeId": "CHG-20261011-NEEDS-ACCOUNT",
+      "At": "2026-10-11T23:01:46.8978094+08:00",
+      "PackageId": "colony.integratedmanagement",
+      "SourceRoot": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+      "TargetRoot": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+      "BackupRoot": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\.codebuddy\\tmp\\codex-account-r2-deploy-backup\\20261011-230146",
+      "Files": [
+        {
+          "Path": "Assemblies/PersonalChronicle.dll",
+          "Previous": "FA9DD16BC239B8020C8812A33BADF792BD8C68C732A34EB466025E78CFEDE473",
+          "Source": "9AEA719E6E544A2F1FF2D6E10B12766B0BD850E33BBBCE2E882000A2639969AB",
+          "Backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\.codebuddy\\tmp\\codex-account-r2-deploy-backup\\20261011-230146\\Assemblies\\PersonalChronicle.dll",
+          "Target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统\\Assemblies\\PersonalChronicle.dll",
+          "Deployed": "9AEA719E6E544A2F1FF2D6E10B12766B0BD850E33BBBCE2E882000A2639969AB"
+        },
+        {
+          "Path": "Languages/ChineseSimplified/Keyed/PawnEconomyPlanning.xml",
+          "Previous": "CB1541687AFA80202C7CDE57DB9B0E756BCFC5E24F8B211A3BCDC6A7FD289910",
+          "Source": "8BD59CD34524D0210012CD0949665CA9FE88C71302ED98CD0E8A58B100C0B716",
+          "Backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\.codebuddy\\tmp\\codex-account-r2-deploy-backup\\20261011-230146\\Languages\\ChineseSimplified\\Keyed\\PawnEconomyPlanning.xml",
+          "Target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统\\Languages\\ChineseSimplified\\Keyed\\PawnEconomyPlanning.xml",
+          "Deployed": "8BD59CD34524D0210012CD0949665CA9FE88C71302ED98CD0E8A58B100C0B716"
+        },
+        {
+          "Path": "Languages/English/Keyed/PawnEconomyPlanning.xml",
+          "Previous": "6EE79DF6735F87F66C45EC024FC7CD6C39BF9C33DBC743DFBF76023A8329EE45",
+          "Source": "8540510A4854D002910768857A013B66F2E39A09C8BF560E759BCD40AC7F77C5",
+          "Backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\.codebuddy\\tmp\\codex-account-r2-deploy-backup\\20261011-230146\\Languages\\English\\Keyed\\PawnEconomyPlanning.xml",
+          "Target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统\\Languages\\English\\Keyed\\PawnEconomyPlanning.xml",
+          "Deployed": "8540510A4854D002910768857A013B66F2E39A09C8BF560E759BCD40AC7F77C5"
+        },
+        {
+          "Path": "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+          "Previous": "0C8494B11F68E53D949052E7F60F8C33FE1760C78063B72CEC2BA9600597B2A8",
+          "Source": "5F17A01795C2EC590D9444BC67495D423017DFDB780BC05285439837CD8F567F",
+          "Backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\.codebuddy\\tmp\\codex-account-r2-deploy-backup\\20261011-230146\\Languages\\ChineseSimplified\\Keyed\\PawnEconomyNeeds.xml",
+          "Target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统\\Languages\\ChineseSimplified\\Keyed\\PawnEconomyNeeds.xml",
+          "Deployed": "5F17A01795C2EC590D9444BC67495D423017DFDB780BC05285439837CD8F567F"
+        },
+        {
+          "Path": "Languages/English/Keyed/PawnEconomyNeeds.xml",
+          "Previous": "464165E8B843C629D893D16168833324EC4610F672488E602054AA99F4FC4E4B",
+          "Source": "06EB6E2934BBFD672A942AF0EDBD88C69375F91EB715799CCE22BA1FD1C2CB87",
+          "Backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\.codebuddy\\tmp\\codex-account-r2-deploy-backup\\20261011-230146\\Languages\\English\\Keyed\\PawnEconomyNeeds.xml",
+          "Target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统\\Languages\\English\\Keyed\\PawnEconomyNeeds.xml",
+          "Deployed": "06EB6E2934BBFD672A942AF0EDBD88C69375F91EB715799CCE22BA1FD1C2CB87"
+        }
+      ],
+      "AllHashesMatch": true,
+      "GameVerified": false,
+      "SteamReleased": false
+    },
+    "codeVerified": true,
+    "testVerified": true,
+    "gameVerified": false,
+    "steamReleased": false,
+    "runtimePending": [
+      "实际Verse中英/窄宽/悬停/切页/存读档",
+      "真实签约→Job→应付→到账",
+      "帧率与分配实测",
+      "实际工坊RUIF及其他Mod运行兼容"
+    ],
+    "staticPreview": ".codebuddy/tmp/codex-account-r2/account-three-states.png"
+  },
+  "baselineHashes": ".codebuddy/tmp/cb-econ-002-baseline.json",
+  "annotation": "docs/设计文档/架构/变更标注/变更标注_CHG-20261011-NEEDS-ACCOUNT.md",
+  "changedFiles": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/SettlementContracts.cs",
+      "type": "M",
+      "symbols": "SettlementLedgerState{Ready,Unavailable,Unsupported,Faulted}",
+      "lines": "108-131",
+      "sha256": "AB4AFF54854FB004A80EC8B050BA8EECD00314E1486DD451821DA6034BA1ABCB"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Budget/LifeBudget.cs",
+      "type": "M",
+      "symbols": "LifeBudget.RefillTriggerMinor / 构造器 trigger 参数 / LifeBudgetPlanner.Build（唯一计算点）",
+      "lines": "52-77, 118-133",
+      "sha256": "7DF619B9424BCD36ED0995D3A6966342D2CA639CA8C16E72365D5267FDBD579B"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/PawnSettlementSaveHost.cs",
+      "type": "M",
+      "symbols": "PawnSettlementSaveHost.ReadLedgerState（O(1) 只读可用性）",
+      "lines": "61-77",
+      "sha256": "0BDC0E0C5B162BF3549279B6E80611F424510F84C9D66507142CCB58AAC923ED"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedDashboard.cs",
+      "type": "M",
+      "symbols": "GameComponent_PawnEconomy.QueryNeedDashboardSingle（装配账户摘要；先判账本可用性再读账户）",
+      "lines": "1-9, 72-89",
+      "sha256": "AB53B65FE849E705513E904304D3B17A983CEACE1782E0D99E5148BF7456E179"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedDashboardPresenter.cs",
+      "type": "M",
+      "symbols": "NeedAccountState 枚举 / NeedAccountView / NeedDashboardView.Account（可选构造参数）",
+      "lines": "88-101, 215-269, 302-306, 332-343",
+      "sha256": "6B78F439D4EA26FB22A048D0BD524005FB44614D3FAFB76ECD2D3B510098C859"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/PawnEconomyFactsPresenter.cs",
+      "type": "M",
+      "symbols": "BuildAccount / IncomeState / OutOfScopeIncome / Money2 / AccountTip / BudgetTip",
+      "lines": "1-12, 89-200",
+      "sha256": "877A07AF3782662A949D75CC8DE4BCE86FF642A7735D8CF4C12AB52D687F7470"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/ShadowPlanPresenter.cs",
+      "type": "M",
+      "symbols": "ShadowPlanPresenter.IsStale（计划陈旧唯一判据，Build 复用）",
+      "lines": "34-44, 49-52",
+      "sha256": "67A8E45C4718E2D4B8E510DB0AD935D355829F46A707489AC15E05716BBC9AEE"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedDashboardPanel.cs",
+      "type": "M",
+      "symbols": "NeedDashboardPanel.RowSpacing（行后间距 internal 常量）",
+      "lines": "215-224",
+      "sha256": "152DEA83F1BF5F558290E0EC4289B9327D29040644337D0E86BA10A77C05270E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.cs",
+      "type": "M",
+      "symbols": "AccountTwoColumnWidth / AccountButtonMaxWidth / JumpToDecision / DrawContent 空态分支（含 H3 内宽同源修复）/ 类头修订",
+      "lines": "15-22, 60-68, 175-188, 196-209",
+      "sha256": "6696A3DDFBE32852BBC326E668B597460E09DB010A1A98BA83ECA6A936BC6DE7"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.Measure.cs",
+      "type": "M",
+      "symbols": "NeedsCycleMeasure 账户字段（含 AccountTitleWidth/AccountHeadlineWidth）/ MeasureAccount / 空态总高显式化（H2）",
+      "lines": "34-70, 262-270, 400-485",
+      "sha256": "D15097C48938234397CC971CBF3A66C765E84380F9119C5E47EA262B8D4F33B6"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.Demand.cs",
+      "type": "M",
+      "symbols": "DrawDemandTab / DrawOverview / DrawAccount（H1：主行列宽改用测量字段）",
+      "lines": "12-17, 105-116, 131-135, 137-212",
+      "sha256": "64C03B65ACFFC741C2A55A11472F4F1D1F18D2FA25F0B7A99E6B38FDA3B1A095"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+      "type": "M",
+      "symbols": "Key:PC_PEA.Needs.Cycle.Account.* ×8",
+      "lines": "119-126",
+      "sha256": "0C8494B11F68E53D949052E7F60F8C33FE1760C78063B72CEC2BA9600597B2A8"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyNeeds.xml",
+      "type": "M",
+      "symbols": "Key:PC_PEA.Needs.Cycle.Account.* ×8",
+      "lines": "119-126",
+      "sha256": "464165E8B843C629D893D16168833324EC4610F672488E602054AA99F4FC4E4B"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyPlanning.xml",
+      "type": "M",
+      "symbols": "Key:PC_PEA.Needs.Planning.Account.* ×29",
+      "lines": "137-165",
+      "sha256": "CB1541687AFA80202C7CDE57DB9B0E756BCFC5E24F8B211A3BCDC6A7FD289910"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyPlanning.xml",
+      "type": "M",
+      "symbols": "Key:PC_PEA.Needs.Planning.Account.* ×29",
+      "lines": "137-165",
+      "sha256": "6EE79DF6735F87F66C45EC024FC7CD6C39BF9C33DBC743DFBF76023A8329EE45"
+    },
+    {
+      "path": "_scripts/verify-pawn-needs-ui.ps1",
+      "type": "M",
+      "symbols": "账户分区断言 ×6 / 账户主行列宽同源反回归断言 / limits +2",
+      "lines": "202-217, 300-303",
+      "sha256": "6996A4E7CFE35669B4A1D5103E7E3AF59F900DFBA46CE4010F42F8278F59F4A2"
+    },
+    {
+      "path": "Tests/PawnLifeBudgetTests.cs",
+      "type": "M",
+      "symbols": "RefillStartLineIsExportedByTheBudgetAndMatchesTheDocumentedThresholds / RefillHysteresisFollowsTheExportedStartLine(7) / StartLineIsUnknownWheneverTheBudgetCannotBeEstimated",
+      "lines": "41-68",
+      "sha256": "60A9416F2FD3771933A7B664FDFBB10EB42E56CBAE2129B83AF6A9BFA5A62712"
+    },
+    {
+      "path": "Tests/PawnEconomyFactsPresenterTests.cs",
+      "type": "M",
+      "symbols": "个人账户摘要 7 个用例（状态分离/归属/预算同源/水位/陈旧/范围外）",
+      "lines": "12-13, 180-318",
+      "sha256": "3E88EE37D570FAADBBD9298931D307E072C0EF1C07896A189B1650E79D1142F8"
+    },
+    {
+      "path": "docs/开发参考/个人需求页-模块索引.md",
+      "type": "M",
+      "symbols": "交付链第 12 行 / 账户读取链 / 表现层行数 / 内容规格 / 验证基线 / 已知边界 / 红线 8·9·14·15",
+      "lines": "35-41, 82-93, 95-104, 125-126, 150-167, 178-190",
+      "sha256": "B3CCEB8C7ED98AF66DBC6680274F97A01706454B06A1450001C61A9D673B038E"
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI需求观察页.md",
+      "type": "M",
+      "symbols": "新增 2026-10-11 节（用户向）",
+      "lines": "13-26",
+      "sha256": "8812D55370F3476DDB3551E0D117A3761A4854CC8315ABF1CB2B32F91F1EA740"
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/B1.3_实装验证.json",
+      "type": "M",
+      "symbols": "门禁脚本生成的机器证据（keysPerLanguage 285 / passed 1467 / newCases 40 / factCases 16 / modSha256 与本轮 DLL 一致）",
+      "lines": "—",
+      "sha256": "9FE0DBA836BD654DD22BC4B419A49B6DB31938882C79EFC998D0856E94E7B36F"
+    },
+    {
+      "path": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-002_ACK.json",
+      "type": "A",
+      "symbols": "执行器回执",
+      "lines": "—",
+      "sha256": "8F72245FCAA021CD818C547E8C6B4FEB4A90746F2BAD45C82E9201D785ECC127"
+    },
+    {
+      "path": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-002_PROGRESS.json",
+      "type": "A",
+      "symbols": "进度回报",
+      "lines": "—",
+      "sha256": "5DB0F5D49AF576BDCC2DE374B06BFABC26C24CBE5833A3ECF5E6E30081809805"
+    }
+  ],
+  "binaryArtifacts": [
+    {
+      "path": "Assemblies/PersonalChronicle.dll",
+      "sha256": "FA9DD16BC239B8020C8812A33BADF792BD8C68C732A34EB466025E78CFEDE473",
+      "bytes": 2282496,
+      "note": "Release 重新编译（0 错 0 警；**Gate 修复后**的最终件，与 Tests/bin/Release/net48 同哈希）。按工程惯例**不列入变更标注 files:**（GATE-DELTA 对 .dll 自动跳过），仅在此登记哈希。"
+    }
+  ],
+  "build": {
+    "command": "pwsh -NoProfile -File _scripts/compile_with_sdk.ps1",
+    "exitCode": 0,
+    "result": "0 error / 0 warning",
+    "log": "Backup -> Assemblies\\PersonalChronicle.dll.bak_20261011212715；BuildStamp -> 2026-10-11 13:27 UTC；无 error/warning 行",
+    "compiledAt": "2026-10-11T21:27:15+08:00",
+    "note": "DLL 哈希每次重编都会变（BuildStamp.g.cs 含 UTC 分钟戳）—— 可比口径是『同一次编译内 Assemblies 与 Tests/bin 的 DLL 同哈希』，由 verify 脚本断言。"
+  },
+  "tests": {
+    "command": "dotnet test Tests/PersonalChronicle.Tests.csproj -c Release -l \"trx;LogFileName=NeedsAccount.trx\" --results-directory \"Tests\\TestResults\"",
+    "passed": 1467,
+    "failed": 0,
+    "skipped": 1,
+    "skippedNames": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "total": 1468,
+    "trx": "Tests/TestResults/NeedsAccount.trx",
+    "trxSha256": "AE6F91EECBCB178AB1D8BEE4889B4852BDDC2FC6937D53C1D27F843325ABA4DB",
+    "newCasesThisChange": 16,
+    "note": "本轮新增 16 个用例（预算启动线 3 方法/9 例 + 账户摘要 7 例）；基线 1451 + 16 = 1467。TRX 与本轮最终 DLL 同批产出（verify 脚本断言 Assemblies/PersonalChronicle.dll 与 Tests/bin/Release/net48/PersonalChronicle.dll 哈希一致）。",
+    "pageGate": {
+      "command": "pwsh -NoProfile -File _scripts/verify-pawn-needs-ui.ps1 -FullTestResults Tests/TestResults/NeedsAccount.trx -ChangeId CHG-20261011-NEEDS-ACCOUNT",
+      "stdout": "PASS: RUIF read-only needs page; 285 bilingual keys; 40 new tests; full 1467 passed, 1 skipped. Game/UI acceptance unverified.",
+      "exitCode": 0
+    }
+  },
+  "schemaMigration": {
+    "saveSchemaChanged": false,
+    "evidence": "本轮改动集不含 Scribe_* / ExposeData / IExposable 成员；新增的 SettlementLedgerState、LifeBudget.RefillTriggerMinor、NeedAccountView、NeedAccountState 全部为运行期只读投影，不落盘。PawnSettlementSaveHost 仅新增只读方法（不触 ExposeData 的 Saving/Loading 分支）。旧档可加载：无字段增删。",
+    "migrationNeeded": "N/A"
+  },
+  "gates": {
+    "ARCH": "PASS（pc-arch-gatekeeper）—— 依赖方向单向、扩展点停在 GameComponent/Contract 档、IsStale 与 min(T,L+E) 均单点实现、全部文件 <800 行；Architecture Review 不触发。存量 P2（单人重打包漏传 mood/status/hiddenCount，非本轮）已登记移交。记录：GR-CHG-20261011-NEEDS-ACCOUNT-ARCH.md",
+    "DATA/SAVE": "DATA PASS / SAVE N/A（零持久化改动，三重核证：改动范围排除 + 无 glob 全目录扫描零命中 + 节点名不变）。记录：GR-CHG-20261011-NEEDS-ACCOUNT-DATA-SAVE.md",
+    "UI/LOC": "UI 初审 BLOCKED（1×P2 H1 主行测量↔绘制口径不一致 ⇒ 窄屏溢出 + 3×P3）→ **已按根因修复**（H1 列宽同源 + H2 空态总高显式 + H3 空态内宽同源 + H4 常量引用 + 门禁加反回归断言）→ 复审 PASS；LOC PASS。记录：GR-CHG-20261011-NEEDS-ACCOUNT-UI-LOC.md",
+    "COMP": "N/A（附理由）· RUIF 适用项 PASS —— 改动集零 Patches、零 Harmony/Patch 改动、零新增程序集引用、Core/Domain 零条件分支；5 个 RUIF 成员成员级核实通过；TooltipHandler.TipRegion 在 1.6.4871 实存。记录：GR-CHG-20261011-NEEDS-ACCOUNT-COMP.md",
+    "PERF/TEST": "PERF PASS（静态有界性；实测 NOT RUN 已标注）/ TEST PASS（Tier B：编译 0 错 0 警 + 1467/0/1 + 页级门禁 PASS 独立复现 + DLL 绑定）。记录：GR-CHG-20261011-NEEDS-ACCOUNT-PERF-TEST.md",
+    "REL/DELTA": "REL PASS（附注记 3 项）/ DELTA PASS（附注记 2 处，已在变更标注 §5 回填修正）。记录：GR-CHG-20261011-NEEDS-ACCOUNT-REL-DELTA.md"
+  },
+  "notExecuted": [
+    "实机验收（游戏内画面/交互/字体/分辨率/UI 缩放/存读档）—— 沙箱无游戏进程，标 NOT RUN；部署已完成，待用户重启游戏后实测",
+    "性能实测（仅静态有界性检查；无帧率/分配实测数据）",
+    "A06 真实结算链路（工资入账后余额变化）—— 需实机与真实账本事件",
+    "A07 全额预留/解除预留/消费扣款 —— 需实机真实结算"
+  ],
+  "remainingGaps": [
+    "窄宽（接近宿主最低可用宽）下账户四字段的逐项一行分档、货币单位是否被截断：仅静态推理 + 折行实测高度，未实机。",
+    "悬停解释（归属/口径/启动线/阻断原因）的可达性与宽度：未实机。",
+    "「查看决策详情」跳转后的滚动复位与页签高亮是否同帧正确：未实机（逻辑上依赖既有的 measure.Tab 失效分支）。",
+    "需求空态（IsEmpty）下账户区仍在且不画跳转按钮：IL/代码级已实现，未实机。"
+  ],
+  "deployment": {
+    "status": "Deployed",
+    "authorizedBy": "用户口头放行「部署」（2026-10-11 21:36）",
+    "command": "pwsh -NoProfile -File _scripts/deploy-to-game.ps1",
+    "deployedAt": "2026-10-11T21:37:25+08:00",
+    "target": "E:/SteamLibrary/steamapps/common/RimWorld/Mods/殖民地综合管理系统",
+    "backup": "_backups/release-deploy/deploy_20261011_213725_669（249 文件，保持相对路径）",
+    "filesCopied": 249,
+    "byDirectory": {
+      "About": 13,
+      "Assemblies": 1,
+      "Defs": 37,
+      "Fonts": 8,
+      "Languages": 73,
+      "Patches": 3,
+      "README.md": 1,
+      "Textures": 113
+    },
+    "dllSha256": "FA9DD16BC239B8020C8812A33BADF792BD8C68C732A34EB466025E78CFEDE473",
+    "postDeployVerification": {
+      "method": ".codebuddy/tmp/cb-econ-002-installed-probe.ps1（只读）",
+      "installedDllMatchesRepo": true,
+      "installedKeyFilesHaveAccountKeys": {
+        "ChineseSimplified": true,
+        "English": true
+      },
+      "gameProcessAtDeployTime": "NOT RUNNING（部署前已确认退出，避免 DLL 锁导致半拷贝）"
+    },
+    "restartRequired": true,
+    "note": "部署前游戏侧为 20:31:08 的并行线快照（471AA504…），其中英文键均不含 Account.* —— 用户 21:31 的实机观察基于该旧件，不构成本轮缺陷证据（见执行回报 §8.1）。"
+  },
+  "reviewFixes": [
+    "H1（P2，GATE-UI 初审阻断）：账户主行测量↔绘制口径不一致（字体 Tiny→Small / 宽度 inner−SpaceXs→inner×.6 / 折行测量 vs RUIF.Draw.Label 强制 WordWrap=false 且不裁剪）⇒ 窄屏文字溢出邻件。修法：折行改用绘制侧字体与列宽，并把两列宽存入测量结构由测量与绘制共用同一字段；门禁新增「两个宽度字段至少各被引用一次」的 IL 反回归断言。",
+    "H2（P3）：空态滚动总高按页签取值而绘制内容与页签无关 ⇒ tab1/2 下账户区下半被裁。修法：空态总高按实际绘制内容显式计算（EmptyHeight + Gap + AccountHeight + Gap*2）。",
+    "H3（P3）：空态 DrawAccount 内宽非同源（传整行宽，差 24px）。修法：改传 x + CardPadX / width − CardPadX*2。",
+    "H4（P3）：按钮宽 +32f 镜像 RUIF.ButtonFmt.FullWidthPad。修法：改引已导出常量。",
+    "H5（文档口径）：变更标注 Account.Income 键数 ×8 实为 ×9（6+1+9+13=29）。已修正。",
+    "修复后复审：compile 0 错 0 警 / 全量回归 1467-0-1 / 页级门禁 PASS（含新增断言）。"
+  ],
+  "rollback": {
+    "scope": "纯源码 + 语言键 + 门禁脚本 + 测试 + 文档；无 Def、无 Save schema、无资源文件。",
+    "steps": [
+      "本工程**不跟踪改动前的源码副本**（git 对新增文件为 ??、且无备份）⇒ 「还原」须按**反向编辑**执行，不得声称『复制回来』",
+      "反向编辑 11 个 Source 文件与 4 个 Languages/Keyed XML 到本标注登记改动前的状态（改动前哈希基线见 .codebuddy/tmp/cb-econ-002-baseline.json）",
+      "重跑 pwsh -NoProfile -File _scripts/compile_with_sdk.ps1",
+      "重跑 verify-pawn-needs-ui.ps1 确认回到 **248** 键基线（Needs 113 + Planning 135；非 245）"
+    ],
+    "risk": "无存档风险（不新增持久化字段）；回滚后旧档与旧 DLL 均可用。"
+  },
+  "aiSignature": "AI: CodeBuddy CN / DeepSeek-V4.1-Flash",
+  "historicalManagerReview": {
+    "status": "ChangesRequired",
+    "reviewCompleted": true,
+    "revision": 2,
+    "acceptance": "BLOCKED",
+    "reviewedAt": "2026-10-11T22:39:42.7344557+08:00",
+    "report": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-002_执行回报.md#11",
+    "tests": {
+      "failed": 0,
+      "trx": ".codebuddy/tmp/cb-econ-002-manager-r2/manager-review-r2.trx",
+      "passed": 1468,
+      "skipped": 1
+    },
+    "sourceDllSha256": "5E4566D043CDFD456A2D563D5E67AA11E9EFDB07FA0F9AA1E5C16E533D48E708",
+    "deployedDllSha256": "FA9DD16BC239B8020C8812A33BADF792BD8C68C732A34EB466025E78CFEDE473",
+    "deploymentApproved": false,
+    "notes": [
+      "R2 remains InProgress with 12 pending work items",
+      "R2 high density UI and state model not implemented",
+      "LR01 and LR03 code changes confirmed; required behavioral regressions still missing",
+      "LR04 partially implemented; account headline reason still generic",
+      "Three claimed R2 specification files absent at referenced paths"
+    ]
+  },
+  "historicalExecutor": "CodeBuddy CN",
+  "executor": "Codex",
+  "status": "DeployedRuntimePending",
+  "completedAt": "2026-10-11T23:03:53.5642506+08:00",
+  "currentRevision": 2,
+  "currentTaskSha256": "3312394495B6541BB744F4FD6C9EAB142F24A05FA93601BE937C926CCA3DF3AA",
+  "deployReady": true,
+  "revisionScope": "顶层 binaryArtifacts/build/tests/gates/changedFiles/deployment/taskSha256 等旧交付细节为明确首轮历史；当前 executor/status/completedAt 与 revision2/managerReview 才是本轮终态。第2轮由用户授权Codex接手完成。",
+  "managerReview": {
+    "status": "CompletedCodeVerified",
+    "reviewCompleted": true,
+    "revision": 2,
+    "acceptance": "CodeVerified/TestVerified; Game NOT RUN",
+    "reviewedAt": "2026-10-11T23:03:53.5642506+08:00",
+    "report": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-002_执行回报.md#12",
+    "sourceDllSha256": "9AEA719E6E544A2F1FF2D6E10B12766B0BD850E33BBBCE2E882000A2639969AB",
+    "deployedDllSha256": "9AEA719E6E544A2F1FF2D6E10B12766B0BD850E33BBBCE2E882000A2639969AB",
+    "deploymentApproved": true,
+    "authorization": "用户直接要求由你进行收尾工作，延续已有本机部署授权",
+    "remainingImplementation": 0,
+    "gameVerified": false
+  },
+  "currentAiSignature": "由 AI 助手 Codex 实施与收尾"
+}

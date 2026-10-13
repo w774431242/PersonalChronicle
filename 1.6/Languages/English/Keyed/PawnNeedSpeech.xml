@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PersonalChronicle.NeedSpeech.Food.Gap>I'm getting hungry.</PersonalChronicle.NeedSpeech.Food.Gap>
+  <PersonalChronicle.NeedSpeech.Food.Urgent>I'm so hungry. I need something to eat.</PersonalChronicle.NeedSpeech.Food.Urgent>
+  <PersonalChronicle.NeedSpeech.Food.Action>I'm hungry. Time to eat.</PersonalChronicle.NeedSpeech.Food.Action>
+  <PersonalChronicle.NeedSpeech.Rest.Gap>Getting sleepy. I could use a break.</PersonalChronicle.NeedSpeech.Rest.Gap>
+  <PersonalChronicle.NeedSpeech.Rest.Urgent>I can barely keep my eyes open.</PersonalChronicle.NeedSpeech.Rest.Urgent>
+  <PersonalChronicle.NeedSpeech.Rest.Action>I'm tired. Time for some rest.</PersonalChronicle.NeedSpeech.Rest.Action>
+  <PersonalChronicle.NeedSpeech.Joy.Gap>Been busy all day. I could use some fun.</PersonalChronicle.NeedSpeech.Joy.Gap>
+  <PersonalChronicle.NeedSpeech.Joy.Urgent>I'm so bored. I need to unwind.</PersonalChronicle.NeedSpeech.Joy.Urgent>
+  <PersonalChronicle.NeedSpeech.Joy.Action>Time to relax and have some fun.</PersonalChronicle.NeedSpeech.Joy.Action>
+  <PersonalChronicle.NeedSpeech.Comfort.Gap>I wish I had somewhere comfortable to sit.</PersonalChronicle.NeedSpeech.Comfort.Gap>
+  <PersonalChronicle.NeedSpeech.Comfort.Urgent>I'm so uncomfortable. I could use a proper rest.</PersonalChronicle.NeedSpeech.Comfort.Urgent>
+  <PersonalChronicle.NeedSpeech.Outdoors.Gap>Been indoors too long. I could use some fresh air.</PersonalChronicle.NeedSpeech.Outdoors.Gap>
+  <PersonalChronicle.NeedSpeech.Outdoors.Urgent>I really want to get outside for a while.</PersonalChronicle.NeedSpeech.Outdoors.Urgent>
+  <PersonalChronicle.Settings.Title.PawnNeedSpeech>Pawn need speech bubbles</PersonalChronicle.Settings.Title.PawnNeedSpeech>
+  <PersonalChronicle.Settings.Use.PawnNeedSpeech>Show a short line above a pawn when needs run low or they start eating, resting or relaxing.</PersonalChronicle.Settings.Use.PawnNeedSpeech>
+  <PersonalChronicle.Settings.Detail.PawnNeedSpeech>Enabled by default. Persistent gaps do not repeat; up to 4 bubbles at once. Disable here.</PersonalChronicle.Settings.Detail.PawnNeedSpeech>
+</LanguageData>

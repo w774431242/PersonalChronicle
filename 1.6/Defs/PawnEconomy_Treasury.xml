@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <JobDef>
+    <defName>PC_PEA_TreasuryDelivery</defName>
+    <driverClass>PersonalChronicle.Economy.PawnEconomy.JobDriver_TreasuryDelivery</driverClass>
+    <reportString>向公有结算处交付银币。</reportString>
+    <casualInterruptible>true</casualInterruptible>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
+  </JobDef>
+</Defs>

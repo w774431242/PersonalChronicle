@@ -1,0 +1,64 @@
+<Defs>
+<ThingDef>
+  <defName>PC_ConveyorSegment</defName>
+  <label>conveyor segment</label>
+  <description>A short industrial conveyor segment for workshop production lines. Pawns can haul items onto it as a buffer, and it periodically pushes them one cell forward along its facing direction. Only a neighbouring segment facing the same way continues the line - opposing segments never push against each other. Items do not stockpile themselves; haulers or a downstream machine must still take them. Pawns can stand on it.</description>
+  <thingClass>PersonalChronicle.Automation.Building_ConveyorSegment</thingClass>
+  <category>Building</category>
+  <tickerType>Normal</tickerType>
+  <graphicData>
+    <texPath>Things/Building/Automation/PC_Conveyor_Mid</texPath>
+    <graphicClass>Graphic_Multi</graphicClass>
+    <drawSize>(1,1)</drawSize>
+  </graphicData>
+  <altitudeLayer>Building</altitudeLayer>
+  <!-- 不继承原版 BuildingBase，须显式补 selectable（默认 false = 无法选中交互） -->
+  <selectable>true</selectable>
+  <drawerType>MapMeshOnly</drawerType>
+  <repairEffect>Repair</repairEffect>
+  <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+  <filthLeaving>Filth_RubbleBuilding</filthLeaving>
+  <passability>Standable</passability>
+  <pathCost>0</pathCost>
+  <rotatable>true</rotatable>
+  <blockWind>false</blockWind>
+  <castEdgeShadows>false</castEdgeShadows>
+  <fillPercent>0.15</fillPercent>
+  <statBases>
+    <MaxHitPoints>100</MaxHitPoints>
+    <WorkToBuild>600</WorkToBuild>
+    <Flammability>0.4</Flammability>
+    <Mass>8</Mass>
+  </statBases>
+  <size>(1,1)</size>
+  <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  <designationCategory>Production</designationCategory>
+  <constructEffect>ConstructMetal</constructEffect>
+  <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
+  <minifiedDef>MinifiedThing</minifiedDef>
+  <thingCategories>
+    <li>BuildingsMisc</li>
+  </thingCategories>
+  <building>
+    <fixedStorageSettings>
+      <priority>Normal</priority>
+      <filter>
+        <categories>
+          <li>Root</li>
+        </categories>
+      </filter>
+    </fixedStorageSettings>
+    <defaultStorageSettings>
+      <priority>Normal</priority>
+      <filter>
+        <categories>
+          <li>Root</li>
+        </categories>
+      </filter>
+    </defaultStorageSettings>
+  </building>
+  <!-- ⚠️ 开发测试期（PM 2026-09-05 要求一）：0 成本直造。
+       正式发布前恢复：costList[Steel 6 + ComponentIndustrial 1]
+       + researchPrerequisites[PC_Research_AutomationBasics] + constructionSkillPrerequisite 3 -->
+</ThingDef>
+</Defs>

@@ -1,0 +1,2563 @@
+{
+  "collectedUtc": "2026-10-08T03:02:37.2320988Z",
+  "gameVersion": "1.6.4871 rev590",
+  "method": "Read-only current DLL metadata, installed XML, and decompiled-source file hashes; no game assembly execution. Source snapshots are explanatory and are not guaranteed byte-identical to current DLL.",
+  "assembly": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\RimWorldWin64_Data\\Managed\\Assembly-CSharp.dll",
+    "sha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "mvid": "61e41735-6189-4da4-9d21-0260257b5097"
+  },
+  "types": [
+    {
+      "type": "RimWorld.Need",
+      "baseType": "System.Object",
+      "properties": [
+        "System.String RimWorld.Need::LabelCap()",
+        "System.Single RimWorld.Need::CurInstantLevelPercentage()",
+        "System.Int32 RimWorld.Need::GUIChangeArrow()",
+        "System.Single RimWorld.Need::CurInstantLevel()",
+        "System.Single RimWorld.Need::MaxLevel()",
+        "System.Single RimWorld.Need::CurLevel()",
+        "System.Single RimWorld.Need::CurLevelPercentage()",
+        "System.Boolean RimWorld.Need::IsFrozen()",
+        "System.Boolean RimWorld.Need::IsPawnInteractableOrVisible()",
+        "System.Boolean RimWorld.Need::ShowOnNeedList()"
+      ],
+      "fields": [
+        "RimWorld.NeedDef RimWorld.Need::def",
+        "System.Single RimWorld.Need::MaxDrawHeight"
+      ],
+      "methods": [
+        {
+          "signature": "System.String RimWorld.Need::get_LabelCap()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_CurInstantLevelPercentage()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_MaxLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_CurLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::set_CurLevel(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need::get_CurLevelPercentage()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need::set_CurLevelPercentage(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need::get_IsFrozen()",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need::get_ShowOnNeedList()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::OnNeedRemoved()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::OffsetDebugPercent(System.Single)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::DrawOnGUI(UnityEngine.Rect,System.Int32,System.Single,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.Rect>,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::DrawBarInstantMarkerAt(UnityEngine.Rect,System.Single)",
+          "public": false,
+          "family": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need::DrawBarThreshold(UnityEngine.Rect,System.Single)",
+          "public": false,
+          "family": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.NeedDef",
+      "baseType": "Verse.Def",
+      "properties": [],
+      "fields": [
+        "System.Type RimWorld.NeedDef::needClass",
+        "Verse.Intelligence RimWorld.NeedDef::minIntelligence",
+        "System.Boolean RimWorld.NeedDef::colonistAndPrisonersOnly",
+        "System.Boolean RimWorld.NeedDef::playerMechsOnly",
+        "System.Boolean RimWorld.NeedDef::colonistsOnly",
+        "System.Boolean RimWorld.NeedDef::slavesOnly",
+        "System.Boolean RimWorld.NeedDef::onlyIfCausedByHediff",
+        "System.Boolean RimWorld.NeedDef::onlyIfCausedByGene",
+        "System.Boolean RimWorld.NeedDef::onlyIfCausedByTrait",
+        "System.Boolean RimWorld.NeedDef::onlyIfCausedByIdeo",
+        "System.Boolean RimWorld.NeedDef::neverOnPrisoner",
+        "System.Boolean RimWorld.NeedDef::neverOnSlave",
+        "System.Collections.Generic.List`1<RimWorld.RoyalTitleDef> RimWorld.NeedDef::titleRequiredAny",
+        "System.Collections.Generic.List`1<Verse.HediffDef> RimWorld.NeedDef::hediffRequiredAny",
+        "System.Collections.Generic.List`1<RimWorld.PreceptDef> RimWorld.NeedDef::nullifyingPrecepts",
+        "System.Collections.Generic.List`1<Verse.CompProperties> RimWorld.NeedDef::requiredComps",
+        "Verse.DevelopmentalStage RimWorld.NeedDef::developmentalStageFilter",
+        "System.Boolean RimWorld.NeedDef::showOnNeedList",
+        "System.Single RimWorld.NeedDef::baseLevel",
+        "System.Boolean RimWorld.NeedDef::major",
+        "System.Int32 RimWorld.NeedDef::listPriority",
+        "System.String RimWorld.NeedDef::tutorHighlightTag",
+        "System.Boolean RimWorld.NeedDef::showForCaravanMembers",
+        "System.Boolean RimWorld.NeedDef::scaleBar",
+        "System.Boolean RimWorld.NeedDef::showUnitTicks",
+        "System.Single RimWorld.NeedDef::fallPerDay",
+        "System.Single RimWorld.NeedDef::seekerRisePerHour",
+        "System.Single RimWorld.NeedDef::seekerFallPerHour",
+        "System.Boolean RimWorld.NeedDef::freezeWhileSleeping",
+        "System.Boolean RimWorld.NeedDef::freezeInMentalState"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<System.String> RimWorld.NeedDef::ConfigErrors()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.NeedDef::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_NeedsTracker",
+      "baseType": "System.Object",
+      "properties": [
+        "System.Collections.Generic.List`1<RimWorld.Need> RimWorld.Pawn_NeedsTracker::AllNeeds()",
+        "System.Collections.Generic.List`1<RimWorld.Need> RimWorld.Pawn_NeedsTracker::MiscNeeds()",
+        "System.Boolean RimWorld.Pawn_NeedsTracker::PrefersOutdoors()",
+        "System.Boolean RimWorld.Pawn_NeedsTracker::PrefersIndoors()"
+      ],
+      "fields": [
+        "RimWorld.Need_Mood RimWorld.Pawn_NeedsTracker::mood",
+        "RimWorld.Need_Food RimWorld.Pawn_NeedsTracker::food",
+        "RimWorld.Need_MechEnergy RimWorld.Pawn_NeedsTracker::energy",
+        "RimWorld.Need_Rest RimWorld.Pawn_NeedsTracker::rest",
+        "RimWorld.Need_Joy RimWorld.Pawn_NeedsTracker::joy",
+        "RimWorld.Need_Beauty RimWorld.Pawn_NeedsTracker::beauty",
+        "RimWorld.Need_RoomSize RimWorld.Pawn_NeedsTracker::roomsize",
+        "RimWorld.Need_Outdoors RimWorld.Pawn_NeedsTracker::outdoors",
+        "RimWorld.Need_Indoors RimWorld.Pawn_NeedsTracker::indoors",
+        "RimWorld.Need_Chemical_Any RimWorld.Pawn_NeedsTracker::drugsDesire",
+        "RimWorld.Need_Comfort RimWorld.Pawn_NeedsTracker::comfort",
+        "RimWorld.Need_Learning RimWorld.Pawn_NeedsTracker::learning",
+        "RimWorld.Need_Play RimWorld.Pawn_NeedsTracker::play"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Need> RimWorld.Pawn_NeedsTracker::get_AllNeeds()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Need> RimWorld.Pawn_NeedsTracker::get_MiscNeeds()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::BindDirectNeedFields()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::NeedsTrackerTickInterval(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "T RimWorld.Pawn_NeedsTracker::TryGetNeed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_NeedsTracker::TryGetNeed(T&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Need RimWorld.Pawn_NeedsTracker::TryGetNeed(RimWorld.NeedDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_NeedsTracker::TryGetNeed(RimWorld.NeedDef,RimWorld.Need&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::SetInitialLevels()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_NeedsTracker::AddOrRemoveNeedsAsAppropriate()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_NeedsTracker::get_PrefersOutdoors()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_NeedsTracker::get_PrefersIndoors()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Gizmo> RimWorld.Pawn_NeedsTracker::GetGizmos()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Food",
+      "baseType": "RimWorld.Need",
+      "properties": [
+        "System.Boolean RimWorld.Need_Food::Starving()",
+        "System.Single RimWorld.Need_Food::PercentageThreshUrgentlyHungry()",
+        "System.Single RimWorld.Need_Food::PercentageThreshHungry()",
+        "System.Single RimWorld.Need_Food::NutritionBetweenHungryAndFed()",
+        "RimWorld.CompHoldingPlatformTarget RimWorld.Need_Food::PlatformTarget()",
+        "RimWorld.HungerCategory RimWorld.Need_Food::CurCategory()",
+        "System.Single RimWorld.Need_Food::FoodFallPerTick()",
+        "System.Int32 RimWorld.Need_Food::TicksUntilHungryWhenFed()",
+        "System.Int32 RimWorld.Need_Food::TicksUntilHungryWhenFedIgnoringMalnutrition()",
+        "System.Int32 RimWorld.Need_Food::GUIChangeArrow()",
+        "System.Single RimWorld.Need_Food::MaxLevel()",
+        "System.Single RimWorld.Need_Food::NutritionWanted()",
+        "System.Int32 RimWorld.Need_Food::TicksStarving()",
+        "System.Single RimWorld.Need_Food::MalnutritionSeverityPerInterval()",
+        "System.Boolean RimWorld.Need_Food::IsFrozen()"
+      ],
+      "fields": [
+        "System.Int32 RimWorld.Need_Food::lastNonStarvingTick",
+        "System.Single RimWorld.Need_Food::BaseFoodFallPerTick"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Food::get_Starving()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_PercentageThreshUrgentlyHungry()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_PercentageThreshHungry()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_NutritionBetweenHungryAndFed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.HungerCategory RimWorld.Need_Food::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_FoodFallPerTick()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Food::get_TicksUntilHungryWhenFed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Food::get_TicksUntilHungryWhenFedIgnoringMalnutrition()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Food::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_MaxLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::get_NutritionWanted()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Food::get_TicksStarving()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Food::get_IsFrozen()",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Food::GainingFood()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::FoodFallPerTickAssumingCategory(RimWorld.HungerCategory,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::OnNeedRemoved()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Food::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::DrawOnGUI(UnityEngine.Rect,System.Int32,System.Single,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.Rect>,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Food::BaseHungerRate(RimWorld.LifeStageDef,Verse.ThingDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Food::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Rest",
+      "baseType": "RimWorld.Need",
+      "properties": [
+        "RimWorld.RestCategory RimWorld.Need_Rest::CurCategory()",
+        "System.Single RimWorld.Need_Rest::RestFallPerTick()",
+        "System.Single RimWorld.Need_Rest::RestFallFactor()",
+        "System.Int32 RimWorld.Need_Rest::GUIChangeArrow()",
+        "System.Int32 RimWorld.Need_Rest::TicksAtZero()",
+        "System.Boolean RimWorld.Need_Rest::Resting()"
+      ],
+      "fields": [
+        "System.Single RimWorld.Need_Rest::BaseRestGainPerTick",
+        "System.Single RimWorld.Need_Rest::ThreshTired",
+        "System.Single RimWorld.Need_Rest::ThreshVeryTired",
+        "System.Single RimWorld.Need_Rest::DefaultFallAsleepMaxLevel",
+        "System.Single RimWorld.Need_Rest::DefaultNaturalWakeThreshold",
+        "System.Single RimWorld.Need_Rest::CanWakeThreshold"
+      ],
+      "methods": [
+        {
+          "signature": "RimWorld.RestCategory RimWorld.Need_Rest::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Rest::get_RestFallPerTick()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Rest::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Rest::get_TicksAtZero()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Rest::get_Resting()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Rest::TickResting(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Joy",
+      "baseType": "RimWorld.Need",
+      "properties": [
+        "RimWorld.JoyCategory RimWorld.Need_Joy::CurCategory()",
+        "System.Single RimWorld.Need_Joy::FallPerInterval()",
+        "System.Int32 RimWorld.Need_Joy::GUIChangeArrow()",
+        "System.Boolean RimWorld.Need_Joy::GainingJoy()"
+      ],
+      "fields": [
+        "RimWorld.JoyToleranceSet RimWorld.Need_Joy::tolerances"
+      ],
+      "methods": [
+        {
+          "signature": "RimWorld.JoyCategory RimWorld.Need_Joy::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Joy::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::GainJoy(System.Single,RimWorld.JoyKindDef)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Joy::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Joy::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Comfort",
+      "baseType": "RimWorld.Need_Seeker",
+      "properties": [
+        "System.Single RimWorld.Need_Comfort::CurInstantLevel()",
+        "RimWorld.ComfortCategory RimWorld.Need_Comfort::CurCategory()"
+      ],
+      "fields": [
+        "System.Single RimWorld.Need_Comfort::lastComfortUsed",
+        "System.Int32 RimWorld.Need_Comfort::lastComfortUseTick",
+        "System.Int32 RimWorld.Need_Comfort::ComfortUseInterval"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_Comfort::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.ComfortCategory RimWorld.Need_Comfort::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Comfort::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Comfort::ComfortUsed(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Beauty",
+      "baseType": "RimWorld.Need_Seeker",
+      "properties": [
+        "System.Single RimWorld.Need_Beauty::CurInstantLevel()",
+        "RimWorld.BeautyCategory RimWorld.Need_Beauty::CurCategory()"
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_Beauty::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.BeautyCategory RimWorld.Need_Beauty::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Beauty::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_Beauty::CurrentInstantBeauty()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_RoomSize",
+      "baseType": "RimWorld.Need_Seeker",
+      "properties": [
+        "System.Single RimWorld.Need_RoomSize::CurInstantLevel()",
+        "RimWorld.RoomSizeCategory RimWorld.Need_RoomSize::CurCategory()"
+      ],
+      "fields": [
+        "System.Int32 RimWorld.Need_RoomSize::SampleNumCells"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_RoomSize::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.RoomSizeCategory RimWorld.Need_RoomSize::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_RoomSize::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_RoomSize::SpacePerceptibleNow()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Outdoors",
+      "baseType": "RimWorld.Need",
+      "properties": [
+        "System.Int32 RimWorld.Need_Outdoors::GUIChangeArrow()",
+        "RimWorld.OutdoorsCategory RimWorld.Need_Outdoors::CurCategory()",
+        "System.Boolean RimWorld.Need_Outdoors::ShowOnNeedList()",
+        "System.Boolean RimWorld.Need_Outdoors::Disabled()"
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.Need_Outdoors::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.OutdoorsCategory RimWorld.Need_Outdoors::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Outdoors::get_ShowOnNeedList()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Outdoors::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Outdoors::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Outdoors::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Indoors",
+      "baseType": "RimWorld.Need",
+      "properties": [
+        "System.Boolean RimWorld.Need_Indoors::ShowOnNeedList()",
+        "System.Int32 RimWorld.Need_Indoors::GUIChangeArrow()",
+        "RimWorld.IndoorsCategory RimWorld.Need_Indoors::CurCategory()",
+        "System.Boolean RimWorld.Need_Indoors::Disabled()"
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Indoors::get_ShowOnNeedList()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.Need_Indoors::get_GUIChangeArrow()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.IndoorsCategory RimWorld.Need_Indoors::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Indoors::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Indoors::SetInitialLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Indoors::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Mood",
+      "baseType": "RimWorld.Need_Seeker",
+      "properties": [
+        "System.Single RimWorld.Need_Mood::CurInstantLevel()",
+        "System.String RimWorld.Need_Mood::MoodString()"
+      ],
+      "fields": [
+        "RimWorld.ThoughtHandler RimWorld.Need_Mood::thoughts",
+        "RimWorld.PawnObserver RimWorld.Need_Mood::observer",
+        "RimWorld.PawnRecentMemory RimWorld.Need_Mood::recentMemory"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_Mood::get_CurInstantLevel()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Mood::get_MoodString()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Mood::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Mood::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Mood::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Mood::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Mood::DrawOnGUI(UnityEngine.Rect,System.Int32,System.Single,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.Rect>,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Play",
+      "baseType": "RimWorld.Need",
+      "properties": [
+        "System.Boolean RimWorld.Need_Play::IsLow()",
+        "RimWorld.PlayCategory RimWorld.Need_Play::CurCategory()"
+      ],
+      "fields": [
+        "System.Single RimWorld.Need_Play::BaseFallPerInterval",
+        "System.Single RimWorld.Need_Play::ThresholdEmpty",
+        "System.Single RimWorld.Need_Play::ThresholdLow",
+        "System.Single RimWorld.Need_Play::ThresholdSatisfied",
+        "System.Single RimWorld.Need_Play::ThresholdHigh",
+        "System.Single RimWorld.Need_Play::ThresholdVeryHigh"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Play::get_IsLow()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.PlayCategory RimWorld.Need_Play::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Play::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Play::Play(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Play::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Learning",
+      "baseType": "RimWorld.Need",
+      "properties": [
+        "System.Boolean RimWorld.Need_Learning::IsFrozen()",
+        "System.Boolean RimWorld.Need_Learning::Suspended()",
+        "RimWorld.LearningCategory RimWorld.Need_Learning::CurCategory()"
+      ],
+      "fields": [
+        "System.Single RimWorld.Need_Learning::BaseFallPerTick",
+        "System.Single RimWorld.Need_Learning::BaseFallPerInterval",
+        "System.Single RimWorld.Need_Learning::ThresholdEmpty",
+        "System.Single RimWorld.Need_Learning::ThresholdLow",
+        "System.Single RimWorld.Need_Learning::ThresholdSatisfied",
+        "System.Single RimWorld.Need_Learning::ThresholdHigh",
+        "System.Single RimWorld.Need_Learning::ThresholdVeryHigh",
+        "System.Single RimWorld.Need_Learning::IconSize",
+        "System.Single RimWorld.Need_Learning::IconPad"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Learning::get_IsFrozen()",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need_Learning::get_Suspended()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.LearningCategory RimWorld.Need_Learning::get_CurCategory()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Learning::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Learning::Learn(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Learning::DrawOnGUI(UnityEngine.Rect,System.Int32,System.Single,System.Boolean,System.Boolean,System.Nullable`1<UnityEngine.Rect>,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Learning::NeedInterval()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.Need_Learning::GetTipString()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.JobGiver_GetFood",
+      "baseType": "Verse.AI.ThinkNode_JobGiver",
+      "properties": [],
+      "fields": [
+        "System.Boolean RimWorld.JobGiver_GetFood::forceScanWholeMap"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.AI.ThinkNode RimWorld.JobGiver_GetFood::DeepCopy(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.JobGiver_GetFood::GetPriority(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.JobGiver_GetFood::TryGiveJob(Verse.Pawn)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.JobGiver_GetFood::TryFindFishJob(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.JobGiver_GetFood::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.JobGiver_GetRest",
+      "baseType": "Verse.AI.ThinkNode_JobGiver",
+      "properties": [],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "Verse.AI.ThinkNode RimWorld.JobGiver_GetRest::DeepCopy(System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.JobGiver_GetRest::GetPriority(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.JobGiver_GetRest::TryGiveJob(Verse.Pawn)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobGiver_GetRest::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.JobGiver_GetJoy",
+      "baseType": "Verse.AI.ThinkNode_JobGiver",
+      "properties": [
+        "System.Boolean RimWorld.JobGiver_GetJoy::CanDoDuringMedicalRest()"
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.JobGiver_GetJoy::get_CanDoDuringMedicalRest()",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.JobGiver_GetJoy::JoyGiverAllowed(RimWorld.JoyGiverDef)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.JobGiver_GetJoy::TryGiveJobFromJoyGiverDefDirect(RimWorld.JoyGiverDef,Verse.Pawn)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobGiver_GetJoy::ResolveReferences()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.JobGiver_GetJoy::TryGiveJob(Verse.Pawn)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.JobGiver_GetJoy::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_Ownership",
+      "baseType": "System.Object",
+      "properties": [
+        "RimWorld.Building_Bed RimWorld.Pawn_Ownership::OwnedBed()",
+        "RimWorld.Building_Grave RimWorld.Pawn_Ownership::AssignedGrave()",
+        "RimWorld.Building_Throne RimWorld.Pawn_Ownership::AssignedThrone()",
+        "Verse.Building RimWorld.Pawn_Ownership::AssignedMeditationSpot()",
+        "RimWorld.Building_Bed RimWorld.Pawn_Ownership::AssignedDeathrestCasket()",
+        "Verse.Room RimWorld.Pawn_Ownership::OwnedRoom()",
+        "Verse.Room RimWorld.Pawn_Ownership::Bedroom()"
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.Pawn_Ownership::get_OwnedBed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Grave RimWorld.Pawn_Ownership::get_AssignedGrave()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Throne RimWorld.Pawn_Ownership::get_AssignedThrone()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Building RimWorld.Pawn_Ownership::get_AssignedMeditationSpot()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Building_Bed RimWorld.Pawn_Ownership::get_AssignedDeathrestCasket()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Room RimWorld.Pawn_Ownership::get_OwnedRoom()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Room RimWorld.Pawn_Ownership::get_Bedroom()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_Ownership::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_Ownership::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimBedIfNonMedical(RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimBed()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimGrave(RimWorld.Building_Grave)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimGrave()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimThrone(RimWorld.Building_Throne)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimThrone()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimMeditationSpot(Verse.Building)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimMeditationSpot()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::ClaimDeathrestCasket(RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_Ownership::UnclaimDeathrestCasket()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_Ownership::UnclaimAll()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_Ownership::Notify_ChangedGuestStatus()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_RelationsTracker",
+      "baseType": "System.Object",
+      "properties": [
+        "System.Collections.Generic.List`1<RimWorld.DirectPawnRelation> RimWorld.Pawn_RelationsTracker::DirectRelations()",
+        "System.Collections.Generic.List`1<RimWorld.VirtualPawnRelation> RimWorld.Pawn_RelationsTracker::VirtualRelations()",
+        "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::Children()",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::ChildrenCount()",
+        "System.Boolean RimWorld.Pawn_RelationsTracker::IsTryRomanceOnCooldown()",
+        "System.Boolean RimWorld.Pawn_RelationsTracker::RelatedToAnyoneOrAnyoneRelatedToMe()",
+        "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::FamilyByBlood()",
+        "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::FamilyByBlood_Internal()",
+        "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::PotentiallyRelatedPawns()",
+        "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::RelatedPawns()"
+      ],
+      "fields": [
+        "System.Boolean RimWorld.Pawn_RelationsTracker::everSeenByPlayer",
+        "System.Boolean RimWorld.Pawn_RelationsTracker::canGetRescuedThought",
+        "Verse.Pawn RimWorld.Pawn_RelationsTracker::relativeInvolvedInRescueQuest",
+        "RimWorld.MarriageNameChange RimWorld.Pawn_RelationsTracker::nextMarriageNameChange",
+        "System.Boolean RimWorld.Pawn_RelationsTracker::hidePawnRelations",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::romanceEnableTick",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::FriendOpinionThreshold",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::RivalOpinionThreshold",
+        "System.Int32 RimWorld.Pawn_RelationsTracker::MinLovinAge",
+        "System.Single RimWorld.Pawn_RelationsTracker::PsychicLoveFactor"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.DirectPawnRelation> RimWorld.Pawn_RelationsTracker::get_DirectRelations()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.VirtualPawnRelation> RimWorld.Pawn_RelationsTracker::get_VirtualRelations()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_Children()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::get_ChildrenCount()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::get_IsTryRomanceOnCooldown()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::get_RelatedToAnyoneOrAnyoneRelatedToMe()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_FamilyByBlood()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_PotentiallyRelatedPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.Pawn_RelationsTracker::get_RelatedPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ExposeData()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.PregnancyApproach RimWorld.Pawn_RelationsTracker::GetPregnancyApproachForPartner(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::SetPregnancyApproach(Verse.Pawn,RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RelationsTrackerTickInterval(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.DirectPawnRelation RimWorld.Pawn_RelationsTracker::GetDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn RimWorld.Pawn_RelationsTracker::GetFirstDirectRelationPawn(RimWorld.PawnRelationDef,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::GetDirectRelationsCount(RimWorld.PawnRelationDef,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::DirectRelationExists(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::VirtualRelationExists(RimWorld.PawnRelationDef,RimWorld.RelationshipRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::GetDirectRelations(RimWorld.PawnRelationDef,System.Collections.Generic.List`1<Verse.Pawn>&,System.Predicate`1<Verse.Pawn>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ElevateToVirtualRelation(RimWorld.DirectPawnRelation)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::AddDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveRelation(RimWorld.RelationshipRecord)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveDirectRelation(RimWorld.DirectPawnRelation)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::RemoveDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_RelationsTracker::TryRemoveDirectRelation(RimWorld.PawnRelationDef,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_RelationsTracker::OpinionOf(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_RelationsTracker::OpinionExplanation(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::SecondaryLovinChanceFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::PrettinessFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::LovinAgeFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::SecondaryRomanceChanceFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::CompatibilityWith(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::ConstantPerPawnsPairCompatibilityOffset(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ClearAllRelations()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::ClearAllNonBloodRelations()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnDestroyed(Verse.DestroyMode)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PassedToWorld()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnLeftBehind()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_ExitedMap()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_ChangedFaction()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnSold(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_PawnKidnapped()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_RescuedBy(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::Notify_FailedRescueQuest()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::GetFriendDiedThoughtPowerFactor(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_RelationsTracker::GetRivalDiedThoughtPowerFactor(System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_RelationsTracker::CheckAppendBondedAnimalDiedInfo(Verse.TaggedString&,Verse.TaggedString&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.InteractionWorker_RomanceAttempt",
+      "baseType": "RimWorld.InteractionWorker",
+      "properties": [],
+      "fields": [
+        "System.Int32 RimWorld.InteractionWorker_RomanceAttempt::MinOpinionForRomanceAttempt",
+        "System.Single RimWorld.InteractionWorker_RomanceAttempt::TryRomanceSuccessChance"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.InteractionWorker_RomanceAttempt::RandomSelectionWeight(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.InteractionWorker_RomanceAttempt::SuccessChance(Verse.Pawn,Verse.Pawn,System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.InteractionWorker_RomanceAttempt::RomanceFactors(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.InteractionWorker_RomanceAttempt::Interacted(Verse.Pawn,Verse.Pawn,System.Collections.Generic.List`1<Verse.RulePackDef>,System.String&,System.String&,Verse.LetterDef&,Verse.LookTargets&)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.InteractionWorker_RomanceAttempt::CanCreatePsychicBondBetween(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.InteractionWorker_RomanceAttempt::TryCreatePsychicBondBetween(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.InteractionWorker_RomanceAttempt::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.InteractionWorker_MarriageProposal",
+      "baseType": "RimWorld.InteractionWorker",
+      "properties": [],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.InteractionWorker_MarriageProposal::RandomSelectionWeight(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.InteractionWorker_MarriageProposal::Interacted(Verse.Pawn,Verse.Pawn,System.Collections.Generic.List`1<Verse.RulePackDef>,System.String&,System.String&,Verse.LetterDef&,Verse.LookTargets&)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.InteractionWorker_MarriageProposal::AcceptanceChance(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.InteractionWorker_MarriageProposal::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.MarriageCeremonyUtility",
+      "baseType": "System.Object",
+      "properties": [],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.MarriageCeremonyUtility::AcceptableGameConditionsToStartCeremony(Verse.Map)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.MarriageCeremonyUtility::FianceReadyToStartCeremony(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.MarriageCeremonyUtility::FianceCanContinueCeremony(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.MarriageCeremonyUtility::ShouldGuestKeepAttendingCeremony(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.MarriageCeremonyUtility::Married(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.GatheringWorker_MarriageCeremony",
+      "baseType": "RimWorld.GatheringWorker",
+      "properties": [],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "Verse.AI.Group.LordJob RimWorld.GatheringWorker_MarriageCeremony::CreateLordJob(Verse.IntVec3,Verse.Pawn)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.GatheringWorker_MarriageCeremony::TryFindGatherSpot(Verse.Pawn,Verse.IntVec3&)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.GatheringWorker_MarriageCeremony::SendLetter(Verse.IntVec3,Verse.Pawn)",
+          "public": false,
+          "family": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.GatheringWorker_MarriageCeremony::CanExecute(Verse.Map,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.GatheringWorker_MarriageCeremony::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.ChildcareUtility",
+      "baseType": "System.Object",
+      "properties": [
+        "System.Collections.Generic.List`1<Verse.Pawn> RimWorld.ChildcareUtility::CanBreastfeedPlayerPawns()"
+      ],
+      "fields": [
+        "Verse.IntRange RimWorld.ChildcareUtility::NextCachedDownedMotherTickCheck",
+        "System.Int32 RimWorld.ChildcareUtility::FullFeedSessionTicks",
+        "System.Int32 RimWorld.ChildcareUtility::BabyFullFeedsPerDay"
+      ],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> RimWorld.ChildcareUtility::get_CanBreastfeedPlayerPawns()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.Pawn> RimWorld.ChildcareUtility::SpawnedColonistChildcarers(Verse.Map)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.TaggedString RimWorld.ChildcareUtility::Translate(RimWorld.ChildcareUtility/BreastfeedFailReason,Verse.Pawn,Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanFeed(Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanBreastfeed(Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanBreastfeedNow(Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanSuckle(Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::WantsSuckle(Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanSuckleNow(Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanFeedBaby(Verse.Pawn,Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanMomBreastfeedBaby(Verse.Pawn,Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanMomBreastfeedBabyNow(Verse.Pawn,Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanHaulBaby(Verse.Pawn,Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanHaulBabyNow(Verse.Pawn,Verse.Pawn,System.Boolean,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanHaulToMom(Verse.Pawn,Verse.Pawn,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanHaulBabyToMomNow(Verse.Pawn,Verse.Pawn,Verse.Pawn,System.Boolean,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanAutoBreastfeed(Verse.Pawn,Verse.Pawn,System.Boolean,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanMomAutoBreastfeedBabyNow(Verse.Pawn,Verse.Pawn,System.Boolean,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::CanHaulBabyToDownedMomToBreastfeedNow(Verse.Pawn,Verse.Pawn,Verse.Pawn,System.Boolean,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Pawn> RimWorld.ChildcareUtility::CanBreastfeedMothers(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.ChildcareUtility::MakeBringBabyToSafetyJob(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.ChildcareUtility::MakeBreastfeedCarryToMomJob(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.ChildcareUtility::MakeBreastfeedJob(Verse.Pawn,RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.ChildcareUtility::MakeBottlefeedJob(Verse.Pawn,Verse.Thing)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.ChildcareUtility::MakeAutofeedBabyJob(Verse.Pawn,Verse.Pawn,Verse.Thing)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.ChildcareUtility::MakeBabySuckleJob(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.ChildcareUtility::MakeBabyPlayJob(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AI.Toil RimWorld.ChildcareUtility::MakeBabyPlayAsLongAsToilIsActive(Verse.AI.Toil,Verse.AI.TargetIndex)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::HasBreastfeedCompatibleFactions(RimWorld.Faction,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::BabyHasFeederInCompatibleFaction(RimWorld.Faction,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::HasBreastfeedCompatibleFactions(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::ImmobileBreastfeederAvailable(Verse.Pawn,Verse.Pawn,System.Boolean,Verse.Pawn&,System.Nullable`1<RimWorld.ChildcareUtility/BreastfeedFailReason>&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::ShouldWakeUpToAutofeedUrgent(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing RimWorld.ChildcareUtility::FindBabyFoodForBaby(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn RimWorld.ChildcareUtility::FindAutofeedBaby(Verse.Pawn,Verse.AutofeedMode,Verse.Thing&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::SuckleFromLactatingPawn(Verse.Pawn,Verse.Pawn,System.Int32)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.ChildcareUtility::ClearCache()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::SwaddleBaby(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::BabyNeedsMovingForTemperatureReasons(Verse.Pawn,Verse.Pawn,Verse.Region&,System.Nullable`1<Verse.IntVec3>)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.LocalTargetInfo RimWorld.ChildcareUtility::SafePlaceForBaby(Verse.Pawn,Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Pawn RimWorld.ChildcareUtility::FindUnsafeBaby(Verse.Pawn,Verse.AutofeedMode)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.ChildcareUtility::BabyBeingPlayedWith(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.LearningUtility",
+      "baseType": "System.Object",
+      "properties": [],
+      "fields": [
+        "System.Single RimWorld.LearningUtility::NeedSatisfiedPerTick",
+        "System.Single RimWorld.LearningUtility::StartJobMaxLearning",
+        "System.Single RimWorld.LearningUtility::LearningRateBonusOffset_Blackboard",
+        "System.Int32 RimWorld.LearningUtility::MaxConnectedBlackboards"
+      ],
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.LearningUtility::SchoolDeskLearningRate(Verse.Thing)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.LearningUtility::ConnectedBlackboards(Verse.Thing)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.LearningUtility::LearningRateFactor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.LearningUtility::LearningTickCheckEnd(Verse.Pawn,System.Int32,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.LearningUtility::LearningSatisfied(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.WorkGiver_PlayWithBaby",
+      "baseType": "RimWorld.WorkGiver_Scanner",
+      "properties": [
+        "Verse.AI.PathEndMode RimWorld.WorkGiver_PlayWithBaby::PathEndMode()",
+        "Verse.ThingRequest RimWorld.WorkGiver_PlayWithBaby::PotentialWorkThingRequest()"
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "Verse.AI.PathEndMode RimWorld.WorkGiver_PlayWithBaby::get_PathEndMode()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.ThingRequest RimWorld.WorkGiver_PlayWithBaby::get_PotentialWorkThingRequest()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> RimWorld.WorkGiver_PlayWithBaby::PotentialWorkThingsGlobal(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.WorkGiver_PlayWithBaby::ShouldSkip(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.WorkGiver_PlayWithBaby::HasJobOnThing(Verse.Pawn,Verse.Thing,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.WorkGiver_PlayWithBaby::JobOnThing(Verse.Pawn,Verse.Thing,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.WorkGiver_PlayWithBaby::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.WorkGiver_Teach",
+      "baseType": "RimWorld.WorkGiver_Scanner",
+      "properties": [],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> RimWorld.WorkGiver_Teach::PotentialWorkThingsGlobal(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.WorkGiver_Teach::ShouldSkip(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.WorkGiver_Teach::HasJobOnThing(Verse.Pawn,Verse.Thing,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.WorkGiver_Teach::JobOnThing(Verse.Pawn,Verse.Thing,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.WorkGiver_Teach::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.WorkGiver_Breastfeed",
+      "baseType": "RimWorld.WorkGiver_Scanner",
+      "properties": [],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> RimWorld.WorkGiver_Breastfeed::PotentialWorkThingsGlobal(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.Job RimWorld.WorkGiver_Breastfeed::JobOnThing(Verse.Pawn,Verse.Thing,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.WorkGiver_Breastfeed::.ctor()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.WorkGiver_FeedBabyManually",
+      "baseType": "RimWorld.WorkGiver_Scanner",
+      "properties": [
+        "Verse.ThingRequest RimWorld.WorkGiver_FeedBabyManually::PotentialWorkThingRequest()",
+        "Verse.AI.PathEndMode RimWorld.WorkGiver_FeedBabyManually::PathEndMode()"
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "signature": "Verse.ThingRequest RimWorld.WorkGiver_FeedBabyManually::get_PotentialWorkThingRequest()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.AI.PathEndMode RimWorld.WorkGiver_FeedBabyManually::get_PathEndMode()",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "Verse.Danger RimWorld.WorkGiver_FeedBabyManually::MaxPathDanger(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.Thing> RimWorld.WorkGiver_FeedBabyManually::PotentialWorkThingsGlobal(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.WorkGiver_FeedBabyManually::CanCreateManualFeedingJob(Verse.Pawn,Verse.Thing,System.Boolean)",
+          "public": false,
+          "family": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.WorkGiver_FeedBabyManually::.ctor()",
+          "public": false,
+          "family": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.PregnancyUtility",
+      "baseType": "System.Object",
+      "properties": [
+        "Verse.FloatRange RimWorld.PregnancyUtility::GeneratedPawnPregnancyProgressRange()"
+      ],
+      "fields": [
+        "Verse.SimpleCurve RimWorld.PregnancyUtility::DeathChanceFromBirthQuality",
+        "System.Collections.Generic.Dictionary`2<RimWorld.PawnRelationDef,System.Single> RimWorld.PregnancyUtility::BeingFatherWeightPerRelation",
+        "System.Int32 RimWorld.PregnancyUtility::MaxGeneAssignmentTries",
+        "System.Single RimWorld.PregnancyUtility::MinFertileMaleAge",
+        "System.Single RimWorld.PregnancyUtility::ChanceOfNoFatherWithCandidates",
+        "System.Single RimWorld.PregnancyUtility::ChanceToInheritOneParent",
+        "System.Single RimWorld.PregnancyUtility::ChanceToInheritTwoParents",
+        "System.Single RimWorld.PregnancyUtility::IvfPregnancyFactor"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.FloatRange RimWorld.PregnancyUtility::get_GeneratedPawnPregnancyProgressRange()",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.AcceptanceReport RimWorld.PregnancyUtility::CanEverProduceChild(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::PregnancyChanceForPawn(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::PregnancyChanceImplantEmbryo(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::PregnancyChanceForPartners(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::PregnancyChanceForWoman(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.RitualRoleAssignments RimWorld.PregnancyUtility::RitualAssignmentsForBirth(RimWorld.Precept_Ritual,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::GetBirthQualityFor(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<RimWorld.Building_Bed> RimWorld.PregnancyUtility::BedsForBirth(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.PregnancyUtility::IsUsableBedFor(Verse.Pawn,Verse.Pawn,RimWorld.Building_Bed)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::ChanceMomDiesDuringBirth(System.Single)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing RimWorld.PregnancyUtility::ApplyBirthOutcome(RimWorld.RitualOutcomePossibility,System.Single,RimWorld.Precept_Ritual,System.Collections.Generic.List`1<Verse.GeneDef>,Verse.Pawn,Verse.Thing,Verse.Pawn,Verse.Pawn,RimWorld.LordJob_Ritual,RimWorld.RitualRoleAssignments,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Gizmo RimWorld.PregnancyUtility::BirthQualityGizmo(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.GeneSet RimWorld.PregnancyUtility::GetInheritedGeneSet(Verse.Pawn,Verse.Pawn,System.Boolean&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.GeneSet RimWorld.PregnancyUtility::GetInheritedGeneSet(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.GeneDef> RimWorld.PregnancyUtility::GetInheritedGenes(Verse.Pawn,Verse.Pawn,System.Boolean&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.GeneDef> RimWorld.PregnancyUtility::GetInheritedGenes(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::InbredChanceFromParents(Verse.Pawn,Verse.Pawn,RimWorld.PawnRelationDef&)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.PregnancyUtility::TryTerminatePregnancy(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Hediff RimWorld.PregnancyUtility::GetPregnancyHediff(Verse.Pawn)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.PregnancyUtility::ForceEndPregnancy(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.PregnancyUtility::GetLabel(RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.PregnancyUtility::GetPregnancyChanceFactor(RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.PregnancyUtility::GetDescription(RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Texture2D RimWorld.PregnancyUtility::GetIcon(RimWorld.PregnancyApproach)",
+          "public": true,
+          "family": false,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.PregnancyApproach",
+      "baseType": "System.Enum",
+      "properties": [],
+      "fields": [
+        "System.Int32 RimWorld.PregnancyApproach::value__",
+        "RimWorld.PregnancyApproach RimWorld.PregnancyApproach::Normal",
+        "RimWorld.PregnancyApproach RimWorld.PregnancyApproach::AvoidPregnancy",
+        "RimWorld.PregnancyApproach RimWorld.PregnancyApproach::TryForBaby"
+      ],
+      "methods": []
+    }
+  ],
+  "files": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Core\\Defs\\NeedDefs\\Needs.xml",
+      "sha256": "F0ABFB6E11CF85EC43F55AC2191735C8CD029E7D76BD0411F014F37BE3A3249C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Biotech\\Defs\\NeedDefs\\Needs.xml",
+      "sha256": "EDCB15C0597EDFF2442DF92CFE9BF092BB589FC51EA45CB1EDEEE3E8D661DCEE"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need.cs",
+      "sha256": "17954C2B9B5CA939E38BD94476B363EBEA02502818864190288AB5545783AB60"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\NeedDef.cs",
+      "sha256": "5692414EB48A5E1277BFA234FEB3391DE284E95F5B76EB9E60D882B861BD3C5C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_NeedsTracker.cs",
+      "sha256": "967415F3C4FF956677B74DA9303AEC41AC0084EE35B751C4CBD81EA147908D95"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Food.cs",
+      "sha256": "C9A9136C0AE4B2B3A3F4567C0F04B507F3CF825C50E1621A1F3C3C40591AFE1D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Rest.cs",
+      "sha256": "11684E45702550F9AA834188D1EFA00AB2E6168F3A4990C3F9230C5BB493E3F0"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Joy.cs",
+      "sha256": "708A75F144C04BE36BD14318998C87114147266F809F9AFE5FD2D4F3AD5B046C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Comfort.cs",
+      "sha256": "E6926BE5DC13DF3E42366D4402D85CA7F6D7F6011FCD915BD50D7E57F22A21EF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Beauty.cs",
+      "sha256": "6ADECBBE44C8F1AAF7912B81BE699F14050A85FD25368B0C076A91AD6360B0A4"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_RoomSize.cs",
+      "sha256": "E584BA662C82B28ABC7FF641D490C6512FD5D46553ABF7799F01E70EB0CC052A"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Outdoors.cs",
+      "sha256": "6FDCFF45502E3FA8612C0EFBE351EAE41A0DCCA85D2431E0A3CE8C864B32E893"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Indoors.cs",
+      "sha256": "CB334DBA508856D7BE37CFD70BFAEE3A1033A3DFBB8141E001D313A1C78251D9"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Mood.cs",
+      "sha256": "3C17ED535D773B85673B2253A08DD3718A088B1358A00ECAA1621B3A9E69D860"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Play.cs",
+      "sha256": "5496920F1488ACA810DAEA8D99EEC3139CCC4F9A8722FA82A764060B2A583ABF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Learning.cs",
+      "sha256": "42B6022FADF602D42BC8F64C6A8D3A04B1BC8CC5F073E791FE6C6B1C264C4EA6"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\JobGiver_GetFood.cs",
+      "sha256": "675B5425B537EB639592A27C7580A4333E6C216BDBA463598E9262A726B158DD"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\JobGiver_GetRest.cs",
+      "sha256": "3B3BB85A16CAE88637DC9C0E68973892C2CDF7364FEE45ADD86498CFC98FF739"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\JobGiver_GetJoy.cs",
+      "sha256": "1AAA28D0B1565DF4E95A1C2E1F4D6AD0FDF7B03E1A460510CD91FDA6D3581F70"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_Ownership.cs",
+      "sha256": "826F1CCD71C8E7945F963D0E291DD478AC16BD76ED8D1717D0391698354A0317"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_RelationsTracker.cs",
+      "sha256": "FAD014F0F09516168E57E57880E222E2BE57D8D29760C33F5E2264999324AD93"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\InteractionWorker_RomanceAttempt.cs",
+      "sha256": "A6E12EE7C5843F6865574E3AC4971FDC34E7F42642F753C46765374992C02ED3"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\InteractionWorker_MarriageProposal.cs",
+      "sha256": "5D3F22FF1C74B6450204DA81E795BC20899E73AC5121CB7C6CA75DCCB976A6E1"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\MarriageCeremonyUtility.cs",
+      "sha256": "5C8857B0B47098600147452374F40B359548D5CA84045104E5F5B1E0E8F3D549"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\GatheringWorker_MarriageCeremony.cs",
+      "sha256": "41D89F25F7B39075D4C7E4363BA0E7B178206A008D6640B0AD590E7948801025"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\ChildcareUtility.cs",
+      "sha256": "370AB5D690B16F7FDC74448516FBEA6862D75F71F3966131066F133552452E87"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\LearningUtility.cs",
+      "sha256": "1246C685F1FBBB8634B313F8A97DFD775AC76975D2ACA46D9F4E93C41A6B76C3"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\WorkGiver_PlayWithBaby.cs",
+      "sha256": "25B4AB2DD5CE6FAD417F0F7DEA377482004F858F8DF6FB192D8CCB2641BF9177"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\WorkGiver_Teach.cs",
+      "sha256": "86A3AC8F577261C8B8DBFB82FB5DCDFA499F8B7F9332C1000592F0727CF6471F"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\WorkGiver_Breastfeed.cs",
+      "sha256": "E1F525BBD6FC259F9F560C83C44315613F6F8D59F0F7F17E3B9FDF1214A8E849"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\WorkGiver_FeedBabyManually.cs",
+      "sha256": "A0D93DB01E5A5769F028599B66FD280A8BF8D5D675CC62885E05583008EA2565"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\PregnancyUtility.cs",
+      "sha256": "1F8A11BDE4CE3DD2DD10EA47AFBE1D815A101D2A23F03173CB520362AD8431D1"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\PregnancyApproach.cs",
+      "sha256": "2F891FDD8255A09E9DE5A661A7C1441EB5DF798BB5A58D8CDBC108510A42DCE8"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\PanelAtoms.cs",
+      "sha256": "CE5EE3B8AD40A8FAE1158F07E50C033B47E7B6BEA294FA2D2C7ABEC3E8356597"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\DataAtoms.cs",
+      "sha256": "64947523E20D868A53620321349BCC60F8ED2BDFFA788B667A3A56E84C1FE055"
+    }
+  ]
+}

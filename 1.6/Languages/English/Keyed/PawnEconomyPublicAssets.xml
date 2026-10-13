@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Public.InstitutionFunds>Available institution budget</PC_PEA.Public.InstitutionFunds>
+  <PC_PEA.Public.TotalLabel>Total public funds</PC_PEA.Public.TotalLabel>
+  <PC_PEA.Public.Total>Total ledger public funds: {0}, including institution budgets</PC_PEA.Public.Total>
+  <PC_PEA.Public.PendingSilver>Public silver awaiting deposit: {0}</PC_PEA.Public.PendingSilver>
+  <PC_PEA.Public.OwnershipHint>Institution budgets belong to the colony. Allocation moves funds without increasing the total. Colonists deliver public stockpile silver to a settlement office before it is credited. Food and clothing are goods, not cash.</PC_PEA.Public.OwnershipHint>
+  <PC_PEA.Public.Budget>{0} · Available budget {1}</PC_PEA.Public.Budget>
+  <PC_PEA.Public.AllocateText>Allocate {0} silver from treasury</PC_PEA.Public.AllocateText>
+  <PC_PEA.Public.Allocate>Allocate</PC_PEA.Public.Allocate>
+  <PC_PEA.Public.ReturnText>{0} · Returnable {1}</PC_PEA.Public.ReturnText>
+  <PC_PEA.Public.Return>Return to treasury</PC_PEA.Public.Return>
+  <PC_PEA.Public.Unallocated>Unallocated treasury funds</PC_PEA.Public.Unallocated>
+  <PC_PEA.Public.FormerInstitution>Removed institution</PC_PEA.Public.FormerInstitution>
+  <PC_PEA.Public.LegacyFunds>Funded legacy public account</PC_PEA.Public.LegacyFunds>
+  <PC_PEA.Public.StockHint>The shop shares actual public stockpile goods on this map and its own inventory. Payment at vanilla market value transfers the item to the buyer. Private goods are excluded.</PC_PEA.Public.StockHint>
+  <PC_PEA.Public.Kind.Deposit>Silver deposit</PC_PEA.Public.Kind.Deposit>
+  <PC_PEA.Public.Kind.Withdrawal>Silver withdrawal</PC_PEA.Public.Kind.Withdrawal>
+  <PC_PEA.Public.Kind.PublicTransfer>Public funds transfer</PC_PEA.Public.Kind.PublicTransfer>
+  <PC_PEA.Public.Kind.LegacyAllocation>Legacy claim funding</PC_PEA.Public.Kind.LegacyAllocation>
+  <PC_PEA.Public.Kind.WageTransfer>Wage payment</PC_PEA.Public.Kind.WageTransfer>
+  <PC_PEA.Public.Kind.Purchase>Goods sale</PC_PEA.Public.Kind.Purchase>
+  <PC_PEA.Public.Phase.Prepared>Awaiting delivery</PC_PEA.Public.Phase.Prepared>
+  <PC_PEA.Public.Phase.Finalized>Settled</PC_PEA.Public.Phase.Finalized>
+  <PC_PEA.Public.Phase.Cancelled>Cancelled</PC_PEA.Public.Phase.Cancelled>
+  <PC_PEA.Public.Phase.ReconciliationRequired>Reconciliation required</PC_PEA.Public.Phase.ReconciliationRequired>
+</LanguageData>

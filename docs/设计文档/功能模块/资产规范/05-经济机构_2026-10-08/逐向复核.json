@@ -1,0 +1,166 @@
+{
+  "changeId": "CHG-20261008-ECON-ART",
+  "assets": [
+    {
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "north",
+      "sha256": "3BBF71ED3AD9336E915F5BBEF9D433E5750649853392CB80D9B349E0B437AE50",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "北向母图：文件夹书脊左、纸盘中央、夹板夹口上、笔右；完整。"
+    },
+    {
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "east",
+      "sha256": "083a2c732e5b241aea78f739b3c98e82150bb69aa68323410816a6b88af3454e",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "文件夹横置书脊上；夹板夹口右；纸盘开口左；笔帽右。完整。"
+    },
+    {
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "south",
+      "sha256": "6b635147cf11627a5274101bb652e5940f9e51ff0db2386f0fae184c8efa9ef3",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "夹板夹口下；笔帽下；纸盘开口上；文件夹书脊右。完整。"
+    },
+    {
+      "defName": "PC_PEA_LaborOffice",
+      "direction": "west",
+      "sha256": "6be89ce929b7ef57fd78b642f41ddb59da32c19a77dea772b21808d1773690b4",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "文件夹横置书脊下；纸盘开口右；夹板夹口左；笔帽左。经短轴返修，物件完整，布局与北向转向对应。"
+    },
+    {
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "north",
+      "sha256": "E61A7326D5561DE0638E2D4BAA9079C097EAAB5FA7EC53C3147704D411DC06A8",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "北向母图：图纸卷边左折角右上；扳手西北至东南、齿轮右；完整。"
+    },
+    {
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "east",
+      "sha256": "e4f4e7546280104cb7b80f7c475ccefa8ed058f5172a06667c925274eee1601f",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "图纸卷边上、折角右下；扳手西南至东北；齿轮下侧。物件完整，盘内相对偏移属生成差异。"
+    },
+    {
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "south",
+      "sha256": "e558f5becc6e8243ab53bc91e17f1decdb8146a836fd3d5d905aea1881aaf97a",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "图纸卷边右、折角左下、圆形下半；齿轮左；扳手西北至东南、右下大端。工具完整，工具盘沿口描线有生成差异。"
+    },
+    {
+      "defName": "PC_PEA_WorkshopOffice",
+      "direction": "west",
+      "sha256": "34E432C1967CC3F712213070D7056D22D9593FD0C739EC4B1781BD53C5AF32A5",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "图纸卷边下、折角左上；齿轮位于扳手上；扳手西南至东北。完整。"
+    },
+    {
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "north",
+      "sha256": "09C05A7B35F445D9579D3344CD8AA39D28722CD2E470610B2B565F6A3CF12DD2",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "北向母图：币盘上四组币、书脊左、计算器屏幕上、收据左下；完整。"
+    },
+    {
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "east",
+      "sha256": "cd3d15ce12407a7128a40487ef1597d02f680f98ffd26807eaed5cb2996a2fed",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "币盘右、较高币组右列；账簿书脊上、护角下；计算器屏幕右、收据左上。币组完整，尺寸返修后保持朝向；键帽描线有生成差异。"
+    },
+    {
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "south",
+      "sha256": "17014e94e77b2e210bf6b26886cf0aa90d6cc51e84b9b13008fce479a81fff29",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "币盘下、较高币组下排；账簿书脊右、护角左；计算器屏幕下，收据右上。四币组完整，书页边与键帽有重绘差异。"
+    },
+    {
+      "defName": "PC_PEA_SettlementOffice",
+      "direction": "west",
+      "sha256": "5e71778e9ebb2c105d105ea60408b32075434d6611353578737fedbd5280e0c5",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "币盘左、较高币组左列；书脊下、护角上；计算器屏幕左、收据右下。尺寸返修后物件完整且身份一致。"
+    },
+    {
+      "defName": "PC_PEA_Shop",
+      "direction": "north",
+      "sha256": "372343F4D2333CE5C05D68CAB0C36ABC0674FEED966ECA05563653F2D6021D01",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "北向母图：衣领上、蓝布上、皂左卷巾右；完整。"
+    },
+    {
+      "defName": "PC_PEA_Shop",
+      "direction": "east",
+      "sha256": "e82c0505ca628c28e775f6b8c2c83d52ce73b0606f2aec7c0ef6f71d14503d29",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "衣领右；蓝布右、黄布左；黄皂右、绿皂左且卷巾在下，卷口左。尺寸返修后折叠与组件仍清楚完整。"
+    },
+    {
+      "defName": "PC_PEA_Shop",
+      "direction": "south",
+      "sha256": "21220e7c1be3f11fef63358c8bb651958f8d06158bea09367abb5b9bb7382525",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "衣领下；蓝布下、黄布上；绿皂上、黄皂下、卷巾左。领口与折叠完整，卷巾端部按世界顶光重新绘制。"
+    },
+    {
+      "defName": "PC_PEA_Shop",
+      "direction": "west",
+      "sha256": "0ab2746f602f1c2f75f2091508170dadd7a4b85a25818849f529c6545c152596",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "衣领左；蓝布左；皂在卷巾下、黄皂左绿皂右，卷口右；折叠完整，四向身份一致。"
+    },
+    {
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "north",
+      "sha256": "D54E73E4203CDFE8DCA1251F4F28AE81BD8F1C2CE5DBBA750B571231E3F92EED",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "北向母图：听诊器盘上两耳端一胸件；血压计左袖带右，盒下；管线连接完整。"
+    },
+    {
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "east",
+      "sha256": "db656b2f07ee25efa6ea9e312f26518a8db39b0076aa6baf03491e8df9f143cb",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "听诊器盘右、双耳端右上、胸件左下，管线连续；血压计在袖带上，屏幕右；盒左双扣左右。组件完整。"
+    },
+    {
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "south",
+      "sha256": "6259e54d2935e598919837481affdf6d1f0785d23f8dae6a13f5d0b35c12d250",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "听诊器盘下、双耳端右下、胸件左上，管线连续；血压计右屏幕下、袖带左；盒上双扣上下。组件完整。"
+    },
+    {
+      "defName": "PC_PEA_ExamCenter",
+      "direction": "west",
+      "sha256": "8c474070e383f373a0f5eca6304c89ddb622c7c2081526093abe69ba2a910df0",
+      "result": "PASS",
+      "reviewType": "assistant visual review of final image",
+      "notes": "听诊器盘左、双耳端左下、胸件右上，管线连续；血压计在袖带下屏幕左；盒右双扣左右。组件完整。"
+    }
+  ],
+  "gameVerified": false
+}

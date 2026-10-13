@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using PersonalChronicle.Domain;
+using PersonalChronicle.Domain.Profession;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -34,6 +35,10 @@ namespace PersonalChronicle.Data
         {
             RaidLordToBattle.Clear();
         }
+
+        // ⚠ 2026-09-20（CHG-LCE-001）：原 `ResetMarketEventLog()`（清 MVS 市场事件 ring，
+        //   FinalizeInit 调用）已随 MVS 市场体系整体删除 —— `MarketEventLog` 类不复存在，
+        //   方法与其调用点一并移除（该类曾是"已实现未接线"修复的先例，历史见 git）。
         public List<ArchiveObject> Objects = new List<ArchiveObject>();
         public List<ChronicleEvent> Events = new List<ChronicleEvent>();
         public long NextEventId;
@@ -72,6 +77,13 @@ namespace PersonalChronicle.Data
         /// value = custom type name (e.g. Workshop -> Forge type). Game logic follows the original Role (bed ownership, research speed unaffected); only the UI label is replaced. Per pawn + per role.
         /// </summary>
         public Dictionary<string, string> RoomTypeOverrides = new Dictionary<string, string>();
+
+        /// <summary>
+        /// 殖民地全局分方向科研速度加成（P9 论文·引用研究）：key = 一级专业键（如 "Manufacturing"），
+        /// value = 科研速度加成百分点（叠加）。论文引用研究文献时按论文所属方向累加，全殖民地该方向受益。
+        /// 持久化以保证跨存档一致；旧档 null-safe。
+        /// </summary>
+        public Dictionary<string, float> ResearchSpeedBonusByMajor = new Dictionary<string, float>();
 
         /// <summary>
         /// v4.0: persisted home overview view preference (Kpi dashboard vs Chronicle
@@ -143,37 +155,6 @@ namespace PersonalChronicle.Data
         private const long ReconcileIntervalTicks = 600L;
 
         /// <summary>
-        /// 默认加入时刻的单一权威入口（v5.x 简化）。
-        ///
-        /// 根因：AddObject 对已存在 StableId 直接拒绝（不更新 JoinTick），谁先建档
-        /// 谁决定 JoinTick，而建档入口有多个（Backfill / reconcile / 社交补录 /
-        /// 捕获补录 / 死亡兜底）。统一在此裁决，避免各入口各自为政导致"新档开局
-        /// 殖民者被 -1 定格"。
-        ///
-        /// 判定只用"加入/发现当天"粒度，不做任何时间窗口推断：
-        ///   - 读档会话（cameFromLoad）→ 存档缺失、后来发现的存活人口，归到
-        ///     发现/加入当天的起点（不再用 -1 显示"中途加入"）。
-        ///   - 新档会话 → 开局殖民者，加入日即第 1 天（tick 0）。
-        /// 显式加入（OnColonistJoined）仍走真实 TicksGame，不经过这里。
-        /// </summary>
-        internal long ResolveDefaultJoinTick()
-        {
-            if (cameFromLoad)
-            {
-                int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-                if (now > 0)
-                {
-                    // 当天起点用游戏日数系统：DayTick = 当天内已过 tick，减去即当天
-                    // 零点。避免手工 TicksPerDay 取模。
-                    long dayStart = now - (long)RimWorld.GenDate.DayTick(now, 0f);
-                    return dayStart;
-                }
-                return 0L;
-            }
-            return 0L;
-        }
-
-        /// <summary>
         /// v3.1 career work-time sampling interval (~2s at 60 tps). Independent of
         /// reconcile — low-frequency, no Harmony on Job hot paths.
         /// </summary>
@@ -205,6 +186,9 @@ namespace PersonalChronicle.Data
         {
             base.ExposeData();
             Scribe_Values.Look(ref SchemaVersion, "schemaVersion", 0L);
+            // 编排布局（PM 裁决「存入」）：加性可选字段，旧档读回空列表，无需 SchemaVersion 迁移
+            ExposeLayout();
+            ExposeDeviceLayout();
             if (Scribe.mode == LoadSaveMode.Saving)
             {
                 legacyPawns = BuildLegacyPawnMirror();
@@ -223,7 +207,25 @@ namespace PersonalChronicle.Data
             Scribe_Collections.Look(ref RoomNameOverrides, "roomNameOverrides", LookMode.Value, LookMode.Value);
             // v1.1.4 房间级类型名替换（key=pawnStableId:RoomRoleDefName）。
             Scribe_Collections.Look(ref RoomTypeOverrides, "roomTypeOverrides", LookMode.Value, LookMode.Value);
-            if (legacyPawns == null)
+            // P9 殖民地全局分方向科研速度加成（key=一级专业键）。
+            Scribe_Collections.Look(ref ResearchSpeedBonusByMajor, "researchSpeedBonusByMajor", LookMode.Value, LookMode.Value);
+            // REQ-MVS-013 物品级产消账本（加性可选字段：旧档读回 null ⇒ 空账本 ⇒ 面板画 —，无需迁移）。
+            ExposeItemFlow();
+            // SDD-LCE-003 库存数量蜡烛序列（加性可选字段：旧档读回 null ⇒ 空集合 ⇒ 面板画空态，无需迁移）。
+            ExposeStockSeries();
+            // CHG-20261003-WORKSTATION 车间专属工位降档台账（加性可选字段：旧档读回 null ⇒ 空台账，无需迁移）。
+            ExposeWorkDemotion();
+            // 接管台账（CHG-20261003-TAKEOVER · EXC-2026-016）：与降档台账**分账**——
+            // 降档写 4（还原闸门"当前仍为 4"），接管写 0（闸门"当前仍为 0"），混用会导致解除后还不回来。
+            ExposeWorkTakeover();
+            // CHG-20261004-WORKTAB-HIDE 工作优先级面板隐藏名单（加性可选字段：旧档读回 null ⇒ 空集合 ⇒ 面板不隐藏任何人，无需迁移）。
+            ExposeWorkTabHide();
+            // CHG-20261005-AUTOASSIGN 自动分配台账（加性可选字段：旧档读回 null ⇒ 空台账 ⇒ 无行为变化）。
+            ExposeAutoAssign();
+            // CHG-20261004-MEALSCHEDULE-B 吃饭格位归属台账（加性可选字段：旧档读回 null ⇒ 空台账）。
+            // 必须落盘：读档后若无法区分「这档是 PC 写的」与「玩家自己排的」，
+            // 就会出现「非餐段仍去吃饭」或「玩家排班被静默回滚」两种错误。
+            ExposeMealPriority();            if (legacyPawns == null)
             {
                 legacyPawns = new List<PawnRecord>();
             }
@@ -255,6 +257,10 @@ namespace PersonalChronicle.Data
             {
                 RoomTypeOverrides = new Dictionary<string, string>();
             }
+            if (ResearchSpeedBonusByMajor == null)
+            {
+                ResearchSpeedBonusByMajor = new Dictionary<string, float>();
+            }
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 DataRevision = 0L;
@@ -267,15 +273,23 @@ namespace PersonalChronicle.Data
         {
             base.FinalizeInit();
 
+            // [DEV] 独立自检单元：三重闸门（DevMode + 设置开关 + 每会话一次）内部自判，
+            // 任一不满足即静默返回；自检异常也不影响游戏。见 Archive/DevSelfTest.cs。
+            Archive.DevSelfTest.TryRunOnStartup();
+
             // Static capture-side accumulators survive a save/load cycle because they live
             // on the assembly, not on the Game. Clear them here (FinalizeInit runs for both
             // "new game" and "load game") so a previous session's pawns can never leak into
             // this one's assist attribution.
             Capture.Patch_PawnTakeDamage.Reset();
+            // CHG-20261004-WORKTAB-HIDE：会话级「临时显示全部已隐藏者」开关跨档复位（同上模式）。
+            Capture.Patch_MainTabWindowWorkPawns.Reset();
             // v4.11 P0: clear the Lord→battle link map so a prior session's (loadID-scoped)
             // links cannot pollute the freshly loaded save. Ongoing battles are re-linked
             // below (after the raid Lords are re-instantiated from the save).
             ResetRaidLordLinks();
+            // ⚠ 2026-09-20（CHG-LCE-001）：原 MVS 市场事件 ring 清理调用点（ResetMarketEventLog）
+            //   随 MVS 删除一并移除（对象类不复存在；同上行同属"静态容器跨档防污染"一族）。
 
             if (SchemaVersion < 1L)
             {
@@ -353,6 +367,21 @@ namespace PersonalChronicle.Data
                 {
                     ChronicleLog.Save("v1.1.4 勋章 defName 规范化，重写 " + remapped
                         + " 条旧档勋章记录。");
+                }
+            }
+            if (SchemaVersion < 7L)
+            {
+                // v1.1.5 通用 XP 曲线迁移（P0-1 方案甲）：等级曲线从"边际递减 A"
+                // 切换为"升级成本递增 B（curvePower）"。旧档持久化的 level 是按 A 曲线
+                // 由 xp 派生并存盘的整数；切换后若直接沿用，同一 xp 会映射到不同等级，
+                // 造成"升级不靠行为、纯靠曲线切换"的跳变。此处一次性按当前 xp + 新曲线
+                // 重算 level/mastery（幂等：重算后与持久化一致，再跑不再变化）。
+                int rel = MigrateLegacySkillLevels();
+                SchemaVersion = 7L;
+                if (rel > 0)
+                {
+                    ChronicleLog.Save("v1.1.5 职业 XP 曲线迁移，重映射 " + rel
+                        + " 条技能等级记录。");
                 }
             }
             // v4.11 P0: RemainingRaidCount is [Unsaved]; rebuild it from the persisted
@@ -624,6 +653,57 @@ namespace PersonalChronicle.Data
                         pawnObject.GrantedMedals[j] = newName;
                         remapped++;
                     }
+                }
+            }
+            return remapped;
+        }
+
+        /// <summary>
+        /// v1.1.5 职业 XP 曲线迁移（P0-1 方案甲）：等级曲线从"边际递减 A"切换为
+        /// "升级成本递增 B（curvePower）"。旧档持久化的 level 按 A 曲线由 xp 派生并存盘，
+        /// 切换后同一 xp 会映射到不同等级，造成跳变。此处一次性按当前 xp + 新曲线
+        /// 重算 level/mastery。幂等：重算后 level 与持久化一致，重复运行不再变化；
+        /// 只增不减（避免因 Def 变更导致的误降级）。
+        /// </summary>
+        private int MigrateLegacySkillLevels()
+        {
+            int remapped = 0;
+            if (Objects == null)
+            {
+                return remapped;
+            }
+            // 曲线幂指数统一走全局口径（铁律 6.5：禁止在调用点硬编码 Def 名）。
+            // 迁移逻辑必须与运行时取同一口径，否则旧档重算结果与新行为不一致。
+            float curvePower = ProfessionalXpPolicyDef.DefaultCurvePower;
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                PawnObject pawnObject = Objects[i] as PawnObject;
+                if (pawnObject == null || pawnObject.CareerData == null
+                    || pawnObject.CareerData.Professional == null
+                    || pawnObject.CareerData.Professional.skills == null)
+                {
+                    continue;
+                }
+                for (int j = 0; j < pawnObject.CareerData.Professional.skills.Count; j++)
+                {
+                    ProfessionalSkillData sd = pawnObject.CareerData.Professional.skills[j];
+                    if (sd == null || sd.xp <= 0f)
+                    {
+                        continue;
+                    }
+                    ProfessionalSkillDef skillDef = DefDatabase<ProfessionalSkillDef>.GetNamedSilentFail(sd.skillDefName);
+                    if (skillDef == null)
+                    {
+                        continue;
+                    }
+                    int newLevel = ProfessionalXpEvaluator.LevelFromXp(
+                        sd.xp, skillDef.maxLevel, skillDef.xpCap, curvePower);
+                    if (newLevel > sd.level)
+                    {
+                        sd.level = newLevel;
+                    }
+                    sd.mastery = ProfessionalXpEvaluator.MasteryFromLevel(sd.level, skillDef.maxLevel);
+                    remapped++;
                 }
             }
             return remapped;

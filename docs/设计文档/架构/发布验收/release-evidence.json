@@ -1,0 +1,87 @@
+{
+  "generatedAtUtc": "2026-10-10 00:47:53",
+  "source": {
+    "gitHead": "21fd0a9fdc89a0c9a3fb80fae9d27a6cc908c0b6",
+    "originMain": "dbcf8f84954a6750108e9ffbae658b68a11e798b",
+    "dirtyCount": 2287,
+    "workingTreeFingerprint": "7F7A3C9A9DC8C271786A0CE85C4BFBA5BDBDDF1F0BF93E8D575ACEA21DFDC91F"
+  },
+  "build": {
+    "buildStampUtc": "2026-10-09 18:00",
+    "assembly": "Assemblies/PersonalChronicle.dll",
+    "assemblySha256": "A6FBC9DC7738EFB786944C5E841BE8E353517A19D204944FF18388A82427F405",
+    "assemblyWriteTimeUtc": "2026-10-10 00:47:53"
+  },
+  "tests": [
+    {
+      "path": "Tests/TestResults/Gap2-final.trx",
+      "sha256": "75FFA25CC2633B23CC0BBE7B9169BD4BFFCC9AE65145BAD14F62275104ED8F71",
+      "passed": 1216,
+      "failed": 0,
+      "skipped": 0,
+      "runTime": "2026-10-10T01:43:25.4472575+08:00"
+    }
+  ],
+  "annotations": [
+    {
+      "changeId": "CHG-20261010-ECON-R01-R04",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-R01-R04.md",
+      "sha256": "DD8C96B6DE2C5078E9C0FBD22D6B2BD4F3585070FB34D4713ED67E51C6EE530F"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-R05-R08",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-R05-R08.md",
+      "sha256": "CAD752F36AADDB0A8574F70139FD3300C0648041D6A80073AFD23662A4A6DDFA"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-R05-CORE",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-R05-CORE.md",
+      "sha256": "18FF4FC1E3DC67A08EBA07E4345C5D654E807064D50EE86F04093DE5EC9DEF9A"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-R08R09",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-R08R09.md",
+      "sha256": "D71D295706A10477402BDDC7BFA5752E7D7E7FF39772821058955A295C361F25"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-R09-PRICE",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-R09-PRICE.md",
+      "sha256": "3ED5D546AEF0AC7B414B6BBE4F192E7174B33FFE3BFA61AAB4C08AFC340D7B95"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-M10-FULL",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-M10-FULL.md",
+      "sha256": "AC3131B6B268360CD32A0E859E49E9F951239C5578CBC8E71EBBCF564851717E"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-M8-FULL",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-M8-FULL.md",
+      "sha256": "0D89C2161D6C7E9D6F8328BB24DDB26C5FC0639BA1FB9E315BE83DE8C7B47BDC"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-BATCH4-PREP",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-BATCH4-PREP.md",
+      "sha256": "A0B19C89E2F25136329078477DBFA16FB0F9AC52DEDA18D71A521D114A22DFD9"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-BATCH4-DEPLOY",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-BATCH4-DEPLOY.md",
+      "sha256": "A06B47F370DE29AD3629B646823BC1D62ECCC398558EEE6F7D7E9597C79CF673"
+    },
+    {
+      "changeId": "CHG-20261010-ECON-GAP2-CAREUI",
+      "path": "docs\\设计文档\\架构\\变更标注\\变更标注_CHG-20261010-ECON-GAP2-CAREUI.md",
+      "sha256": "BAA2985EF42BEFC951A13268AB563BB66177D73F16B3490D6A68D4B221D429B7"
+    }
+  ],
+  "compile": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "verdict": "READY_WITH_WARNINGS",
+  "blockers": [],
+  "warnings": [
+    "HEAD != origin/main（存在未推送提交；快照基线须注明）",
+    "工作区有 2287 项未提交改动（快照非单一提交；已连同 dirty 指纹绑定）"
+  ]
+}

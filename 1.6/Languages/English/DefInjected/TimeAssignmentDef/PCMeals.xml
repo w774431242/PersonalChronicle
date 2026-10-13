@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!--
+    CHG-20261004-MEALSCHEDULE-B / CHG-20261004-IDLE · PC time assignments.
+    Vanilla Data/Core/Defs/Misc/TimeAssignmentDefs/TimeAssignments.xml only ships
+    Anything / Work / Joy / Sleep (+ Royalty's Meditate); these two are PC additions.
+    (English counterpart of the same file under ChineseSimplified — 中英对等.)
+  -->
+  <PC_Meal.label>meal</PC_Meal.label>
+
+  <!--
+    "Idling": the fallback assignment for redundant workers — when a shift has more
+    members than the workshop has devices, the extra members are written into this
+    assignment (allowJoy = true) so vanilla JobGiver_GetJoy sends them to recreation
+    instead of them standing around doing nothing. The members tab shows "Idling…".
+  -->
+  <PC_Idle.label>idling</PC_Idle.label>
+</LanguageData>

@@ -1,9 +1,10 @@
+using PersonalChronicle.MasterControl.Population;
 // ITab_Pawn_Career partial：勋章子页（勋章墙 + 荣誉贡献结构 + 最近荣誉事件）。
 // ARC-013 文件治理，物理切片零契约改动；见主文件 ITab_Pawn_Career.cs 类文档。
 using System;
 using System.Collections.Generic;
 using PersonalChronicle.Application;
-using PersonalChronicle.Archive.ReadModels;
+using PersonalChronicle.Application.ReadModels;
 using PersonalChronicle.Archive.UI;
 using PersonalChronicle.Data;
 using PersonalChronicle.Domain;
@@ -42,7 +43,7 @@ namespace PersonalChronicle.Archive
         // ================= 子页：勋章 =================
         private void DrawHonorTab(Rect rect, Pawn pawn, DetailSnapshot snap)
         {
-            // 原生 BeginScrollView 用法（对齐 ArchiveMainTabWindow）：不自定义背景，
+            // 原生 BeginScrollView 用法（对齐 PersonnelArchivePanel）：不自定义背景，
             // 让 rimworld 窗口默认背景生效——避免自定义 TintedBox 干扰造成的白屏。
             Rect view = new Rect(rect.x, rect.y, rect.width, rect.height);
             float innerW = view.width - 16f;
@@ -57,6 +58,23 @@ namespace PersonalChronicle.Archive
                 UIComponents.SectionTitle(new Rect(view.x, y, innerW, 0f), y,
                     "PersonalChronicle.UI.Career.Honor.Title".Translate().ToString());
                 y += UITheme.SectionTitleHeight;
+
+                Rect selectRect = new Rect(view.x, y, innerW, 28f);
+                string currentHonor = Dialog_SetDisplayHonor.CurrentLabel(pawn);
+                string selectText = "PersonalChronicle.UI.Career.Honor.SelectDisplay".Translate()
+                    + " · " + currentHonor;
+                if (Widgets.ButtonText(selectRect, selectText))
+                {
+                    if (pawn != null)
+                    {
+                        IArchiveService honorService = PersonalChronicleMod.ArchiveService;
+                        Find.WindowStack.Add(new Dialog_SetDisplayHonor(pawn,
+                            () => EnsureSnapshot(honorService, pawn)));
+                    }
+                }
+                TooltipHandler.TipRegion(selectRect,
+                    "PersonalChronicle.UI.Career.Honor.SelectDisplay.Tip".Translate().ToString());
+                y += 32f;
 
                 // v4.17 体检：先按行数建墙再画图标——旧实现先画单行背景、循环内才
                 // 动态增高，第 2+ 行勋章画在面板背景外（悬空于滚动背景上）。
@@ -106,12 +124,10 @@ namespace PersonalChronicle.Archive
                     TooltipHandler.TipRegion(addRect, "PersonalChronicle.UI.Career.Honor.AddTip".Translate().ToString());
                     if (Widgets.ButtonInvisible(addRect))
                     {
-                        ChronicleGameComponent component = Current.Game != null
-                            ? Current.Game.GetComponent<ChronicleGameComponent>() : null;
-                        if (component != null && pawn != null)
+                        if (pawn != null)
                         {
                             IArchiveService service = PersonalChronicleMod.ArchiveService;
-                            Find.WindowStack.Add(new Dialog_ManualMedalAward(pawn, component,
+                            Find.WindowStack.Add(new Dialog_ManualMedalAward(pawn,
                                 () => EnsureSnapshot(service, pawn)));
                         }
                     }
@@ -191,7 +207,7 @@ namespace PersonalChronicle.Archive
                 }
                 else
                 {
-                    // 名称查表：MedalView 已派生 UI.Medal.<defName>.Label 的翻译文案，
+                    // 名称查表：MedalView 已派生 PersonalChronicle.UI.Medal.<defName>.Label 的翻译文案，
                     // CareerEvent 只携带 defName，借查表避免回到 MedalDef.LabelCap 的 raw defName。
                     // v4.17 体检：标签映射经 EnsureHonorCache 缓存，不再每帧重建 Dictionary。
                     Dictionary<string, string> labelMap = cachedMedalLabelMap;
@@ -367,7 +383,7 @@ namespace PersonalChronicle.Archive
             int perRow = Mathf.Max(1, (int)((innerW - 8f) / (MedIconW + 8f)));
             int rows = grantedCount == 0 ? 1 : Mathf.CeilToInt(grantedCount / (float)perRow);
             float wallH = MedIconH + 12f + (rows - 1) * (MedIconH + 8f);
-            float h = 30f + wallH + 8f;                  // 勋章墙
+            float h = 30f + 32f + wallH + 8f;            // 选择显示称号 + 勋章墙
             h += 30f + 5f * 30f + 8f;                    // 贡献结构（分段条）
             // 最近荣誉事件：最多 8 行，空则 1 行。
             int honorCount = 0;

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_Exam_Thesis.label>论文书卷</PC_Exam_Thesis.label>
+  <PC_Exam_Thesis.description>一份装订成册的论文，记录持有人在资格考试中的研究成果。</PC_Exam_Thesis.description>
+  <PC_Exam_Diploma.label>职称文凭</PC_Exam_Diploma.label>
+  <PC_Exam_Diploma.description>证明持有人通过资格审查与答辩的正式文凭，可收藏展示。</PC_Exam_Diploma.description>
+  <PC_Exam_Practical.label>实践证书</PC_Exam_Practical.label>
+  <PC_Exam_Practical.description>证明持有人通过实践考核的合格铭牌，由系统发放或手工压制，可批量制造收藏。</PC_Exam_Practical.description>
+  <PC_Exam_PracticeKit.label>实践工件样件</PC_Exam_PracticeKit.label>
+  <PC_Exam_PracticeKit.description>实践考试专属标准工件样件，由木材、钢材与布料压制，供考官核验制造水平。</PC_Exam_PracticeKit.description>
+  <PC_Exam_Textbook.label>职称考试教科书</PC_Exam_Textbook.label>
+  <PC_Exam_Textbook.description>理论考试用书，系统阐述专业方向主题，供考生研读（匹配考试所需书籍主题）。</PC_Exam_Textbook.description>
+  <PC_Exam_ResearchDoc.label>技术研究文献</PC_Exam_ResearchDoc.label>
+  <PC_Exam_ResearchDoc.description>记录已完成研究课题的技术文献，对应理论考试的科研项数要求。</PC_Exam_ResearchDoc.description>
+  <PC_Exam_SkillBook.label>技能方向专著</PC_Exam_SkillBook.label>
+  <PC_Exam_SkillBook.description>聚焦单一原版技能成长路径的专著，对应理论考试的技能评分依据。</PC_Exam_SkillBook.description>
+  <PC_Exam_TheoryBook.label>理论方向论著</PC_Exam_TheoryBook.label>
+  <PC_Exam_TheoryBook.description>阐述专业理论体系的论著，对应理论考试的理论方向书籍要求。</PC_Exam_TheoryBook.description>
+  <PC_Exam_PracticeKit_Engineering.label>工程实践样件</PC_Exam_PracticeKit_Engineering.label>
+  <PC_Exam_PracticeKit_Engineering.description>工程类资格考试的实践工件样件：结构件与机械装配样本，由钢材、木材与布料在手工加工点制备，供考官核验工程制造水平。</PC_Exam_PracticeKit_Engineering.description>
+  <PC_Exam_PracticeKit_Manufacturing.label>制造实践样件</PC_Exam_PracticeKit_Manufacturing.label>
+  <PC_Exam_PracticeKit_Manufacturing.description>制造类资格考试的实践工件样件：精密加工工件样本，由钢材与布料在手工加工点制备，供考官核验制造工艺水平。</PC_Exam_PracticeKit_Manufacturing.description>
+  <PC_Exam_PracticeKit_Agriculture.label>农业实践样件</PC_Exam_PracticeKit_Agriculture.label>
+  <PC_Exam_PracticeKit_Agriculture.description>农业类资格考试的实践工件样件：农具与种植器械样本，由木材、钢材与布料在手工加工点制备，供考官核验农事作业水平。</PC_Exam_PracticeKit_Agriculture.description>
+  <PC_Exam_PracticeKit_Forestry.label>林业实践样件</PC_Exam_PracticeKit_Forestry.label>
+  <PC_Exam_PracticeKit_Forestry.description>林业类资格考试的实践工件样件：伐木与林木作业器械样本，由木材与钢材在手工加工点制备，供考官核验林业作业水平。</PC_Exam_PracticeKit_Forestry.description>
+  <PC_Exam_PracticeKit_AnimalHusbandry.label>畜牧实践样件</PC_Exam_PracticeKit_AnimalHusbandry.label>
+  <PC_Exam_PracticeKit_AnimalHusbandry.description>畜牧类资格考试的实践工件样件：饲养与兽医器械样本，由皮革、木材与钢材在手工加工点制备，供考官核验畜牧作业水平。</PC_Exam_PracticeKit_AnimalHusbandry.description>
+  <PC_Exam_PracticeKit_Medicine.label>医学实践样件</PC_Exam_PracticeKit_Medicine.label>
+  <PC_Exam_PracticeKit_Medicine.description>医学类资格考试的实践工件样件：医疗器械与药品样本，由钢材、布料与金在手工加工点制备，供考官核验医疗作业水平。</PC_Exam_PracticeKit_Medicine.description>
+  <PC_Exam_PracticeKit_Weapons.label>武器实践样件</PC_Exam_PracticeKit_Weapons.label>
+  <PC_Exam_PracticeKit_Weapons.description>武器类资格考试的实践工件样件：武器部件与装配样本，由钢材与木材在手工加工点制备，供考官核验武器制造水平。</PC_Exam_PracticeKit_Weapons.description>
+  <PC_Exam_PracticeKit_Mining.label>矿业实践样件</PC_Exam_PracticeKit_Mining.label>
+  <PC_Exam_PracticeKit_Mining.description>矿业类资格考试的实践工件样件：矿料与采掘器械样本，由钢材与木材在手工加工点制备，供考官核验采矿作业水平。</PC_Exam_PracticeKit_Mining.description>
+  <PC_Exam_PracticeKit_Research.label>科研实践样件</PC_Exam_PracticeKit_Research.label>
+  <PC_Exam_PracticeKit_Research.description>科研类资格考试的实践工件样件：实验装置与仪器样本，由金、钢材与木材在手工加工点制备，供考官核验科研实验水平。</PC_Exam_PracticeKit_Research.description>
+  <PC_Exam_PracticeKit_Cooking.label>烹饪实践样件</PC_Exam_PracticeKit_Cooking.label>
+  <PC_Exam_PracticeKit_Cooking.description>烹饪类资格考试的实践工件样件：炊具与餐食样本，由钢材、木材与布料在手工加工点制备，供考官核验烹饪作业水平。</PC_Exam_PracticeKit_Cooking.description>
+  <PC_Exam_PracticeKit_Art.label>艺术实践样件</PC_Exam_PracticeKit_Art.label>
+  <PC_Exam_PracticeKit_Art.description>艺术类资格考试的实践工件样件：工艺品与雕塑样本，由金、木材与布料在手工加工点制备，供考官核验艺术创作水平。</PC_Exam_PracticeKit_Art.description>
+  <PC_Exam_PracticeKit_Management.label>管理实践样件</PC_Exam_PracticeKit_Management.label>
+  <PC_Exam_PracticeKit_Management.description>管理类资格考试的实践工件样件：调度文书与规划样本，由布料、木材与金在手工加工点制备，供考官核验管理统筹水平。</PC_Exam_PracticeKit_Management.description>
+  <PC_Exam_Textbook_Engineering.label>工程考试教科书</PC_Exam_Textbook_Engineering.label>
+  <PC_Exam_Textbook_Engineering.description>工程类资格考试的理论考试用书：系统阐述工程专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Engineering.description>
+  <PC_Exam_ResearchDoc_Engineering.label>工程技术研究文献</PC_Exam_ResearchDoc_Engineering.label>
+  <PC_Exam_ResearchDoc_Engineering.description>工程类资格考试的科研证据：记录工程领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Engineering.description>
+  <PC_Exam_SkillBook_Engineering.label>工程技能方向专著</PC_Exam_SkillBook_Engineering.label>
+  <PC_Exam_SkillBook_Engineering.description>工程类资格考试的技能凭证：聚焦工程相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Engineering.description>
+  <PC_Exam_TheoryBook_Engineering.label>工程理论方向论著</PC_Exam_TheoryBook_Engineering.label>
+  <PC_Exam_TheoryBook_Engineering.description>工程类资格考试的理论方向论著：阐述工程专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Engineering.description>
+  <PC_Exam_Textbook_Manufacturing.label>制造考试教科书</PC_Exam_Textbook_Manufacturing.label>
+  <PC_Exam_Textbook_Manufacturing.description>制造类资格考试的理论考试用书：系统阐述制造专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Manufacturing.description>
+  <PC_Exam_ResearchDoc_Manufacturing.label>制造技术研究文献</PC_Exam_ResearchDoc_Manufacturing.label>
+  <PC_Exam_ResearchDoc_Manufacturing.description>制造类资格考试的科研证据：记录制造领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Manufacturing.description>
+  <PC_Exam_SkillBook_Manufacturing.label>制造技能方向专著</PC_Exam_SkillBook_Manufacturing.label>
+  <PC_Exam_SkillBook_Manufacturing.description>制造类资格考试的技能凭证：聚焦制造相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Manufacturing.description>
+  <PC_Exam_TheoryBook_Manufacturing.label>制造理论方向论著</PC_Exam_TheoryBook_Manufacturing.label>
+  <PC_Exam_TheoryBook_Manufacturing.description>制造类资格考试的理论方向论著：阐述制造专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Manufacturing.description>
+  <PC_Exam_Textbook_Agriculture.label>农业考试教科书</PC_Exam_Textbook_Agriculture.label>
+  <PC_Exam_Textbook_Agriculture.description>农业类资格考试的理论考试用书：系统阐述农业专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Agriculture.description>
+  <PC_Exam_ResearchDoc_Agriculture.label>农业技术研究文献</PC_Exam_ResearchDoc_Agriculture.label>
+  <PC_Exam_ResearchDoc_Agriculture.description>农业类资格考试的科研证据：记录农业领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Agriculture.description>
+  <PC_Exam_SkillBook_Agriculture.label>农业技能方向专著</PC_Exam_SkillBook_Agriculture.label>
+  <PC_Exam_SkillBook_Agriculture.description>农业类资格考试的技能凭证：聚焦农业相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Agriculture.description>
+  <PC_Exam_TheoryBook_Agriculture.label>农业理论方向论著</PC_Exam_TheoryBook_Agriculture.label>
+  <PC_Exam_TheoryBook_Agriculture.description>农业类资格考试的理论方向论著：阐述农业专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Agriculture.description>
+  <PC_Exam_Textbook_Forestry.label>林业考试教科书</PC_Exam_Textbook_Forestry.label>
+  <PC_Exam_Textbook_Forestry.description>林业类资格考试的理论考试用书：系统阐述林业专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Forestry.description>
+  <PC_Exam_ResearchDoc_Forestry.label>林业技术研究文献</PC_Exam_ResearchDoc_Forestry.label>
+  <PC_Exam_ResearchDoc_Forestry.description>林业类资格考试的科研证据：记录林业领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Forestry.description>
+  <PC_Exam_SkillBook_Forestry.label>林业技能方向专著</PC_Exam_SkillBook_Forestry.label>
+  <PC_Exam_SkillBook_Forestry.description>林业类资格考试的技能凭证：聚焦林业相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Forestry.description>
+  <PC_Exam_TheoryBook_Forestry.label>林业理论方向论著</PC_Exam_TheoryBook_Forestry.label>
+  <PC_Exam_TheoryBook_Forestry.description>林业类资格考试的理论方向论著：阐述林业专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Forestry.description>
+  <PC_Exam_Textbook_AnimalHusbandry.label>畜牧考试教科书</PC_Exam_Textbook_AnimalHusbandry.label>
+  <PC_Exam_Textbook_AnimalHusbandry.description>畜牧类资格考试的理论考试用书：系统阐述畜牧专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_AnimalHusbandry.description>
+  <PC_Exam_ResearchDoc_AnimalHusbandry.label>畜牧技术研究文献</PC_Exam_ResearchDoc_AnimalHusbandry.label>
+  <PC_Exam_ResearchDoc_AnimalHusbandry.description>畜牧类资格考试的科研证据：记录畜牧领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_AnimalHusbandry.description>
+  <PC_Exam_SkillBook_AnimalHusbandry.label>畜牧技能方向专著</PC_Exam_SkillBook_AnimalHusbandry.label>
+  <PC_Exam_SkillBook_AnimalHusbandry.description>畜牧类资格考试的技能凭证：聚焦畜牧相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_AnimalHusbandry.description>
+  <PC_Exam_TheoryBook_AnimalHusbandry.label>畜牧理论方向论著</PC_Exam_TheoryBook_AnimalHusbandry.label>
+  <PC_Exam_TheoryBook_AnimalHusbandry.description>畜牧类资格考试的理论方向论著：阐述畜牧专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_AnimalHusbandry.description>
+  <PC_Exam_Textbook_Medicine.label>医学考试教科书</PC_Exam_Textbook_Medicine.label>
+  <PC_Exam_Textbook_Medicine.description>医学类资格考试的理论考试用书：系统阐述医学专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Medicine.description>
+  <PC_Exam_ResearchDoc_Medicine.label>医学技术研究文献</PC_Exam_ResearchDoc_Medicine.label>
+  <PC_Exam_ResearchDoc_Medicine.description>医学类资格考试的科研证据：记录医学领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Medicine.description>
+  <PC_Exam_SkillBook_Medicine.label>医学技能方向专著</PC_Exam_SkillBook_Medicine.label>
+  <PC_Exam_SkillBook_Medicine.description>医学类资格考试的技能凭证：聚焦医学相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Medicine.description>
+  <PC_Exam_TheoryBook_Medicine.label>医学理论方向论著</PC_Exam_TheoryBook_Medicine.label>
+  <PC_Exam_TheoryBook_Medicine.description>医学类资格考试的理论方向论著：阐述医学专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Medicine.description>
+  <PC_Exam_Textbook_Weapons.label>武器考试教科书</PC_Exam_Textbook_Weapons.label>
+  <PC_Exam_Textbook_Weapons.description>武器类资格考试的理论考试用书：系统阐述武器专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Weapons.description>
+  <PC_Exam_ResearchDoc_Weapons.label>武器技术研究文献</PC_Exam_ResearchDoc_Weapons.label>
+  <PC_Exam_ResearchDoc_Weapons.description>武器类资格考试的科研证据：记录武器领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Weapons.description>
+  <PC_Exam_SkillBook_Weapons.label>武器技能方向专著</PC_Exam_SkillBook_Weapons.label>
+  <PC_Exam_SkillBook_Weapons.description>武器类资格考试的技能凭证：聚焦武器相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Weapons.description>
+  <PC_Exam_TheoryBook_Weapons.label>武器理论方向论著</PC_Exam_TheoryBook_Weapons.label>
+  <PC_Exam_TheoryBook_Weapons.description>武器类资格考试的理论方向论著：阐述武器专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Weapons.description>
+  <PC_Exam_Textbook_Mining.label>矿业考试教科书</PC_Exam_Textbook_Mining.label>
+  <PC_Exam_Textbook_Mining.description>矿业类资格考试的理论考试用书：系统阐述矿业专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Mining.description>
+  <PC_Exam_ResearchDoc_Mining.label>矿业技术研究文献</PC_Exam_ResearchDoc_Mining.label>
+  <PC_Exam_ResearchDoc_Mining.description>矿业类资格考试的科研证据：记录矿业领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Mining.description>
+  <PC_Exam_SkillBook_Mining.label>矿业技能方向专著</PC_Exam_SkillBook_Mining.label>
+  <PC_Exam_SkillBook_Mining.description>矿业类资格考试的技能凭证：聚焦矿业相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Mining.description>
+  <PC_Exam_TheoryBook_Mining.label>矿业理论方向论著</PC_Exam_TheoryBook_Mining.label>
+  <PC_Exam_TheoryBook_Mining.description>矿业类资格考试的理论方向论著：阐述矿业专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Mining.description>
+  <PC_Exam_Textbook_Research.label>科研考试教科书</PC_Exam_Textbook_Research.label>
+  <PC_Exam_Textbook_Research.description>科研类资格考试的理论考试用书：系统阐述科研专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Research.description>
+  <PC_Exam_ResearchDoc_Research.label>科研技术研究文献</PC_Exam_ResearchDoc_Research.label>
+  <PC_Exam_ResearchDoc_Research.description>科研类资格考试的科研证据：记录科研领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Research.description>
+  <PC_Exam_SkillBook_Research.label>科研技能方向专著</PC_Exam_SkillBook_Research.label>
+  <PC_Exam_SkillBook_Research.description>科研类资格考试的技能凭证：聚焦科研相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Research.description>
+  <PC_Exam_TheoryBook_Research.label>科研理论方向论著</PC_Exam_TheoryBook_Research.label>
+  <PC_Exam_TheoryBook_Research.description>科研类资格考试的理论方向论著：阐述科研专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Research.description>
+  <PC_Exam_Textbook_Cooking.label>烹饪考试教科书</PC_Exam_Textbook_Cooking.label>
+  <PC_Exam_Textbook_Cooking.description>烹饪类资格考试的理论考试用书：系统阐述烹饪专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Cooking.description>
+  <PC_Exam_ResearchDoc_Cooking.label>烹饪技术研究文献</PC_Exam_ResearchDoc_Cooking.label>
+  <PC_Exam_ResearchDoc_Cooking.description>烹饪类资格考试的科研证据：记录烹饪领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Cooking.description>
+  <PC_Exam_SkillBook_Cooking.label>烹饪技能方向专著</PC_Exam_SkillBook_Cooking.label>
+  <PC_Exam_SkillBook_Cooking.description>烹饪类资格考试的技能凭证：聚焦烹饪相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Cooking.description>
+  <PC_Exam_TheoryBook_Cooking.label>烹饪理论方向论著</PC_Exam_TheoryBook_Cooking.label>
+  <PC_Exam_TheoryBook_Cooking.description>烹饪类资格考试的理论方向论著：阐述烹饪专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Cooking.description>
+  <PC_Exam_Textbook_Art.label>艺术考试教科书</PC_Exam_Textbook_Art.label>
+  <PC_Exam_Textbook_Art.description>艺术类资格考试的理论考试用书：系统阐述艺术专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Art.description>
+  <PC_Exam_ResearchDoc_Art.label>艺术技术研究文献</PC_Exam_ResearchDoc_Art.label>
+  <PC_Exam_ResearchDoc_Art.description>艺术类资格考试的科研证据：记录艺术领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Art.description>
+  <PC_Exam_SkillBook_Art.label>艺术技能方向专著</PC_Exam_SkillBook_Art.label>
+  <PC_Exam_SkillBook_Art.description>艺术类资格考试的技能凭证：聚焦艺术相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Art.description>
+  <PC_Exam_TheoryBook_Art.label>艺术理论方向论著</PC_Exam_TheoryBook_Art.label>
+  <PC_Exam_TheoryBook_Art.description>艺术类资格考试的理论方向论著：阐述艺术专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Art.description>
+  <PC_Exam_Textbook_Management.label>管理考试教科书</PC_Exam_Textbook_Management.label>
+  <PC_Exam_Textbook_Management.description>管理类资格考试的理论考试用书：系统阐述管理专业方向主题，供考生研读（匹配考试所需书籍主题）。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_Textbook_Management.description>
+  <PC_Exam_ResearchDoc_Management.label>管理技术研究文献</PC_Exam_ResearchDoc_Management.label>
+  <PC_Exam_ResearchDoc_Management.description>管理类资格考试的科研证据：记录管理领域已完成的研究课题，对应理论考试的科研项数要求。由皮革、木材与金在手工加工点装订。</PC_Exam_ResearchDoc_Management.description>
+  <PC_Exam_SkillBook_Management.label>管理技能方向专著</PC_Exam_SkillBook_Management.label>
+  <PC_Exam_SkillBook_Management.description>管理类资格考试的技能凭证：聚焦管理相关原版技能的成长路径，对应理论考试的技能评分依据。由布料与木材在手工加工点装订，每批 2 本。</PC_Exam_SkillBook_Management.description>
+  <PC_Exam_TheoryBook_Management.label>管理理论方向论著</PC_Exam_TheoryBook_Management.label>
+  <PC_Exam_TheoryBook_Management.description>管理类资格考试的理论方向论著：阐述管理专业理论体系，对应理论考试的理论方向书籍要求。由皮革、木材与布料在手工加工点装订。</PC_Exam_TheoryBook_Management.description>
+  <PC_Exam_ThesisProposal.label>论文选题单</PC_Exam_ThesisProposal.label>
+  <PC_Exam_ThesisProposal.description>论文骨架单据，记录选题方向；后续引用书籍/研究/最终论文均围绕此方向展开。</PC_Exam_ThesisProposal.description>
+</LanguageData>

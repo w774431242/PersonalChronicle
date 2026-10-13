@@ -1,0 +1,1793 @@
+{
+  "collectedUtc": "2026-10-08T05:18:46.2560627Z",
+  "gameVersion": "1.6.4871 rev590",
+  "method": "Read-only current game/RUIF DLL metadata, installed Core XML and source fingerprints; no game code executed.",
+  "assembly": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\RimWorldWin64_Data\\Managed\\Assembly-CSharp.dll",
+    "sha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "mvid": "61e41735-6189-4da4-9d21-0260257b5097"
+  },
+  "ruif": {
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\RUIF\\Assemblies\\RUIF.dll",
+    "sha256": "E9C0ED7C4B027F3F6C3F656C0737311DBCD21603FA94138D38C7105842C0ACAC",
+    "assembly": "RUIF, Version=1.3.0.0, Culture=neutral, PublicKeyToken=null",
+    "methods": [
+      {
+        "type": "RUIF.PanelAtoms",
+        "signature": "System.Void RUIF.PanelAtoms::StatRow(UnityEngine.Rect,System.String,System.String,System.Nullable`1<System.Single>,System.Nullable`1<UnityEngine.Color>)"
+      },
+      {
+        "type": "RUIF.DataAtoms",
+        "signature": "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single)"
+      },
+      {
+        "type": "RUIF.DataAtoms",
+        "signature": "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single,RUIF.StatCol[],System.Int32,System.Single,System.Single[],System.String[])"
+      },
+      {
+        "type": "RUIF.FeedbackAtoms",
+        "signature": "System.Boolean RUIF.FeedbackAtoms::AlertBanner(UnityEngine.Rect,RUIF.AlertPriority,System.String,System.String)"
+      },
+      {
+        "type": "RUIF.FeedbackAtoms",
+        "signature": "System.Boolean RUIF.FeedbackAtoms::EmptyState(UnityEngine.Rect,System.String,System.String,System.String)"
+      },
+      {
+        "type": "RUIF.ProgressAtoms",
+        "signature": "System.Void RUIF.ProgressAtoms::CapacityBar(UnityEngine.Rect,System.Single,System.Single,System.Nullable`1<UnityEngine.Color>)"
+      }
+    ]
+  },
+  "types": [
+    {
+      "type": "RimWorld.Pawn_TimetableTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Collections.Generic.List`1<RimWorld.TimeAssignmentDef> RimWorld.Pawn_TimetableTracker::times"
+      ],
+      "methods": [
+        {
+          "signature": "RimWorld.TimeAssignmentDef RimWorld.Pawn_TimetableTracker::get_CurrentAssignment()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_TimetableTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_TimetableTracker::ExposeData()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.TimeAssignmentDef RimWorld.Pawn_TimetableTracker::GetAssignment(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_TimetableTracker::SetAssignment(System.Int32,RimWorld.TimeAssignmentDef)",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.TimeAssignmentDef",
+      "baseType": "Verse.Def",
+      "publicFields": [
+        "UnityEngine.Color RimWorld.TimeAssignmentDef::color",
+        "System.Boolean RimWorld.TimeAssignmentDef::allowRest",
+        "System.Boolean RimWorld.TimeAssignmentDef::allowJoy",
+        "System.String RimWorld.TimeAssignmentDef::cachedHighlightNotSelectedTag"
+      ],
+      "methods": [
+        {
+          "signature": "UnityEngine.Texture2D RimWorld.TimeAssignmentDef::get_ColorTexture()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TimeAssignmentDef::PostLoad()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.TimeAssignmentDef::.ctor()",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.GenDate",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Int32 RimWorld.GenDate::TicksPerDay",
+        "System.Int32 RimWorld.GenDate::HoursPerDay",
+        "System.Int32 RimWorld.GenDate::DaysPerTwelfth",
+        "System.Int32 RimWorld.GenDate::TwelfthsPerYear",
+        "System.Int32 RimWorld.GenDate::GameStartHourOfDay",
+        "System.Int32 RimWorld.GenDate::TicksPerTwelfth",
+        "System.Int32 RimWorld.GenDate::TicksPerSeason",
+        "System.Int32 RimWorld.GenDate::TicksPerQuadrum",
+        "System.Int32 RimWorld.GenDate::TicksPerYear",
+        "System.Int32 RimWorld.GenDate::DaysPerYear",
+        "System.Int32 RimWorld.GenDate::DaysPerSeason",
+        "System.Int32 RimWorld.GenDate::DaysPerQuadrum",
+        "System.Int32 RimWorld.GenDate::TicksPerHour",
+        "System.Single RimWorld.GenDate::TimeZoneWidth",
+        "System.Int32 RimWorld.GenDate::DefaultStartingYear"
+      ],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.GenDate::get_DaysPassed()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::get_DaysPassedSinceSettle()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::get_DaysPassedFloat()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::get_DaysPassedSinceSettleFloat()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::get_TwelfthsPassed()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::get_TwelfthsPassedFloat()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::get_YearsPassed()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::get_YearsPassedFloat()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::TickAbsToGame(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::TickGameToAbs(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::TickGameToSettled(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::DaysPassedAt(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::TwelfthsPassedAt(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::YearsPassedAt(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int64 RimWorld.GenDate::LocalTicksOffsetFromLongitude(System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::HourOfDay(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::DayOfTwelfth(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::DayOfYear(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Twelfth RimWorld.GenDate::Twelfth(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Season RimWorld.GenDate::Season(System.Int64,UnityEngine.Vector2)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Season RimWorld.GenDate::Season(System.Int64,System.Single,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Quadrum RimWorld.GenDate::Quadrum(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::Year(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::DayOfSeason(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::DayOfQuadrum(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::DayTick(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::DayPercent(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::YearPercent(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::HourInteger(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::HourFloat(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::DateFullStringAt(System.Int64,UnityEngine.Vector2)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::DateMonthYearStringAt(System.Int64,UnityEngine.Vector2)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::DateFullStringWithHourAt(System.Int64,UnityEngine.Vector2)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::DateReadoutStringAt(System.Int64,UnityEngine.Vector2)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::DateShortStringAt(System.Int64,UnityEngine.Vector2)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::SeasonDateStringAt(System.Int64,UnityEngine.Vector2)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::SeasonDateStringAt(RimWorld.Twelfth,UnityEngine.Vector2)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::QuadrumDateStringAt(System.Int64,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::QuadrumDateStringAt(RimWorld.Quadrum)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::QuadrumDateStringAt(RimWorld.Twelfth)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::TicksToDays(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::DaysToTicks(System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::ToStringTicksToDays(System.Int32,System.String)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::ToStringTicksToPeriod(System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::ToStringTicksToPeriodVerbose(System.Int32,System.Boolean,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::ToStringTicksToPeriodVague(System.Int32,System.Boolean,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.GenDate::TicksToPeriod(System.Int32,System.Int32&,System.Int32&,System.Int32&,System.Single&)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.GenDate::TicksToPeriod(System.Int64,System.Int32&,System.Int32&,System.Int32&,System.Single&)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.GenDate::ToStringApproxAge(System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenDate::TimeZoneAt(System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenDate::TimeZoneFloatAt(System.Single)",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.GenLocalDate",
+      "baseType": "System.Object",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfYear(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::HourOfDay(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfTwelfth(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Twelfth RimWorld.GenLocalDate::Twelfth(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Season RimWorld.GenLocalDate::Season(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::Year(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfSeason(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfQuadrum(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayTick(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::DayPercent(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::YearPercent(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::HourInteger(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::HourFloat(Verse.Map)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfYear(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::HourOfDay(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfTwelfth(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Twelfth RimWorld.GenLocalDate::Twelfth(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Season RimWorld.GenLocalDate::Season(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::Year(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfSeason(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfQuadrum(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayTick(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::DayPercent(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::YearPercent(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::HourInteger(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::HourFloat(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfYear(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::HourOfDay(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfTwelfth(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Twelfth RimWorld.GenLocalDate::Twelfth(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Season RimWorld.GenLocalDate::Season(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::Year(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfSeason(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayOfQuadrum(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::DayTick(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::DayPercent(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::YearPercent(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.GenLocalDate::HourInteger(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.GenLocalDate::HourFloat(RimWorld.Planet.PlanetTile)",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_StoryTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Nullable`1<UnityEngine.Color> RimWorld.Pawn_StoryTracker::skinColorOverride",
+        "Verse.HeadTypeDef RimWorld.Pawn_StoryTracker::headType",
+        "RimWorld.BodyTypeDef RimWorld.Pawn_StoryTracker::bodyType",
+        "RimWorld.HairDef RimWorld.Pawn_StoryTracker::hairDef",
+        "RimWorld.TraitSet RimWorld.Pawn_StoryTracker::traits",
+        "System.String RimWorld.Pawn_StoryTracker::title",
+        "System.String RimWorld.Pawn_StoryTracker::birthLastName",
+        "RimWorld.ColorDef RimWorld.Pawn_StoryTracker::favoriteColor",
+        "RimWorld.FurDef RimWorld.Pawn_StoryTracker::furDef"
+      ],
+      "methods": [
+        {
+          "signature": "RimWorld.BackstoryDef RimWorld.Pawn_StoryTracker::get_Childhood()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_StoryTracker::set_Childhood(RimWorld.BackstoryDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.BackstoryDef RimWorld.Pawn_StoryTracker::get_Adulthood()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_StoryTracker::set_Adulthood(RimWorld.BackstoryDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_StoryTracker::get_Title()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_StoryTracker::set_Title(System.String)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_StoryTracker::get_TitleCap()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_StoryTracker::get_TitleDefault()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_StoryTracker::get_TitleDefaultCap()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_StoryTracker::get_TitleShort()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_StoryTracker::get_TitleShortCap()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Color RimWorld.Pawn_StoryTracker::get_SkinColorBase()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_StoryTracker::set_SkinColorBase(UnityEngine.Color)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Color RimWorld.Pawn_StoryTracker::get_SkinColor()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_StoryTracker::get_SkinColorOverriden()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_StoryTracker::get_CaresAboutOthersAppearance()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "UnityEngine.Color RimWorld.Pawn_StoryTracker::get_HairColor()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_StoryTracker::set_HairColor(UnityEngine.Color)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.BackstoryDef> RimWorld.Pawn_StoryTracker::get_AllBackstories()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.WorkTags RimWorld.Pawn_StoryTracker::get_DisabledWorkTagsBackstoryAndTraits()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.WorkTags RimWorld.Pawn_StoryTracker::get_DisabledWorkTagsBackstoryTraitsAndGenes()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_StoryTracker::get_VoicePitchFactor()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_StoryTracker::get_IsDisturbing()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_StoryTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_StoryTracker::ExposeData()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.BackstoryDef RimWorld.Pawn_StoryTracker::GetBackstory(RimWorld.BackstorySlot)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_StoryTracker::TryGetRandomHeadFromSet(System.Collections.Generic.IEnumerable`1<Verse.HeadTypeDef>)",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.TraitSet",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Collections.Generic.List`1<RimWorld.Trait> RimWorld.TraitSet::allTraits"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::get_AnyTraitHasIngestibleOverrides()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.TraitSet::get_HungerRateFactor()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.Trait> RimWorld.TraitSet::get_TraitsSorted()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TraitSet::.ctor(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TraitSet::ExposeData()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::DisableHostilityFrom(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::IsThoughtDisallowed(RimWorld.ThoughtDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::IsThoughtFromIngestionDisallowed(RimWorld.ThoughtDef,Verse.ThingDef,RimWorld.MeatSourceCategory)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TraitSet::GetExtraThoughtsFromIngestion(System.Collections.Generic.List`1<RimWorld.ThoughtDef>,Verse.ThingDef,RimWorld.MeatSourceCategory,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TraitSet::GainTrait(RimWorld.Trait,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TraitSet::RemoveTrait(RimWorld.Trait,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TraitSet::Notify_GeneRemoved(Verse.Gene)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.TraitSet::RecalculateSuppression()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::HasTrait(RimWorld.TraitDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::HasTrait(RimWorld.TraitDef,System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::HasNonSuppressedTrait(RimWorld.Trait)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::TryGetNeedEnablingTrait(RimWorld.NeedDef,RimWorld.Trait&)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::TryGetNeedDisablingTrait(RimWorld.NeedDef,RimWorld.Trait&)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::EnablesNeed(RimWorld.NeedDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.TraitSet::DisablesNeed(RimWorld.NeedDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.IEnumerable`1<Verse.MentalBreakDef> RimWorld.TraitSet::get_TheOnlyAllowedMentalBreaks()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Trait RimWorld.TraitSet::GetTrait(RimWorld.TraitDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Trait RimWorld.TraitSet::GetTrait(RimWorld.TraitDef,System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.TraitSet::DegreeOfTrait(RimWorld.TraitDef)",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Trait",
+      "baseType": "System.Object",
+      "publicFields": [
+        "Verse.Pawn RimWorld.Trait::pawn",
+        "Verse.Gene RimWorld.Trait::sourceGene",
+        "Verse.Gene RimWorld.Trait::suppressedByGene",
+        "RimWorld.TraitDef RimWorld.Trait::def",
+        "System.Boolean RimWorld.Trait::suppressedByTrait"
+      ],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.Trait::get_Degree()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.TraitDegreeData RimWorld.Trait::get_CurrentData()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Trait::get_Label()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Trait::get_LabelCap()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Trait::get_ScenForced()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Trait::get_Suppressed()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Trait::.ctor()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Trait::.ctor(RimWorld.TraitDef,System.Int32,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Trait::ExposeData()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Single RimWorld.Trait::OffsetOfStat(RimWorld.StatDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Trait::MultiplierOfStat(RimWorld.StatDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Trait::TipString(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Trait::ToString()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Trait::Notify_MentalStateEndedOn(Verse.Pawn,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Trait::Notify_MentalStateEndedOn(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<Verse.WorkTypeDef> RimWorld.Trait::GetDisabledWorkTypes()",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_WorkSettings",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Int32 RimWorld.Pawn_WorkSettings::LowestPriority",
+        "System.Int32 RimWorld.Pawn_WorkSettings::DefaultPriority"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Pawn_WorkSettings::get_EverWork()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.WorkGiver> RimWorld.Pawn_WorkSettings::get_WorkGiversInOrderNormal()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.WorkGiver> RimWorld.Pawn_WorkSettings::get_WorkGiversInOrderEmergency()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_WorkSettings::get_LimitInitialActiveWorks()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_WorkSettings::get_Initialized()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::.ctor()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::.ctor(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::ExposeData()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::EnableAndInitializeIfNotAlreadyInitialized()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::EnableAndInitialize()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::SetPriority(Verse.WorkTypeDef,System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.Pawn_WorkSettings::GetPriority(Verse.WorkTypeDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Pawn_WorkSettings::WorkIsActive(Verse.WorkTypeDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::Disable(Verse.WorkTypeDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::DisableAll()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::Notify_UseWorkPrioritiesChanged()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_WorkSettings::Notify_DisabledWorkTypesChanged()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.Pawn_WorkSettings::DebugString()",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Pawn_SkillTracker",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Collections.Generic.List`1<RimWorld.SkillRecord> RimWorld.Pawn_SkillTracker::skills"
+      ],
+      "methods": [
+        {
+          "signature": "System.Int32 RimWorld.Pawn_SkillTracker::get_PassionCount()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_SkillTracker::.ctor(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_SkillTracker::ExposeData()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "RimWorld.SkillRecord RimWorld.Pawn_SkillTracker::GetSkill(RimWorld.SkillDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_SkillTracker::SkillsTickInterval(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_SkillTracker::Learn(RimWorld.SkillDef,System.Single,System.Boolean,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.Pawn_SkillTracker::AverageOfRelevantSkillsFor(Verse.WorkTypeDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.Passion RimWorld.Pawn_SkillTracker::MaxPassionOfRelevantSkillsFor(Verse.WorkTypeDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_SkillTracker::Notify_SkillDisablesChanged()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.Pawn_SkillTracker::DirtyAptitudes()",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.SkillRecord",
+      "baseType": "System.Object",
+      "publicFields": [
+        "RimWorld.SkillDef RimWorld.SkillRecord::def",
+        "System.Int32 RimWorld.SkillRecord::levelInt",
+        "RimWorld.Passion RimWorld.SkillRecord::passion",
+        "System.Single RimWorld.SkillRecord::xpSinceLastLevel",
+        "System.Single RimWorld.SkillRecord::xpSinceMidnight",
+        "System.Int32 RimWorld.SkillRecord::IntervalTicks",
+        "System.Int32 RimWorld.SkillRecord::MinLevel",
+        "System.Int32 RimWorld.SkillRecord::MaxLevel",
+        "System.Int32 RimWorld.SkillRecord::MaxFullRateXpPerDay",
+        "System.Int32 RimWorld.SkillRecord::MasterSkillThreshold",
+        "System.Single RimWorld.SkillRecord::SaturatedLearningFactor",
+        "System.Single RimWorld.SkillRecord::LearnFactorPassionNone",
+        "System.Single RimWorld.SkillRecord::LearnFactorPassionMinor",
+        "System.Single RimWorld.SkillRecord::LearnFactorPassionMajor",
+        "System.Single RimWorld.SkillRecord::MinXPAmount"
+      ],
+      "methods": [
+        {
+          "signature": "Verse.Pawn RimWorld.SkillRecord::get_Pawn()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.SkillRecord::get_Level()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::set_Level(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.SkillRecord::get_XpRequiredForLevelUp()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.SkillRecord::get_XpProgressPercent()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.SkillRecord::get_XpTotalEarned()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.SkillRecord::get_TotallyDisabled()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.SkillRecord::get_PermanentlyDisabled()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.SkillRecord::get_LevelDescriptor()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.SkillRecord::get_LearningSaturatedToday()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.SkillRecord::get_Aptitude()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::.ctor()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::.ctor(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::.ctor(Verse.Pawn,RimWorld.SkillDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::ExposeData()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::Interval()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.SkillRecord::XpRequiredToLevelUpFrom(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::Learn(System.Single,System.Boolean,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.SkillRecord::CompareTo(RimWorld.SkillRecord)",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Int32 RimWorld.SkillRecord::GetLevel(System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.SkillRecord::GetLevelForUI(System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.SkillRecord::GetUnclampedLevel()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.SkillRecord::LearnRateFactor(System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::EnsureMinLevelWithMargin(System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::Notify_SkillDisablesChanged()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.SkillRecord::DirtyAptitudes()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.String RimWorld.SkillRecord::ToString()",
+          "public": true,
+          "virtual": true
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.FoodUtility",
+      "baseType": "System.Object",
+      "publicFields": [
+        "System.Int32 RimWorld.FoodUtility::FoodPoisoningStageInitial",
+        "System.Int32 RimWorld.FoodUtility::FoodPoisoningStageMajor",
+        "System.Int32 RimWorld.FoodUtility::FoodPoisoningStageRecovering",
+        "Verse.Danger RimWorld.FoodUtility::DefaultFoodSearchDanger"
+      ],
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::WillEat(Verse.Pawn,Verse.Thing,Verse.Pawn,System.Boolean,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::WillEat(Verse.Pawn,Verse.ThingDef,Verse.Pawn,System.Boolean,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::FoodIsSuitable(Verse.Pawn,Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::DrugIsSuitable(Verse.Pawn,Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::HasVeneratedAnimalMeatOrCorpseIngredients(Verse.Thing,Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::IsVeneratedAnimalMeatOrCorpseOrHasIngredients(Verse.Thing,Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::InappropriateForTitle(Verse.ThingDef,Verse.Pawn,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::TryFindBestFoodSourceFor(Verse.Pawn,Verse.Pawn,System.Boolean,Verse.Thing&,Verse.ThingDef&,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,RimWorld.FoodPreferability)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.ThingDef RimWorld.FoodUtility::GetFinalIngestibleDef(Verse.Thing,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing RimWorld.FoodUtility::BestFoodInInventory(Verse.Pawn,Verse.Pawn,RimWorld.FoodPreferability,RimWorld.FoodPreferability,System.Single,System.Boolean,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.FoodUtility::GetMaxAmountToPickup(Verse.Thing,Verse.Pawn,System.Int32)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "Verse.Thing RimWorld.FoodUtility::BestFoodSourceOnMap(Verse.Pawn,Verse.Pawn,System.Boolean,Verse.ThingDef&,RimWorld.FoodPreferability,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,RimWorld.FoodPreferability,System.Nullable`1<System.Single>,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.FoodUtility::FoodOptimality(Verse.Pawn,Verse.Thing,Verse.ThingDef,System.Single,System.Boolean)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.FoodUtility::DebugFoodSearchFromMouse_Update()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.FoodUtility::DebugFoodSearchFromMouse_OnGUI()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::IsAcceptablePreyFor(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.FoodUtility::GetPreyScoreFor(Verse.Pawn,Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.FoodUtility::DebugDrawPredatorFoodSource()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.FoodUtility::MoodFromIngesting(Verse.Pawn,Verse.Thing,Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Collections.Generic.List`1<RimWorld.FoodUtility/ThoughtFromIngesting> RimWorld.FoodUtility::ThoughtsFromIngesting(Verse.Pawn,Verse.Thing,Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::IsHumanlikeCorpseOrHumanlikeMeatOrIngredient(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::IsHumanlikeCorpseOrHumanlikeMeat(Verse.Thing,Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::IsInsectCorpseOrInsectMeatIngredient(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::IsVeneratedAnimalMeatOrCorpse(Verse.ThingDef,Verse.Pawn,Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.MeatSourceCategory RimWorld.FoodUtility::GetMeatSourceCategory(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.MeatSourceCategory RimWorld.FoodUtility::GetMeatSourceCategoryFromCorpse(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::HasVegetarianRequiredPrecept(RimWorld.Ideo)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::HasMeatEatingRequiredPrecept(RimWorld.Ideo)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::HasHumanMeatEatingRequiredPrecept(RimWorld.Ideo)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.FoodUtility::GenerateGoodIngredients(Verse.Thing,RimWorld.Ideo)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::MealCanBeMadeFrom(Verse.ThingDef,Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.FoodUtility::WillIngestStackCountOf(Verse.Pawn,Verse.ThingDef,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.FoodUtility::GetBodyPartNutrition(Verse.Corpse,Verse.BodyPartRecord)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.FoodUtility::GetBodyPartNutrition(System.Single,Verse.Pawn,Verse.BodyPartRecord)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Int32 RimWorld.FoodUtility::StackCountForNutrition(System.Single,System.Single)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::ShouldBeFedBySomeone(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.FoodUtility::AddFoodPoisoningHediff(Verse.Pawn,Verse.Thing,RimWorld.FoodPoisonCause)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.FoodUtility::GetFoodPoisonChanceFactor(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::TryGetFoodPoisoningChanceOverrideFromTraits(Verse.Pawn,Verse.Thing,System.Single&)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::Starving(Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.FoodUtility::GetNutrition(Verse.Pawn,Verse.Thing,Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::WillIngestFromInventoryNow(Verse.Pawn,Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.FoodUtility::IngestFromInventoryNow(Verse.Pawn,Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.FoodKind RimWorld.FoodUtility::GetFoodKind(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "RimWorld.FoodKind RimWorld.FoodUtility::GetFoodKind(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::WillGiveNegativeThoughts(Verse.Thing,Verse.Pawn)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::AcceptableVegetarian(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::UnacceptableVegetarian(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::AcceptableCannibalNonHumanlikeMeatFood(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::AcceptableCarnivore(Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::AcceptableCarnivore(Verse.Thing,Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::UnacceptableCarnivore(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::MaybeAcceptableCannibalDef(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::MaybeAcceptableInsectMeatEatersDef(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Single RimWorld.FoodUtility::NutritionForEater(Verse.Pawn,Verse.Thing)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::IsRawHumanFood(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.FoodUtility::IsHumanFood(Verse.ThingDef)",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.CompQuality",
+      "baseType": "Verse.ThingComp",
+      "publicFields": [],
+      "methods": [
+        {
+          "signature": "RimWorld.QualityCategory RimWorld.CompQuality::get_Quality()",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.CompQuality::SetQuality(RimWorld.QualityCategory,System.Nullable`1<RimWorld.ArtGenerationContext>)",
+          "public": true,
+          "virtual": false
+        },
+        {
+          "signature": "System.Void RimWorld.CompQuality::PostExposeData()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.CompQuality::PostPostGeneratedForTrader(RimWorld.TraderKindDef,RimWorld.Planet.PlanetTile,RimWorld.Faction)",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Boolean RimWorld.CompQuality::AllowStackWith(Verse.Thing)",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.CompQuality::PostSplitOff(Verse.Thing)",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.String RimWorld.CompQuality::CompInspectStringExtra()",
+          "public": true,
+          "virtual": true
+        },
+        {
+          "signature": "System.Void RimWorld.CompQuality::.ctor()",
+          "public": true,
+          "virtual": false
+        }
+      ]
+    }
+  ],
+  "timeConstants": {
+    "TicksPerDay": 60000,
+    "TicksPerHour": 2500,
+    "HoursPerDay": 24
+  },
+  "traits": [
+    {
+      "defName": "Industriousness",
+      "degrees": [
+        {
+          "degree": 2,
+          "label": "industrious"
+        },
+        {
+          "degree": 1,
+          "label": "hard worker"
+        },
+        {
+          "degree": -1,
+          "label": "lazy"
+        },
+        {
+          "degree": -2,
+          "label": "slothful"
+        }
+      ]
+    },
+    {
+      "defName": "NightOwl",
+      "degrees": [
+        {
+          "degree": 0,
+          "label": "night owl"
+        }
+      ]
+    },
+    {
+      "defName": "Greedy",
+      "degrees": [
+        {
+          "degree": 0,
+          "label": "greedy"
+        }
+      ]
+    },
+    {
+      "defName": "Ascetic",
+      "degrees": [
+        {
+          "degree": 0,
+          "label": "ascetic"
+        }
+      ]
+    },
+    {
+      "defName": "Gourmand",
+      "degrees": [
+        {
+          "degree": 0,
+          "label": "gourmand"
+        }
+      ]
+    },
+    {
+      "defName": "QuickSleeper",
+      "degrees": [
+        {
+          "degree": 0,
+          "label": "quick sleeper"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_TimetableTracker.cs",
+      "sha256": "7B7824E19763AC5A478D753A3A1F5EDB3258D373C8AADA2F86C1242416C333FA"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\TimeAssignmentDef.cs",
+      "sha256": "51EE764537417C3784A9C75B45A3EAE8C23BB908D6E08E07B4D0621B55568B27"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\GenDate.cs",
+      "sha256": "4A54866840A1CFF3CACB69ECA823309CE9BC927B596778C8C817C0B7A1C6CA56"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\GenLocalDate.cs",
+      "sha256": "08A8AD872D9153AC21A3B470B8523B4617ECCFDC3F689FA0C80C76B8C82A0ABF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_StoryTracker.cs",
+      "sha256": "FF181051B84BB23C3E6B23A2840D306A37912CBFF76D4E8DB370C5FD0C67704B"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\TraitSet.cs",
+      "sha256": "55234515E34256AE2D0D9010B460473FA2F3DDC7892993FAFB839C23FCBAE324"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Trait.cs",
+      "sha256": "CE1480D8F684B8829C38BE788B596EFEA5D8C387F5744704BD74F8745B4B5DA7"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_WorkSettings.cs",
+      "sha256": "E2EFB36AF53B6DC279D4CA1E92B50715D632FD4FBCD68251B997D3A39A93C580"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Pawn_SkillTracker.cs",
+      "sha256": "F085D8E395BAE7FE1619EF1ECC15B2D70C662CEC4C4C3CCBE12931D2406E60F6"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\SkillRecord.cs",
+      "sha256": "3CF34FC35B620F853CF1555C193F6DA02A08E040F125E6897051742AC827EF4B"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\FoodUtility.cs",
+      "sha256": "8CD579EB1E9FA9BF85C4770C27F62A524E774C898AD8A1E834228D757DA4E5F7"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\CompQuality.cs",
+      "sha256": "4EE20B67EB74B6BAFFC24A04E709CA9EBB4FB98F0466EB3A86B312A3C64ABB30"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Core\\Defs\\TraitDefs\\Traits_Spectrum.xml",
+      "sha256": "87202C304487B4663DF14C8B8F46A2299AE5A5CD3285F8C2B3847D36D4706FCF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Core\\Defs\\TraitDefs\\Traits_Singular.xml",
+      "sha256": "7932C025E2755DF9677F3F4D499ADABD88C1C2EA373A7E275F92BE47DFF36F5D"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Core\\Defs\\Misc\\TimeAssignmentDefs\\TimeAssignments.xml",
+      "sha256": "6A71E2EA22BD716F57C282936966EF8AC2ADD222652B1CC5E46EC650C0D9202B"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Data\\Core\\Defs\\ThingDefs_Items\\Items_Food.xml",
+      "sha256": "9B111FCDFD43FE6BAD8E14C0F8CFB6D723365FB82C7732245DF82DD2A49FBDC4"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle.csproj",
+      "sha256": "90BEEC014C69D1A74091462F9B9FB392A501B309770963769743CED9CCDF1F55"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyService.cs",
+      "sha256": "B70313BD863639CA9C4C19D0BC8FBC47092D361692F4752A283EFE76D13AAD6C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\PanelAtoms.cs",
+      "sha256": "CE5EE3B8AD40A8FAE1158F07E50C033B47E7B6BEA294FA2D2C7ABEC3E8356597"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\DataAtoms.cs",
+      "sha256": "64947523E20D868A53620321349BCC60F8ED2BDFFA788B667A3A56E84C1FE055"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\FeedbackAtoms.cs",
+      "sha256": "DC71042AEB123A8730B6A098E5421EB2BEE4DBAF0E9CCF89A1C7962F6B73F137"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\RUIF\\Source\\Components\\ProgressAtoms.cs",
+      "sha256": "BAAAFA9E1577DDBEFCFDCA59282D0ACC52252D1197F8695F4C1CB0C1E1ED7E8E"
+    }
+  ],
+  "publicReferences": [
+    "https://spdskatr.github.io/RWModdingResources/saving-guide",
+    "https://harmony.pardeike.net/v2/articles/patching-postfix.html"
+  ],
+  "limits": [
+    "Economic personality mappings and planning rules are Mod design, not vanilla APIs or calibrated empirical results.",
+    "Metadata proves signatures and constants, not in-game performance or complete third-party semantics.",
+    "Decompiled source is explanatory and not guaranteed byte-identical to current DLL method bodies.",
+    "Budget/quantity conversion, household coordination and action arbitration remain separate module contracts.",
+    "No runtime implementation, build, deployment or game acceptance was executed."
+  ]
+}

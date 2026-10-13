@@ -1,0 +1,619 @@
+{
+  "checked_files": 40,
+  "all_source_matches_manifest": true,
+  "all_imported_matches_manifest": true,
+  "all_deployed_matches_imported": true,
+  "visual_review": {
+    "north_baselines": 10,
+    "other_directions": 30,
+    "direction_errors": 11,
+    "local_structure_issues": 10,
+    "structure_basically_consistent": 9
+  },
+  "visual_review_is_manual": true,
+  "source_or_runtime_assets_modified": false,
+  "image_models_called": false,
+  "runtime_gameplay_validated": false,
+  "files": [
+    {
+      "source": "D:\\素材\\智能冶炼台北.PNG",
+      "target": "PC_T1_Smelter_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能冶炼台东.PNG",
+      "target": "PC_T1_Smelter_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能冶炼台南.PNG",
+      "target": "PC_T1_Smelter_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能冶炼台西.PNG",
+      "target": "PC_T1_Smelter_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能机加台北.png",
+      "target": "PC_T1_Machining_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能机加台东.PNG",
+      "target": "PC_T1_Machining_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能机加台南.PNG",
+      "target": "PC_T1_Machining_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能机加台西.PNG",
+      "target": "PC_T1_Machining_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能缝纫台北.PNG",
+      "target": "PC_T1_Tailoring_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能缝纫台东.PNG",
+      "target": "PC_T1_Tailoring_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能缝纫台南.PNG",
+      "target": "PC_T1_Tailoring_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能缝纫台西.PNG",
+      "target": "PC_T1_Tailoring_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能锻造台北.PNG",
+      "target": "PC_T1_Smithy_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能锻造台东.PNG",
+      "target": "PC_T1_Smithy_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能锻造台南.PNG",
+      "target": "PC_T1_Smithy_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能锻造台西.PNG",
+      "target": "PC_T1_Smithy_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能烹饪台北.PNG",
+      "target": "PC_T1_Cooking_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能烹饪台东.PNG",
+      "target": "PC_T1_Cooking_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能烹饪台南.PNG",
+      "target": "PC_T1_Cooking_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能烹饪台西.PNG",
+      "target": "PC_T1_Cooking_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能制药台北.PNG",
+      "target": "PC_T1_DrugLab_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能制药台东.PNG",
+      "target": "PC_T1_DrugLab_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能制药台南.PNG",
+      "target": "PC_T1_DrugLab_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能制药台西.PNG",
+      "target": "PC_T1_DrugLab_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能石工台北.PNG",
+      "target": "PC_T1_Stonecutting_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能石工台东.PNG",
+      "target": "PC_T1_Stonecutting_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能石工台南.PNG",
+      "target": "PC_T1_Stonecutting_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能石工台西.PNG",
+      "target": "PC_T1_Stonecutting_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能雕艺台北.PNG",
+      "target": "PC_T1_Sculpting_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能雕艺台东.PNG",
+      "target": "PC_T1_Sculpting_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能雕艺台南.PNG",
+      "target": "PC_T1_Sculpting_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能雕艺台西.PNG",
+      "target": "PC_T1_Sculpting_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能屠宰台北.PNG",
+      "target": "PC_T1_Butchery_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能屠宰台东.PNG",
+      "target": "PC_T1_Butchery_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能屠宰台南.PNG",
+      "target": "PC_T1_Butchery_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能屠宰台西.PNG",
+      "target": "PC_T1_Butchery_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能制作台北.PNG",
+      "target": "PC_T1_Crafting_north.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能制作台东.PNG",
+      "target": "PC_T1_Crafting_east.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能制作台南.PNG",
+      "target": "PC_T1_Crafting_south.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        1916,
+        821
+      ],
+      "imported_size": [
+        448,
+        192
+      ]
+    },
+    {
+      "source": "D:\\素材\\智能制作台西.PNG",
+      "target": "PC_T1_Crafting_west.png",
+      "source_matches_import_manifest": true,
+      "imported_matches_import_manifest": true,
+      "deployed_matches_imported": true,
+      "source_size": [
+        821,
+        1916
+      ],
+      "imported_size": [
+        192,
+        448
+      ]
+    }
+  ]
+}

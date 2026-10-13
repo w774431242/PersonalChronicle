@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  English overrides for WorkshopDeviceEquivalenceDef (CHG-20261006-TRKEY · LOC-01).
+  设备族 = 「智能 + 工序 + 台 / 设备族」，与 Defs/T1_Production.xml 的英文设备名同源。
+-->
+<LanguageData>
+  <PC_DeviceFamily_Butchery.label>Smart Butchery Bench Family</PC_DeviceFamily_Butchery.label>
+  <PC_DeviceFamily_Cooking.label>Smart Cooking Bench Family</PC_DeviceFamily_Cooking.label>
+  <PC_DeviceFamily_Crafting.label>Smart Crafting Bench Family</PC_DeviceFamily_Crafting.label>
+  <PC_DeviceFamily_DrugLab.label>Smart Drug Lab Family</PC_DeviceFamily_DrugLab.label>
+  <PC_DeviceFamily_Machining.label>Smart Machining Bench Family</PC_DeviceFamily_Machining.label>
+  <PC_DeviceFamily_Sculpting.label>Smart Sculpting Bench Family</PC_DeviceFamily_Sculpting.label>
+  <PC_DeviceFamily_Smelter.label>Smart Smelter Family</PC_DeviceFamily_Smelter.label>
+  <PC_DeviceFamily_Smithy.label>Smart Smithy Family</PC_DeviceFamily_Smithy.label>
+  <PC_DeviceFamily_Stonecutting.label>Smart Stonecutting Bench Family</PC_DeviceFamily_Stonecutting.label>
+  <PC_DeviceFamily_Tailoring.label>Smart Tailoring Bench Family</PC_DeviceFamily_Tailoring.label>
+</LanguageData>

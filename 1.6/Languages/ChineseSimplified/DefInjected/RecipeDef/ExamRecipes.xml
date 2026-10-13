@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_MakeExamThesis.label>装订论文书卷</PC_MakeExamThesis.label>
+  <PC_MakeExamThesis.description>用布料、皮革与木材在手工加工点装订成册的论文书卷。</PC_MakeExamThesis.description>
+  <PC_MakeExamThesis.jobString>装订论文书卷</PC_MakeExamThesis.jobString>
+  <PC_MakeExamDiploma.label>精制职称文凭</PC_MakeExamDiploma.label>
+  <PC_MakeExamDiploma.description>用细布、皮革与金在手工加工点精制的正式文凭。</PC_MakeExamDiploma.description>
+  <PC_MakeExamDiploma.jobString>精制职称文凭</PC_MakeExamDiploma.jobString>
+  <PC_MakeExamPractical.label>压制实践证书</PC_MakeExamPractical.label>
+  <PC_MakeExamPractical.description>用木材、钢材与布料在手工加工点压制的实践考核合格铭牌，每批 3 枚。</PC_MakeExamPractical.description>
+  <PC_MakeExamPractical.jobString>压制实践证书</PC_MakeExamPractical.jobString>
+  <PC_MakeExamPracticeKit.label>制备实践工件样件</PC_MakeExamPracticeKit.label>
+  <PC_MakeExamPracticeKit.description>用木材、钢材与布料在手工加工点压制的实践考试标准工件样件，每批 2 套。</PC_MakeExamPracticeKit.description>
+  <PC_MakeExamPracticeKit.jobString>制备实践工件样件</PC_MakeExamPracticeKit.jobString>
+  <PC_MakeExamTextbook.label>装订考试教科书</PC_MakeExamTextbook.label>
+  <PC_MakeExamTextbook.description>用布料与木材在手工加工点装订的职称考试教科书，每批 2 本。</PC_MakeExamTextbook.description>
+  <PC_MakeExamTextbook.jobString>装订考试教科书</PC_MakeExamTextbook.jobString>
+  <PC_MakeExamResearchDoc.label>装订研究文献</PC_MakeExamResearchDoc.label>
+  <PC_MakeExamResearchDoc.description>用皮革、木材与金在手工加工点装订的技术研究文献。</PC_MakeExamResearchDoc.description>
+  <PC_MakeExamResearchDoc.jobString>装订研究文献</PC_MakeExamResearchDoc.jobString>
+  <PC_MakeExamSkillBook.label>装订技能专著</PC_MakeExamSkillBook.label>
+  <PC_MakeExamSkillBook.description>用布料与木材在手工加工点装订的技能方向专著，每批 2 本。</PC_MakeExamSkillBook.description>
+  <PC_MakeExamSkillBook.jobString>装订技能专著</PC_MakeExamSkillBook.jobString>
+  <PC_MakeExamTheoryBook.label>装订理论论著</PC_MakeExamTheoryBook.label>
+  <PC_MakeExamTheoryBook.description>用皮革、木材与布料在手工加工点装订的理论方向论著。</PC_MakeExamTheoryBook.description>
+  <PC_MakeExamTheoryBook.jobString>装订理论论著</PC_MakeExamTheoryBook.jobString>
+  <PC_MakeExamPracticeKit_Engineering.label>制备工程实践样件</PC_MakeExamPracticeKit_Engineering.label>
+  <PC_MakeExamPracticeKit_Engineering.description>用钢材、木材与布料在手工加工点制备工程类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Engineering.description>
+  <PC_MakeExamPracticeKit_Engineering.jobString>制备工程实践样件</PC_MakeExamPracticeKit_Engineering.jobString>
+  <PC_MakeExamPracticeKit_Manufacturing.label>制备制造实践样件</PC_MakeExamPracticeKit_Manufacturing.label>
+  <PC_MakeExamPracticeKit_Manufacturing.description>用钢材与布料在手工加工点制备制造类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Manufacturing.description>
+  <PC_MakeExamPracticeKit_Manufacturing.jobString>制备制造实践样件</PC_MakeExamPracticeKit_Manufacturing.jobString>
+  <PC_MakeExamPracticeKit_Agriculture.label>制备农业实践样件</PC_MakeExamPracticeKit_Agriculture.label>
+  <PC_MakeExamPracticeKit_Agriculture.description>用木材、钢材与布料在手工加工点制备农业类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Agriculture.description>
+  <PC_MakeExamPracticeKit_Agriculture.jobString>制备农业实践样件</PC_MakeExamPracticeKit_Agriculture.jobString>
+  <PC_MakeExamPracticeKit_Forestry.label>制备林业实践样件</PC_MakeExamPracticeKit_Forestry.label>
+  <PC_MakeExamPracticeKit_Forestry.description>用木材与钢材在手工加工点制备林业类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Forestry.description>
+  <PC_MakeExamPracticeKit_Forestry.jobString>制备林业实践样件</PC_MakeExamPracticeKit_Forestry.jobString>
+  <PC_MakeExamPracticeKit_AnimalHusbandry.label>制备畜牧实践样件</PC_MakeExamPracticeKit_AnimalHusbandry.label>
+  <PC_MakeExamPracticeKit_AnimalHusbandry.description>用皮革、木材与钢材在手工加工点制备畜牧类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_AnimalHusbandry.description>
+  <PC_MakeExamPracticeKit_AnimalHusbandry.jobString>制备畜牧实践样件</PC_MakeExamPracticeKit_AnimalHusbandry.jobString>
+  <PC_MakeExamPracticeKit_Medicine.label>制备医学实践样件</PC_MakeExamPracticeKit_Medicine.label>
+  <PC_MakeExamPracticeKit_Medicine.description>用钢材、布料与金在手工加工点制备医学类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Medicine.description>
+  <PC_MakeExamPracticeKit_Medicine.jobString>制备医学实践样件</PC_MakeExamPracticeKit_Medicine.jobString>
+  <PC_MakeExamPracticeKit_Weapons.label>制备武器实践样件</PC_MakeExamPracticeKit_Weapons.label>
+  <PC_MakeExamPracticeKit_Weapons.description>用钢材与木材在手工加工点制备武器类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Weapons.description>
+  <PC_MakeExamPracticeKit_Weapons.jobString>制备武器实践样件</PC_MakeExamPracticeKit_Weapons.jobString>
+  <PC_MakeExamPracticeKit_Mining.label>制备矿业实践样件</PC_MakeExamPracticeKit_Mining.label>
+  <PC_MakeExamPracticeKit_Mining.description>用钢材与木材在手工加工点制备矿业类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Mining.description>
+  <PC_MakeExamPracticeKit_Mining.jobString>制备矿业实践样件</PC_MakeExamPracticeKit_Mining.jobString>
+  <PC_MakeExamPracticeKit_Research.label>制备科研实践样件</PC_MakeExamPracticeKit_Research.label>
+  <PC_MakeExamPracticeKit_Research.description>用金、钢材与木材在手工加工点制备科研类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Research.description>
+  <PC_MakeExamPracticeKit_Research.jobString>制备科研实践样件</PC_MakeExamPracticeKit_Research.jobString>
+  <PC_MakeExamPracticeKit_Cooking.label>制备烹饪实践样件</PC_MakeExamPracticeKit_Cooking.label>
+  <PC_MakeExamPracticeKit_Cooking.description>用钢材、木材与布料在手工加工点制备烹饪类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Cooking.description>
+  <PC_MakeExamPracticeKit_Cooking.jobString>制备烹饪实践样件</PC_MakeExamPracticeKit_Cooking.jobString>
+  <PC_MakeExamPracticeKit_Art.label>制备艺术实践样件</PC_MakeExamPracticeKit_Art.label>
+  <PC_MakeExamPracticeKit_Art.description>用金、木材与布料在手工加工点制备艺术类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Art.description>
+  <PC_MakeExamPracticeKit_Art.jobString>制备艺术实践样件</PC_MakeExamPracticeKit_Art.jobString>
+  <PC_MakeExamPracticeKit_Management.label>制备管理实践样件</PC_MakeExamPracticeKit_Management.label>
+  <PC_MakeExamPracticeKit_Management.description>用布料、木材与金在手工加工点制备管理类实践工件样件，每批 2 件。</PC_MakeExamPracticeKit_Management.description>
+  <PC_MakeExamPracticeKit_Management.jobString>制备管理实践样件</PC_MakeExamPracticeKit_Management.jobString>
+  <PC_MakeExamTextbook_Engineering.label>装订工程考试教科书</PC_MakeExamTextbook_Engineering.label>
+  <PC_MakeExamTextbook_Engineering.description>用原料在手工加工点制备工程考试教科书，每批 2 份。</PC_MakeExamTextbook_Engineering.description>
+  <PC_MakeExamTextbook_Engineering.jobString>装订工程考试教科书</PC_MakeExamTextbook_Engineering.jobString>
+  <PC_MakeExamResearchDoc_Engineering.label>装订工程技术研究文献</PC_MakeExamResearchDoc_Engineering.label>
+  <PC_MakeExamResearchDoc_Engineering.description>用原料在手工加工点制备工程技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Engineering.description>
+  <PC_MakeExamResearchDoc_Engineering.jobString>装订工程技术研究文献</PC_MakeExamResearchDoc_Engineering.jobString>
+  <PC_MakeExamSkillBook_Engineering.label>装订工程技能方向专著</PC_MakeExamSkillBook_Engineering.label>
+  <PC_MakeExamSkillBook_Engineering.description>用原料在手工加工点制备工程技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Engineering.description>
+  <PC_MakeExamSkillBook_Engineering.jobString>装订工程技能方向专著</PC_MakeExamSkillBook_Engineering.jobString>
+  <PC_MakeExamTheoryBook_Engineering.label>装订工程理论方向论著</PC_MakeExamTheoryBook_Engineering.label>
+  <PC_MakeExamTheoryBook_Engineering.description>用原料在手工加工点制备工程理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Engineering.description>
+  <PC_MakeExamTheoryBook_Engineering.jobString>装订工程理论方向论著</PC_MakeExamTheoryBook_Engineering.jobString>
+  <PC_MakeExamTextbook_Manufacturing.label>装订制造考试教科书</PC_MakeExamTextbook_Manufacturing.label>
+  <PC_MakeExamTextbook_Manufacturing.description>用原料在手工加工点制备制造考试教科书，每批 2 份。</PC_MakeExamTextbook_Manufacturing.description>
+  <PC_MakeExamTextbook_Manufacturing.jobString>装订制造考试教科书</PC_MakeExamTextbook_Manufacturing.jobString>
+  <PC_MakeExamResearchDoc_Manufacturing.label>装订制造技术研究文献</PC_MakeExamResearchDoc_Manufacturing.label>
+  <PC_MakeExamResearchDoc_Manufacturing.description>用原料在手工加工点制备制造技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Manufacturing.description>
+  <PC_MakeExamResearchDoc_Manufacturing.jobString>装订制造技术研究文献</PC_MakeExamResearchDoc_Manufacturing.jobString>
+  <PC_MakeExamSkillBook_Manufacturing.label>装订制造技能方向专著</PC_MakeExamSkillBook_Manufacturing.label>
+  <PC_MakeExamSkillBook_Manufacturing.description>用原料在手工加工点制备制造技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Manufacturing.description>
+  <PC_MakeExamSkillBook_Manufacturing.jobString>装订制造技能方向专著</PC_MakeExamSkillBook_Manufacturing.jobString>
+  <PC_MakeExamTheoryBook_Manufacturing.label>装订制造理论方向论著</PC_MakeExamTheoryBook_Manufacturing.label>
+  <PC_MakeExamTheoryBook_Manufacturing.description>用原料在手工加工点制备制造理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Manufacturing.description>
+  <PC_MakeExamTheoryBook_Manufacturing.jobString>装订制造理论方向论著</PC_MakeExamTheoryBook_Manufacturing.jobString>
+  <PC_MakeExamTextbook_Agriculture.label>装订农业考试教科书</PC_MakeExamTextbook_Agriculture.label>
+  <PC_MakeExamTextbook_Agriculture.description>用原料在手工加工点制备农业考试教科书，每批 2 份。</PC_MakeExamTextbook_Agriculture.description>
+  <PC_MakeExamTextbook_Agriculture.jobString>装订农业考试教科书</PC_MakeExamTextbook_Agriculture.jobString>
+  <PC_MakeExamResearchDoc_Agriculture.label>装订农业技术研究文献</PC_MakeExamResearchDoc_Agriculture.label>
+  <PC_MakeExamResearchDoc_Agriculture.description>用原料在手工加工点制备农业技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Agriculture.description>
+  <PC_MakeExamResearchDoc_Agriculture.jobString>装订农业技术研究文献</PC_MakeExamResearchDoc_Agriculture.jobString>
+  <PC_MakeExamSkillBook_Agriculture.label>装订农业技能方向专著</PC_MakeExamSkillBook_Agriculture.label>
+  <PC_MakeExamSkillBook_Agriculture.description>用原料在手工加工点制备农业技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Agriculture.description>
+  <PC_MakeExamSkillBook_Agriculture.jobString>装订农业技能方向专著</PC_MakeExamSkillBook_Agriculture.jobString>
+  <PC_MakeExamTheoryBook_Agriculture.label>装订农业理论方向论著</PC_MakeExamTheoryBook_Agriculture.label>
+  <PC_MakeExamTheoryBook_Agriculture.description>用原料在手工加工点制备农业理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Agriculture.description>
+  <PC_MakeExamTheoryBook_Agriculture.jobString>装订农业理论方向论著</PC_MakeExamTheoryBook_Agriculture.jobString>
+  <PC_MakeExamTextbook_Forestry.label>装订林业考试教科书</PC_MakeExamTextbook_Forestry.label>
+  <PC_MakeExamTextbook_Forestry.description>用原料在手工加工点制备林业考试教科书，每批 2 份。</PC_MakeExamTextbook_Forestry.description>
+  <PC_MakeExamTextbook_Forestry.jobString>装订林业考试教科书</PC_MakeExamTextbook_Forestry.jobString>
+  <PC_MakeExamResearchDoc_Forestry.label>装订林业技术研究文献</PC_MakeExamResearchDoc_Forestry.label>
+  <PC_MakeExamResearchDoc_Forestry.description>用原料在手工加工点制备林业技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Forestry.description>
+  <PC_MakeExamResearchDoc_Forestry.jobString>装订林业技术研究文献</PC_MakeExamResearchDoc_Forestry.jobString>
+  <PC_MakeExamSkillBook_Forestry.label>装订林业技能方向专著</PC_MakeExamSkillBook_Forestry.label>
+  <PC_MakeExamSkillBook_Forestry.description>用原料在手工加工点制备林业技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Forestry.description>
+  <PC_MakeExamSkillBook_Forestry.jobString>装订林业技能方向专著</PC_MakeExamSkillBook_Forestry.jobString>
+  <PC_MakeExamTheoryBook_Forestry.label>装订林业理论方向论著</PC_MakeExamTheoryBook_Forestry.label>
+  <PC_MakeExamTheoryBook_Forestry.description>用原料在手工加工点制备林业理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Forestry.description>
+  <PC_MakeExamTheoryBook_Forestry.jobString>装订林业理论方向论著</PC_MakeExamTheoryBook_Forestry.jobString>
+  <PC_MakeExamTextbook_AnimalHusbandry.label>装订畜牧考试教科书</PC_MakeExamTextbook_AnimalHusbandry.label>
+  <PC_MakeExamTextbook_AnimalHusbandry.description>用原料在手工加工点制备畜牧考试教科书，每批 2 份。</PC_MakeExamTextbook_AnimalHusbandry.description>
+  <PC_MakeExamTextbook_AnimalHusbandry.jobString>装订畜牧考试教科书</PC_MakeExamTextbook_AnimalHusbandry.jobString>
+  <PC_MakeExamResearchDoc_AnimalHusbandry.label>装订畜牧技术研究文献</PC_MakeExamResearchDoc_AnimalHusbandry.label>
+  <PC_MakeExamResearchDoc_AnimalHusbandry.description>用原料在手工加工点制备畜牧技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_AnimalHusbandry.description>
+  <PC_MakeExamResearchDoc_AnimalHusbandry.jobString>装订畜牧技术研究文献</PC_MakeExamResearchDoc_AnimalHusbandry.jobString>
+  <PC_MakeExamSkillBook_AnimalHusbandry.label>装订畜牧技能方向专著</PC_MakeExamSkillBook_AnimalHusbandry.label>
+  <PC_MakeExamSkillBook_AnimalHusbandry.description>用原料在手工加工点制备畜牧技能方向专著，每批 2 份。</PC_MakeExamSkillBook_AnimalHusbandry.description>
+  <PC_MakeExamSkillBook_AnimalHusbandry.jobString>装订畜牧技能方向专著</PC_MakeExamSkillBook_AnimalHusbandry.jobString>
+  <PC_MakeExamTheoryBook_AnimalHusbandry.label>装订畜牧理论方向论著</PC_MakeExamTheoryBook_AnimalHusbandry.label>
+  <PC_MakeExamTheoryBook_AnimalHusbandry.description>用原料在手工加工点制备畜牧理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_AnimalHusbandry.description>
+  <PC_MakeExamTheoryBook_AnimalHusbandry.jobString>装订畜牧理论方向论著</PC_MakeExamTheoryBook_AnimalHusbandry.jobString>
+  <PC_MakeExamTextbook_Medicine.label>装订医学考试教科书</PC_MakeExamTextbook_Medicine.label>
+  <PC_MakeExamTextbook_Medicine.description>用原料在手工加工点制备医学考试教科书，每批 2 份。</PC_MakeExamTextbook_Medicine.description>
+  <PC_MakeExamTextbook_Medicine.jobString>装订医学考试教科书</PC_MakeExamTextbook_Medicine.jobString>
+  <PC_MakeExamResearchDoc_Medicine.label>装订医学技术研究文献</PC_MakeExamResearchDoc_Medicine.label>
+  <PC_MakeExamResearchDoc_Medicine.description>用原料在手工加工点制备医学技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Medicine.description>
+  <PC_MakeExamResearchDoc_Medicine.jobString>装订医学技术研究文献</PC_MakeExamResearchDoc_Medicine.jobString>
+  <PC_MakeExamSkillBook_Medicine.label>装订医学技能方向专著</PC_MakeExamSkillBook_Medicine.label>
+  <PC_MakeExamSkillBook_Medicine.description>用原料在手工加工点制备医学技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Medicine.description>
+  <PC_MakeExamSkillBook_Medicine.jobString>装订医学技能方向专著</PC_MakeExamSkillBook_Medicine.jobString>
+  <PC_MakeExamTheoryBook_Medicine.label>装订医学理论方向论著</PC_MakeExamTheoryBook_Medicine.label>
+  <PC_MakeExamTheoryBook_Medicine.description>用原料在手工加工点制备医学理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Medicine.description>
+  <PC_MakeExamTheoryBook_Medicine.jobString>装订医学理论方向论著</PC_MakeExamTheoryBook_Medicine.jobString>
+  <PC_MakeExamTextbook_Weapons.label>装订武器考试教科书</PC_MakeExamTextbook_Weapons.label>
+  <PC_MakeExamTextbook_Weapons.description>用原料在手工加工点制备武器考试教科书，每批 2 份。</PC_MakeExamTextbook_Weapons.description>
+  <PC_MakeExamTextbook_Weapons.jobString>装订武器考试教科书</PC_MakeExamTextbook_Weapons.jobString>
+  <PC_MakeExamResearchDoc_Weapons.label>装订武器技术研究文献</PC_MakeExamResearchDoc_Weapons.label>
+  <PC_MakeExamResearchDoc_Weapons.description>用原料在手工加工点制备武器技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Weapons.description>
+  <PC_MakeExamResearchDoc_Weapons.jobString>装订武器技术研究文献</PC_MakeExamResearchDoc_Weapons.jobString>
+  <PC_MakeExamSkillBook_Weapons.label>装订武器技能方向专著</PC_MakeExamSkillBook_Weapons.label>
+  <PC_MakeExamSkillBook_Weapons.description>用原料在手工加工点制备武器技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Weapons.description>
+  <PC_MakeExamSkillBook_Weapons.jobString>装订武器技能方向专著</PC_MakeExamSkillBook_Weapons.jobString>
+  <PC_MakeExamTheoryBook_Weapons.label>装订武器理论方向论著</PC_MakeExamTheoryBook_Weapons.label>
+  <PC_MakeExamTheoryBook_Weapons.description>用原料在手工加工点制备武器理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Weapons.description>
+  <PC_MakeExamTheoryBook_Weapons.jobString>装订武器理论方向论著</PC_MakeExamTheoryBook_Weapons.jobString>
+  <PC_MakeExamTextbook_Mining.label>装订矿业考试教科书</PC_MakeExamTextbook_Mining.label>
+  <PC_MakeExamTextbook_Mining.description>用原料在手工加工点制备矿业考试教科书，每批 2 份。</PC_MakeExamTextbook_Mining.description>
+  <PC_MakeExamTextbook_Mining.jobString>装订矿业考试教科书</PC_MakeExamTextbook_Mining.jobString>
+  <PC_MakeExamResearchDoc_Mining.label>装订矿业技术研究文献</PC_MakeExamResearchDoc_Mining.label>
+  <PC_MakeExamResearchDoc_Mining.description>用原料在手工加工点制备矿业技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Mining.description>
+  <PC_MakeExamResearchDoc_Mining.jobString>装订矿业技术研究文献</PC_MakeExamResearchDoc_Mining.jobString>
+  <PC_MakeExamSkillBook_Mining.label>装订矿业技能方向专著</PC_MakeExamSkillBook_Mining.label>
+  <PC_MakeExamSkillBook_Mining.description>用原料在手工加工点制备矿业技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Mining.description>
+  <PC_MakeExamSkillBook_Mining.jobString>装订矿业技能方向专著</PC_MakeExamSkillBook_Mining.jobString>
+  <PC_MakeExamTheoryBook_Mining.label>装订矿业理论方向论著</PC_MakeExamTheoryBook_Mining.label>
+  <PC_MakeExamTheoryBook_Mining.description>用原料在手工加工点制备矿业理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Mining.description>
+  <PC_MakeExamTheoryBook_Mining.jobString>装订矿业理论方向论著</PC_MakeExamTheoryBook_Mining.jobString>
+  <PC_MakeExamTextbook_Research.label>装订科研考试教科书</PC_MakeExamTextbook_Research.label>
+  <PC_MakeExamTextbook_Research.description>用原料在手工加工点制备科研考试教科书，每批 2 份。</PC_MakeExamTextbook_Research.description>
+  <PC_MakeExamTextbook_Research.jobString>装订科研考试教科书</PC_MakeExamTextbook_Research.jobString>
+  <PC_MakeExamResearchDoc_Research.label>装订科研技术研究文献</PC_MakeExamResearchDoc_Research.label>
+  <PC_MakeExamResearchDoc_Research.description>用原料在手工加工点制备科研技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Research.description>
+  <PC_MakeExamResearchDoc_Research.jobString>装订科研技术研究文献</PC_MakeExamResearchDoc_Research.jobString>
+  <PC_MakeExamSkillBook_Research.label>装订科研技能方向专著</PC_MakeExamSkillBook_Research.label>
+  <PC_MakeExamSkillBook_Research.description>用原料在手工加工点制备科研技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Research.description>
+  <PC_MakeExamSkillBook_Research.jobString>装订科研技能方向专著</PC_MakeExamSkillBook_Research.jobString>
+  <PC_MakeExamTheoryBook_Research.label>装订科研理论方向论著</PC_MakeExamTheoryBook_Research.label>
+  <PC_MakeExamTheoryBook_Research.description>用原料在手工加工点制备科研理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Research.description>
+  <PC_MakeExamTheoryBook_Research.jobString>装订科研理论方向论著</PC_MakeExamTheoryBook_Research.jobString>
+  <PC_MakeExamTextbook_Cooking.label>装订烹饪考试教科书</PC_MakeExamTextbook_Cooking.label>
+  <PC_MakeExamTextbook_Cooking.description>用原料在手工加工点制备烹饪考试教科书，每批 2 份。</PC_MakeExamTextbook_Cooking.description>
+  <PC_MakeExamTextbook_Cooking.jobString>装订烹饪考试教科书</PC_MakeExamTextbook_Cooking.jobString>
+  <PC_MakeExamResearchDoc_Cooking.label>装订烹饪技术研究文献</PC_MakeExamResearchDoc_Cooking.label>
+  <PC_MakeExamResearchDoc_Cooking.description>用原料在手工加工点制备烹饪技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Cooking.description>
+  <PC_MakeExamResearchDoc_Cooking.jobString>装订烹饪技术研究文献</PC_MakeExamResearchDoc_Cooking.jobString>
+  <PC_MakeExamSkillBook_Cooking.label>装订烹饪技能方向专著</PC_MakeExamSkillBook_Cooking.label>
+  <PC_MakeExamSkillBook_Cooking.description>用原料在手工加工点制备烹饪技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Cooking.description>
+  <PC_MakeExamSkillBook_Cooking.jobString>装订烹饪技能方向专著</PC_MakeExamSkillBook_Cooking.jobString>
+  <PC_MakeExamTheoryBook_Cooking.label>装订烹饪理论方向论著</PC_MakeExamTheoryBook_Cooking.label>
+  <PC_MakeExamTheoryBook_Cooking.description>用原料在手工加工点制备烹饪理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Cooking.description>
+  <PC_MakeExamTheoryBook_Cooking.jobString>装订烹饪理论方向论著</PC_MakeExamTheoryBook_Cooking.jobString>
+  <PC_MakeExamTextbook_Art.label>装订艺术考试教科书</PC_MakeExamTextbook_Art.label>
+  <PC_MakeExamTextbook_Art.description>用原料在手工加工点制备艺术考试教科书，每批 2 份。</PC_MakeExamTextbook_Art.description>
+  <PC_MakeExamTextbook_Art.jobString>装订艺术考试教科书</PC_MakeExamTextbook_Art.jobString>
+  <PC_MakeExamResearchDoc_Art.label>装订艺术技术研究文献</PC_MakeExamResearchDoc_Art.label>
+  <PC_MakeExamResearchDoc_Art.description>用原料在手工加工点制备艺术技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Art.description>
+  <PC_MakeExamResearchDoc_Art.jobString>装订艺术技术研究文献</PC_MakeExamResearchDoc_Art.jobString>
+  <PC_MakeExamSkillBook_Art.label>装订艺术技能方向专著</PC_MakeExamSkillBook_Art.label>
+  <PC_MakeExamSkillBook_Art.description>用原料在手工加工点制备艺术技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Art.description>
+  <PC_MakeExamSkillBook_Art.jobString>装订艺术技能方向专著</PC_MakeExamSkillBook_Art.jobString>
+  <PC_MakeExamTheoryBook_Art.label>装订艺术理论方向论著</PC_MakeExamTheoryBook_Art.label>
+  <PC_MakeExamTheoryBook_Art.description>用原料在手工加工点制备艺术理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Art.description>
+  <PC_MakeExamTheoryBook_Art.jobString>装订艺术理论方向论著</PC_MakeExamTheoryBook_Art.jobString>
+  <PC_MakeExamTextbook_Management.label>装订管理考试教科书</PC_MakeExamTextbook_Management.label>
+  <PC_MakeExamTextbook_Management.description>用原料在手工加工点制备管理考试教科书，每批 2 份。</PC_MakeExamTextbook_Management.description>
+  <PC_MakeExamTextbook_Management.jobString>装订管理考试教科书</PC_MakeExamTextbook_Management.jobString>
+  <PC_MakeExamResearchDoc_Management.label>装订管理技术研究文献</PC_MakeExamResearchDoc_Management.label>
+  <PC_MakeExamResearchDoc_Management.description>用原料在手工加工点制备管理技术研究文献，每批 1 份。</PC_MakeExamResearchDoc_Management.description>
+  <PC_MakeExamResearchDoc_Management.jobString>装订管理技术研究文献</PC_MakeExamResearchDoc_Management.jobString>
+  <PC_MakeExamSkillBook_Management.label>装订管理技能方向专著</PC_MakeExamSkillBook_Management.label>
+  <PC_MakeExamSkillBook_Management.description>用原料在手工加工点制备管理技能方向专著，每批 2 份。</PC_MakeExamSkillBook_Management.description>
+  <PC_MakeExamSkillBook_Management.jobString>装订管理技能方向专著</PC_MakeExamSkillBook_Management.jobString>
+  <PC_MakeExamTheoryBook_Management.label>装订管理理论方向论著</PC_MakeExamTheoryBook_Management.label>
+  <PC_MakeExamTheoryBook_Management.description>用原料在手工加工点制备管理理论方向论著，每批 1 份。</PC_MakeExamTheoryBook_Management.description>
+  <PC_MakeExamTheoryBook_Management.jobString>装订管理理论方向论著</PC_MakeExamTheoryBook_Management.jobString>
+  <PC_MakeExamThesis_Proposal.label>Make Thesis Proposal</PC_MakeExamThesis_Proposal.label>
+  <PC_MakeExamThesis_Proposal.description>Make Thesis Proposal at the crafting spot.</PC_MakeExamThesis_Proposal.description>
+  <PC_MakeExamThesis_Proposal.jobString>Making Thesis Proposal</PC_MakeExamThesis_Proposal.jobString>
+  <PC_MakeExamThesis_CiteBooks.label>Make Thesis CiteBooks</PC_MakeExamThesis_CiteBooks.label>
+  <PC_MakeExamThesis_CiteBooks.description>Make Thesis CiteBooks at the crafting spot.</PC_MakeExamThesis_CiteBooks.description>
+  <PC_MakeExamThesis_CiteBooks.jobString>Making Thesis CiteBooks</PC_MakeExamThesis_CiteBooks.jobString>
+  <PC_MakeExamThesis_CiteResearch.label>Make Thesis CiteResearch</PC_MakeExamThesis_CiteResearch.label>
+  <PC_MakeExamThesis_CiteResearch.description>Make Thesis CiteResearch at the crafting spot.</PC_MakeExamThesis_CiteResearch.description>
+  <PC_MakeExamThesis_CiteResearch.jobString>Making Thesis CiteResearch</PC_MakeExamThesis_CiteResearch.jobString>
+  <PC_MakeExamThesis_Final.label>Make Thesis Final</PC_MakeExamThesis_Final.label>
+  <PC_MakeExamThesis_Final.description>Make Thesis Final at the crafting spot.</PC_MakeExamThesis_Final.description>
+  <PC_MakeExamThesis_Final.jobString>Making Thesis Final</PC_MakeExamThesis_Final.jobString>
+</LanguageData>

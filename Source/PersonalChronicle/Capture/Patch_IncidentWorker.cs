@@ -25,25 +25,34 @@ namespace PersonalChronicle.Capture
     ///
     /// Patch 档案:
     ///   Patch Target      : RimWorld.IncidentWorker.TryExecute(IncidentParms)
+    ///                       (UNCHANGED — target, patch type and method signature
+    ///                        are identical to all previous versions)
     ///   Patch Type        : Postfix (read-only, never skips the original)
     ///   Reason            : record a Battle event (PersonalChronicleEventBattle)
-    ///                       when the incident def carries isBattle=true
+    ///                       when the incident def carries isBattle=true.
     ///   Alternative       : IncidentWorker.TryExecuteWorker (rejected: virtual,
     ///                       subclass overrides bypass the base patch — would
     ///                       miss RaidEnemy); IncidentWorker.DoIncident (rejected:
-    ///                       does not exist in 1.6)
+    ///                       does not exist in 1.6).
     ///   Compatibility Risk: low-medium — TryExecute is a hot path; the Postfix
-    ///                       is cheap (one GetModExtension lookup + early exit).
-    ///                       Many mods patch incident workers; [HarmonyAfter] not
-    ///                       required because we are read-only
+    ///                       is cheap (one GetModExtension lookup behind an early
+    ///                       exit). Many mods patch incident workers;
+    ///                       [HarmonyAfter] not required because we are read-only
     ///   Execution Order   : no ordering contract; Postfix order irrelevant
     ///                       because we never mutate
-    ///   Failure Behavior  : catch → Log.Warning, original method unaffected
+    ///   Failure Behavior  : single try/catch; never rethrows; the original
+    ///                       method is unaffected.
+    ///                       ⚠ 2026-09-20 (CHG-LCE-001): the former parallel MVS
+    ///                       market-event try/catch block was removed together
+    ///                       with the whole market system; this patch is back to
+    ///                       a single responsibility (battle records).
+    ///   Rollback          : remove the side effect; Harmony target/type unchanged.
+    ///                       Unpatch is per patch id, never UnpatchAll (plan §13.8).
     /// </summary>
     [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.TryExecute), new Type[] { typeof(IncidentParms) })]
     public static class Patch_IncidentWorker
     {
-        public static void Postfix(IncidentWorker __instance, bool __result)
+        public static void Postfix(IncidentWorker __instance, IncidentParms parms, bool __result)
         {
             try
             {

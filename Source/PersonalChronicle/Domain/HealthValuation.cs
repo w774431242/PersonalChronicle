@@ -394,28 +394,33 @@ namespace PersonalChronicle.Domain
         {
             if (hd == null || hd.def == null) return;
             HediffDef def = hd.def;
-            string labelKey = HealthValuationKeys.EventPrefix + def.defName;
-            string tagKey = HealthValuationKeys.EventTag.Drop;
-            float impact;
-            if (def.isBad)
+            if (!def.isBad)
             {
-                // RimWorld 1.6: tendable=true means bandage/healable, tendable=false
-                // means scar/old/permanent. Use tendable as the recovery proxy
-                // (there is no isChronic on HediffDef in 1.6).
-                if (def.tendable)
-                {
-                    impact = DefaultInjuryImpact;
-                    tagKey = HealthValuationKeys.EventTag.Recoverable;
-                }
-                else
-                {
-                    impact = DefaultScarImpact;
-                    tagKey = HealthValuationKeys.EventTag.Permanent;
-                }
+                return;
+            }
+            // Need / addiction hediffs are not scars. Malnutrition was being tagged
+            // Permanent because tendable=false (you eat, you do not bandage hunger).
+            if (def == HediffDefOf.Malnutrition || hd is Hediff_Addiction)
+            {
+                return;
+            }
+            bool injury = hd is Hediff_Injury || hd is Hediff_MissingPart;
+            if (!injury)
+            {
+                return;
+            }
+            string labelKey = HealthValuationKeys.EventPrefix + def.defName;
+            string tagKey;
+            float impact;
+            if (def.tendable)
+            {
+                impact = DefaultInjuryImpact;
+                tagKey = HealthValuationKeys.EventTag.Recoverable;
             }
             else
             {
-                return; // ignore benign / prosthetic additions for the event log.
+                impact = DefaultScarImpact;
+                tagKey = HealthValuationKeys.EventTag.Permanent;
             }
             events.Add(new HealthDepreciationEvent(labelKey, tagKey, def.defName, impact, -1L));
         }

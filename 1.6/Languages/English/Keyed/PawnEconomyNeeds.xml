@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Needs.Title>Needs</PC_PEA.Needs.Title>
+  <PC_PEA.Needs.TabTitle>Personal Needs</PC_PEA.Needs.TabTitle>
+  <PC_PEA.Needs.ReadOnly>Read only · Sampling continues with fees off</PC_PEA.Needs.ReadOnly>
+  <PC_PEA.Needs.Limits>Food, rest and recreation targets and read-only life planning are connected. Budgets and income remain unknown until cost estimates and job offers are published. No autonomous contracts or work-priority writes yet. Stale observations grant no authority to act.</PC_PEA.Needs.Limits>
+  <PC_PEA.Needs.Empty>No numeric needs</PC_PEA.Needs.Empty>
+  <PC_PEA.Needs.EmptyHint>Select a member or wait for sampling.</PC_PEA.Needs.EmptyHint>
+  <PC_PEA.Needs.Unavailable>Observation unavailable</PC_PEA.Needs.Unavailable>
+  <PC_PEA.Needs.UnavailableHint>Enter a colony map first.</PC_PEA.Needs.UnavailableHint>
+  <PC_PEA.Needs.Previous>Previous</PC_PEA.Needs.Previous>
+  <PC_PEA.Needs.Next>Next</PC_PEA.Needs.Next>
+  <PC_PEA.Needs.Page>Page {0} / {1}</PC_PEA.Needs.Page>
+  <PC_PEA.Needs.NoSelection>No member selected</PC_PEA.Needs.NoSelection>
+  <PC_PEA.Needs.NoSubjects>No observed members on this map</PC_PEA.Needs.NoSubjects>
+  <PC_PEA.Needs.Unconfigured>Unconfigured</PC_PEA.Needs.Unconfigured>
+  <PC_PEA.Needs.Yes>Yes</PC_PEA.Needs.Yes>
+  <PC_PEA.Needs.No>No</PC_PEA.Needs.No>
+  <PC_PEA.Needs.Fact.Unknown>Unknown</PC_PEA.Needs.Fact.Unknown>
+  <PC_PEA.Needs.Fact.Known>Known</PC_PEA.Needs.Fact.Known>
+  <PC_PEA.Needs.Fact.NotApplicable>N/A</PC_PEA.Needs.Fact.NotApplicable>
+  <PC_PEA.Needs.Fact.Unsupported>Unsupported</PC_PEA.Needs.Fact.Unsupported>
+  <PC_PEA.Needs.Fact.Error>Read error</PC_PEA.Needs.Fact.Error>
+  <PC_PEA.Needs.Readiness.Unknown>Unknown</PC_PEA.Needs.Readiness.Unknown>
+  <PC_PEA.Needs.Readiness.Loading>Awaiting sample</PC_PEA.Needs.Readiness.Loading>
+  <PC_PEA.Needs.Readiness.Ready>Fresh</PC_PEA.Needs.Readiness.Ready>
+  <PC_PEA.Needs.Readiness.Partial>Partly available</PC_PEA.Needs.Readiness.Partial>
+  <PC_PEA.Needs.Readiness.Stale>Stale</PC_PEA.Needs.Readiness.Stale>
+  <PC_PEA.Needs.Readiness.OutOfScope>Out of scope</PC_PEA.Needs.Readiness.OutOfScope>
+  <PC_PEA.Needs.Readiness.Error>Read error</PC_PEA.Needs.Readiness.Error>
+  <PC_PEA.Needs.Capture.Unknown>Unknown</PC_PEA.Needs.Capture.Unknown>
+  <PC_PEA.Needs.Capture.Complete>Complete</PC_PEA.Needs.Capture.Complete>
+  <PC_PEA.Needs.Capture.Partial>Partial</PC_PEA.Needs.Capture.Partial>
+  <PC_PEA.Needs.Capture.NotApplicable>N/A</PC_PEA.Needs.Capture.NotApplicable>
+  <PC_PEA.Needs.Capture.Error>Read error</PC_PEA.Needs.Capture.Error>
+  <PC_PEA.Needs.Group.Context>Identity and control</PC_PEA.Needs.Group.Context>
+  <PC_PEA.Needs.Group.Needs>Vanilla needs</PC_PEA.Needs.Group.Needs>
+  <PC_PEA.Needs.Group.Body>Body and living conditions</PC_PEA.Needs.Group.Body>
+  <PC_PEA.Needs.Group.Relationships>Direct relations</PC_PEA.Needs.Group.Relationships>
+  <PC_PEA.Needs.AgeTicks>{0} ticks ago</PC_PEA.Needs.AgeTicks>
+  <PC_PEA.Needs.Person>{0} · {1}</PC_PEA.Needs.Person>
+  <PC_PEA.Needs.Coverage>Observed on map: {0} / Observed globally: {1} · Census: {2} · Unexamined entries: {3} · Census age: {4}</PC_PEA.Needs.Coverage>
+  <PC_PEA.Needs.CensusComplete>Complete</PC_PEA.Needs.CensusComplete>
+  <PC_PEA.Needs.CensusPartial>Pending or partial (not a population total)</PC_PEA.Needs.CensusPartial>
+  <PC_PEA.Needs.Column.Need>Need</PC_PEA.Needs.Column.Need>
+  <PC_PEA.Needs.Column.Current>Ratio / raw level</PC_PEA.Needs.Column.Current>
+  <PC_PEA.Needs.Column.Target>Target</PC_PEA.Needs.Column.Target>
+  <PC_PEA.Needs.Column.LongTarget>Long-term</PC_PEA.Needs.Column.LongTarget>
+  <PC_PEA.Needs.Column.Gap>Gap (percentage points)</PC_PEA.Needs.Column.Gap>
+  <PC_PEA.Needs.Column.Source>Source</PC_PEA.Needs.Column.Source>
+  <PC_PEA.Needs.Column.Age>Data age</PC_PEA.Needs.Column.Age>
+  <PC_PEA.Needs.Column.Status>Fact state</PC_PEA.Needs.Column.Status>
+  <PC_PEA.Needs.CurrentRaw>{0}
+{1} / {2}</PC_PEA.Needs.CurrentRaw>
+  <PC_PEA.Needs.SourceVanilla>Vanilla Need
+{0}</PC_PEA.Needs.SourceVanilla>
+  <PC_PEA.Needs.SourceUnadapted>Unverified semantics
+{0}</PC_PEA.Needs.SourceUnadapted>
+  <PC_PEA.Needs.GroupState>{0} · {1}</PC_PEA.Needs.GroupState>
+  <PC_PEA.Needs.Mood>Mood (outcome, not a purchase target)</PC_PEA.Needs.Mood>
+  <PC_PEA.Needs.NeedCoverage>Need coverage</PC_PEA.Needs.NeedCoverage>
+  <PC_PEA.Needs.NeedCounts>Present: {0}, unsupported: {1}, failed: {2}, unread: {3}</PC_PEA.Needs.NeedCounts>
+  <PC_PEA.Needs.Location>Observed location</PC_PEA.Needs.Location>
+  <PC_PEA.Needs.Location.Unknown>Unknown</PC_PEA.Needs.Location.Unknown>
+  <PC_PEA.Needs.Location.SpawnedMap>On map</PC_PEA.Needs.Location.SpawnedMap>
+  <PC_PEA.Needs.Location.HeldOnMap>Carried or held on map</PC_PEA.Needs.Location.HeldOnMap>
+  <PC_PEA.Needs.Location.OffMap>Outside map scope</PC_PEA.Needs.Location.OffMap>
+  <PC_PEA.Needs.Location.Dead>Dead</PC_PEA.Needs.Location.Dead>
+  <PC_PEA.Needs.Downed>Downed</PC_PEA.Needs.Downed>
+  <PC_PEA.Needs.Drafted>Drafted</PC_PEA.Needs.Drafted>
+  <PC_PEA.Needs.PlayerForced>Current player-forced job</PC_PEA.Needs.PlayerForced>
+  <PC_PEA.Needs.Health>Visible health records</PC_PEA.Needs.Health>
+  <PC_PEA.Needs.Apparel>Worn apparel records</PC_PEA.Needs.Apparel>
+  <PC_PEA.Needs.Collection>Read: {0} · {1} · Unread: {2}</PC_PEA.Needs.Collection>
+  <PC_PEA.Needs.Temperature>Ambient temperature (°C)</PC_PEA.Needs.Temperature>
+  <PC_PEA.Needs.ComfortRange>Comfortable range (°C)</PC_PEA.Needs.ComfortRange>
+  <PC_PEA.Needs.Range>{0} – {1}</PC_PEA.Needs.Range>
+  <PC_PEA.Needs.OwnedBed>Assigned bed ID</PC_PEA.Needs.OwnedBed>
+  <PC_PEA.Needs.CurrentBed>Current bed ID</PC_PEA.Needs.CurrentBed>
+  <PC_PEA.Needs.Pregnancy>Visible pregnancy fact</PC_PEA.Needs.Pregnancy>
+  <PC_PEA.Needs.Conditions>Environmental condition capture</PC_PEA.Needs.Conditions>
+  <PC_PEA.Needs.Condition>{0}: instant condition</PC_PEA.Needs.Condition>
+  <PC_PEA.Needs.Relations>Direct relations (no guardian or payment authority)</PC_PEA.Needs.Relations>
+  <PC_PEA.Needs.RelationCount>{0} entries</PC_PEA.Needs.RelationCount>
+  <PC_PEA.Needs.Cycle.Section.Planning>Arbitration and budget (shadow)</PC_PEA.Needs.Cycle.Section.Planning>
+  <PC_PEA.Needs.Cycle.Error>This page cannot be read right now</PC_PEA.Needs.Cycle.Error>
+  <PC_PEA.Needs.Cycle.Section.LongTerm>Long-term life plan</PC_PEA.Needs.Cycle.Section.LongTerm>
+  <PC_PEA.Needs.Cycle.Section.Cycles>Four business cycles</PC_PEA.Needs.Cycle.Section.Cycles>
+  <PC_PEA.Needs.Cycle.Section.Budget>Budget and savings</PC_PEA.Needs.Cycle.Section.Budget>
+  <PC_PEA.Needs.Cycle.Section.Arbitration>Shadow arbitration</PC_PEA.Needs.Cycle.Section.Arbitration>
+  <PC_PEA.Needs.Cycle.GoalEmpty>No goal state yet</PC_PEA.Needs.Cycle.GoalEmpty>
+  <PC_PEA.Needs.Cycle.GoalEmptyHint>Once a shadow plan is built, this tab lists each need's entry threshold, target value and the three gap readings.</PC_PEA.Needs.Cycle.GoalEmptyHint>
+  <PC_PEA.Needs.Cycle.Section.Opportunities>Candidate jobs (none contracted)</PC_PEA.Needs.Cycle.Section.Opportunities>
+  <PC_PEA.Needs.Cycle.Alloc.Immediate>Immediate</PC_PEA.Needs.Cycle.Alloc.Immediate>
+  <PC_PEA.Needs.Cycle.Alloc.Saving>Saving</PC_PEA.Needs.Cycle.Alloc.Saving>
+  <PC_PEA.Needs.Cycle.Alloc.Optional>Optional</PC_PEA.Needs.Cycle.Alloc.Optional>
+  <PC_PEA.Needs.Cycle.Gap.Relative>Relative</PC_PEA.Needs.Cycle.Gap.Relative>
+  <PC_PEA.Needs.Cycle.Gap.Absolute>Absolute</PC_PEA.Needs.Cycle.Gap.Absolute>
+  <PC_PEA.Needs.Cycle.Gap.Raw>Raw</PC_PEA.Needs.Cycle.Gap.Raw>
+  <PC_PEA.Needs.Cycle.Details>Observation details</PC_PEA.Needs.Cycle.Details>
+  <PC_PEA.Needs.Cycle.Tab.Demand>Demand</PC_PEA.Needs.Cycle.Tab.Demand>
+  <PC_PEA.Needs.Cycle.Tab.Decision>Decision</PC_PEA.Needs.Cycle.Tab.Decision>
+  <PC_PEA.Needs.Cycle.Tab.Goal>Goals</PC_PEA.Needs.Cycle.Tab.Goal>
+  <PC_PEA.Needs.Cycle.Section.Satisfaction>Satisfaction</PC_PEA.Needs.Cycle.Section.Satisfaction>
+  <PC_PEA.Needs.Cycle.Section.Goal>Targets and gaps</PC_PEA.Needs.Cycle.Section.Goal>
+  <PC_PEA.Needs.Cycle.Section.Status>Conditions</PC_PEA.Needs.Cycle.Section.Status>
+  <PC_PEA.Needs.Cycle.Overview.Mood>Mood</PC_PEA.Needs.Cycle.Overview.Mood>
+  <PC_PEA.Needs.Cycle.Section.OtherNeeds>Other needs (hidden in vanilla)</PC_PEA.Needs.Cycle.Section.OtherNeeds>
+  <PC_PEA.Needs.Cycle.Hidden>{0} hidden</PC_PEA.Needs.Cycle.Hidden>
+  <PC_PEA.Needs.Cycle.PlannedCount>{0} / {1}</PC_PEA.Needs.Cycle.PlannedCount>
+  <PC_PEA.Needs.Label.Gap>Gap</PC_PEA.Needs.Label.Gap>
+  <PC_PEA.Needs.Label.Satisfaction>Satisfaction</PC_PEA.Needs.Label.Satisfaction>
+  <PC_PEA.Needs.Cycle.Overview>Life security</PC_PEA.Needs.Cycle.Overview>
+  <PC_PEA.Needs.Cycle.ObserveOnly>Observe only (not planned)</PC_PEA.Needs.Cycle.ObserveOnly>
+  <PC_PEA.Needs.Cycle.Summary>{0} planned · {1} observed</PC_PEA.Needs.Cycle.Summary>
+  <PC_PEA.Needs.Cycle.Section.Employment>Labour and contracts</PC_PEA.Needs.Cycle.Section.Employment>
+  <PC_PEA.Needs.Cycle.Section.Care>Care and services</PC_PEA.Needs.Cycle.Section.Care>
+  <PC_PEA.Needs.Cycle.Waiting>waiting {0} / cap {1} ticks</PC_PEA.Needs.Cycle.Waiting>
+  <PC_PEA.Needs.Cycle.Account.Title>Personal account</PC_PEA.Needs.Cycle.Account.Title>
+  <PC_PEA.Needs.Cycle.Account.AvailableValue>Available {0}</PC_PEA.Needs.Cycle.Account.AvailableValue>
+  <PC_PEA.Needs.Cycle.Account.Balance>Account total</PC_PEA.Needs.Cycle.Account.Balance>
+  <PC_PEA.Needs.Cycle.Account.Reserved>Reserved</PC_PEA.Needs.Cycle.Account.Reserved>
+  <PC_PEA.Needs.Cycle.Account.Target>Living reserve target</PC_PEA.Needs.Cycle.Account.Target>
+  <PC_PEA.Needs.Cycle.Account.Gap>Reserve shortfall</PC_PEA.Needs.Cycle.Account.Gap>
+  <PC_PEA.Needs.Cycle.Account.IncomeValue>Income status: {0}</PC_PEA.Needs.Cycle.Account.IncomeValue>
+  <PC_PEA.Needs.Cycle.Account.Details>Decision details</PC_PEA.Needs.Cycle.Account.Details>
+  <PC_PEA.Needs.Cycle.Account.DetailsShort>Details</PC_PEA.Needs.Cycle.Account.DetailsShort>
+  <PC_PEA.Needs.Cycle.Account.AvailableShort>Available balance</PC_PEA.Needs.Cycle.Account.AvailableShort>
+  <PC_PEA.Needs.Cycle.Account.Totals>Total {0} · Reserved {1}</PC_PEA.Needs.Cycle.Account.Totals>
+  <PC_PEA.Needs.Cycle.Account.ReserveSummary>Living reserve {0} · Shortfall {1}</PC_PEA.Needs.Cycle.Account.ReserveSummary>
+  <PC_PEA.Needs.Cycle.Account.DecisionValue>Decision  {0}</PC_PEA.Needs.Cycle.Account.DecisionValue>
+  <PC_PEA.Needs.Cycle.Account.ReasonValue>Reason  {0}</PC_PEA.Needs.Cycle.Account.ReasonValue>
+  <PC_PEA.Needs.Cycle.Account.NextValue>Next  {0}</PC_PEA.Needs.Cycle.Account.NextValue>
+  <PC_PEA.Needs.Cycle.Account.ModelName>Needs planning · Facts → Gap → Choice → Execution</PC_PEA.Needs.Cycle.Account.ModelName>
+  <PC_PEA.Needs.Cycle.Account.FocusValue>Goal  {0}</PC_PEA.Needs.Cycle.Account.FocusValue>
+  <PC_PEA.Needs.Cycle.Account.ExecutionValue>Execution feedback  {0}</PC_PEA.Needs.Cycle.Account.ExecutionValue>
+</LanguageData>

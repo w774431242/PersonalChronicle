@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-08T20:56:09.6198212+08:00",
+  "timezone": "Asia/Shanghai",
+  "status": "ConnectionVerified",
+  "allPassed": true,
+  "package": "@tencent-ai/codebuddy-code",
+  "version": "2.162.0",
+  "model": "hy4-preview",
+  "rawCli": "C:/Users/Administrator/AppData/Local/Programs/CodeBuddyCodeCLI/codebuddy.cmd",
+  "authenticatedLauncher": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\codebuddy.cmd",
+  "region": "internal",
+  "credentialStorage": "Windows DPAPI, current user; injected into child process environment; no plaintext project or settings file",
+  "tests": [
+    {
+      "id": "MODEL",
+      "passed": true,
+      "durationMs": 3689,
+      "sessionId": "01a11b92-d7e0-72ad-8f3f-8d6d5da0fd3c"
+    },
+    {
+      "id": "ACK_READ_WRITE",
+      "passed": true,
+      "durationMs": 6787,
+      "sessionId": "01a11b93-33ee-7e14-ae76-d51c12d92ba0",
+      "permissionDenials": 0
+    },
+    {
+      "id": "SESSION_RESUME",
+      "passed": true,
+      "durationMs": 7319,
+      "sessionId": "01a11b93-33ee-7e14-ae76-d51c12d92ba0"
+    },
+    {
+      "id": "COMMAND",
+      "passed": true,
+      "durationMs": 19245,
+      "sessionId": "01a11b94-ada0-7e54-8e4f-c91399cf3081",
+      "permissionDenials": 0,
+      "actualToolOutput": "Command: node --version\nStdout: v26.8.1\r\n\nStderr: (empty)\nExit Code: 0\nSignal: (none)"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\smoke-response.json",
+      "sha256": "4B0E78EA4219C8220BD8AB79B1A11092DD0DCE4BEA0A2926AB2087C66DA4B4A0"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\smoke-process.json",
+      "sha256": "E5B89BCB59D94C6F239A6525586CE0E94369CF19274460316381C2AF93E0E6E9"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\probe-request.json",
+      "sha256": "C1A5576AEA1FC82D875C0A89BF8459023FBD42B85C9054AC53DDFC8539D62CC4"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\probe-ack.json",
+      "sha256": "972D362BFCFD105ECFBB794461C4C89B0BB5546011C6F38CDFED8FBCC3998FA9"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\ack-response.json",
+      "sha256": "5221E9C968919C173952F69CFFC3BD3FC8EB83E266532B3AB53ED1D21F549344"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\ack-process.json",
+      "sha256": "859A8A99597956E54CF5861B44B6F8E32275B3415F2F0C1683C4AE0CED1CF4CD"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\resume-response.json",
+      "sha256": "152A2D996DCB0406CF7E0C043C00A7FAF92C01110C492C2496990FDA9F2800AD"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\resume-process.json",
+      "sha256": "685C5FA7D868F8A3E3E67E31AC41301EF62AE06F347DA2C059BDD884CC47C2D9"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\command-response.json",
+      "sha256": "AD3A458D569F819FAF0A407318676AE318CE5FE3D6A0C07ABEC259462D4B6500"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\probe\\command-process.json",
+      "sha256": "A5A34182A183F974D73EA0BAD6847C86BBD53122AE823E2A65A39B22368CA48A"
+    }
+  ],
+  "runtimeCodeChanged": false,
+  "gameBuildRun": false,
+  "gameDeployed": false,
+  "economicTaskStarted": false,
+  "previousDesktopDispatchStatus": "NotDelivered",
+  "notes": "Connection probe only. CLI is a separate executor from desktop IDE Craft; no desktop chat delivery is claimed. Explicit Read/Write and exact Bash command allow rules passed without blanket permission bypass.",
+  "sources": [
+    "https://www.codebuddy.cn/docs/cli/installation",
+    "https://www.codebuddy.cn/docs/cli/iam",
+    "https://www.codebuddy.cn/docs/cli/env-vars"
+  ]
+}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using PersonalChronicle.Domain.Profession;
@@ -101,12 +102,22 @@ namespace PersonalChronicle.Tests
         [Test]
         public void ComputePracticeXp_Quantity_AppliedAndClamped()
         {
-            // qty=3 → 30
-            Assert.AreEqual(30f, ProfessionalXpEvaluator.ComputePracticeXp(10f, 1f, 1f, 1f, 3), Epsilon);
-            // qty=10 钳到 4 → 40
-            Assert.AreEqual(40f, ProfessionalXpEvaluator.ComputePracticeXp(10f, 1f, 1f, 1f, 10), Epsilon);
+            // V2.0+ 数量系数衰减 q^0.8：qty=3 → 10×3^0.8 ≈ 22.66（不再是 30，抑制批量刷级）
+            Assert.AreEqual((float)(10f * Math.Pow(3, 0.8)), ProfessionalXpEvaluator.ComputePracticeXp(10f, 1f, 1f, 1f, 3), Epsilon);
+            // qty=10 钳到 4 → 10×4^0.8 ≈ 24.08（不再是 40）
+            Assert.AreEqual((float)(10f * Math.Pow(4, 0.8)), ProfessionalXpEvaluator.ComputePracticeXp(10f, 1f, 1f, 1f, 10), Epsilon);
             // qty=0 视为 1 → 10
             Assert.AreEqual(10f, ProfessionalXpEvaluator.ComputePracticeXp(10f, 1f, 1f, 1f, 0), Epsilon);
+        }
+
+        [Test]
+        public void ComputePracticeXp_QuantityDecay_Sublinear()
+        {
+            // 衰减后 ×4 批量收益 < ×4（24.25 < 40），验证"批量收益递减"
+            float single = ProfessionalXpEvaluator.ComputePracticeXp(10f, 1f, 1f, 1f, 1);
+            float quad = ProfessionalXpEvaluator.ComputePracticeXp(10f, 1f, 1f, 1f, 4);
+            Assert.Less(quad, single * 4f);
+            Assert.Greater(quad, single);
         }
 
         [Test]
@@ -203,6 +214,71 @@ namespace PersonalChronicle.Tests
         public void MasteryFromLevel_ClampedAtHundred()
         {
             Assert.AreEqual(100f, ProfessionalXpEvaluator.MasteryFromLevel(99, 50), Epsilon);
+        }
+
+        // ------------------------------------------------------------------
+        // V2.0+ 通用参数化曲线（curvePower 4 参）
+        // ------------------------------------------------------------------
+
+        [Test]
+        public void LevelFromXp_CurvePower_AtCap_ReturnsMax()
+        {
+            Assert.AreEqual(50, ProfessionalXpEvaluator.LevelFromXp(5000f, 50, 5000f, 1.6f));
+            Assert.AreEqual(50, ProfessionalXpEvaluator.LevelFromXp(10000f, 50, 5000f, 1.6f));
+        }
+
+        [Test]
+        public void LevelFromXp_CurvePower_InvalidArgs_ReturnsZero()
+        {
+            Assert.AreEqual(0, ProfessionalXpEvaluator.LevelFromXp(0f, 50, 5000f, 1.6f));
+            Assert.AreEqual(0, ProfessionalXpEvaluator.LevelFromXp(1000f, 0, 5000f, 1.6f));
+            Assert.AreEqual(0, ProfessionalXpEvaluator.LevelFromXp(1000f, 50, 0f, 1.6f));
+            // curvePower<=0 回退线性 p=1：xp=1000, cap=5000, max=50 → 50×(1000/5000)^1 = 10
+            Assert.AreEqual(10, ProfessionalXpEvaluator.LevelFromXp(1000f, 50, 5000f, 0f));
+        }
+
+        [Test]
+        public void LevelFromXp_CurvePower_StrictlyIncreasing()
+        {
+            int prev = -1;
+            for (int xp = 0; xp <= 5000; xp += 250)
+            {
+                int level = ProfessionalXpEvaluator.LevelFromXp(xp, 50, 5000f, 1.6f);
+                Assert.GreaterOrEqual(level, prev, "等级应随 XP 单调不减");
+                prev = level;
+            }
+        }
+
+        [Test]
+        public void NeedForNext_CurvePower_MonotonicIncreasing()
+        {
+            // 升级成本递增：curvePower>1 时后段升级需求 > 前段
+            float early = ProfessionalXpEvaluator.NeedForNext(5, 50, 5000f, 1.6f);
+            float mid = ProfessionalXpEvaluator.NeedForNext(25, 50, 5000f, 1.6f);
+            float late = ProfessionalXpEvaluator.NeedForNext(45, 50, 5000f, 1.6f);
+            Assert.Greater(mid, early);
+            Assert.Greater(late, mid);
+            // 满级返回 0
+            Assert.AreEqual(0f, ProfessionalXpEvaluator.NeedForNext(50, 50, 5000f, 1.6f));
+        }
+
+        [Test]
+        public void XpAtLevel_CurvePower_Endpoints()
+        {
+            Assert.AreEqual(0f, ProfessionalXpEvaluator.XpAtLevel(0, 50, 5000f, 1.6f));
+            Assert.AreEqual(5000f, ProfessionalXpEvaluator.XpAtLevel(50, 50, 5000f, 1.6f));
+            Assert.AreEqual(5000f, ProfessionalXpEvaluator.XpAtLevel(60, 50, 5000f, 1.6f));
+        }
+
+        [Test]
+        public void ComputeActivityXp_WeightAndRelevance()
+        {
+            // base=10, weight=0.9, rel=1.0, 无品质, diff=1 → 9
+            Assert.AreEqual(9f, ProfessionalXpEvaluator.ComputeActivityXp(10f, 0.9f, 1f, 1f, 1f), Epsilon);
+            // weight=0 → 0
+            Assert.AreEqual(0f, ProfessionalXpEvaluator.ComputeActivityXp(10f, 0f, 1f, 1f, 1f), Epsilon);
+            // rel=0 → 0
+            Assert.AreEqual(0f, ProfessionalXpEvaluator.ComputeActivityXp(10f, 1f, 0f, 1f, 1f), Epsilon);
         }
 
         // ------------------------------------------------------------------

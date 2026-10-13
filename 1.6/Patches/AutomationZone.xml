@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  把车间区设计器挂进原版「区域」分类（DesignationCategoryDef[defName="Zone"]）。
+  该文件放在 Patches/ 下：PatchOperation 不是 Def，不能被 Def 解析器直接加载。
+-->
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/DesignationCategoryDef[defName="Zone"]/specialDesignatorClasses</xpath>
+    <value>
+      <li>PersonalChronicle.Automation.Designator_ZoneAdd_Workshop</li>
+    </value>
+  </Operation>
+</Patch>

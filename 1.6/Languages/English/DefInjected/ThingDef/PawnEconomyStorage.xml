@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PublicStorage.label>public supply shelf</PC_PublicStorage.label>
+  <PC_PublicStorage.description>Public stock. While the economy is enabled, food must be paid for at this shelf's published price per nutrition before it is ingested; payment goes to the public treasury. Set a price after building. No price is published initially. Public ownership survives splitting, hauling and dropping. Ordinary unclassified stock follows vanilla rules.</PC_PublicStorage.description>
+  <PC_PrivateStorage.label>personal supply shelf</PC_PrivateStorage.label>
+  <PC_PrivateStorage.description>Personal stock. Assign an owner while the shelf is empty. The owner can automatically find and eat their food; other pawns cannot consume it. Ownership survives splitting, hauling and dropping, and different owners cannot merge their stacks. Unpaid public food retains public ownership even if placed here. Automatic purchases and use permissions currently cover food.</PC_PrivateStorage.description>
+</LanguageData>

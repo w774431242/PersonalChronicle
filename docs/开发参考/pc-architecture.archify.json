@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "PersonalChronicle 编年史 Mod · 分层架构",
+    "locale": "zh-CN",
+    "output": "PersonalChronicle_Architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1200, 590],
+    "views": [
+      { "id": "capture-path", "label": "采集到渲染主链路", "focus": ["events", "capture", "data", "application", "ui"], "note": "原版玩法事件经 Capture 写入存档，再由 ReadModels 快照驱动 Archive UI 渲染。" },
+      { "id": "layer-direction", "label": "分层与依赖方向", "focus": ["capture", "data", "application", "domain"], "note": "只允许 UI → Application → Domain ← Data / Capture 的单向依赖。" },
+      { "id": "vanilla-writeback", "label": "回写原版与扩展面", "focus": ["domain", "effects", "engine", "api", "thirdparty"], "note": "Effects 以 StatPart 把加成注入原版统计；Api 供第三方 Mod 注册 Provider 覆盖领域判定。" },
+      { "id": "automation", "label": "车间与农机体系", "focus": ["automation", "application", "data"], "note": "车间 / 农机 / 管道域复用应用层读写面与存档组件，不另建旁路。" }
+    ]
+  },
+  "components": [
+    { "id": "thirdparty", "type": "external", "label": "第三方 Mod", "sublabel": "Provider 接入", "pos": [40, 90], "size": [180, 72] },
+    { "id": "api", "type": "backend", "label": "Api 扩展面", "sublabel": "Provider ×4 族", "tag": "19 文件", "pos": [275, 90], "size": [180, 72] },
+    { "id": "domain", "type": "backend", "label": "Domain 领域模型", "sublabel": "模型 / Evaluator", "tag": "72 文件", "pos": [510, 90], "size": [180, 72] },
+    { "id": "effects", "type": "backend", "label": "Effects 原版注入", "sublabel": "StatPart 注入", "tag": "7 文件", "pos": [745, 90], "size": [180, 72] },
+    { "id": "engine", "type": "external", "label": "RimWorld 1.6 Core", "sublabel": "Unity (Mono)", "pos": [980, 90], "size": [180, 72] },
+    { "id": "events", "type": "external", "label": "原版玩法事件", "sublabel": "加入 · 死亡 · 击杀", "pos": [40, 280], "size": [180, 72] },
+    { "id": "capture", "type": "backend", "label": "Capture 采集层", "sublabel": "Harmony 补丁", "tag": "22 文件", "pos": [275, 280], "size": [180, 72] },
+    { "id": "data", "type": "database", "label": "Data 持久化", "sublabel": "存档 + 事件存储", "tag": "9 文件", "pos": [510, 280], "size": [180, 72] },
+    { "id": "application", "type": "backend", "label": "Application 快照层", "sublabel": "Service + ReadModels", "tag": "44 文件", "pos": [745, 280], "size": [180, 72] },
+    { "id": "ui", "type": "frontend", "label": "Archive UI", "sublabel": "MainTabWindow / ITab", "tag": "58 文件", "pos": [980, 280], "size": [180, 72] },
+    { "id": "automation", "type": "backend", "label": "Automation 车间体系", "sublabel": "车间 · 农机 · 管道", "tag": "33 文件", "pos": [745, 470], "size": [180, 72] }
+  ],
+  "connections": [
+    { "id": "events-to-capture", "from": "events", "to": "capture", "label": "玩法事件", "variant": "emphasis" },
+    { "id": "capture-to-data", "from": "capture", "to": "data", "label": "写入档案", "variant": "emphasis" },
+    { "id": "data-to-application", "from": "data", "to": "application", "label": "只读快照", "variant": "emphasis" },
+    { "id": "application-to-ui", "from": "application", "to": "ui", "label": "渲染", "variant": "emphasis" },
+    { "id": "capture-to-domain", "from": "capture", "to": "domain", "label": "领域事件", "fromSide": "top" },
+    { "id": "data-to-domain", "from": "data", "to": "domain", "label": "模型存储" },
+    { "id": "application-to-domain", "from": "application", "to": "domain", "label": "领域类型", "fromSide": "top" },
+    { "id": "domain-to-effects", "from": "domain", "to": "effects", "label": "加成契约" },
+    { "id": "effects-to-engine", "from": "effects", "to": "engine", "label": "StatPart" },
+    { "id": "engine-to-ui", "from": "engine", "to": "ui", "label": "IMGUI 托管", "labelAt": [1070, 221] },
+    { "id": "thirdparty-to-api", "from": "thirdparty", "to": "api", "label": "Provider" },
+    { "id": "api-to-domain", "from": "api", "to": "domain", "label": "领域判定" },
+    { "id": "automation-to-application", "from": "automation", "to": "application", "label": "车间产出" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "分层（268 个 .cs）", "items": ["UI 58 · Application 44 · Domain 72 · Automation 33 · Capture 22 · Api 19 · Data 9 · Effects 7", "依赖方向只允许 UI → Application → Domain ← Data / Capture", "UI 只消费 ReadModels 快照，禁直接引用 Data 或 Capture"] },
+    { "dot": "emerald", "title": "运行链路", "items": ["原版事件 → Capture 的 Harmony 补丁 → IArchiveService 写入面", "写入聚合进 ChronicleGameComponent，随存档 Scribe 持久化", "写入触发 MarkChanged() → DataRevision++，UI 按 CacheRefreshInterval 节流重建快照"] },
+    { "dot": "rose", "title": "扩展与回写", "items": ["Api 暴露 Provider 四族（Battle / Place / Production / Relation）与 EventSink", "Effects 用 StatPart 把职业与车间加成注入原版速度、品质", "RUIF 是独立 UI 框架 Mod，与本 Mod 解耦，接入方案尚未接线"] }
+  ]
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA_WorkContractDocument.label>工作合同</PC_PEA_WorkContractDocument.label>
+  <PC_PEA_WorkContractDocument.description>一份已签发的劳务合同正本。纸本身不是债权：付款对象与全部条款以合同账本为准，捡到或偷走它都不能领取工资。</PC_PEA_WorkContractDocument.description>
+</LanguageData>

@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 using PersonalChronicle.Application;
-using PersonalChronicle.Archive.ReadModels;
+using PersonalChronicle.Application.ReadModels;
 using PersonalChronicle.Archive.UI;
 using PersonalChronicle.Data;
 using PersonalChronicle.Domain;
@@ -30,8 +30,10 @@ namespace PersonalChronicle.Archive
     public partial class ITab_Pawn_Career : ITab
     {
         // ---- Layout metrics（对齐预览 HTML：身份卡 + 3 子页；CJK 行高见 UI 标准 §4）----
-        private const float TabWidth = 640f;
-        private const float TabHeight = 720f;
+        // v1.2.x 前端体检：底框尺寸 copy 六宫格 ITab_Pawn_Chronicle（560×640 固定 +
+        // paneTopY-8 自适应公式），仅对齐底框、不 copy 内容样式；六宫格为完整版基准禁止改。
+        private const float TabWidth = 560f;
+        private const float TabHeight = 640f;
         private const float Pad = UITheme.PanelPadding;
         private const float HeaderH = 96f;
         private const float TabBarH = 30f;
@@ -52,23 +54,19 @@ namespace PersonalChronicle.Archive
             "PersonalChronicle.UI.Career.Sub.Qualification"
         };
 
-        // 12 一级专业稳定键（对齐 ProfessionalFitAnalyzer.MAJOR_WEIGHTS）。
-        private static readonly string[] MajorKeys =
-        {
-            "Engineering", "Manufacturing", "Agriculture", "Forestry",
-            "AnimalHusbandry", "Medicine", "Weapons", "Mining",
-            "Research", "Cooking", "Art", "Management"
-        };
+        // [GOV-006] 以下两个集合均为**引用**而非副本：唯一真源在 Domain 层
+        // （ProfessionalMajor.All = 12 专业稳定键；ProfessionalFitAnalyzer.VanillaSkillKeys
+        //  = 由权重矩阵键反推的原版技能键）。此前本文件各维护一份字面量副本，
+        // 与 Domain 层存在"新增专业/技能需改两处、漏改即静默失配"的风险，现收口为单一真源。
+        private static readonly IReadOnlyList<string> MajorKeys = ProfessionalMajor.All;
 
-        // 12 原版技能稳定键（ProfessionalFitAnalyzer 输入键 = SkillDef.defName）。
-        private static readonly string[] VanillaSkills =
-        {
-            "Shooting", "Melee", "Construction", "Mining", "Cooking", "Plants",
-            "Animals", "Crafting", "Artistic", "Medicine", "Social", "Intellectual"
-        };
+        private static readonly IReadOnlyList<string> VanillaSkills = ProfessionalFitAnalyzer.VanillaSkillKeys;
 
         private int subTabIndex;
         private Vector2 scroll;
+
+        // 注：原「专业等级固定浮层」的 levelHoverStart / levelCardOpen / levelCardAnimT0
+        // 随 DrawLevelCard 一并移除后成为死字段（CS0169/CS0414 警告），已清理（铁律 3.2 要求 0 警）。
 
         // 职业规划（会话态）：当前选中专业 key；null = 未选择（职称链兜底真实 QualificationDef）。
         private string currentMajorKey;
@@ -124,10 +122,11 @@ namespace PersonalChronicle.Archive
 
         protected override void FillTab()
         {
-            // Tab 尺寸自适应：宽度不超过 640 且留屏幕边距；高度不超过 720 且不顶出屏幕
-            // （TabRect = 底部标签行向上生长：上限 screenHeight - 230）。
+            // v1.2.x 前端体检：底框尺寸 copy 六宫格 ITab_Pawn_Chronicle（paneTopY-8 公式）。
+            // 六宫格为完整版基准禁止改；此处与六宫格逐字符一致，只对齐底框、不涉及内容样式。
             float w = Mathf.Min(TabWidth, Verse.UI.screenWidth - 24f);
-            float h = Mathf.Min(TabHeight, Verse.UI.screenHeight - 240f);
+            float paneTopY = PaneTopY;
+            float h = Mathf.Min(TabHeight, Mathf.Max(320f, paneTopY - 8f));
             if (Mathf.Abs(size.x - w) > 1f || Mathf.Abs(size.y - h) > 1f)
             {
                 size = new Vector2(w, h);
@@ -171,6 +170,7 @@ namespace PersonalChronicle.Archive
                 case "Honor": DrawHonorTab(body, pawn, snap); break;
                 case "Qualification": DrawQualificationTab(body, pawn, snap); break;
             }
+
         }
 
         // ================= 顶部身份卡（personbar）=================
@@ -262,8 +262,20 @@ namespace PersonalChronicle.Archive
         private static ProfessionalDirectionDef TryGetDirectionDef(DetailSnapshot snap)
         {
             PawnObject po = snap != null ? snap.DetailObject as PawnObject : null;
-            if (po == null || po.CareerData == null || po.CareerData.Professional == null
-                || po.CareerData.Professional.skills == null)
+            if (po == null || po.CareerData == null || po.CareerData.Professional == null)
+            {
+                return null;
+            }
+            string pd = po.CareerData.Professional.primaryDirection;
+            if (!string.IsNullOrEmpty(pd))
+            {
+                ProfessionalDirectionDef chosen = DefDatabase<ProfessionalDirectionDef>.GetNamedSilentFail(pd);
+                if (chosen != null)
+                {
+                    return chosen;
+                }
+            }
+            if (po.CareerData.Professional.skills == null)
             {
                 return null;
             }
@@ -321,13 +333,18 @@ namespace PersonalChronicle.Archive
         private bool IsMajorChosen(string majorKey)
         {
             if (string.IsNullOrEmpty(majorKey)) return false;
+            ProfessionalDirectionDef ddef = ChosenDirectionDef();
+            return ddef != null && ddef.profession == majorKey;
+        }
+
+        /// <summary>当前已选主方向 Def（经 primaryDirection 解析；未选/null 返回 null）。供悬停透视表复用。</summary>
+        private ProfessionalDirectionDef ChosenDirectionDef()
+        {
             PawnObject po = cachedSnapshot != null ? cachedSnapshot.DetailObject as PawnObject : null;
-            if (po == null || po.CareerData == null || po.CareerData.Professional == null) return false;
+            if (po == null || po.CareerData == null || po.CareerData.Professional == null) return null;
             string pd = po.CareerData.Professional.primaryDirection;
-            if (string.IsNullOrEmpty(pd)) return false;
-            ProfessionalDirectionDef ddef = DefDatabase<ProfessionalDirectionDef>.GetNamedSilentFail(pd);
-            if (ddef == null || string.IsNullOrEmpty(ddef.profession)) return false;
-            return ddef.profession == majorKey;
+            if (string.IsNullOrEmpty(pd)) return null;
+            return DefDatabase<ProfessionalDirectionDef>.GetNamedSilentFail(pd);
         }
 
         private static string TierLabel(MedalTier tier)

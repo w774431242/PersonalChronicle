@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Enable>重新启用经济系统</PC_PEA.Enable>
+  <PC_PEA.Open>经济机构</PC_PEA.Open>
+  <PC_PEA.OpenDesc>管理殖民者账户、劳务招聘、商店库存与体检服务。</PC_PEA.OpenDesc>
+  <PC_PEA.Enabled>已启用</PC_PEA.Enabled>
+  <PC_PEA.Disabled>尚未启用</PC_PEA.Disabled>
+  <PC_PEA.Fault>数据保护模式</PC_PEA.Fault>
+  <PC_PEA.FaultHint>存档版本不支持或账本校验失败。保留原始数据，停止经济操作。</PC_PEA.FaultHint>
+  <PC_PEA.AllocationHint>首次启用一次性注入公共资金 1000.00。工资与购买使用内部记账单位；不会生成白银。关闭会解约并退还未结订单的冻结款。</PC_PEA.AllocationHint>
+  <PC_PEA.OpenState>营业</PC_PEA.OpenState>
+  <PC_PEA.ClosedState>停业</PC_PEA.ClosedState>
+  <PC_PEA.Configure>管理</PC_PEA.Configure>
+  <PC_PEA.Hours>营业/新岗位时段</PC_PEA.Hours>
+  <PC_PEA.Cycle>切换</PC_PEA.Cycle>
+  <PC_PEA.Toggle>切换</PC_PEA.Toggle>
+  <PC_PEA.Price>每件衣物/每次体检价格</PC_PEA.Price>
+  <PC_PEA.Wage>每次真实生产完成工资</PC_PEA.Wage>
+  <PC_PEA.Capacity>新岗位人数</PC_PEA.Capacity>
+  <PC_PEA.RequireExam>招聘需要有效体检</PC_PEA.RequireExam>
+  <PC_PEA.PublishHint>以当前设置发布车间岗位</PC_PEA.PublishHint>
+  <PC_PEA.Publish>发布岗位</PC_PEA.Publish>
+  <PC_PEA.Doctor>体检医生</PC_PEA.Doctor>
+  <PC_PEA.AssignSelected>指派所选殖民者</PC_PEA.AssignSelected>
+  <PC_PEA.ExamHint>个人体检由本人支付。需医术≥4且启用医生工作；招聘要求的体检由公共账户支付。</PC_PEA.ExamHint>
+  <PC_PEA.RequestExam>预约个人体检</PC_PEA.RequestExam>
+  <PC_PEA.SettleHint>检查并补发已有计件工资欠款。公共余额不足时暂停招聘和合同。</PC_PEA.SettleHint>
+  <PC_PEA.Settle>补发欠薪</PC_PEA.Settle>
+  <PC_PEA.MissingZone>车间已移除</PC_PEA.MissingZone>
+  <PC_PEA.Withdraw>撤下并解约</PC_PEA.Withdraw>
+  <PC_PEA.Contract>经济合同</PC_PEA.Contract>
+  <PC_PEA.Terminate>解约</PC_PEA.Terminate>
+  <PC_PEA.StockHint>选择搬运殖民者并点击入库。衣物将真实搬进商店，最多64件；出售后保留品质、耐久与身份。拆除柜台会释放库存。</PC_PEA.StockHint>
+  <PC_PEA.StockSelected>所选者搬运入库</PC_PEA.StockSelected>
+  <PC_PEA.SelectShop>请在机构页选择商店柜台。</PC_PEA.SelectShop>
+  <PC_PEA.PublicFunds>公共资金</PC_PEA.PublicFunds>
+  <PC_PEA.Paid>已支付</PC_PEA.Paid>
+  <PC_PEA.Unpaid>待补发</PC_PEA.Unpaid>
+  <PC_PEA.Cancel>取消并退款</PC_PEA.Cancel>
+  <PC_PEA.Capabilities>移动/操作/意识</PC_PEA.Capabilities>
+  <PC_PEA.Valid>有效</PC_PEA.Valid>
+  <PC_PEA.Expired>已过期</PC_PEA.Expired>
+  <PC_PEA.ReportHint>体检记录检查时的真实能力与可见健康状态，不治疗、不揭示隐藏疾病。有效期1天；岗位仍受实时身体与工作限制。</PC_PEA.ReportHint>
+  <PC_PEA.NoFocus>从机构列表选择柜台</PC_PEA.NoFocus>
+  <PC_PEA.Disable>关闭经济系统</PC_PEA.Disable>
+  <PC_PEA.EnableAllocation>启用 · 首次拨款1000.00</PC_PEA.EnableAllocation>
+  <PC_PEA.SelectedActor>所选殖民者（点击切换）</PC_PEA.SelectedActor>
+  <PC_PEA.NoActor>无可用成年殖民者</PC_PEA.NoActor>
+  <PC_PEA.Rejected>操作未完成：数据已更新，或条件不足。请检查余额、营业时间、医生、工作设置及搬运路径。</PC_PEA.Rejected>
+  <PC_PEA.AutoOn>自主经济开启</PC_PEA.AutoOn>
+  <PC_PEA.AutoOff>自主经济关闭</PC_PEA.AutoOff>
+  <PC_PEA.Tab.Institutions>机构</PC_PEA.Tab.Institutions>
+  <PC_PEA.Tab.Jobs>劳务/合同</PC_PEA.Tab.Jobs>
+  <PC_PEA.Tab.Stock>商店</PC_PEA.Tab.Stock>
+  <PC_PEA.Tab.Accounts>账户/需求</PC_PEA.Tab.Accounts>
+  <PC_PEA.Tab.Ledger>结算/订单</PC_PEA.Tab.Ledger>
+  <PC_PEA.Tab.Reports>体检报告</PC_PEA.Tab.Reports>
+  <PC_PEA.Tab.Empty>暂无数据</PC_PEA.Tab.Empty>
+  <PC_PEA.Tab.EmptyHint>当前没有可显示的内容；完成对应操作后会自动出现在这里。</PC_PEA.Tab.EmptyHint>
+  <PC_PEA.Goal.None>待评估</PC_PEA.Goal.None>
+  <PC_PEA.Goal.WaitingIncome>等待劳动收入</PC_PEA.Goal.WaitingIncome>
+  <PC_PEA.Goal.WaitingSupply>等待合适衣物</PC_PEA.Goal.WaitingSupply>
+  <PC_PEA.Goal.WaitingExamination>等待入职体检</PC_PEA.Goal.WaitingExamination>
+  <PC_PEA.Goal.Executing>办理服务中</PC_PEA.Goal.Executing>
+  <PC_PEA.Goal.AcquiredPendingUse>已购待穿</PC_PEA.Goal.AcquiredPendingUse>
+  <PC_PEA.Goal.Satisfied>已穿戴</PC_PEA.Goal.Satisfied>
+  <PC_PEA.Goal.Blocked>服务受阻</PC_PEA.Goal.Blocked>
+  <PC_PEA.Receipt.OpeningAllocation>启动拨款</PC_PEA.Receipt.OpeningAllocation>
+  <PC_PEA.Receipt.Wage>计件工资</PC_PEA.Receipt.Wage>
+  <PC_PEA.Receipt.ServiceWage>体检劳务报酬</PC_PEA.Receipt.ServiceWage>
+  <PC_PEA.Receipt.Employment>签约</PC_PEA.Receipt.Employment>
+  <PC_PEA.Receipt.Purchase>衣物购买</PC_PEA.Receipt.Purchase>
+  <PC_PEA.Receipt.Examination>体检费用</PC_PEA.Receipt.Examination>
+  <!-- B3.2 机构政策（M10）：声明式报价。零表示未发布，不等于零价。 -->
+  <PC_PEA.Policy.Title>机构政策（工资与食品报价）</PC_PEA.Policy.Title>
+  <PC_PEA.Policy.Hint>玩家作为公有所有者声明每个机构发布什么：绑定车间区、每笔岗位工资、每营养点食品价、营业时段、开闭与**每品类库存目标**。零表示“未发布”，不会当作零价或零目标；未绑定车间区的机构不发布任何岗位；每次修改按修订号提交，过期修改会被拒绝。</PC_PEA.Policy.Hint>
+  <PC_PEA.Policy.None>没有可用机构</PC_PEA.Policy.None>
+  <PC_PEA.Policy.Wage>岗位工资</PC_PEA.Policy.Wage>
+  <PC_PEA.Policy.Hours>时段</PC_PEA.Policy.Hours>
+  <PC_PEA.Policy.Revision>修订</PC_PEA.Policy.Revision>
+  <PC_PEA.Policy.Close>停业</PC_PEA.Policy.Close>
+  <PC_PEA.Policy.StartHour>开始+1时</PC_PEA.Policy.StartHour>
+  <PC_PEA.Policy.EndHour>结束+1时</PC_PEA.Policy.EndHour>
+  <PC_PEA.Policy.Rejected>修改被拒绝</PC_PEA.Policy.Rejected>
+  <!-- 术语统一（2026-10-10，用户批准）：机构类型一律与 Def label 同词，避免"建筑叫劳务站 / 窗口叫劳务所"的双名 -->
+  <PC_PEA.Policy.Kind.LaborOffice>劳务站</PC_PEA.Policy.Kind.LaborOffice>
+  <PC_PEA.Policy.Kind.WorkshopOffice>工坊管理处</PC_PEA.Policy.Kind.WorkshopOffice>
+  <PC_PEA.Policy.Kind.SettlementOffice>工资结算处</PC_PEA.Policy.Kind.SettlementOffice>
+  <PC_PEA.Policy.Kind.Shop>生活用品商店</PC_PEA.Policy.Kind.Shop>
+  <PC_PEA.Policy.Kind.ExamCenter>体检中心</PC_PEA.Policy.Kind.ExamCenter>
+  <PC_PEA.Care.Title>家庭与照护（四身份授权与服务能力）</PC_PEA.Care.Title>
+  <PC_PEA.Care.Hint>受益者、监护人、执行者与付款方是四个独立身份：亲属关系本身不授权扣款，只有显式记录的付款方可被扣费，且每笔都在授权上限与有效期内。服务只有七门取证齐全（原版访问、交付证据、容量时段、价格上限、结算、中断恢复、界面解释）才可收费；未齐的服务继续走原版公共路径，不报价。</PC_PEA.Care.Hint>
+  <PC_PEA.Care.None>尚无照护授权</PC_PEA.Care.None>
+  <PC_PEA.Care.Missing>未证明</PC_PEA.Care.Missing>
+  <PC_PEA.Care.Beneficiary>受益者</PC_PEA.Care.Beneficiary>
+  <PC_PEA.Care.Guardian>监护人</PC_PEA.Care.Guardian>
+  <PC_PEA.Care.Payer>付款方</PC_PEA.Care.Payer>
+  <PC_PEA.Care.Executor>执行者</PC_PEA.Care.Executor>
+  <PC_PEA.Care.GrantAnyExecutor>不限执行者</PC_PEA.Care.GrantAnyExecutor>
+  <PC_PEA.Care.GrantExecutor>指定执行者</PC_PEA.Care.GrantExecutor>
+  <PC_PEA.Care.Charged>已扣/上限</PC_PEA.Care.Charged>
+  <PC_PEA.Care.Expires>到期</PC_PEA.Care.Expires>
+  <PC_PEA.Care.Revoke>撤销授权</PC_PEA.Care.Revoke>
+  <PC_PEA.Care.Grant>新建诊疗授权</PC_PEA.Care.Grant>
+  <PC_PEA.Care.GrantRejected>授权被拒绝</PC_PEA.Care.GrantRejected>
+  <PC_PEA.Care.Service.Examination>体检</PC_PEA.Care.Service.Examination>
+  <PC_PEA.Care.Service.Bed>床位</PC_PEA.Care.Service.Bed>
+  <PC_PEA.Care.Service.Treatment>诊疗</PC_PEA.Care.Service.Treatment>
+  <PC_PEA.Care.Service.Childcare>托育</PC_PEA.Care.Service.Childcare>
+  <PC_PEA.Care.Service.Education>教育/娱乐登记</PC_PEA.Care.Service.Education>
+  <PC_PEA.Care.Capability.PublicVanilla>原版公共</PC_PEA.Care.Capability.PublicVanilla>
+  <PC_PEA.Care.Capability.Preparing>取证中</PC_PEA.Care.Capability.Preparing>
+  <PC_PEA.Care.Capability.ReadyPaid>可收费</PC_PEA.Care.Capability.ReadyPaid>
+  <PC_PEA.Care.Capability.Suspended>已暂停</PC_PEA.Care.Capability.Suspended>  <PC_PEA.Policy.ServicePrice>服务价/次</PC_PEA.Policy.ServicePrice>
+  <PC_PEA.Policy.ServicePriceUp>服务价+</PC_PEA.Policy.ServicePriceUp>
+  <PC_PEA.Policy.ServicePriceDown>服务价-</PC_PEA.Policy.ServicePriceDown>
+  <PC_PEA.Workspace.Pay.Frozen>暂不可用</PC_PEA.Workspace.Pay.Frozen>
+  <PC_PEA.Policy.ServicePriceChanged>服务价：{0} 银/次</PC_PEA.Policy.ServicePriceChanged>
+  <PC_PEA.Policy.ServicePriceClear>服务价归零（未挂牌）</PC_PEA.Policy.ServicePriceClear>
+  <PC_PEA.Policy.ServicePriceHelp>当前 {0} 银/次。0 = 未挂牌（不收费、不结算）。</PC_PEA.Policy.ServicePriceHelp>
+  <PC_PEA.Overview.Title>经济总览（治理视图）</PC_PEA.Overview.Title>
+  <PC_PEA.Overview.Institutions>机构</PC_PEA.Overview.Institutions>
+  <PC_PEA.Overview.Treasury>国库可用</PC_PEA.Overview.Treasury>
+  <PC_PEA.Overview.Unknown>未知</PC_PEA.Overview.Unknown>
+  <PC_PEA.Overview.Contracts>合同</PC_PEA.Overview.Contracts>
+  <PC_PEA.Overview.CareGrants>照护授权</PC_PEA.Overview.CareGrants>
+  <PC_PEA.Overview.Services>服务能力</PC_PEA.Overview.Services>
+  <PC_PEA.Overview.Unproven>未证明</PC_PEA.Overview.Unproven>
+  <PC_PEA.Overview.Note>本页只读已发布读模型：未发布的报价显示为「未发布」，未取证的服务显示为「取证中」，不会为了好看而补齐。</PC_PEA.Overview.Note>
+  <PC_PEA.Overview.Production>生产读数</PC_PEA.Overview.Production>
+  <PC_PEA.Overview.Categories>品类</PC_PEA.Overview.Categories>
+  <PC_PEA.Overview.Stock>库存</PC_PEA.Overview.Stock>
+  <PC_PEA.Overview.Wip>在制</PC_PEA.Overview.Wip>
+  <PC_PEA.Overview.ProductionInputs>补货输入</PC_PEA.Overview.ProductionInputs>
+  <PC_PEA.Overview.Wired>已接线</PC_PEA.Overview.Wired>
+  <PC_PEA.Overview.NotWired>未接线</PC_PEA.Overview.NotWired>
+  <PC_PEA.Overview.Authorised>已授权未开工</PC_PEA.Overview.Authorised>
+  <PC_PEA.Overview.StockTarget>目标库存</PC_PEA.Overview.StockTarget>
+  <PC_PEA.Overview.Reconciliation>旧账对账</PC_PEA.Overview.Reconciliation>
+  <PC_PEA.Overview.RecordCount>条</PC_PEA.Overview.RecordCount>
+  <PC_PEA.Overview.Diagnostics>诊断</PC_PEA.Overview.Diagnostics>
+  <PC_PEA.Overview.Passed>通过</PC_PEA.Overview.Passed>
+  <PC_PEA.Overview.Issues>问题</PC_PEA.Overview.Issues>
+  <PC_PEA.Overview.UnpaidWages>未付工资</PC_PEA.Overview.UnpaidWages>
+  <PC_PEA.Overview.BackingUnverified>背书未证</PC_PEA.Overview.BackingUnverified>
+  <PC_PEA.Overview.Ownership>工作占用</PC_PEA.Overview.Ownership>
+  <PC_PEA.Overview.Restock>补货评估</PC_PEA.Overview.Restock>
+  <PC_PEA.Overview.RestockBlocked>无法评估</PC_PEA.Overview.RestockBlocked>
+  <PC_PEA.Overview.RestockShown>显示</PC_PEA.Overview.RestockShown>
+  <PC_PEA.Overview.RestockUnavailable>读数不可用</PC_PEA.Overview.RestockUnavailable>
+  <PC_PEA.Policy.Reason.DemandDomainNotWired>需求域未接线</PC_PEA.Policy.Reason.DemandDomainNotWired>
+  <PC_PEA.Policy.Reason.ReadoutUnavailable>读数不可用</PC_PEA.Policy.Reason.ReadoutUnavailable>
+  <PC_PEA.Policy.Reason.CategoryUnknown>品类未知</PC_PEA.Policy.Reason.CategoryUnknown>
+  <PC_PEA.Policy.Reason.StockTargetNotWired>未发布库存目标</PC_PEA.Policy.Reason.StockTargetNotWired>
+  <PC_PEA.Policy.Reason.TradeDomainNotWired>贸易域未接线</PC_PEA.Policy.Reason.TradeDomainNotWired>
+  <PC_PEA.Policy.Reason.ProductionAuthorisationNotWired>生产授权未接线</PC_PEA.Policy.Reason.ProductionAuthorisationNotWired>
+  <PC_PEA.Overview.NotWiredInputs>需求·出口</PC_PEA.Overview.NotWiredInputs>
+  <PC_PEA.Overview.WorkshopCapacity>车间</PC_PEA.Overview.WorkshopCapacity>
+  <PC_PEA.Overview.Shifts>班次</PC_PEA.Overview.Shifts>
+  <PC_PEA.Overview.StaffingGap>缺员</PC_PEA.Overview.StaffingGap>
+  <PC_PEA.Overview.OpenBills>工单</PC_PEA.Overview.OpenBills>
+  <PC_PEA.Overview.Proposals>授权</PC_PEA.Overview.Proposals>
+  <PC_PEA.Overview.Credibility>工资可信度</PC_PEA.Overview.Credibility>
+  <PC_PEA.Overview.CredibilityTracked>已记录</PC_PEA.Overview.CredibilityTracked>
+  <PC_PEA.Overview.CredibilityStrong>良好</PC_PEA.Overview.CredibilityStrong>
+  <PC_PEA.Overview.CredibilityWeak>记录差</PC_PEA.Overview.CredibilityWeak>
+  <PC_PEA.Policy.Revoke>撤销授权</PC_PEA.Policy.Revoke>
+  <PC_PEA.Policy.Authorised>已授权</PC_PEA.Policy.Authorised>
+  <PC_PEA.Diag.Open>经济诊断</PC_PEA.Diag.Open>
+  <PC_PEA.Diag.Title>经济诊断（只读）</PC_PEA.Diag.Title>
+  <PC_PEA.Diag.WriteLog>写入日志</PC_PEA.Diag.WriteLog>
+  <PC_PEA.Diag.Written>诊断已写入 Player.log</PC_PEA.Diag.Written>
+  <PC_PEA.Diag.RuntimeNull>经济组件未就绪</PC_PEA.Diag.RuntimeNull>
+  <PC_PEA.Diag.Section.Perception>感知</PC_PEA.Diag.Section.Perception>
+  <PC_PEA.Diag.PerceptionUnavailable>感知未初始化或初始化失败 —— 此时一切规划都会停在「等待事实」</PC_PEA.Diag.PerceptionUnavailable>
+  <PC_PEA.Diag.Population>人口快照</PC_PEA.Diag.Population>
+  <PC_PEA.Diag.PopulationComplete>完整</PC_PEA.Diag.PopulationComplete>
+  <PC_PEA.Diag.OldestDueNote>已超过 300 tick 判据（规划将判事实缺失）</PC_PEA.Diag.OldestDueNote>
+  <PC_PEA.Diag.Section.Institution>制度</PC_PEA.Diag.Section.Institution>
+  <PC_PEA.Diag.None>（无）</PC_PEA.Diag.None>
+  <PC_PEA.Diag.Section.PawnPlans>殖民者规划</PC_PEA.Diag.Section.PawnPlans>
+  <PC_PEA.Diag.NoColonists>本图无在场自由殖民者</PC_PEA.Diag.NoColonists>
+  <PC_PEA.Diag.PlanMissing>本会话尚未为它规划</PC_PEA.Diag.PlanMissing>
+  <PC_PEA.Diag.WillFailFacts>规划将判事实缺失</PC_PEA.Diag.WillFailFacts>
+  <PC_PEA.Policy.Tool>工具</PC_PEA.Policy.Tool>
+  <PC_PEA.Policy.Tool.LabourBoard>劳务板</PC_PEA.Policy.Tool.LabourBoard>
+  <PC_PEA.Policy.Tool.WorkshopBench>车间工作台</PC_PEA.Policy.Tool.WorkshopBench>
+  <PC_PEA.Policy.Tool.SettlementDesk>结算台</PC_PEA.Policy.Tool.SettlementDesk>
+  <PC_PEA.Policy.Tool.ShopCounter>零售柜台</PC_PEA.Policy.Tool.ShopCounter>
+  <PC_PEA.Policy.Tool.ExamRoom>体检室</PC_PEA.Policy.Tool.ExamRoom>
+  <PC_PEA.Policy.Tool.BedWard>床位区</PC_PEA.Policy.Tool.BedWard>
+  <PC_PEA.Policy.Tool.Kitchen>厨房</PC_PEA.Policy.Tool.Kitchen>
+  <PC_PEA.Policy.Tool.TailorBench>裁缝台</PC_PEA.Policy.Tool.TailorBench>
+  <PC_PEA.Policy.Tool.Clinic>诊疗室</PC_PEA.Policy.Tool.Clinic>
+  <PC_PEA.Policy.Tool.Nursery>托育室</PC_PEA.Policy.Tool.Nursery>
+  <PC_PEA.Policy.Tool.School>教室</PC_PEA.Policy.Tool.School>
+  <PC_PEA.Policy.Tool.Warehouse>仓房</PC_PEA.Policy.Tool.Warehouse>
+  <PC_PEA.Policy.StockTarget>库存目标</PC_PEA.Policy.StockTarget>
+  <PC_PEA.Care.Evidence>交付过程</PC_PEA.Care.Evidence>
+  <PC_PEA.Care.Evidence.NotDeliverable>原版无过程</PC_PEA.Care.Evidence.NotDeliverable>
+  <PC_PEA.Care.Evidence.ProcessExistsCaptureNotWired>过程在·摄取未接</PC_PEA.Care.Evidence.ProcessExistsCaptureNotWired>
+  <PC_PEA.Care.Evidence.CaptureWired>已接通</PC_PEA.Care.Evidence.CaptureWired>
+  <PC_PEA.Care.Gate.VanillaAccess>原版访问</PC_PEA.Care.Gate.VanillaAccess>
+  <PC_PEA.Care.Gate.DeliveryEvidence>交付证据</PC_PEA.Care.Gate.DeliveryEvidence>
+  <PC_PEA.Care.Gate.CapacityAndHours>容量时段</PC_PEA.Care.Gate.CapacityAndHours>
+  <PC_PEA.Care.Gate.PriceCap>价格上限</PC_PEA.Care.Gate.PriceCap>
+  <PC_PEA.Care.Gate.Settlement>结算</PC_PEA.Care.Gate.Settlement>
+  <PC_PEA.Care.Gate.InterruptionRecovery>中断恢复</PC_PEA.Care.Gate.InterruptionRecovery>
+  <PC_PEA.Care.Gate.UiExplanation>界面解释</PC_PEA.Care.Gate.UiExplanation>
+  <PC_PEA.Care.Kind.LaborOffice>劳务站</PC_PEA.Care.Kind.LaborOffice>
+  <PC_PEA.Care.Kind.WorkshopOffice>工坊管理处</PC_PEA.Care.Kind.WorkshopOffice>
+  <PC_PEA.Care.Kind.SettlementOffice>工资结算处</PC_PEA.Care.Kind.SettlementOffice>
+  <PC_PEA.Care.Kind.Shop>生活用品商店</PC_PEA.Care.Kind.Shop>
+  <PC_PEA.Care.Kind.ExamCenter>体检中心</PC_PEA.Care.Kind.ExamCenter>
+  <PC_PEA.Care.Cap.Name.Work>岗位</PC_PEA.Care.Cap.Name.Work>
+  <PC_PEA.Care.Cap.Name.Food>食品</PC_PEA.Care.Cap.Name.Food>
+  <PC_PEA.Care.Cap.Name.Apparel>衣物</PC_PEA.Care.Cap.Name.Apparel>
+  <PC_PEA.Care.Cap.Name.Service>医疗与服务</PC_PEA.Care.Cap.Name.Service>
+  <PC_PEA.Care.Cap.Reason.Unset>未配置</PC_PEA.Care.Cap.Reason.Unset>
+  <PC_PEA.Care.Cap.Reason.NotPublished>未挂牌</PC_PEA.Care.Cap.Reason.NotPublished>
+  <PC_PEA.Care.Cap.Reason.Closed>机构停业</PC_PEA.Care.Cap.Reason.Closed>
+  <PC_PEA.Care.Cap.Reason.OutOfHours>非营业时段</PC_PEA.Care.Cap.Reason.OutOfHours>
+  <PC_PEA.Care.Cap.Reason.ModeNotOpen>制度未开放</PC_PEA.Care.Cap.Reason.ModeNotOpen>
+  <PC_PEA.Policy.Reason.ProposalCapacityReached>授权账已满</PC_PEA.Policy.Reason.ProposalCapacityReached>
+  <PC_PEA.Policy.Reason.ProposalInvalid>授权参数无效</PC_PEA.Policy.Reason.ProposalInvalid>
+  <PC_PEA.Policy.Reason.ExecutorSinkNotWired>执行器未接线</PC_PEA.Policy.Reason.ExecutorSinkNotWired>
+  <PC_PEA.Policy.Reason.ExecutorFailure>执行器读取失败</PC_PEA.Policy.Reason.ExecutorFailure>
+  <!-- 柜台工作台（CHG-20261010-ECON-COUNTER-WORKSPACE）：每台机构独立窗口的 KPI / 分区 / 说明 -->
+  <PC_PEA.Workspace.Kpi.Zones>绑定车间区</PC_PEA.Workspace.Kpi.Zones>
+  <PC_PEA.Workspace.Kpi.Positions>在招岗位</PC_PEA.Workspace.Kpi.Positions>
+  <PC_PEA.Workspace.Kpi.StaffingGap>缺员</PC_PEA.Workspace.Kpi.StaffingGap>
+  <PC_PEA.Workspace.Kpi.Authorisations>生产授权</PC_PEA.Workspace.Kpi.Authorisations>
+  <PC_PEA.Workspace.Kpi.UnpaidWages>未付工资</PC_PEA.Workspace.Kpi.UnpaidWages>
+  <PC_PEA.Workspace.Kpi.TreasuryAvailable>国库可用</PC_PEA.Workspace.Kpi.TreasuryAvailable>
+  <PC_PEA.Workspace.Kpi.Receipts>凭证条数</PC_PEA.Workspace.Kpi.Receipts>
+  <PC_PEA.Workspace.Kpi.StockCount>在售件数</PC_PEA.Workspace.Kpi.StockCount>
+  <PC_PEA.Workspace.Kpi.ServicePrice>服务价</PC_PEA.Workspace.Kpi.ServicePrice>
+  <PC_PEA.Workspace.Kpi.ClinicAccount>本机构账户</PC_PEA.Workspace.Kpi.ClinicAccount>
+  <PC_PEA.Workspace.Kpi.Reports>体检报告</PC_PEA.Workspace.Kpi.Reports>
+  <PC_PEA.Workspace.Kpi.ReportsValid>有效报告</PC_PEA.Workspace.Kpi.ReportsValid>
+  <PC_PEA.Workspace.Section.Positions>本图岗位（地图口径：本图全部岗位与落在其上的活跃合同）</PC_PEA.Workspace.Section.Positions>
+  <PC_PEA.Workspace.Section.Stock>本柜台库存</PC_PEA.Workspace.Section.Stock>
+  <PC_PEA.Workspace.Section.Receipts>凭证（全殖民口径）</PC_PEA.Workspace.Section.Receipts>
+  <PC_PEA.Workspace.Section.Reports>体检报告（全殖民口径）</PC_PEA.Workspace.Section.Reports>
+  <PC_PEA.Workspace.NoInstitutionField>凭证与报告没有机构归属字段，本区为全殖民口径，不代表本机构流水</PC_PEA.Workspace.NoInstitutionField>
+  <PC_PEA.Workspace.PositionsNone>该柜台尚未绑定车间区，或绑定的车间区还没有已发布岗位。</PC_PEA.Workspace.PositionsNone>
+  <PC_PEA.Workspace.ContractsHint>在签合同</PC_PEA.Workspace.ContractsHint>
+  <PC_PEA.Workspace.StockEmpty>柜台内暂无在售物品；入库需要搬运殖民者与可用的衣物。</PC_PEA.Workspace.StockEmpty>
+  <PC_PEA.Workspace.NoActions>本柜台当前没有可执行的写操作（账户等承载页在本窗口的页签里）。</PC_PEA.Workspace.NoActions>
+  <!-- 原版工作合同（CHG-20261010-VANILLA-JOBS）：劳务站识别玩家下达的工作动作
+       UI 工程（2026-10-10）：删除 Workspace.Hint.OldVerbsClosed —— 它是"解释为何没有那些按钮"的
+       开发者说明，对玩家是噪音；F4 的纪律由"行动区只列真正可用的动作"直接体现，无需再加一段解释。 -->
+  <PC_PEA.Workspace.Kpi.VanillaContracts>承接人</PC_PEA.Workspace.Kpi.VanillaContracts>
+  <PC_PEA.Workspace.VanillaHint>识别玩家下达的砍伐 / 割除 / 采矿动作，按完成件数从国库计酬（名称取自原版工作定义，沿用它俩的第三方内容同样适用）。用上方「每份」按钮调整每份合同的件数：多名求职者会各签一份并行开工。旧存档中已有的标记不追溯，需要重新下达一次。</PC_PEA.Workspace.VanillaHint>
+  <PC_PEA.Workspace.Section.VanillaWork>本图待办（**你亲自下达**的砍伐 / 割除 / 采矿任务；取消一条立即下架。建筑自动清障 —— 如风力发电机的自动割除 —— 不计入）</PC_PEA.Workspace.Section.VanillaWork>
+  <PC_PEA.Workspace.VanillaBacklog>待办</PC_PEA.Workspace.VanillaBacklog>
+  <PC_PEA.Workspace.VanillaCommitted>已派发</PC_PEA.Workspace.VanillaCommitted>
+  <PC_PEA.Workspace.VanillaAvailable>可派发</PC_PEA.Workspace.VanillaAvailable>
+  <PC_PEA.Workspace.VanillaPerContract>每份</PC_PEA.Workspace.VanillaPerContract>
+  <PC_PEA.Workspace.VanillaStatsDone>已完成</PC_PEA.Workspace.VanillaStatsDone>
+  <PC_PEA.Workspace.VanillaStatsPaid>已付</PC_PEA.Workspace.VanillaStatsPaid>
+  <PC_PEA.Workspace.ContractWage>签约价</PC_PEA.Workspace.ContractWage>
+  <PC_PEA.Workspace.Chain.Blocked>链路待打通</PC_PEA.Workspace.Chain.Blocked>
+  <PC_PEA.Workspace.Chain.Ready>链路已通：待办、工资、国库与求职动机齐备。</PC_PEA.Workspace.Chain.Ready>
+  <PC_PEA.Workspace.Chain.NoBacklog>无待办（用砍伐 / 割除 / 采矿设计器下达）</PC_PEA.Workspace.Chain.NoBacklog>
+  <PC_PEA.Workspace.Chain.TreasuryEmpty>国库为空（去结算处缴存银币）</PC_PEA.Workspace.Chain.TreasuryEmpty>
+  <PC_PEA.Workspace.Chain.TreasuryUnknown>国库读数不可用（账本未就绪）</PC_PEA.Workspace.Chain.TreasuryUnknown>
+  <PC_PEA.Workspace.Detail.Primary>本柜台</PC_PEA.Workspace.Detail.Primary>
+  <PC_PEA.KindMissing>这栋经济机构缺少「机构类型」声明（EconomyInstitutionExtension.kind），无法打开柜台；请检查该建筑的 Def。</PC_PEA.KindMissing>
+  <PC_PEA.Order.Mine>开采</PC_PEA.Order.Mine>
+  <PC_PEA.Order.ChopWood>伐木</PC_PEA.Order.ChopWood>
+  <PC_PEA.Order.CutPlants>割除</PC_PEA.Order.CutPlants>
+  <PC_PEA.Order.Harvest>收获</PC_PEA.Order.Harvest>
+  <PC_PEA.Order.Hunt>狩猎</PC_PEA.Order.Hunt>
+  <PC_PEA.Order.Slaughter>宰杀</PC_PEA.Order.Slaughter>
+  <PC_PEA.Order.Tame>驯服</PC_PEA.Order.Tame>
+  <PC_PEA.Order.Haul>搬运</PC_PEA.Order.Haul>
+  <PC_PEA.Workspace.OrderList>订单</PC_PEA.Workspace.OrderList>
+  <PC_PEA.Workspace.Pay.Wired>已接线</PC_PEA.Workspace.Pay.Wired>
+  <PC_PEA.Workspace.Pay.NotWired>⚠ 未接线（完成信号未接入，暂不计酬）</PC_PEA.Workspace.Pay.NotWired>
+  <PC_PEA.Workspace.Section.ModPosts>本 Mod 岗位（车间区）</PC_PEA.Workspace.Section.ModPosts>
+  <PC_PEA.Workspace.NoModPosts>本图暂无开放的车间岗位</PC_PEA.Workspace.NoModPosts>
+  <PC_PEA.Workspace.Kpi.PayableBacklog>可计酬待办</PC_PEA.Workspace.Kpi.PayableBacklog>
+  <PC_PEA.Workspace.Kpi.UnwiredBacklog>未接线待办</PC_PEA.Workspace.Kpi.UnwiredBacklog>
+  <PC_PEA.Workspace.Col.Work>工作</PC_PEA.Workspace.Col.Work>
+  <PC_PEA.Workspace.Col.Orders>订单</PC_PEA.Workspace.Col.Orders>
+  <PersonalChronicle.Storage.PublicMarketPriced>公有储物：按物品市价计费</PersonalChronicle.Storage.PublicMarketPriced>
+  <PC_PEA.Dialog.WorkContract.Title>工作合同</PC_PEA.Dialog.WorkContract.Title>
+  <PC_PEA.Dialog.WorkContract.Jobs>工作数量</PC_PEA.Dialog.WorkContract.Jobs>
+  <PC_PEA.Dialog.WorkContract.StartHour>开始时段</PC_PEA.Dialog.WorkContract.StartHour>
+  <PC_PEA.Dialog.WorkContract.EndHour>结束时段</PC_PEA.Dialog.WorkContract.EndHour>
+  <PC_PEA.Dialog.WorkContract.Wage>单件薪资</PC_PEA.Dialog.WorkContract.Wage>
+  <PC_PEA.Dialog.WorkContract.Recommended>推荐市价：</PC_PEA.Dialog.WorkContract.Recommended>
+  <PC_PEA.Dialog.WorkContract.Baseline>推荐基准价（无产出市价）：</PC_PEA.Dialog.WorkContract.Baseline>
+  <PC_PEA.Dialog.WorkContract.Confirm>派发合同</PC_PEA.Dialog.WorkContract.Confirm>
+  <PC_PEA.Dialog.WorkContract.Cancel>取消</PC_PEA.Dialog.WorkContract.Cancel>
+  <PC_PEA.Dialog.WorkContract.Midnight>全天</PC_PEA.Dialog.WorkContract.Midnight>
+  <PC_PEA.Dialog.WorkContract.Reason.NoDemand>该工作当前没有可派发的需求</PC_PEA.Dialog.WorkContract.Reason.NoDemand>
+  <PC_PEA.Dialog.WorkContract.Reason.JobsOutOfRange>数量超出可派发范围</PC_PEA.Dialog.WorkContract.Reason.JobsOutOfRange>
+  <PC_PEA.Dialog.WorkContract.Reason.WageOutOfRange>薪资超出允许范围</PC_PEA.Dialog.WorkContract.Reason.WageOutOfRange>
+  <PC_PEA.Dialog.WorkContract.Reason.WindowOutOfRange>时段超出允许范围</PC_PEA.Dialog.WorkContract.Reason.WindowOutOfRange>
+  <PC_PEA.Dialog.WorkContract.Reason.InsufficientBacking>国库可用余额不足以预留这笔工资</PC_PEA.Dialog.WorkContract.Reason.InsufficientBacking>
+  <PC_PEA.Dialog.WorkContract.Reason.ContractAlreadyTaken>这份合同刚被他人接走</PC_PEA.Dialog.WorkContract.Reason.ContractAlreadyTaken>
+  <PC_PEA.Workspace.Col.WorkType>工作类型</PC_PEA.Workspace.Col.WorkType>
+  <PC_PEA.Workspace.Col.Position>工作岗位</PC_PEA.Workspace.Col.Position>
+  <PC_PEA.Workspace.Col.Demand>总需求</PC_PEA.Workspace.Col.Demand>
+  <PC_PEA.Workspace.Col.Posted>已派发</PC_PEA.Workspace.Col.Posted>
+  <PC_PEA.Workspace.Col.Employment>就业率</PC_PEA.Workspace.Col.Employment>
+  <PC_PEA.Workspace.ModPosition>车间岗位</PC_PEA.Workspace.ModPosition>
+  <PC_PEA.Workspace.Col.Wage>工资</PC_PEA.Workspace.Col.Wage>
+  <PC_PEA.Workspace.Col.Pay>计酬</PC_PEA.Workspace.Col.Pay>
+  <PC_PEA.Workspace.Table.All>全部</PC_PEA.Workspace.Table.All>
+  <PC_PEA.Workspace.Table.Catalogue>工作目录</PC_PEA.Workspace.Table.Catalogue>
+  <PC_PEA.Workspace.Table.Contracts>工作合同</PC_PEA.Workspace.Table.Contracts>
+  <PC_PEA.Workspace.Table.Search>搜索承接人 / 合同号</PC_PEA.Workspace.Table.Search>
+  <PC_PEA.Workspace.Contract.Col.Pawn>承接</PC_PEA.Workspace.Contract.Col.Pawn>
+  <PC_PEA.Workspace.Contract.Col.Done>完成</PC_PEA.Workspace.Contract.Col.Done>
+  <PC_PEA.Workspace.Contract.Col.Total>件数</PC_PEA.Workspace.Contract.Col.Total>
+  <PC_PEA.Workspace.Contract.Col.Unpaid>未付</PC_PEA.Workspace.Contract.Col.Unpaid>
+  <PC_PEA.Workspace.Contract.Paid>已付</PC_PEA.Workspace.Contract.Paid>
+  <PC_PEA.Workspace.Contract.Detail.Id>合同号</PC_PEA.Workspace.Contract.Detail.Id>
+  <PC_PEA.Workspace.Contract.Detail.Signed>签订</PC_PEA.Workspace.Contract.Detail.Signed>
+  <PC_PEA.Workspace.Contract.Detail.Expires>到期</PC_PEA.Workspace.Contract.Detail.Expires>
+  <PC_PEA.Workspace.Contract.Detail.Position>岗位键</PC_PEA.Workspace.Contract.Detail.Position>
+  <PC_PEA.Workspace.Col.Action>操作</PC_PEA.Workspace.Col.Action>
+  <PC_PEA.Workspace.Contract.Posted>待承接</PC_PEA.Workspace.Contract.Posted>
+  <PC_PEA.Workspace.Contract.Revoke>撤销</PC_PEA.Workspace.Contract.Revoke>
+  <PC_PEA.Workspace.Contract.RevokeConfirm>撤销这份已派发的工作合同？件数与预留资金会当场退回。</PC_PEA.Workspace.Contract.RevokeConfirm>
+  <PC_PEA.Workspace.Contract.Detail.Window>时段</PC_PEA.Workspace.Contract.Detail.Window>
+  <PC_PEA.Workspace.Contract.AllDay>全天</PC_PEA.Workspace.Contract.AllDay>
+  <PC_PEA.Workspace.Contract.Revoke.Reason.ContractUnknown>撤销失败：找不到该合同</PC_PEA.Workspace.Contract.Revoke.Reason.ContractUnknown>
+  <PC_PEA.Workspace.Contract.Revoke.Reason.NotPosted>撤销失败：该合同已被承接或已结束</PC_PEA.Workspace.Contract.Revoke.Reason.NotPosted>
+  <PC_PEA.Workspace.Contract.Revoke.Reason.Replay>撤销失败：该合同已撤销</PC_PEA.Workspace.Contract.Revoke.Reason.Replay>
+  <PC_PEA.Workspace.WorkPrices>工作定价</PC_PEA.Workspace.WorkPrices>
+  <PC_PEA.WorkPrices.Title>工作定价：工种默认价与订单覆盖价</PC_PEA.WorkPrices.Title>
+  <PC_PEA.WorkPrices.Hint>金额以银为单位，使用小数点，最多两位小数。0 或清除表示继承工种默认价/推荐价。只影响新合同，既有合同工资不变。搬运按成功送达的一趟；驯服按成功一次；其它订单按完成一个目标计件。</PC_PEA.WorkPrices.Hint>
+  <PC_PEA.WorkPrices.Default>工种默认价</PC_PEA.WorkPrices.Default>
+  <PC_PEA.WorkPrices.Override>订单覆盖价</PC_PEA.WorkPrices.Override>
+  <PC_PEA.WorkPrices.Inherit>未设价：继承工种默认价/推荐价</PC_PEA.WorkPrices.Inherit>
+  <PC_PEA.WorkPrices.Save>保存</PC_PEA.WorkPrices.Save>
+  <PC_PEA.WorkPrices.Clear>清除</PC_PEA.WorkPrices.Clear>
+  <PC_PEA.WorkPrices.Invalid>金额须为 0–1000.00 银，最多两位小数</PC_PEA.WorkPrices.Invalid>
+  <PC_PEA.WorkPrices.Failed>保存失败：机构不可用、数据版本不支持或定价条目已满</PC_PEA.WorkPrices.Failed>
+  <PC_PEA.WorkPrices.Saved>已保存（仅新合同生效）</PC_PEA.WorkPrices.Saved>
+  <PC_PEA.WorkPrices.Applied>采用配置报价：</PC_PEA.WorkPrices.Applied>
+  <PC_PEA.Dialog.WorkContract.Reason.OrderUnavailable>订单未接线或与工种不符</PC_PEA.Dialog.WorkContract.Reason.OrderUnavailable>
+  <PC_PEA.Dialog.WorkContract.Reason.PriceUnavailable>价格数据不可读取（未知版本或损坏），请恢复可用存档后再起草</PC_PEA.Dialog.WorkContract.Reason.PriceUnavailable>
+
+  <PC_PEA.LaborVisual.Stage.None>未在办</PC_PEA.LaborVisual.Stage.None>
+  <PC_PEA.LaborVisual.Stage.IntentReady>准备到劳务站</PC_PEA.LaborVisual.Stage.IntentReady>
+  <PC_PEA.LaborVisual.Stage.GoingToLaborOffice>前往劳务站</PC_PEA.LaborVisual.Stage.GoingToLaborOffice>
+  <PC_PEA.LaborVisual.Stage.QueuedAtLaborOffice>柜台排队</PC_PEA.LaborVisual.Stage.QueuedAtLaborOffice>
+  <PC_PEA.LaborVisual.Stage.Negotiating>洽谈中</PC_PEA.LaborVisual.Stage.Negotiating>
+  <PC_PEA.LaborVisual.Stage.IssuingDocument>签领合同</PC_PEA.LaborVisual.Stage.IssuingDocument>
+  <PC_PEA.LaborVisual.Stage.Working>持约履约</PC_PEA.LaborVisual.Stage.Working>
+  <PC_PEA.LaborVisual.Stage.CollectingOutputs>收集产物</PC_PEA.LaborVisual.Stage.CollectingOutputs>
+  <PC_PEA.LaborVisual.Stage.GoingToSettlement>前往工资结算处</PC_PEA.LaborVisual.Stage.GoingToSettlement>
+  <PC_PEA.LaborVisual.Stage.VerifyingSubmission>核验交付</PC_PEA.LaborVisual.Stage.VerifyingSubmission>
+  <PC_PEA.LaborVisual.Stage.AwaitingPayment>已交付待发薪</PC_PEA.LaborVisual.Stage.AwaitingPayment>
+  <PC_PEA.LaborVisual.Stage.PaymentConfirmed>工资已到账</PC_PEA.LaborVisual.Stage.PaymentConfirmed>
+  <PC_PEA.LaborVisual.Stage.Archived>已结清归档</PC_PEA.LaborVisual.Stage.Archived>
+
+  <PC_PEA.LaborVisual.Hold.None>进行中</PC_PEA.LaborVisual.Hold.None>
+  <PC_PEA.LaborVisual.Hold.Paused>已暂停</PC_PEA.LaborVisual.Hold.Paused>
+  <PC_PEA.LaborVisual.Hold.Blocked>受阻</PC_PEA.LaborVisual.Hold.Blocked>
+  <PC_PEA.LaborVisual.Hold.Reconciliation>物资待对账</PC_PEA.LaborVisual.Hold.Reconciliation>
+
+  <PC_PEA.LaborVisual.Reason.None>无需处理</PC_PEA.LaborVisual.Reason.None>
+  <PC_PEA.LaborVisual.Reason.ContractAlreadyTaken>机会已被他人接走</PC_PEA.LaborVisual.Reason.ContractAlreadyTaken>
+  <PC_PEA.LaborVisual.Reason.InsufficientBacking>资金不足，无法承诺这份工资</PC_PEA.LaborVisual.Reason.InsufficientBacking>
+  <PC_PEA.LaborVisual.Reason.JobCapReached>该合同件数已做满</PC_PEA.LaborVisual.Reason.JobCapReached>
+  <PC_PEA.LaborVisual.Reason.JobsAlreadyCommitted>该工种待办已被其他合同预留</PC_PEA.LaborVisual.Reason.JobsAlreadyCommitted>
+  <PC_PEA.LaborVisual.Reason.WorkTypeUnavailable>该工种在当前人员上不可用</PC_PEA.LaborVisual.Reason.WorkTypeUnavailable>
+  <PC_PEA.LaborVisual.Reason.ZoneUnavailable>劳务站不可用（已拆除或燃烧）</PC_PEA.LaborVisual.Reason.ZoneUnavailable>
+  <PC_PEA.LaborVisual.Reason.CannotReach>无法安全到达劳务站</PC_PEA.LaborVisual.Reason.CannotReach>
+  <PC_PEA.LaborVisual.Reason.DeliveryUnsupported>该工种尚不支持实体交付，无法签订新模式合同</PC_PEA.LaborVisual.Reason.DeliveryUnsupported>
+  <PC_PEA.LaborVisual.Reason.AlreadyContracted>已有在办合同</PC_PEA.LaborVisual.Reason.AlreadyContracted>
+  <PC_PEA.LaborVisual.Reason.InstitutionNotReady>制度尚未开放新的用工承诺</PC_PEA.LaborVisual.Reason.InstitutionNotReady>
+  <PC_PEA.LaborVisual.Reason.PriceUnavailable>价格数据不可读取</PC_PEA.LaborVisual.Reason.PriceUnavailable>
+  <PC_PEA.LaborVisual.Reason.ProductNotCarried>实物产物尚未随身携带到柜台</PC_PEA.LaborVisual.Reason.ProductNotCarried>
+  <PC_PEA.LaborVisual.Reason.SignedButContractMissing>签约已提交但合同记录缺失，需诊断</PC_PEA.LaborVisual.Reason.SignedButContractMissing>
+  <PC_PEA.LaborVisual.Reason.DocumentIdentityConflict>合同纸身份冲突，需诊断</PC_PEA.LaborVisual.Reason.DocumentIdentityConflict>
+  <PC_PEA.LaborVisual.Reason.DocumentReissueLimit>补发次数已达上限，需人工处理</PC_PEA.LaborVisual.Reason.DocumentReissueLimit>
+  <PC_PEA.LaborVisual.Reason.SubmissionUnknown>交付数量无法核对，需对账</PC_PEA.LaborVisual.Reason.SubmissionUnknown>
+  <PC_PEA.LaborVisual.Reason.SignRejected>到站复验未通过</PC_PEA.LaborVisual.Reason.SignRejected>
+  <PC_PEA.LaborVisual.Reason.PayloadBlocked>存档数据版本较新，已停止不确定写入</PC_PEA.LaborVisual.Reason.PayloadBlocked>
+
+  <PC_PEA.LaborVisual.Next.GotoLaborOffice>到劳务站签约</PC_PEA.LaborVisual.Next.GotoLaborOffice>
+  <PC_PEA.LaborVisual.Next.Queue>排队等待办理</PC_PEA.LaborVisual.Next.Queue>
+  <PC_PEA.LaborVisual.Next.Negotiate>与柜台洽谈</PC_PEA.LaborVisual.Next.Negotiate>
+  <PC_PEA.LaborVisual.Next.IssueDocument>签领合同正本</PC_PEA.LaborVisual.Next.IssueDocument>
+  <PC_PEA.LaborVisual.Next.Work>执行原版工作</PC_PEA.LaborVisual.Next.Work>
+  <PC_PEA.LaborVisual.Next.BringProducts>把产物搬回工资结算处</PC_PEA.LaborVisual.Next.BringProducts>
+  <PC_PEA.LaborVisual.Next.AwaitPayment>等待资金到账</PC_PEA.LaborVisual.Next.AwaitPayment>
+  <PC_PEA.LaborVisual.Next.RetryLater>稍后重试</PC_PEA.LaborVisual.Next.RetryLater>
+  <PC_PEA.LaborVisual.Next.Diagnose>查看诊断详情</PC_PEA.LaborVisual.Next.Diagnose>
+  <!-- CA-15：运行期实际会用到的**动作/阻断/原因**补齐（原缺键回落成稳定 ID，玩家看不懂） -->
+  <PC_PEA.LaborVisual.Next.Verify>到柜台核验交验</PC_PEA.LaborVisual.Next.Verify>
+  <PC_PEA.LaborVisual.Next.Replan>重新规划路线</PC_PEA.LaborVisual.Next.Replan>
+  <PC_PEA.LaborVisual.Next.ReissueContract>到劳务站补领合同正本</PC_PEA.LaborVisual.Next.ReissueContract>
+  <PC_PEA.LaborVisual.Next.CollectOutputs>搬运自己产出的交付物</PC_PEA.LaborVisual.Next.CollectOutputs>
+  <PC_PEA.LaborVisual.Next.GoToSettlement>带货运往结算处</PC_PEA.LaborVisual.Next.GoToSettlement>
+  <PC_PEA.LaborVisual.Next.SubmitWork>到结算处交验</PC_PEA.LaborVisual.Next.SubmitWork>
+  <PC_PEA.LaborVisual.Reason.WrongStation>站台类型不符，需到对应机构办理</PC_PEA.LaborVisual.Reason.WrongStation>
+  <PC_PEA.LaborVisual.Reason.Interrupted>办理被打断（被征召/倒地/离开）</PC_PEA.LaborVisual.Reason.Interrupted>
+  <PC_PEA.LaborVisual.Reason.DeliveryRoomFull>接收区已满，腾出空间后再交验</PC_PEA.LaborVisual.Reason.DeliveryRoomFull>
+  <PC_PEA.LaborVisual.Reason.PartialDelivery>本次只交了一部分，余下的下次再交</PC_PEA.LaborVisual.Reason.PartialDelivery>
+  <PC_PEA.LaborVisual.Reason.NoRegisteredOutput>这件产出没有登记来源，需人工核对</PC_PEA.LaborVisual.Reason.NoRegisteredOutput>
+  <PC_PEA.LaborVisual.Reason.DocumentMissing>手上没有当前有效的合同正本，需补领</PC_PEA.LaborVisual.Reason.DocumentMissing>
+  <PC_PEA.LaborVisual.Reason.ReceiptUnverifiable>没有可核验的收货回执，已停止自动放行</PC_PEA.LaborVisual.Reason.ReceiptUnverifiable>
+  <PC_PEA.LaborVisual.Reason.DocumentAbilityMissing>缺少合同纸定义，签领已暂停</PC_PEA.LaborVisual.Reason.DocumentAbilityMissing>
+  <PC_PEA.LaborVisual.Reason.BatchUnknown>合同批次对不上，需人工核对</PC_PEA.LaborVisual.Reason.BatchUnknown>
+  <PC_PEA.LaborVisual.Reason.SampleNotCovered>声称交付量超过批次剩余量，已拒绝记账</PC_PEA.LaborVisual.Reason.SampleNotCovered>
+  <PC_PEA.LaborVisual.Reason.BatchWriteBlocked>批次核销写入被阻，未产生任何变更</PC_PEA.LaborVisual.Reason.BatchWriteBlocked>
+  <PC_PEA.LaborVisual.Reason.SubmissionWriteBlocked>回执写入被阻，未产生任何变更</PC_PEA.LaborVisual.Reason.SubmissionWriteBlocked>
+  <PC_PEA.LaborVisual.Reason.SubmissionCapacityReached>回执表已满，先清理或存档轮换后再交验</PC_PEA.LaborVisual.Reason.SubmissionCapacityReached>
+  <PC_PEA.LaborVisual.Reason.BatchNotConserved>批次数量不守恒，已停止处理</PC_PEA.LaborVisual.Reason.BatchNotConserved>
+  <PC_PEA.LaborVisual.Reason.AlreadySubmitted>这次交验已经记过账（重复提交）</PC_PEA.LaborVisual.Reason.AlreadySubmitted>
+  <PC_PEA.LaborVisual.Reason.NoReconciliation>该流程不需要对账处置</PC_PEA.LaborVisual.Reason.NoReconciliation>
+  <PC_PEA.LaborVisual.Reason.WorkflowUnknown>找不到这条办理流程</PC_PEA.LaborVisual.Reason.WorkflowUnknown>
+  <PC_PEA.LaborVisual.Reason.WriteOffBlocked>损失核销被阻，未改动任何批次</PC_PEA.LaborVisual.Reason.WriteOffBlocked>
+  <PC_PEA.LaborVisual.Reason.ContractMissing>该流程没有关联合同，无法核销</PC_PEA.LaborVisual.Reason.ContractMissing>
+  <PC_PEA.LaborVisual.Reason.WorkflowWriteBlocked>流程写入被阻，请查看诊断</PC_PEA.LaborVisual.Reason.WorkflowWriteBlocked>
+  <PC_PEA.LaborVisual.Reconcile.Label>处置对账流程</PC_PEA.LaborVisual.Reconcile.Label>
+  <PC_PEA.LaborVisual.Reconcile.Desc>核验现场（柜台接收区/本人背包/批次台账）后选择：继续办理，或把确实无法交付的剩余量按损失核销。两者都不改动金额与债权。</PC_PEA.LaborVisual.Reconcile.Desc>
+  <PC_PEA.LaborVisual.Reconcile.Title>对账处置</PC_PEA.LaborVisual.Reconcile.Title>
+  <PC_PEA.LaborVisual.Reconcile.Resume>事实已查清：继续办理</PC_PEA.LaborVisual.Reconcile.Resume>
+  <PC_PEA.LaborVisual.Reconcile.WriteOff>剩余已无法交付：按损失核销</PC_PEA.LaborVisual.Reconcile.WriteOff>
+  <!-- CA-14/REQ-003：洽谈与办理等待气泡（由真实阶段事件触发） -->
+  <PC_PEA.LaborVisual.Speech.Negotiating>到站了，开始洽谈合同。</PC_PEA.LaborVisual.Speech.Negotiating>
+  <PC_PEA.LaborVisual.Speech.Waiting>已加入柜台办理队列。</PC_PEA.LaborVisual.Speech.Waiting>
+  <!-- CA-13/REQ-017：机构建筑只读显示本站当前在办的劳务流程（与账户页/合同纸同源） -->
+  <PC_PEA.LaborVisual.Station.OpenCount>本站当前在办劳务流程</PC_PEA.LaborVisual.Station.OpenCount>
+  <!-- CA-14 全过程事件（补齐收集/核验/丢纸）与 REQ-021 诊断快照面 -->
+  <PC_PEA.LaborVisual.Speech.CollectingOutputs>开始收取已登记的交付物。</PC_PEA.LaborVisual.Speech.CollectingOutputs>
+  <PC_PEA.LaborVisual.Speech.Verifying>交验已受理，开始核验。</PC_PEA.LaborVisual.Speech.Verifying>
+  <PC_PEA.LaborVisual.Speech.DocumentMissing>合同正本不在身上，得去劳务站补领</PC_PEA.LaborVisual.Speech.DocumentMissing>
+  <PC_PEA.LaborVisual.Speech.SignRejected>这份工作没签成，稍后再试</PC_PEA.LaborVisual.Speech.SignRejected>
+  <PC_PEA.LaborVisual.Speech.Reissued>已补发新的合同正本</PC_PEA.LaborVisual.Speech.Reissued>
+  <PC_PEA.LaborVisual.Diag.Label>劳务诊断快照</PC_PEA.LaborVisual.Diag.Label>
+  <PC_PEA.LaborVisual.Diag.Desc>只读导出当前在办劳务流程的可复制事实（流程 ID/阶段/状态/原因/下一步/批次剩余/回执条数），同时写入日志，便于回报问题。</PC_PEA.LaborVisual.Diag.Desc>
+  <PC_PEA.LaborVisual.Diag.Title>劳务诊断快照</PC_PEA.LaborVisual.Diag.Title>
+  <PC_PEA.LaborVisual.Diag.Close>关闭</PC_PEA.LaborVisual.Diag.Close>
+
+  <PC_PEA.LaborVisual.Capability.CarryToCounter>实物交付：把产物搬到柜台</PC_PEA.LaborVisual.Capability.CarryToCounter>
+  <PC_PEA.LaborVisual.Capability.AlreadyAccepted>凭权威入库/送达回执交验</PC_PEA.LaborVisual.Capability.AlreadyAccepted>
+  <PC_PEA.LaborVisual.Capability.EvidenceOnly>无需实物产品，凭完成证明交验</PC_PEA.LaborVisual.Capability.EvidenceOnly>
+  <PC_PEA.LaborVisual.Capability.Unsupported>尚不支持实体交付</PC_PEA.LaborVisual.Capability.Unsupported>
+
+  <PC_PEA.LaborVisual.Mode.PhysicalSubmission>到站交验后付款</PC_PEA.LaborVisual.Mode.PhysicalSubmission>
+  <PC_PEA.LaborVisual.Mode.LegacyImmediate>完成即付款</PC_PEA.LaborVisual.Mode.LegacyImmediate>
+  <PC_PEA.LaborVisual.Mode.Unknown>付款模式无法识别（已停止结算）</PC_PEA.LaborVisual.Mode.Unknown>
+
+  <PC_PEA.LaborVisual.Eligibility.Immediate>可付款</PC_PEA.LaborVisual.Eligibility.Immediate>
+  <PC_PEA.LaborVisual.Eligibility.PendingSubmission>已赚取，待交验</PC_PEA.LaborVisual.Eligibility.PendingSubmission>
+  <PC_PEA.LaborVisual.Eligibility.Submitted>已交验，待付款</PC_PEA.LaborVisual.Eligibility.Submitted>
+  <PC_PEA.LaborVisual.Eligibility.Blocked>凭据校验未通过</PC_PEA.LaborVisual.Eligibility.Blocked>
+  <PC_PEA.LaborVisual.Eligibility.Unknown>付款资格无法识别（已停止结算）</PC_PEA.LaborVisual.Eligibility.Unknown>
+
+  <PC_PEA.LaborVisual.Doc.ShortCode>合同短号</PC_PEA.LaborVisual.Doc.ShortCode>
+  <PC_PEA.LaborVisual.Doc.Corrupt>这份合同纸的数据不完整，无法辨认其合同身份。</PC_PEA.LaborVisual.Doc.Corrupt>
+  <PC_PEA.LaborVisual.Doc.ContractMissing>合同账本里找不到对应记录，这份纸不能用于交验。</PC_PEA.LaborVisual.Doc.ContractMissing>
+  <PC_PEA.LaborVisual.Doc.Generation>代次</PC_PEA.LaborVisual.Doc.Generation>
+  <PC_PEA.LaborVisual.Doc.Superseded>已被补发作废</PC_PEA.LaborVisual.Doc.Superseded>
+  <PC_PEA.LaborVisual.Doc.Holder>持约人</PC_PEA.LaborVisual.Doc.Holder>
+  <PC_PEA.LaborVisual.Doc.NoHolder>尚未承接</PC_PEA.LaborVisual.Doc.NoHolder>
+  <PC_PEA.LaborVisual.Doc.WorkType>工作</PC_PEA.LaborVisual.Doc.WorkType>
+  <PC_PEA.LaborVisual.Doc.Wage>单价</PC_PEA.LaborVisual.Doc.Wage>
+  <PC_PEA.LaborVisual.Doc.Progress>已完成</PC_PEA.LaborVisual.Doc.Progress>
+  <PC_PEA.LaborVisual.Doc.Stage>当前阶段</PC_PEA.LaborVisual.Doc.Stage>
+  <PC_PEA.LaborVisual.Doc.Paid>已付</PC_PEA.LaborVisual.Doc.Paid>
+  <PC_PEA.LaborVisual.Doc.Unpaid>未付</PC_PEA.LaborVisual.Doc.Unpaid>
+  <PC_PEA.LaborVisual.Doc.LastSubmission>最近交验</PC_PEA.LaborVisual.Doc.LastSubmission>
+  <PC_PEA.LaborVisual.Doc.Valid>这份纸是当前有效正本，可用于交验。</PC_PEA.LaborVisual.Doc.Valid>
+  <PC_PEA.LaborVisual.Doc.InvalidNoRights>这份纸不是有效正本：它不能被呈递，也不产生任何领取工资的权利。</PC_PEA.LaborVisual.Doc.InvalidNoRights>
+  <PC_PEA.LaborVisual.Doc.Locate>定位合同</PC_PEA.LaborVisual.Doc.Locate>
+  <PC_PEA.LaborVisual.Doc.LocateDesc>把镜头移到这份合同当前所在的位置。</PC_PEA.LaborVisual.Doc.LocateDesc>
+  <PC_PEA.LaborVisual.Doc.LocateFailed>找不到这份合同的当前载体。</PC_PEA.LaborVisual.Doc.LocateFailed>
+  <PC_PEA.LaborVisual.Doc.DroppedAtCounter>背包放不下 {0} 的合同正本，已放在劳务站柜台旁，请前去拾取。</PC_PEA.LaborVisual.Doc.DroppedAtCounter>
+
+  <PC_PEA.LaborVisual.Speech.SignedDocument>合同领到了。</PC_PEA.LaborVisual.Speech.SignedDocument>
+  <PC_PEA.LaborVisual.Speech.SubmittedProducts>验收完成，交了 {0} 件。</PC_PEA.LaborVisual.Speech.SubmittedProducts>
+  <PC_PEA.LaborVisual.Speech.SubmittedProof>劳务完成证明已核验。</PC_PEA.LaborVisual.Speech.SubmittedProof>
+
+  <PC_PEA.LaborVisual.Row.Stage>劳动履约</PC_PEA.LaborVisual.Row.Stage>
+  <PC_PEA.LaborVisual.Row.Next>下一步</PC_PEA.LaborVisual.Row.Next>
+  <PC_PEA.LaborVisual.Contract.Stage>阶段</PC_PEA.LaborVisual.Contract.Stage>
+  <PC_PEA.LaborVisual.Contract.Next>下一步</PC_PEA.LaborVisual.Contract.Next>
+
+  <!-- CHG-20261011-LABOR-VISUAL: player fulfilment feedback and compact read models. -->
+  <PC_PEA.LaborVisual.Next.Paid>核对到账，继续生活或余下合同工作</PC_PEA.LaborVisual.Next.Paid>
+  <PC_PEA.LaborVisual.Next.Archived>合同已归档，可查看履约记录</PC_PEA.LaborVisual.Next.Archived>
+  <PC_PEA.LaborVisual.UI.Delivered>已交</PC_PEA.LaborVisual.UI.Delivered>
+  <PC_PEA.LaborVisual.UI.Remaining>待交</PC_PEA.LaborVisual.UI.Remaining>
+  <PC_PEA.LaborVisual.UI.Stage>履约阶段</PC_PEA.LaborVisual.UI.Stage>
+  <PC_PEA.LaborVisual.UI.NextStation>下一站</PC_PEA.LaborVisual.UI.NextStation>
+  <PC_PEA.LaborVisual.UI.WageDue>待付工资</PC_PEA.LaborVisual.UI.WageDue>
+  <PC_PEA.LaborVisual.UI.NoStation>尚未确定</PC_PEA.LaborVisual.UI.NoStation>
+  <PC_PEA.LaborVisual.UI.DeliveryValue>已交 {0} · 待交 {1}</PC_PEA.LaborVisual.UI.DeliveryValue>
+  <PC_PEA.LaborVisual.UI.WageValue>待付 {0} · 已付 {1}</PC_PEA.LaborVisual.UI.WageValue>
+  <PC_PEA.LaborVisual.UI.MapScope>本图劳动者；机构归属见详情</PC_PEA.LaborVisual.UI.MapScope>
+  <PC_PEA.LaborVisual.UI.Group.PendingSubmission>待交验</PC_PEA.LaborVisual.UI.Group.PendingSubmission>
+  <PC_PEA.LaborVisual.UI.Group.PendingPayment>待付款</PC_PEA.LaborVisual.UI.Group.PendingPayment>
+  <PC_PEA.LaborVisual.UI.Group.Arrears>欠薪</PC_PEA.LaborVisual.UI.Group.Arrears>
+  <PC_PEA.LaborVisual.UI.Group.Paid>已付</PC_PEA.LaborVisual.UI.Group.Paid>
+  <PC_PEA.LaborVisual.UI.Empty>暂无记录</PC_PEA.LaborVisual.UI.Empty>
+  <PC_PEA.LaborVisual.UI.Contract>合同</PC_PEA.LaborVisual.UI.Contract>
+  <PC_PEA.LaborVisual.UI.History>履约事件记录</PC_PEA.LaborVisual.UI.History>
+  <PC_PEA.LaborVisual.UI.HistoryEmpty>尚无可追溯事件</PC_PEA.LaborVisual.UI.HistoryEmpty>
+  <PC_PEA.LaborVisual.UI.HistoryTick>Tick {0}</PC_PEA.LaborVisual.UI.HistoryTick>
+  <PC_PEA.LaborVisual.UI.HistoryValue>{0} · {1} · 物资 {2} · 数量 {3} · 金额 {4} · {5}</PC_PEA.LaborVisual.UI.HistoryValue>
+  <PC_PEA.LaborVisual.UI.NoProduct>无实物</PC_PEA.LaborVisual.UI.NoProduct>
+  <PC_PEA.LaborVisual.UI.Result.None>未记录</PC_PEA.LaborVisual.UI.Result.None>
+  <PC_PEA.LaborVisual.UI.Reconciliation>需要对账</PC_PEA.LaborVisual.UI.Reconciliation>
+  <PC_PEA.LaborVisual.UI.Station>办理站</PC_PEA.LaborVisual.UI.Station>
+  <PC_PEA.LaborVisual.Speech.Paid>工资到账 +{0} 银币。</PC_PEA.LaborVisual.Speech.Paid>
+  <PC_PEA.LaborVisual.Speech.NoFunds>机构资金不足，办理暂缓。</PC_PEA.LaborVisual.Speech.NoFunds>
+  <PC_PEA.LaborVisual.Speech.AwaitingPayment>交验已通过，等待付款。</PC_PEA.LaborVisual.Speech.AwaitingPayment>
+
+  <PC_PEA.LaborVisual.Interact.Unavailable>机构当前无法办理</PC_PEA.LaborVisual.Interact.Unavailable>
+  <PC_PEA.LaborVisual.Interact.Reissue>补领合同正本</PC_PEA.LaborVisual.Interact.Reissue>
+  <PC_PEA.LaborVisual.Interact.Continue>继续办理当前合同</PC_PEA.LaborVisual.Interact.Continue>
+  <PC_PEA.LaborVisual.Interact.Accept>接取劳务合同</PC_PEA.LaborVisual.Interact.Accept>
+  <PC_PEA.LaborVisual.Interact.NoOffers>暂无可承接合同</PC_PEA.LaborVisual.Interact.NoOffers>
+  <PC_PEA.LaborVisual.Interact.AlreadyContracted>已有在办合同</PC_PEA.LaborVisual.Interact.AlreadyContracted>
+  <PC_PEA.LaborVisual.Interact.Submit>提交合同与交付物</PC_PEA.LaborVisual.Interact.Submit>
+  <PC_PEA.LaborVisual.Interact.NoSubmission>暂无可交验内容</PC_PEA.LaborVisual.Interact.NoSubmission>
+  <PC_PEA.LaborVisual.Reason.Drafted>已征召，暂停劳务办理</PC_PEA.LaborVisual.Reason.Drafted>
+  <PC_PEA.LaborVisual.Reason.Hungry>需要先用餐</PC_PEA.LaborVisual.Reason.Hungry>
+  <PC_PEA.LaborVisual.Reason.Tired>需要先休息</PC_PEA.LaborVisual.Reason.Tired>
+  <PC_PEA.LaborVisual.Reason.Downed>倒地，无法继续办理</PC_PEA.LaborVisual.Reason.Downed>
+  <PC_PEA.LaborVisual.Reason.MentalState>精神状态异常，暂停办理</PC_PEA.LaborVisual.Reason.MentalState>
+  <PC_PEA.LaborVisual.Reason.StationUnavailable>办理机构不可用</PC_PEA.LaborVisual.Reason.StationUnavailable>
+  <PC_PEA.LaborVisual.Reason.Forbidden>机构或交付物被禁用</PC_PEA.LaborVisual.Reason.Forbidden>
+  <PC_PEA.LaborVisual.Reason.NoActionAvailable>当前没有可执行的办理步骤</PC_PEA.LaborVisual.Reason.NoActionAvailable>
+  <PC_PEA.LaborVisual.Reason.CounterBusy>柜台正在为他人办理，等待服务</PC_PEA.LaborVisual.Reason.CounterBusy>
+  <PC_PEA.LaborVisual.Report.Verifying>在工资结算处核验合同与交付物</PC_PEA.LaborVisual.Report.Verifying>
+  <PC_PEA.LaborVisual.Report.Negotiating>在劳务站洽谈合同</PC_PEA.LaborVisual.Report.Negotiating>
+  <PC_PEA.LaborVisual.Report.Queued>在柜台排队等待办理</PC_PEA.LaborVisual.Report.Queued>
+  <PC_PEA.LaborVisual.Report.GoingSettlement>携带合同与交付物前往工资结算处</PC_PEA.LaborVisual.Report.GoingSettlement>
+  <PC_PEA.LaborVisual.Report.GoingOffice>前往劳务站办理合同</PC_PEA.LaborVisual.Report.GoingOffice>
+  <PC_PEA.LaborVisual.Report.Issuing>在劳务站签领合同正本</PC_PEA.LaborVisual.Report.Issuing>
+  <PC_PEA.LaborVisual.Report.Reissuing>在劳务站补领合同正本</PC_PEA.LaborVisual.Report.Reissuing>
+  <PC_PEA.LaborVisual.Report.Collecting>收取已登记的合同交付物</PC_PEA.LaborVisual.Report.Collecting>
+  <PC_PEA.LaborVisual.Doc.Delivery>已交验</PC_PEA.LaborVisual.Doc.Delivery>
+  <PC_PEA.LaborVisual.Doc.Remaining>待交验</PC_PEA.LaborVisual.Doc.Remaining>
+  <PC_PEA.LaborVisual.Doc.Due>待付工资</PC_PEA.LaborVisual.Doc.Due>
+  <PC_PEA.LaborVisual.Doc.NextStation>下一办理机构</PC_PEA.LaborVisual.Doc.NextStation>
+  <PC_PEA.LaborVisual.Reconcile.NoRows>该机构没有待处置的对账流程</PC_PEA.LaborVisual.Reconcile.NoRows>
+
+  <PC_PEA.LaborVisual.Reconcile.Row>{0} · 合同 {1} · 已交 {2} · 待交 {3} · {4}</PC_PEA.LaborVisual.Reconcile.Row>
+  <PC_PEA.LaborVisual.Reconcile.Confirm>仅处理此流程：{0}。待核对数量 {1}；继续办理或核销剩余均不会处理其他流程。</PC_PEA.LaborVisual.Reconcile.Confirm>
+  <PC_PEA.LaborVisual.Reconcile.Result>{0} · {1}</PC_PEA.LaborVisual.Reconcile.Result>
+
+  <PC_PEA.LaborVisual.UI.Record>履约记录</PC_PEA.LaborVisual.UI.Record>
+  <PC_PEA.LaborVisual.UI.OpenRecord>完整记录</PC_PEA.LaborVisual.UI.OpenRecord>
+  <PC_PEA.LaborVisual.History.Action.StationChanged>办理站变更</PC_PEA.LaborVisual.History.Action.StationChanged>
+  <PC_PEA.LaborVisual.History.Action.DocumentIssued>签领合同正本</PC_PEA.LaborVisual.History.Action.DocumentIssued>
+  <PC_PEA.LaborVisual.History.Action.ContractAttached>关联合同</PC_PEA.LaborVisual.History.Action.ContractAttached>
+
+  <PC_PEA.LaborVisual.Speech.PaymentUnavailable>工资暂未到账，等待付款条件恢复。</PC_PEA.LaborVisual.Speech.PaymentUnavailable>
+  <PC_PEA.LaborVisual.Reason.PaymentUnavailable>付款尚未成功，等待付款条件恢复</PC_PEA.LaborVisual.Reason.PaymentUnavailable>
+  <PC_PEA.LaborVisual.History.Action.PaymentUnavailable>付款暂缓</PC_PEA.LaborVisual.History.Action.PaymentUnavailable>
+  <PC_PEA.LaborVisual.History.Result.PaymentUnavailable>付款未成功</PC_PEA.LaborVisual.History.Result.PaymentUnavailable>
+  <PC_PEA.LaborVisual.History.Action.IntentReady>形成求职意图</PC_PEA.LaborVisual.History.Action.IntentReady>
+  <PC_PEA.LaborVisual.History.Action.StageChanged>阶段变更</PC_PEA.LaborVisual.History.Action.StageChanged>
+  <PC_PEA.LaborVisual.History.Action.Held>办理暂缓</PC_PEA.LaborVisual.History.Action.Held>
+  <PC_PEA.LaborVisual.History.Action.Resumed>恢复办理</PC_PEA.LaborVisual.History.Action.Resumed>
+  <PC_PEA.LaborVisual.History.Action.DocumentReissued>补发合同正本</PC_PEA.LaborVisual.History.Action.DocumentReissued>
+  <PC_PEA.LaborVisual.History.Action.SubmissionAccepted>交验通过</PC_PEA.LaborVisual.History.Action.SubmissionAccepted>
+  <PC_PEA.LaborVisual.History.Action.PaymentConfirmed>工资到账</PC_PEA.LaborVisual.History.Action.PaymentConfirmed>
+  <PC_PEA.LaborVisual.History.Result.Applied>已提交</PC_PEA.LaborVisual.History.Result.Applied>
+  <PC_PEA.LaborVisual.History.Result.Replay>已处理，无重复变更</PC_PEA.LaborVisual.History.Result.Replay>
+  <PC_PEA.LaborVisual.History.Result.Blocked>受阻</PC_PEA.LaborVisual.History.Result.Blocked>
+  <PC_PEA.LaborVisual.History.Result.Unknown>未知，需核对</PC_PEA.LaborVisual.History.Result.Unknown>
+  <PC_PEA.LaborVisual.History.Result.InvalidCommand>参数无效</PC_PEA.LaborVisual.History.Result.InvalidCommand>
+  <PC_PEA.LaborVisual.History.Result.Finalized>结算已完成</PC_PEA.LaborVisual.History.Result.Finalized>
+
+  <PC_PEA.LaborVisual.History.Action.OutputsCollected>交付物已随身携带</PC_PEA.LaborVisual.History.Action.OutputsCollected>
+  <PC_PEA.LaborVisual.Reason.DocumentIssuanceFailed>合同正本未能交到手中，请补领或查看诊断</PC_PEA.LaborVisual.Reason.DocumentIssuanceFailed>
+  <PC_PEA.LaborVisual.Next.CollectDocument>拾取已签发的合同正本</PC_PEA.LaborVisual.Next.CollectDocument>
+
+  <PC_PEA.LaborVisual.Report.CollectDocument>拾取已签发的合同正本</PC_PEA.LaborVisual.Report.CollectDocument>
+
+  <PC_PEA.LaborVisual.Speech.ReissueChecking>已到站核对补领合同。</PC_PEA.LaborVisual.Speech.ReissueChecking>
+  <PC_PEA.LaborVisual.UI.ProductSeeEvidence>产物种类见交验明细</PC_PEA.LaborVisual.UI.ProductSeeEvidence>
+</LanguageData>
+
+
+
+
+

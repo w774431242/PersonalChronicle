@@ -13,7 +13,7 @@ using Verse.AI.Group;
 namespace PersonalChronicle.Application
 {
     /// <summary>
-    /// Partial of <see cref="ArchiveService"/> 鈥?see main file for the class doc.
+    /// Partial of <see cref="ArchiveService"/> —see main file for the class doc.
     /// </summary>
     public sealed partial class ArchiveService : IArchiveService, IWorkIntensityService, IWorkTimeCaptureService, IArchiveQueryService, IArchiveEventSink
     {
@@ -92,11 +92,41 @@ namespace PersonalChronicle.Application
                     totalValue += rows[i].MarketValue;
                 }
             }
+            // v5.x：读取路径先把市值桶对齐到当前季（AdvanceQuadrum 契约：闲置 n 季的档案
+            // 末段不再滞留旧值），再复制快照给 UI（UI 不持有累加器引用）。工时桶同理。
+            long nowTicks = Find.TickManager != null ? Find.TickManager.TicksGame : 0L;
+            long currentQuadrum = nowTicks > 0L ? nowTicks / GenDate.TicksPerQuadrum : 0L;
+            production.AdvanceQuadrum(currentQuadrum);
+            float[] quadrumMarket = SnapshotQuadrum(production.MarketValueByQuadrum);
+            float[] quadrumWork = null;
+            if (pawn.WorkTime != null)
+            {
+                pawn.WorkTime.AdvanceQuadrum(currentQuadrum);
+                quadrumWork = SnapshotQuadrum(pawn.WorkTime.WorkHoursByQuadrum);
+            }
             return new ProductionSummaryView(
                 totalQuantity,
                 totalValue,
                 production.LastProductionTick,
-                rows);
+                rows,
+                quadrumMarket,
+                quadrumWork);
+        }
+
+        /// <summary>滚动桶 → 定长快照（长度归一由 <see cref="Domain.QuadrumBuckets"/> 保证）。</summary>
+        private static float[] SnapshotQuadrum(List<float> buckets)
+        {
+            if (buckets == null || buckets.Count == 0)
+            {
+                return new float[Domain.QuadrumBuckets.Slots];
+            }
+            float[] snapshot = new float[Domain.QuadrumBuckets.Slots];
+            int n = System.Math.Min(Domain.QuadrumBuckets.Slots, buckets.Count);
+            for (int i = 0; i < n; i++)
+            {
+                snapshot[i] = buckets[i];
+            }
+            return snapshot;
         }
 
         private static List<ProductionTypeView> AggregateProductionByCategory(

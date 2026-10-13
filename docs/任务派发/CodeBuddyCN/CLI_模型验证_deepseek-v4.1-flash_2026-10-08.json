@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-08T21:20:38.0120538+08:00",
+  "timezone": "Asia/Shanghai",
+  "requestedModel": "deepseek-v4.1-flash",
+  "previousObservedModel": "hy4-preview",
+  "passed": true,
+  "explicitModelTest": {
+    "test": "explicit-deepseek-model",
+    "startedAt": "2026-10-08T21:18:32.1794856+08:00",
+    "endedAt": "2026-10-08T21:18:36.8708286+08:00",
+    "exitCode": 0,
+    "subtype": "success",
+    "response": "DEEPSEEK_FLASH_OK",
+    "sessionId": "01a11baa-63f2-73ae-8ec7-408e11b85265",
+    "models": [
+      {
+        "actualModel": "deepseek-v4.1-flash",
+        "requestModel": "deepseek-v4.1-flash"
+      }
+    ],
+    "durationMs": 2112
+  },
+  "defaultModelAndToolTest": {
+    "test": "default-model-native-powershell",
+    "startedAt": "2026-10-08T21:18:53.7843143+08:00",
+    "endedAt": "2026-10-08T21:19:00.0852873+08:00",
+    "exitCode": 0,
+    "subtype": "success",
+    "response": "DEEPSEEK_DEFAULT_TOOL_OK",
+    "sessionId": "01a11baa-b88f-7ee1-8620-6bb507381cf5",
+    "actualModels": [
+      "deepseek-v4.1-flash"
+    ],
+    "toolNames": [
+      "PowerShell"
+    ],
+    "durationMs": 3649,
+    "passed": true
+  },
+  "launcher": "C:\\Users\\Administrator\\AppData\\Local\\CodeBuddyManager\\Invoke-CodeBuddyCN.ps1",
+  "launcherSha256": "56E60907AC715D8741D08F6B437536EC6085DD71C9226F7C21BBBF491B042185",
+  "mainModelEnv": "CODEBUDDY_MODEL",
+  "subagentModelEnv": "CODEBUDDY_CODE_SUBAGENT_MODEL",
+  "subagentExecutionTested": false,
+  "noFallbackRequested": true,
+  "credentialIncluded": false,
+  "source": "CLI response providerData.model and requestModelId; not model self-report",
+  "officialReference": "https://www.codebuddy.cn/docs/cli/env-vars"
+}

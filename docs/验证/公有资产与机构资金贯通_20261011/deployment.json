@@ -1,0 +1,39 @@
+{
+  "changeId": "CHG-20261011-PUBLIC-ASSET-LINKS",
+  "verifiedUtc": "2026-10-11T11:02:36.1715138Z",
+  "source": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\public-assets_20261011_190235_459",
+  "files": [
+    {
+      "path": "Assemblies/PersonalChronicle.dll",
+      "sha256": "94A2FFACE2054E9DF2B3728042A90978B2725ABE8B739C1E802B33741A89D82E",
+      "previousSha256": "6F45735087EA5D762B710852D4E6533462066C3A2E38292B06829F4899FE2148"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyPublicAssets.xml",
+      "sha256": "EA2049767B6BADB9C54F31835951E15398C87494B3FCBEAEA9ACA7D85F1CA815",
+      "previousSha256": "EA2049767B6BADB9C54F31835951E15398C87494B3FCBEAEA9ACA7D85F1CA815"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyPublicAssets.xml",
+      "sha256": "06467792C96780B79A303CE7BBF9B7904250EA8664FB0FEA3682C7EFC9F8A154",
+      "previousSha256": "06467792C96780B79A303CE7BBF9B7904250EA8664FB0FEA3682C7EFC9F8A154"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/TreasuryOperations.xml",
+      "sha256": "51E4C7A8AB67D5E51B3D69B71DC5FD08CA9DDF978CE81E19D66A4CE2CF1CFCA8",
+      "previousSha256": "51E4C7A8AB67D5E51B3D69B71DC5FD08CA9DDF978CE81E19D66A4CE2CF1CFCA8"
+    },
+    {
+      "path": "Languages/English/Keyed/TreasuryOperations.xml",
+      "sha256": "D5C812EF80B13B15BFC9A7AF1DCAD44D4969AB35A2AFAF88B2CFE69C1C80BA83",
+      "previousSha256": "D5C812EF80B13B15BFC9A7AF1DCAD44D4969AB35A2AFAF88B2CFE69C1C80BA83"
+    }
+  ],
+  "unchangedFilesVerified": 245,
+  "deployed": true,
+  "gameVerified": false,
+  "verificationSha256": "40B132F924FE9E3E8ED7254FEDDC5CE30A4BB13E6BCAA28D33F5436C8CF658D0",
+  "finalReverifiedUtc": "2026-10-11T11:03:27.4391580Z"
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "当前 AI 需求模型 · 经济需求驱动（实装态）",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [930, 500]
+  },
+  "stages": [
+    { "label": "原版真值" },
+    { "label": "观察 · 缺口" },
+    { "label": "目标 · 预算 · 仲裁" },
+    { "label": "计划 · 执行 · 结算" }
+  ],
+  "nodes": [
+    { "id": "vanilla", "type": "external", "label": "原版需求真值", "sublabel": "RimWorld.Need · Mood", "stage": 0, "row": 1, "tag": "只读真值" },
+    { "id": "capture", "type": "backend", "label": "感知采集", "sublabel": "VanillaPawnFactCapture", "stage": 1, "row": 0, "tag": "隐藏项透传" },
+    { "id": "project", "type": "backend", "label": "缺口投影", "sublabel": "CurrentNeedProjector", "stage": 1, "row": 2, "tag": "Fact 状态" },
+    { "id": "arbitrate", "type": "backend", "label": "多需求仲裁", "sublabel": "闸门序列 · RankGoals", "stage": 2, "row": 0, "tag": "四类方案" },
+    { "id": "budget", "type": "backend", "label": "预算与储蓄", "sublabel": "三分配 · 下水位 · 应急储备", "stage": 2, "row": 1, "tag": "LifeBudget" },
+    { "id": "goals", "type": "backend", "label": "目标态与阈值", "sublabel": "进入阈值 → 目标值 · 等待加权", "stage": 2, "row": 2, "tag": "LifePolicy" },
+    { "id": "plan", "type": "database", "label": "影子计划", "sublabel": "决策 · 原因 · 四类候选方案", "stage": 3, "row": 0, "tag": "ShadowPlan" },
+    { "id": "execute", "type": "external", "label": "执行接线", "sublabel": "OnPlanPublished", "stage": 3, "row": 1, "tag": "就业 / 购买 / 照护" },
+    { "id": "settle", "type": "database", "label": "结算与学习", "sublabel": "可信度 · 退避 · 学习偏移", "stage": 3, "row": 2, "tag": "回写策略" }
+  ],
+  "flows": [
+    { "id": "vanilla-capture", "from": "vanilla", "to": "capture", "label": "逐项读值", "classification": "AllNeeds · Mood 摘出", "variant": "emphasis" },
+    { "id": "capture-project", "from": "capture", "to": "project", "label": "观测事实", "classification": "含隐藏项", "variant": "default", "labelDy": 24 },
+    { "id": "project-goals", "from": "project", "to": "goals", "label": "缺口 × 阈值", "classification": "三口径缺口", "variant": "emphasis" },
+    { "id": "goals-budget", "from": "goals", "to": "budget", "label": "目标 × 生活政策", "classification": "现金与收入缺口", "variant": "default", "labelAt": [530, 328] },
+    { "id": "budget-arbitrate", "from": "budget", "to": "arbitrate", "label": "可支配现金", "classification": "预算闸门", "variant": "default", "labelAt": [530, 214] },
+    { "id": "arbitrate-plan", "from": "arbitrate", "to": "plan", "label": "闸门序列结果", "classification": "四类方案可行性", "variant": "default" },
+    { "id": "plan-execute", "from": "plan", "to": "execute", "label": "OnPlanPublished", "classification": "执行侧订阅", "variant": "emphasis", "labelDy": 24 },
+    { "id": "execute-settle", "from": "execute", "to": "settle", "label": "结算证据", "classification": "按时 / 延误 / 失败", "variant": "default", "labelDy": 24 },
+    { "id": "settle-goals", "from": "settle", "to": "goals", "label": "学习偏移回写", "classification": "有界慢速", "variant": "dashed", "fromSide": "left", "toSide": "right", "route": "straight" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "主路径 · 需求循环",
+      "items": [
+        "原版真值只读进入：逐项读值，Mood 单独摘出",
+        "9 项适配表经运行期类型校验",
+        "缺口三口径（相对 / 绝对 / 原始）；无比例时报事实状态"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "边界与保护",
+      "items": [
+        "隐藏项（ShowOnNeedList=false）单独成区，不丢弃",
+        "闸门序列：安全 → P0/P1 → 资格 → 预算 → 岗位",
+        "只读呈现（ITab 单人 / 总控名册）零写路径"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "当前已登记缺口",
+      "items": [
+        "ECON-AUTOEMPLOY-001 仍 Open",
+        "Service 方案恒报 ServiceNotImplemented",
+        "消费仅食物（food-only）；实机验收 NOT EXECUTED"
+      ]
+    }
+  ]
+}

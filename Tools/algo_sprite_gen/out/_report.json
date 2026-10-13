@@ -1,0 +1,556 @@
+{
+  "benchmark": {
+    "median_lum": 44.0,
+    "mean_lum": 60.2,
+    "dark_ratio": 0.745,
+    "bright_ratio": 0.162,
+    "detail_ratio": 0.22,
+    "detail_ratio_12": 0.379,
+    "warm_ratio": 0.235,
+    "color_ratio": 0.339,
+    "opaque_ratio": 0.518,
+    "bbox": [
+      0,
+      11,
+      127,
+      118
+    ],
+    "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\PersonalChronicle\\Textures\\Things\\Building\\AutoFarm\\PC_AutoFarm_M.png",
+    "size": [
+      128,
+      128
+    ]
+  },
+  "limits": {
+    "median_lum": [
+      32.0,
+      58.0
+    ],
+    "dark_ratio": [
+      0.55,
+      1.0
+    ],
+    "bright_ratio": [
+      0.04,
+      0.22
+    ],
+    "detail_ratio": [
+      0.075,
+      0.24
+    ],
+    "opaque_ratio": [
+      0.34,
+      0.95
+    ],
+    "warm_ratio": [
+      0.09,
+      1.0
+    ]
+  },
+  "items": [
+    {
+      "name": "PC_Smelter_T1",
+      "cn": "01 冶炼",
+      "file": "PC_Smelter_T1_east.png",
+      "kb": 14.4,
+      "shape_algo": "SDF 平滑并集 (圆炉体+方台)",
+      "mat_algo": "fBm + 湍流热辉光",
+      "metrics": {
+        "median_lum": 36.0,
+        "mean_lum": 49.1,
+        "dark_ratio": 0.818,
+        "bright_ratio": 0.131,
+        "detail_ratio": 0.113,
+        "detail_ratio_12": 0.24,
+        "warm_ratio": 0.197,
+        "color_ratio": 0.248,
+        "opaque_ratio": 0.457,
+        "bbox": [
+          10,
+          29,
+          118,
+          113
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_Forge_T1",
+      "cn": "02 锻造",
+      "file": "PC_Forge_T1_east.png",
+      "kb": 12.0,
+      "shape_algo": "SDF 多边形轮廓 + 平滑并集",
+      "mat_algo": "各向异性拉丝金属",
+      "metrics": {
+        "median_lum": 47.9,
+        "mean_lum": 52.8,
+        "dark_ratio": 0.774,
+        "bright_ratio": 0.074,
+        "detail_ratio": 0.09,
+        "detail_ratio_12": 0.204,
+        "warm_ratio": 0.199,
+        "color_ratio": 0.199,
+        "opaque_ratio": 0.436,
+        "bbox": [
+          16,
+          34,
+          118,
+          113
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_HeatTreat_T1",
+      "cn": "03 热处理",
+      "file": "PC_HeatTreat_T1_east.png",
+      "kb": 14.7,
+      "shape_algo": "SDF 圆角腔体（双箱）",
+      "mat_algo": "元胞自动机凹坑",
+      "metrics": {
+        "median_lum": 42.0,
+        "mean_lum": 53.0,
+        "dark_ratio": 0.752,
+        "bright_ratio": 0.1,
+        "detail_ratio": 0.128,
+        "detail_ratio_12": 0.261,
+        "warm_ratio": 0.103,
+        "color_ratio": 0.234,
+        "opaque_ratio": 0.477,
+        "bbox": [
+          9,
+          28,
+          119,
+          116
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_RoughMach_T1",
+      "cn": "04 粗加工",
+      "file": "PC_RoughMach_T1_east.png",
+      "kb": 13.0,
+      "shape_algo": "Voronoi 分格床身",
+      "mat_algo": "Worley F2-F1 龟裂",
+      "metrics": {
+        "median_lum": 47.2,
+        "mean_lum": 56.3,
+        "dark_ratio": 0.769,
+        "bright_ratio": 0.092,
+        "detail_ratio": 0.101,
+        "detail_ratio_12": 0.231,
+        "warm_ratio": 0.177,
+        "color_ratio": 0.177,
+        "opaque_ratio": 0.411,
+        "bbox": [
+          8,
+          35,
+          124,
+          116
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_PrecMach_T1",
+      "cn": "05 精密机加工",
+      "file": "PC_PrecMach_T1_east.png",
+      "kb": 15.4,
+      "shape_algo": "门型龙门（SDF 布尔）",
+      "mat_algo": "Worley 花岗岩斑点",
+      "metrics": {
+        "median_lum": 50.0,
+        "mean_lum": 60.8,
+        "dark_ratio": 0.755,
+        "bright_ratio": 0.157,
+        "detail_ratio": 0.136,
+        "detail_ratio_12": 0.289,
+        "warm_ratio": 0.112,
+        "color_ratio": 0.112,
+        "opaque_ratio": 0.551,
+        "bbox": [
+          12,
+          28,
+          118,
+          122
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_Barrel_T1",
+      "cn": "06 枪管",
+      "file": "PC_Barrel_T1_east.png",
+      "kb": 11.5,
+      "shape_algo": "满宽长床身（一维中点位移）",
+      "mat_algo": "中点位移膛线起伏",
+      "metrics": {
+        "median_lum": 46.3,
+        "mean_lum": 61.2,
+        "dark_ratio": 0.727,
+        "bright_ratio": 0.194,
+        "detail_ratio": 0.079,
+        "detail_ratio_12": 0.172,
+        "warm_ratio": 0.271,
+        "color_ratio": 0.271,
+        "opaque_ratio": 0.374,
+        "bbox": [
+          9,
+          34,
+          120,
+          113
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_Surface_T1",
+      "cn": "07 表面处理",
+      "file": "PC_Surface_T1_east.png",
+      "kb": 14.8,
+      "shape_algo": "SDF 三连槽体",
+      "mat_algo": "Gray-Scott 反应扩散",
+      "metrics": {
+        "median_lum": 43.0,
+        "mean_lum": 54.7,
+        "dark_ratio": 0.762,
+        "bright_ratio": 0.106,
+        "detail_ratio": 0.137,
+        "detail_ratio_12": 0.281,
+        "warm_ratio": 0.123,
+        "color_ratio": 0.279,
+        "opaque_ratio": 0.548,
+        "bbox": [
+          10,
+          26,
+          119,
+          116
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_Furniture_T1",
+      "cn": "08 木托护木",
+      "file": "PC_Furniture_T1_east.png",
+      "kb": 13.4,
+      "shape_algo": "SDF 龙门 + 集尘塔",
+      "mat_algo": "各向异性木纹 + 年轮",
+      "metrics": {
+        "median_lum": 43.0,
+        "mean_lum": 55.8,
+        "dark_ratio": 0.772,
+        "bright_ratio": 0.087,
+        "detail_ratio": 0.109,
+        "detail_ratio_12": 0.239,
+        "warm_ratio": 0.297,
+        "color_ratio": 0.297,
+        "opaque_ratio": 0.488,
+        "bbox": [
+          9,
+          26,
+          119,
+          120
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_Magazine_T1",
+      "cn": "09 供弹",
+      "file": "PC_Magazine_T1_east.png",
+      "kb": 12.8,
+      "shape_algo": "L 形（模板阵列拼装）",
+      "mat_algo": "DLA 枝晶 + 调色板交换",
+      "metrics": {
+        "median_lum": 36.1,
+        "mean_lum": 53.1,
+        "dark_ratio": 0.723,
+        "bright_ratio": 0.127,
+        "detail_ratio": 0.115,
+        "detail_ratio_12": 0.214,
+        "warm_ratio": 0.22,
+        "color_ratio": 0.22,
+        "opaque_ratio": 0.428,
+        "bbox": [
+          11,
+          20,
+          119,
+          115
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_Assembly_T1",
+      "cn": "10 总装",
+      "file": "PC_Assembly_T1_east.png",
+      "kb": 13.7,
+      "shape_algo": "胶囊 / CSG 拼装",
+      "mat_algo": "Worley 皮革细胞",
+      "metrics": {
+        "median_lum": 40.0,
+        "mean_lum": 51.8,
+        "dark_ratio": 0.79,
+        "bright_ratio": 0.088,
+        "detail_ratio": 0.126,
+        "detail_ratio_12": 0.255,
+        "warm_ratio": 0.109,
+        "color_ratio": 0.109,
+        "opaque_ratio": 0.527,
+        "bbox": [
+          10,
+          24,
+          119,
+          115
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_Calibration_T1",
+      "cn": "11 调试校准",
+      "file": "PC_Calibration_T1_east.png",
+      "kb": 14.0,
+      "shape_algo": "同心环 SDF + 靶板架",
+      "mat_algo": "Mandelbrot 逃逸场",
+      "metrics": {
+        "median_lum": 37.0,
+        "mean_lum": 50.6,
+        "dark_ratio": 0.776,
+        "bright_ratio": 0.128,
+        "detail_ratio": 0.125,
+        "detail_ratio_12": 0.246,
+        "warm_ratio": 0.102,
+        "color_ratio": 0.13,
+        "opaque_ratio": 0.472,
+        "bbox": [
+          8,
+          17,
+          119,
+          120
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    },
+    {
+      "name": "PC_Inspection_T1",
+      "cn": "12 质检计量",
+      "file": "PC_Inspection_T1_east.png",
+      "kb": 15.8,
+      "shape_algo": "SDF 表盘 + 环（仪表墙）",
+      "mat_algo": "Poisson Disk 测点阵",
+      "metrics": {
+        "median_lum": 50.0,
+        "mean_lum": 60.6,
+        "dark_ratio": 0.72,
+        "bright_ratio": 0.177,
+        "detail_ratio": 0.119,
+        "detail_ratio_12": 0.277,
+        "warm_ratio": 0.097,
+        "color_ratio": 0.216,
+        "opaque_ratio": 0.516,
+        "bbox": [
+          11,
+          26,
+          119,
+          122
+        ]
+      },
+      "checks": {
+        "png32_rgba": true,
+        "not_palette": true,
+        "size_1to1": true,
+        "no_halo": true,
+        "size_ok_kb": true,
+        "has_transparent": true,
+        "alpha_clean": true,
+        "metric_median_lum": true,
+        "metric_dark_ratio": true,
+        "metric_bright_ratio": true,
+        "metric_detail_ratio": true,
+        "metric_opaque_ratio": true,
+        "metric_warm_ratio": true
+      },
+      "pass": true,
+      "failed": []
+    }
+  ]
+}

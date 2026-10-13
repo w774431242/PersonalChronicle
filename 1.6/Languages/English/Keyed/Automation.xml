@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Auto farm device configuration (gizmo + dialog) -->
+  <PersonalChronicle.Automation.Farm.Configure>Configure farm</PersonalChronicle.Automation.Farm.Configure>
+  <PersonalChronicle.Automation.Farm.ConfigureDesc>Pick the crop, then zone the whole coverage or paint tiles within it. The machine auto-tills and sows.</PersonalChronicle.Automation.Farm.ConfigureDesc>
+  <PersonalChronicle.Automation.Farm.DialogTitle>Auto farm setup</PersonalChronicle.Automation.Farm.DialogTitle>
+  <!-- Step-by-step redesign (PM 2026-09-07: players didn't know the correct order) -->
+  <PersonalChronicle.Automation.Farm.Step1Crop>Select a crop</PersonalChronicle.Automation.Farm.Step1Crop>
+  <PersonalChronicle.Automation.Farm.Step2Zone>Draw growing zones</PersonalChronicle.Automation.Farm.Step2Zone>
+  <PersonalChronicle.Automation.Farm.Step3Manage>Manage zones</PersonalChronicle.Automation.Farm.Step3Manage>
+  <PersonalChronicle.Automation.Farm.StepNeedCrop>Pick a crop in step ① first - zones need a crop</PersonalChronicle.Automation.Farm.StepNeedCrop>
+  <PersonalChronicle.Automation.Farm.ConfigSummary>Coverage {0} cells - product: {1}</PersonalChronicle.Automation.Farm.ConfigSummary>
+  <!-- Info-card spec entries (PM 2026-09-07) -->
+  <PersonalChronicle.Automation.Farm.Spec.Coverage>Coverage area</PersonalChronicle.Automation.Farm.Spec.Coverage>
+  <PersonalChronicle.Automation.Farm.Spec.CoverageDesc>The square working area centred on the machine: auto-tilling, sowing, harvesting and growth driving all happen here. Highlighted when the machine is selected.</PersonalChronicle.Automation.Farm.Spec.CoverageDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Fertilize>Soil enrichment</PersonalChronicle.Automation.Farm.Spec.Fertilize>
+  <PersonalChronicle.Automation.Farm.Spec.FertilizeValue>+40% growth speed</PersonalChronicle.Automation.Farm.Spec.FertilizeValue>
+  <PersonalChronicle.Automation.Farm.Spec.FertilizeDesc>Barren natural ground inside growing zones is enriched into rich soil (target terrain can be changed via the "renovate terrain" gizmo). Player-built floors are never altered; the original ground is restored whenever the machine is uninstalled, destroyed or moved.</PersonalChronicle.Automation.Farm.Spec.FertilizeDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Collect>Drop collection</PersonalChronicle.Automation.Farm.Spec.Collect>
+  <PersonalChronicle.Automation.Farm.Spec.CollectValue>Auto</PersonalChronicle.Automation.Farm.Spec.CollectValue>
+  <PersonalChronicle.Automation.Farm.Spec.CollectDesc>Dropped products of the current crop inside growing zones are pulled into the built-in storage (with a converging animation). Only the currently selected crop's product is collected - nothing else.</PersonalChronicle.Automation.Farm.Spec.CollectDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Storage>Output storage</PersonalChronicle.Automation.Farm.Spec.Storage>
+  <PersonalChronicle.Automation.Farm.Spec.StorageValue>Buffer first</PersonalChronicle.Automation.Farm.Spec.StorageValue>
+  <PersonalChronicle.Automation.Farm.Spec.StorageDesc>Harvested goods go into the built-in storage first and can be piped to any storage via "set output target"; once full they drop to the ground for haulers or conveyor belts.</PersonalChronicle.Automation.Farm.Spec.StorageDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Power>Solar &amp; draw</PersonalChronicle.Automation.Farm.Spec.Power>
+  <PersonalChronicle.Automation.Farm.Spec.PowerValue>Daytime solar {0}W (offset) · draw {1}W</PersonalChronicle.Automation.Farm.Spec.PowerValue>
+  <PersonalChronicle.Automation.Farm.Spec.PowerDesc>Built-in solar panels generate during daytime to offset part of the draw (output is always below draw, zero at night); the difference comes from the grid or the backup battery. The machine is also a power conduit node.</PersonalChronicle.Automation.Farm.Spec.PowerDesc>
+  <PersonalChronicle.Automation.Farm.Spec.Battery>Backup battery</PersonalChronicle.Automation.Farm.Spec.Battery>
+  <PersonalChronicle.Automation.Farm.Spec.BatteryValue>{0} Wd stored</PersonalChronicle.Automation.Farm.Spec.BatteryValue>
+  <PersonalChronicle.Automation.Farm.Spec.BatteryDesc>Charges while on the grid and discharges during blackouts. Same mechanism as vanilla batteries: a fully charged battery may short-circuit in rain or fire - keep it roofed.</PersonalChronicle.Automation.Farm.Spec.BatteryDesc>
+  <PersonalChronicle.Automation.Farm.NeedPowerHint>No power: lay a power conduit adjacent to auto-connect</PersonalChronicle.Automation.Farm.NeedPowerHint>
+  <PersonalChronicle.Automation.Farm.NoGrid>Not on a grid: lay a power conduit adjacent</PersonalChronicle.Automation.Farm.NoGrid>
+  <PersonalChronicle.Automation.Farm.PowerShortage>Grid output below this machine's draw: build more generators</PersonalChronicle.Automation.Farm.PowerShortage>
+  <PersonalChronicle.Automation.Farm.CurrentCrop>Current crop: {0}</PersonalChronicle.Automation.Farm.CurrentCrop>
+  <PersonalChronicle.Automation.Farm.NoCrop>None</PersonalChronicle.Automation.Farm.NoCrop>
+  <!-- Inspect / mouseover readout (aggregated into Thing.GetInspectString) -->
+  <PersonalChronicle.Automation.Farm.Inspect.State>State: {0}</PersonalChronicle.Automation.Farm.Inspect.State>
+  <PersonalChronicle.Automation.Farm.Inspect.Running>running</PersonalChronicle.Automation.Farm.Inspect.Running>
+  <PersonalChronicle.Automation.Farm.Idle.NoPower>no power</PersonalChronicle.Automation.Farm.Idle.NoPower>
+  <PersonalChronicle.Automation.Farm.Idle.NoFuel>out of fuel</PersonalChronicle.Automation.Farm.Idle.NoFuel>
+  <PersonalChronicle.Automation.Farm.Idle.Off>switched off</PersonalChronicle.Automation.Farm.Idle.Off>
+  <PersonalChronicle.Automation.Farm.Inspect.Crop>Crop: {0}</PersonalChronicle.Automation.Farm.Inspect.Crop>
+  <PersonalChronicle.Automation.Farm.Inspect.CropNone>not set - use "Configure farm"</PersonalChronicle.Automation.Farm.Inspect.CropNone>
+  <PersonalChronicle.Automation.Farm.Inspect.Coverage>Coverage: {0} cells</PersonalChronicle.Automation.Farm.Inspect.Coverage>
+  <PersonalChronicle.Automation.Farm.Inspect.Work>Coverage {0} cells · sown {1} · ready {2}</PersonalChronicle.Automation.Farm.Inspect.Work>
+  <PersonalChronicle.Automation.Farm.WholeCoverage>Zone entire coverage</PersonalChronicle.Automation.Farm.WholeCoverage>
+  <PersonalChronicle.Automation.Farm.PaintZone>Paint zone</PersonalChronicle.Automation.Farm.PaintZone>
+  <PersonalChronicle.Automation.Farm.Clear>Clear farm</PersonalChronicle.Automation.Farm.Clear>
+  <!-- Crop picker window (search box + icon grid + details panel) -->
+  <PersonalChronicle.Automation.Farm.ChooseCrop>Choose crop…</PersonalChronicle.Automation.Farm.ChooseCrop>
+  <PersonalChronicle.Automation.Farm.SearchCrop>Choose crop</PersonalChronicle.Automation.Farm.SearchCrop>
+  <PersonalChronicle.Automation.Farm.NoMatch>No matching crop</PersonalChronicle.Automation.Farm.NoMatch>
+  <PersonalChronicle.Automation.Farm.CropHint>Hover a crop to see its stats and description here</PersonalChronicle.Automation.Farm.CropHint>
+  <PersonalChronicle.Automation.Farm.GrowDays>Grow days</PersonalChronicle.Automation.Farm.GrowDays>
+  <PersonalChronicle.Automation.Farm.FertilityMin>Min fertility</PersonalChronicle.Automation.Farm.FertilityMin>
+  <PersonalChronicle.Automation.Farm.FertilitySens>Fertility sens.</PersonalChronicle.Automation.Farm.FertilitySens>
+  <PersonalChronicle.Automation.Farm.MinGlow>Min light</PersonalChronicle.Automation.Farm.MinGlow>
+  <PersonalChronicle.Automation.Farm.Harvest>Harvest yield</PersonalChronicle.Automation.Farm.Harvest>
+  <PersonalChronicle.Automation.Farm.SowSkill>Sow skill</PersonalChronicle.Automation.Farm.SowSkill>
+  <PersonalChronicle.Automation.Farm.TempRange>Ideal temp</PersonalChronicle.Automation.Farm.TempRange>
+  <PersonalChronicle.Automation.Farm.StatDays>{0} d</PersonalChronicle.Automation.Farm.StatDays>
+  <PersonalChronicle.Automation.Farm.StatPercent>{0}%</PersonalChronicle.Automation.Farm.StatPercent>
+  <PersonalChronicle.Automation.Farm.StatYield>{0} x {1}</PersonalChronicle.Automation.Farm.StatYield>
+  <PersonalChronicle.Automation.Farm.StatSkill>lv {0}</PersonalChronicle.Automation.Farm.StatSkill>
+  <PersonalChronicle.Automation.Farm.StatTemp>{0}°C ~ {1}°C</PersonalChronicle.Automation.Farm.StatTemp>
+  <PersonalChronicle.Automation.Farm.StatNone>None</PersonalChronicle.Automation.Farm.StatNone>
+  <!-- Reclamation terrain gizmo + terrain picker window -->
+  <PersonalChronicle.Automation.Farm.Terrain>Terrain: {0}</PersonalChronicle.Automation.Farm.Terrain>
+  <PersonalChronicle.Automation.Farm.TerrainDesc>Pick the terrain the machine converts growing-zone tiles into. Third-party terrain mods are supported. It can be changed any number of times: after each change the conversion re-spreads outward from the machine. Removing the machine restores the original terrain (tiles you laid afterwards are kept).</PersonalChronicle.Automation.Farm.TerrainDesc>
+  <PersonalChronicle.Automation.Farm.TerrainTitle>Choose terrain</PersonalChronicle.Automation.Farm.TerrainTitle>
+  <PersonalChronicle.Automation.Farm.TerrainHint>Hover a terrain to see its stats and description here</PersonalChronicle.Automation.Farm.TerrainHint>
+  <PersonalChronicle.Automation.Farm.TerrainNoMatch>No matching terrain</PersonalChronicle.Automation.Farm.TerrainNoMatch>
+  <PersonalChronicle.Automation.Farm.StatFertility>Fertility</PersonalChronicle.Automation.Farm.StatFertility>
+  <PersonalChronicle.Automation.Farm.StatBeauty>Beauty</PersonalChronicle.Automation.Farm.StatBeauty>
+  <PersonalChronicle.Automation.Farm.StatPathCost>Path cost</PersonalChronicle.Automation.Farm.StatPathCost>
+  <PersonalChronicle.Automation.Farm.StatCost>Cost</PersonalChronicle.Automation.Farm.StatCost>
+  <!-- Item storage (player-facing seam of the pipe-transport reserved interface) -->
+  <PersonalChronicle.Automation.Farm.Storage.Unload>Unload all ({0})</PersonalChronicle.Automation.Farm.Storage.Unload>
+  <PersonalChronicle.Automation.Farm.Storage.UnloadDesc>Drop everything stored in the internal buffer beside the machine for haulers or conveyor belts.</PersonalChronicle.Automation.Farm.Storage.UnloadDesc>
+  <PersonalChronicle.Automation.Farm.Storage.Empty>Storage: empty</PersonalChronicle.Automation.Farm.Storage.Empty>
+  <PersonalChronicle.Automation.Farm.Storage.Inspect>Storage: {0}</PersonalChronicle.Automation.Farm.Storage.Inspect>
+  <PersonalChronicle.Automation.Farm.Storage.Full> (full)</PersonalChronicle.Automation.Farm.Storage.Full>
+  <PersonalChronicle.Automation.Zone.Workshop>Workshop zone</PersonalChronicle.Automation.Zone.Workshop>
+  <PersonalChronicle.Automation.Zone.WorkshopDesc>Designate a workshop zone. Automated processors and conveyor segments placed inside will belong to this workshop.</PersonalChronicle.Automation.Zone.WorkshopDesc>
+  <PersonalChronicle.Automation.Zone.Inspect>Workshop zone · Cells {0}</PersonalChronicle.Automation.Zone.Inspect>
+  <!-- Workshop manage gizmo and panel -->
+  <PersonalChronicle.Automation.Zone.Manage>Manage workshop</PersonalChronicle.Automation.Zone.Manage>
+  <PersonalChronicle.Automation.Zone.ManageDesc>Open the workshop panel: review its size, free floor space and device list.</PersonalChronicle.Automation.Zone.ManageDesc>
+  <!-- Workshop manage panel (large dialog, shared content layer) -->
+  <PersonalChronicle.Automation.Tab.HeaderDevices>{0} device(s)</PersonalChronicle.Automation.Tab.HeaderDevices>
+  <PersonalChronicle.Automation.Tab.HeaderSub>Cells {0} · Free floor {1} · Devices {2}</PersonalChronicle.Automation.Tab.HeaderSub>
+  <PersonalChronicle.Automation.Tab.Overview>Overview</PersonalChronicle.Automation.Tab.Overview>
+  <PersonalChronicle.Automation.Tab.Devices>Devices</PersonalChronicle.Automation.Tab.Devices>
+  <PersonalChronicle.Automation.Tab.Settings>Settings</PersonalChronicle.Automation.Tab.Settings>
+  <PersonalChronicle.Automation.Tab.ColName>Device</PersonalChronicle.Automation.Tab.ColName>
+  <PersonalChronicle.Automation.Tab.ColPos>Position</PersonalChronicle.Automation.Tab.ColPos>
+  <PersonalChronicle.Automation.Tab.ColState>State</PersonalChronicle.Automation.Tab.ColState>
+  <PersonalChronicle.Automation.Tab.NoDevices>No devices wired in yet</PersonalChronicle.Automation.Tab.NoDevices>
+  <PersonalChronicle.Automation.Tab.DevicesEmptySub>Place a processor inside the zone and it will show up here</PersonalChronicle.Automation.Tab.DevicesEmptySub>
+  <!-- CHG-20261005-DEVRENAME · workshop device renaming (single write entry: MapComponent_WorkshopManager.TryRenameDevice) -->
+  <PersonalChronicle.Automation.Tab.DeviceRename.Button>Rename</PersonalChronicle.Automation.Tab.DeviceRename.Button>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ButtonTip>Click the device name to rename it (shown in vanilla UI too)</PersonalChronicle.Automation.Tab.DeviceRename.ButtonTip>
+  <PersonalChronicle.Automation.Tab.DeviceRename.Title>Rename device</PersonalChronicle.Automation.Tab.DeviceRename.Title>
+  <PersonalChronicle.Automation.Tab.DeviceRename.Hint>Leave empty to restore the default name "{0}". Names must be unique among workshop devices on this map.</PersonalChronicle.Automation.Tab.DeviceRename.Hint>
+  <PersonalChronicle.Automation.Tab.DeviceRename.Done>Renamed to "{0}"</PersonalChronicle.Automation.Tab.DeviceRename.Done>
+  <PersonalChronicle.Automation.Tab.DeviceRename.Cleared>Default name restored</PersonalChronicle.Automation.Tab.DeviceRename.Cleared>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrTooLong>Name too long (limit {0} characters)</PersonalChronicle.Automation.Tab.DeviceRename.ErrTooLong>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrDuplicate>Another device already has this name: {0}</PersonalChronicle.Automation.Tab.DeviceRename.ErrDuplicate>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrDuplicateGeneric>Another device already has this name, pick a different one</PersonalChronicle.Automation.Tab.DeviceRename.ErrDuplicateGeneric>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrNotTracked>This device is not tracked by any workshop; cannot rename</PersonalChronicle.Automation.Tab.DeviceRename.ErrNotTracked>
+  <PersonalChronicle.Automation.Tab.DeviceRename.ErrGone>This device has been deconstructed</PersonalChronicle.Automation.Tab.DeviceRename.ErrGone>
+  <PersonalChronicle.Automation.Tab.Members>Members</PersonalChronicle.Automation.Tab.Members>
+  <PersonalChronicle.Automation.Tab.AgRunning>Running</PersonalChronicle.Automation.Tab.AgRunning>
+  <PersonalChronicle.Automation.Tab.AgNoPower>No power</PersonalChronicle.Automation.Tab.AgNoPower>
+  <PersonalChronicle.Automation.Tab.AgNoFuel>No fuel</PersonalChronicle.Automation.Tab.AgNoFuel>
+  <PersonalChronicle.Automation.Tab.AgOff>Switched off</PersonalChronicle.Automation.Tab.AgOff>
+  <PersonalChronicle.Automation.Tab.ColMemberName>Name</PersonalChronicle.Automation.Tab.ColMemberName>
+  <PersonalChronicle.Automation.Tab.ColActivity>Activity</PersonalChronicle.Automation.Tab.ColActivity>
+  <!-- CHG-20261004-IDLE / POSTGUIDE（中英对等，2026-10-04 审计 P2 缺口） -->
+  <PersonalChronicle.Automation.Tab.ColActivityIdle>Idling… (no station this shift, recreation arranged)</PersonalChronicle.Automation.Tab.ColActivityIdle>
+  <PersonalChronicle.Automation.Tab.PostsNeedWorkshopType>⚠ No workshop type yet: members will only stand duty. Pick a type on the "Settings" tab (press Refresh, then scroll up) and enable vanilla "Manual priorities".</PersonalChronicle.Automation.Tab.PostsNeedWorkshopType>
+  <PersonalChronicle.Automation.Tab.PostsNeedWorkshopType2>"Planned - no takeover yet" on the right only means this post may not take over (disable) your vanilla work; it does not affect whether a member can work.</PersonalChronicle.Automation.Tab.PostsNeedWorkshopType2>
+  <PersonalChronicle.Automation.Tab.PatternAutoCrewHint>(auto-creates {0} crews and rotates all members in, when this workshop has none)</PersonalChronicle.Automation.Tab.PatternAutoCrewHint>
+  <PersonalChronicle.Automation.Tab.NoMembers>No members assigned yet</PersonalChronicle.Automation.Tab.NoMembers>
+  <PersonalChronicle.Automation.Tab.MembersEmptySub>Press "Add member" to assign colonists to this workshop</PersonalChronicle.Automation.Tab.MembersEmptySub>
+  <PersonalChronicle.Automation.Tab.MembersHint>Members are assigned manually</PersonalChronicle.Automation.Tab.MembersHint>
+  <!-- CHG-20261004-POSTOVERRIDE manual post override (auto-assign first, player may override per pawn) -->
+  <PersonalChronicle.Automation.Tab.SetPost>Set post</PersonalChronicle.Automation.Tab.SetPost>
+  <PersonalChronicle.Automation.Tab.PostFollowAuto>Follow auto-assignment (clear manual override)</PersonalChronicle.Automation.Tab.PostFollowAuto>
+  <PersonalChronicle.Automation.Tab.AddMember>Add member</PersonalChronicle.Automation.Tab.AddMember>
+  <PersonalChronicle.Automation.Tab.NoCandidates>No colonists available to assign</PersonalChronicle.Automation.Tab.NoCandidates>
+  <!-- Schedule page (fixed shifts + rotations) -->
+  <PersonalChronicle.Automation.Tab.Schedule>Schedule</PersonalChronicle.Automation.Tab.Schedule>
+  <PersonalChronicle.Automation.Tab.ScheduleHint>Assign shifts from the member list; pawns clock out automatically when a shift ends</PersonalChronicle.Automation.Tab.ScheduleHint>
+  <PersonalChronicle.Automation.Tab.AddShift>Add shift</PersonalChronicle.Automation.Tab.AddShift>
+  <PersonalChronicle.Automation.Tab.AddRotation>Add rotation</PersonalChronicle.Automation.Tab.AddRotation>
+  <PersonalChronicle.Automation.Tab.RotateNow>Rotate now</PersonalChronicle.Automation.Tab.RotateNow>
+  <!-- 2026-09-25 Schedule page semantic fix: crews / shifts / duty calendar, removed fixed/rotation -->
+  <PersonalChronicle.Automation.Tab.SectionCrews>Crews</PersonalChronicle.Automation.Tab.SectionCrews>
+  <PersonalChronicle.Automation.Tab.SectionShifts>Shifts</PersonalChronicle.Automation.Tab.SectionShifts>
+  <PersonalChronicle.Automation.Tab.SectionCalendar>Duty calendar</PersonalChronicle.Automation.Tab.SectionCalendar>
+  <PersonalChronicle.Automation.Tab.CrewAdd>Add crew</PersonalChronicle.Automation.Tab.CrewAdd>
+  <PersonalChronicle.Automation.Tab.CrewHeadcount>{0} on roster</PersonalChronicle.Automation.Tab.CrewHeadcount>
+  <PersonalChronicle.Automation.Tab.CrewEmptyTitle>No crews yet</PersonalChronicle.Automation.Tab.CrewEmptyTitle>
+  <PersonalChronicle.Automation.Tab.CrewEmptySub>Press "Add crew" to create A/B/C/D-named crews, or use "Preset shifts" to lay out two/three shifts and auto-assign members</PersonalChronicle.Automation.Tab.CrewEmptySub>
+  <!-- 2026-09-25 Crew editor dialog -->
+  <PersonalChronicle.Automation.Tab.CrewEditorTitle>Crew settings</PersonalChronicle.Automation.Tab.CrewEditorTitle>
+  <PersonalChronicle.Automation.Tab.CrewNameLabel>Crew name</PersonalChronicle.Automation.Tab.CrewNameLabel>
+  <PersonalChronicle.Automation.Tab.CrewMembersLabel>Members (pick from workshop roster)</PersonalChronicle.Automation.Tab.CrewMembersLabel>
+  <PersonalChronicle.Automation.Tab.CrewShiftsLabel>Shifts (tick shifts this crew covers)</PersonalChronicle.Automation.Tab.CrewShiftsLabel>
+  <PersonalChronicle.Automation.Tab.CrewAddMember>Add</PersonalChronicle.Automation.Tab.CrewAddMember>
+  <PersonalChronicle.Automation.Tab.CrewRemoveMember>Remove</PersonalChronicle.Automation.Tab.CrewRemoveMember>
+  <PersonalChronicle.Automation.Tab.CrewMoveMember>Move here</PersonalChronicle.Automation.Tab.CrewMoveMember>
+  <PersonalChronicle.Automation.Tab.CrewAssignShift>Cover</PersonalChronicle.Automation.Tab.CrewAssignShift>
+  <PersonalChronicle.Automation.Tab.CrewUnassignShift>Drop</PersonalChronicle.Automation.Tab.CrewUnassignShift>
+  <!-- CHG-20261004-WORKTAB-SHIFT unit B: hover help after the shift row became a checkbox -->
+  <PersonalChronicle.Automation.Tab.CrewShiftAssignTip>Checked = this crew is responsible for the shift, so crew members join its candidate pool. Unchecked = removed from that shift's candidate pool (on-duty members are unaffected).</PersonalChronicle.Automation.Tab.CrewShiftAssignTip>
+  <PersonalChronicle.Automation.Tab.CrewNoShifts>No shifts yet; add via "Preset shifts"</PersonalChronicle.Automation.Tab.CrewNoShifts>
+  <PersonalChronicle.Automation.Tab.CrewEditorOk>OK</PersonalChronicle.Automation.Tab.CrewEditorOk>
+  <!-- 2026-09-25 Schedule third section: performance (replaces old duty calendar) -->
+  <PersonalChronicle.Automation.Tab.PerfTitle>Performance</PersonalChronicle.Automation.Tab.PerfTitle>
+  <PersonalChronicle.Automation.Tab.PerfTarget>Daily target per member {0}</PersonalChronicle.Automation.Tab.PerfTarget>
+  <PersonalChronicle.Automation.Tab.PerfAttendance>Attendance</PersonalChronicle.Automation.Tab.PerfAttendance>
+  <PersonalChronicle.Automation.Tab.PerfProduction>Output rate</PersonalChronicle.Automation.Tab.PerfProduction>
+  <PersonalChronicle.Automation.Tab.PerfProduced>Produced today {0}</PersonalChronicle.Automation.Tab.PerfProduced>
+  <PersonalChronicle.Automation.Tab.PerfNoData>No performance data yet</PersonalChronicle.Automation.Tab.PerfNoData>
+  <PersonalChronicle.Automation.Tab.PerfNoDataSub>Add crews and shifts; on-duty production will be tracked here as daily attendance and output rates</PersonalChronicle.Automation.Tab.PerfNoDataSub>
+  <!-- 2026-09-25 Devices page: current bill / runtime / output -->
+  <PersonalChronicle.Automation.Tab.ColBill>Current bill</PersonalChronicle.Automation.Tab.ColBill>
+  <PersonalChronicle.Automation.Tab.ColRuntime>Runtime</PersonalChronicle.Automation.Tab.ColRuntime>
+  <!-- Output window: last N days (2026-10-02 request "set device output period to 5 days") -->
+  <PersonalChronicle.Automation.Tab.ColOutputWindow>Output (daily / weekly)</PersonalChronicle.Automation.Tab.ColOutputWindow>
+  <PersonalChronicle.Automation.Tab.DeviceBillsSuspended>Bills suspended</PersonalChronicle.Automation.Tab.DeviceBillsSuspended>
+  <PersonalChronicle.Automation.Tab.ConfirmCreate>Create (day shift 6:00–18:00)</PersonalChronicle.Automation.Tab.ConfirmCreate>
+
+  <PersonalChronicle.Automation.Tab.RotEditorTitle>Rotation rule</PersonalChronicle.Automation.Tab.RotEditorTitle>
+  <PersonalChronicle.Automation.Tab.RotInterval>Rotation interval</PersonalChronicle.Automation.Tab.RotInterval>
+  <PersonalChronicle.Automation.Tab.RotIntervalHours>{0} h</PersonalChronicle.Automation.Tab.RotIntervalHours>
+  <PersonalChronicle.Automation.Tab.RotReset>Reset rotation</PersonalChronicle.Automation.Tab.RotReset>
+  <PersonalChronicle.Automation.Tab.Mode>Rotation mode</PersonalChronicle.Automation.Tab.Mode>
+  <PersonalChronicle.Automation.Tab.ViewList>List</PersonalChronicle.Automation.Tab.ViewList>
+  <PersonalChronicle.Automation.Tab.ViewChart>Chart</PersonalChronicle.Automation.Tab.ViewChart>
+  <PersonalChronicle.Automation.Tab.ChartManHours>{0} man-hours/day</PersonalChronicle.Automation.Tab.ChartManHours>
+  <PersonalChronicle.Automation.Tab.ChartEmptyHours>{0} uncovered hours</PersonalChronicle.Automation.Tab.ChartEmptyHours>
+  <PersonalChronicle.Automation.Tab.ChartEntries>{0} posts</PersonalChronicle.Automation.Tab.ChartEntries>
+  <PersonalChronicle.Automation.Tab.ChartLegendEmpty>Uncovered</PersonalChronicle.Automation.Tab.ChartLegendEmpty>
+  <PersonalChronicle.Automation.Tab.ChartLegendSome>Staffed</PersonalChronicle.Automation.Tab.ChartLegendSome>
+  <PersonalChronicle.Automation.Tab.ChartLegendPeak>Peak</PersonalChronicle.Automation.Tab.ChartLegendPeak>
+  <PersonalChronicle.Automation.Tab.ChartCoverage>On duty by hour</PersonalChronicle.Automation.Tab.ChartCoverage>
+  <PersonalChronicle.Automation.Tab.ChartUnitPawn>staff</PersonalChronicle.Automation.Tab.ChartUnitPawn>
+  <PersonalChronicle.Automation.Tab.ChartNote>Rosters repeat daily; coverage does not change per date (rotations only swap who is on duty)</PersonalChronicle.Automation.Tab.ChartNote>
+  <PersonalChronicle.Automation.Tab.ChartQuadrumTitle>This quadrum ({0} days) · daily man-hours</PersonalChronicle.Automation.Tab.ChartQuadrumTitle>
+  <PersonalChronicle.Automation.Tab.ChartToday>(highlighted = today)</PersonalChronicle.Automation.Tab.ChartToday>
+  <PersonalChronicle.Automation.Tab.ChartEmptyHint>{0} hours are uncovered - use "Apply shift pattern" for two/three-shift rosters</PersonalChronicle.Automation.Tab.ChartEmptyHint>
+  <PersonalChronicle.Automation.Tab.ChartEmptySub>No roster yet. Apply a shift pattern (two/three shifts) or add a crew manually</PersonalChronicle.Automation.Tab.ChartEmptySub>
+  <PersonalChronicle.Automation.Tab.PatternApply>Preset shifts</PersonalChronicle.Automation.Tab.PatternApply>
+  <PersonalChronicle.Automation.Tab.PatternTargetCrew>Create crews (slots split by headcount)</PersonalChronicle.Automation.Tab.PatternTargetCrew>
+  <PersonalChronicle.Automation.Tab.PatternTargetRotation>Create rotations (one post per shift)</PersonalChronicle.Automation.Tab.PatternTargetRotation>
+  <PersonalChronicle.Automation.Tab.PatternShifts>{0} shifts</PersonalChronicle.Automation.Tab.PatternShifts>
+  <PersonalChronicle.Automation.Tab.PatternDayShift>Day shift 08-16</PersonalChronicle.Automation.Tab.PatternDayShift>
+  <PersonalChronicle.Automation.Tab.PatternTwoShift>Two-shift 08-20 / 20-08</PersonalChronicle.Automation.Tab.PatternTwoShift>
+  <PersonalChronicle.Automation.Tab.PatternThreeShift6>Three-shift 06-14 / 14-22 / 22-06</PersonalChronicle.Automation.Tab.PatternThreeShift6>
+  <PersonalChronicle.Automation.Tab.PatternThreeShift8>Three-shift 08-16 / 16-00 / 00-08</PersonalChronicle.Automation.Tab.PatternThreeShift8>
+  <PersonalChronicle.Automation.Tab.ViewRoster>Roster</PersonalChronicle.Automation.Tab.ViewRoster>
+  <PersonalChronicle.Automation.Tab.CrewBoardTitle>Crew roster board</PersonalChronicle.Automation.Tab.CrewBoardTitle>
+  <PersonalChronicle.Automation.Tab.CrewCycleDays>{0}-day cycle</PersonalChronicle.Automation.Tab.CrewCycleDays>
+  <PersonalChronicle.Automation.Tab.CrewShiftCount>{0} shifts</PersonalChronicle.Automation.Tab.CrewShiftCount>
+  <PersonalChronicle.Automation.Tab.CrewRestPerDay>{0} crew(s) off per day</PersonalChronicle.Automation.Tab.CrewRestPerDay>
+  <PersonalChronicle.Automation.Tab.CrewHint>Click a crew header to add members, clear or delete</PersonalChronicle.Automation.Tab.CrewHint>
+  <PersonalChronicle.Automation.Tab.CrewColumn>Crew · headcount</PersonalChronicle.Automation.Tab.CrewColumn>
+  <PersonalChronicle.Automation.Tab.CrewMembers>{0} members</PersonalChronicle.Automation.Tab.CrewMembers>
+  <PersonalChronicle.Automation.Tab.CrewRest>Off</PersonalChronicle.Automation.Tab.CrewRest>
+  <PersonalChronicle.Automation.Tab.CrewTodayStaffing>Manning today</PersonalChronicle.Automation.Tab.CrewTodayStaffing>
+  <PersonalChronicle.Automation.Tab.CrewSlotEarly>Early</PersonalChronicle.Automation.Tab.CrewSlotEarly>
+  <PersonalChronicle.Automation.Tab.CrewSlotMiddle>Middle</PersonalChronicle.Automation.Tab.CrewSlotMiddle>
+  <PersonalChronicle.Automation.Tab.CrewSlotNight>Night</PersonalChronicle.Automation.Tab.CrewSlotNight>
+  <PersonalChronicle.Automation.Tab.CrewSlotN>Shift {0}</PersonalChronicle.Automation.Tab.CrewSlotN>
+  <PersonalChronicle.Automation.Tab.CrewAddMemberMenu>Add member</PersonalChronicle.Automation.Tab.CrewAddMemberMenu>
+  <PersonalChronicle.Automation.Tab.CrewClearMembers>Clear members</PersonalChronicle.Automation.Tab.CrewClearMembers>
+  <PersonalChronicle.Automation.Tab.CrewDelete>Delete crew</PersonalChronicle.Automation.Tab.CrewDelete>
+  <PersonalChronicle.Automation.Tab.CrewManage>Crew management</PersonalChronicle.Automation.Tab.CrewManage>
+  <PersonalChronicle.Automation.Tab.ViewHandover>Handover</PersonalChronicle.Automation.Tab.ViewHandover>
+  <PersonalChronicle.Automation.Tab.CrewTodayMark>Today</PersonalChronicle.Automation.Tab.CrewTodayMark>
+  <PersonalChronicle.Automation.Tab.PhaseDays>phase {0}d</PersonalChronicle.Automation.Tab.PhaseDays>
+  <PersonalChronicle.Automation.Tab.ExcHint>Click a cell to cycle: normal -&gt; leave -&gt; cover</PersonalChronicle.Automation.Tab.ExcHint>
+  <PersonalChronicle.Automation.Tab.ExcClickHint>click to cycle normal/leave/cover</PersonalChronicle.Automation.Tab.ExcClickHint>
+  <PersonalChronicle.Automation.Tab.ExcLeave>Leave</PersonalChronicle.Automation.Tab.ExcLeave>
+  <PersonalChronicle.Automation.Tab.ExcExtra>Cover</PersonalChronicle.Automation.Tab.ExcExtra>
+  <PersonalChronicle.Automation.Tab.KpiAttendance>Attendance</PersonalChronicle.Automation.Tab.KpiAttendance>
+  <PersonalChronicle.Automation.Tab.KpiOvertime>Overtime</PersonalChronicle.Automation.Tab.KpiOvertime>
+  <PersonalChronicle.Automation.Tab.KpiUtilization>Labor util.</PersonalChronicle.Automation.Tab.KpiUtilization>
+  <PersonalChronicle.Automation.Tab.KpiAvailability>Availability</PersonalChronicle.Automation.Tab.KpiAvailability>
+  <PersonalChronicle.Automation.Tab.KpiHours>{0} h</PersonalChronicle.Automation.Tab.KpiHours>
+  <PersonalChronicle.Automation.Tab.HandoverTitle>Shift handover</PersonalChronicle.Automation.Tab.HandoverTitle>
+  <PersonalChronicle.Automation.Tab.HandoverCurrentShift>Current shift</PersonalChronicle.Automation.Tab.HandoverCurrentShift>
+  <PersonalChronicle.Automation.Tab.HandoverNoCrew>unstaffed</PersonalChronicle.Automation.Tab.HandoverNoCrew>
+  <PersonalChronicle.Automation.Tab.HandoverOnDuty>{0} on duty</PersonalChronicle.Automation.Tab.HandoverOnDuty>
+  <PersonalChronicle.Automation.Tab.HandoverNoShift>Not in a shift window right now</PersonalChronicle.Automation.Tab.HandoverNoShift>
+  <PersonalChronicle.Automation.Tab.HandoverNextChange>Next handover in</PersonalChronicle.Automation.Tab.HandoverNextChange>
+  <PersonalChronicle.Automation.Tab.HandoverInHours>{0} h</PersonalChronicle.Automation.Tab.HandoverInHours>
+  <PersonalChronicle.Automation.Tab.HandoverOpenBills>{0} open bill(s)</PersonalChronicle.Automation.Tab.HandoverOpenBills>
+  <PersonalChronicle.Automation.Tab.HandoverFaults>{0} faulty device(s)</PersonalChronicle.Automation.Tab.HandoverFaults>
+  <PersonalChronicle.Automation.Tab.InspectionTitle>Equipment inspection</PersonalChronicle.Automation.Tab.InspectionTitle>
+  <PersonalChronicle.Automation.Tab.InspectionColDevice>Device</PersonalChronicle.Automation.Tab.InspectionColDevice>
+  <PersonalChronicle.Automation.Tab.InspectionColState>State</PersonalChronicle.Automation.Tab.InspectionColState>
+  <PersonalChronicle.Automation.Tab.InspectionColBills>Bills</PersonalChronicle.Automation.Tab.InspectionColBills>
+  <PersonalChronicle.Automation.Tab.InspectionColKeeper>Crew on duty</PersonalChronicle.Automation.Tab.InspectionColKeeper>
+  <PersonalChronicle.Automation.Tab.ColHours>Hours</PersonalChronicle.Automation.Tab.ColHours>
+  <PersonalChronicle.Automation.Tab.ColTask>Duty</PersonalChronicle.Automation.Tab.ColTask>
+  <PersonalChronicle.Automation.Tab.ColGate>Skill gate</PersonalChronicle.Automation.Tab.ColGate>
+  <PersonalChronicle.Automation.Tab.ColPriority>Prio</PersonalChronicle.Automation.Tab.ColPriority>
+  <PersonalChronicle.Automation.Tab.ColPool>{0} in rotation pool</PersonalChronicle.Automation.Tab.ColPool>
+  <PersonalChronicle.Automation.Tab.GateClear>Clear gate</PersonalChronicle.Automation.Tab.GateClear>
+  <!-- Time range editor -->
+  <PersonalChronicle.Automation.Tab.TimeRangeTitle>Time range</PersonalChronicle.Automation.Tab.TimeRangeTitle>
+  <PersonalChronicle.Automation.Tab.TimeStart>Start</PersonalChronicle.Automation.Tab.TimeStart>
+  <PersonalChronicle.Automation.Tab.TimeEnd>End</PersonalChronicle.Automation.Tab.TimeEnd>
+  <PersonalChronicle.Automation.Tab.ColHeadcount>Headcount</PersonalChronicle.Automation.Tab.ColHeadcount>
+  <PersonalChronicle.Automation.Tab.HeadcountDefault>default {0}</PersonalChronicle.Automation.Tab.HeadcountDefault>
+  <PersonalChronicle.Automation.Tab.HeadcountUnlimited>unlimited</PersonalChronicle.Automation.Tab.HeadcountUnlimited>
+  <PersonalChronicle.Automation.Tab.HeadcountTip>How many people this shift puts on duty. Stepping down past zero means "unlimited" - every eligible pawn on that shift will be put on duty, which is usually not what you want. When unset it falls back to 1 person per shift, so a three-shift rotation does not collapse into everyone working every shift.</PersonalChronicle.Automation.Tab.HeadcountTip>
+  <PersonalChronicle.Automation.Tab.TimeAllDay>All day</PersonalChronicle.Automation.Tab.TimeAllDay>
+  <PersonalChronicle.Automation.Tab.TimeAllDayTip>Start = End means an "all-day shift": it covers every hour 0-23, so anyone it picks up will never clock off (and will never go back to bed). To staff a night shift only, set a range such as 20:00 - 08:00.</PersonalChronicle.Automation.Tab.TimeAllDayTip>
+  <PersonalChronicle.Automation.Tab.TimeWrap>crosses midnight</PersonalChronicle.Automation.Tab.TimeWrap>
+  <PersonalChronicle.Automation.Tab.DutyNow>on duty {0}</PersonalChronicle.Automation.Tab.DutyNow>
+  <PersonalChronicle.Automation.Tab.DutyOff>off duty {0}</PersonalChronicle.Automation.Tab.DutyOff>
+  <PersonalChronicle.Automation.Tab.DutyRoster>on duty {0} / expected {1}</PersonalChronicle.Automation.Tab.DutyRoster>
+  <PersonalChronicle.Automation.Tab.DutyOnDuty>on duty {0}</PersonalChronicle.Automation.Tab.DutyOnDuty>
+  <PersonalChronicle.Automation.Tab.DutyExpected>expected {0}</PersonalChronicle.Automation.Tab.DutyExpected>
+  <PersonalChronicle.Automation.Tab.DutyGhost>ghost on-duty {0} (auto-cleared)</PersonalChronicle.Automation.Tab.DutyGhost>
+  <PersonalChronicle.Automation.Tab.RestBroken>bad schedule {0}</PersonalChronicle.Automation.Tab.RestBroken>
+  <PersonalChronicle.Automation.Tab.RestMaxHours>longest Work {0}h</PersonalChronicle.Automation.Tab.RestMaxHours>
+  <PersonalChronicle.Automation.Tab.PresetDay>Day</PersonalChronicle.Automation.Tab.PresetDay>
+  <PersonalChronicle.Automation.Tab.PresetNight>Night</PersonalChronicle.Automation.Tab.PresetNight>
+  <PersonalChronicle.Automation.Tab.PresetAll>All day</PersonalChronicle.Automation.Tab.PresetAll>
+  <PersonalChronicle.Automation.Tab.Ok>OK</PersonalChronicle.Automation.Tab.Ok>
+  <PersonalChronicle.Automation.Tab.Cancel>Cancel</PersonalChronicle.Automation.Tab.Cancel>
+  <!-- Crew shift (headcount based: custom headcount + hours + candidate pool) -->
+  <PersonalChronicle.Automation.Tab.ShiftAdd>Add crew</PersonalChronicle.Automation.Tab.ShiftAdd>
+  <PersonalChronicle.Automation.Tab.ShiftEditorTitle>Shift settings</PersonalChronicle.Automation.Tab.ShiftEditorTitle>
+  <PersonalChronicle.Automation.Tab.ShiftSection>Crew shifts (headcount)</PersonalChronicle.Automation.Tab.ShiftSection>
+  <PersonalChronicle.Automation.Tab.ShiftCount>{0} people</PersonalChronicle.Automation.Tab.ShiftCount>
+  <PersonalChronicle.Automation.Tab.ShiftCountLabel>Slots</PersonalChronicle.Automation.Tab.ShiftCountLabel>
+  <PersonalChronicle.Automation.Tab.ShiftCountUnlimited>Unlimited</PersonalChronicle.Automation.Tab.ShiftCountUnlimited>
+  <PersonalChronicle.Automation.Tab.ShiftHit>{0} on duty</PersonalChronicle.Automation.Tab.ShiftHit>
+  <PersonalChronicle.Automation.Tab.ShiftPool>Pool</PersonalChronicle.Automation.Tab.ShiftPool>
+  <PersonalChronicle.Automation.Tab.ShiftPoolFallback>Use workshop roster ({0})</PersonalChronicle.Automation.Tab.ShiftPoolFallback>
+  <PersonalChronicle.Automation.Tab.ShiftPoolAdd>Add member</PersonalChronicle.Automation.Tab.ShiftPoolAdd>
+  <PersonalChronicle.Automation.Tab.ShiftPoolClear>Use roster</PersonalChronicle.Automation.Tab.ShiftPoolClear>
+  <PersonalChronicle.Automation.Tab.ShiftDelete>Delete shift</PersonalChronicle.Automation.Tab.ShiftDelete>
+  <!-- Shifts table page (added 2026-10-02): list / edit / delete every shift of this workshop -->
+  <PersonalChronicle.Automation.Tab.ShiftTable>Shifts</PersonalChronicle.Automation.Tab.ShiftTable>
+  <PersonalChronicle.Automation.Tab.ShiftTableHint>Click a row to view or edit; the Delete button removes the shift.</PersonalChronicle.Automation.Tab.ShiftTableHint>
+  <PersonalChronicle.Automation.Tab.ShiftTableSummary>{0} shifts</PersonalChronicle.Automation.Tab.ShiftTableSummary>
+  <PersonalChronicle.Automation.Tab.ShiftTableEmptyTitle>No shifts yet</PersonalChronicle.Automation.Tab.ShiftTableEmptyTitle>
+  <PersonalChronicle.Automation.Tab.ShiftTableEmptySub>Use "Add shift" above, or "Preset shifts" to lay out 2-3 shifts at once.</PersonalChronicle.Automation.Tab.ShiftTableEmptySub>
+  <PersonalChronicle.Automation.Tab.ShiftDeleteConfirm>Delete shift "{0}"? Crews assigned to it will be unassigned.</PersonalChronicle.Automation.Tab.ShiftDeleteConfirm>
+  <PersonalChronicle.Automation.Tab.ShiftNotAssigned>Crew cycle</PersonalChronicle.Automation.Tab.ShiftNotAssigned>
+  <PersonalChronicle.Automation.Tab.ShiftSlotLabel>Cycle slot {0}</PersonalChronicle.Automation.Tab.ShiftSlotLabel>
+  <PersonalChronicle.Automation.Tab.ShiftRowDelete>Delete</PersonalChronicle.Automation.Tab.ShiftRowDelete>
+  <PersonalChronicle.Automation.Tab.ColFilled>Filled</PersonalChronicle.Automation.Tab.ColFilled>
+  <PersonalChronicle.Automation.Tab.ColCrews>Assigned crews</PersonalChronicle.Automation.Tab.ColCrews>
+  <PersonalChronicle.Automation.Tab.ColActions>Actions</PersonalChronicle.Automation.Tab.ColActions>
+  <!-- Vanilla work-priority link disclosure (2026-10-02 · EXC-2026-012 + EXC-2026-013) -->
+  <!-- CHG-20261005-TAKEOVERUI: shorter copy (player asked for minimal reading cost) -->
+  <PersonalChronicle.Automation.Tab.WorkPrioManualOn>Work priorities: manual - workshop jobs at top priority</PersonalChronicle.Automation.Tab.WorkPrioManualOn>
+  <PersonalChronicle.Automation.Tab.WorkPrioManualOff>Work priorities: simple mode - workshop boost inactive</PersonalChronicle.Automation.Tab.WorkPrioManualOff>
+  <PersonalChronicle.Automation.Tab.WorkPrioEnable>Enable manual priorities</PersonalChronicle.Automation.Tab.WorkPrioEnable>
+  <PersonalChronicle.Automation.Tab.WorkPrioHint>Vanilla reads priorities only in "manual priorities" mode. With it on, workshop jobs go to top priority (1) so colonists do them first; adjust anytime in the vanilla Work tab.</PersonalChronicle.Automation.Tab.WorkPrioHint>
+  <PersonalChronicle.Automation.Tab.ScheduleEmptyTitle>No shifts scheduled yet</PersonalChronicle.Automation.Tab.ScheduleEmptyTitle>
+  <PersonalChronicle.Automation.Tab.ScheduleEmptySub>Assign members on the Members page first, then press "Add shift" or "Add rotation"</PersonalChronicle.Automation.Tab.ScheduleEmptySub>
+  <PersonalChronicle.Automation.Tab.TaskProduction>Production</PersonalChronicle.Automation.Tab.TaskProduction>
+  <PersonalChronicle.Automation.Tab.TaskMaintenance>Maintenance</PersonalChronicle.Automation.Tab.TaskMaintenance>
+  <PersonalChronicle.Automation.Tab.TaskQualityCheck>Quality check</PersonalChronicle.Automation.Tab.TaskQualityCheck>
+  <PersonalChronicle.Automation.Tab.TaskStandby>Standby</PersonalChronicle.Automation.Tab.TaskStandby>
+  <!-- Duty ⇄ vanilla Work tab link (2026-10-02): hint line + menu sub-text ({0} = vanilla work name, LabelCap at runtime) -->
+  <PersonalChronicle.Automation.Tab.TaskSyncHint>Auto-enables matching Work tab entries (priorities unchanged)</PersonalChronicle.Automation.Tab.TaskSyncHint>
+  <PersonalChronicle.Automation.Tab.TaskSyncTo>Vanilla work: {0}</PersonalChronicle.Automation.Tab.TaskSyncTo>
+
+  <!--
+    CHG-20261004-SHIFTMEAL · per-shift meal times (shift editor).
+    Shift work makes day/night crews need different meal times ⇒ each shift can define its own
+    three meals; any meal left unset follows the global meal schedule in mod settings.
+  -->
+  <PersonalChronicle.Automation.Tab.MealBreakfast>Shift breakfast</PersonalChronicle.Automation.Tab.MealBreakfast>
+  <PersonalChronicle.Automation.Tab.MealLunch>Shift lunch</PersonalChronicle.Automation.Tab.MealLunch>
+  <PersonalChronicle.Automation.Tab.MealDinner>Shift dinner</PersonalChronicle.Automation.Tab.MealDinner>
+  <!-- CHG-20261005-MEALHOUR: global meal settings removed => "follow global" strings retired (ShiftMealFollowGlobal is now an orphan key, harmless) -->
+  <PersonalChronicle.Automation.Tab.ShiftMealHint>Each meal is a single time of day (e.g. 07:00); once set it is written into the members' timetables</PersonalChronicle.Automation.Tab.ShiftMealHint>
+  <PersonalChronicle.Automation.Tab.ShiftMealClearAll>Clear all</PersonalChronicle.Automation.Tab.ShiftMealClearAll>
+  <PersonalChronicle.Automation.Tab.ModeRoundRobin>Round robin</PersonalChronicle.Automation.Tab.ModeRoundRobin>
+  <PersonalChronicle.Automation.Tab.ModeSkillBased>Best skill</PersonalChronicle.Automation.Tab.ModeSkillBased>
+  <PersonalChronicle.Automation.Tab.ModePriorityBased>Fixed order</PersonalChronicle.Automation.Tab.ModePriorityBased>
+  <PersonalChronicle.Automation.Tab.Cells>Cells</PersonalChronicle.Automation.Tab.Cells>
+  <PersonalChronicle.Automation.Tab.CellsSub>Total zone area</PersonalChronicle.Automation.Tab.CellsSub>
+  <PersonalChronicle.Automation.Tab.FreeCells>Free floor</PersonalChronicle.Automation.Tab.FreeCells>
+  <PersonalChronicle.Automation.Tab.FreeCellsSub>Space still available for devices</PersonalChronicle.Automation.Tab.FreeCellsSub>
+  <PersonalChronicle.Automation.Tab.DevicesSub>Not wired up yet</PersonalChronicle.Automation.Tab.DevicesSub>
+  <PersonalChronicle.Automation.Tab.OccupancyTitle>Floor usage</PersonalChronicle.Automation.Tab.OccupancyTitle>
+  <!-- Device fit (workshop type's expected devices vs actual devices in the zone) -->
+  <PersonalChronicle.Automation.Tab.FitTitle>Process device fit</PersonalChronicle.Automation.Tab.FitTitle>
+  <PersonalChronicle.Automation.Tab.FitUnspecified>This process declares no expected devices (no native anchor yet)</PersonalChronicle.Automation.Tab.FitUnspecified>
+  <PersonalChronicle.Automation.Tab.FitMatched>Matched {0}</PersonalChronicle.Automation.Tab.FitMatched>
+  <PersonalChronicle.Automation.Tab.FitExtra>Extra {0}</PersonalChronicle.Automation.Tab.FitExtra>
+  <PersonalChronicle.Automation.Tab.FitMissing>Missing {0}: {1}</PersonalChronicle.Automation.Tab.FitMissing>
+  <PersonalChronicle.Automation.Tab.FitNoMissing>No missing</PersonalChronicle.Automation.Tab.FitNoMissing>
+  <PersonalChronicle.Automation.Tab.OverviewHint>Place workbenches (vanilla production benches) or this mod's automated devices inside the workshop zone to wire them in automatically.</PersonalChronicle.Automation.Tab.OverviewHint>
+  <PersonalChronicle.Automation.Tab.SettingsPlaceholder>Workshop settings open once the device system lands</PersonalChronicle.Automation.Tab.SettingsPlaceholder>
+  <PersonalChronicle.Automation.Tab.SettingsEmptyTitle>Settings under construction</PersonalChronicle.Automation.Tab.SettingsEmptyTitle>
+  <PersonalChronicle.Automation.Tab.FooterHint>{0} device(s) · counted once on open, press Refresh after changes</PersonalChronicle.Automation.Tab.FooterHint>
+  <PersonalChronicle.Automation.Tab.Refresh>Refresh</PersonalChronicle.Automation.Tab.Refresh>
+  <PersonalChronicle.Automation.Tab.Close>Close</PersonalChronicle.Automation.Tab.Close>
+  <PersonalChronicle.Automation.Tab.Gone>This workshop has been deleted</PersonalChronicle.Automation.Tab.Gone>
+  <!-- Item output port (pipeline v0.2: output end + pipe = closed loop) -->
+  <PersonalChronicle.Automation.Port.Bind>Set output target…</PersonalChronicle.Automation.Port.Bind>
+  <PersonalChronicle.Automation.Port.BindDesc>Click, then pick a target on the map: click a storage cell (any storage - stockpiles, shelves, modded storage included) to output onto that exact cell; click one of this mod's storage machines to feed it directly. One target at a time.</PersonalChronicle.Automation.Port.BindDesc>
+  <PersonalChronicle.Automation.Port.Unbind>Clear output target</PersonalChronicle.Automation.Port.Unbind>
+  <PersonalChronicle.Automation.Port.UnbindDesc>Remove the current output binding. The port stops sending.</PersonalChronicle.Automation.Port.UnbindDesc>
+  <PersonalChronicle.Automation.Port.Inspect.None>Output port: no target bound (use "Set output target…")</PersonalChronicle.Automation.Port.Inspect.None>
+  <PersonalChronicle.Automation.Port.Inspect.Target>Output to: {0}</PersonalChronicle.Automation.Port.Inspect.Target>
+  <PersonalChronicle.Automation.Port.Inspect.NoPipe>No pipe: lay pipe next to this machine</PersonalChronicle.Automation.Port.Inspect.NoPipe>
+  <!-- Inspect panel has fixed width (vanilla UI); long strings get clipped (PM 2026-09-07) — keep hints to one line. -->
+  <PersonalChronicle.Automation.Port.Inspect.Unreachable>Pipe doesn't reach target: lay pipe adjacent to it</PersonalChronicle.Automation.Port.Inspect.Unreachable>
+  <PersonalChronicle.Automation.Port.Inspect.Stopped>Port idle: needs power, fuel, switch on</PersonalChronicle.Automation.Port.Inspect.Stopped>
+  <PersonalChronicle.Automation.Port.Inspect.Empty>Port standing by: goods flow once produced</PersonalChronicle.Automation.Port.Inspect.Empty>
+  <PersonalChronicle.Automation.Port.Inspect.Rejected>Target rejects or is full of {0}: adjust filter or free space (port paused)</PersonalChronicle.Automation.Port.Inspect.Rejected>
+  <PersonalChronicle.Automation.Pipe.AlreadyThere>There is already a logistics pipe on this tile</PersonalChronicle.Automation.Pipe.AlreadyThere>
+  <PersonalChronicle.Automation.Pipe.ConduitConflict>Tile already has a conduit or power transmitter - can't stack</PersonalChronicle.Automation.Pipe.ConduitConflict>
+  <!-- Deconstruct pipes designator (hidden pipes are fully transparent; highlighted on activation) -->
+  <PersonalChronicle.Automation.Pipe.Deconstruct>Deconstruct pipes</PersonalChronicle.Automation.Pipe.Deconstruct>
+  <PersonalChronicle.Automation.Pipe.DeconstructDesc>Deconstruct logistics pipes (including hidden ones). While this designator is active, every pipe segment on the map is highlighted in gold - hidden pipes included. Click or drag to mark for removal.</PersonalChronicle.Automation.Pipe.DeconstructDesc>
+  <!-- Pipe segment inspect -->
+  <PersonalChronicle.Automation.Pipe.Inspect.Cargo>In pipe: {0} x{1} → {2}</PersonalChronicle.Automation.Pipe.Inspect.Cargo>
+  <PersonalChronicle.Automation.Pipe.Inspect.DestLost>Destination lost: cargo stranded - deconstruct this segment to recover it</PersonalChronicle.Automation.Pipe.Inspect.DestLost>
+  <PersonalChronicle.Automation.Port.BindRejected>Can't bind "{0}": it's not storage that accepts items. Click a stockpile/storage cell, a shelf, or one of this mod's storage machines.</PersonalChronicle.Automation.Port.BindRejected>
+  <!-- Logistics manage (PM 2026-09-07: bind/unbind/threshold in one panel) -->
+  <PersonalChronicle.Automation.Port.Manage>Logistics</PersonalChronicle.Automation.Port.Manage>
+  <PersonalChronicle.Automation.Port.ManageDesc>Open the logistics panel: set or clear the output target, adjust the output threshold (batch shipping).</PersonalChronicle.Automation.Port.ManageDesc>
+  <PersonalChronicle.Automation.Port.ManageTitle>Logistics</PersonalChronicle.Automation.Port.ManageTitle>
+  <PersonalChronicle.Automation.Port.ManageTarget>Output target</PersonalChronicle.Automation.Port.ManageTarget>
+  <PersonalChronicle.Automation.Port.Manage.SetTarget>Set output target…</PersonalChronicle.Automation.Port.Manage.SetTarget>
+  <PersonalChronicle.Automation.Port.Manage.ClearTarget>Unbind</PersonalChronicle.Automation.Port.Manage.ClearTarget>
+  <PersonalChronicle.Automation.Port.ManageThreshold>Output threshold</PersonalChronicle.Automation.Port.ManageThreshold>
+  <PersonalChronicle.Automation.Port.ManageStatus>Push status</PersonalChronicle.Automation.Port.ManageStatus>
+  <!-- Threshold value unit (2026-09-21 CHG-SHOP-AUDIT-001 · L-3: was hardcoded Chinese) -->
+  <PersonalChronicle.Automation.Port.UnitPieces>{0} pcs</PersonalChronicle.Automation.Port.UnitPieces>
+  <PersonalChronicle.Automation.Port.Manage.Ready>Stored {0} ≥ threshold {1}: shipping</PersonalChronicle.Automation.Port.Manage.Ready>
+  <PersonalChronicle.Automation.Port.Manage.Waiting>Stored {0} / threshold {1}: batching</PersonalChronicle.Automation.Port.Manage.Waiting>
+  <PersonalChronicle.Automation.Port.Inspect.BelowThreshold>Batching: {0} / threshold {1} (shipping starts when reached)</PersonalChronicle.Automation.Port.Inspect.BelowThreshold>
+  <!-- Workshop type bonus (landing pipeline: work-speed StatPart). {0}=workshop type, {1}=percent -->
+  <PersonalChronicle.Workshop.WorkSpeed.StatPart>{0}: work speed +{1}%</PersonalChronicle.Workshop.WorkSpeed.StatPart>
+  <PersonalChronicle.Workshop.Product.Hp.StatPart>Workshop production: hit points +{0}%</PersonalChronicle.Workshop.Product.Hp.StatPart>
+  <PersonalChronicle.Workshop.Product.Accuracy.StatPart>Workshop production: accuracy +{0}%</PersonalChronicle.Workshop.Product.Accuracy.StatPart>
+  <PersonalChronicle.Workshop.ResearchSpeed.StatPart>{0}: research speed +{1}%</PersonalChronicle.Workshop.ResearchSpeed.StatPart>
+  <!-- Workshop type picker (settings page; type decides which bonuses this workshop grants) -->
+  <PersonalChronicle.Automation.Tab.TypeCurrent>Workshop type: </PersonalChronicle.Automation.Tab.TypeCurrent>
+  <PersonalChronicle.Automation.Tab.TypeBuffWork>Work speed +{0}%</PersonalChronicle.Automation.Tab.TypeBuffWork>
+  <PersonalChronicle.Automation.Tab.TypeBuffQuality>Quality +{0}</PersonalChronicle.Automation.Tab.TypeBuffQuality>
+  <PersonalChronicle.Automation.Tab.TypeBuffResearch>Research speed +{0}%</PersonalChronicle.Automation.Tab.TypeBuffResearch>
+  <PersonalChronicle.Automation.Tab.OverviewEmptyTitle>No workshop data</PersonalChronicle.Automation.Tab.OverviewEmptyTitle>
+  <PersonalChronicle.Automation.Tab.OverviewEmptySub>The zone was deleted or the scan has not finished — close and reopen this window</PersonalChronicle.Automation.Tab.OverviewEmptySub>
+  <PersonalChronicle.Automation.Tab.OccupancyEmpty>No cells yet — draw the workshop area first</PersonalChronicle.Automation.Tab.OccupancyEmpty>
+  <PersonalChronicle.Automation.Tab.RuntimeHours>{0} h</PersonalChronicle.Automation.Tab.RuntimeHours>
+  <PersonalChronicle.Automation.Tab.RuntimeDaysHours>{0} d {1} h</PersonalChronicle.Automation.Tab.RuntimeDaysHours>
+  <PersonalChronicle.Automation.Tab.PerfRate>{0}%</PersonalChronicle.Automation.Tab.PerfRate>
+  <PersonalChronicle.Automation.Tab.PerfNA>—</PersonalChronicle.Automation.Tab.PerfNA>
+  <PersonalChronicle.Automation.Tab.PerfSummary>Today · attendance {0}/{1} h · output {2}</PersonalChronicle.Automation.Tab.PerfSummary>
+  <PersonalChronicle.Automation.Tab.MembersMore>+{0}</PersonalChronicle.Automation.Tab.MembersMore>
+  <PersonalChronicle.Automation.Tab.CrewNoMembers>Empty — open the card to add members</PersonalChronicle.Automation.Tab.CrewNoMembers>
+  <PersonalChronicle.Automation.Tab.CardNoShifts>No shifts yet</PersonalChronicle.Automation.Tab.CardNoShifts>
+  <!-- Shift chip tooltip line listing every shift of this workshop (2026-10-02: the card shows exactly one) -->
+  <PersonalChronicle.Automation.Tab.CardShiftAll>Workshop shifts: {0}</PersonalChronicle.Automation.Tab.CardShiftAll>
+  <!-- Empty-shift warning (2026-10-02): in a multi-shift workshop, a shift nobody is assigned to runs with no staff -->
+  <PersonalChronicle.Automation.Tab.ShiftNoPool>⚠ No one is available for this shift — assign a crew to it in the Crew settings</PersonalChronicle.Automation.Tab.ShiftNoPool>
+  <!-- Crew-card chip = shift assignment entry (2026-10-02): pick which shift this crew covers -->
+  <PersonalChronicle.Automation.Tab.ChipClickAssignHint>Click to choose the shift this crew covers</PersonalChronicle.Automation.Tab.ChipClickAssignHint>
+  <PersonalChronicle.Automation.Tab.CrewAssignShort>assign</PersonalChronicle.Automation.Tab.CrewAssignShort>
+  <PersonalChronicle.Automation.Tab.CrewNoShiftsToAssign>No shifts in this workshop yet — add one in the Shifts tab</PersonalChronicle.Automation.Tab.CrewNoShiftsToAssign>
+  <!-- Crew deletion confirmation (2026-10-02 audit P1-I): {0} = crew name -->
+  <PersonalChronicle.Automation.Tab.ConfirmRemoveCrew>Delete crew "{0}"?\nIts members and shift assignments will be lost. This cannot be undone.</PersonalChronicle.Automation.Tab.ConfirmRemoveCrew>
+  <!-- Two new member columns (2026-10-02): today's duty / main skill; prebuilt at Refresh, zero per-frame cost -->
+  <PersonalChronicle.Automation.Tab.ColDuty>Duty</PersonalChronicle.Automation.Tab.ColDuty>
+  <PersonalChronicle.Automation.Tab.ColSkill>Main skill</PersonalChronicle.Automation.Tab.ColSkill>
+  <PersonalChronicle.Automation.Tab.Unassigned>Unassigned</PersonalChronicle.Automation.Tab.Unassigned>
+  <PersonalChronicle.Automation.Tab.NoSkill>—</PersonalChronicle.Automation.Tab.NoSkill>
+  <!-- Priority short mark (2026-10-02 subtraction audit): replaces hardcoded "P" + number in code (LOC-001) -->
+  <PersonalChronicle.Automation.Tab.PriorityMark>P{0}</PersonalChronicle.Automation.Tab.PriorityMark>
+  <!-- "unlimited" short mark (2026-10-02 subtraction audit): replaces hardcoded "∞" (LOC-001) -->
+  <PersonalChronicle.Automation.Tab.UnlimitedMark>∞</PersonalChronicle.Automation.Tab.UnlimitedMark>
+  <!-- Remove-button mark (2026-10-02 subtraction audit): replaces hardcoded "X" (LOC-001 + readability) -->
+  <PersonalChronicle.Automation.Tab.RemoveMark>✕</PersonalChronicle.Automation.Tab.RemoveMark>
+  <PersonalChronicle.Automation.Tab.MembersHoverHint>hover the card footer for full member details</PersonalChronicle.Automation.Tab.MembersHoverHint>
+  <PersonalChronicle.Automation.Tab.KpiRunning>Running</PersonalChronicle.Automation.Tab.KpiRunning>
+  <PersonalChronicle.Automation.Tab.KpiFaulted>Faulted</PersonalChronicle.Automation.Tab.KpiFaulted>
+  <PersonalChronicle.Automation.Tab.KpiProducedWindow>Weekly output</PersonalChronicle.Automation.Tab.KpiProducedWindow>
+  <PersonalChronicle.Automation.Tab.UnassignedHint>{0} members not in any crew</PersonalChronicle.Automation.Tab.UnassignedHint>
+  <PersonalChronicle.Automation.Tab.UnassignedAssign>Distribute evenly</PersonalChronicle.Automation.Tab.UnassignedAssign>
+  <PersonalChronicle.Automation.Tab.TypeNone>not set (no bonus)</PersonalChronicle.Automation.Tab.TypeNone>
+  <PersonalChronicle.Automation.Tab.TypeClear>Clear type</PersonalChronicle.Automation.Tab.TypeClear>
+  <!-- 2026-09-25 workshop type themed buff display -->
+  <!-- CHG-20261003-WORKSTATION workshop workstation (L4 status row + one-click restore) -->
+  <PersonalChronicle.Automation.Tab.WorkSyncAligned>Aligned {0}</PersonalChronicle.Automation.Tab.WorkSyncAligned>
+  <PersonalChronicle.Automation.Tab.WorkSyncSkipped>Skipped {0}</PersonalChronicle.Automation.Tab.WorkSyncSkipped>
+  <PersonalChronicle.Automation.Tab.WorkSyncScope>Roster {0}</PersonalChronicle.Automation.Tab.WorkSyncScope>
+  <!-- CHG-20261005-NODEMOTE: WorkSyncLedger / WorkSyncRestore removed with the demotion channel. -->
+  <PersonalChronicle.Automation.Tab.WorkSyncNoManager>Workshop workstations: scheduler unavailable</PersonalChronicle.Automation.Tab.WorkSyncNoManager>
+  <PersonalChronicle.Automation.Tab.WorkSyncHint>After you schedule or assign colonists, workshop-related work is raised to top priority (1) so they do workshop jobs first; every other work type keeps the priority you set. "Skipped" counts colonists with work types disabled by vanilla (missing skills or background restrictions).</PersonalChronicle.Automation.Tab.WorkSyncHint>
+  <PersonalChronicle.Automation.Tab.Posts>Posts</PersonalChronicle.Automation.Tab.Posts>
+  <PersonalChronicle.Automation.Tab.PostsTitle>Post table - real-world factory roles</PersonalChronicle.Automation.Tab.PostsTitle>
+  <PersonalChronicle.Automation.Tab.PostsNoticePhase1>Posts use vanilla work matching the workshop type. Production staff execute bills and briefly await work; other staff use their vanilla services. Meal breaks, rest and shift end follow the timetable.</PersonalChronicle.Automation.Tab.PostsNoticePhase1>
+  <PersonalChronicle.Automation.Tab.PostCoversNone>(internal role, covers no vanilla work)</PersonalChronicle.Automation.Tab.PostCoversNone>
+  <PersonalChronicle.Automation.Tab.PostMissingSuffix>(no such work in 1.6)</PersonalChronicle.Automation.Tab.PostMissingSuffix>
+  <PersonalChronicle.Automation.Tab.PostDelivers>delivered in workshop</PersonalChronicle.Automation.Tab.PostDelivers>
+  <!-- CHG-20261005-POSTTIP: hover text for the post tag (removes the "nothing to take over" vs "no takeover yet" contradiction) -->
+  <PersonalChronicle.Automation.Tab.PostDeliversTip>This post is declared "self-delivered": the workshop has the matching work type implemented, so "Take over vanilla work" will uncheck it for members.</PersonalChronicle.Automation.Tab.PostDeliversTip>
+  <PersonalChronicle.Automation.Tab.PostNotDeliversTip>This post is not declared "self-delivered" yet: no matching work type is implemented, so it takes no part in takeover (your vanilla work tab is untouched) and it does not affect whether pawns can work - the post table only suggests assignments. "Nothing take-overable" on the Settings page means every post is in this state.</PersonalChronicle.Automation.Tab.PostNotDeliversTip>
+  <PersonalChronicle.Automation.Tab.PostNotDelivers>Planned - no takeover yet</PersonalChronicle.Automation.Tab.PostNotDelivers>
+
+  <!-- CHG-20261005-POSTLAND: land post work priorities (tick + raise, never clear, never take over) -->
+  <PersonalChronicle.Automation.Tab.PostLandButton>Land post work</PersonalChronicle.Automation.Tab.PostLandButton>
+  <PersonalChronicle.Automation.Tab.PostLandTip>Writes each post's work type into its holder's vanilla work priorities: ticks it and raises it by skill. Only that one work type per post is touched; nothing else is changed. It never clears or takes over - the "no takeover yet" tag refers to PC delivering its own job, which is a separate matter.</PersonalChronicle.Automation.Tab.PostLandTip>
+  <!-- {0} = pawns landed; {1} = no post; {2} = no usable work type -->
+  <PersonalChronicle.Automation.Tab.PostLandDone>Landed {0} (no post {1}, no work {2})</PersonalChronicle.Automation.Tab.PostLandDone>
+  <PersonalChronicle.Automation.Tab.TakeoverIdle>ON by default: members stop ticking workshop-type vanilla work once assigned (hauling / cleaning / doctor / firefighting unaffected).</PersonalChronicle.Automation.Tab.TakeoverIdle>
+  <PersonalChronicle.Automation.Tab.TakeoverDo>Take over vanilla work</PersonalChronicle.Automation.Tab.TakeoverDo>
+  <PersonalChronicle.Automation.Tab.TakeoverDoTip>Unticks workshop-type vanilla work for members so they focus on the workshop. Release anytime.</PersonalChronicle.Automation.Tab.TakeoverDoTip>
+  <PersonalChronicle.Automation.Tab.TakeoverRelease>Release takeover</PersonalChronicle.Automation.Tab.TakeoverRelease>
+  <PersonalChronicle.Automation.Tab.TakeoverReleaseTip>Restores only entries the mod took over and you have not changed back.</PersonalChronicle.Automation.Tab.TakeoverReleaseTip>
+  <PersonalChronicle.Automation.Tab.TakeoverDone>{0} entries - </PersonalChronicle.Automation.Tab.TakeoverDone>
+  <PersonalChronicle.Automation.Tab.TakeoverOk>takeover done</PersonalChronicle.Automation.Tab.TakeoverOk>
+  <PersonalChronicle.Automation.Tab.TakeoverReleased>restored</PersonalChronicle.Automation.Tab.TakeoverReleased>
+  <PersonalChronicle.Automation.Tab.TakeoverReleaseNone>nothing to restore</PersonalChronicle.Automation.Tab.TakeoverReleaseNone>
+  <PersonalChronicle.Automation.Tab.Takeover_no_free_worker_warn>Heads up: everyone is in a workshop, no free worker left. Hauling / cleaning / doctor / firefighting are always kept by the hard red line, so nobody becomes unusable - but consider keeping one hand free.</PersonalChronicle.Automation.Tab.Takeover_no_free_worker_warn>
+  <PersonalChronicle.Automation.Tab.Takeover_no_crew_member>not applied: this workshop has no crew members</PersonalChronicle.Automation.Tab.Takeover_no_crew_member>
+  <PersonalChronicle.Automation.Tab.Takeover_no_takeoverable_work>nothing take-overable: every post is still "Planned - no takeover yet" - the workshop declares no self-delivered work type (this build only implements on-duty jobs, no production jobs). This does not affect whether pawns work: the post table only suggests assignments and never edits your vanilla work tab.</PersonalChronicle.Automation.Tab.Takeover_no_takeoverable_work>
+  <PersonalChronicle.Automation.Tab.Takeover_nothing_to_take_over>not applied: none of those work types are currently ticked</PersonalChronicle.Automation.Tab.Takeover_nothing_to_take_over>
+  <PersonalChronicle.Automation.Tab.Takeover_zone_missing>not applied: invalid workshop</PersonalChronicle.Automation.Tab.Takeover_zone_missing>  <PersonalChronicle.Automation.Tab.PostNoHolder>(nobody suitable yet)</PersonalChronicle.Automation.Tab.PostNoHolder>  <PersonalChronicle.Automation.Tab.ColPost>Post</PersonalChronicle.Automation.Tab.ColPost>
+  <PersonalChronicle.Automation.Tab.RestPolicy>Rest policy</PersonalChronicle.Automation.Tab.RestPolicy>
+  <PersonalChronicle.Automation.Tab.RestPolicyRotateWarning>Warning: this policy rewrites the work schedule by the daily rotation, so a worker's work hours flip by about 12 hours from day to day and their sleep period shifts violently. Only use it for comparison.</PersonalChronicle.Automation.Tab.RestPolicyRotateWarning>
+
+  <!-- CHG-20261005-OVERVIEW-IND · industrial overview (gauges + device status matrix) -->
+  <PersonalChronicle.Automation.Tab.GaugeOccupancy>Space used</PersonalChronicle.Automation.Tab.GaugeOccupancy>
+  <PersonalChronicle.Automation.Tab.GaugeDeviceRun>Devices running</PersonalChronicle.Automation.Tab.GaugeDeviceRun>
+  <PersonalChronicle.Automation.Tab.GaugeDeviceManned>Benches manned</PersonalChronicle.Automation.Tab.GaugeDeviceManned>
+  <PersonalChronicle.Automation.Tab.LedTitle>Device status matrix</PersonalChronicle.Automation.Tab.LedTitle>
+  <PersonalChronicle.Automation.Tab.LedIdle>Stopped</PersonalChronicle.Automation.Tab.LedIdle>
+  <PersonalChronicle.Automation.Tab.LedRun>Running</PersonalChronicle.Automation.Tab.LedRun>
+  <PersonalChronicle.Automation.Tab.LedWarn>Warning</PersonalChronicle.Automation.Tab.LedWarn>
+  <PersonalChronicle.Automation.Tab.LedFault>Fault</PersonalChronicle.Automation.Tab.LedFault>
+  <PersonalChronicle.Automation.Tab.LedNoDevice>No devices in this zone yet - each device lights up here once placed.</PersonalChronicle.Automation.Tab.LedNoDevice>
+  <!-- {0} = missing device names (separated by /) -->
+  <PersonalChronicle.Automation.Tab.FitMissingNames>Missing: {0}</PersonalChronicle.Automation.Tab.FitMissingNames>
+
+  <!-- CHG-20261005-OVERVIEW-IND batch B: output gauge + bottleneck ribbon -->
+  <PersonalChronicle.Automation.Tab.GaugeProduce>Output today</PersonalChronicle.Automation.Tab.GaugeProduce>
+  <PersonalChronicle.Automation.Tab.BottleneckTitle>Device load (share of accumulated run time)</PersonalChronicle.Automation.Tab.BottleneckTitle>
+  <PersonalChronicle.Automation.Tab.BottleneckNoData>No run data yet - sampling starts after a second of operation.</PersonalChronicle.Automation.Tab.BottleneckNoData>
+
+  <!-- CHG-20261005-OVERVIEW-IND batch C: 5-day output trend (via RUIF Charts.BarChartV) -->
+  <PersonalChronicle.Automation.Tab.TrendTitle>Output trend (5 days)</PersonalChronicle.Automation.Tab.TrendTitle>
+  <!-- {0} = total items in the window -->
+  <PersonalChronicle.Automation.Tab.TrendTotal>{0} items total</PersonalChronicle.Automation.Tab.TrendTotal>
+  <PersonalChronicle.Automation.Tab.TrendNoData>No output recorded yet - the trend appears once devices here produce.</PersonalChronicle.Automation.Tab.TrendNoData>
+  <PersonalChronicle.Automation.Tab.TrendToday>Today</PersonalChronicle.Automation.Tab.TrendToday>
+  <!-- {0} = days ago -->
+  <PersonalChronicle.Automation.Tab.TrendDaysAgo>{0}d ago</PersonalChronicle.Automation.Tab.TrendDaysAgo>
+
+  <!-- CHG-20261005-TRENDBOARD: overview big-block charts (player-approved candidates 1 / 3 / 4, 2026-10-05) -->
+  <!-- Candidate 1: device usage peaks (7 days x 24 hours heatmap grid via RUIF Charts.HeatmapGrid) -->
+  <PersonalChronicle.Automation.Tab.PeakTitle>Device usage peaks (7 days, hourly)</PersonalChronicle.Automation.Tab.PeakTitle>
+  <PersonalChronicle.Automation.Tab.PeakNoData>No run samples yet - hourly totals begin once devices run.</PersonalChronicle.Automation.Tab.PeakNoData>
+  <!-- Heat scale end labels (less on the left, more on the right) -->
+  <PersonalChronicle.Automation.Tab.PeakLegendLess>Less</PersonalChronicle.Automation.Tab.PeakLegendLess>
+  <PersonalChronicle.Automation.Tab.PeakLegendMore>More</PersonalChronicle.Automation.Tab.PeakLegendMore>
+  <!-- {0} = busiest hour of day (0-23) -->
+  <PersonalChronicle.Automation.Tab.PeakBest>Busiest {0}:00</PersonalChronicle.Automation.Tab.PeakBest>
+  <!-- {0} = total run hours in that hour slot (one decimal) -->
+  <PersonalChronicle.Automation.Tab.PeakBestHours>{0} device-hours</PersonalChronicle.Automation.Tab.PeakBestHours>
+  <PersonalChronicle.Automation.Tab.PeakFooter>Columns = hour (0-23) - rows = days (oldest on top)</PersonalChronicle.Automation.Tab.PeakFooter>
+
+  <!-- Candidate 3: utilization vs output (normalized two-series line via RUIF Charts.LineChart multi-series) -->
+  <PersonalChronicle.Automation.Tab.EffTitle>Utilization vs output (each peak = 100%)</PersonalChronicle.Automation.Tab.EffTitle>
+  <PersonalChronicle.Automation.Tab.EffNoData>No run records yet - the 7-day comparison appears once devices run.</PersonalChronicle.Automation.Tab.EffNoData>
+  <PersonalChronicle.Automation.Tab.EffLegendProduced>Output</PersonalChronicle.Automation.Tab.EffLegendProduced>
+  <PersonalChronicle.Automation.Tab.EffLegendRun>Run hours</PersonalChronicle.Automation.Tab.EffLegendRun>
+  <!-- Must stay short: the right half panel is narrow; long text overflows onto the title (2026-10-05 COMPFIX) -->
+  <PersonalChronicle.Automation.Tab.EffFooter>oldest -&gt; newest (6d)</PersonalChronicle.Automation.Tab.EffFooter>
+  <!-- CHG-20261005-COMPFIX2: bottleneck footnote is drawn by the component again
+       (it reads stageLabels[bottleneck]) - the BottleneckFoot key was removed. -->
+
+  <!-- Candidate 4: bottleneck shift (per-device run hours stacked bars via RUIF Charts.StackedBarChartV) -->
+  <PersonalChronicle.Automation.Tab.BottleTrendTitle>Bottleneck shift (7d, per-device run hours)</PersonalChronicle.Automation.Tab.BottleTrendTitle>
+  <PersonalChronicle.Automation.Tab.BottleTrendNoData>No run samples yet - daily totals begin once devices run.</PersonalChronicle.Automation.Tab.BottleTrendNoData>
+  <PersonalChronicle.Automation.Tab.BottleTrendOther>Other</PersonalChronicle.Automation.Tab.BottleTrendOther>
+
+  <!-- CHG-20261005-DEVCOLS: device page new columns (3 player-requested + 1 suggested) -->
+  <PersonalChronicle.Automation.Tab.ColWorker>Operator</PersonalChronicle.Automation.Tab.ColWorker>
+  <PersonalChronicle.Automation.Tab.ColValue>Total value</PersonalChronicle.Automation.Tab.ColValue>
+  <PersonalChronicle.Automation.Tab.ColBorn>Built</PersonalChronicle.Automation.Tab.ColBorn>
+  <PersonalChronicle.Automation.Tab.ColEfficiency>Rate (items/h)</PersonalChronicle.Automation.Tab.ColEfficiency>
+  <!-- {0} = game day when the ledger first saw this device -->
+  <PersonalChronicle.Automation.Tab.ColBornDay>Day {0}</PersonalChronicle.Automation.Tab.ColBornDay>
+  <!-- CHG-20261005-DURCOL: durability column (HP%, zero-cost maintenance column) -->
+  <PersonalChronicle.Automation.Tab.ColDurability>HP</PersonalChronicle.Automation.Tab.ColDurability>
+
+  <!-- CHG-20261005-MEALBYSHIFT: per-shift meal not configured (old text said "follow global") -->
+  <PersonalChronicle.Automation.Tab.ShiftMealUnset>Not set</PersonalChronicle.Automation.Tab.ShiftMealUnset>
+
+  <!-- CHG-20261005-MEALHOUR: single-point time picker (meals changed from a range to one time) -->
+  <PersonalChronicle.Automation.Tab.HourPickTitle>Pick a time</PersonalChronicle.Automation.Tab.HourPickTitle>
+  <!-- {0} = the chosen time, e.g. 07:00 -->
+  <PersonalChronicle.Automation.Tab.HourPickHint>This meal is scheduled at {0} (only takes effect inside the shift's hours)</PersonalChronicle.Automation.Tab.HourPickHint>
+  <PersonalChronicle.Automation.Tab.HourPickClose>Turn this meal off</PersonalChronicle.Automation.Tab.HourPickClose>
+
+  <!-- CHG-20261005-TIMERANGE: time-range dialog semantic hint (one dialog, two meanings of "start == end") -->
+  <PersonalChronicle.Automation.Tab.TimeClosedMeal>start == end = meal off</PersonalChronicle.Automation.Tab.TimeClosedMeal>
+  <PersonalChronicle.Automation.Tab.PresetMealOff>Meal off</PersonalChronicle.Automation.Tab.PresetMealOff>
+  <PersonalChronicle.Automation.RestPolicy.Fixed.Label>Fixed shift</PersonalChronicle.Automation.RestPolicy.Fixed.Label>
+  <PersonalChronicle.Automation.RestPolicy.Fixed.Desc>Each post stays on one shift for good - no daily flip, so sleep keeps a stable rhythm.</PersonalChronicle.Automation.RestPolicy.Fixed.Desc>
+  <PersonalChronicle.Automation.RestPolicy.Natural.Label>Natural rest</PersonalChronicle.Automation.RestPolicy.Natural.Label>
+  <PersonalChronicle.Automation.RestPolicy.Natural.Desc>Does not touch the vanilla schedule at all: workers rest when they need to, and duty jobs set the hours.</PersonalChronicle.Automation.RestPolicy.Natural.Desc>
+  <PersonalChronicle.Automation.RestPolicy.Rotate.Label>Rotate daily</PersonalChronicle.Automation.RestPolicy.Rotate.Label>
+  <PersonalChronicle.Automation.RestPolicy.Rotate.Desc>Old behaviour: the schedule follows whichever shift the crew is on that day.</PersonalChronicle.Automation.RestPolicy.Rotate.Desc>
+  <PersonalChronicle.Automation.RestPolicy.Rotate.Warning>Warning: rotating daily flips each worker's work hours by about 12 hours from day to day, which wrecks their sleep rhythm.</PersonalChronicle.Automation.RestPolicy.Rotate.Warning>
+  <PersonalChronicle.Automation.Tab.PostUnassigned>(unassigned)</PersonalChronicle.Automation.Tab.PostUnassigned></LanguageData>

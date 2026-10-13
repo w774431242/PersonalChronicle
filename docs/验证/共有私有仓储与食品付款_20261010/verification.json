@@ -1,0 +1,111 @@
+{
+  "changeId": "CHG-20261010-ECONOMY-STORAGE",
+  "verifiedUtc": "2026-10-10T10:04:53.3808375Z",
+  "modSha256": "D703AE003A5050E829DB2383E642A6685FEB085A9FB25E02303E467A98877D2B",
+  "sourceFiles": [
+    {
+      "path": "Source/PersonalChronicle/BuildStamp.g.cs",
+      "sha256": "42FE4FFB1B212F191CBD76141F1E44ADFC586EA1C5DBF9C382AE37FD2DDBBD56"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedSpeech.cs",
+      "sha256": "9A01ADA35716C796082C8899A8E42950DF170FB6785E79C3C1108F8A8B21D672"
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/StorageFoodRules.cs",
+      "sha256": "D3636C994FD6B0B359F246DEB45629F4E06ED10C45D6C15CA63EE7BA15087216"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Building_EconomyStorage.cs",
+      "sha256": "19AA3D58A9E5F0AB040FEF186F56A550EF956FDBE4BED0E320A1369794880E5E"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyStorage.cs",
+      "sha256": "F990376A9C0F6A2ADD9CA31EDFC9CBF4FF887DC373A3E38018BFC76E27AF0CD4"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyStoredFoodPurchase.cs",
+      "sha256": "F848A98BE286E263BB5E9EB4F4BFAE4A0581ACCEB17E6D62F6046D9C750ADA34"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_EconomyStoredFood.cs",
+      "sha256": "31DC8AF489BE601D604BD9BCE600BC908CCB217060886A25C6A761561E2BF01A"
+    },
+    {
+      "path": "Source/PersonalChronicle/Capture/Patch_ThingIngested.cs",
+      "sha256": "0FF3F74671B54E2488BA88EEB3D09A91BDF428B95465F04068673BEB4A66B091"
+    },
+    {
+      "path": "Source/PersonalChronicle/Automation/MealFoodSearch.cs",
+      "sha256": "B2687AAC0D0F4102387C776ECE8566D8FEDD3651F149BC57BC68DD2DDA006A41"
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Planning/EconomyFoodCostSource.cs",
+      "sha256": "9FABA74CFEC4E80A49EDEABFEF96BB9B1BE28D1FD8BE21EB90F0212B3911BF9D"
+    },
+    {
+      "path": "Tests/StorageFoodTests.cs",
+      "sha256": "696FF27BD1F8714B5DDEC35DA327873D19FF8CF644503DF9E5C69E29398D2DBA"
+    },
+    {
+      "path": "Defs/PawnEconomy_Storage.xml",
+      "sha256": "0AD6321C99996BB591C656DE6A4F5C7D34216C5BAA62E7B2F12C1B3D8ABA12AF"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyStorage.xml",
+      "sha256": "54BDB884D43226D52E605B116CFE4B28FE2CFBDDE86E2C34DC23154DA4710375"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyStorage.xml",
+      "sha256": "B047728F0744C3159BF76D3A7E09B6B7484F8B8A7319C15765C71D790B5C3D12"
+    },
+    {
+      "path": "Languages/English/DefInjected/ThingDef/PawnEconomyStorage.xml",
+      "sha256": "7DFA4825A1D3B896046B11CEE942A337728FB07654E9B3E4C5185449AB4AD040"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnNeedSpeech.xml",
+      "sha256": "83C17375255729F5CFF285BC4E89261BD10A8CBDB6338A1A474EA79EF82F44C1"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnNeedSpeech.xml",
+      "sha256": "05D50F1E7CB34E36609D3B9F0B41570559EC6FA17F9A1D5254134D5803F5AB16"
+    }
+  ],
+  "testReports": [
+    {
+      "path": "Tests/TestResults/StorageFood.trx",
+      "sha256": "BCE666E08A05EAF9F459FE182FC5A3529EDCB9736AEFA88BC11E8D64FC6DEA07",
+      "total": 18,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "path": "Tests/TestResults/StorageFood-Regression.trx",
+      "sha256": "19E5BDCEAEE680CCA9B6E00FA3595DA519A2AE2A444D6FF3D67C01563E9B976A",
+      "total": 1273,
+      "passed": 1272,
+      "failed": 0,
+      "skipped": 1
+    }
+  ],
+  "build": {
+    "configuration": "Release",
+    "warnings": 0,
+    "errors": 0
+  },
+  "harmonyAdaptersApplied": 11,
+  "storageLanguageKeysPerLocale": 9,
+  "speechLanguageKeysPerLocale": 16,
+  "codeVerified": true,
+  "testVerified": true,
+  "gameVerified": false,
+  "sourceIncludesExistingWorkspaceChanges": true,
+  "notes": [
+    "No game acceptance performed.",
+    "Scribe test covers primitive ownership and pending fields, not live Thing references.",
+    "Inventory search test uses real game search and ownership with isolated native eligibility stubs.",
+    "Ordinary unclassified food retains vanilla access."
+  ]
+}

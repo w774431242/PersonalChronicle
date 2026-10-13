@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  English overrides for WorkshopProcessDef (CHG-20261006-TRKEY · LOC-01).
+  Base Def text in Defs/WorkshopProcesses.xml is Chinese (primary language), so the
+  English (default) language needs these injections — otherwise English players see
+  the Chinese label through Def.LabelCap.
+  「域 · 工序」结构：前半为专业域，后半为工序类型（生产 / 维护）。
+-->
+<LanguageData>
+  <WP_Common_Maintenance.label>Common · Maintenance</WP_Common_Maintenance.label>
+  <WP_Cooking_Production.label>Cooking · Production</WP_Cooking_Production.label>
+  <WP_Crafting_Maintenance.label>Crafting · Maintenance</WP_Crafting_Maintenance.label>
+  <WP_Crafting_Production.label>Crafting · Production</WP_Crafting_Production.label>
+  <WP_DrugCrafting_Production.label>Drug Synthesis · Production</WP_DrugCrafting_Production.label>
+  <WP_Logging_Maintenance.label>Logging · Maintenance</WP_Logging_Maintenance.label>
+  <WP_Logging_Production.label>Logging · Production</WP_Logging_Production.label>
+  <WP_Machining_Production.label>Machining · Production</WP_Machining_Production.label>
+  <WP_Research_Production.label>Research · Production</WP_Research_Production.label>
+  <WP_Sculpting_Production.label>Sculpting · Production</WP_Sculpting_Production.label>
+  <WP_Smithing_Production.label>Smithing · Production</WP_Smithing_Production.label>
+  <WP_Stonecutting_Production.label>Stonecutting · Production</WP_Stonecutting_Production.label>
+  <WP_Tailoring_Production.label>Tailoring · Production</WP_Tailoring_Production.label>
+</LanguageData>

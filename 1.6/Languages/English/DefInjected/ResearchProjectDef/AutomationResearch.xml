@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_Research_AutomationBasics.label>basic agricultural automation</PC_Research_AutomationBasics.label>
+  <PC_Research_AutomationBasics.description>Unlocks the workshop assembly chain: conveyor segments, farm machine modules and the small automated farm machine.</PC_Research_AutomationBasics.description>
+  <PC_Research_AutomationAdvanced.label>advanced agricultural automation</PC_Research_AutomationAdvanced.label>
+  <PC_Research_AutomationAdvanced.description>Unlocks medium and large automated farm machines with grow lights, irrigation and fertilizer spreaders.</PC_Research_AutomationAdvanced.description>
+</LanguageData>

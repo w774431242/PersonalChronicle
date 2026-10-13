@@ -1,0 +1,5 @@
+Use case: precise-object-edit
+Asset type: RimWorld building sprite, east view, healthy CLOSED isolator.
+Input image is approved north master, edit target. Preserve EXACT same plate, terminal proportions, two fixed insulated contact blocks, four corner fasteners, light-steel blade and one separate operating handle with simple linkage.
+Primary request: Rotate north device CLOCKWISE 90 degrees in image plane. Housing vertical. Terminals TOP and BOTTOM. LEFT hinge from north becomes TOP hinge; RIGHT jaw becomes BOTTOM jaw. CLOSED steel blade VERTICAL bridges top hinge to bottom jaw. Short separate operating handle VERTICAL along LEFT front edge.
+Keep strict overhead orthographic camera, no mirror, no perspective, no tall front side, no cabinet, vent, screen or new part. Match master color, detail density and object scale. One centered object on transparent square canvas, genuine RGBA, no external shadows, floor, text, glow, sparks or checkerboard.

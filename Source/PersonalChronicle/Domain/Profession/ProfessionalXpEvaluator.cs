@@ -6,8 +6,11 @@ namespace PersonalChronicle.Domain.Profession
     /// <summary>
     /// 专业技能 XP 纯函数（V2.0 §7 / P2-A §5）。Domain 层，无 Verse/DefDatabase 依赖，可离线单测。
     ///
-    /// 公式：ProfessionalXP(单次实践) = 基础实践值 × Recipe相关度 × 品质系数 × 难度系数 × 数量系数
-    /// 等级曲线：L(n) = maxLevel × (1 − (1 − xp/xpCap)^0.4) —— 前期快、后期慢（V2.0 §13 软上限哲学）。
+    /// 公式：ProfessionalXP(单次实践) = 基础实践值 × 活动权重 × Recipe相关度 × 品质系数 × 难度系数 × 数量系数(衰减)
+    /// 等级曲线（通用参数化，V2.0+ 推荐）：xpAtLevel(n) = xpCap × (n/maxLevel)^curvePower ——
+    ///   升级成本递增（classic RPG），curvePower=1.6 温和递增；curvePower=1 线性；curvePower&lt;1 前期快。
+    /// 兼容旧曲线：LevelFromXp(xp, maxLevel, xpCap) 3 参保留 V2.0 §7 边际递减公式
+    ///   L = maxLevel × (1 − (1 − xp/xpCap)^0.4)（仅供迁移/旧逻辑）。
     /// </summary>
     public static class ProfessionalXpEvaluator
     {
@@ -59,7 +62,7 @@ namespace PersonalChronicle.Domain.Profession
         /// <param name="recipeRelevance">0.0~1.0（白名单匹配=1.0 / 仅 WorkType 匹配=0.5 / 无匹配=0）。</param>
         /// <param name="qualityMultiplier">品质系数（QualityMultiplier）。</param>
         /// <param name="difficulty">难度系数（第一版 1.0）。</param>
-        /// <param name="quantity">产出数量（≥1，上限 4）。</param>
+        /// <param name="quantity">产出数量（≥1，上限 4；按 q^0.8 衰减，削弱批量刷级）。</param>
         public static float ComputePracticeXp(
             float baseValue, float recipeRelevance, float qualityMultiplier,
             float difficulty, int quantity)
@@ -76,7 +79,106 @@ namespace PersonalChronicle.Domain.Profession
             float d = difficulty <= 0f ? 1f : difficulty;
             float qm = qualityMultiplier <= 0f ? 1f : qualityMultiplier;
             float rel = recipeRelevance > 1f ? 1f : recipeRelevance;
-            return baseValue * rel * qm * d * q;
+            // 数量系数衰减 q^0.8：×4 批量不再 ×4 收益，抑制"专做批量配方刷级"。
+            // 全程 double 运算、仅最终结果一次 float 舍入（与单测基准 (float)(10f*Math.Pow(n,0.8)) 口径一致，避免 1-ULP 误差）。
+            return (float)((double)baseValue * rel * qm * d * Math.Pow(q, 0.8d));
+        }
+
+        /// <summary>
+        /// 通用活动→XP 折算（V2.0+ 通用通道）：任意职业行为统一入口。
+        /// 制造仍走 <see cref="ComputePracticeXp"/>（含相关度/品质），其他活动以本函数兜底。
+        /// </summary>
+        /// <param name="baseValue">ProfessionalSkillDef.xpPerPracticeBase。</param>
+        /// <param name="activityWeight">活动类型权重（Work/Research/Construct/Author/Harvest，来自 ProfessionalXpPolicyDef）。</param>
+        /// <param name="relevance">活动与技能相关度 0~1。</param>
+        /// <param name="qualityMultiplier">品质系数（无品质=1）。</param>
+        /// <param name="difficulty">难度系数。</param>
+        public static float ComputeActivityXp(
+            float baseValue, float activityWeight, float relevance,
+            float qualityMultiplier, float difficulty)
+        {
+            if (baseValue <= 0f || activityWeight <= 0f || relevance <= 0f)
+            {
+                return 0f;
+            }
+            float rel = relevance > 1f ? 1f : relevance;
+            float d = difficulty <= 0f ? 1f : difficulty;
+            float qm = qualityMultiplier <= 0f ? 1f : qualityMultiplier;
+            return baseValue * activityWeight * rel * qm * d;
+        }
+
+        /// <summary>
+        /// 通用参数化曲线：给定等级 n，返回累计 XP 阈值。
+        /// xpAtLevel(n) = xpCap × (n/maxLevel)^curvePower。n=0 → 0；n=maxLevel → xpCap。
+        /// </summary>
+        public static float XpAtLevel(int level, int maxLevel, float xpCap, float curvePower)
+        {
+            if (maxLevel <= 0 || xpCap <= 0f || level <= 0)
+            {
+                return 0f;
+            }
+            if (level >= maxLevel)
+            {
+                return xpCap;
+            }
+            float p = curvePower <= 0f ? 1f : curvePower;
+            float t = (float)level / maxLevel;
+            return xpCap * (float)Math.Pow(t, p);
+        }
+
+        /// <summary>
+        /// 升级所需 XP：从 level 升到 level+1 的缺口。
+        /// need(n) = xpAtLevel(n+1) − xpAtLevel(n)；满级返回 0。
+        /// </summary>
+        public static float NeedForNext(int level, int maxLevel, float xpCap, float curvePower)
+        {
+            if (maxLevel <= 0 || level < 0 || level >= maxLevel)
+            {
+                return 0f;
+            }
+            float next = XpAtLevel(level + 1, maxLevel, xpCap, curvePower);
+            float cur = XpAtLevel(level, maxLevel, xpCap, curvePower);
+            return Math.Max(0f, next - cur);
+        }
+
+        /// <summary>
+        /// 通用参数化曲线反函数：XP → Level（升级成本递增，curvePower&gt;1 时越顶级越难）。
+        /// 返回 [0, maxLevel] 整数等级。
+        /// </summary>
+        public static int LevelFromXp(float xp, int maxLevel, float xpCap, float curvePower)
+        {
+            if (maxLevel <= 0)
+            {
+                return 0;
+            }
+            if (xp <= 0f || xpCap <= 0f)
+            {
+                return 0;
+            }
+            float p = curvePower <= 0f ? 1f : curvePower;
+            float t = Math.Min(1f, xp / xpCap);
+            double levelF = maxLevel * Math.Pow(t, 1d / p);
+            int level = (int)Math.Floor(levelF);
+            return level < 0 ? 0 : (level > maxLevel ? maxLevel : level);
+        }
+
+        /// <summary>
+        /// 通用参数化曲线：距下一等级还差多少 XP（基于真实曲线，非线性近似）。
+        /// </summary>
+        public static float XpToNext(float currentXp, int maxLevel, float xpCap, float curvePower)
+        {
+            if (maxLevel <= 0 || xpCap <= 0f)
+            {
+                return 0f;
+            }
+            int cur = LevelFromXp(currentXp, maxLevel, xpCap, curvePower);
+            if (cur >= maxLevel)
+            {
+                return 0f;
+            }
+            float need = NeedForNext(cur, maxLevel, xpCap, curvePower);
+            float atCur = XpAtLevel(cur, maxLevel, xpCap, curvePower);
+            return Math.Max(0f, need - (currentXp - atCur));
         }
 
         /// <summary>

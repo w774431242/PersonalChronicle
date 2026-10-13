@@ -104,6 +104,58 @@ namespace PersonalChronicle.Application
         void RecordCareerProduced(Thing product, RecipeDef recipe, Pawn worker);
 
         /// <summary>
+        /// P1 CAREER-005：记录一次"完成一座建筑"职业事实（ConstructionCompleted）。
+        /// 由 <c>Patch_GenConstruct</c>（Postfix on Frame.CompleteConstruction）调用；
+        /// <paramref name="builtStableId"/> = builtDef.defName + ":" + frame.thingIDNumber
+        /// （与 OnThingBuilt 同键）。只记事实，建筑不入装备归档（与 OnThingBuilt 分工）。
+        /// </summary>
+        void RecordCareerConstruction(Pawn worker, ThingDef builtDef, string builtStableId, long tick);
+
+        /// <summary>
+        /// P1 CAREER-005：记录一次"完成一项研究"职业事实（ResearchCompleted）。
+        /// 由 <c>Patch_ResearchFinishProject</c>（Postfix on ResearchManager.FinishProject）
+        /// 调用；同项目防重复（只记一次）。研究者为 null（dev 强制完成等）时由调用方过滤。
+        /// </summary>
+        void RecordCareerResearch(Pawn researcher, string researchDefName, long tick);
+
+        /// <summary>
+        /// P1 CAREER-005：WorkCompleted 量子派生。每累计 2500 工作tick（=游戏 1 小时）
+        /// 记 1 条 WorkCompleted 事实（对齐 UI 每事件=1h 语义）。无状态推导
+        /// （TotalWorkTicks / quantum 与 RecordCountByType 差额），幂等、零新增 Save schema。
+        /// 由工时采样器每次采样后调用。
+        /// </summary>
+        void RecordWorkCompletedQuantum(string pawnStableId, long tick);
+
+        /// <summary>
+        /// V2.1 职业 XP 采集（原版链路）：记录一次原版技能经验注入 → 职业技能 XP。
+        /// 由 <c>Patch_SkillRecord_Learn</c>（Postfix on SkillRecord.Learn）调用。
+        /// <paramref name="actualXp"/> 为已含 LearnRateFactor（Passion/学习速率）的增量；
+        /// <paramref name="vanillaSkillName"/> 为原版 SkillDef.defName（经
+        /// ProfessionalSkillDef.sourceSkills 匹配职业技能）。只累加、永不减少
+        /// （无每日上限、无衰退）。调用方须保证 <paramref name="pawn"/> 为玩家派系
+        /// chronicle 相关 humanlike。
+        /// </summary>
+        /// <param name="countPractice">
+        /// v2.3 整件结算：制造完成一次性注入（Patch_BillProduction → pawn.skills.Learn）时传
+        /// <c>false</c>，跳过 practice 计数（制造实践由 <see cref="RecordCraftCompleted"/> 独家
+        /// 记录，避免一次完成重复计实践）；其他技能来源保持 <c>true</c>。
+        /// </param>
+        void RecordSkillLearn(Pawn pawn, string vanillaSkillName, float actualXp, long tick, bool countPractice = true);
+
+        /// <summary>
+        /// V2.3 制造完成实践统计（v2.1 的自造 XP 结算已由「整件结算制」取代）：
+        /// 工作台完成一次制造迭代 → recipe.workSkill 映射的职业技能记一次实践
+        /// （practiceCount / practiceCountBySkill / lastPracticeTick）。
+        /// 由 <c>Patch_BillProduction</c>（Postfix on Bill_Production.Notify_IterationCompleted，
+        /// 所有工作台/简易制作点制造完成的统一回调）调用。制造 XP 走整件结算——
+        /// Patch_BillProduction 先 Flush <c>CraftXpSettlement</c> 缓存 → 原生
+        /// pawn.skills.Learn(workSkill, total) 一次性注入 → 原版公式自动生效 →
+        /// <see cref="RecordSkillLearn"/> 分流职业 XP。只累加、永不减少（append-only 铁律）。
+        /// 调用方须保证 <paramref name="worker"/> 为玩家派系 chronicle 相关 humanlike。
+        /// </summary>
+        void RecordCraftCompleted(Pawn worker, RecipeDef recipe, long tick);
+
+        /// <summary>
         /// v1.1.4 损耗宫格：记录该人物消耗了一份可摄入物（进食/饮用/用药/成瘾品），
         /// 按 <c>ThingDef.BaseMarketValue</c> 计价累加到 <see cref="ConsumptionAccumulator"/>。
         /// 来自 <c>Thing.Ingested</c> 捕获（高频，不写事件流）。<paramref name="eater"/> 需为
@@ -119,6 +171,13 @@ namespace PersonalChronicle.Application
         /// 只存 defName 稳定键 —— 玩家手动改名后 UI 实时解析 <c>DefDatabase.LabelCap</c> 正确显示新名。
         /// </summary>
         void OnWorkplaceUsed(Pawn worker, Building_WorkTable workbench);
+
+        /// <summary>
+        /// v1.1.6 切换档案记录的「当前工作场所」：把该殖民者的 WorkplaceSnapshot 改指选中的工坊
+        /// （不实际指挥殖民者做工，仅改档案记录，安全可逆）。供六宫格工坊卡弹窗「设为当前」。
+        /// </summary>
+        void SetCurrentWorkplace(string pawnStableId, string buildingDefName, string buildingStableId,
+            string roomRoleDefName, int mapIndex, Verse.IntVec3 cell);
 
         /// <summary>
         /// v1.1.4 建筑别名（旧 per-pawn 兼容）：为指定殖民者的工作场所设置自定义别名
@@ -236,5 +295,34 @@ namespace PersonalChronicle.Application
         /// 去重写入 CareerData.GrantedTitles 与 MarkChanged。返回本次新授予职称的 (Pawn, TitleDef)。
         /// </summary>
         List<KeyValuePair<Pawn, PersonalChronicle.Domain.Qualification.ProfessionalTitleDef>> RunQualification(ChronicleGameComponent component);
+
+        // ---- REQ-MVS-013 物品级产消读数（2026-09-20，CHG-MVS-ITEMFLOW-001）----
+
+        /// <summary>
+        /// 记一笔物品级产消（Capture 层只读钩子调用；失败静默降级，不影响原版流程）。
+        /// <paramref name="production"/> true = 生产、false = 消费。
+        /// </summary>
+        void RecordItemFlow(string defName, int qty, bool production);
+
+        /// <summary>
+        /// 读某物品近两季的日均产/消速率（件/日）。<c>false</c> = 无账本/未建立
+        /// （调用方画 `—`，**不得填 0**）；<c>true</c> 时数值可能为 0（真值：近期无产出）。
+        /// </summary>
+        bool TryGetItemFlowRate(string defName, bool production, out float perDay);
+
+        /// <summary>
+        /// 记一笔**原料流向**（2026-09-20，`REQ-MVS-018`）：material 被 product 的生产消耗了 qty 件。
+        /// 由 <c>Patch_ItemFlowIngredients</c> 在 <c>GenRecipe.MakeRecipeProducts</c> 的只读
+        /// Prefix 里调用（该路径覆盖全部配方；采掘/收获/建造耗材不经此路）。
+        /// </summary>
+        void RecordMaterialFlow(string material, string product, int qty);
+
+        /// <summary>
+        /// 读某物品作为**原料**时近两季流向各产物的件数（降序）。
+        /// <c>false</c> = 无流向记录 —— ⚠ **不等于"没有流向"**（只覆盖配方消耗路径），
+        /// 调用方必须按"无数据"处理（画 `—` / 退回其它判据），不得当作 0。
+        /// </summary>
+        bool TryGetMaterialFlows(string material,
+            System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, int>> result);
     }
 }

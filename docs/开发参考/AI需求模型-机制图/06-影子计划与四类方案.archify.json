@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "机制 06 · 影子计划与四类方案",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": { "mode": "hidden" }
+  },
+  "lanes": [
+    { "id": "opts", "label": "四类方案（固定顺序）" },
+    { "id": "judge", "label": "判据", "variant": "exception" },
+    { "id": "plan", "label": "计划产物" }
+  ],
+  "phases": [
+    { "id": "p1", "label": "入口", "fromCol": 0, "toCol": 0 },
+    { "id": "p2", "label": "自救与劳动", "fromCol": 1, "toCol": 2 },
+    { "id": "p3", "label": "购买与服务", "fromCol": 3, "toCol": 4, "variant": "emphasis" },
+    { "id": "p4", "label": "产物", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["arb", "self", "work", "buy", "svc", "plan"],
+  "semanticChecks": { "allowedRoots": ["arb"], "allowedTerminals": ["plan"] },
+  "nodes": [
+    { "id": "arb", "lane": "opts", "col": 0, "type": "messagebus", "label": "仲裁出口", "sublabel": "目标 · 预算 · 候选", "tag": "机制 05" },
+    { "id": "self", "lane": "opts", "col": 1, "type": "backend", "label": "① 免费自救", "sublabel": "NativeSelfHelp", "tag": "未命中不可行", "width": 120 },
+    { "id": "work", "lane": "opts", "col": 2, "type": "backend", "label": "② 劳动", "sublabel": "SeekWork", "tag": "无 offer 不可行", "width": 120 },
+    { "id": "buy", "lane": "opts", "col": 3, "type": "backend", "label": "③ 购买", "sublabel": "Purchase", "tag": "三态判据" },
+    { "id": "svc", "lane": "opts", "col": 4, "type": "backend", "label": "④ 服务", "sublabel": "Service", "tag": "恒不可行" },
+    { "id": "feas", "lane": "judge", "col": 3, "type": "security", "label": "购买可行性", "sublabel": "已定价且扣覆盖付得起", "tag": "成本不全即否", "height": 64 },
+    { "id": "codes", "lane": "judge", "col": 4, "type": "security", "label": "不可行码", "sublabel": "购买三码 + 服务一码", "height": 64 },
+    { "id": "plan", "lane": "plan", "col": 5, "type": "database", "label": "影子计划", "sublabel": "决策 · 原因 · 拟选", "tag": "发布给执行侧", "height": 64, "width": 120 }
+  ],
+  "edges": [
+    { "from": "arb", "to": "self", "label": "先给免费" },
+    { "from": "self", "to": "work", "label": "不足才挣钱" },
+    { "from": "work", "to": "buy", "label": "有价才买" },
+    { "from": "buy", "to": "svc", "label": "顺序固定" },
+    { "from": "svc", "to": "plan", "label": "四类汇入方案集" },
+    { "from": "buy", "to": "feas", "label": "判据", "role": "branch" },
+    { "from": "feas", "to": "codes", "label": "不可行", "role": "error", "variant": "security" },
+    { "from": "codes", "to": "plan", "label": "携带原因码", "role": "branch" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "四类顺序与码",
+      "items": [
+        "免费自救 → 劳动 → 购买 → 服务：构造顺序即优先级",
+        "劳动不可行码：EmploymentNotPermitted / NoFeasibleOpportunity",
+        "服务恒 ServiceNotImplemented（调用点恒传 false）"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "购买三态判据",
+      "items": [
+        "成本不全 ⇒ CostEstimateUnavailable（不可行）",
+        "有已定价必要消费且扣覆盖后付得起 ⇒ 可行",
+        "否则：买不起 = ConsumptionUnaffordable；无报价 = NoPricedConsumption"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "实装陷阱",
+      "items": [
+        "MaintainReserve 枚举无任何产生点（仅枚举与读侧）",
+        "早退路径的方案集恒为空集合（Options.Count == 0）",
+        "覆盖累加必须与制度性受阻同口径（源码列为不变量）"
+      ]
+    }
+  ]
+}

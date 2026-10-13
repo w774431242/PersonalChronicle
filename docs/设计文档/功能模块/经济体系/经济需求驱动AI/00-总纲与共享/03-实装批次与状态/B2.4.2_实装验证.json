@@ -1,0 +1,539 @@
+{
+  "changeId": "CHG-20261008-ECON-DELIVERY",
+  "batch": "B2.4.2",
+  "state": "CodeVerified",
+  "parentBatchState": "InProgress",
+  "checkedUtc": "2026-10-12T15:34:36.1354907Z",
+  "modSha256": "CCD71B96D81847F8436656A94A26E00DABF8EBFD84C14E0DA1EE33B0944A82C0",
+  "gameSha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+  "gameAssemblyVersion": "1.6.9676.17735",
+  "compiledChecks": {
+    "pureFinanceGovernanceTypes": 61,
+    "legacyFeesClosed": true,
+    "preparatoryPhysicalRuntimeWired": true,
+    "authorizedPhysicalCallersOnly": true,
+    "nativeCarryAndReservation": true,
+    "fixedToilShape": true,
+    "oldRightsAdoptionWired": true,
+    "completeGameSaveAcceptance": false,
+    "activeAvailableInGame": false,
+    "ruifDependency": true,
+    "treasuryBilingualKeys": 44,
+    "newJobDefs": 1
+  },
+  "tests": {
+    "path": "Tests/TestResults/EconomyLanding-B242-Full.trx",
+    "sha256": "CEED377CB5D958ADE17C4E4335A7B3614D5697BCF666A8C021DA8C2A27B4614D",
+    "passed": 904,
+    "failed": 0,
+    "skipped": 1,
+    "skippedNames": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "newCases": 38
+  },
+  "deployedThisChange": false,
+  "gameVerifiedThisChange": false,
+  "globalGateAvailable": false,
+  "files": [
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Finance/TreasuryDelivery.cs",
+      "sha256": "4E28A298CF3AFD10C54B30B218BC8D549909A499133701E1D4818F85D7D4540A",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "internal enum TreasuryDeliveryPhase { Waiting, Carrying, Completed, Cancelled, Faulted }"
+        },
+        {
+          "line": 6,
+          "text": "internal sealed class TreasuryDelivery"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Finance/LegacyCutoverPlan.cs",
+      "sha256": "77E066D9FF07E045483DFDE12FA04D4B45BDF6BB2D0E5956DAA95A94312E93CD",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "internal enum LegacyDisposition { PreserveHistory, CancelOrderReleaseReservation, EndContractPreserveWage, RetainOwnership }"
+        },
+        {
+          "line": 10,
+          "text": "internal sealed class LegacyCutoverItem"
+        },
+        {
+          "line": 21,
+          "text": "internal sealed class LegacyCutoverCash"
+        },
+        {
+          "line": 28,
+          "text": "internal sealed class LegacyCutoverPlan"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Data/PawnEconomy/TreasuryOperationsSaveData.cs",
+      "sha256": "549AD506147E0EB693FA6B6F138E31E3EE34808D8631A0F7C246F200008EFA7F",
+      "anchors": [
+        {
+          "line": 14,
+          "text": "internal sealed class TreasuryOperationsSaveData : IExposable"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyTreasuryOperations.cs",
+      "sha256": "538B6E3CE0F72F74177183DCF661873493E7B9EF8B06CCDBE15056E06288F58C",
+      "anchors": [
+        {
+          "line": 17,
+          "text": "public static class TreasuryJobDefOf"
+        },
+        {
+          "line": 22,
+          "text": "public sealed partial class GameComponent_PawnEconomy"
+        },
+        {
+          "line": 292,
+          "text": "public sealed class JobDriver_TreasuryDelivery : JobDriver"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyTreasuryPresenter.cs",
+      "sha256": "43B8174CE9D24FB7B89198E799739560BE1D92A8217E5146D0021F1C66F82495",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "public sealed partial class GameComponent_PawnEconomy"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/PawnSettlementSaveHost.cs",
+      "sha256": "93E873E9839E4D0533ED4F673C207FCA94A780B7CC96664A3EF6447F6DE0E224",
+      "anchors": [
+        {
+          "line": 14,
+          "text": "internal sealed class PawnSettlementSaveHost : IExposable"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "sha256": "3E82BFE60648655369702860D9CE1BD7C0E16E5E84DD31009A9A9768AE9C9BD4",
+      "anchors": [
+        {
+          "line": 14,
+          "text": "public sealed partial class GameComponent_PawnEconomy : GameComponent"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyInstitutionMode.cs",
+      "sha256": "020D72335E0A9EDF38D3DC21FEB6865B8A25143CE355DB724C5C603094DA0F66",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "public sealed partial class GameComponent_PawnEconomy"
+        },
+        {
+          "line": 163,
+          "text": "internal enum InstitutionReverifyCode { Cleared, NotFaulted, StillFaulted, Unavailable }"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyCommands.cs",
+      "sha256": "ACBA30C2B06CB00AE0B02CBBDE88417CC1187C8889B2E9E199990D543B202E9E",
+      "anchors": [
+        {
+          "line": 17,
+          "text": "public sealed partial class GameComponent_PawnEconomy"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Window_InstitutionWorkspace.cs",
+      "sha256": "B8E10714DDF0C6FF68A3103EE356AFA9EA7A0337FD580B4CFB4A6EB94E3CF2AA",
+      "anchors": [
+        {
+          "line": 26,
+          "text": "public sealed partial class Window_InstitutionWorkspace : Window"
+        }
+      ]
+    },
+    {
+      "path": "Defs/PawnEconomy_Treasury.xml",
+      "sha256": "6B509BC58E3AC08D6B4FA6C0694D847A7DA0828D4A3DD07B04DA522797FA74D9",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        },
+        {
+          "line": 2,
+          "text": "<Defs>"
+        },
+        {
+          "line": 3,
+          "text": "<JobDef>"
+        }
+      ]
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/TreasuryOperations.xml",
+      "sha256": "51E4C7A8AB67D5E51B3D69B71DC5FD08CA9DDF978CE81E19D66A4CE2CF1CFCA8",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        },
+        {
+          "line": 2,
+          "text": "<LanguageData>"
+        },
+        {
+          "line": 3,
+          "text": "<PC_PEA.Treasury.Title>公有国库准备与旧权益承接</PC_PEA.Treasury.Title>"
+        }
+      ]
+    },
+    {
+      "path": "Languages/English/Keyed/TreasuryOperations.xml",
+      "sha256": "D5C812EF80B13B15BFC9A7AF1DCAD44D4969AB35A2AFAF88B2CFE69C1C80BA83",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        },
+        {
+          "line": 2,
+          "text": "<LanguageData>"
+        },
+        {
+          "line": 3,
+          "text": "<PC_PEA.Treasury.Title>Public treasury preparation and legacy settlement</PC_PEA.Treasury.Title>"
+        }
+      ]
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/EconomyMode.xml",
+      "sha256": "C757715E05FCA9E737D6A5D067631FA3B5CC52C4F941B37CE60D5BE1A06AF375",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        },
+        {
+          "line": 2,
+          "text": "<LanguageData>"
+        },
+        {
+          "line": 3,
+          "text": "<PersonalChronicle.Settings.Tab.Economy>经济</PersonalChronicle.Settings.Tab.Economy>"
+        }
+      ]
+    },
+    {
+      "path": "Languages/English/Keyed/EconomyMode.xml",
+      "sha256": "0066FED898C6094D93738FCF3EDDFBD82B108711A0023C3A8FC3390CEBCCEFB8",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        },
+        {
+          "line": 2,
+          "text": "<LanguageData>"
+        },
+        {
+          "line": 3,
+          "text": "<PersonalChronicle.Settings.Tab.Economy>Economy</PersonalChronicle.Settings.Tab.Economy>"
+        }
+      ]
+    },
+    {
+      "path": "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+      "sha256": "4A7FF9BA956B780001F607DBD09033F9B4FF01FA19D4B3B8D59858F8C8DB65C9",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        },
+        {
+          "line": 2,
+          "text": "<LanguageData><PC_PEA_TreasuryDelivery.reportString>在公有结算处办理银币交付。</PC_PEA_TreasuryDelivery.reportString></LanguageData>"
+        }
+      ]
+    },
+    {
+      "path": "Languages/English/DefInjected/JobDef/PawnEconomy_Treasury.xml",
+      "sha256": "44525148DCA11F10E642BD16F59C857E772426A808472CEB732C67447802EED0",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+        },
+        {
+          "line": 2,
+          "text": "<LanguageData><PC_PEA_TreasuryDelivery.reportString>Delivering silver at a public settlement counter.</PC_PEA_TreasuryDelivery.reportString></LanguageData>"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnTreasuryOperationsTests.cs",
+      "sha256": "37758E922EBE2F0AC93BD35A64DB8D4E3A458AB9D9C7DA35AACCE1DB4BA5BBB2",
+      "anchors": [
+        {
+          "line": 18,
+          "text": "public sealed partial class PawnSilverReserveTests"
+        }
+      ]
+    },
+    {
+      "path": "Tests/PawnInstitutionModeTests.cs",
+      "sha256": "4D2800130AE8532B1CE5B7D4C803EB2EE8A92D787F61C1C100B0AE077E14E14F",
+      "anchors": [
+        {
+          "line": 17,
+          "text": "public sealed partial class PawnSilverReserveTests"
+        },
+        {
+          "line": 254,
+          "text": "public sealed class PawnInstitutionModeRulesTests"
+        }
+      ]
+    },
+    {
+      "path": "_scripts/verify-pawn-treasury-operations.ps1",
+      "sha256": "614164D327BF620F4761DFBB975D01317C3D4D25B53449B837363DE23E9B804C",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "#requires -Version 7.0"
+        },
+        {
+          "line": 2,
+          "text": "param([string]$GameRoot = 'E:\\SteamLibrary\\steamapps\\common\\RimWorld')"
+        },
+        {
+          "line": 3,
+          "text": "$ErrorActionPreference = 'Stop'"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/08-B2.4.2_真实交付与权益承接_实装记录.md",
+      "sha256": "F6D286D4409389ED801088D7D820A782B3D9F708DC18F15DAA7ECA76D84BA02A",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. Intake / Architecture Review"
+        },
+        {
+          "line": 17,
+          "text": "## 2. 验证计划"
+        },
+        {
+          "line": 21,
+          "text": "## 3. 实装结果"
+        },
+        {
+          "line": 54,
+          "text": "## 4. 操作与实机验收"
+        },
+        {
+          "line": 63,
+          "text": "## 5. 剩余边界"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实施批次状态.json",
+      "sha256": "0E4DBFAB61D3CBC0F5BB19F59D5497AD696DBA49778531FA40D0DB9BD61996EC",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "{"
+        },
+        {
+          "line": 2,
+          "text": "\"changeId\": \"CHG-20261008-ECON-LANDING\","
+        },
+        {
+          "line": 3,
+          "text": "\"lastChangeId\": \"CHG-20261009-ECON-A6-ZONEWAGE\","
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/00-实装落地计划_v1.0.md",
+      "sha256": "80103803099F17BEB546056331AFB511F95CD8E6EE57274895B7934F58DA66BC",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "## 1. 目标、范围与交付纪律"
+        },
+        {
+          "line": 15,
+          "text": "## 2. 当前代码基线及迁移差异"
+        },
+        {
+          "line": 34,
+          "text": "## 3. 架构决策与数据边界"
+        },
+        {
+          "line": 46,
+          "text": "## 4. 批次总览与依赖"
+        },
+        {
+          "line": 63,
+          "text": "## 5. B1：需求感知与 RUIF 最小闭环"
+        },
+        {
+          "line": 91,
+          "text": "## 6. B2：实资、迁移与制度开关"
+        },
+        {
+          "line": 107,
+          "text": "## 7. B3：生活规划、储蓄与影子决策"
+        },
+        {
+          "line": 115,
+          "text": "## 8. B4：第一条自主经济闭环"
+        },
+        {
+          "line": 129,
+          "text": "## 9. B5：家庭与服务分项落地"
+        },
+        {
+          "line": 139,
+          "text": "## 10. B6：机构再生产与有限学习"
+        },
+        {
+          "line": 149,
+          "text": "## 11. B7：RUIF 治理与综合验收"
+        },
+        {
+          "line": 157,
+          "text": "## 12. 每批证据与检查命令"
+        },
+        {
+          "line": 173,
+          "text": "## 13. 迁移与回滚纪律"
+        },
+        {
+          "line": 179,
+          "text": "## 14. 完成定义与下一步"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/04-实装指导手册/00-总册与实施路线.md",
+      "sha256": "F147F3745CE9D081A980EC46C83AC98DE597B84CCF9779B9F0CDEAED92F859E0",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "## 1. 本手册回答什么"
+        },
+        {
+          "line": 18,
+          "text": "## 2. 阅读与交付索引"
+        },
+        {
+          "line": 57,
+          "text": "## 3. 当前核验基线"
+        },
+        {
+          "line": 70,
+          "text": "## 4. 模块划分"
+        },
+        {
+          "line": 89,
+          "text": "## 5. 架构和数据流"
+        },
+        {
+          "line": 117,
+          "text": "## 6. 首版具体闭环"
+        },
+        {
+          "line": 135,
+          "text": "## 7. 实施里程碑和退出条件"
+        },
+        {
+          "line": 147,
+          "text": "## 8. 开发工作包写法"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/M11-资金资源权利与制度协调/11-资金资源权利与制度协调_代码设计方案.md",
+      "sha256": "DFCA0D0B6CCE4DFFC25EFE2D07287865CF01696D526119581B1CE85223A12E87",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. 输入输出与职责"
+        },
+        {
+          "line": 11,
+          "text": "## 2. 共同数据与不变量"
+        },
+        {
+          "line": 27,
+          "text": "## 3. 银币缴存、提取与外贸"
+        },
+        {
+          "line": 39,
+          "text": "## 4. 账户与借贷腿"
+        },
+        {
+          "line": 54,
+          "text": "## 5. 资源权利与谱系"
+        },
+        {
+          "line": 64,
+          "text": "## 6. 原子准备与交易恢复"
+        },
+        {
+          "line": 74,
+          "text": "## 7. 开关、迁移与能力路由"
+        },
+        {
+          "line": 86,
+          "text": "## 8. 接口、落点与原版依据"
+        },
+        {
+          "line": 102,
+          "text": "## 9. 验收"
+        }
+      ]
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI真实交付与权益承接.md",
+      "sha256": "61A7C043C51214CAE62A58B9F444B600C0788253B8E33A00CAFD79769B0770AD",
+      "anchors": [
+        {
+          "line": 1,
+          "text": "# 经济 AI：真实交付与权益承接"
+        },
+        {
+          "line": 3,
+          "text": "Change ID：CHG-20261008-ECON-DELIVERY，2026-10-08。B2.4.2 CodeVerified；未部署、未实机验收。"
+        },
+        {
+          "line": 5,
+          "text": "- 公有结算处接入真实银币缴存/提取。RUIF 账户页提交准备指令，殖民者在安全空闲窗口自主搬运；不强制打断原版行为。提取先锁可用国库，实际双端数量/所属证明后才记账。"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Actual Pawn navigation, interruption, reservation contention and whole-game saves have not been accepted in a running game.",
+    "Only explicit public Treasury preparation is routed; ordinary wages, consumption, services and savings are still closed.",
+    "Draining preserves assumed personal/institution credits; this batch withdraws only unreserved public Treasury funds.",
+    "Conflicts freeze rather than silently repair. Delivery history is bounded to 512 lifetime orders; legacy decisions to 8192 records.",
+    "Offline fixtures exercise original CarryTracker container, ThingOwner and Scribe APIs with minimal Def/environment shims; no rendering or gameplay proof is claimed."
+  ]
+}

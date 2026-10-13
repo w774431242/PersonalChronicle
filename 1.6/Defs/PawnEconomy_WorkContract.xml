@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    CHG-20261011-LABOR-VISUAL：实体工作合同纸。
+    硬约束（REQ-LaborVisual-004）：真实 Thing、stackLimit=1、**不可**作为材料/燃料/食物/贸易商品，
+    也不以市场价值模拟薪资（MarketValue=0）。base 走原版 ResourceBase，只覆写与语义相关的字段。
+    label/description 走 DefInjected（Languages/*/DefInjected/ThingDef/PawnEconomy_WorkContract.xml）。
+  -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>PC_PEA_WorkContractDocument</defName>
+    <label>工作合同</label>
+    <description>一份已签发的劳务合同正本。纸本身不是债权：付款对象与全部条款以合同账本为准，捡到或偷走它都不能领取工资。</description>
+    <thingClass>PersonalChronicle.Economy.PawnEconomy.Thing_WorkContractDocument</thingClass>
+    <category>Item</category>
+    <stackLimit>1</stackLimit>
+    <selectable>true</selectable>
+    <rotatable>false</rotatable>
+    <useHitPoints>true</useHitPoints>
+    <destroyable>true</destroyable>
+    <tradeability>None</tradeability>
+    <graphicData>
+      <texPath>Things/Item/PawnEconomy/PC_PEA_WorkContract</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.85</drawSize>
+    </graphicData>
+    <uiIconPath>Things/Item/PawnEconomy/PC_PEA_WorkContract</uiIconPath>
+    <statBases>
+      <MaxHitPoints>30</MaxHitPoints>
+      <MarketValue>0</MarketValue>
+      <Mass>0.02</Mass>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <thingCategories />
+    <comps />
+  </ThingDef>
+
+  <!-- 到劳务站办理签约（IntentReady → 洽谈 → SignCommit → 签领实体合同）。 -->
+  <JobDef>
+    <defName>PC_PEA_VisitLaborOffice</defName>
+    <driverClass>PersonalChronicle.Economy.PawnEconomy.JobDriver_LaborVisit</driverClass>
+    <reportString>前往劳务站签约</reportString>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+
+  <!-- 到工资结算处提交合同与交付物（核验 → 接收回执 → 授予付款资格）。 -->
+  <JobDef>
+    <defName>PC_PEA_SubmitWorkContract</defName>
+    <driverClass>PersonalChronicle.Economy.PawnEconomy.JobDriver_LaborSubmit</driverClass>
+    <reportString>前往工资结算处交验</reportString>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+
+  <!-- 自主收集自己产出的真实产物（REQ-LaborVisual-007/010：玩家不手动搬货，多趟由重复规划承担）。 -->
+  <JobDef>
+    <defName>PC_PEA_CollectContractOutput</defName>
+    <driverClass>PersonalChronicle.Economy.PawnEconomy.JobDriver_LaborCollectOutputs</driverClass>
+    <reportString>搬运合同交付物到结算处</reportString>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+</Defs>

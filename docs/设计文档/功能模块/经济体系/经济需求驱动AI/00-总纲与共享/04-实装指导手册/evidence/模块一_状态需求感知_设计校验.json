@@ -1,0 +1,112 @@
+{
+  "checkedUtc": "2026-10-08T05:44:20.2883739Z",
+  "scope": "Design document consistency, current evidence fingerprints and equation arithmetic only.",
+  "documents": [
+    {
+      "path": "游戏代码设计/01-状态与需求感知_代码设计方案.md",
+      "utf8": true,
+      "pairedCodeFences": true,
+      "localLinks": [
+        "../公有机构与外贸循环_优化方案_v0.7.md",
+        "../经济学优化与需求可视化_方案_v0.8.md",
+        "../当前方案复评与AI模块摘要_v0.9.md",
+        "01-状态与需求感知_方案评审.md",
+        "02-长期生活规划_代码设计方案.md",
+        "../模块化实装指导手册/07-需求驾驶舱与政策反馈.md",
+        "../模块化实装指导手册/evidence/模块一_状态需求感知_接口证据.json",
+        "../模块化实装指导手册/evidence/模块一优化与模块二_设计校验.json"
+      ]
+    },
+    {
+      "path": "游戏代码设计/00-公有经济第一批代码设计.md",
+      "utf8": true,
+      "pairedCodeFences": true,
+      "localLinks": [
+        "00-全部模块方案_总册.md",
+        "01-状态与需求感知_代码设计方案.md",
+        "02-长期生活规划_代码设计方案.md",
+        "../经济学优化与需求可视化_方案_v0.8.md",
+        "../模块化实装指导手册/07-需求驾驶舱与政策反馈.md",
+        "../公有机构与外贸循环_优化方案_v0.7.md",
+        "../模块化实装指导手册/evidence/公有制度与外贸_接口证据.json",
+        "../模块化实装指导手册/evidence/本机接口证据.json",
+        "../模块化实装指导手册/evidence/原版需求与家庭机制_证据.json"
+      ]
+    },
+    {
+      "path": "模块化实装指导手册/00-总册与实施路线.md",
+      "utf8": true,
+      "pairedCodeFences": true,
+      "localLinks": [
+        "../经济机构首版_操作与验收.md",
+        "../原版需求缺口驱动经济AI_设计方案_v0.3.md",
+        "D:/QQ/Pawn经济AI核心方案-1.md",
+        "../游戏代码设计/00-全部模块方案_总册.md",
+        "../游戏代码设计/00-全部模块方案_合订本.md",
+        "../游戏代码设计/01-状态与需求感知_代码设计方案.md",
+        "../游戏代码设计/02-长期生活规划_代码设计方案.md",
+        "../游戏代码设计/01-状态与需求感知_方案评审.md",
+        "../当前方案复评与AI模块摘要_v0.9.md",
+        "../经济学优化与需求可视化_方案_v0.8.md",
+        "07-需求驾驶舱与政策反馈.md",
+        "../公有机构与外贸循环_优化方案_v0.7.md",
+        "../游戏代码设计/00-公有经济第一批代码设计.md",
+        "../玩法完整度评估与设计准入_v0.6.md",
+        "../自主经济社会与玩家角色_总体设计_v0.5.md",
+        "../原版需求缺口驱动经济AI_设计方案_v0.3.md",
+        "../多需求并发仲裁_设计补充_v0.4.md",
+        "01-数据模型与源码依据.md",
+        "02-业务模块实装细则.md",
+        "03-RUIF前端实装.md",
+        "04-接入分期与验收.md",
+        "05-证据索引与验证记录.md",
+        "06-微观机构与场所工具.md",
+        "../经济机构首版_操作与验收.md",
+        "evidence/本机接口证据.json",
+        "examples/EconomySaveExample.cs",
+        "examples/EconomyRuifExample.cs",
+        "examples/EconomyStockExample.cs",
+        "tools/Collect-Evidence.ps1"
+      ]
+    }
+  ],
+  "evidence": {
+    "types": 25,
+    "sourceFingerprints": 20,
+    "assemblyAndSourceHashesMatched": true,
+    "protectedFreezeConfirmed": true
+  },
+  "equationExamples": [
+    {
+      "target": 0.8,
+      "expected": 0.5,
+      "maximum": 2.0,
+      "raw": 0.8
+    },
+    {
+      "target": 0.8,
+      "expected": 1.0,
+      "maximum": 1.0,
+      "raw": 0.0
+    },
+    {
+      "target": 0.8,
+      "expected": 0.0,
+      "maximum": 1.0,
+      "raw": 0.8
+    },
+    {
+      "target": 0.8,
+      "expected": 0.0,
+      "maximum": 1.0,
+      "raw": 1.0
+    }
+  ],
+  "runtimeCompiled": false,
+  "runtimeTestsExecuted": false,
+  "gameValidated": false,
+  "limits": [
+    "No capture implementation or RUIF page executed.",
+    "Freshness, lifecycle, compatibility, performance and full acceptance matrix remain implementation work."
+  ]
+}

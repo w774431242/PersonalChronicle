@@ -1,0 +1,24 @@
+id,title,url,evidence_level,checked_on,scope,limit
+P01,Colony Coupons 2,https://steamcommunity.com/sharedfiles/filedetails/?id=3657676020,P,2026-10-07,个人账户及工时工资和消费制度的作者发行声明,未安装未审计代码；兼容和性能声明未验证
+P02,Colony Coupons 2 Smart Pawns,https://steamcommunity.com/sharedfiles/filedetails/?id=3738853303,P,2026-10-07,经济人格及自主财务行为；预算权限冷却；默认2500ticks；RimTalk白名单建议,未确认实际劳动决策入口及游戏表现
+P03,Colonist Wages,https://steamcommunity.com/sharedfiles/filedetails/?id=3412615132,P,2026-10-07,季度工资预期与配置；购买武器防具及成瘾药物,未确认完整地图内生活消费闭环
+P04,Colony Coupons初代,https://steamcommunity.com/sharedfiles/filedetails/?id=3645059987,P,2026-10-07,个人钱包及收费的历史发行样本；标题明确停更,不作为维护中的依赖
+P05,Free Will,https://steamcommunity.com/sharedfiles/filedetails/?id=2580837227,P,2026-10-07,自主工作优先级；Ideology与Harmony依赖；1.6标签,页面标签不等于当前组合实测兼容
+P06,Work Manager,https://steamcommunity.com/sharedfiles/filedetails/?id=2029596262,P,2026-10-07,技能热情分配与默认每小时刷新；1.6依赖LordKuper.Common,不是个人经济目标模型
+P07,Work Tab Continued,https://steamcommunity.com/sharedfiles/filedetails/?id=3453549086,P,2026-10-07,细分工作与时段优先级及作者兼容列表,未验证与本项目共存
+P08,Hospitality原版,https://steamcommunity.com/sharedfiles/filedetails/?id=753498552,P,2026-10-07,访客住宿购物服务；原作者已不再维护的说明,应区分原版与Continued
+P09,Hospitality Continued,https://steamcommunity.com/sharedfiles/filedetails/?id=3509486825,P,2026-10-07,维护分支与保留packageId；作者列出Odyssey跨图限制,未安装验证；限制可能随版本变动
+P10,Gastronomy Continued,https://steamcommunity.com/sharedfiles/filedetails/?id=3509488152,P,2026-10-07,菜单营业服务员和点餐；明确Hospitality访客支付,不能据点餐能力推导支持自定义个人钱包
+P11,Vanilla Trading Expanded,https://steamcommunity.com/sharedfiles/filedetails/?id=2785616901,P,2026-10-07,外部市场银行贷款合同；MarketValue与财富关联的作者说明,未安装；不依据文本模板判定下架
+P12,Economics and Demography,https://steamcommunity.com/sharedfiles/filedetails/?id=3692156692,P,2026-10-07,世界人口聚落生产与供需的作者描述,不能推导每位殖民者均有经济AI
+P13,Dynamic economy Continued,https://steamcommunity.com/sharedfiles/filedetails/?id=2974182214,P,2026-10-07,外部交易供需及买卖倍率变化,未验证代码和组合兼容
+S01,Free Will架构固定提交,https://github.com/paul-freeman/rimworld-freewill/blob/47ec7c9f3a05876b263c14f349a4c2ddda784701/docs/architecture.md,S,2026-10-07,WorldComponent保存自主状态；MapComponent计算工作优先级,仓库提交不自动等于工坊当前DLL
+S02,Free Will优先级固定提交,https://github.com/paul-freeman/rimworld-freewill/blob/47ec7c9f3a05876b263c14f349a4c2ddda784701/Priority.cs#L284,S,2026-10-07,ApplyPriorityToGame及SetPriority；评分映射整数优先级,只核验关键路径没有全量审计
+S03,Gastronomy用餐Job固定提交,https://github.com/Zaljerem/Gastronomy/blob/9fc05404e0379c542966b9571b604fce4fb0cef4/Source/RimWorld_Gastronomy/Dining/JobDriver_Dine.cs#L91,S,2026-10-07,OnTransferredFood中食物转移后的PayForMeal调用,未全量审计付款扩展及取消路径
+S04,Vanilla Trading Expanded作者仓库,https://github.com/Vanilla-Expanded/VanillaTradingExpanded,S,2026-10-07,确认存在作者源码仓库,本轮没有全量审计该仓库实现
+S05,Gastronomy Continued维护者仓库,https://github.com/Zaljerem/Gastronomy,S,2026-10-07,维护分支存在；README许可文字与发行页不同,不据此作代码可再发行判定
+D01,Example Mending Job,https://rimworldwiki.com/wiki/Modding_Tutorials/Code_MendingJob,D,2026-10-07,社区作者教程：Job与JobDriver及Toil和预约,不是完整经济AI实现或官方SDK
+D02,GameComponent教程,https://rimworldwiki.com/wiki/Modding_Tutorials/GameComponent,D,2026-10-07,组件生命周期及ExposeData；明确部分列表依据旧版本,具体1.6方法需以目标程序集确认
+D03,RimWorld Saving For Dummies,https://spdskatr.github.io/RWModdingResources/saving-guide,D,2026-10-07,作者公开教程：Scribe值及对象引用和集合保存,经济事务与迁移需自行设计
+D04,Harmony v2 Priorities,https://harmony.pardeike.net/v2/articles/priorities.html,D,2026-10-07,官方补丁优先级及before和after,加载顺序不代替执行关系及兼容验证
+D05,Harmony v2 Prefix,https://harmony.pardeike.net/v2/articles/patching-prefix.html,D,2026-10-07,官方Prefix及跳过原函数对补丁执行的影响,本轮不新增补丁

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!--
+    CHG-20261004-MEALSCHEDULE-B · PC「吃饭」时段类型（管制表 / 作息表）。
+
+    玩家诉求（2026-10-04）：底部【管制】标签的作息表里**没有吃饭管制类型** ⇒
+    希望能在那张表里把某几个小时划成「吃饭」，到点殖民地成员就去进食。
+
+    1.6 事实（Mono.Cecil 核实 Build 1.6.4871）：
+    - 管制表 = MainTabWindow_Schedule（MainButtonDef Schedule，order 20），
+      表格 = PawnTableDefOf.Restrict，列含 Timetable + AllowedArea。
+    - 时段数据 = `Pawn_TimetableTracker.times : List<TimeAssignmentDef>`，
+      格子绘制 = PawnColumnWorker_Timetable（按 TimeAssignmentDef.color 上色），
+      按钮网格 = TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid。
+    ⇒ **只要本 Def 存在，格子涂色、存读档、点击涂格全部自动生效**
+      （原版用的是 Def 全链路，无任何硬编码 defName 判断）。
+
+    ⚠ 但按钮网格是**硬编码 5 项**（IL 实证）：
+        DrawTimeAssignmentSelectorGrid 依次 DrawTimeAssignmentSelectorFor
+          (TimeAssignmentDefOf.Anything / Work / Joy / Sleep[/Meditate(Royalty)])
+      —— 它不遍历 DefDatabase，所以光加 Def **不会**出现按钮；
+      按钮由 PC 的 Harmony Postfix 追加（见 Capture/Patch_TimeAssignmentSelector.cs，EXC 登记）。
+
+    字段语义（Verse.TimeAssignmentDef 只有 3 个字段，Cecil 核实）：
+    - color：格子/按钮底色（也用于按钮贴图）。
+    - allowRest：该时段能否睡觉。默认 true；原版 Work 显式 false。
+    - allowJoy：该时段能否娱乐。默认 true；原版 Work 显式 false。
+    ⇒ 吃饭时段按「工作时段」的管制强度配置：allowRest=false（到饭点不许睡）
+      + allowJoy=false（到饭点不许玩）。这与"Work"的原版取值完全一致，
+      语义 = 吃饭优先于睡眠与娱乐，但仍让位于更高优先级的具体工作
+      （排序键 naturalPriority + (4 - 档位) × 100000，档位由 PC 三餐规则/玩家排班决定）。
+  -->
+  <TimeAssignmentDef>
+    <defName>PC_Meal</defName>
+    <label>用餐</label>
+    <!--
+      颜色对齐（2026-10-04 实机比对）：原版 5 个时段色的亮度都在 60-114 区间
+      （Anything 114,114,114 / Work 133,133,61 / Joy 115,74,138 / Sleep 51,51,127），
+      整体是低饱和、暗色调。初版取的 (198,132,58) 明显偏亮，与前 5 个并排时"跳"出来，
+      故压到 (168,120,58) —— 亮度与 Work 的 133 同一量级，同时保留暖色语义（食物）
+      且能与相邻的黄褐（Work）与绿色（Meditate）区分。
+    -->
+    <color>(168, 120, 58)</color>
+    <allowRest>false</allowRest>
+    <allowJoy>false</allowJoy>
+  </TimeAssignmentDef>
+
+  <!--
+    CHG-20261004-IDLE · PC「摸鱼」时段类型（冗余员工兜底）。
+
+    玩家诉求（2026-10-04）：「员工数量多于设备导致员工原地发呆，并显示在区域上班中，
+    需要【娱乐】进行兜底并额外标注'摸鱼中...'」。
+
+    ⚠ 为什么会「原地发呆」——机制在**原版时段字段**上，不在 Job 逻辑上：
+      原版 TimeAssignmentDef 的 <allowJoy> 默认 true，但 **Work 显式 false**
+      （Data/Core/Defs/Misc/TimeAssignmentDefs/TimeAssignments.xml：
+       Work: allowRest=false / allowJoy=false）。
+      而 PC 的班次把工作小时写进作息表时用的正是 Work
+      （WorkshopDutyCoordinator.ApplyWorkHoursToCrew：work[h] ? Work : Sleep）
+      ⇒ 被排班的员工在班次内**既不能娱乐也不能睡**，除了值勤 Job 无事可做
+      ⇒ 站着发呆（值勤 Job 本身就是"走到车间格位站着"）。
+      ⚠ 另一层：车间目前**只有值勤 Job，没有任何生产 Job**
+        （见 WorkshopPostDef.implementedWorkTypeDefNames 的注释与岗位页的"尚未实现"）
+        ⇒ 就算有设备，员工也只是站岗看护。
+
+    ⇒ 本 Def 是「冗余员工」的兜底时段：允许娱乐 + 允许休息。
+      车间在写作息表时按**设备容量**切分——前 N 人（N = 车间设备数，
+      与概览页显示的数字同源）写 Work，其余写本时段
+      ⇒ 原版 JobGiver_GetJoy / JobGiver_GetRest 自然接管，无需 PC 造任何 Job。
+
+    字段取值理由：
+    - allowJoy=true：这就是"娱乐兜底"本体（玩家明确要求）。
+    - allowRest=true：没活干时困了就该睡。刻意**不**学 Work 的 false ——
+      否则被判定为冗余的人在极度疲劳时仍不能睡，会走向精神崩溃（不可逆），
+      代价远大于"上班时睡了一觉"。
+    - color：淡青灰，与原版 5 色 + 用餐的暖棕全部拉开距离，一眼可辨（不靠文字）。
+  -->
+  <TimeAssignmentDef>
+    <defName>PC_Idle</defName>
+    <label>摸鱼</label>
+    <color>(110, 140, 140)</color>
+    <allowRest>true</allowRest>
+    <allowJoy>true</allowJoy>
+  </TimeAssignmentDef>
+</Defs>

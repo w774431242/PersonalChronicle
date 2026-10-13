@@ -1,0 +1,416 @@
+{
+  "taskId": "CB-ECON-003",
+  "changeId": "CHG-20261011-LABOR-VISUAL",
+  "revision": 1,
+  "executor": "Codex",
+  "authoredBy": "AI 助手 Codex · 2026-10-12",
+  "status": "OutputCollectFixDeployed_GameAcceptancePending",
+  "updatedAt": "2026-10-12T22:41:25.813442+08:00",
+  "currentStep": "§17收尾Work调度、真实落地增量/证据批次、缺批次对账及Pawn诊断修复；1629/0/1，DLL已同步；Niklas实机拾取/存读验收待做",
+  "completedCA": [
+    "CA-02",
+    "CA-04",
+    "CA-05",
+    "CA-06",
+    "CA-07",
+    "CA-09",
+    "CA-10",
+    "CA-11",
+    "CA-15",
+    "CA-16",
+    "CA-17",
+    "CA-18"
+  ],
+  "partialCA": [
+    "CA-01",
+    "CA-03",
+    "CA-08",
+    "CA-13",
+    "CA-14"
+  ],
+  "remainingCA": [
+    "CA-12"
+  ],
+  "remainingSteps": [
+    "G01-G14 real-game acceptance, Job resume and actual pawn inventory save/load",
+    "Bills actual production authorization/delivery chain CA-12",
+    "Hunt/slaughter/haul authoritative delivery receipts CA-03",
+    "Generic third-party split/merge lineage beyond tracked collector CA-08",
+    "Cross-map funding T31 host evidence",
+    "Actual Unity map UI / four rotations / zoom / profiler / fault-injection acceptance"
+  ],
+  "blockingReason": "Niklas实际拾取/存读和原单G/Bills/凭据/跨图验收未完成",
+  "gameVerified": false,
+  "runtimeAcceptance": "NOT RUN",
+  "tests": {
+    "passed": 1629,
+    "failed": 0,
+    "skipped": 1,
+    "newCasesVs1609": 20,
+    "trx": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\output-collect-final.trx"
+  },
+  "deployed": {
+    "at": "2026-10-12T22:39:13.225980+08:00",
+    "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+    "path": "Assemblies/PersonalChronicle.dll",
+    "beforeSha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+    "afterSha256": "4730FE67FE1293FF1C76E8E3A81AD3F5C419E191A75B3DA877007E6AED6FFD22",
+    "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_output_collect_fix_20261012_223913\\Assemblies\\PersonalChronicle.dll",
+    "bytes": 2455040,
+    "gameRestarted": false,
+    "gameVerified": false
+  },
+  "modifiedFiles": [
+    "Defs/PawnEconomy_Institutions.xml",
+    "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_LaborFlow.xml",
+    "Languages/ChineseSimplified/Keyed/PawnEconomy.xml",
+    "Languages/English/DefInjected/JobDef/PawnEconomy_LaborFlow.xml",
+    "Languages/English/Keyed/PawnEconomy.xml",
+    "Source/PersonalChronicle/Application/PawnEconomy/Employment/EmploymentService.cs",
+    "Source/PersonalChronicle/Application/PawnEconomy/Employment/LaborFlowService.cs",
+    "Source/PersonalChronicle/BuildStamp.g.cs",
+    "Source/PersonalChronicle/Data/PawnEconomy/LaborFlowSaveData.cs",
+    "Source/PersonalChronicle/Domain/PawnEconomy/Employment/LaborFlow.cs",
+    "Source/PersonalChronicle/Domain/PawnEconomy/Perception/LaborSpeechQueue.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyEmployment.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborCarryPresentation.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborCounterPresentation.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborFlow.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborInteraction.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborPresentation.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborTransport.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedDashboard.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedSpeech.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorkspaceQueries.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorld.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/NeedAccountModelView.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/NeedsCyclePanel.Account.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/ShadowPlanPresenter.AccountModel.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/Thing_WorkContractDocument.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/Window_InstitutionWorkspace.Table.cs",
+    "Source/PersonalChronicle/Economy/PawnEconomy/Window_LaborRecord.cs",
+    "Tests/LaborFlowScribeTests.cs",
+    "Tests/LaborFlowVisualCycleTests.cs",
+    "Tests/LaborPaymentFeedbackTests.cs",
+    "Tests/LaborPhysicalTransferTests.cs",
+    "Tests/LaborPresentationTests.cs",
+    "Tests/LaborSpeechQueueTests.cs",
+    "Tests/LaborVisualBoundedWorkloadTests.cs",
+    "_scripts/verify-pawn-economy.ps1"
+  ],
+  "receiptSha256": "AA22CED968069F5C9C65B062DDDC1C4FB009DCB3ECED554E550E7B6AD844E107",
+  "requirementSha256": "776A9B57A752AC697ED1394ACFD4752B0AAFB7DA99AEFAEFBFFEF1091E8F223B",
+  "report": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-003_执行回报.md#16-机构消失实机回归def-枚举热修2026-10-12",
+  "historyBeforeCodexVisualRepair": {
+    "status": "ReworkInProgress",
+    "updatedAt": "2026-10-12T11:43:00+08:00",
+    "currentStep": "R4 已完成 B1+B1'+B3（气泡：队列/去重/时间基准统一 120→1200tick/11 类事件；诊断快照面）、B2（机构只读同源），并补 §13.7 REQ001–026 证据矩阵与 §13.8 未执行清单；编译 0 诊断 / 1573 测试全绿 / 已部署；B4 窄宽缩放色觉、B5 Bills(CA-12)、B6 收尸凭据与 T31、B7 负面对照与故障注入待做；实机 G01–G14 NOT RUN",
+    "remainingSteps": [
+      "B1 气泡事件队列（CA-14）：每 Pawn 有界队列 + EventId 去重/限频 + 补齐洽谈/等待/签领/交验/缺款/到账事件与双语键",
+      "B2 同源只读面（CA-13/REQ-017）：劳务站/工资处建筑显示本站真实在办与排队，与账户页/合同纸同源",
+      "B3 诊断与追踪（REQ-021）：ExposeLaborFlow 输出面 + 稳定追踪 ID + 有限事件环形缓冲",
+      "B4 呈现健壮性（REQ-022）：窄宽/长文本/缩放/色觉降级",
+      "B5 Bills 交付链（CA-12）：生产授权/完成证据 + 实际成品交付，保留原计件与随机/附加产物",
+      "B6 凭据与账务边界（CA-03 真实收尸/接收凭证；T31 跨图宿主证据与定案）",
+      "B7 验收工程（回执 §5）：REQ001-026→T01-31→G01-14→文件/符号→证据矩阵、五项指定负面对照全跑、五个故障注入点、四哈希绑定、RESULT 追加 revision"
+    ],
+    "blockingReason": "用户尚未指定 R4 起始批次；B5/B6 需要真实宿主证据；B7 需先搭矩阵骨架",
+    "tests": {
+      "latest": "1573 passed / 0 failed / 1 skipped",
+      "runAt": "2026-10-12T18:57:00+08:00",
+      "addedThisRework": [
+        "CA-05 UnknownSchemaPayloadSurvivesRoundTrip",
+        "CA-10 ReconciliationCanBeResolvedAndNeverInventsFacts",
+        "CA-16 WriteIsRefusedAtLimitInsteadOfDroppingExistingRows"
+      ]
+    },
+    "deployed": {
+      "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+      "dllAt": "2026-10-12 18:56:51",
+      "synced": {
+        "Defs": 38,
+        "Languages": 77,
+        "Assemblies": 1
+      },
+      "note": "重启 RimWorld 后生效；回滚用 _backups\\release-deploy\\deploy_20261012_184324_054\\"
+    },
+    "modifiedFiles": [
+      "Source/PersonalChronicle/Domain/PawnEconomy/Employment/LaborFlow.cs",
+      "Source/PersonalChronicle/Data/PawnEconomy/LaborFlowSaveData.cs",
+      "Source/PersonalChronicle/Application/PawnEconomy/Employment/LaborFlowService.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborFlow.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborOutputs.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorld.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyVanillaWork.cs",
+      "Defs/PawnEconomy_WorkContract.xml",
+      "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_LaborFlow.xml",
+      "Languages/English/DefInjected/JobDef/PawnEconomy_LaborFlow.xml",
+      "Languages/ChineseSimplified/Keyed/PawnEconomy.xml",
+      "Languages/English/Keyed/PawnEconomy.xml",
+      "Tests/LaborFlowTests.cs",
+      "Tests/LaborFlowScribeTests.cs"
+    ],
+    "report": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-003_执行回报.md#13"
+  },
+  "institutionDefHotfix": {
+    "at": "2026-10-12T21:56:32.425592+08:00",
+    "status": "DefHotfixDeployed_GameRecoveryPending",
+    "rootCause": "MapMeshAndRealtime is not exact Verse.DrawerType enum member; actual MapMeshAndRealTime",
+    "causedBy": "Codex §15 change",
+    "runtimeEvidence": {
+      "log": ".codebuddy\\tmp\\cb-econ-003-institution-hotfix-20261012\\Player.before.log",
+      "sha256": "A3F53E3C81225067D11E8FCC292F3FD62E9CE6C8702B188F431EE33D214A3ABA",
+      "fiveDefFailures": true,
+      "loadedBuild": "2026-10-12 13:31 UTC"
+    },
+    "modifiedFiles": [
+      {
+        "path": "Defs/PawnEconomy_Institutions.xml",
+        "beforeSha256": "528E63D09CE86ADADE172BFF5170ACA13FB1AE6F5EB64808002AFC58E127037B",
+        "afterSha256": "70CA1271142342885EE8370F1112101C2643B5C6433C27282E3EFB48EC9AE8BA"
+      },
+      {
+        "path": "Defs/PawnEconomy_WorkContract.xml",
+        "beforeSha256": "0B2B25C5F9FF4752F6EC6DC63369C02A37D505BBD653DFBCBAC7558651BAFF7B",
+        "afterSha256": "D166F00A366D85352363DC34239826F243E9A6E917F616599F6DAED707EAD29E"
+      },
+      {
+        "path": "_scripts/verify-pawn-economy.ps1",
+        "beforeSha256": "46DD045F0ACD437BEB6F3E6902F59BCC575F3ED0E095707EBF17162CD4B52503",
+        "afterSha256": "5513F6123E47C79D47F71C1CB837199132DA96D9AE5FA943368B6CE1381F72E9"
+      }
+    ],
+    "verification": {
+      "negativeControls": [
+        {
+          "case": "bad-drawer",
+          "exitCode": 1,
+          "expectedFailureObserved": true,
+          "expectedMessage": "Invalid enum value: drawerType=MapMeshAndRealtime"
+        },
+        {
+          "case": "bad-paper",
+          "exitCode": 1,
+          "expectedFailureObserved": true,
+          "expectedMessage": "Flammable contract paper must have hitpoints."
+        }
+      ],
+      "save": {
+        "path": "C:\\Users\\Administrator\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Saves\\新移民1.rws",
+        "sha256": "1617FFCEBCAB8665C417CAFCCE3196975FEB167FDB576839A8AD1F26851C9A14",
+        "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\save-safety\\institution_def_hotfix_20261012\\新移民1.rws",
+        "backedUpSha256": "1617FFCEBCAB8665C417CAFCCE3196975FEB167FDB576839A8AD1F26851C9A14",
+        "institutions": [
+          {
+            "def": "PC_PEA_LaborOffice",
+            "id": "PC_PEA_LaborOffice45842",
+            "pos": "(132, 0, 138)",
+            "health": "120"
+          },
+          {
+            "def": "PC_PEA_WorkshopOffice",
+            "id": "PC_PEA_WorkshopOffice45843",
+            "pos": "(133, 0, 138)",
+            "health": "120"
+          },
+          {
+            "def": "PC_PEA_SettlementOffice",
+            "id": "PC_PEA_SettlementOffice45844",
+            "pos": "(134, 0, 138)",
+            "health": "120"
+          },
+          {
+            "def": "PC_PEA_Shop",
+            "id": "PC_PEA_Shop45845",
+            "pos": "(135, 0, 138)",
+            "health": "120"
+          },
+          {
+            "def": "PC_PEA_ExamCenter",
+            "id": "PC_PEA_ExamCenter45846",
+            "pos": "(136, 0, 138)",
+            "health": "120"
+          }
+        ],
+        "originalUnmodified": true
+      },
+      "positiveCheck": "16 Def nodes / 6 exact-case enum values / paper HP PASS",
+      "scope": "top-level enum members in two economy Def files; not all XML parsing",
+      "gameRecoveryVerified": false
+    },
+    "deployment": {
+      "at": "2026-10-12T21:52:31.165139+08:00",
+      "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+      "files": [
+        {
+          "path": "Defs/PawnEconomy_Institutions.xml",
+          "beforeSha256": "528E63D09CE86ADADE172BFF5170ACA13FB1AE6F5EB64808002AFC58E127037B",
+          "afterSha256": "70CA1271142342885EE8370F1112101C2643B5C6433C27282E3EFB48EC9AE8BA",
+          "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_institution_def_hotfix_20261012_215231\\Defs\\PawnEconomy_Institutions.xml"
+        },
+        {
+          "path": "Defs/PawnEconomy_WorkContract.xml",
+          "beforeSha256": "0B2B25C5F9FF4752F6EC6DC63369C02A37D505BBD653DFBCBAC7558651BAFF7B",
+          "afterSha256": "D166F00A366D85352363DC34239826F243E9A6E917F616599F6DAED707EAD29E",
+          "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_institution_def_hotfix_20261012_215231\\Defs\\PawnEconomy_WorkContract.xml"
+        }
+      ],
+      "unchangedDllSha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+      "gameRestarted": false,
+      "recoveredInGame": false
+    },
+    "sourceChanged": false,
+    "dllChanged": false,
+    "fullTestsRerun": false,
+    "negativeControlsPassed": 2,
+    "defVerifier": "PASS: 16 Def nodes / 6 actual exact-case enums / flammable paper HP",
+    "gameRecoveryVerified": false,
+    "scope": "Hotfix 2 Def files and verifier. Source helper tests remain historical, not proof of XML load success."
+  },
+  "laborOutputCollectRepair": {
+    "at": "2026-10-12T22:41:25.813442+08:00",
+    "reportSection": 17,
+    "status": "CodeVerified_TestVerified_Deployed_GamePending",
+    "tests": {
+      "passed": 1629,
+      "failed": 0,
+      "skipped": 1,
+      "newCasesVs1609": 20,
+      "trx": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\output-collect-final.trx"
+    },
+    "sourceManifest": {
+      "taskId": "CB-ECON-003",
+      "changeId": "CHG-20261011-LABOR-VISUAL",
+      "at": "2026-10-12T22:39:13.225980+08:00",
+      "files": [
+        {
+          "path": "Source/PersonalChronicle/Capture/Patch_GenPlaceOutput.cs",
+          "beforeSha256": "5CEA32C82E5DE562FA07987F5672CFFC357FF28260AEDC2B7D9039982BCCB674",
+          "afterSha256": "85248B4E65A00217F930DCFECFBDD2DBF4F25CAF8FD4E8F2FD851DCBD84EFDE3"
+        },
+        {
+          "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborOutputs.cs",
+          "beforeSha256": "542E6A788076793736A24E28CC32427DD15CEEFAC5F6B0FFAE899C4D766015B5",
+          "afterSha256": "038C623BD513C812FDC943E97E8CBFB6550415FFCF283E813C2605066F0ED92C"
+        },
+        {
+          "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+          "beforeSha256": "11002C59690719C8737CEFC3DC956D4B5745686AC0C8ECB4E47700033EE5A382",
+          "afterSha256": "3E82BFE60648655369702860D9CE1BD7C0E16E5E84DD31009A9A9768AE9C9BD4"
+        },
+        {
+          "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorld.cs",
+          "beforeSha256": "120579BAC75D3E2D73A28C362AA9D7DF7ECDB8C194134258AA56069C469918ED",
+          "afterSha256": "C86FE253845AB0F648E44890039A511144B3B1420C4ECF7C8B543D1654EC0D35"
+        },
+        {
+          "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborFlow.cs",
+          "beforeSha256": "1732414FFECEB5F45A4E7E817175BCE778AF166F6C9D4597D0C6BA5A82D6D5B6",
+          "afterSha256": "AAEED1B25A0D51409F24E53339EABAC9F5F41FF5E2043F39676729199C226CCC"
+        },
+        {
+          "path": "Source/PersonalChronicle/Domain/PawnEconomy/Employment/LaborFlow.cs",
+          "beforeSha256": "1830A5AA117A635707967ADA5C35C1A912DA774588392C5D0904749AAEE7D597",
+          "afterSha256": "69233FF6565DB8E1F5D9FCC6EDB055178E3EED3DA35B7828B6CA588F8F410236"
+        },
+        {
+          "path": "Source/PersonalChronicle/BuildStamp.g.cs",
+          "beforeSha256": "15F4216B5DF12E00F6DD330596A50A948FE5EB6E3DE2A120F6C8BA865DC2C2A7",
+          "afterSha256": "A0724F8AB2AD5972332712CFD0E22A7DD71F34E9D23E8F215B7555E1AD6BC0E6"
+        },
+        {
+          "path": "Tests/LaborOutputCaptureTests.cs",
+          "beforeSha256": null,
+          "afterSha256": "B9610E2E72B3787AF0FE6BF86F9891787F989DE284936B279684B1B75B1BF694"
+        },
+        {
+          "path": "Tests/LaborFulfillmentSchedulingTests.cs",
+          "beforeSha256": null,
+          "afterSha256": "DA1474794699F72DCF487DE79FB033429C74389496E945067A6FC18C26408012"
+        },
+        {
+          "path": "docs/设计文档/架构/EXC-2026-001.md",
+          "beforeSha256": "50485720F54BA0FF3CA536594EFE5EA6257F8A9E887E3FB5890A423AED65E872",
+          "afterSha256": "920ED5171E3A2F1A80E23718C0B1E78219ECB35FDAE2BA40F008BB23827F9C37"
+        }
+      ],
+      "mainDllSha256": "4730FE67FE1293FF1C76E8E3A81AD3F5C419E191A75B3DA877007E6AED6FFD22",
+      "testReferenceSha256": "4730FE67FE1293FF1C76E8E3A81AD3F5C419E191A75B3DA877007E6AED6FFD22",
+      "testDllSha256": "8F1703E16BE979149E4A90FCAE4886CE82BA129C075E4ADF20075A5CCA726515",
+      "trxSha256": "B928A3F299BFA7145776E0C1BBA1370A6401D9931013F905845840C88C52C989",
+      "diffSha256": "D9BCB4B547B3EBC6675D8C37ACFC6DA2C39936F8DB9836A0321CDCE1C764FCA8"
+    },
+    "deployment": {
+      "at": "2026-10-12T22:39:13.225980+08:00",
+      "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+      "path": "Assemblies/PersonalChronicle.dll",
+      "beforeSha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+      "afterSha256": "4730FE67FE1293FF1C76E8E3A81AD3F5C419E191A75B3DA877007E6AED6FFD22",
+      "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_output_collect_fix_20261012_223913\\Assemblies\\PersonalChronicle.dll",
+      "bytes": 2455040,
+      "gameRestarted": false,
+      "gameVerified": false
+    },
+    "gameVerified": false,
+    "runtimeAcceptance": "NOT RUN",
+    "legacyUnregisteredOutputs": "ReconciliationRequired; never guess nearby inventory",
+    "remainingOriginalAcceptance": true,
+    "governance": {
+      "DELTA": {
+        "status": "PASS",
+        "coveredFiles": 62,
+        "hints": 0,
+        "log": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\gate-delta.txt",
+        "sha256": "C2CFE8685EF1928C1334097A041702F1E5AF87CFFEADA34C001D0C1910E0B6A1"
+      },
+      "DocGuard": {
+        "status": "BLOCKED",
+        "existingBlockers": 11,
+        "newBlockers": 0,
+        "warnings": 2,
+        "baselineChanged": false,
+        "log": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\doc-guard.txt",
+        "sha256": "BEE0DE21D490674A7C684288CA07A3EC0D4AC85E35F990BE02EF3DAE38492841"
+      }
+    },
+    "closure": {
+      "at": "2026-10-12T22:43:15.290064+08:00",
+      "governance": {
+        "DELTA": {
+          "status": "PASS",
+          "coveredFiles": 62,
+          "hints": 0,
+          "log": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\gate-delta.txt",
+          "sha256": "C2CFE8685EF1928C1334097A041702F1E5AF87CFFEADA34C001D0C1910E0B6A1"
+        },
+        "DocGuard": {
+          "status": "BLOCKED",
+          "existingBlockers": 11,
+          "newBlockers": 0,
+          "warnings": 2,
+          "baselineChanged": false,
+          "log": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\doc-guard.txt",
+          "sha256": "BEE0DE21D490674A7C684288CA07A3EC0D4AC85E35F990BE02EF3DAE38492841"
+        }
+      },
+      "sourceFreezeMatches": true,
+      "mainTestDeployedDllMatch": true,
+      "requirementUnchanged": true,
+      "managerReceiptUnchanged": true,
+      "defHashes": {
+        "Defs/PawnEconomy_Institutions.xml": "70CA1271142342885EE8370F1112101C2643B5C6433C27282E3EFB48EC9AE8BA",
+        "Defs/PawnEconomy_WorkContract.xml": "D166F00A366D85352363DC34239826F243E9A6E917F616599F6DAED707EAD29E"
+      },
+      "save": {
+        "path": "C:\\Users\\Administrator\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Saves\\新移民1.rws",
+        "sha256": "1617FFCEBCAB8665C417CAFCCE3196975FEB167FDB576839A8AD1F26851C9A14",
+        "originalExpectedSha256": "1617FFCEBCAB8665C417CAFCCE3196975FEB167FDB576839A8AD1F26851C9A14",
+        "modifiedByThisRepair": false,
+        "matchesPreviousSnapshot": true
+      },
+      "gameVerified": false
+    }
+  }
+}

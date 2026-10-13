@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!--
+    CHG-20261004-MEALSCHEDULE-B · 「吃饭」时段类型（管制/作息表的时段按钮）。
+    原版 Data/Core/Defs/Misc/TimeAssignmentDefs/TimeAssignments.xml 仅有
+    Anything / Work / Joy / Sleep（+ Royalty 的 Meditate），此处新增 PC_Meal。
+  -->
+  <PC_Meal.label>用餐</PC_Meal.label>
+
+  <!--
+    CHG-20261004-IDLE · 「摸鱼」时段（冗余员工兜底）。
+    车间按设备容量切分：有工位的人写 Work，多出来的人写本时段
+    （allowJoy=true ⇒ 原版自动安排娱乐），人员页会标注「摸鱼中…」。
+    玩家可在【管制】表里直接看到它被涂在哪些小时（颜色的方块）。
+  -->
+  <PC_Idle.label>摸鱼</PC_Idle.label>
+</LanguageData>

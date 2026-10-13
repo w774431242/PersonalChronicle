@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>设备卡弹窗 · 重构版预览（2026-09-22 评估稿）</title>
+<!--
+  ── 2026-10-02 4Tab 实机截图 ↔ 预览对照 · 逐项修复（CHG-20261002-FLOORDETAIL-AUDIT）──
+  ⚠ **行号基准**：本文下方所有 `文件:行号` 注记为**裁决时点快照**，已系统性漂移。
+    游戏侧锚点一律以 系统中心蓝图/待落地项/设备卡弹窗_唯一基准表_2026-10-02.md 为准。
+  ① 全局：警示条按 HTML:137-139 原义改**绝对定位覆盖层** —— 任何状态都不占布局（旧实现计入内容顶偏移：
+    非故障留空带、故障反向下沉 7px）；列距 30→26（HTML:181/432）；键值行**值列右对齐**（HTML:192）。
+  ② 概览：KPI 列数 = min(6, 指标数)（HTML:167 默认 4 格；旧实现 6 列排 4 卡 ⇒ 卡宽 1/6、右侧 1/3 空白）；
+    指标卡内几何/字号**按字档真值派生**（数值取 Medium ← 21px，LAND-007；旧用 Small 且标签 rect 14 < Tiny 行高
+    ⇒ 中文标签半截字，2026-10-02 实机截图实证）；检视串**独立成块并移到 15 行之后**（HTML:729-738）；
+    状态行右侧由「节拍采集中」改**当前作业**（HTML:155 语义）；「待加工工单」值去同文（新键 Shift.OpenBillsValue）。
+  ③ 生产：工单行高 = 2×Tiny 真值行高 + 2（HTML:213-222 两行结构；旧 22px 放不下副行 ⇒ 半截字）；
+    行内按钮单行高垂直居中；**配料独立成块**（HTML:837-850；旧挂在摘要块内 ⇒ 默认折叠态整块不可见）；
+    摘要折叠按钮移到行集之后（HTML:816；旧挂块标题右端）；追加生产补 RUIF 不可用时的**原版加减回落**（HTML:798-800）。
+  ④ 人员：当前工作/当前时段排班/派工**恒占位**（HTML:862-889 定表；旧随操作者/工单漂移）；
+    健康：直方图标签行高按 Tiny 真值（HTML:995；旧 14px rect 裁字）。
+  ⑤ 本轮**受控偏离 / 未落地**（已登记，勿当缺口重报）：
+     · 「每页签一屏内不滚动」硬约束（HTML:676-677）维持**游戏兜底**（自适应窗高 + 88vh + 超限滚动），是否收严待用户裁决；
+     · 工具栏全部开关（4/6 KPI、源徽标、窄档、主题、RUIF、警示条）= **评估件非交付物**，默认口径即本稿初态 4 格；
+     · 6 格模式两格（当前品质档 / 操作者心情）未补（同上）；
+     · 健康页直方图 / 7 档枚举在**无 CompQuality 机型**上走空态（LAND-009 不编造）；
+     · 生产页空态 1 行（本稿 :794-795 两行）、展开面 9 行无本稿基准、块级并排（:462）；
+     · 状态词「运行」vs 本稿「运行中」：`Floor.State.Run` 为俯视图/设备卡**共用键**。
+  ⑥ 下方**过时注记作废**（现码已修，勿再按旧注改码）：LEDGER 逐行徽标"游戏侧待修项"、QualityScope 标签/值同文、
+    耐久条填充 Info 内缩 1px（现为 ToneColor，CHG-20261002-RUNTAB-100PCT）。
+  ============================================================================
+  ── 2026-10-01 全页签检测 · 二轮反向同步（概览 / 健康 / 契约 + 横切项；生产 / 人员仅回归复核）──
+  ① 概览：设计稿四块（加成条/作业条/本班表/运行读数表）→ 单块键值行 15 行（BuildRunTab
+     Detail.cs:329-494 · RowHeight 22 · 两栏流式 perColumn=8）；文案全取 Archive/Automation 真值
+     （BoolText=原版 Yes/No「是/否」· InHours「{0} 小时」· OnDuty「{0} 在岗」· HandoverOpenBills
+     「待加工工单 {0} 项」）；检视串=独立块（窗口 :844-868 API 徽标）。⚠ 游戏侧待修项：
+     Run.Grid 键两语言缺失（游戏实显键路径）· OpenBills 标签/值同文 —— 本稿如实呈现。
+  ② 健康：设计稿四块 → BuildHealthTab 9 行（Detail.cs:957-1050，耐久行 Bar01 64×8 值左）+
+     品质直方图（标签=原版 GetLabel：极差/较差/一般/良好/极佳/大师级/传奇级 —— 原「普通/优秀/
+     大师/传奇」4 处非真值已修正）+ BuildQualTab 7 档枚举（Tabs.cs:129-163，Qual.Cat.* 真值，
+     逐行 API）；旧「状态与电力/可维修性/耐久条」→ 设计稿演示件折叠（「可维修组件/故障后行为」
+     系自造文案，真值=失修组件 / 能否故障）。
+  ③ 契约：设计稿 4 行数据层块 → BuildContractTab 16 行真结构（Tabs.cs:173-281，15×API + 工序导航
+     SIM；thingClass/size 3×1/组件清单取自原版 ElectricStove Def）；显隐改绑 DevMode 开关
+     （Detail.cs:311-315 Prefs.DevMode 门控），原「契约页 4/5」工具栏组移除；旧块 → 折叠留存。
+  ④ 横切：.drow2 统一 min-height 22；.pv-api 绿→青（SourceTagColor case1=Info ·
+     FloorDeviceDetailWindow.cs:1066）；修复 .rk-av::after 未闭合吞掉 .dot 规则的 CSS 破损
+     （.dot 此前实际失效，概览作业条状态点无样式）；dfold 增 data-fold 通用绑定（ov/health/
+     contract），syncDrawerHeight 联动不回归；DevMode 开关 ↔ 契约页签显隐联动。
+  ============================================================================
+  设备卡弹窗 · 前端整改重构方案 —— 可交互评估稿
+  ----------------------------------------------------------------------------
+  1:1 口径来源：系统中心蓝图/待落地项/制造系统中心预览_RUIF单页统一版.html
+                （#drawer 段 :478-493 / :660-666 / :609-666）
+  审计来源：  docs/设计文档/功能模块/车间体系/审计-设备卡弹窗与前端重构方案-2026-09-22.md
+
+  ⚠ 本文件 = 评估用预览（含顶部工具栏 + 右侧 RUIF 映射面板），**非**游戏内形态；
+     工具栏仅用于逐项切换"待裁决点"，定稿后按选定组合落地（LAND-* 预览→落地流程）。
+  ⚠ 引擎降级项已在文内以 [IMGUI] 标注：圆角/阴影/过渡在 IMGUI 不可得（LAND-003），
+     落地时以直角 + 双层描边替代。
+
+  ── 2026-09-22 RUIF 组件化（本轮新增）────────────────────────────────────
+  每个区块都以 [RUIF.xxx] 徽标标注它**实际调用的 RUIF 原子**，依据两份权威源：
+    ① `Source/PersonalChronicle/Archive/UI/RuifBridge.cs`（工程侧桥接方法 + 版本门控 + 行为契约）
+    ② `_backups/ruif_pre_strip_20260912/DevDocs/组件库全量目录.md`（RUIF v1.2.0 全量组件清单）
+  徽标三态：青色 = 调用 RUIF 组件 · 灰字 = **必须自绘**（RUIF 无对应原子 / 表格图表不读 Mouse）
+            · 琥珀 = 有版本门控或降级阶梯
+  可切换：工具栏「RUIF 标注」开/关；右侧面板列出全部映射与约束（游戏内不存在该面板）。
+
+  ── 2026-09-22 现代化层（后置覆盖，见文末 `§现代化层`）──────────────────
+  只保留「有实际作用」的部分：卡片层次 / 字级阶梯 / 间距节奏 + 配料库存条。
+  复审已撤 Sparkline / DonutChart / LEDMatrix 三处（与同屏表格或柱图重复，见映射面板）。
+  ⚠ 真圆角/阴影/模糊/过渡在 IMGUI 不可得（LAND-003 降级表）⇒ 落地 = 直角 + 双层描边；
+    预览圆角（6px）仅为示意，不做更激进的视觉花活。
+  ── 2026-10-01 生产页同步（游戏内 FloorDeviceDetailWindow 现行参数 · 预览反向对齐）────────
+  ① 布局：生产列表置顶=唯一写面（WorkshopFloorViewProvider.Detail.cs:301-303 页序：可写列表在前、只读摘要在后）；
+     配方 10 行表 → 摘要 3 行（配方 · 基础工时 · 重复模式/目标数）+「▸ 详情」折叠；配料与摘要同行两列（.full.half）；
+     追加生产 = 数量 Stepper + 按钮 收列表尾（游戏无下拉，FloatMenu 选配方，cs:557-578）。
+  ② 参数：工单行高 22（cs:442）· 进度条 64×6 轨道=BorderSoft/填充=Alive（cs:510-521）· 状态列 88 定宽+悬停全名
+     （cs:450,523-531）· 按钮 ▲▼挂/复✕ 宽26 gap2（cs:445-446,539-552）· 副行=重复模式·◆指定人（cs:491-495）·
+     演示窗高 JS 同步 InitialSize（clamp(内容+7+4+38,260,min(88vh,屏-80))；cs:39-43,115-135；BillQueue 测量分支 cs:960-967）。
+     ⚠ 任务文档「行高22→28 / 状态列88→96」与代码现状（22/88）不符 ⇒ 以代码为准；「暗底+内缩1px」实为键值行分数条修复
+       （FloorDeviceDetailWindow.Draw.cs:129-137），非生产列表行进度条。
+  ③ 清理：.tl 时序条死引用（时序条 S1 已整段删除，cs:61-62）· 追加行 select（游戏走 FloatMenu）· rmline 16px 旧行高；
+     契约页 .pv 来源徽标保留（对应游戏 S13 后仍按行冒标的场景，且默认隐藏）。
+  ④ DevMode 卡头右上 build 时间戳（cs:262-270,317-338）= 工具栏「DevMode」开关（默认关；演示值 build 10-01 10:26）。
+  ── 2026-10-01 人员页同步（追加 · 用户验收反馈：人员tab同样不一致）──────────
+  ① 布局：排班决策台（左排名/右指派卡两栏 grid）→ 单块键值行列表（BuildCrewTab=一个
+     section.Rows 行序，Detail.cs:706-929 · RowHeight 22）；宽档两栏流式=行序前半左列/
+     后半右列（Draw.cs:70-81 perColumn=ceil(n/2)），窄档单栏。
+  ② 行序与文案全取中文 Archive.xml 键真值（3108-3133）：当前工作 · 当前时段排班 ·
+     排序依据（本台配方技能）· 派工=点击行指派，再点取消 · 简单餐 · 排名×4 · 指派详情
+     6 行（指派详情/技能/心情/技能效果/车间加成/综合系数）· 编制 4 行（车间成员/班组/
+     近 15 日人时/加班）。排名值=「{分} 分 · Lv{级} · {当班}」三段合一（RankValue+
+     BuildDutyLabel）；Bar01 条 64×8 值左（轨道暗底+描边、填充内缩 1px，Draw.cs:126-137）；
+     ◆=工单指定者 ★=当前操作者；不可用者=「不可用」置灰排末尾（Tone=Dead）。
+  ③ 来源徽标：块级 API 一次（Detail.cs:713）；LEDGER 行仍逐行冒标（排名行/车间加成/
+     综合系数/人时/加班 = Detail.cs:841,885,888,922,925 实值 SourceLedger=2 ≠ 块
+     SourceApi=1，Draw.cs:111 按不等值放行）——Detail.cs:711-713 注释与实值偏差
+     ⇒ 游戏侧待修项（仅记录），本稿如实呈现。
+  ④ 评分实算修正：演示分按 WorkshopCrewScoring（技能60+激情20+心情20，MaxScore=100）
+     重算 = 76/55/35/25（原 92/78/61/43，且原 formula「36+20+20=92」系算术错误）。
+  ⑤ 演示件裁决：pickcard 富卡（双技能条/评分分解式/加入班组·移出车间按钮）→「▸ 设计稿
+     演示件」折叠留存（游戏内已落地为键值行；按钮组游戏内无写面）；.dutybar 死 CSS
+     清理；「本车间编制」虚构值 A(2)/B(1)·缺口 删除（游戏内 RosterValue 仅报班组数）。
+  ⑥ 交互：点排名行 = 派工 toggle（ApplyPawnAssign toggleOnRepeat:true，cs:721-745，
+     写面 TrySetPawnRestriction→Bill.SetPawnRestriction）；演示=切换 ◆+消息行
+     （已指派给当前工单/已取消指派，XML:3131-3132 真值）；折叠后 syncDrawerHeight 重测。
+  ============================================================================
+-->
+<style>
+:root{
+  --bg:#0d0f11; --steel:#16191d; --steel2:#1d2127; --steel3:#242a32;
+  --line:#343b45; --line2:#454e5a;
+  --text:#d7dbdf; --dim:#828a95;
+  --amber:#e8a33d; --amber2:#ffc46b;
+  --good:#57b96e; --warn:#d9a03a; --bad:#e05545; --info:#58a6d6; --cyan:#43c6d8;
+  --hz:repeating-linear-gradient(45deg,#b98a1e 0 14px,#141414 14px 28px);
+}
+body.blueprint{
+  --bg:#06121f; --steel:#0a1c30; --steel2:#0e2440; --steel3:#123054;
+  --line:#1d4166; --line2:#2a5c8e;
+  --text:#cfe8f7; --dim:#6d93b5;
+  --amber:#38c4e4; --amber2:#82e2f5;
+  --good:#2fc98c; --warn:#e0b23c; --bad:#e05a6a; --info:#38c4e4; --cyan:#38c4e4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:"Segoe UI","Microsoft YaHei",sans-serif;font-size:14px;
+  min-height:100vh}
+.mono{font-family:Consolas,monospace}
+
+/* ===== 评估工具栏（预览专属，非游戏内）===== */
+#toolbar{position:sticky;top:0;z-index:200;display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+  padding:9px 16px;border-bottom:2px solid var(--line);background:linear-gradient(180deg,var(--steel3),var(--steel))}
+#toolbar .brand{font-size:13px;font-weight:800;color:var(--amber2);letter-spacing:1px}
+#toolbar .brand span{font-size:10px;color:var(--dim);font-family:Consolas,monospace;letter-spacing:2px;margin-left:8px}
+#toolbar .grp{display:flex;align-items:center;gap:4px}
+#toolbar .glbl{font-size:10px;color:var(--dim);font-family:Consolas,monospace;letter-spacing:.5px}
+#toolbar button{font-family:inherit;cursor:pointer;border:1px solid var(--line2);background:transparent;color:var(--dim);
+  border-radius:5px;padding:3px 10px;font-size:11px;transition:.15s}
+#toolbar button:hover{border-color:var(--amber);color:var(--amber2)}
+#toolbar button.on{background:var(--amber);border-color:var(--amber);color:#161006;font-weight:800}
+#toolbar .note{margin-left:auto;font-size:10px;color:var(--dim);font-family:Consolas,monospace}
+
+/* ===== 背景舞台 ===== */
+#stage{position:relative;min-height:calc(100vh - 46px);padding:26px 18px 60px;overflow:hidden}
+#stage .ghost{max-width:1680px;margin:0 auto;opacity:.16;pointer-events:none;filter:blur(.4px)}
+#stage .ghost .panel{background:var(--steel);border:1px solid var(--line);border-radius:8px;height:220px;margin-bottom:14px}
+#mask{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:80;opacity:0;pointer-events:none;transition:opacity .18s}
+#mask.show{opacity:1;pointer-events:auto}
+
+/* =========================================================================
+   设备弹窗（1:1 复刻预览 #drawer 段；改动点以 [R] 标注）
+   ========================================================================= */
+#drawer{position:fixed;left:50%;top:calc(50% + 24px);right:auto;bottom:auto;width:min(960px,94vw);max-height:88vh;
+/* [2026-10-01] 固定 height:88vh 已删：演示窗高由 JS 按 InitialSize 口径同步（clamp(内容+7+4+38,260,min(88vh,屏-80)))，见文末 syncDrawerHeight */
+  transform:translate(-50%,-50%);padding:0;display:flex;flex-direction:column;overflow:hidden;
+  background:var(--steel);border:2px solid var(--line2);border-radius:12px;box-shadow:0 26px 80px rgba(0,0,0,.75);
+  z-index:90;opacity:1;transition:opacity .18s ease}
+/* ↑ top 偏移 24px = 评估工具栏一半高度：评估稿专属补偿（游戏内窗口按 LAND-003 自行居中，无工具栏）*/
+#drawer::before{content:"";position:absolute;top:0;left:0;right:0;height:7px;background:var(--hz);z-index:2}
+/* [R] 警示条：仅故障态显示（默认隐藏，工具栏可切回"常显"） */
+#drawer.no-hazard::before{display:none}
+#drawer #dclose{position:absolute;top:14px;right:14px;z-index:3}
+#dbody{overflow-y:auto;padding:22px 26px 26px;flex:1 1 auto}
+#dbody::-webkit-scrollbar{width:9px}#dbody::-webkit-scrollbar-thumb{background:var(--line2);border-radius:4px}
+/* [R] 窄档模拟（工具栏切换）：媒体查询之外的强制单栏 +
+   落地时对应"宽度 < 560 单栏降级"（LAND-005） */
+#drawer.narrow{width:min(560px,94vw)}
+#drawer.narrow .dsec.on,#drawer.narrow .dcols,#drawer.narrow .dgrid2{grid-template-columns:1fr}
+#drawer.narrow .mkpi,#drawer.narrow .mkpi.mk6{grid-template-columns:repeat(3,1fr)}
+#drawer.narrow .mkpi.mk4{grid-template-columns:repeat(2,1fr)}
+
+/* ---- .dhead ---- */
+.dhead h2{font-size:19px;color:var(--amber2);letter-spacing:1px;margin:6px 0 2px}
+.dhead .did{font-size:10.5px;color:var(--dim);font-family:Consolas,monospace;margin-bottom:6px}
+/* DevMode 构建时间戳：卡头右上（游戏 FloorDeviceDetailWindow.cs:262-270，Tiny/Muted 右对齐、标题让位 140px） */
+.dhead{position:relative}
+#dbuild{position:absolute;top:8px;right:0;font-size:10px;color:var(--dim);letter-spacing:.5px}
+body.nodev #dbuild{display:none}
+.dstate{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800;padding:6px 9px;border-radius:6px;
+  margin-bottom:10px;border:1px solid var(--line)}
+.dstate .sp{margin-left:auto;font-size:10px;font-weight:400;color:var(--dim);font-family:Consolas,monospace}
+.dstate.st-run{background:color-mix(in srgb,var(--good) 14%,transparent);color:var(--good);border-color:color-mix(in srgb,var(--good) 45%,transparent)}
+.dstate.st-starved{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 45%,transparent)}
+.dstate.st-fault{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,transparent)}
+.dstate.st-idle,.dstate.st-off{background:color-mix(in srgb,var(--line2) 18%,transparent);color:var(--dim)}
+.lampdot{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 6px currentColor;background:currentColor}
+
+/* ---- .mkpi 指标栅格（[R] 4 格默认 / 6 格可选）---- */
+.mkpi{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:8px 0 12px}
+.mkpi.mk6{grid-template-columns:repeat(6,1fr)}
+.mkpi>div{background:var(--steel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.mkpi .v{font-size:19px;font-weight:800;font-family:Consolas,monospace;color:var(--text);line-height:1.15}
+.mkpi .v small{font-size:11px;font-weight:600;color:var(--dim);margin-left:3px}
+.mkpi .n{font-size:9.5px;color:var(--dim);margin-top:2px}
+.mkpi .v.good{color:var(--good)}
+/* [R] 永久不可得项不再出现 —— 无 .off 灰格、无「—」占位 */
+
+/* ---- .dtab ---- */
+.dtab{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px}
+.dtab button{font-size:11px;padding:3px 11px;border-radius:6px;border:1px solid var(--line2);background:transparent;color:var(--dim)}
+.dtab button:hover{border-color:var(--amber);color:var(--amber2)}
+.dtab button.on{background:var(--cyan);border-color:var(--cyan);color:#0d0f11;font-weight:800}
+.dsec{display:none} .dsec.on{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;align-items:start}
+.dsec .dsub,.dsec .insp,.dsec .qh,.dsec .qlab,.dsec .bonusbar,.dsec .crewcard,.dsec .addrow,
+.dsec .full,.dsec .inote,.dsec .legs,.dsec .rmline,.dsec .stt{grid-column:1/-1}
+
+.dsub{font-size:10.5px;color:var(--dim);letter-spacing:1px;font-weight:800;margin:12px 0 5px;
+  border-left:3px solid var(--cyan);padding-left:7px}
+.dsub .tag{font-size:9px;font-family:Consolas,monospace;font-weight:400;color:var(--dim);letter-spacing:0;margin-left:6px}
+.drow2{display:flex;align-items:center;gap:8px;font-size:11.5px;min-height:22px;padding:3px 0;
+  border-bottom:1px dashed color-mix(in srgb,var(--line) 70%,transparent)}
+.drow2 span{color:var(--dim);flex:none}
+/* [R] 长值（defName / 类型名）必须省略而非推挤徽标（LAND-007 行内截断 + 悬停 tooltip） */
+.drow2 b{margin-left:auto;font-weight:600;text-align:right;min-width:0;flex:0 1 auto;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drow2 b.good{color:var(--good)} .drow2 b.warn{color:var(--warn)} .drow2 b.bad{color:var(--bad)}
+
+/* [R] 车间加成条：本弹窗最高价值信息（新增区块） */
+.bonusbar{display:flex;align-items:center;gap:10px;margin:6px 0 2px;padding:8px 12px;border-radius:7px;
+  background:color-mix(in srgb,var(--good) 8%,var(--steel2));
+  border:1px solid color-mix(in srgb,var(--good) 35%,transparent);border-left:3px solid var(--good);font-size:11.5px}
+.bonusbar .bt{font-size:9.5px;font-weight:800;letter-spacing:1px;color:var(--good);flex:none}
+.bonusbar .bi{font-family:Consolas,monospace;color:var(--text);flex:none}
+.bonusbar .bi em{font-style:normal;color:var(--dim);font-size:9.5px;margin-right:3px}
+.bonusbar .bend{margin-left:auto;font-size:9.5px;color:var(--dim);font-family:Consolas,monospace;flex:none}
+
+.insp{background:var(--steel2);border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-size:11px;line-height:1.6}
+.inote{font-size:9.5px;color:var(--dim);line-height:1.55;margin-top:5px}
+
+/* ---- 生产列表（可写）—— 2026-10-01 对齐 FloorDeviceDetailWindow.cs:442-455 ----
+   行高 22（QueueRowHeight:442）；配方行 ≈22×0.55（:486）、副行 ≈22×0.5（:496-497）；
+   状态列 88 定宽右对齐+截断悬停全名（:450,523-531）；按钮 ▲▼挂/复✕ 宽26 gap2 高=行-2（:445-446,539-552,615-622）；
+   行步进 = 行高+2（:553）；状态点 6px：执行中=Alive / 等待=Threat / 挂起=Dim（:473-474）。
+   ⚠ 任务文档「行高22→28 / 状态列88→96」与代码现状（22/88）不符 ⇒ 本预览以代码为准（偏差记录于交付说明）。 */
+.billrow{display:flex;align-items:center;gap:7px;height:22px;margin-bottom:2px;padding:0 7px;
+  background:var(--steel2);border-radius:5px;font-size:10px}
+.billrow.run{background:color-mix(in srgb,var(--good) 9%,var(--steel2))}
+.billrow.susp .bl1 b{color:var(--dim)}
+.billrow .bdot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.billrow .btxt{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.billrow .bl1{height:12px;line-height:12px;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.billrow .bl1 b{color:var(--amber2);font-weight:700}
+.billrow .bl2{height:10px;line-height:10px;font-size:9.5px;color:var(--dim);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.billrow .bst{width:88px;flex:none;margin-left:auto;font-size:9px;line-height:14px;text-align:right;
+  padding:0 6px;color:var(--cyan);border:1px solid color-mix(in srgb,var(--cyan) 45%,transparent);
+  border-radius:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.billrow .bst.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 55%,transparent)}
+.billrow .bst.off{color:var(--dim);border-color:var(--line2)}
+.billrow .acts{display:flex;gap:2px;flex:none}
+.billrow .acts button{width:26px;height:20px;font-size:10px;line-height:1;padding:0;border-radius:4px}
+/* 追加生产收尾：数量 Stepper（≤96）+ 按钮（140）——游戏无下拉，配方走原版 FloatMenu（cs:557-578） */
+.addrow{display:flex;gap:6px;align-items:center;margin-top:6px}
+.addrow input{width:96px;background:var(--steel3);border:1px solid var(--line2);color:var(--text);
+  border-radius:5px;padding:4px 7px;font-size:11px;font-family:inherit}
+.addrow button{width:140px;border:1px solid var(--line2);background:var(--steel3);color:var(--text);
+  border-radius:5px;padding:4px 12px;font-size:11px;cursor:pointer}
+.addrow .tip{font-size:9.5px;color:var(--dim);margin-left:auto}
+/* ▸/▾ 详情折叠（摘要3行配套演示件；折叠后窗高经 syncDrawerHeight 重测） */
+.foldrow{margin-top:4px}
+.dfold{font-size:10px;padding:2px 8px;border:1px solid var(--line2);border-radius:4px;background:transparent;
+  color:var(--dim);cursor:pointer}
+.dfold:hover{border-color:var(--amber);color:var(--amber2)}
+
+/* ---- 人员 ---- */
+.crewcard{display:flex;align-items:center;gap:12px;background:var(--steel2);border:1px solid var(--line);
+  border-radius:7px;padding:8px 11px}
+.crewcard .who{width:98px;flex:none}
+.crewcard .who b{font-size:13px;color:var(--amber2)}
+.crewcard .who span{font-size:10px;color:var(--dim);display:block}
+.crewcard .skr{flex:1;display:flex;flex-direction:column;gap:4px}
+.skr{display:flex;align-items:center;gap:6px;font-size:10.5px}
+.skr .skn{width:64px;color:var(--dim);flex:none}
+.skr .sb{flex:1;height:7px;background:#101317;border-radius:3px;overflow:hidden}
+.skr .sb i{display:block;height:100%;background:linear-gradient(90deg,var(--steel3),var(--cyan))}
+.skr .skv{width:18px;text-align:right;font-family:Consolas,monospace}
+.skr .skp{width:74px;font-size:9px}
+.skp.p-Major{color:var(--amber)} .skp.p-Minor{color:var(--info)} .skp.p-None{color:var(--dim)}
+.crewcard .mood{margin-left:auto;text-align:right;flex:none}
+.crewcard .mood b{font-size:16px;font-family:Consolas,monospace;color:var(--good)}
+.crewcard .mood span{display:block;font-size:9px;color:var(--dim)}
+
+/* ---- 健康页：品质柱 + 耐久 ---- */
+.qh{display:flex;gap:6px;align-items:flex-end;height:44px;margin:8px 0 2px}
+.qh i{flex:1;border-radius:2px 2px 0 0;min-height:2px}
+.qlab{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;font-size:8.5px;color:var(--dim);
+  text-align:center;font-family:Consolas,monospace}
+.hpbar{display:flex;height:10px;border-radius:3px;overflow:hidden;background:#101317;margin:4px 0 6px}
+/* [R] 耐久条 = **按比例填充**（非满宽渐变）；落地按阈值换色：≥66% good / 33~66% warn / <33% bad */
+.hpbar i{display:block;height:100%;background:var(--good)}
+.legs{display:flex;gap:12px;align-items:center;font-size:9.5px;color:var(--dim);font-family:Consolas,monospace;margin-top:2px}
+.legs i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}
+
+/* =========================================================================
+   RUIF 组件映射层（2026-09-22 · 组件优化）
+   -------------------------------------------------------------------------
+   每个区块标注它**实际调用的 RUIF 原子**（依据：RuifBridge 桥接方法 +
+   `_backups/…/DevDocs/组件库全量目录.md` v1.2.0 全量清单）。
+   徽标为"落地契约词"（LAND-013 不翻译清单）：显示组件全名，不译。
+   ========================================================================= */
+.ruif{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-family:Consolas,monospace;
+  letter-spacing:.2px;color:var(--cyan);border:1px solid color-mix(in srgb,var(--cyan) 38%,transparent);
+  border-radius:4px;padding:0 5px;line-height:15px;white-space:nowrap;flex:none}
+.ruif.self{color:var(--dim);border-color:var(--line2)}          /* 必须自绘（RUIF 无对应原子）*/
+.ruif.ver{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 40%,transparent)}  /* 有版本门控 */
+body.noruif .ruif{display:none}
+/* 徽标统一右对齐到所在行尾（标题行 / 小节标题行）*/
+.dhead .did{display:flex;align-items:center;gap:8px}
+.dhead .did .ruif,.dsub .ruif{margin-left:auto}
+.dsub{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+/* 无小节标题的区块：一行极简徽标条（右对齐；旧「16px 行高」已废，统一 15px）*/
+.rmline{display:flex;align-items:center;gap:5px;justify-content:flex-end;min-height:15px;margin:1px 0 0}
+
+/* =========================================================================
+   人员页 = 单块键值行列表（2026-10-01 反向同步 BuildCrewTab，Detail.cs:706-929）
+   行序：当前工作/当前时段排班/排序依据/派工 → 排名×N → 指派详情6行 → 编制4行；
+   宽档两栏流式 = 行序前半左列/后半右列（Draw.cs:70-81 perColumn=ceil(n/2)），窄档单栏。
+   旧「排班决策台」两栏 grid 与 .dutybar 死样式（2026-09-22 已删 DOM）已清理。
+   ========================================================================= */
+.crewcols{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;align-content:start}
+#drawer.narrow .crewcols{grid-template-columns:1fr}
+/* 派工消息行（演示 Messages.Message：Crew.AssignDone / AssignCleared 真值文案） */
+.msgline{font-size:10px;color:var(--good);font-family:Consolas,monospace;opacity:0;transition:opacity .18s}
+.msgline.show{opacity:1}
+/* 排名行（Draw.cs:90-147：头像+标签+分数条+值；整行热区=派工 toggle） */
+.crow{display:flex;align-items:center;gap:7px;font-size:11.5px;padding:1px 4px;min-height:22px;
+  border-bottom:1px dashed color-mix(in srgb,var(--line) 70%,transparent);cursor:pointer}
+.crow:hover{background:color-mix(in srgb,#fff 6%,transparent)}
+.crow.on{background:color-mix(in srgb,var(--cyan) 8%,var(--steel2))}
+.crow.off{opacity:.55}
+.crow .rk-av{width:20px;height:20px}
+.crow .cl{color:var(--dim);flex:none;white-space:nowrap}
+.crow b{margin-left:auto;font-weight:600;text-align:right;min-width:0;flex:0 1 auto;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Bar01 分数条 64×8：轨道=暗底+描边、填充=Info 内缩 1px（Draw.cs:126-137 实机修复） */
+.crowbar{width:64px;height:8px;background:color-mix(in srgb,var(--steel) 90%,transparent);
+  border:1px solid var(--line2);flex:none;margin-left:6px}
+.crowbar i{display:block;height:calc(100% - 2px);margin:1px;background:var(--info)}
+/* [R] 人物头像位（原版 PortraitsCache.Get 占位；已落地 Draw.cs:90-96 DrawPawnAvatar） */
+.rk-av{width:20px;height:20px;flex:none;border:1px solid var(--line2);border-radius:4px;position:relative;
+  overflow:hidden;background:linear-gradient(180deg,#39424e,#222932)}
+.rk-av::before{content:"";position:absolute;left:50%;top:2px;transform:translateX(-50%);
+  width:6px;height:6px;border-radius:50%;background:#8b95a1}
+.rk-av::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+  width:12px;height:7px;border-radius:6px 6px 0 0;background:#8b95a1}
+/* 状态点 .dot：概览页「在岗成员」行共享（原人员页 .rk-tag 随排名行重构已废，定义迁此）；
+   修复（2026-10-01 二轮检测）：原 .dot 规则被插进未闭合的 .rk-av::after 块内 ⇒ 选择器失效 */
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:currentColor;margin-right:3px}
+.pickcard{display:flex;flex-direction:column;gap:6px;padding:8px 10px;border:1px solid var(--line);
+  border-radius:7px;background:var(--steel2)}
+.pickcard .ph{display:flex;align-items:center;gap:8px;font-size:12px}
+.pickcard .ph b{color:var(--amber2)}
+.pickcard .ph em{font-style:normal;font-size:9.5px;color:var(--dim);margin-left:auto;
+  font-family:Consolas,monospace}
+.prow{display:flex;align-items:center;gap:8px;font-size:10.5px}
+.prow span{color:var(--dim);flex:none}
+.prow b{margin-left:auto;font-family:Consolas,monospace}
+.formula{font-size:9.5px;color:var(--dim);font-family:Consolas,monospace;line-height:1.5;padding:4px 6px;
+  border-radius:5px;background:color-mix(in srgb,var(--steel3) 80%,transparent);border:1px dashed var(--line2)}
+.acts2{display:flex;gap:6px;flex-wrap:wrap}
+.acts2 button{flex:1;min-width:96px;font-size:10.5px;padding:5px;border-radius:5px;
+  border:1px solid var(--line2);background:var(--steel3);color:var(--text);cursor:pointer;transition:.12s}
+.acts2 button.pri{border-color:var(--cyan);color:var(--cyan);font-weight:800}
+.acts2 button:hover{border-color:var(--amber);color:var(--amber2)}
+
+/* 影响幅度分解（设计稿演示件留存）：因子清单 + 来源标注 */
+.fac{display:flex;flex-direction:column;gap:3px;padding:6px 8px;border:1px solid var(--line);
+  border-radius:6px;background:color-mix(in srgb,var(--steel3) 70%,var(--steel2))}
+.fac-t{font-size:9.5px;font-weight:800;letter-spacing:.6px;color:var(--dim);margin-bottom:1px}
+.fac .inote{margin-top:3px}
+
+/* ---- 概览/生产/健康：作业进度行 / 负载条 / 列表行内进度 ---- */
+.jobrow{display:flex;align-items:center;gap:8px;font-size:11px}
+.jobrow b{color:var(--amber2);flex:none}
+.jobrow .jv{font-family:Consolas,monospace;font-size:10.5px;flex:none}
+.jobrow .jh,.jobrow .jp{color:var(--dim);font-size:10px;flex:none}
+.gridrow{display:flex;align-items:center;gap:8px;margin:6px 0 2px}
+.gridrow .gl{font-size:9.5px;color:var(--dim);font-family:Consolas,monospace;flex:none}
+/* 工单进度条 = 队列行条（FloorDeviceDetailWindow.cs:510-521）：轨道=BorderSoft 实心（RUIF 令牌，预览以 --line2 近似）
+   + 填充=Alive；64×6、无内缩；仅「当前执行中」一条有值（Progress01≥0）。 */
+.billrow .barb{width:64px;height:6px;background:var(--line2);border-radius:3px;overflow:hidden;flex:none}
+.billrow .barb i{display:block;height:100%;background:var(--good)}
+
+/* RUIF.StatusAtoms.PulseDot —— 呼吸点（IMGUI：每帧相位，非 CSS 动画） */
+.pulsedot{width:9px;height:9px;border-radius:50%;display:inline-block;background:currentColor;
+  box-shadow:0 0 6px currentColor;animation:ruifPulse 1.6s ease-in-out infinite}
+@keyframes ruifPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.82)}}
+
+/* RUIF.ProgressAtoms.CapacityBar —— 轨道 + 按比例填充 + 溢出警示段 */
+.capbar{display:flex;height:10px;border-radius:3px;overflow:hidden;background:#101317;
+  border:1px solid var(--line);margin:4px 0 6px}
+.capbar i{display:block;height:100%}
+
+/* RUIF.DataAtoms.StatTable —— 表头 + 斑马纹 + 列宽占比（行高真值 Measure.RowHeight ≈18） */
+.stt{width:100%;border-collapse:collapse;font-size:11px}
+.stt th{background:var(--steel3);color:var(--dim);font-weight:800;font-size:9.5px;text-align:left;
+  padding:3px 6px;border-bottom:1px solid var(--line)}
+.stt td{padding:3px 6px;border-bottom:1px solid color-mix(in srgb,var(--line) 55%,transparent)}
+.stt tr:nth-child(even) td{background:color-mix(in srgb,var(--steel2) 70%,transparent)}
+.stt td.r{text-align:right;font-family:Consolas,monospace}
+.stt td.dim{color:var(--dim)}
+
+/* RUIF.FeedbackAtoms.EmptyState —— 虚线框 + 说明 */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  min-height:64px;border:1px dashed var(--line2);border-radius:6px;color:var(--dim);font-size:10.5px;text-align:center}
+
+/* =========================================================================
+   RUIF 组件映射面板（评估用侧栏；游戏内不存在）
+   ========================================================================= */
+#ruifmap{position:fixed;right:12px;top:56px;width:352px;max-height:calc(100vh - 74px);overflow-y:auto;
+  z-index:150;background:var(--steel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.55)}
+#ruifmap h4{font-size:11px;color:var(--amber2);letter-spacing:1px;margin-bottom:6px}
+#ruifmap h4 span{font-size:9px;color:var(--dim);font-family:Consolas,monospace;letter-spacing:0;margin-left:6px}
+#ruifmap .rm{display:flex;flex-direction:column;gap:3px;font-size:10px;padding:5px 0;
+  border-bottom:1px dashed color-mix(in srgb,var(--line) 65%,transparent)}
+#ruifmap .rm .blk{color:var(--dim)}
+#ruifmap .rm .api{font-family:Consolas,monospace;color:var(--cyan);font-size:10px}
+#ruifmap .rm .api.self{color:var(--dim)}
+#ruifmap .rm .note{color:var(--dim);font-size:9.5px;line-height:1.45}
+#ruifmap .rm .note b{color:var(--amber)}
+#ruifmap .gapbox{margin-top:8px;padding:7px 9px;border:1px solid var(--line);border-left:3px solid var(--amber);
+  border-radius:6px;font-size:9.5px;color:var(--dim);line-height:1.5}
+@media (max-width:1560px){#ruifmap{display:none}}
+
+/* =========================================================================
+   §现代化层（2026-09-22 后置覆盖）
+   -------------------------------------------------------------------------
+   可达（能带进 IMGUI）：层次与间距节奏 · 字级阶梯 · 语义色 · **数据图形**
+                        （Sparkline / DonutChart / LEDMatrix / CapacityBar / BarChartV）
+   不可达（LAND-003 降级表）：真圆角 · 阴影 · 模糊 · CSS 过渡 ⇒ 落地 = 直角 + 双层描边
+   本层所有图形都对应 v1.2.0 里**真实存在**的 RUIF 组件，非自造视觉。
+   ========================================================================= */
+:root{--r-card:10px;--r-soft:7px;--gap-2:10px}
+
+/* 卡片：升一档底色（线性微渐变 → IMGUI 用 PanelRaised 单色）+ 内描边 */
+.mkpi>div,.pickcard,.crewcard,.stt th{background:var(--steel3)}
+.mkpi>div{background:var(--steel3);border:1px solid var(--line);border-radius:6px;padding:9px 11px}
+.mkpi .v{font-size:21px;letter-spacing:.2px}
+.mkpi .v small{font-size:11px;color:var(--dim)}
+.mkpi .n{opacity:.92}
+
+/* 小节标题：色条加粗 + 字距收紧（视觉锚点更强） */
+.dsub{border-left-width:3px;letter-spacing:.6px;margin:13px 0 6px}
+.dsub .tag{opacity:.85}
+
+/* =========================================================================
+   一页式区块（2026-09-22 · 替代页签内容容器）
+   -------------------------------------------------------------------------
+   口径 = 旧预览「RUIF 单页统一版」：全部区块同页顺序呈现，无 TabBar。
+   沿用旧 `#drawer .dsec.on` 的**宽档两栏 + 指定项跨栏**版式（:662-664）。
+   ========================================================================= */
+/* 页签内容：两栏 + **标题跟随内容列**（标题不再跨栏，否则会与内容分居两列） */
+.dsec.on{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;align-items:start}
+.dsec.on > .dsub{grid-column:auto}
+.dsec .insp,.dsec .qh,.dsec .qlab,.dsec .bonusbar,.dsec .crewcard,
+.dsec .addrow,.dsec .full,.dsec .legs,.dsec .stt,
+.dsec .jobrow,.dsec .gridrow,.dsec .rmline{grid-column:1/-1}
+#drawer.narrow .dsec.on{grid-template-columns:1fr}
+/* §页面高度约束（2026-09-22 用户硬约束）：**每个页签不滚动** ⇒ 窗口高度固定，内容按两栏压到一屏 */
+#dbody{overflow-y:hidden}
+/* ⚠ 分档例外（布局终检 2026-09-23 发现）：窄档（Tier-S，单栏）内容高≈翻倍，一屏必然放不下。
+   故「不滚动」只在**两栏档**成立；窄档按 LAND-005 降级为**允许滚动**（而不是裁掉内容）。
+   落地对应：窗口宽 < 阈值（约 640）→ 切单栏 + 开启滚动；否则两栏 + 禁滚动 + 空间断言。 */
+#drawer.narrow #dbody{overflow-y:auto}
+@media (max-width:900px){#dbody{overflow-y:auto}}
+/* §密度压缩（后置覆盖）：为达成"不滚动"统一收紧留白——只改常量，不动信息 */
+#dbody{padding:16px 22px 16px}
+.dhead h2{font-size:18px;margin:4px 0 2px}
+.dhead .did{margin-bottom:4px}
+.dstate{margin-bottom:5px;padding:5px 9px}
+.mkpi{margin:5px 0 7px;gap:8px}
+.mkpi>div{padding:7px 10px}
+.mkpi .v{font-size:20px}
+.dsub{margin:5px 0 2px}
+.stt th,.stt td{padding:2px 5px}   /* 行高 ≈18px = RUIF Measure.RowHeight 真值，不再压（否则与落地不符） */
+.capbar{margin:3px 0 4px}
+.bonusbar{margin:3px 0 2px;padding:6px 11px}
+.insp{padding:5px 8px}
+.pickcard{padding:7px 9px;gap:5px}
+.crewcard{padding:6px 9px}
+.matrow{padding:2px 0}
+/* 允许指定块回到单列（与相邻块并排 ⇒ 整页高度取两列较大者，直接省一整块的高度） */
+.dsec .full.half{grid-column:auto}
+/* 末位微调（使 prod / crew 也落入一屏）*/
+.inote{line-height:1.45}
+.addrow{margin-top:4px}
+
+/* 已移除（2026-09-22 · 按「实际作用」复审，避免为可视化而可视化）：
+   · .spark 迷你趋势 —— 设备弹窗里放车间级「殖民地口径」产出，口径错位且与表格重复
+   · .led 在岗点阵 —— 与紧邻表格行「在岗 3 / 5」信息完全重复
+   · .donut 良品率环 —— 与同屏 7 档柱图重复表达同一分布
+   ⇒ 数据保留（表格 / 柱图），只去掉重复图形。 */
+
+/* 配料库存条（RUIF.ProgressAtoms.CapacityBar：需求 / 库存） */
+.matrow{display:flex;align-items:center;gap:8px;font-size:10.5px;padding:3px 0}
+.matrow .mn{width:96px;flex:none;color:var(--dim)}
+.matrow .mb{flex:1;height:8px;border-radius:2px;background:#101317;overflow:hidden;border:1px solid var(--line)}
+.matrow .mb i{display:block;height:100%}
+.matrow .mv{width:104px;text-align:right;font-family:Consolas,monospace;font-size:10px;flex:none}
+
+/* 弹窗层次：外框更沉稳，内层多一道 1px 描边（IMGUI 双层描边等价物） */
+#drawer{border-color:color-mix(in srgb,var(--line2) 85%,transparent);
+  box-shadow:0 22px 60px rgba(0,0,0,.72)}
+#dbody{padding:24px 28px 28px}
+
+/* ---- 数据来源徽标（[R] 默认隐藏，工具栏可开）---- */
+.pv{font-size:8px;font-family:Consolas,monospace;line-height:13px;padding:0 4px;border:1px solid;
+  border-radius:3px;letter-spacing:.4px;flex:none;font-style:normal}
+.pv-api{color:var(--cyan);border-color:color-mix(in srgb,var(--cyan) 50%,transparent)}
+.pv-mod{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 50%,transparent)}
+.pv-sim{color:var(--dim);border-color:var(--line2)}
+body.nobadge .pv{display:none}
+
+/* ---- 契约页（5 页签模式下显示，用于评估"保留 / 迁移"）---- */
+.dgrid2{display:grid;grid-template-columns:1.15fr 1fr;gap:0 30px;margin-top:6px;grid-column:1/-1}
+.nav2{display:flex;gap:6px;margin:6px 0 4px}
+.nav2 button{flex:1;font-size:11px;padding:5px;border-radius:6px;border:1px solid var(--line2);
+  background:transparent;color:var(--dim);cursor:not-allowed}
+</style>
+</head>
+<body>
+
+<!-- ===================== 评估工具栏（预览专属） ===================== -->
+<div id="toolbar">
+  <div class="brand">设备卡弹窗 · 重构版<span>DRAWER REFACTOR v1 · 2026-09-22 · SYNC 2026-10-01</span></div>
+  <div class="grp"><span class="glbl">指标格</span>
+    <button class="on" data-t="kpi" data-v="4">4 格</button>
+    <button data-t="kpi" data-v="6">6 格</button></div>
+  <div class="grp"><span class="glbl">源徽标</span>
+    <button data-t="badge" data-v="off">关（默认）</button>
+    <button data-t="badge" data-v="on">开</button></div>
+  <div class="grp"><span class="glbl">警示条</span>
+    <button class="on" data-t="hazard" data-v="fault">仅故障</button>
+    <button data-t="hazard" data-v="always">常显</button></div>
+  <div class="grp"><span class="glbl">产出（殖民地口径）</span>
+    <button class="on" data-t="output" data-v="on">显示</button>
+    <button data-t="output" data-v="off">隐藏</button></div>
+  <div class="grp"><span class="glbl">视口</span>
+    <button class="on" data-t="width" data-v="wide">宽 960</button>
+    <button data-t="width" data-v="narrow">窄 560</button></div>
+  <div class="grp"><span class="glbl">主题</span>
+    <button class="on" data-t="theme" data-v="dark">深色</button>
+    <button data-t="theme" data-v="blueprint">蓝图</button></div>
+  <div class="grp"><span class="glbl">RUIF 标注</span>
+    <button class="on" data-t="ruif" data-v="on">显示</button>
+    <button data-t="ruif" data-v="off">隐藏</button></div>
+  <div class="grp"><span class="glbl">DevMode</span>
+    <button class="on" data-t="dev" data-v="off">关（默认）</button>
+    <button data-t="dev" data-v="on">开</button></div>
+  <div class="note">工具栏与背景为评估用，非游戏内形态 · [IMGUI] 标注项为落地降级点</div>
+</div>
+
+<!-- ===================== 背景舞台（虚化占位） ===================== -->
+<div id="stage">
+  <div class="ghost">
+    <div class="panel"></div>
+    <div class="panel" style="height:130px"></div>
+    <div class="panel" style="height:300px"></div>
+  </div>
+</div>
+<div id="mask" class="show"></div>
+
+<!-- ===================== RUIF 组件映射面板（评估用；游戏内不存在） ===================== -->
+<aside id="ruifmap">
+  <h4>RUIF 组件映射<span>v1.2.0 · 经 RuifBridge 门控</span></h4>
+
+  <div class="rm"><span class="blk">原版事实核实（Mono.Cecil · 1.6.4871 rev590）</span>
+    <span class="api">WorkAmountTotal / workSpeedStat / WorkSpeedGlobal / IngredientCount</span>
+    <span class="note">
+      · <b>WorkAmountTotal 只有 <span class="mono">Thing</span> 重载</b>（按材料 stuff / 熔炼调整），<b>无 Pawn 重载</b> ⇒ 不能拿它算"某人做要多久"<br/>
+      · <b><span class="mono">workSpeedStat</span> 被 <span class="mono">Toils_Recipe</span> 的 tickInterval 消费</b> ⇒ 技能影响经此进入制作链<br/>
+      · <b><span class="mono">WorkSpeedGlobal</span> 不在制作链</b>（引用点仅涂装 / 舞会）⇒ 不得当"工作速度"用<br/>
+      · <b><span class="mono">IngredientCount.GetBaseCount()</span> = 直读 <span class="mono">count</span> 字段</b><br/>
+      · 工作台环境修正由 <span class="mono">StatPart_WorkTable*</span>（户外 / 温度 / 断电 / 房间角色）注入，<span class="mono">CompReportWorkSpeed</span> 只报告存在性 ⇒ <b>合值须实测，不估算</b>
+    </span></div>
+
+  <div class="rm"><span class="blk">① 标题带 / 身份行</span>
+    <span class="api">RUIF.TextAtoms.Title · Sub</span></div>
+
+  <div class="rm"><span class="blk">① 状态灯（运行/故障/停）</span>
+    <span class="api">RUIF.StatusAtoms.PulseDot(rect, color, t)</span>
+    <span class="note">桥 <b>TryPulseDot</b>；画布设备卡已用。相位 t 每帧推进，非 CSS 动画。</span></div>
+
+  <div class="rm"><span class="blk">② 指标卡 ×4/×6</span>
+    <span class="api">RUIF.PanelAtoms.Card + TextAtoms.KpiValue</span>
+    <span class="note">卡型/列数由 <b>LAND-006 阈值 160</b> 决定，不由预览 px 决定。</span></div>
+
+  <div class="rm"><span class="blk">③ 一页式（无页签条）</span>
+    <span class="api self">不调用 RUIF.NavAtoms.TabBar</span>
+    <span class="note">全部区块同页顺序呈现（口径 = 旧预览「RUIF 单页统一版」）。<b>省一次组件调用，且消除"切页签看不到全貌"</b>；代价是窗口更高 ⇒ 必须走 <b>LAND-003 的 max-height + 内容滚动</b>（本页已是该形态）。TabBar 仍留在工程桥内，总控 / 花名册继续使用。</span></div>
+
+  <div class="rm"><span class="blk">③ 车间加成条（新增区块）</span>
+    <span class="api">RUIF.PanelAtoms.Card + Shapes.CornerFrame</span>
+    <span class="note">数据源 <b>WorkshopBonusAccess</b>（本轮 A-1 已落地的契约）—— 本弹窗此前完全未接入。</span></div>
+
+  <div class="rm"><span class="blk">④ 运行读数 / 在岗排班 / 状态电力</span>
+    <span class="api">RUIF.DataAtoms.StatTable(…, shares, rowH, cols, band…)</span>
+    <span class="note">行高取真值 <b>RUIF.Measure.RowHeight(Tokens.FontLabel)</b>≈18；须按 <b>(1+rows)×rowH</b> 预留，越出底边<b>静默截断</b>。shares 是<b>占比</b>（桥已归一化）。带列样式需 <b>RUIF ≥ 1.2</b>，低版回落 5 参（左对齐、无带色）。</span></div>
+
+  <div class="rm"><span class="blk">④ 设备检视串（多行原文）</span>
+    <span class="api self">自绘多行 + Draw.Label</span>
+    <span class="note">RUIF 无"多行原文"原子；截断处须配悬停（LAND-008，提示构建期拼好）。</span></div>
+
+  <div class="rm"><span class="blk">⑤ 本机生产列表（可写）</span>
+    <span class="api self">自绘可点行 + 原版 Widgets</span>
+    <span class="note">RUIF 表格 / 图表<b>不读 Mouse</b> ⇒ 行内 ▲▼挂/复✕ 只能自绘。RUIF「账单队列」在目录里仍是 <b>📋 候选（未落地）</b>。</span></div>
+
+  <div class="rm"><span class="blk">⑤ 追加生产</span>
+    <span class="api">RUIF.InputAtoms.Stepper（数量）</span>
+    <span class="note">配方选择沿用原版 <b>FloatMenu / Dialog_BillConfig</b> 语义。</span></div>
+
+  <div class="rm"><span class="blk">人员页 · 胜任度排名（最佳优先）</span>
+    <span class="api">RUIF.DataAtoms.RankList(rect, names, values, maxValue)</span>
+    <span class="note">名次徽记（前三带样式）+ 姓名（固定 72px）+ 数值条；宽 &lt; 200px 会挤压 ⇒ 调用方自判宽度。评分口径为<b>本 mod 自研</b>（技能 60 + 激情 20 + 心情 20）⇒ 必须走 Provider 计算 + <b>Domain 纯函数</b>（可离线单测，UI 不重算阈值）。</span></div>
+
+  <div class="rm"><span class="blk">人员页 · 指派动作（可写面）</span>
+    <span class="api self">原版 Bill.PawnRestriction · WorkshopCrew.Members</span>
+    <span class="note">「指派到本工单」= 原版 <b>Bill.PawnRestriction</b>（只允许此人做该单）；「加入班组」= <b>Zone_Workshop.Crews[].Add(pawn)</b>（随 Zone 存档）；「移出车间」= <b>Members.Remove</b>。RUIF 无派工原子 ⇒ 按钮走 InputAtoms/InteractAtoms，动作回传走稳定 ID（GOV-009）。</span></div>
+
+  <div class="rm"><span class="blk">人员页 · 在岗摘要 / 编制考勤</span>
+    <span class="api">RUIF.ProgressAtoms.CapacityBar + DataAtoms.StatTable</span>
+    <span class="note">数据源 <b>WorkshopOpsAccess.Digest(map, days)</b>（在岗/覆盖/人时/缺口）+ <b>Zone_Workshop.Attendance</b>。周排班视图若做 → <b>InputPlusAtoms.TimetableMatrix</b>（候选）。</span></div>
+
+  <div class="rm"><span class="blk">⑥ 技能条 / 耐久条</span>
+    <span class="api">RUIF.ProgressAtoms.CapacityBar(rect, used, capacity, fill)</span>
+    <span class="note">默认取色是"容量占用"语义（&gt;0.85 转 Warn）<b>与能力水平相反</b> ⇒ 调用点必须显式传 fill。</span></div>
+
+  <div class="rm"><span class="blk">⑥ 品质分布（7 档）</span>
+    <span class="api">RUIF.Charts.BarChartV(rect, values, labels, colors)</span>
+    <span class="note">颜色只经令牌（传 null 走 Series 色板）；<b>不读 Mouse</b> ⇒ 悬停由调用方自判。</span></div>
+
+  <div class="rm"><span class="blk">空态（无 Bill / 无操作者 / 无产出）</span>
+    <span class="api">RUIF.FeedbackAtoms.EmptyState</span>
+    <span class="note">经济面板已用；文案取真实本地化键，不带样例数。</span></div>
+
+  <div class="rm"><span class="blk">主题令牌（全窗）</span>
+    <span class="api">RUIF.Tokens.*（16 令牌）</span>
+    <span class="note">桥 <b>TryGetTokens</b> → <b>UITheme.ReapplyForRuif()</b>：同名同义令牌直接换源，调用点零改动。卡片只许用令牌色（ASSET-002）。</span></div>
+
+  <div class="rm"><span class="blk">可视化复审（2026-09-22）</span>
+    <span class="api self">已撤 Sparkline / DonutChart / LEDMatrix 三处图形</span>
+    <span class="note">理由：与同屏表格或柱图<b>重复表达同一数据</b>（在岗点阵 vs「在岗 3/5」、良品率环 vs 7 档柱），或<b>口径错位</b>（设备弹窗里放车间级「殖民地口径」产出）。<b>数据保留、图形撤掉</b>。
+      现存的图形仅三处且各有不可替代的作用：配料<b>库存条</b>（比 4 列表格省一半高度）、<b>胜任度条</b>（唯一能一眼排序的手段）、<b>耐久/负载条</b>（原版本来就是条语义）。</span></div>
+
+  <div class="rm"><span class="blk">已移除：状态时序条（40 格）</span>
+    <span class="api self">RUIF.Industrial.MachineStateTimeline（v1.2.0 已落地）</span>
+    <span class="note">组件本身可用，但本弹窗<b>无按台历史</b>（原版无此口径）⇒ 按 <b>LAND-009</b> 不画，而不是画 40 格空格。将来 ledger 落地即可 1:1 启用。</span></div>
+
+  <div class="gapbox">
+    <b>版本门控（桥内已实现）</b><br/>
+    · <span class="mono">RUIF.Industrial.Gauge</span> ≥ <b>1.1.2</b>（低版回落 PC 自绘表盘）<br/>
+    · <span class="mono">DataAtoms.StatTable</span> 带列样式 ≥ <b>1.2</b>（低版 D1：5 参左对齐）<br/>
+    · 桥不可用 ⇒ 图表类<b>不画</b>（硬依赖下的防御分支），非自绘回落
+  </div>
+  <div class="gapbox">
+    <b>LAND 合规提示</b><br/>
+    · 本页所有数值均为<b>样例</b>，落地一律取真值；取不到按 <b>LAND-009</b> 显示「—」+ 原因（开发期仅 <b>Dev-Fill</b> §7.1 可填）<br/>
+    · 字号映射 <b>LAND-007</b>：10–12px→Tiny / 13–15→Small / 18–22→Medium（引擎仅三档）<br/>
+    · 圆角·阴影·过渡在 IMGUI 不可得 ⇒ 直角 + 双层描边（LAND-003 降级表）
+  </div>
+</aside>
+
+<!-- ===================== 设备弹窗（重构版） ===================== -->
+<aside id="drawer" class="no-hazard">
+  <button id="dclose" class="dclosebtn">✕ 关闭</button>
+  <div id="dbody">
+
+    <!-- ① 标题带（清理：无编号占位、无原生 X 叠加） -->
+    <div class="dhead">
+      <h2>炉灶（电力）</h2>
+      <!-- DevMode：构建时间戳（游戏内卡头右上，FloorDeviceDetailWindow.cs:262-270；工具栏可开） -->
+      <span id="dbuild" class="mono">build 10-01 10:26</span>
+      <div class="did">车间 1 · 工业时代
+        <span class="ruif">RUIF.TextAtoms.Title / Sub</span></div>
+      <div class="dstate st-run"><span class="pulsedot"></span>运行中
+        <span class="sp">正在烹饪 · 简单餐</span>
+        <span class="ruif">RUIF.StatusAtoms.PulseDot</span></div>
+    </div>
+
+    <!-- ② 指标栅格：[R] 默认 4 格全真值；6 格模式补 2 项真值（品质档 / 操作者心情） -->
+    <div class="rmline">
+      <span class="ruif">RUIF.PanelAtoms.Card</span>
+      <span class="ruif">RUIF.TextAtoms.KpiValue</span>
+      <span class="ruif self">卡型/列数 = LAND-006 阈值 160</span>
+    </div>
+    <!-- CHG-20261002-RUNTAB-100PCT：第 4 格值形态 ×0.85 → 85 %（用户 2026-10-02 裁决，与概览页加成行同源 FormatBonusPercent）；空态「无」仅 RunTab 15 行，mkpi 维持真值/「—」 -->
+<div class="mkpi" id="mkpi">
+      <div><div class="v">4<small>单</small></div><div class="n">在册工单</div></div>
+      <div><div class="v">350<small>W</small></div><div class="n">当前功率</div></div>
+      <div><div class="v">42</div><div class="n">作业剩余</div></div>
+      <div><div class="v good">×0.85</div><div class="n">车间工时加成</div></div>
+      <div class="kpiExtra"><div class="v">良好</div><div class="n">当前品质档</div></div>
+      <div class="kpiExtra"><div class="v good">100<small>%</small></div><div class="n">操作者心情</div></div>
+    </div>
+
+    <!-- ③ 页签条（回滚 tab 式 · 2026-09-22 二次确认）
+         ⚠ 硬约束：**每个页签内容必须在一屏内放下，不允许滚动** ⇒ 弹窗高度固定，
+            各页签内容以"两栏 + 必要跨栏"压到 ≤ 可用高度（见 §页面高度约束）。 -->
+    <div class="dtab">
+      <button class="on" data-dt="overview">概览</button>
+      <button data-dt="prod">生产</button>
+      <button data-dt="crew">人员</button>
+      <button data-dt="health">健康</button>
+      <button data-dt="contract" class="tab5">契约</button>
+    </div>
+
+    <!-- ============ 概览（2026-10-01 二轮全页签检测 · 反向同步 BuildRunTab） ============ -->
+    <!--     行序/文案/值口径 = WorkshopFloorViewProvider.Detail.cs:329-494 + Archive/Automation.xml 中文真值；
+             渲染 = 单块键值行（RowHeight 22 · FloorDeviceDetailWindow.cs:56）· 宽档两栏流式（Draw.cs:70-81，
+             15 行 → perColumn=8：左 1-8 / 右 9-15）· 块无来源徽标（BuildRunTab 未设 SourceKind）；
+             检视串 = 窗口层独立块（FloorDeviceDetailWindow.cs:844-868：API 徽标 + 逐行 RowHeight） -->
+    <div class="dsec on" id="dt-overview">
+      <div class="full">
+        <div class="dsub">当前作业 · 运行读数<span class="tag">0 概览 = BuildRunTab（命名不同，勿混淆）</span></div>
+        <div class="crewcols">
+          <!-- 左列 = 行序 1-8（车间加成 3 行仅有操作者时出现 · Detail.cs:343-353） -->
+          <div>
+            <div class="drow2"><span>车间工时加成</span><b>×0.85</b></div>
+            <div class="drow2"><span>车间品质加成</span><b>+1</b></div>
+            <div class="drow2"><span>车间耗材加成</span><b>×0.95</b></div>
+            <div class="drow2"><span>配方</span><b>简单餐</b></div>
+            <div class="drow2"><span>进度</span><b>64 %</b></div>
+            <div class="drow2"><span>操作者</span><b>杜甫</b></div>
+            <div class="drow2"><span>当前班次</span><b>早班 · 甲组 · 3 在岗</b></div>
+            <div class="drow2"><span>距下次交接</span><b>2 小时</b></div>
+          </div>
+          <!-- 右列 = 行序 9-15 -->
+          <div>
+            <div class="drow2"><span>待加工工单</span><b>待加工工单 4 项</b></div>
+            <div class="drow2"><span>故障 / 断电</span><b>0 / 1</b></div>
+            <div class="drow2"><span>通电状态</span><b>是</b></div>
+            <div class="drow2"><span>当前功率</span><b>350 W</b></div>
+            <div class="drow2"><span class="mono" title="PersonalChronicle.UI.Floor.Detail.Run.Grid">电网储能</span><b>287 Wd</b></div>
+            <div class="drow2"><span>故障状态</span><b class="good">正常</b></div>
+            <div class="drow2"><span>作业剩余工时</span><b>42</b></div>
+          </div>
+        </div>
+        <div class="rmline">
+          <span class="ruif self">BoolText = 原版 Yes/No 键（中文「是/否」· Detail.cs:698-703）；语气：正常=1(好) / 已故障=3(差)（:475-481）</span>
+          <span class="ruif self">键值行无 Bar01 ⇒ 本页无分数条（分数条仅在 健康·耐久 / 人员·排名 / 队列·进度）</span>
+          <span class="ruif self">CHG-20261002-RUNTAB-EMPTYSTATE（2026-10-02）：空态行恒占位——左列 1-3（车间加成）、本班 4 行、电网储能行在无操作者/无班次表/无电网时值=「—」，15 行恒有值（与本稿一致）；游戏侧已删除 Run.Empty「整块替换为一行提示」形态（实机空态挤兑修复）</span>
+          <span class="ruif self">CHG-20261002-RUNTAB-100PCT（2026-10-02 用户裁决 · 仅游戏侧落地，本稿形态不改作基准）：①空态值=「无」覆盖 LAND-009「—」（仅 RunTab 15 行，键 ...Detail.EmptyValue 无/None）；②倍率加成改百分比 ×0.85→85 % / ×0.95→95 %（×100 最多两位小数，FormatBonusPercent 与 mkpi 第 4 格同源）；③品质 +1 = int 档位非百分比语义，维持 +1</span>
+        </div>
+        <div class="rmline">
+          <span class="ruif self">CHG-20261002-RUNTAB-100PCT 复核：Run.Grid 键已两语言定义（CHG-20261001-LAND-FLOORDETAIL · F1「电网储能 / Grid stored energy」）—— 上表 :711 标签已按修后实况更新，原「缺键」镜像作废</span>
+          <span class="ruif self">CHG-20261002-RUNTAB-100PCT：Shift.OpenBills 标签「本班待加工工单」→「待加工工单」（与本稿逐字对齐，EN: Bills to process）；标签与值 Tab.HandoverOpenBills「待加工工单 {0} 项」的字面重复保留——值键为交班板共用文案，不随本轮改动</span>
+        </div>
+      </div>
+
+      <div class="full">
+        <div class="dsub">设备检视（原样，含火灾 / 温度告警）<span class="tag">Run.InspectCaption 真值 · 逐行 RowHeight</span>
+          <em class="pv pv-api">API</em></div>
+        <div class="insp">
+          温度：40.8°C（适宜）<br/>
+          需要 350 W 电力<br/>
+          正在烹饪：简单餐（剩余 42 工时）
+        </div>
+        <div class="inote">检视串 = Thing.GetInspectString() 只拆行不过滤（Detail.cs:418-448）；非 DevMode 过滤「内部标识形串」（:434-440）。</div>
+      </div>
+
+      <!-- ▸ 设计稿演示件（2026-09-22 加成条 / 作业条 / 负载条 · 数据已被上方键值行覆盖，仅评估留存） -->
+      <div class="full half">
+        <div class="foldrow"><button class="dfold" data-fold="ovproto" data-label="设计稿演示件（2026-09-22 加成条 / 作业条 / 负载条）">▸ 设计稿演示件（2026-09-22 加成条 / 作业条 / 负载条）</button></div>
+        <div id="ovproto" hidden>
+          <div class="bonusbar">
+            <span class="bt">车间加成</span>
+            <span class="ruif" style="margin-left:0">RUIF.PanelAtoms.Card · Shapes</span>
+            <span class="bi"><em>工时</em>×0.85</span>
+            <span class="bi"><em>品质</em>+1</span>
+            <span class="bi"><em>耗材</em>×0.95</span>
+            <span class="bend">车间 1 · 3 台在产 · 早班甲组在岗 3/4</span>
+          </div>
+          <div class="dsub">当前作业（条形态）<span class="tag">游戏内 = 配方 / 进度 / 操作者 三行键值</span></div>
+          <div class="jobrow">
+            <b>简单餐</b>
+            <div class="capbar" style="flex:1;margin:0"><i style="width:64%;background:var(--good)"></i></div>
+            <span class="jv">64%</span>
+            <span class="jh">剩 42</span>
+            <span class="jp"><i class="dot on" style="color:var(--good)"></i>杜甫</span>
+          </div>
+          <div class="inote">进度 = 原版 JobDriver_DoBill 的 workLeft/totalWork（与俯视图同源，WorkshopDeviceReader.ResolveProgress）；
+            游戏内另有「作业剩余工时」行（Run.WorkLeft · Detail.cs:482-483）。</div>
+          <div class="gridrow">
+            <span class="gl">本台 350 W</span>
+            <div class="capbar" style="flex:1;margin:0"><i style="width:7%;background:var(--cyan)"></i></div>
+            <span class="gl">电网 5300 W · 储能 0 Wd</span>
+          </div>
+          <div class="inote">⚠ 设计稿「电网 5300 W」无代码出处：代码只报储能（CurrentStoredEnergy · Wd · Detail.cs:464-474），
+            增益率 Wd/tick 单位未核实 ⇒ 不报不估算（LAND-009）；「在岗 3/4」bend 为俯视图口径，非本弹窗数据。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 生产（2026-10-01 同步 FloorDeviceDetailWindow：列表置顶=唯一写面 · 摘要3行+▸详情 · 配料同行两列 · 追加收尾） ============ -->
+    <!--     页序依据 WorkshopFloorViewProvider.Detail.cs:301-303（可写列表在前、只读摘要在后）；
+             行几何依据 FloorDeviceDetailWindow.cs:442-455（行高22 · 条64×6 · 状态列88 · 按钮▲▼挂/复✕宽26）。 -->
+    <div class="dsec" id="dt-prod">
+      <!-- ⑦ 生产列表（可写）：行 = [状态点6][两行文本][进度条64×6][状态列88][▲▼挂/复✕ ×4] -->
+      <div class="dsub">生产列表<span class="tag">本机 · 可写 · 顺序即执行顺序</span>
+        <span class="ruif self">必须自绘：RUIF 表格不读 Mouse（交互由调用方判定）</span></div>
+      <div class="full">
+        <div class="billrow run"><i class="bdot" style="color:var(--good)"></i>
+          <div class="btxt"><div class="bl1"><b>简单餐</b></div><div class="bl2">无限重复 · ◆ 杜甫</div></div>
+          <div class="barb" title="进度 64%（workLeft/totalWork · 与俯视图同源）"><i style="width:64%"></i></div>
+          <span class="bst" title="运行中 64%">运行中 64%</span>
+          <span class="acts"><button title="上移">▲</button><button title="下移">▼</button><button title="挂起">挂</button><button title="移出">✕</button></span></div>
+        <div class="billrow"><i class="bdot" style="color:var(--bad)"></i>
+          <div class="btxt"><div class="bl1"><b>精致餐</b></div><div class="bl2">重复 ×5</div></div>
+          <span class="bst off" title="等待">等待</span>
+          <span class="acts"><button title="上移">▲</button><button title="下移">▼</button><button title="挂起">挂</button><button title="移出">✕</button></span></div>
+        <div class="billrow susp"><i class="bdot" style="color:var(--dim)"></i>
+          <div class="btxt"><div class="bl1"><b>干肉饼</b></div><div class="bl2">重复 ×12</div></div>
+          <span class="bst warn" title="已挂起">已挂起</span>
+          <span class="acts"><button title="上移">▲</button><button title="下移">▼</button><button title="恢复">复</button><button title="移出">✕</button></span></div>
+        <!-- 空态示例：BillStack 为空时替换上方列表（Queue.Empty / Bill.Empty） -->
+        <div class="empty">该设备当前没有工单<br/>用下方「＋ 追加生产」加入第一条</div>
+        <!-- 追加生产收尾 = 数量 Stepper + 按钮（点击 → 原版 FloatMenu 选配方；游戏无下拉）
+             依据 FloorDeviceDetailWindow.cs:557-578 · 文案 Queue.Add「＋ 追加生产」/ Queue.AddTip -->
+        <div class="addrow">
+          <input type="number" min="1" max="99" value="3" title="数量：1 = 单件；大于 1 按该单重复模式追加"/>
+          <button title="选择一个配方，追加到本机的生产列表">＋ 追加生产</button>
+          <span class="tip">配方选择 = 原版 FloatMenu（RUIF「账单队列」候选未落地）</span>
+        </div>
+      </div>
+
+      <!-- 工单摘要：10 行表 → 3 行（配方 · 基础工时 · 重复模式/目标数）+「▸ 详情」折叠
+           摘要行集对应 BuildBillTab（WorkshopFloorViewProvider.Detail.cs:614-642）；全量表降级为查阅折叠面
+           ⚠ 游戏侧落地（CHG-20261002-PRODCOLLAPSE）：默认**折叠**（对齐本稿 hidden 初态）；按钮文案游戏侧
+           用「▶ 详情 / ▼ 收起」（▸/▾ 未实机验证字形，按 S6 字库教训改用已验证 ▶/▼）；摘要行集合经行级
+           IsSummary 声明（4 行：配方/基础工时/重复模式/目标数量 ↔ 本稿 3 行语义）。 -->
+      <div class="full half">
+        <div class="dsub">当前工单配方<span class="tag">只读摘要 · 原版 RecipeDef 直读</span>
+          <span class="ruif">RUIF.DataAtoms.StatTable</span></div>
+        <div class="drow2"><span>配方</span><b>烹饪 · 简单餐</b></div>
+        <div class="drow2"><span>基础工时</span><b>42</b></div>
+        <div class="drow2"><span>重复模式 / 目标数</span><b>无限重复</b></div>
+        <div class="foldrow"><button id="billfold" class="dfold">▸ 详情</button></div>
+        <div id="billdetail" hidden>
+          <table class="stt">
+            <tr><th style="width:52%">项</th><th>值</th></tr>
+            <tr><td>工作技能</td><td class="r">烹饪 · 无等级门槛</td></tr>
+            <tr><td>速度属性</td><td class="r">烹饪速度</td></tr>
+            <tr><td>产物</td><td class="r">简单餐 ×1</td></tr>
+            <tr><td>所需研究</td><td class="r">无</td></tr>
+            <tr><td>目标数量</td><td class="r">∞</td></tr>
+            <tr><td>已挂起</td><td class="r">否</td></tr>
+          </table>
+          <div class="rmline">
+            <span class="ruif">工时 ← WorkAmountTotal(Thing)｜Cecil 已核实：无 Pawn 重载</span>
+            <span class="ruif self">CHG-20261002-RUNTAB-100PCT：产物行已对齐本稿 :820「产物 | 名 ×数」（原游戏「产出 {0}」标签拆分形态废除）；配料充足行语气 0→1（good）＝条色=值色，对齐 :837-838；行内 Bar01 条填充白杠已修（Draw.cs 填充改 ToneColor）</span>
+            <span class="ruif">速度属性 ← workSpeedStat（已核实被 Toils_Recipe 消费）</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 配料：与摘要同行两列（消除右侧长条空白；预览扩展块，游戏内无对应区块） -->
+      <div class="full half">
+        <div class="dsub">配料<span class="tag">本机全部工单需求合计 · 殖民地库存</span>
+          <span class="ruif">RUIF.ProgressAtoms.CapacityBar</span></div>
+        <div class="matrow"><span class="mn">食物（任意）</span>
+          <div class="mb"><i style="width:100%;background:var(--good)"></i></div>
+          <span class="mv" style="color:var(--good)">需 20 · 存 120</span></div>
+        <div class="matrow"><span class="mn">⚠ 燃料 · 木柴</span>
+          <div class="mb"><i style="width:60%;background:var(--bad)"></i></div>
+          <span class="mv" style="color:var(--bad)">需 5 · 存 3 · 缺 2</span></div>
+        <div class="inote">口径与俯视图「原料库」<b>同源</b>（<span class="mono">FillRawRail</span>）：
+          遍历本机 BillStack <b>全部工单</b>按 <span class="mono">IngredientCount.count</span> 累加需求
+          → 与 <span class="mono">ResourceCounter.GetCount</span> 对照 → 按「库存/需求」升序（越紧张越靠前）。
+          <span class="mono">GetBaseCount()</span> 已 Cecil 核实 = 直读 <span class="mono">count</span> 字段；
+          ⚠ 前缀 = 库存不足；宽泛筛选（「任意食物」）取 filter 允许物品的库存合计（原版无按 filter 统计的公开入口）。</div>
+      </div>
+    </div>
+
+    <!-- ============ 人员（2026-10-01 反向同步 BuildCrewTab：单块键值行列表 · RowHeight 22 ·
+         宽档两栏流式=行序前半左列/后半右列（Draw.cs:70-81 perColumn=ceil(n/2)）；块级 API 徽标一次（S13）） ============ -->
+    <div class="dsec" id="dt-crew">
+      <div class="dsub">人员 · 胜任度排名<span class="tag">排序依据=本台配方主技能 · 行高 22</span>
+        <em class="pv pv-api">API</em></div>
+      <div class="full">
+        <div class="crewcols">
+          <!-- 左列 = 行序前 9 行（18 行 ÷ 2，列优先） -->
+          <div>
+            <div class="drow2"><span>当前工作</span><b>烹饪 · 执行工单</b></div>
+            <div class="drow2"><span>当前时段排班</span><b>工作</b></div>
+            <div class="drow2"><span>排序依据（本台配方技能）</span><b>烹饪</b></div>
+            <div class="drow2"><span>派工</span><b>点击行指派，再点取消 · 简单餐</b></div>
+            <!-- 排名行：Label=「序号. ◆指定者 ★操作者 名」· 值=「分 · Lv · 当班」三段合一（RankValue+BuildDutyLabel）
+                 评分=WorkshopCrewScoring 实算：技能60+激情20+心情20 · MaxScore=100（原稿 92/78/61/43 系算错，已修正） -->
+            <div class="crow on" data-pawn="杜甫" data-info="Lv12 主要 · 心情 100% · 在岗">
+              <i class="rk-av"></i><span class="cl">1. ◆ ★ 杜甫</span><b>76 分 · Lv12 · 在岗</b><div class="crowbar"><i style="width:76%"></i></div><em class="pv pv-mod">LEDGER</em></div>
+            <div class="crow" data-pawn="李白" data-info="Lv9 次要 · 心情 88% · 空闲">
+              <i class="rk-av"></i><span class="cl">2. 李白</span><b>55 分 · Lv9 · 空闲</b><div class="crowbar"><i style="width:55%"></i></div><em class="pv pv-mod">LEDGER</em></div>
+            <div class="crow" data-pawn="王维" data-info="Lv7 无 · 心情 72% · 休息">
+              <i class="rk-av"></i><span class="cl">3. 王维</span><b>35 分 · Lv7 · 休息</b><div class="crowbar"><i style="width:35%"></i></div><em class="pv pv-mod">LEDGER</em></div>
+            <div class="crow" data-pawn="白居易" data-info="Lv4 无 · 心情 65% · 其他工作">
+              <i class="rk-av"></i><span class="cl">4. 白居易</span><b>25 分 · Lv4 · 其他工作</b><div class="crowbar"><i style="width:25%"></i></div><em class="pv pv-mod">LEDGER</em></div>
+            <div class="drow2"><span>指派详情</span><b>杜甫 · 简单餐</b></div>
+          </div>
+          <!-- 右列 = 行序后 9 行 -->
+          <div>
+            <div class="drow2"><span>技能</span><b>烹饪 Lv12</b></div>
+            <div class="drow2"><span>心情</span><b>100 %</b></div>
+            <div class="drow2"><span>技能效果</span><b>×1.35</b></div>
+            <div class="drow2"><span>车间加成</span><b>×0.85</b><em class="pv pv-mod">LEDGER</em></div>
+            <div class="drow2"><span>综合系数</span><b>×1.15</b><em class="pv pv-mod">LEDGER</em></div>
+            <div class="drow2"><span>车间成员</span><b>3 （杜甫 · 李白 · 王维）</b></div>
+            <div class="drow2"><span>班组</span><b>2 个班组</b></div>
+            <div class="drow2"><span>近 15 日人时</span><b>128 h</b><em class="pv pv-mod">LEDGER</em></div>
+            <div class="drow2"><span>加班</span><b>6 h</b><em class="pv pv-mod">LEDGER</em></div>
+          </div>
+        </div>
+        <div class="msgline" id="crewmsg"></div>
+        <div class="rmline">
+          <span class="ruif">头像 ← PortraitsCache（DrawPawnAvatar 已落地，Draw.cs:90-96 · 20px=RowHeight-2）</span>
+          <span class="ruif self">评分已落地 WorkshopCrewScoring：技能 60 + 激情 20 + 心情 20 · MaxScore=100</span>
+        </div>
+        <div class="rmline">
+          <span class="ruif self">点排名行 = 派工 toggle（ApplyPawnAssign · 再点同人行=取消 · 写面 TrySetPawnRestriction→Bill.SetPawnRestriction）</span>
+        </div>
+        <div class="rmline">
+          <span class="ruif self">⚠ 游戏侧待修项（仅记录）：Detail.cs:711-713 注释称「整块同源⇒逐行徽标抑制」，但排名行/车间加成/综合系数/人时/加班实值 SourceLedger(2)≠块 SourceApi(1)，Draw.cs:111 放行 ⇒ LEDGER 仍逐行冒标；本稿如实呈现</span>
+        </div>
+        <div class="rmline">
+          <span class="ruif self">不可用者（倒下/死亡/未在场）：值=「不可用」· 置灰（Tone=Dead）· 排末尾 · 同分按名字序（WorkshopCrewScoring.Unavailable=-1）</span>
+          <span class="ruif self">编制段=同块 Rows 行序延续（WorkshopOpsAccess.Digest 15 日 + Zone_Workshop.Members · 1h=2500tick）</span>
+        </div>
+      </div>
+
+      <!-- ▸ 设计稿演示件（2026-09-22「排班决策台」pickcard 留存 · 默认收起）：游戏内已落地为上方键值行；
+           双技能条/评分分解式/按钮组为设计稿遗留，供对照评估（对齐生产页「▸ 详情」折叠先例） -->
+      <div class="full half">
+        <div class="foldrow"><button id="crewfold" class="dfold">▸ 设计稿演示件（2026-09-22 排班决策台）</button></div>
+        <div id="crewproto" hidden>
+          <div class="pickcard">
+            <div class="ph"><i class="rk-av" style="width:30px;height:30px"></i>
+              <b id="pk-name">杜甫</b><em id="pk-info">Lv12 主要 · 心情 100% · 在岗</em></div>
+            <div class="skr"><span class="skn">烹饪</span>
+              <div class="capbar" style="flex:1;margin:0"><i style="width:74%;background:var(--cyan)"></i></div>
+              <span class="skv">12</span><span class="skp p-Major">主要</span></div>
+            <div class="skr"><span class="skn">智识</span>
+              <div class="capbar" style="flex:1;margin:0"><i style="width:38%;background:var(--cyan)"></i></div>
+              <span class="skv">6</span><span class="skp p-Minor">次要</span></div>
+            <div class="prow"><span>心情</span><b>100%</b><span>状态</span><b style="color:var(--good)">在岗 · 正在烹饪</b></div>
+            <div class="formula">胜任度 76 = 技能 36（Lv12/20×60）+ 激情 20（主要）+ 心情 20（100%）
+              <br/>※ 已落地 Domain 纯函数 WorkshopCrewScoring（原稿「=92」系算术错误，2026-10-01 修正）；
+              游戏内仅显示主技能一行（RelevantSkills[0]），双技能条为设计稿遗留</div>
+            <div class="fac">
+              <div class="fac-t">影响幅度 · 对当前配方</div>
+              <div class="prow"><span>技能效果</span><b style="color:var(--good)">×1.35</b></div>
+              <div class="prow"><span>车间加成</span><b style="color:var(--good)">×0.85</b></div>
+              <div class="prow" style="border-top:1px dashed var(--line2);padding-top:3px">
+                <span>综合系数</span><b style="color:var(--cyan)">×1.15</b></div>
+              <div class="inote">技能效果 = <span class="mono">GetStatValue(recipe.workSpeedStat)</span>
+                ＝ CookingSpeed（<b>已 Cecil 核实</b>该 stat 被 <span class="mono">Toils_Recipe</span> 的
+                tickInterval 消费；<span class="mono">WorkSpeedGlobal</span> <b>不在</b>制作链，故不采用）；
+                车间加成 = <span class="mono">WorkshopBonusAccess</span>。
+                <b>环境因子（温度 / 供电 / 户外 / 房间角色）不计入</b> —— 原版经 <span class="mono">StatPart_WorkTable*</span>
+                运行时注入（<span class="mono">CompReportWorkSpeed</span> 只报告其存在性），合值需实测，不做估算。</div>
+            </div>
+            <div class="acts2">
+              <button class="pri">指派到本工单</button>
+              <button>加入班组 ▾</button>
+              <button>移出车间</button>
+            </div>
+            <div class="inote">「指派到本工单」已落地 = 上方点排名行 toggle（原版 <span class="mono">Bill.PawnRestriction</span>）；
+              「加入班组」设计稿语义写入 <span class="mono">WorkshopCrew.Members</span>、「移出车间」游戏内均无写面，仅设计稿留存。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 健康（2026-10-01 二轮全页签检测 · 反向同步 BuildHealthTab + BuildQualTab） ============ -->
+    <!--     页签 3 = 两块：TPM+品质（Detail.cs:957-1050）· 品质 7 档枚举（Detail.Tabs.cs:129-163）；
+             直方图 = BuildHealthTab 的 QualityHistogram（窗口层 FloorDeviceDetailWindow.cs:879-920）；
+             徽标 = 逐行（块 SourceKind=0 ⇒ Draw.cs:111 全放行）：耐久/失修/品质行 SourceKind=0 无徽标 -->
+    <div class="dsec" id="dt-health">
+      <!-- 块 1：设备健康（BuildHealthTab） -->
+      <div class="full">
+        <div class="dsub">设备健康<span class="tag">3 健康 · 块 1 = BuildHealthTab · RowHeight 22</span></div>
+        <div class="crewcols">
+          <!-- 左列 = 行序 1-5（9 行 → perColumn=5） -->
+          <div>
+            <div class="drow2"><span>耐久</span><b>153 / 180</b><i class="crowbar"><i style="width:85%"></i></i></div>
+            <div class="drow2"><span>失修组件</span><b class="good">正常</b></div>
+            <div class="drow2"><span>能否故障</span><b>原版内部状态不可读（无外部读取接口）</b><em class="pv pv-sim">SIM</em></div>
+            <div class="drow2"><span>可燃性</span><b>1.00</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>劣化速率</span><b>0.0</b><em class="pv pv-api">API</em></div>
+          </div>
+          <!-- 右列 = 行序 6-9 -->
+          <div>
+            <div class="drow2"><span>品质</span><b>良好</b></div>
+            <div class="drow2"><span>近 15 日产出（本配方）</span><b>58</b><em class="pv pv-mod">LEDGER</em></div>
+            <div class="drow2"><span>良好及以上</span><b>43 （74 %）</b><em class="pv pv-mod">LEDGER</em></div>
+            <div class="drow2"><span>按配方近似 · 台账不含设备归属</span><b>按配方近似 · 台账不含设备归属</b><em class="pv pv-sim">SIM</em></div>
+          </div>
+        </div>
+        <div class="rmline">
+          <span class="ruif self">耐久 Bar01 行内条 64×8 值左：轨道=暗底+描边、填充=Info 内缩 1px（Draw.cs:126-137）；HP 溢出或 &lt;40% ⇒ 语气 2（Detail.cs:980-984）</span>
+          <span class="ruif self">演示 HP=153/180 与可燃性 1.00 取自原版 ElectricStove（MaxHitPoints 180 · Flammability 1.0 · Def :700-701）</span>
+        </div>
+        <div class="rmline">
+          <span class="ruif self">近 15 日产出 / 良好及以上 = 台账按本台配方过滤（WorkshopQualityAccess.Digest · Detail.cs:1025-1047）</span>
+          <span class="ruif self">⚠ 游戏侧待修项：QualityScope 行标签与值同文（Detail.cs:1045-1046 两次 T() 同键）⇒ 本稿如实呈现</span>
+        </div>
+        <!-- 直方图（块 1 尾部 · 窗口层 :879-920）：标签 = 原版 QualityCategory.GetLabel()（Detail.cs:1127-1135）；
+             2026-10-01 修正 4 标签为原版真值（Enums.xml QualityCategory_*） -->
+        <div class="qh">
+          <i style="height:8%;background:var(--dim)" title="极差 0"></i>
+          <i style="height:22%;background:var(--info)" title="较差 3"></i>
+          <i style="height:52%;background:var(--good)" title="一般 12"></i>
+          <i style="height:88%;background:var(--cyan)" title="良好 22"></i>
+          <i style="height:64%;background:var(--amber)" title="极佳 16"></i>
+          <i style="height:26%;background:#b98a1e" title="大师级 5"></i>
+          <i style="height:6%;background:#8a5a1e" title="传奇级 0"></i>
+        </div>
+        <div class="qlab"><span>极差</span><span>较差</span><span>一般</span><span>良好</span><span>极佳</span><span>大师级</span><span>传奇级</span></div>
+        <div class="inote">柱色走 RUIF.Charts 系列色板；图表不读 Mouse ⇒ 悬停提示须由调用方在 rect 上自判（LAND-008）。
+          ⚠ 游戏侧待修项：同页两套品质档文案并存（直方图=原版 GetLabel / 枚举行=Qual.Cat.* 自有键），仅记录。</div>
+        <div class="rmline"><span class="ruif self">空态：块无行 → Health.Empty「该设备没有耐久 / 故障组件」（Detail.cs:969）；无产出 → EmptyState</span></div>
+      </div>
+
+      <!-- 块 2：品质分布 7 档枚举（BuildQualTab · 每行 SourceApi ⇒ 逐行徽标 · Tabs.cs:149-161） -->
+      <div class="full">
+        <div class="dsub">品质分布<span class="tag">块 2 = BuildQualTab · Qual.Cat.* 真值（Archive.xml:3326-3332）</span></div>
+        <div class="crewcols">
+          <div>
+            <div class="drow2"><span>糟糕 Awful</span><b></b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>粗糙 Poor</span><b></b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>普通 Normal</span><b></b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>良好 Good</span><b class="good">◀ 当前档</b><em class="pv pv-api">API</em></div>
+          </div>
+          <div>
+            <div class="drow2"><span>优秀 Excellent</span><b></b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>杰作 Masterwork</span><b></b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>传说 Legendary</span><b></b><em class="pv pv-api">API</em></div>
+          </div>
+        </div>
+        <div class="rmline"><span class="ruif self">当前档 = CompQuality 直读，语气 1（好）；值 = Qual.Current「◀ 当前档」，其余行值空（Tabs.cs:152-158）</span></div>
+      </div>
+
+      <!-- ▸ 设计稿演示件（2026-09-22 旧健康页三块 · 数据已被上方键值行覆盖，仅评估留存） -->
+      <div class="full half">
+        <div class="foldrow"><button class="dfold" data-fold="healthproto" data-label="设计稿演示件（2026-09-22 状态电力 / 可维修性 / 耐久条）">▸ 设计稿演示件（2026-09-22 状态电力 / 可维修性 / 耐久条）</button></div>
+        <div id="healthproto" hidden>
+          <div class="dsub">状态与电力<span class="tag">⚠ 属概览口径（BuildRunTab）· 非健康页数据</span></div>
+          <table class="stt">
+            <tr><th style="width:52%">项</th><th>值</th></tr>
+            <tr><td>故障状态</td><td class="r" style="color:var(--good)">正常</td></tr>
+            <tr><td>通电状态</td><td class="r" style="color:var(--good)">已通电</td></tr>
+          </table>
+          <div class="gridrow">
+            <span class="gl">本台 350 W</span>
+            <div class="capbar" style="flex:1;margin:0"><i style="width:7%;background:var(--cyan)"></i></div>
+            <span class="gl">电网 5300 W</span>
+          </div>
+          <div class="legs"><span>储能 0 Wd</span><span>断电即停机</span>
+            <span class="ruif self">「已通电」自造 → 游戏值=原版 Yes/No（是）；「电网 5300 W」无代码出处（只报储能 Wd）</span></div>
+          <div class="dsub">可维修性<span class="tag">⚠ 自造文案 · 真值=失修组件 / 能否故障</span></div>
+          <table class="stt">
+            <tr><th style="width:52%">项</th><th>值</th></tr>
+            <tr><td>可维修组件</td><td class="r">存在（可派修）</td></tr>
+            <tr><td>故障后行为</td><td class="r">停机待修</td></tr>
+          </table>
+          <div class="dsub">耐久（条形态）<span class="tag">游戏内 = 耐久行 Bar01（64×8 值左）</span></div>
+          <div class="capbar"><i style="width:85%;background:var(--good)"></i></div>
+          <div class="legs"><span>当前耐久 85%</span><span>153 / 180</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 契约（第 5 页签 · 游戏内仅 DevMode 可见：Detail.cs:311-315 Prefs.DevMode 门控
+                  · 2026-10-01 二轮检测反向同步 BuildContractTab，Detail.Tabs.cs:173-281） ============ -->
+    <div class="dsec tab5" id="dt-contract">
+      <div class="full">
+        <div class="dsub">身份档案 · 组件字典 · 工作台统计 · 命令条<span class="tag">4 契约 = BuildContractTab · 块级无徽标 ⇒ 逐行 API / SIM</span></div>
+        <div class="crewcols">
+          <!-- 左列 = 行序 1-8（16 行 → perColumn=8，Draw.cs:70-81 列优先） -->
+          <div>
+            <div class="drow2"><span>稳定 ID</span><b class="mono">ElectricStove:312</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>defName</span><b class="mono">ElectricStove</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>label</span><b>炉灶（电力）</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>thingClass</span><b class="mono">Building_WorkTable_HeatPush</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>size</span><b class="mono">3×1</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>材质 stuff</span><b>—</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>坐标 position</span><b class="mono">(24,0,31)</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>本机声明的组件</span><b class="mono">CompPowerTrader · CompFlickable · CompBreakdownable</b><em class="pv pv-api">API</em></div>
+          </div>
+          <!-- 右列 = 行序 9-16 -->
+          <div>
+            <div class="drow2"><span>常见但未声明</span><b class="mono">CompQuality · CompRefuelable · CompAffectedByFacilities · CompGlower · CompForbiddable</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>工作速度 StatDef</span><b class="mono">CookingSpeed</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>额定工作量</span><b>450</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>产物项数 products</span><b>1</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>可加工建筑数</span><b>—</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>技能要求</span><b>—</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>命令条项数</span><b>4</b><em class="pv pv-api">API</em></div>
+            <div class="drow2"><span>工序导航</span><b>原版无「工序链路顺序」字段（无对应数据源）</b><em class="pv pv-sim">SIM</em></div>
+          </div>
+        </div>
+        <div class="inote">演示值取自原版 ElectricStove Def（thingClass / size 3×1 / 组件清单 · Buildings_Production.xml:673-749）；
+          组件字典按 ThingDef.comps（Def 声明）判定（Tabs.cs:200-222）。本页为开发者数据（LAND-003：玩家侧不出现），建议迁「组件验证台」。</div>
+        <div class="rmline"><span class="ruif self">⚠ 游戏侧待修项：Contract.Caption 等键在 Archive.xml 重复定义（:3144-3149 旧值 / :3333-3350 新值，后值生效）⇒ 建议清理旧键</span></div>
+      </div>
+
+      <!-- ▸ 设计稿演示件（2026-09-22 数据层契约块 · BuildContractTab 无此四行，仅评估留存） -->
+      <div class="full half">
+        <div class="foldrow"><button class="dfold" data-fold="contractproto" data-label="设计稿演示件（2026-09-22 数据层契约）">▸ 设计稿演示件（2026-09-22 数据层契约）</button></div>
+        <div id="contractproto" hidden>
+          <div class="dgrid2">
+            <div>
+              <div class="drow2"><span>Provider</span><b class="mono">WorkshopFloorViewProvider</b> <em class="pv pv-api">API</em></div>
+              <div class="drow2"><span>快照</span><b class="mono">FloorDeviceDetailSnapshot</b> <em class="pv pv-api">API</em></div>
+              <div class="drow2"><span>加成源</span><b class="mono">WorkshopBonusAccess</b> <em class="pv pv-mod">LEDGER</em></div>
+              <div class="drow2"><span>状态时序</span><b>已移除（原版无按台历史）</b> <em class="pv pv-sim">SIM</em></div>
+            </div>
+            <div>
+              <div class="dsub" style="margin-top:0">工序导航（条形态）<span class="tag">游戏内 = 一行 SIM 键值（Tabs.cs:277-279）</span></div>
+              <div class="nav2"><button disabled>◀ 无前道</button><button disabled>无后道 ▶</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</aside>
+
+<script>
+/* ===================== 评估工具栏 ===================== */
+(function () {
+  var body = document.body;
+  var state = { kpi: '4', badge: 'off', hazard: 'fault', output: 'on', width: 'wide', theme: 'dark', ruif: 'on', dev: 'off' };
+
+  function apply() {
+    /* 契约页签显隐 = DevMode：游戏内 Detail.cs:311-315 仅 Prefs.DevMode 添加「契约」页签
+       （2026-10-01 二轮检测：原「契约页 4/5」工具栏组并入本开关，消除双入口口径冲突） */
+    document.querySelectorAll('.tab5').forEach(function (el) {
+      el.style.display = state.dev === 'on' ? '' : 'none';
+    });
+    if (state.dev !== 'on' && activeTab() === 'contract') selectTab('overview');
+
+    /* 指标格 4 / 6 */
+    document.getElementById('mkpi').className = 'mkpi' + (state.kpi === '6' ? ' mk6' : '');
+    document.querySelectorAll('.kpiExtra').forEach(function (el) {
+      el.style.display = state.kpi === '6' ? '' : 'none';
+    });
+
+    /* 源徽标 */
+    body.classList.toggle('nobadge', state.badge === 'off');
+
+    /* 警示条 */
+    document.getElementById('drawer').classList.toggle('no-hazard', state.hazard === 'fault');
+
+    /* 产出块 */
+    document.querySelectorAll('.outputBlock').forEach(function (el) {
+      el.style.display = state.output === 'on' ? '' : 'none';
+    });
+
+    /* 视口 */
+    document.getElementById('drawer').classList.toggle('narrow', state.width === 'narrow');
+
+    /* 主题 */
+    body.classList.toggle('blueprint', state.theme === 'blueprint');
+
+    /* RUIF 组件标注 */
+    body.classList.toggle('noruif', state.ruif === 'off');
+
+    /* DevMode：卡头右上 build 时间戳（游戏内 Prefs.DevMode 才显示，FloorDeviceDetailWindow.cs:265-270） */
+    body.classList.toggle('nodev', state.dev !== 'on');
+    syncDrawerHeight();
+  }
+
+  function activeTab() {
+    var on = document.querySelector('#drawer .dtab button.on');
+    return on ? on.dataset.dt : 'overview';
+  }
+  function selectTab(name) {
+    document.querySelectorAll('#drawer .dtab button').forEach(function (b) {
+      b.classList.toggle('on', b.dataset.dt === name);
+    });
+    document.querySelectorAll('#dbody .dsec').forEach(function (s) {
+      s.classList.toggle('on', s.id === 'dt-' + name);
+    });
+    syncDrawerHeight();
+  }
+
+  document.querySelectorAll('#toolbar button[data-t]').forEach(function (b) {
+    b.onclick = function () {
+      var t = b.dataset.t;
+      state[t] = b.dataset.v;
+      document.querySelectorAll('#toolbar button[data-t="' + t + '"]').forEach(function (x) {
+        x.classList.toggle('on', x === b);
+      });
+      apply();
+    };
+  });
+
+  /* 页签切换 */
+  document.querySelectorAll('#drawer .dtab button').forEach(function (b) {
+    b.onclick = function () { selectTab(b.dataset.dt); };
+  });
+
+  /* 关闭按钮演示（评估稿不真关，仅提示） */
+  document.getElementById('dclose').onclick = function () {
+    this.textContent = '✕ 关闭（评估稿不关窗）';
+    var self = this;
+    setTimeout(function () { self.textContent = '✕ 关闭'; }, 1200);
+  };
+
+  /* 生产列表动作演示 */
+  document.querySelectorAll('#dt-prod .acts button').forEach(function (b) {
+    if (b.textContent.trim() === '✕') {
+      b.onclick = function () {
+        var row = b.closest('.billrow');
+        row.style.opacity = '.35';
+        setTimeout(function () { row.style.opacity = ''; }, 700);
+      };
+    }
+  });
+
+  /* 人员页：点排名行 = 派工 toggle（游戏内 ApplyPawnAssign toggleOnRepeat:true，
+     FloorDeviceDetailWindow.cs:721-745 · 写面 WorkshopBillActions.TrySetPawnRestriction
+     → 原版 Bill.SetPawnRestriction）。演示 = 切换 ◆ 指定者 + 消息行真值文案
+     （Crew.AssignDone / Crew.AssignCleared，Archive.xml:3131-3132）；★ 当前操作者
+     不随点击变化（operatorPawn 另行判定）；指派卡在下方折叠演示件内联动。 */
+  (function () {
+    var rows = document.querySelectorAll("#dt-crew .crow");
+    var msg = document.getElementById("crewmsg");
+    function flash(text) {
+      if (!msg) { return; }
+      msg.textContent = "› " + text;
+      msg.classList.add("show");
+      clearTimeout(flash.t);
+      flash.t = setTimeout(function () { msg.classList.remove("show"); }, 1800);
+    }
+    rows.forEach(function (r) {
+      r.onclick = function () {
+        var label = r.querySelector(".cl");
+        var wasOn = label && label.textContent.indexOf("◆") >= 0;
+        rows.forEach(function (x) {
+          var cl = x.querySelector(".cl");
+          if (cl) { cl.textContent = cl.textContent.replace(" ◆ ", " "); }
+          x.classList.toggle("on", x === r && !wasOn);
+        });
+        if (label && !wasOn) {
+          label.textContent = label.textContent.replace(/^(\d+\.)\s/, "$1 ◆ ");
+          flash("已指派给当前工单");
+        } else {
+          flash("已取消指派");
+        }
+        var n = document.getElementById("pk-name");
+        if (n && !wasOn && r.dataset.pawn) { n.textContent = r.dataset.pawn; }
+        var i = document.getElementById("pk-info");
+        if (i && r.dataset.info) { i.textContent = r.dataset.info; }
+      };
+    });
+  })();
+
+  /* ▸/▾ 设计稿演示件折叠（2026-09-22 pickcard 留存；折叠后 syncDrawerHeight 重测窗高，
+     与生产页 billfold 同模式） */
+  var crewFold = document.getElementById("crewfold");
+  if (crewFold) {
+    crewFold.onclick = function () {
+      var box = document.getElementById("crewproto");
+      if (box.hasAttribute("hidden")) { box.removeAttribute("hidden"); crewFold.textContent = "▾ 设计稿演示件（2026-09-22 排班决策台）"; }
+      else { box.setAttribute("hidden", ""); crewFold.textContent = "▸ 设计稿演示件（2026-09-22 排班决策台）"; }
+      syncDrawerHeight();
+    };
+  }
+
+  /* ===== 2026-10-01 同步：演示窗高逻辑（对齐游戏 InitialSize「先量后画」） =====
+     依据 FloorDeviceDetailWindow.cs:39-43（MinWindowHeight=260 / WindowChromeAllowance=38）、
+     :115-135（clamp(内容+7+4+38, 260, min(88vh, 屏高-80))）、:960-967（BillQueue 测量分支已补，
+     DOM 实测即测量口径）、:212-218（内容超上限才开滚动；窄档维持 LAND-005 允许滚动）。 */
+  function syncDrawerHeight() {
+    var drawer = document.getElementById('drawer');
+    var dbody = document.getElementById('dbody');
+    var content = dbody.scrollHeight;
+    var chrome = 7 + 4 + 38; /* 警示条 7 + 双层边框 4 + 窗体 chrome 补偿 38 */
+    var cap = Math.min(window.innerHeight * 0.88, window.innerHeight - 80);
+    drawer.style.height = Math.max(260, Math.min(content + chrome, cap)) + 'px';
+    if (drawer.classList.contains('narrow')) { dbody.style.overflowY = ''; }
+    else { dbody.style.overflowY = (content + chrome > cap) ? 'auto' : 'hidden'; }
+  }
+  window.addEventListener('resize', syncDrawerHeight);
+
+  /* ▸/▾ 详情折叠（配方摘要配套演示件；任务 2026-10-01 布局2） */
+  var foldBtn = document.getElementById('billfold');
+  if (foldBtn) {
+    foldBtn.onclick = function () {
+      var box = document.getElementById('billdetail');
+      if (box.hasAttribute('hidden')) { box.removeAttribute('hidden'); foldBtn.textContent = '▾ 详情'; }
+      else { box.setAttribute('hidden', ''); foldBtn.textContent = '▸ 详情'; }
+      syncDrawerHeight();
+    };
+  }
+
+  /* ▸/▾ 通用折叠（概览 ovproto / 健康 healthproto / 契约 contractproto · 与 billfold / crewfold 同模式，
+     折叠后 syncDrawerHeight 重测窗高） */
+  document.querySelectorAll('.dfold[data-fold]').forEach(function (b) {
+    b.onclick = function () {
+      var box = document.getElementById(b.dataset.fold);
+      if (!box) { return; }
+      if (box.hasAttribute('hidden')) { box.removeAttribute('hidden'); b.textContent = '▾ ' + b.dataset.label; }
+      else { box.setAttribute('hidden', ''); b.textContent = '▸ ' + b.dataset.label; }
+      syncDrawerHeight();
+    };
+  });
+  apply();
+})();
+</script>
+</body>
+</html>

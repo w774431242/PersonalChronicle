@@ -1,0 +1,242 @@
+{
+  "createdUtc": "2026-10-11T11:38:22.525378+00:00",
+  "verification": "MetadataAndToolVerified",
+  "gameVerified": false,
+  "productionIntegrated": false,
+  "checks": [
+    {
+      "name": "Six official pack rows recorded",
+      "result": "PASS"
+    },
+    {
+      "name": "Zero XML parse errors",
+      "result": "PASS"
+    },
+    {
+      "name": "Runtime state is not inferred from config",
+      "result": "PASS"
+    },
+    {
+      "name": "Assembly identities agree across reports",
+      "result": "PASS"
+    },
+    {
+      "name": "21 requested runtime types present",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.LoadedModManager.LoadAllActiveMods found",
+      "result": "PASS"
+    },
+    {
+      "name": "Original loading stage call order verified",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.LoadedModManager.ParseAndProcessXML found",
+      "result": "PASS"
+    },
+    {
+      "name": "New and legacy parser branches both present",
+      "result": "PASS"
+    },
+    {
+      "name": "Top-level all/any requirements recorded",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.DirectXmlToObjectNew.ValidateMayRequires found",
+      "result": "PASS"
+    },
+    {
+      "name": "New parser uses all/any activity queries",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModsConfig.get_RoyaltyActive found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModLister.get_RoyaltyInstalled found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModsConfig.get_IdeologyActive found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModLister.get_IdeologyInstalled found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModsConfig.get_BiotechActive found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModLister.get_BiotechInstalled found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModsConfig.get_AnomalyActive found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModLister.get_AnomalyInstalled found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModsConfig.get_OdysseyActive found",
+      "result": "PASS"
+    },
+    {
+      "name": "Verse.ModLister.get_OdysseyInstalled found",
+      "result": "PASS"
+    },
+    {
+      "name": "Absent API probes preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "Copied source hash: Source/PersonalChronicle/Domain/DlcStatus.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Copied source hash: Source/PersonalChronicle/Compatibility/Dlc/IdeologyAdapter.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Copied source hash: Source/PersonalChronicle/Compatibility/Dlc/PawnLifeBiotechAdapter.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "TSV row count matches raw XML nodes",
+      "result": "PASS"
+    },
+    {
+      "name": "All pack counts consistent",
+      "result": "PASS"
+    },
+    {
+      "name": "Comments excluded and XML line numbers correct",
+      "result": "PASS"
+    },
+    {
+      "name": "Abstract/template/identity kept separate",
+      "result": "PASS"
+    },
+    {
+      "name": "Malformed XML raises an error",
+      "result": "PASS"
+    },
+    {
+      "name": "Missing config stays Unknown",
+      "result": "PASS"
+    },
+    {
+      "name": "Live game assembly hash unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "Live file set: Core",
+      "result": "PASS"
+    },
+    {
+      "name": "Live About hash: Core",
+      "result": "PASS"
+    },
+    {
+      "name": "Live file set: Royalty",
+      "result": "PASS"
+    },
+    {
+      "name": "Live About hash: Royalty",
+      "result": "PASS"
+    },
+    {
+      "name": "Live file set: Ideology",
+      "result": "PASS"
+    },
+    {
+      "name": "Live About hash: Ideology",
+      "result": "PASS"
+    },
+    {
+      "name": "Live file set: Biotech",
+      "result": "PASS"
+    },
+    {
+      "name": "Live About hash: Biotech",
+      "result": "PASS"
+    },
+    {
+      "name": "Live file set: Anomaly",
+      "result": "PASS"
+    },
+    {
+      "name": "Live About hash: Anomaly",
+      "result": "PASS"
+    },
+    {
+      "name": "Live file set: Odyssey",
+      "result": "PASS"
+    },
+    {
+      "name": "Live About hash: Odyssey",
+      "result": "PASS"
+    },
+    {
+      "name": "All live XML hashes match (1570)",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinPopulationProvider.Derived.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Application/SystemCenters/Builtin/BuiltinPopulationProvider.Overview.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Capture/Patch_TimeAssignmentSelector.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Compatibility/Dlc/IdeologyAdapter.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Compatibility/Dlc/PawnLifeBiotechAdapter.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Domain/ChronicleColonistScanner.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Domain/DlcStatus.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Economy/PawnEconomy/EconomyPerception.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaNeedRegistry.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaPawnFactCapture.Body.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaPawnFactCapture.cs",
+      "result": "PASS"
+    },
+    {
+      "name": "Live call-site source hash: Defs/T1_Production.xml",
+      "result": "PASS"
+    }
+  ],
+  "passed": 58,
+  "scope": "Tool fixtures, snapshot consistency, and requested live hashes; no behavioral gameplay tests"
+}

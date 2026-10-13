@@ -13,7 +13,7 @@ using Verse.AI.Group;
 namespace PersonalChronicle.Application
 {
     /// <summary>
-    /// Partial of <see cref="ArchiveService"/> 鈥?see main file for the class doc.
+    /// Partial of <see cref="ArchiveService"/> —see main file for the class doc.
     /// </summary>
     public sealed partial class ArchiveService : IArchiveService, IWorkIntensityService, IWorkTimeCaptureService, IArchiveQueryService, IArchiveEventSink
     {
@@ -135,6 +135,26 @@ namespace PersonalChronicle.Application
             catch (System.Exception ex)
             {
                 ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to record workplace use for " + (worker != null ? worker.LabelShort : "null") + ": " + ex.Message);
+            }
+        }
+
+        public void SetCurrentWorkplace(string pawnStableId, string buildingDefName, string buildingStableId,
+            string roomRoleDefName, int mapIndex, IntVec3 cell)
+        {
+            if (string.IsNullOrEmpty(pawnStableId) || string.IsNullOrEmpty(buildingDefName))
+            {
+                return;
+            }
+            ChronicleGameComponent component = Component;
+            if (component == null) return;
+            try
+            {
+                component.SetCurrentWorkplace(pawnStableId, buildingDefName, buildingStableId,
+                    roomRoleDefName, mapIndex, cell);
+            }
+            catch (System.Exception ex)
+            {
+                ChronicleLog.Warning(ChronicleLog.Category.Archive, "failed to set current workplace for " + pawnStableId + ": " + ex.Message);
             }
         }
 

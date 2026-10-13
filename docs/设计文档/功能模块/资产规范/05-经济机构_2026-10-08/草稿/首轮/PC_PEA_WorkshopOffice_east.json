@@ -1,0 +1,12 @@
+{
+  "defName": "PC_PEA_WorkshopOffice",
+  "direction": "east",
+  "path": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_east.png",
+  "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a116ec-7957-7de1-816a-0b501e24b6b0\\exec-2cfa9f7b-b4e6-47a1-bab7-95bc24c9b0a4.png",
+  "generator": "built-in image_gen",
+  "northReference": "Textures/Things/Building/PawnEconomy/PC_PEA_WorkshopOffice_north.png",
+  "northReferenceSha256": "E61A7326D5561DE0638E2D4BAA9079C097EAAB5FA7EC53C3147704D411DC06A8",
+  "promptFile": "PC_PEA_WorkshopOffice_east.prompt.txt",
+  "sha256": "419BE3D8E51F53200377E95D4D781513CD79F681BB52B429A792B8D55F6DE4B9",
+  "imageEditsPerformed": false
+}

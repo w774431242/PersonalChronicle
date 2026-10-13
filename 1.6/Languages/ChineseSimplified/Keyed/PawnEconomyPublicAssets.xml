@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Public.InstitutionFunds>机构可用拨款</PC_PEA.Public.InstitutionFunds>
+  <PC_PEA.Public.TotalLabel>总公有资金</PC_PEA.Public.TotalLabel>
+  <PC_PEA.Public.Total>总公有资金（已入账）：{0}，含机构拨款</PC_PEA.Public.Total>
+  <PC_PEA.Public.PendingSilver>公有银币待交存：{0} 枚</PC_PEA.Public.PendingSilver>
+  <PC_PEA.Public.OwnershipHint>机构拨款归殖民地所有。拨款只调配资金，不增加总额。公有储存区的银币由殖民者送到工资结算处后入账；食品、衣物是实物资产，不计作现金。</PC_PEA.Public.OwnershipHint>
+  <PC_PEA.Public.Budget>{0} · 可用拨款 {1}</PC_PEA.Public.Budget>
+  <PC_PEA.Public.AllocateText>从国库拨款 {0} 银</PC_PEA.Public.AllocateText>
+  <PC_PEA.Public.Allocate>拨款</PC_PEA.Public.Allocate>
+  <PC_PEA.Public.ReturnText>{0} · 可退回 {1}</PC_PEA.Public.ReturnText>
+  <PC_PEA.Public.Return>退回国库</PC_PEA.Public.Return>
+  <PC_PEA.Public.Unallocated>国库未拨款资金</PC_PEA.Public.Unallocated>
+  <PC_PEA.Public.FormerInstitution>已撤销机构</PC_PEA.Public.FormerInstitution>
+  <PC_PEA.Public.LegacyFunds>已兑现历史公有资金</PC_PEA.Public.LegacyFunds>
+  <PC_PEA.Public.StockHint>生活用品区共享本地图公有储存区及商店实物库存。按原版物品市价付款后转为个人所有；私人物品不在售。</PC_PEA.Public.StockHint>
+  <PC_PEA.Public.Kind.Deposit>银币交存</PC_PEA.Public.Kind.Deposit>
+  <PC_PEA.Public.Kind.Withdrawal>银币提取</PC_PEA.Public.Kind.Withdrawal>
+  <PC_PEA.Public.Kind.PublicTransfer>公有资金调拨</PC_PEA.Public.Kind.PublicTransfer>
+  <PC_PEA.Public.Kind.LegacyAllocation>历史权益兑现</PC_PEA.Public.Kind.LegacyAllocation>
+  <PC_PEA.Public.Kind.WageTransfer>工资支付</PC_PEA.Public.Kind.WageTransfer>
+  <PC_PEA.Public.Kind.Purchase>商品销售</PC_PEA.Public.Kind.Purchase>
+  <PC_PEA.Public.Phase.Prepared>待交割</PC_PEA.Public.Phase.Prepared>
+  <PC_PEA.Public.Phase.Finalized>已结算</PC_PEA.Public.Phase.Finalized>
+  <PC_PEA.Public.Phase.Cancelled>已取消</PC_PEA.Public.Phase.Cancelled>
+  <PC_PEA.Public.Phase.ReconciliationRequired>待对账</PC_PEA.Public.Phase.ReconciliationRequired>
+</LanguageData>

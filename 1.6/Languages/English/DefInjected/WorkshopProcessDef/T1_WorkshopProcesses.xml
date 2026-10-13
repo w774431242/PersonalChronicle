@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  English overrides for T1 smart-bench WorkshopProcessDef (CHG-20261006-TRKEY · LOC-01).
+  设备名与 Defs/T1_Production.xml 的英文 DefInjected（"smart smelter (T1)" 等）同源，
+  此处保持 "Smart X Bench" 命名以便建造菜单与工序下拉一致可读。
+-->
+<LanguageData>
+  <WP_T1_Butchery.label>Smart Butchery Bench · Production</WP_T1_Butchery.label>
+  <WP_T1_Cooking.label>Smart Cooking Bench · Production</WP_T1_Cooking.label>
+  <WP_T1_Crafting.label>Smart Crafting Bench · Production</WP_T1_Crafting.label>
+  <WP_T1_DrugLab.label>Smart Drug Lab · Production</WP_T1_DrugLab.label>
+  <WP_T1_Machining.label>Smart Machining Bench · Production</WP_T1_Machining.label>
+  <WP_T1_Sculpting.label>Smart Sculpting Bench · Production</WP_T1_Sculpting.label>
+  <WP_T1_Smelter.label>Smart Smelter · Production</WP_T1_Smelter.label>
+  <WP_T1_Smithy.label>Smart Smithy · Production</WP_T1_Smithy.label>
+  <WP_T1_Stonecutting.label>Smart Stonecutting Bench · Production</WP_T1_Stonecutting.label>
+  <WP_T1_Tailoring.label>Smart Tailoring Bench · Production</WP_T1_Tailoring.label>
+</LanguageData>

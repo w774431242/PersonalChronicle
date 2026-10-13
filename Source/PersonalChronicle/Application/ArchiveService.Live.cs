@@ -13,7 +13,7 @@ using Verse.AI.Group;
 namespace PersonalChronicle.Application
 {
     /// <summary>
-    /// Partial of <see cref="ArchiveService"/> 鈥?see main file for the class doc.
+    /// Partial of <see cref="ArchiveService"/> —see main file for the class doc.
     /// </summary>
     public sealed partial class ArchiveService : IArchiveService, IWorkIntensityService, IWorkTimeCaptureService, IArchiveQueryService, IArchiveEventSink
     {
@@ -319,6 +319,12 @@ namespace PersonalChronicle.Application
             for (int i = 0; i < pawns.Count; i++)
             {
                 if (!(pawns[i] is PawnObject pawn))
+                {
+                    continue;
+                }
+                // v1.5: 首页"档案活跃/已归档"计数只统计己方殖民者，
+                // 与主界面人物档案过滤口径一致（排除动物等非殖民者）。
+                if (pawn.Role == PawnRole.None)
                 {
                     continue;
                 }

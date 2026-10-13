@@ -1,7 +1,7 @@
 // 勋章详情对话框（对齐 docs/UI预览/人物档案视窗/职业档案Tab预览.html 勋章详情 Dialog：
 // 大图 + 标题 + 档位 pill + 归属/当前值/阈值/进度 + 描述 + 增益）。
 // 只读消费 ReadModel 已派生的 MedalView（窗口不重判定）；无图时档位色占位块兜底。
-using PersonalChronicle.Archive.ReadModels;
+using PersonalChronicle.Application.ReadModels;
 using PersonalChronicle.Domain;
 using PersonalChronicle.Archive.UI;
 using UnityEngine;

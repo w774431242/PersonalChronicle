@@ -1,0 +1,370 @@
+{
+  "checks": "Independent color-region segmentation on resized original and candidate PNGs; manual structure inspection also required",
+  "anchor_checks": {
+    "north": {
+      "before": {
+        "furnace": {
+          "pixels": 1003,
+          "center": [
+            107.95,
+            106.44
+          ],
+          "bbox": [
+            69,
+            99,
+            147,
+            114
+          ]
+        },
+        "control_screen": {
+          "pixels": 1798,
+          "center": [
+            353.5,
+            87.0
+          ],
+          "bbox": [
+            325,
+            72,
+            383,
+            103
+          ]
+        },
+        "orange_button": {
+          "pixels": 91,
+          "center": [
+            376.0,
+            121.0
+          ],
+          "bbox": [
+            370,
+            118,
+            383,
+            125
+          ]
+        },
+        "furnace_screen_end_order_correct": true,
+        "panel_operator_side_correct": true,
+        "orange_button_relative_order_correct": true
+      },
+      "after": {
+        "furnace": {
+          "pixels": 1003,
+          "center": [
+            107.95,
+            106.44
+          ],
+          "bbox": [
+            69,
+            99,
+            147,
+            114
+          ]
+        },
+        "control_screen": {
+          "pixels": 1798,
+          "center": [
+            353.5,
+            87.0
+          ],
+          "bbox": [
+            325,
+            72,
+            383,
+            103
+          ]
+        },
+        "orange_button": {
+          "pixels": 91,
+          "center": [
+            376.0,
+            121.0
+          ],
+          "bbox": [
+            370,
+            118,
+            383,
+            125
+          ]
+        },
+        "furnace_screen_end_order_correct": true,
+        "panel_operator_side_correct": true,
+        "orange_button_relative_order_correct": true
+      }
+    },
+    "east": {
+      "before": {
+        "furnace": {
+          "pixels": 1111,
+          "center": [
+            86.17,
+            119.88
+          ],
+          "bbox": [
+            79,
+            83,
+            95,
+            158
+          ]
+        },
+        "control_screen": {
+          "pixels": 1210,
+          "center": [
+            97.5,
+            338.0
+          ],
+          "bbox": [
+            87,
+            311,
+            109,
+            366
+          ]
+        },
+        "orange_button": {
+          "pixels": 122,
+          "center": [
+            69.0,
+            357.5
+          ],
+          "bbox": [
+            65,
+            351,
+            74,
+            365
+          ]
+        },
+        "furnace_screen_end_order_correct": true,
+        "panel_operator_side_correct": true,
+        "orange_button_relative_order_correct": true
+      },
+      "after": {
+        "furnace": {
+          "pixels": 1111,
+          "center": [
+            86.17,
+            119.88
+          ],
+          "bbox": [
+            79,
+            83,
+            95,
+            158
+          ]
+        },
+        "control_screen": {
+          "pixels": 1210,
+          "center": [
+            97.5,
+            338.0
+          ],
+          "bbox": [
+            87,
+            311,
+            109,
+            366
+          ]
+        },
+        "orange_button": {
+          "pixels": 122,
+          "center": [
+            69.0,
+            357.5
+          ],
+          "bbox": [
+            65,
+            351,
+            74,
+            365
+          ]
+        },
+        "furnace_screen_end_order_correct": true,
+        "panel_operator_side_correct": true,
+        "orange_button_relative_order_correct": true
+      }
+    },
+    "south": {
+      "before": {
+        "furnace": {
+          "pixels": 1103,
+          "center": [
+            109.49,
+            109.25
+          ],
+          "bbox": [
+            69,
+            101,
+            150,
+            117
+          ]
+        },
+        "control_screen": {
+          "pixels": 1652,
+          "center": [
+            353.0,
+            89.5
+          ],
+          "bbox": [
+            324,
+            76,
+            383,
+            104
+          ]
+        },
+        "orange_button": {
+          "pixels": 112,
+          "center": [
+            375.5,
+            121.5
+          ],
+          "bbox": [
+            369,
+            118,
+            383,
+            126
+          ]
+        },
+        "furnace_screen_end_order_correct": false,
+        "panel_operator_side_correct": false,
+        "orange_button_relative_order_correct": false
+      },
+      "after": {
+        "furnace": {
+          "pixels": 1103,
+          "center": [
+            337.51,
+            109.25
+          ],
+          "bbox": [
+            298,
+            101,
+            379,
+            117
+          ]
+        },
+        "control_screen": {
+          "pixels": 1652,
+          "center": [
+            94.0,
+            109.5
+          ],
+          "bbox": [
+            65,
+            96,
+            124,
+            124
+          ]
+        },
+        "orange_button": {
+          "pixels": 111,
+          "center": [
+            71.44,
+            76.53
+          ],
+          "bbox": [
+            65,
+            73,
+            79,
+            81
+          ]
+        },
+        "furnace_screen_end_order_correct": true,
+        "panel_operator_side_correct": true,
+        "orange_button_relative_order_correct": true
+      }
+    },
+    "west": {
+      "before": {
+        "furnace": {
+          "pixels": 1180,
+          "center": [
+            85.64,
+            133.93
+          ],
+          "bbox": [
+            78,
+            95,
+            94,
+            173
+          ]
+        },
+        "control_screen": {
+          "pixels": 1320,
+          "center": [
+            83.5,
+            351.5
+          ],
+          "bbox": [
+            69,
+            330,
+            99,
+            374
+          ]
+        },
+        "orange_button": {
+          "pixels": 119,
+          "center": [
+            116.92,
+            369.0
+          ],
+          "bbox": [
+            112,
+            364,
+            123,
+            375
+          ]
+        },
+        "furnace_screen_end_order_correct": false,
+        "panel_operator_side_correct": true,
+        "orange_button_relative_order_correct": false
+      },
+      "after": {
+        "furnace": {
+          "pixels": 1111,
+          "center": [
+            104.83,
+            327.12
+          ],
+          "bbox": [
+            97,
+            290,
+            113,
+            365
+          ]
+        },
+        "control_screen": {
+          "pixels": 1210,
+          "center": [
+            93.5,
+            109.0
+          ],
+          "bbox": [
+            83,
+            82,
+            105,
+            137
+          ]
+        },
+        "orange_button": {
+          "pixels": 122,
+          "center": [
+            122.0,
+            89.5
+          ],
+          "bbox": [
+            118,
+            83,
+            127,
+            97
+          ]
+        },
+        "furnace_screen_end_order_correct": true,
+        "panel_operator_side_correct": true,
+        "orange_button_relative_order_correct": true
+      }
+    }
+  },
+  "all_40_source_files_unchanged": true,
+  "all_40_development_runtime_textures_unchanged": true,
+  "all_40_release_textures_unchanged": true,
+  "lighting_verified": false,
+  "runtime_gameplay_verified": false
+}

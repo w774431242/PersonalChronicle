@@ -1,0 +1,38 @@
+{
+  "scope": "Hypothetical arithmetic counterexamples, not runtime results or calibrated game parameters",
+  "examples": [
+    {
+      "id": "CE01",
+      "assumedTotalCurrency": 1000,
+      "residents": 10,
+      "reservePerResident": 100,
+      "remainingOtherAccounts": 0,
+      "claim": "Conservation alone does not guarantee employer liquidity."
+    },
+    {
+      "id": "CE02",
+      "assumedAvailablePaidHoursPerDay": 4,
+      "incomePerHour": 10,
+      "essentialDailyExpense": 50,
+      "dailyBalanceChange": -10,
+      "claim": "Action ordering cannot make this household budget sustainable."
+    },
+    {
+      "id": "CE03",
+      "assumedDailyServiceCapacity": 5,
+      "dailyDemand": 8,
+      "backlogIncreasePerDay": 3,
+      "claim": "Cash alone cannot repair insufficient service capacity."
+    },
+    {
+      "id": "CE04",
+      "sameBenefit": 0.6,
+      "sameTimeAndRiskCost": 0,
+      "freePriceCost": 0,
+      "paidPriceCost": 0.2,
+      "freeScore": 0.6,
+      "paidScore": 0.4,
+      "claim": "Identical free service dominates a purely more expensive equivalent under positive price weighting."
+    }
+  ]
+}

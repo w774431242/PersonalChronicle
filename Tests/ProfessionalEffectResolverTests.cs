@@ -87,7 +87,7 @@ namespace PersonalChronicle.Tests
             {
                 MakeSkill("S1", "E1", new List<string> { "Make_A" }),
             };
-            Assert.AreEqual(1.03f, ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "Make_A"), Epsilon);
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.03f, 5, 50, 0f), ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "Make_A"), Epsilon);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace PersonalChronicle.Tests
             {
                 MakeSkill("S1", "E1", new List<string>()),
             };
-            Assert.AreEqual(1.03f, ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "AnyRecipe"), Epsilon);
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.03f, 5, 50, 0f), ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "AnyRecipe"), Epsilon);
         }
 
         [Test]
@@ -145,8 +145,8 @@ namespace PersonalChronicle.Tests
                 MakeSkill("S1", "E1", new List<string>()),
                 MakeSkill("S2", "E2", new List<string>()),
             };
-            // 两个技能都加成，加法叠加 → 1.05
-            Assert.AreEqual(1.05f, ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "AnyRecipe"), Epsilon);
+            // lv5/50 × 0.03 + lv3/50 × 0.02 = 0.003 + 0.0012 → 1.0042
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.03f, 5, 50, 0f) + ProfessionalEffectResolver.ScaleByLevel(0.02f, 3, 50, 0f), ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "AnyRecipe"), Epsilon);
         }
 
         // ------------------------------------------------------------------
@@ -181,7 +181,7 @@ namespace PersonalChronicle.Tests
             {
                 MakeSkillWithOverride("S1", "E1", new List<string>(), new EffectOverride { effectDefName = "E1", hasValue = true, value = 0.05f }),
             };
-            Assert.AreEqual(1.05f, ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "AnyRecipe"), Epsilon);
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.05f, 5, 50, 0f), ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "AnyRecipe"), Epsilon);
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace PersonalChronicle.Tests
             {
                 MakeSkillWithOverride("S1", "E1", new List<string>(), new EffectOverride { effectDefName = "E2", hasValue = true, value = 0.09f }),
             };
-            Assert.AreEqual(1.03f, ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "AnyRecipe"), Epsilon);
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.03f, 5, 50, 0f), ProfessionalEffectResolver.ResolveSpeedFactor(skills, skillDefs, effects, "AnyRecipe"), Epsilon);
         }
 
         [Test]
@@ -304,15 +304,107 @@ namespace PersonalChronicle.Tests
         public void RecipeMatches_EmptyWhitelist_AllRelevant()
         {
             ProfessionalSkillDef skill = MakeSkill("S1", "E1", new List<string>());
-            Assert.IsTrue(ProfessionalEffectResolver.RecipeMatches(skill, "AnyRecipe"));
-            Assert.IsTrue(ProfessionalEffectResolver.RecipeMatches(skill, null));
+            Assert.IsTrue(ProfessionalEffectResolver.RecipeMatches(skill, "AnyRecipe", null));
+            Assert.IsTrue(ProfessionalEffectResolver.RecipeMatches(skill, null, null));
         }
 
         [Test]
         public void RecipeMatches_NullRecipeWithWhitelist_False()
         {
             ProfessionalSkillDef skill = MakeSkill("S1", "E1", new List<string> { "Make_A" });
-            Assert.IsFalse(ProfessionalEffectResolver.RecipeMatches(skill, null));
+            Assert.IsFalse(ProfessionalEffectResolver.RecipeMatches(skill, null, null));
+        }
+
+        [Test]
+        public void RecipeMatches_WorkTypeWhitelist_MatchesWorkType()
+        {
+            ProfessionalSkillDef skill = MakeSkill("S1", "E1", new List<string>());
+            skill.practiceWorkTypeDefNames = new System.Collections.Generic.List<string> { "Smithing" };
+            // 双白名单皆空才全相关；有 WorkType 白名单时按 workType 判定
+            Assert.IsFalse(ProfessionalEffectResolver.RecipeMatches(skill, "AnyRecipe", null));
+            Assert.IsTrue(ProfessionalEffectResolver.RecipeMatches(skill, null, "Smithing"));
+            Assert.IsFalse(ProfessionalEffectResolver.RecipeMatches(skill, null, "Crafting"));
+        }
+
+        [Test]
+        public void ResolveContributions_IncludesStatBonusWhenNoWorkSpeed()
+        {
+            ProfessionalEffectDef effect = new ProfessionalEffectDef
+            {
+                defName = "E1",
+                kind = ProfessionalEffectKind.StatBonus,
+                value = 0.05f,
+                statDefName = "ConstructionSpeed"
+            };
+            ProfessionalSkillDef skill = MakeSkill("S1", "E1", new List<string>());
+            skill.practiceWorkTypeDefNames = new List<string> { "Construction" };
+            List<ProfessionalEffectResolver.SkillBonusContribution> list =
+                ProfessionalEffectResolver.ResolveContributions(
+                    new List<ProfessionalSkillData> { SkillWithLevel("S1", 8) },
+                    new List<ProfessionalSkillDef> { skill },
+                    EffectIndex(effect),
+                    null,
+                    null);
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual(ProfessionalEffectResolver.ScaleByLevel(0.05f, 8, 50, 0f), list[0].GenericBonus, Epsilon);
+            Assert.AreEqual("ConstructionSpeed", list[0].GenericStatDefName);
+            Assert.IsTrue(list[0].ActiveNow);
+        }
+
+        [Test]
+        public void ResolveStatBonus_NullRecipe_AppliesWorkTypeWhitelistedSkill()
+        {
+            // 通用 Stat 评估没有制造上下文；带 practiceWorkTypeDefNames 的技能仍应注入 pawn 面板。
+            ProfessionalEffectDef effect = new ProfessionalEffectDef
+            {
+                defName = "E1",
+                kind = ProfessionalEffectKind.StatBonus,
+                value = 0.05f,
+                statDefName = "ConstructionSpeed"
+            };
+            ProfessionalSkillDef skill = MakeSkill("S1", "E1", new List<string>());
+            skill.practiceWorkTypeDefNames = new List<string> { "Construction" };
+            List<ProfessionalSkillData> skills = new List<ProfessionalSkillData> { SkillWithLevel("S1", 10) };
+            float factor = ProfessionalEffectResolver.ResolveStatBonus(
+                skills,
+                new List<ProfessionalSkillDef> { skill },
+                EffectIndex(effect),
+                ProfessionalEffectKind.StatBonus,
+                "ConstructionSpeed",
+                null);
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.05f, 10, 50, 0f), factor, Epsilon);
+        }
+
+        [Test]
+        public void ResolveStatBonus_GrowsWithLevel()
+        {
+            ProfessionalEffectDef effect = new ProfessionalEffectDef
+            {
+                defName = "E1",
+                kind = ProfessionalEffectKind.StatBonus,
+                value = 0.10f,
+                statDefName = "MiningSpeed"
+            };
+            ProfessionalSkillDef skill = MakeSkill("S1", "E1", new List<string>());
+            Dictionary<string, ProfessionalEffectDef> effects = EffectIndex(effect);
+            List<ProfessionalSkillDef> skillDefs = new List<ProfessionalSkillDef> { skill };
+            float low = ProfessionalEffectResolver.ResolveStatBonus(
+                new List<ProfessionalSkillData> { SkillWithLevel("S1", 10) },
+                skillDefs, effects, ProfessionalEffectKind.StatBonus, "MiningSpeed", null);
+            float high = ProfessionalEffectResolver.ResolveStatBonus(
+                new List<ProfessionalSkillData> { SkillWithLevel("S1", 50) },
+                skillDefs, effects, ProfessionalEffectKind.StatBonus, "MiningSpeed", null);
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.10f, 10, 50, 0f), low, Epsilon);
+            Assert.AreEqual(1f + ProfessionalEffectResolver.ScaleByLevel(0.10f, 50, 50, 0f), high, Epsilon);
+        }
+
+        [Test]
+        public void ScaleByLevel_CapsAtMaxLevel()
+        {
+            Assert.AreEqual(0.10f, ProfessionalEffectResolver.ScaleByLevel(0.10f, 50, 50, 0f), Epsilon);
+            Assert.AreEqual(0.10f, ProfessionalEffectResolver.ScaleByLevel(0.10f, 80, 50, 0f), Epsilon);
+            Assert.AreEqual(0f, ProfessionalEffectResolver.ScaleByLevel(0.10f, 0, 50, 0f), Epsilon);
+            Assert.AreEqual(0.11f, ProfessionalEffectResolver.ScaleByLevel(0.10f, 50, 50, 0.10f), Epsilon);
         }
     }
 }

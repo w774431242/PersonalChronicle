@@ -1,0 +1,464 @@
+{
+  "width": 3000,
+  "height": 2350,
+  "scale": 2,
+  "nodes": [
+    {
+      "id": "state",
+      "x": 850,
+      "y": 270,
+      "w": 1300,
+      "h": 130,
+      "text": "① 读取当前状态\n需求 · 衣物 · 余额 · 合同 · 体检报告",
+      "tone": "blue",
+      "shape": "rect",
+      "size": 38
+    },
+    {
+      "id": "gate",
+      "x": 850,
+      "y": 470,
+      "w": 1300,
+      "h": 160,
+      "text": "② 原版调度：现在适合经济活动吗？\n自由时段且安全；原版需求与强制命令优先",
+      "tone": "blue",
+      "shape": "rect",
+      "size": 36
+    },
+    {
+      "id": "choose",
+      "x": 850,
+      "y": 710,
+      "w": 1300,
+      "h": 180,
+      "text": "③ 选择行动（按优先级）\n未结订单先续办；新决策需自主开启、冷却结束\n再看衣物、商品与余额",
+      "tone": "purple",
+      "shape": "rect",
+      "size": 35
+    },
+    {
+      "id": "wait",
+      "x": 2480,
+      "y": 710,
+      "w": 360,
+      "h": 180,
+      "text": "继续原版活动\n等待条件变化",
+      "tone": "amber",
+      "shape": "rect",
+      "size": 34
+    },
+    {
+      "id": "wear",
+      "x": 270,
+      "y": 1060,
+      "w": 700,
+      "h": 340,
+      "text": "优先：已有合适衣物\n检查穿戴条件\n直接穿戴",
+      "tone": "teal",
+      "shape": "rect",
+      "size": 38
+    },
+    {
+      "id": "buy",
+      "x": 1150,
+      "y": 1060,
+      "w": 700,
+      "h": 340,
+      "text": "其次：有合适商品且钱够\n冻结款项 → 到店复核\n交付衣物并扣款 → 穿戴",
+      "tone": "teal",
+      "shape": "rect",
+      "size": 36
+    },
+    {
+      "id": "income",
+      "x": 2030,
+      "y": 1060,
+      "w": 700,
+      "h": 340,
+      "text": "有商品但钱不足：获取收入\n已有合同 → 原版生产\n无合同 → 找岗 → 必要体检\n→ 签约 → 原版生产\n完成产出 → 结薪",
+      "tone": "orange",
+      "shape": "rect",
+      "size": 34
+    },
+    {
+      "id": "execute",
+      "x": 650,
+      "y": 1580,
+      "w": 1700,
+      "h": 180,
+      "text": "④ 执行并确认真实结果（原版 Job）\n穿戴生效 · 交货扣款 · 体检出报告 · 完工计薪\n失败或中断：未提交则取消退款；已提交则保留结果",
+      "tone": "blue",
+      "shape": "rect",
+      "size": 35
+    },
+    {
+      "id": "feedback",
+      "x": 850,
+      "y": 1890,
+      "w": 1300,
+      "h": 160,
+      "text": "⑤ 回写状态与收支，重新评估需求\n成功、等待、中断、欠薪均进入下一轮",
+      "tone": "green",
+      "shape": "rect",
+      "size": 38
+    }
+  ],
+  "edges": [
+    {
+      "a": "state",
+      "b": "gate",
+      "points": [
+        [
+          1500,
+          400
+        ],
+        [
+          1500,
+          470
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "gate",
+      "b": "choose",
+      "points": [
+        [
+          1500,
+          630
+        ],
+        [
+          1500,
+          710
+        ]
+      ],
+      "label": "可以",
+      "lx": 1565,
+      "ly": 668,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "gate",
+      "b": "wait",
+      "points": [
+        [
+          2150,
+          550
+        ],
+        [
+          2660,
+          550
+        ],
+        [
+          2660,
+          710
+        ]
+      ],
+      "label": "暂不参与",
+      "lx": 2400,
+      "ly": 515,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "choose",
+      "b": "wait",
+      "points": [
+        [
+          2150,
+          800
+        ],
+        [
+          2480,
+          800
+        ]
+      ],
+      "label": "无可行动条件",
+      "lx": 2310,
+      "ly": 762,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "choose",
+      "b": "wear",
+      "points": [
+        [
+          1500,
+          890
+        ],
+        [
+          1500,
+          970
+        ],
+        [
+          620,
+          970
+        ],
+        [
+          620,
+          1060
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "choose",
+      "b": "buy",
+      "points": [
+        [
+          1500,
+          890
+        ],
+        [
+          1500,
+          1060
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "choose",
+      "b": "income",
+      "points": [
+        [
+          1500,
+          890
+        ],
+        [
+          1500,
+          970
+        ],
+        [
+          2380,
+          970
+        ],
+        [
+          2380,
+          1060
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "wear",
+      "b": "execute",
+      "points": [
+        [
+          620,
+          1400
+        ],
+        [
+          620,
+          1490
+        ],
+        [
+          1500,
+          1490
+        ],
+        [
+          1500,
+          1580
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "buy",
+      "b": "execute",
+      "points": [
+        [
+          1500,
+          1400
+        ],
+        [
+          1500,
+          1580
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "income",
+      "b": "execute",
+      "points": [
+        [
+          2380,
+          1400
+        ],
+        [
+          2380,
+          1490
+        ],
+        [
+          1500,
+          1490
+        ],
+        [
+          1500,
+          1580
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "execute",
+      "b": "feedback",
+      "points": [
+        [
+          1500,
+          1760
+        ],
+        [
+          1500,
+          1890
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "line",
+      "virtual": false
+    },
+    {
+      "a": "wait",
+      "b": "feedback",
+      "points": [
+        [
+          2840,
+          800
+        ],
+        [
+          2900,
+          800
+        ],
+        [
+          2900,
+          1970
+        ],
+        [
+          2150,
+          1970
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "amber",
+      "virtual": false
+    },
+    {
+      "a": "feedback",
+      "b": "state",
+      "points": [
+        [
+          850,
+          1970
+        ],
+        [
+          120,
+          1970
+        ],
+        [
+          120,
+          335
+        ],
+        [
+          850,
+          335
+        ]
+      ],
+      "label": "",
+      "lx": 0,
+      "ly": 0,
+      "tone": "green",
+      "virtual": false
+    }
+  ],
+  "notes": [
+    {
+      "x": 1500,
+      "y": 100,
+      "text": "Pawn 经济 AI · 简明闭环",
+      "size": 66,
+      "tone": "ink",
+      "align": "center",
+      "bold": true
+    },
+    {
+      "x": 1500,
+      "y": 185,
+      "text": "需求决定行动，真实行动改变状态，下一轮重新判断",
+      "size": 36,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 450,
+      "y": 290,
+      "text": "下一次原版自然决策",
+      "size": 30,
+      "tone": "green",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 1500,
+      "y": 2140,
+      "text": "条件暂缺就等待：缺货、缺岗、体检未完成或穿戴受限，均不强行执行。",
+      "size": 32,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 1500,
+      "y": 2210,
+      "text": "资金不足以发薪：记一次欠薪并停岗解约；补发后重新招聘。读档取消未结订单。",
+      "size": 32,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    },
+    {
+      "x": 1500,
+      "y": 2280,
+      "text": "当前范围：衣物消费、计件就业与入职体检；图结构已校验，游戏内闭环仍待实机验收。",
+      "size": 29,
+      "tone": "muted",
+      "align": "center",
+      "bold": false
+    }
+  ],
+  "panels": []
+}

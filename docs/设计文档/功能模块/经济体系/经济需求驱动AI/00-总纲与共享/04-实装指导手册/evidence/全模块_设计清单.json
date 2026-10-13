@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "stage": "complete_module_design_not_runtime_implementation",
+  "master": "00-总纲与共享/02-代码设计总册/00-全部模块方案_总册.md",
+  "merged": "00-总纲与共享/02-代码设计总册/00-全部模块方案_合订本.md",
+  "modules": [
+    {"id":"M1","file":"M01-状态与需求感知/01-状态与需求感知_代码设计方案.md","owns":"facts_and_current_gap_projection","inputs":["vanilla_read_only"],"outputs":["M2","M3","M4","M5","M8","M12"]},
+    {"id":"M2","file":"M02-长期生活规划/02-长期生活规划_代码设计方案.md","owns":"style_targets_and_limited_plan","inputs":["M1","M5","M8","M9","M11"],"outputs":["M1","M3","M4","M5","M12"]},
+    {"id":"M3","file":"M03-目标与多需求仲裁/03-目标与多需求仲裁_代码设计方案.md","owns":"goal_lifecycle_and_arbitration_choice","inputs":["M1","M2","M4","M5","M6","M7","M8","M9"],"outputs":["M4","M12"]},
+    {"id":"M4","file":"M04-方案比较与行动调度/04-方案比较与行动调度_代码设计方案.md","owns":"candidate_comparison_and_single_action_lease","inputs":["M1","M2","M3","M5","M6","M7","M8","M9","M10","M11"],"outputs":["native_jobs","M6","M7","M8","M9","M11","M12"]},
+    {"id":"M5","file":"M05-生活预算与储蓄/05-生活预算与储蓄_代码设计方案.md","owns":"soft_budget_and_refill_hysteresis","inputs":["M1","M2","M4","M7","M8","M9","M11"],"outputs":["M2","M3","M4","M6","M12"]},
+    {"id":"M6","file":"M06-就业与劳动合同/06-就业与劳动合同_代码设计方案.md","owns":"employment_contract_work_evidence_and_wage_obligation","inputs":["M1","M2","M3","M5","M9","M10","M11"],"outputs":["M4","M9","M10","M11","M12"]},
+    {"id":"M7","file":"M07-消费与服务/07-消费与服务_代码设计方案.md","owns":"order_delivery_use_right_and_service_obligation","inputs":["M1","M3","M4","M5","M8","M9","M10","M11"],"outputs":["M3","M5","M9","M10","M11","M12"]},
+    {"id":"M8","file":"M08-家庭与照护协作/08-家庭与照护协作_代码设计方案.md","owns":"care_authorization_assignment_and_handover","inputs":["M1","M2","M3","M5","M6","M7","M9","M10","M11"],"outputs":["M2","M3","M4","M5","M7","M9","M12"]},
+    {"id":"M9","file":"M09-经验反馈与失败恢复/09-经验反馈与失败恢复_代码设计方案.md","owns":"bounded_experience_retry_and_recovery_coordination","inputs":["M1","M4","M6","M7","M8","M10","M11"],"outputs":["M1","M2","M3","M4","M6","M7","M11","M12"]},
+    {"id":"M10","file":"M10-再生产与公有机构运行/10-再生产与公有机构运行_代码设计方案.md","owns":"authorized_supply_plan_and_institution_operations","inputs":["M6","M7","M8","M9","M11","M12"],"outputs":["M4","M6","M7","M11","M12"]},
+    {"id":"M11","file":"M11-资金资源权利与制度协调/11-资金资源权利与制度协调_代码设计方案.md","owns":"ledger_hard_claims_resource_rights_transactions_and_mode","inputs":["M4","M6","M7","M8","M10","M12","vanilla_physical_evidence"],"outputs":["M4","M5","M6","M7","M8","M9","M10","M12"]},
+    {"id":"M12","file":"M12-需求可视化与治理反馈/12-需求可视化与治理反馈_代码设计方案.md","owns":"read_models_policy_drafts_and_bounded_trends","inputs":["M1","M2","M3","M4","M5","M6","M7","M8","M9","M10","M11"],"outputs":["authorized_governance_commands"]}
+  ],
+  "phaseProtocol": ["commands_and_recovery","raw_facts","desired_targets","cost_and_budget_estimates","one_plan_feedback","goals_and_limited_candidates","batched_resource_preparation","native_job_acceptance_and_execution","verified_evidence_and_unique_settlement","bounded_supply_and_dashboard_publication"],
+  "singleWriterRoles": {
+    "goal_state":"M3",
+    "action_lease":"M4",
+    "soft_budget":"M5",
+    "work_contract":"M6",
+    "service_order":"M7",
+    "care_authorization":"M8",
+    "experience_summary":"M9",
+    "supply_plan":"M10",
+    "money_and_hard_claims":"M11",
+    "read_model":"M12"
+  },
+  "prototypeGates": ["native_thinktree_ordering_and_player_control","food_bed_medical_access_filters","work_type_specific_completion_evidence","item_split_merge_production_lineage","trade_actual_silver_arrival_and_reset_order","save_load_transaction_reconciliation","large_population_and_ruif_runtime_readability"],
+  "nativeControlMustRemain": true,
+  "publicInstitutionsOnly": true,
+  "ruifRequired": true,
+  "newMoneyRequiresPhysicalDeposit": true,
+  "implemented": false
+}

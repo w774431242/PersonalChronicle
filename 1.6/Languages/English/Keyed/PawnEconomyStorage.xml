@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PersonalChronicle.Storage.PublicZone>Public ownership</PersonalChronicle.Storage.PublicZone>
+  <PersonalChronicle.Storage.PublicZoneHelp>Register unowned stock already here and future arrivals as public. Private ownership is preserved. Charging uses each item's own market value (no manual price). When the economy is enabled, settlement precedes ingestion. Disabling, shrinking or deleting the zone preserves existing public ownership. This toggle applies only to this stockpile.</PersonalChronicle.Storage.PublicZoneHelp>
+  <PersonalChronicle.Storage.PublicZoneActive>Public stockpile</PersonalChronicle.Storage.PublicZoneActive>
+  <PersonalChronicle.Storage.AssignOwner>Assign owner</PersonalChronicle.Storage.AssignOwner>
+  <PersonalChronicle.Storage.OwnerHelp>Only the assigned pawn may consume private food. Empty the shelf before changing its owner.</PersonalChronicle.Storage.OwnerHelp>
+  <PersonalChronicle.Storage.EmptyFirst>Empty the shelf before assigning a different owner. Existing ownership is not transferred.</PersonalChronicle.Storage.EmptyFirst>
+  <PersonalChronicle.Storage.Unassigned>Unassigned</PersonalChronicle.Storage.Unassigned>
+  <PersonalChronicle.Storage.OwnerValue>Owner: {0}</PersonalChronicle.Storage.OwnerValue>
+</LanguageData>

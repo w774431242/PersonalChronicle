@@ -38,6 +38,13 @@
       <HintPath>$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <!-- 离线宿主垫片依赖（**长期**，2026-09-21 起不再是 TEMP）：离线的引擎路径用例
+         （`TempR8Measure` 窗口度量探针 / `StockSeriesScribeTests` Scribe 往返等）需要
+         Harmony 短接 Unity 缺口（TODO 类短接见 08c §12.7：Verse.Log.* / Verse.DeepProfiler）。 -->
+    <Reference Include="0Harmony">
+      <HintPath>E:\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <PropertyGroup>
@@ -59,10 +66,32 @@
       <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll" />
       <!-- Verse.Def 构造（shortHash=Rand.Range）依赖 netstandard 2.1，必须随引擎拷入，否则 Def 子类 new 不出 -->
       <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\netstandard.dll" />
+      <!-- 离线宿主垫片链的一环：Harmony 读取引擎程序集 custom attribute 时需要它（长期） -->
+      <EngineDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\UnityEngine.SharedInternalsModule.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(EngineDll)"
           DestinationFolder="$(OutDir)"
           SkipUnchangedFiles="true"
           Condition="Exists('$(RimWorldPath)\RimWorldWin64_Data\Managed')" />
+  </Target>
+
+  <!-- 离线 Scribe 路径依赖（2026-09-21 取证）：
+       `ScribeExtractor.SaveableFromNode` 会调 `GenTypes.GetTypeInAnyAssembly` ⇒ 枚举 Assembly-CSharp 的**全类型**
+       ⇒ **所有非框架依赖 dll 必须能在输出目录解析**，否则 ReflectionTypeLoadException / FileNotFoundException
+       被 Scribe 吞成 `Log.Error` + `target = default`（外在表现 = “读档后永远空态、不报错、不崩”）。
+       此处批量拷贝非框架游戏 dll；框架程序集（mscorlib/System.*/Mono.Security）排除，避免与 net48 宿主冲突。 -->
+  <Target Name="CopyGameDependencies" AfterTargets="Build">
+    <ItemGroup>
+      <GameDll Include="$(RimWorldPath)\RimWorldWin64_Data\Managed\*.dll"
+               Exclude="$(RimWorldPath)\RimWorldWin64_Data\Managed\mscorlib.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Core.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Data.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Data.DataSetExtensions.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Drawing.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Configuration.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Numerics.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Runtime.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Runtime.Serialization.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Security.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.ServiceModel.Internals.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Transactions.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Xml.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Xml.Linq.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.IO.Compression.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.IO.Compression.FileSystem.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.Net.Http.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\System.EnterpriseServices.dll;$(RimWorldPath)\RimWorldWin64_Data\Managed\Mono.Security.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(GameDll)"
+          DestinationFolder="$(OutDir)"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(RimWorldPath)\RimWorldWin64_Data\Managed')" />
+    <!-- Test host only: GenTypes enumerates the registered mod's full type inventory.
+         The production mod still uses RUIF with Private=false. -->
+    <Copy SourceFiles="$(RimWorldPath)\Mods\RUIF\Assemblies\RUIF.dll"
+          DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
   </Target>
 </Project>

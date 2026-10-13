@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA.Treasury.Title>Public treasury preparation and legacy settlement</PC_PEA.Treasury.Title>
+  <PC_PEA.Treasury.Funds>Unallocated treasury {0} · reserved {1} · physical backing for all accounts {2}</PC_PEA.Treasury.Funds>
+  <PC_PEA.Treasury.Unknown>unknown</PC_PEA.Treasury.Unknown>
+  <PC_PEA.Treasury.Hint>Adult colonists deposit public stockpile silver in safe free time. You can also request a delivery with a selected settlement office and colonist. Withdrawals return public silver beside the carrier. During preparation, resolve legacy claims as shown here, then save and reload. Wages and purchases require the active phase.</PC_PEA.Treasury.Hint>
+  <PC_PEA.Treasury.Pending>Delivery #{0}: {1}, {2} silver, carrier {3}</PC_PEA.Treasury.Pending>
+  <PC_PEA.Treasury.Kind.Deposit>deposit</PC_PEA.Treasury.Kind.Deposit>
+  <PC_PEA.Treasury.Kind.Withdrawal>withdrawal</PC_PEA.Treasury.Kind.Withdrawal>
+  <PC_PEA.Treasury.DeliveryRecord>#{0} · {1} {2} silver · {3}</PC_PEA.Treasury.DeliveryRecord>
+  <PC_PEA.Treasury.Status.Waiting>waiting for safe free time</PC_PEA.Treasury.Status.Waiting>
+  <PC_PEA.Treasury.Status.Carrying>carrying</PC_PEA.Treasury.Status.Carrying>
+  <PC_PEA.Treasury.Status.Completed>delivered</PC_PEA.Treasury.Status.Completed>
+  <PC_PEA.Treasury.Status.Cancelled>cancelled</PC_PEA.Treasury.Status.Cancelled>
+  <PC_PEA.Treasury.Status.Faulted>awaiting reconciliation</PC_PEA.Treasury.Status.Faulted>
+  <PC_PEA.Treasury.ClaimKind.Balance>legacy balance</PC_PEA.Treasury.ClaimKind.Balance>
+  <PC_PEA.Treasury.ClaimKind.UnpaidWage>unpaid wage</PC_PEA.Treasury.ClaimKind.UnpaidWage>
+  <PC_PEA.Treasury.OriginalOnly>only in the initial archive; retained as historical evidence</PC_PEA.Treasury.OriginalOnly>
+  <PC_PEA.Treasury.Cancel>Cancel delivery</PC_PEA.Treasury.Cancel>
+  <PC_PEA.Treasury.DepositText>Deliver {0} public silver to the treasury</PC_PEA.Treasury.DepositText>
+  <PC_PEA.Treasury.WithdrawText>Return {0} available treasury silver to the colony</PC_PEA.Treasury.WithdrawText>
+  <PC_PEA.Treasury.Deposit>Request deposit</PC_PEA.Treasury.Deposit>
+  <PC_PEA.Treasury.Withdraw>Request withdrawal</PC_PEA.Treasury.Withdraw>
+  <PC_PEA.Treasury.SelectBank>Select a public settlement counter in Institutions first.</PC_PEA.Treasury.SelectBank>
+  <PC_PEA.Treasury.Account>Assumed account: {0} · {1}</PC_PEA.Treasury.Account>
+  <PC_PEA.Treasury.FreezeFirst>Enable the sole Mod setting first to freeze the latest legacy state.</PC_PEA.Treasury.FreezeFirst>
+  <PC_PEA.Treasury.CutoverSummary>Legacy review: {0} records awaiting acknowledgement; {1} unfunded claims. Cash transfers use actual treasury funds. Each acknowledgement adopts the stated treatment and preserves the source record.</PC_PEA.Treasury.CutoverSummary>
+  <PC_PEA.Treasury.Conflict>Legacy settlement or saved delivery records conflict. Funding and adoption are blocked; source records and funds remain preserved for reconciliation.</PC_PEA.Treasury.Conflict>
+  <PC_PEA.Treasury.Claim>Claim #{0} · recipient {1} · remaining {2}</PC_PEA.Treasury.Claim>
+  <PC_PEA.Treasury.Fund>Fund full remainder</PC_PEA.Treasury.Fund>
+  <PC_PEA.Treasury.Acknowledge>Adopt treatment</PC_PEA.Treasury.Acknowledge>
+  <PC_PEA.Treasury.Changed>differs from initial archive</PC_PEA.Treasury.Changed>
+  <PC_PEA.Treasury.CutoverComplete>All legacy records have an explicit treatment and cash claims are funded. This does not enable wages or fees. Assumed personal/institution balances remain liabilities; closing the setting preserves them in Draining.</PC_PEA.Treasury.CutoverComplete>
+  <PC_PEA.Treasury.Disposition.PreserveHistory>retain identity, configuration or historical evidence; old fee routes remain inactive</PC_PEA.Treasury.Disposition.PreserveHistory>
+  <PC_PEA.Treasury.Disposition.CancelOrderReleaseReservation>cancel the old pending service and release its reservation in the assumed balance; preserve the original order</PC_PEA.Treasury.Disposition.CancelOrderReleaseReservation>
+  <PC_PEA.Treasury.Disposition.EndContractPreserveWage>end the old work assignment; retain all wage claims</PC_PEA.Treasury.Disposition.EndContractPreserveWage>
+  <PC_PEA.Treasury.Disposition.RetainOwnership>retain the original owner's title and paid apparel use</PC_PEA.Treasury.Disposition.RetainOwnership>
+  <PC_PEA.Treasury.Record.EconomyAccount>account</PC_PEA.Treasury.Record.EconomyAccount>
+  <PC_PEA.Treasury.Record.EconomyPerson>person</PC_PEA.Treasury.Record.EconomyPerson>
+  <PC_PEA.Treasury.Record.EconomyInstitution>public institution</PC_PEA.Treasury.Record.EconomyInstitution>
+  <PC_PEA.Treasury.Record.EconomyPosition>position</PC_PEA.Treasury.Record.EconomyPosition>
+  <PC_PEA.Treasury.Record.EconomyContract>work contract</PC_PEA.Treasury.Record.EconomyContract>
+  <PC_PEA.Treasury.Record.EconomyOrder>order</PC_PEA.Treasury.Record.EconomyOrder>
+  <PC_PEA.Treasury.Record.EconomyReceipt>receipt or unpaid wage</PC_PEA.Treasury.Record.EconomyReceipt>
+  <PC_PEA.Treasury.Record.EconomyReport>examination report</PC_PEA.Treasury.Record.EconomyReport>
+  <PC_PEA.Treasury.Record.EconomyOwnership>asset title</PC_PEA.Treasury.Record.EconomyOwnership>
+</LanguageData>

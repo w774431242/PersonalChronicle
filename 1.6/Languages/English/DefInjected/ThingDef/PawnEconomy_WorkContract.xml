@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <PC_PEA_WorkContractDocument.label>work contract</PC_PEA_WorkContractDocument.label>
+  <PC_PEA_WorkContractDocument.description>A signed copy of a labour contract. The paper itself is not the claim: payee and every term come from the contract ledger, so picking it up or stealing it never pays a wage.</PC_PEA_WorkContractDocument.description>
+</LanguageData>

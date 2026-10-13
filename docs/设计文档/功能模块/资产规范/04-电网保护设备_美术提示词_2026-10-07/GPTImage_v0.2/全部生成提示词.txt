@@ -1,0 +1,94 @@
+PC_PowerCircuitBreaker_north
+Use case: stylized-concept
+Asset type: RimWorld mod building texture, one isolated game sprite, north-facing structural master.
+Style: match the supplied T1 smelter reference ONLY for muted steel-gray palette, charcoal outlines, broad readable hand-painted flat color blocks and restrained bevels. Do NOT copy its shape, orange furnace, screen or equipment. Strict overhead orthographic plan view, no isometric view, no perspective, no tall visible front panel. Very short lower rim only. Not a photograph, not a 3D product render, not pixel art. Simple silhouette readable after downsampling to 192 px.
+Canvas: square, centered sprite, generous transparent padding, object including terminals spans about 66% of canvas width and 48% height. Genuine transparent RGBA background, no ground, no shadow outside silhouette, no checkerboard painted into image. No text, numerals, logos, labels, screens, glowing pixels, sparks, cables running outside sprite. Smooth solid opaque metal interior, clean alpha edges.
+Primary request: one compact low-profile enclosed circuit breaker, healthy intact NORMAL closed condition, front at BOTTOM of image. Broad horizontal rectangular steel-gray housing with dark muted steel-blue structural plate. Exactly TWO short stub electrical terminals, one centered LEFT and one centered RIGHT, equal size; terminals have simple solid metal socket shapes. Exactly ONE short thick mechanical latch lever centered near BOTTOM edge, oriented vertically in the image, squared gray grip, seated on a small dark rectangular socket. Exactly ONE narrow horizontal vent near TOP of housing, containing exactly FOUR broad vertical dark slots. Exactly ONE tiny muted mustard-yellow square immediately to the RIGHT of the vent, no glow. Sparse details: at most four large corner fasteners. Device is floor-hugging, no cabinet, no legs, no second lever, no other vent or icon. Draw ONLY this one object in north view.
+
+
+PC_PowerCircuitBreaker_east
+Use case: precise-object-edit
+Asset type: RimWorld building directional sprite, east view.
+Input image: approved north structural master, the ONLY edit target. Preserve exact same object design, material color, silhouette proportions, terminal shape, four corner bolts, FOUR vent slots, one lever, one yellow square.
+Primary request: Rotate the actual device CLOCKWISE by exactly 90 degrees in the image plane. Front lever at LEFT; terminals at TOP and BOTTOM; vent a VERTICAL strip at RIGHT with FOUR horizontal slots; mustard square immediately BELOW vent. Housing is VERTICAL, long axis top-bottom.
+Keep camera strictly overhead orthographic; do not mirror, tilt, invent new details or show tall sides. Rerender only minimal restrained rim shading consistently with game sprite. One centered object on same square transparent canvas; preserve relative object scale and center. No text, numbers, glow, floor, drop shadow, white matte, checkerboard or extra objects. Healthy normal closed condition. Genuine transparent RGBA background. Match master exactly in visual complexity and proportions.
+
+
+PC_PowerCircuitBreaker_south
+Use case: precise-object-edit
+Asset type: RimWorld building directional sprite, south view.
+Input image: approved north structural master, the ONLY edit target. Preserve exact same object design, material color, silhouette proportions, terminal shape, four corner bolts, FOUR vent slots, one lever, one yellow square.
+Primary request: Rotate actual device by exactly 180 degrees in the image plane. Front lever at TOP; terminals LEFT and RIGHT; vent HORIZONTAL near BOTTOM with FOUR vertical slots; mustard square immediately LEFT of vent. Housing HORIZONTAL.
+Keep camera strictly overhead orthographic; do not mirror, tilt, invent new details or show tall sides. Rerender only minimal restrained rim shading consistently with game sprite. One centered object on same square transparent canvas; preserve relative object scale and center. No text, numbers, glow, floor, drop shadow, white matte, checkerboard or extra objects. Healthy normal closed condition. Genuine transparent RGBA background. Match master exactly in visual complexity and proportions.
+
+
+PC_PowerCircuitBreaker_west
+Use case: precise-object-edit
+Asset type: RimWorld building directional sprite, west view.
+Input image: approved north structural master, the ONLY edit target. Preserve exact same object design, material color, silhouette proportions, terminal shape, four corner bolts, FOUR vent slots, one lever, one yellow square.
+Primary request: Rotate actual device CLOCKWISE by exactly 270 degrees in the image plane. Front lever at RIGHT; terminals TOP and BOTTOM; vent a VERTICAL strip at LEFT with FOUR horizontal slots; mustard square immediately ABOVE vent. Housing VERTICAL, long axis top-bottom.
+Keep camera strictly overhead orthographic; do not mirror, tilt, invent new details or show tall sides. Rerender only minimal restrained rim shading consistently with game sprite. One centered object on same square transparent canvas; preserve relative object scale and center. No text, numbers, glow, floor, drop shadow, white matte, checkerboard or extra objects. Healthy normal closed condition. Genuine transparent RGBA background. Match master exactly in visual complexity and proportions.
+
+
+PC_PowerIsolator_north
+Use case: stylized-concept
+Asset type: RimWorld mod building texture, one isolated game sprite, north-facing structural master.
+Style: match the supplied T1 smelter reference ONLY for muted steel-gray palette, charcoal outlines, broad readable hand-painted flat color blocks and restrained bevels. Do NOT copy its shape, orange furnace, screen or equipment. Strict overhead orthographic plan view, no isometric view, no perspective, no tall visible front panel. Very short lower rim only. Not a photograph, not a 3D product render, not pixel art. Simple silhouette readable after downsampling to 192 px.
+Canvas: square, centered sprite, generous transparent padding, object including terminals spans about 66% of canvas width and 48% height. Genuine transparent RGBA background, no ground, no shadow outside silhouette, no checkerboard painted into image. No text, numerals, logos, labels, screens, glowing pixels, sparks, cables running outside sprite. Smooth solid opaque metal interior, clean alpha edges.
+Primary request: one compact low-profile exposed manual rotary knife isolator switch, healthy intact NORMAL CLOSED condition, front at BOTTOM. Horizontal rectangular steel-gray very shallow base, dark muted steel-blue inset mounting plate, simpler and lower than circuit breaker. Exactly TWO short stub electrical terminals centered LEFT and RIGHT. Exactly TWO insulated fixed contact blocks aligned horizontally LEFT and RIGHT of center on top, dark charcoal bases with simple steel-gray contact sockets. Exactly ONE broad light-steel knife blade runs horizontally from left contact hinge to right contact jaw, physically bridges both contact blocks in CLOSED position. Left hinge and right jaw must be distinguishable. Exactly ONE short separate horizontal gray operating handle near BOTTOM of plate, mechanically linked simply to the left hinge; no button, no upright lever. No vent, no screen, no enclosure covering blade, no protective electronics, no indicator. Four large corner fasteners maximum. Clear simple industrial geometry; no labels or floating symbols. Draw ONLY this one object in north view.
+
+
+PC_PowerIsolator_east
+Use case: precise-object-edit
+Asset type: RimWorld building sprite, east view, healthy CLOSED isolator.
+Input image is approved north master, edit target. Preserve EXACT same plate, terminal proportions, two fixed insulated contact blocks, four corner fasteners, light-steel blade and one separate operating handle with simple linkage.
+Primary request: Rotate north device CLOCKWISE 90 degrees in image plane. Housing vertical. Terminals TOP and BOTTOM. LEFT hinge from north becomes TOP hinge; RIGHT jaw becomes BOTTOM jaw. CLOSED steel blade VERTICAL bridges top hinge to bottom jaw. Short separate operating handle VERTICAL along LEFT front edge.
+Keep strict overhead orthographic camera, no mirror, no perspective, no tall front side, no cabinet, vent, screen or new part. Match master color, detail density and object scale. One centered object on transparent square canvas, genuine RGBA, no external shadows, floor, text, glow, sparks or checkerboard.
+
+
+PC_PowerIsolator_south
+Use case: precise-object-edit
+Asset type: RimWorld building sprite, south view, healthy CLOSED isolator.
+Input image is approved north master, edit target. Preserve EXACT same plate, terminal proportions, two fixed insulated contact blocks, four corner fasteners, light-steel blade and one separate operating handle with simple linkage.
+Primary request: Rotate north device 180 degrees. Housing horizontal. Terminals LEFT and RIGHT. Original LEFT hinge becomes RIGHT hinge; original RIGHT jaw becomes LEFT jaw. CLOSED blade HORIZONTAL bridges right hinge to left jaw. Short separate operating handle HORIZONTAL at TOP front edge.
+Keep strict overhead orthographic camera, no mirror, no perspective, no tall front side, no cabinet, vent, screen or new part. Match master color, detail density and object scale. One centered object on transparent square canvas, genuine RGBA, no external shadows, floor, text, glow, sparks or checkerboard.
+
+
+PC_PowerIsolator_west
+Use case: precise-object-edit
+Asset type: RimWorld building sprite, west view, healthy CLOSED isolator.
+Input image is approved north master, edit target. Preserve EXACT same plate, terminal proportions, two fixed insulated contact blocks, four corner fasteners, light-steel blade and one separate operating handle with simple linkage.
+Primary request: Rotate north device CLOCKWISE 270 degrees. Housing vertical. Terminals TOP and BOTTOM. Original LEFT hinge becomes BOTTOM hinge; original RIGHT jaw becomes TOP jaw. CLOSED blade VERTICAL bridges bottom hinge to top jaw. Short separate operating handle VERTICAL along RIGHT front edge.
+Keep strict overhead orthographic camera, no mirror, no perspective, no tall front side, no cabinet, vent, screen or new part. Match master color, detail density and object scale. One centered object on transparent square canvas, genuine RGBA, no external shadows, floor, text, glow, sparks or checkerboard.
+
+
+PC_PowerIsolator_Off_north
+Use case: precise-object-edit
+Asset type: RimWorld isolator OPEN-state texture, north view.
+Input image: SAME DIRECTION closed sprite, the edit target. This is a strict localized mechanical STATE EDIT, NOT a redesign. Preserve exact canvas, object scale, placement, outline, colors, FOUR corner bolts, TWO external terminals, TWO insulated fixed contact block positions, socket details and steel-blue base. Keep housing and background pixels unchanged as far as possible. Retain healthy intact materials; OPEN is an intentional normal state, no damage or darkening.
+Primary request: Hinge remains LEFT, receiving jaw remains RIGHT. Move ONLY blade: swing its free right end toward UPPER-CENTER of the inset plate, in an oblique open position. Blade remains attached to left hinge; large clearly visible EMPTY AIR GAP between blade tip and right receiving jaw. Keep blade within base footprint. Turn separate BOTTOM operating handle about 25 degrees to its open position.
+Mechanical goal: one hinged blade visibly DISENGAGED from receiving jaw, no conductive bridge. Fixed contacts do not move. Retain one blade, one handle, one hinge, one jaw; no extra parts. Do not move or rotate whole device. Same overhead orthographic view, same restrained rim shading. No sparks, arcs, warning symbols, indicator lamps, glow, text, white matte, floor or shadow. Genuine transparent RGBA background.
+
+
+PC_PowerIsolator_Off_east
+Use case: precise-object-edit
+Asset type: RimWorld isolator OPEN-state texture, east view.
+Input image: SAME DIRECTION closed sprite, the edit target. This is a strict localized mechanical STATE EDIT, NOT a redesign. Preserve exact canvas, object scale, placement, outline, colors, FOUR corner bolts, TWO external terminals, TWO insulated fixed contact block positions, socket details and steel-blue base. Keep housing and background pixels unchanged as far as possible. Retain healthy intact materials; OPEN is an intentional normal state, no damage or darkening.
+Primary request: Hinge remains TOP, receiving jaw remains BOTTOM. Move ONLY blade: swing its free bottom end toward RIGHT-CENTER of inset plate, oblique open position, blade remains attached to top hinge. Large clearly visible EMPTY AIR GAP between tip and bottom receiving jaw. Keep blade within base footprint. Turn separate LEFT operating handle about 25 degrees to its open position.
+Mechanical goal: one hinged blade visibly DISENGAGED from receiving jaw, no conductive bridge. Fixed contacts do not move. Retain one blade, one handle, one hinge, one jaw; no extra parts. Do not move or rotate whole device. Same overhead orthographic view, same restrained rim shading. No sparks, arcs, warning symbols, indicator lamps, glow, text, white matte, floor or shadow. Genuine transparent RGBA background.
+
+
+PC_PowerIsolator_Off_south
+Use case: precise-object-edit
+Asset type: RimWorld isolator OPEN-state texture, south view.
+Input image: SAME DIRECTION closed sprite, the edit target. This is a strict localized mechanical STATE EDIT, NOT a redesign. Preserve exact canvas, object scale, placement, outline, colors, FOUR corner bolts, TWO external terminals, TWO insulated fixed contact block positions, socket details and steel-blue base. Keep housing and background pixels unchanged as far as possible. Retain healthy intact materials; OPEN is an intentional normal state, no damage or darkening.
+Primary request: Hinge remains RIGHT, receiving jaw remains LEFT. Move ONLY blade: swing its free left end toward LOWER-CENTER of inset plate, oblique open position, blade remains attached to right hinge. Large clearly visible EMPTY AIR GAP between tip and left receiving jaw. Keep blade within base footprint. Turn separate TOP operating handle about 25 degrees to its open position.
+Mechanical goal: one hinged blade visibly DISENGAGED from receiving jaw, no conductive bridge. Fixed contacts do not move. Retain one blade, one handle, one hinge, one jaw; no extra parts. Do not move or rotate whole device. Same overhead orthographic view, same restrained rim shading. No sparks, arcs, warning symbols, indicator lamps, glow, text, white matte, floor or shadow. Genuine transparent RGBA background.
+
+
+PC_PowerIsolator_Off_west
+Use case: precise-object-edit
+Asset type: RimWorld isolator OPEN-state texture, west view.
+Input image: SAME DIRECTION closed sprite, the edit target. This is a strict localized mechanical STATE EDIT, NOT a redesign. Preserve exact canvas, object scale, placement, outline, colors, FOUR corner bolts, TWO external terminals, TWO insulated fixed contact block positions, socket details and steel-blue base. Keep housing and background pixels unchanged as far as possible. Retain healthy intact materials; OPEN is an intentional normal state, no damage or darkening.
+Primary request: Hinge remains BOTTOM, receiving jaw remains TOP. Move ONLY blade: swing its free top end toward LEFT-CENTER of inset plate, oblique open position, blade remains attached to bottom hinge. Large clearly visible EMPTY AIR GAP between tip and top receiving jaw. Keep blade within base footprint. Turn separate RIGHT operating handle about 25 degrees to its open position.
+Mechanical goal: one hinged blade visibly DISENGAGED from receiving jaw, no conductive bridge. Fixed contacts do not move. Retain one blade, one handle, one hinge, one jaw; no extra parts. Do not move or rotate whole device. Same overhead orthographic view, same restrained rim shading. No sparks, arcs, warning symbols, indicator lamps, glow, text, white matte, floor or shadow. Genuine transparent RGBA background.

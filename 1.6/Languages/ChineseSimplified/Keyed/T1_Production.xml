@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <PersonalChronicle.T1.Manual>T1 · 人工操作＋智能辅助</PersonalChronicle.T1.Manual>
+  <PersonalChronicle.T1.Speed>当前设备速度系数：{0}</PersonalChronicle.T1.Speed>
+  <PersonalChronicle.T1.State>设备状态：{0}</PersonalChronicle.T1.State>
+  <PersonalChronicle.T1.Waiting>等待作业</PersonalChronicle.T1.Waiting>
+  <PersonalChronicle.T1.WaitHint>有待办工单，尚未开始加工；请检查人员、材料与通路。</PersonalChronicle.T1.WaitHint>
+  <PersonalChronicle.ProductionCard.T1>T1</PersonalChronicle.ProductionCard.T1>
+  <PersonalChronicle.ProductionCard.T2>T2</PersonalChronicle.ProductionCard.T2>
+  <PersonalChronicle.ProductionCard.T3>T3</PersonalChronicle.ProductionCard.T3>
+  <PersonalChronicle.ProductionCard.Speed>设备速度系数 ×{0}</PersonalChronicle.ProductionCard.Speed>
+</LanguageData>

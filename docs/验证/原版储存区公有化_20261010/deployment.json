@@ -1,0 +1,27 @@
+{
+  "changeId": "CHG-20261010-PUBLIC-STOCKPILE",
+  "verifiedUtc": "2026-10-10T11:06:33.7478547Z",
+  "source": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\public-stockpile_20261010_190633_022",
+  "files": [
+    {
+      "path": "Assemblies/PersonalChronicle.dll",
+      "sha256": "C8B58F2F377848896220DD915790F6ABE6026FBB327B94A3B5A9F755A562C3C5",
+      "previousSha256": "3406666C8EB9C947924BF50A0B40D591B8C08C4356390D53B218FEB2D0B6F045"
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyStorage.xml",
+      "sha256": "A96F1C5EEB5A7387EBD3A938F0F947B5D522CC427EF2BBA3D860EE1444FFB4A7",
+      "previousSha256": "A96F1C5EEB5A7387EBD3A938F0F947B5D522CC427EF2BBA3D860EE1444FFB4A7"
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyStorage.xml",
+      "sha256": "9309000ADF8631CAEE5630292B54B575CE22DD8EEF5E07C9C695860E4E726766",
+      "previousSha256": "9309000ADF8631CAEE5630292B54B575CE22DD8EEF5E07C9C695860E4E726766"
+    }
+  ],
+  "unchangedFilesVerified": 245,
+  "deployed": true,
+  "gameVerified": false
+}

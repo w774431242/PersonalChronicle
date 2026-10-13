@@ -1,0 +1,309 @@
+{
+  "checkedUtc": "2026-10-08T05:44:20.5436193Z",
+  "scope": "All twelve module design documents, local links, current evidence fingerprints, declared ownership and independent arithmetic examples only.",
+  "modules": 12,
+  "documents": [
+    {
+      "path": "游戏代码设计/00-全部模块方案_总册.md",
+      "sha256": "AFB86D6D9E933A3A961C493762E741B2492F2EB295844FE0794B490DCD28B2CF",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 15,
+      "length": 6748
+    },
+    {
+      "path": "游戏代码设计/01-状态与需求感知_代码设计方案.md",
+      "sha256": "DBA95AD6EA561401C591272946BA9B8EC370EFF51489B52E9D94989FA3F737DF",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 8,
+      "length": 16396
+    },
+    {
+      "path": "游戏代码设计/02-长期生活规划_代码设计方案.md",
+      "sha256": "5B25C9C3E0B15C18AA0FF930C8C93E5F8688C7E404706A63FEB301FFF3D830D6",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 11,
+      "length": 17877
+    },
+    {
+      "path": "游戏代码设计/03-目标与多需求仲裁_代码设计方案.md",
+      "sha256": "AA4B19A7DE3CBC7E270F226DCE1ABED7643A99B89CB593791880192B6B3AB07E",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 3628
+    },
+    {
+      "path": "游戏代码设计/04-方案比较与行动调度_代码设计方案.md",
+      "sha256": "1E937EBC3817DA8D1C3422D7BCED6552AA593E28F59169E55430D11BF631CB0B",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 3943
+    },
+    {
+      "path": "游戏代码设计/05-生活预算与储蓄_代码设计方案.md",
+      "sha256": "E60A959CE9B0F9428BB48386DB052D5F76962141B8F4B9D80664BD93CFF307D7",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 4336
+    },
+    {
+      "path": "游戏代码设计/06-就业与劳动合同_代码设计方案.md",
+      "sha256": "D94F44DA04E8772A829E9A0BBC05D57932A5D3FF78A2017391D170EF30CA11B7",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 3732
+    },
+    {
+      "path": "游戏代码设计/07-消费与服务_代码设计方案.md",
+      "sha256": "AE87692B2D68B78D608D6FC3F8DDFA12E71F8E81919F518E6A1B06DA3DAAE70A",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 3725
+    },
+    {
+      "path": "游戏代码设计/08-家庭与照护协作_代码设计方案.md",
+      "sha256": "ABAF3B37404D7BEA2C853D0DAA78052886A288FA85B3746C0731DBCF07F53265",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 3330
+    },
+    {
+      "path": "游戏代码设计/09-经验反馈与失败恢复_代码设计方案.md",
+      "sha256": "4596D38CC520FF99682EB5E9CF63850E37A0CF50C3F9C9F10A35F837CFF16931",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 3456
+    },
+    {
+      "path": "游戏代码设计/10-再生产与公有机构运行_代码设计方案.md",
+      "sha256": "A36F044B8101DBC3FE46F66E7863810ACB7EF28FAD5D3DA68FF8F4810D8CB626",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 3940
+    },
+    {
+      "path": "游戏代码设计/11-资金资源权利与制度协调_代码设计方案.md",
+      "sha256": "D32FE35E1C4356F307667F43771CD2E25E5960D8CE6B64FCCB877C8A4F06EFFA",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 1,
+      "length": 4951
+    },
+    {
+      "path": "游戏代码设计/12-需求可视化与治理反馈_代码设计方案.md",
+      "sha256": "7A59FC68EF53E33801817FAB7903F6EDD4C22D9C64D9296D467A0A7D7FB51CAE",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 2,
+      "length": 4461
+    },
+    {
+      "path": "游戏代码设计/00-全部模块方案_合订本.md",
+      "sha256": "C7579765B35F70BED13263A97BAC5EAA2CF07C8345ABF2509141E9F5B6AC4798",
+      "utf8": true,
+      "pairedFences": true,
+      "localLinks": 17,
+      "length": 83451
+    }
+  ],
+  "evidence": [
+    {
+      "file": "模块一_状态需求感知_接口证据.json",
+      "types": 25,
+      "sourceFingerprints": 20,
+      "matched": true
+    },
+    {
+      "file": "模块二_长期生活规划_接口证据.json",
+      "types": 12,
+      "sourceFingerprints": 22,
+      "matched": true
+    },
+    {
+      "file": "全模块_接口证据.json",
+      "types": 26,
+      "sourceFingerprints": 40,
+      "matched": true
+    }
+  ],
+  "manifestOwnershipUnique": true,
+  "structuralMarkersOnly": true,
+  "hypotheticalArithmetic": [
+    {
+      "name": "M3 first effective help",
+      "actual": 1650.0,
+      "expected": 1650.0
+    },
+    {
+      "name": "M3 risk slack is not need percentage",
+      "actual": 150.0,
+      "expected": 150.0
+    },
+    {
+      "name": "M5 usable cash excludes hard reserve",
+      "actual": 700.0,
+      "expected": 700.0
+    },
+    {
+      "name": "M5 reserve cost excludes protected obligation",
+      "actual": 500.0,
+      "expected": 500.0
+    },
+    {
+      "name": "M5 no duplicated current soft budget in target comparison",
+      "actual": 200.0,
+      "expected": 200.0
+    },
+    {
+      "name": "M5 daily reserve target",
+      "actual": 1200.0,
+      "expected": 1200.0
+    },
+    {
+      "name": "M5 lower refill band, minor units",
+      "actual": 840.0,
+      "expected": 840.0
+    },
+    {
+      "name": "M5 limited financing shortfall",
+      "actual": 700.0,
+      "expected": 700.0
+    },
+    {
+      "name": "M5 surplus saving, not whole wage",
+      "actual": 20.0,
+      "expected": 20.0
+    },
+    {
+      "name": "M7 incremental partial settlement",
+      "actual": 150.0,
+      "expected": 150.0
+    },
+    {
+      "name": "M7 unperformed held amount release",
+      "actual": 600.0,
+      "expected": 600.0
+    },
+    {
+      "name": "M8 bounded family cost sharing",
+      "actual": 1000.0,
+      "expected": 1000.0
+    },
+    {
+      "name": "M8 public shortfall not unauthorized spouse debit",
+      "actual": 200.0,
+      "expected": 200.0
+    },
+    {
+      "name": "M9 initial estimate has prior, not certainty",
+      "actual": 0.5,
+      "expected": 0.5
+    },
+    {
+      "name": "M9 one known timely outcome posterior example",
+      "actual": 0.6666666666666666666666666667,
+      "expected": 0.6666666666666666666666666667
+    },
+    {
+      "name": "M9 first retry delay",
+      "actual": 150.0,
+      "expected": 150.0
+    },
+    {
+      "name": "M9 bounded retry delay",
+      "actual": 6000.0,
+      "expected": 6000.0
+    },
+    {
+      "name": "M10 initial net production need",
+      "actual": 9.0,
+      "expected": 9.0
+    },
+    {
+      "name": "M10 after authorizing seven, only two new",
+      "actual": 2.0,
+      "expected": 2.0
+    },
+    {
+      "name": "M10 seven starts, total planned coverage unchanged",
+      "actual": 2.0,
+      "expected": 2.0
+    },
+    {
+      "name": "M10 seven finishes, inventory replaces WIP",
+      "actual": 2.0,
+      "expected": 2.0
+    },
+    {
+      "name": "M11 deposit silver to minor units",
+      "actual": 2000.0,
+      "expected": 2000.0
+    },
+    {
+      "name": "M11 public allocation conserves all balances",
+      "actual": 2000.0,
+      "expected": 2000.0
+    },
+    {
+      "name": "M11 real wage transfer conserves all balances",
+      "actual": 2000.0,
+      "expected": 2000.0
+    },
+    {
+      "name": "M11 consumption transfer conserves all balances",
+      "actual": 2000.0,
+      "expected": 2000.0
+    },
+    {
+      "name": "M11 worker current balance after consumption",
+      "actual": 100.0,
+      "expected": 100.0
+    },
+    {
+      "name": "M12 need minus existing public coverage",
+      "actual": 30.0,
+      "expected": 30.0
+    },
+    {
+      "name": "M12 added public procurement real cost",
+      "actual": 18.0,
+      "expected": 18.0
+    },
+    {
+      "name": "M12 private intent unchanged by public payment",
+      "actual": 24.0,
+      "expected": 24.0
+    },
+    {
+      "name": "M12 total covered including old public support",
+      "actual": 30.0,
+      "expected": 30.0
+    },
+    {
+      "name": "M12 unpaid real need still remains",
+      "actual": 6.0,
+      "expected": 6.0
+    }
+  ],
+  "runtimeCompiled": false,
+  "runtimeTestsExecuted": false,
+  "simulationExecuted": false,
+  "performanceMeasured": false,
+  "gameValidated": false,
+  "limits": [
+    "Manifest ownership and document markers do not prove an implementation satisfies contracts.",
+    "Independent arithmetic is not a test of proposed game modules or a stability proof.",
+    "Native ordering, individual completion hooks, rights access, silver arrival, save recovery and RUIF runtime remain prototype gates.",
+    "No game DLL or decompiled source is distributed in the documentation package."
+  ]
+}

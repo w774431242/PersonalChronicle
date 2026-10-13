@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ===================================================================
+       「标准细化 · 工序/岗位标准表」WorkshopProcessDef
+       （CHG-20261003-WORKSTATION / EXC-2026-015）
+
+       一道工序 = 一行。本表把"真实车间分工"拆成五个可数据驱动的维度：
+         (1) 工序 processStage   (2) 岗位 taskTypeKey   (3) 所需技能 skillDefNames
+         (4) 原版 WorkTypeDef workTypeDefNames   (5) 期望设备 expectedDeviceDefNames
+
+       为什么要有这张表（GOV-006 / GOV-009）：
+         车间类型原本是 N 个孤立 Def，各自声明 4 组岗位映射。要表达"真实分工"就得在 C# 里
+         写 N 个分支 —— 那是硬编码。本表把分工下沉为数据，WorkshopTypeDef.processKeys
+         按 defName 引用若干行；C# 侧零 defName 字面量、零 switch。
+
+       两种生效路径（都合法，互补）：
+         · 显式引用 —— WorkshopTypeDef.processKeys 列出本车间由哪些工序行组成；
+         · 设备反查 —— WorkshopProcessCatalog 建「设备 defName → 本表行」索引，车间内
+           出现该设备即自动并入其工作类型（用户裁决：设备进出车间也要触发，不要求先开工单）。
+           故 expectedDeviceDefNames 非空的行**无需**被 processKeys 引用也能生效。
+
+       taskTypeKey 取值（WorkshopTaskType 的枚举名，刻意不用序号 —— 插入新值不会让既有
+       Def 含义漂移）：Production / Maintenance / QualityCheck / Standby。
+       未知键回退 Production 并只告警一次（WorkshopTaskTypeKeys.Parse）。
+
+       ★ 本表**不覆盖** EXC-2026-012 / EXC-2026-013 的既有映射：车间类型原有 4 组
+         *WorkTypeDefNames 仍然生效，本表只是保留集**并集里的一项**。
+       ★ 本表所有 WorkTypeDef / SkillDef / ThingDef defName 均已对 1.6 原版 Data 逐一核实存在
+         （2026-10-03 核验：WorkTypes.xml / Skills.xml / ThingDefs_Buildings/Buildings_Production.xml）。
+       =================================================================== -->
+
+  <!-- ── 伐木坊：原版无专用锯木台，锚点设备留空（按 PlantCutting 工分而非机器）── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Logging_Production</defName>
+    <label>伐木 · 生产</label>
+    <processStage>Logging</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Plants</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>PlantCutting</li>
+    </workTypeDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Logging</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Logging_Maintenance</defName>
+    <label>伐木 · 维护</label>
+    <processStage>Logging</processStage>
+    <taskTypeKey>Maintenance</taskTypeKey>
+    <skillDefNames>
+      <li>Construction</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Construction</li>
+      <li>Hauling</li>
+    </workTypeDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Logging</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <!-- ── 制作坊 ── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Crafting_Production</defName>
+    <label>制作 · 生产</label>
+    <processStage>Crafting</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Crafting</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>CraftingSpot</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Crafting</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Crafting_Maintenance</defName>
+    <label>制作 · 维护</label>
+    <processStage>Crafting</processStage>
+    <taskTypeKey>Maintenance</taskTypeKey>
+    <skillDefNames>
+      <li>Construction</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Construction</li>
+      <li>Hauling</li>
+    </workTypeDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Crafting</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+  <!-- ── 锻造坊 ── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Smithing_Production</defName>
+    <label>锻造 · 生产</label>
+    <processStage>Smithing</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Smithing</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>FueledSmithy</li>
+      <li>ElectricSmithy</li>
+      <li>ElectricSmelter</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Smithing</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <!-- ── 机械加工坊：原版仍走 Smithing 工作类型（机加台属锻造系工位）── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Machining_Production</defName>
+    <label>机械加工 · 生产</label>
+    <processStage>Machining</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Smithing</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>TableMachining</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Machining</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <!-- ── 烹饪坊 ── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Cooking_Production</defName>
+    <label>烹饪 · 生产</label>
+    <processStage>Cooking</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Cooking</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Cooking</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Cooking</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <!-- ── 缝纫坊 ── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Tailoring_Production</defName>
+    <label>缝纫 · 生产</label>
+    <processStage>Tailoring</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Tailoring</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>HandTailoringBench</li>
+      <li>ElectricTailoringBench</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Tailoring</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+  <!-- ── 制药坊：原版走 Crafting 工作类型（药品由制药台出活）── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_DrugCrafting_Production</defName>
+    <label>制药 · 生产</label>
+    <processStage>DrugCrafting</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Crafting</li>
+      <li>Medicine</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Crafting</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>DrugLab</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_DrugCrafting</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <!-- ── 石工坊 ── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Stonecutting_Production</defName>
+    <label>石工 · 生产</label>
+    <processStage>Stonecutting</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Crafting</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Crafting</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>TableStonecutter</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Stonecutting</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <!-- ── 雕塑坊 ── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Sculpting_Production</defName>
+    <label>雕塑 · 生产</label>
+    <processStage>Sculpting</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Artistic</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Art</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>TableSculpting</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Sculpting</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <!-- ── 研究坊：原版无"搬运研究产物"独立类型，故不加 Hauling ── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Research_Production</defName>
+    <label>研究 · 生产</label>
+    <processStage>Research</processStage>
+    <taskTypeKey>Production</taskTypeKey>
+    <skillDefNames>
+      <li>Intellectual</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Research</li>
+    </workTypeDefNames>
+    <expectedDeviceDefNames>
+      <li>SimpleResearchBench</li>
+      <li>HiTechResearchBench</li>
+    </expectedDeviceDefNames>
+    <workshopTypeDefNames>
+      <li>WT_Research</li>
+    </workshopTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+  <!-- ── 维护 · 搬运（跨车间通用行；设备反查不命中，仅供 processKeys 显式引用）── -->
+  <PersonalChronicle.Automation.WorkshopProcessDef>
+    <defName>WP_Common_Maintenance</defName>
+    <label>通用 · 维护</label>
+    <processStage>Common</processStage>
+    <taskTypeKey>Maintenance</taskTypeKey>
+    <skillDefNames>
+      <li>Construction</li>
+    </skillDefNames>
+    <workTypeDefNames>
+      <li>Construction</li>
+      <li>Hauling</li>
+      <li>Cleaning</li>
+    </workTypeDefNames>
+  </PersonalChronicle.Automation.WorkshopProcessDef>
+
+</Defs>

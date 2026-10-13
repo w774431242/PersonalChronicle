@@ -1,0 +1,482 @@
+<Defs>
+<ThingDef>
+  <defName>PC_FarmFrame</defName>
+  <label>farm frame</label>
+  <description>A reinforced steel chassis frame. The base component every automated farm machine is assembled onto.</description>
+  <graphicData>
+    <texPath>Things/Item/AutoFarm/PC_FarmFrame</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+  </graphicData>
+  <category>Item</category>
+  <thingClass>Thing</thingClass>
+  <statBases>
+    <MarketValue>140</MarketValue>
+    <Mass>6</Mass>
+    <MaxHitPoints>80</MaxHitPoints>
+  </statBases>
+  <techLevel>Industrial</techLevel>
+  <stackLimit>25</stackLimit>
+  <selectable>true</selectable>
+  <useHitPoints>true</useHitPoints>
+  <drawGUIOverlay>true</drawGUIOverlay>
+  <tradeability>None</tradeability>
+  <thingCategories>
+    <li>Items</li>
+  </thingCategories>
+</ThingDef>
+
+<ThingDef>
+  <defName>PC_GrowLightModule</defName>
+  <label>grow light module</label>
+  <description>A long grow lamp tube on a mounting bracket. Provides the light plants need to grow in the machine's coverage area.</description>
+  <graphicData>
+    <texPath>Things/Item/AutoFarm/PC_GrowLightModule</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+  </graphicData>
+  <category>Item</category>
+  <thingClass>Thing</thingClass>
+  <statBases>
+    <MarketValue>220</MarketValue>
+    <Mass>4</Mass>
+    <MaxHitPoints>70</MaxHitPoints>
+  </statBases>
+  <techLevel>Industrial</techLevel>
+  <stackLimit>25</stackLimit>
+  <selectable>true</selectable>
+  <useHitPoints>true</useHitPoints>
+  <drawGUIOverlay>true</drawGUIOverlay>
+  <tradeability>None</tradeability>
+  <thingCategories>
+    <li>Items</li>
+  </thingCategories>
+</ThingDef>
+
+<ThingDef>
+  <defName>PC_IrrigationModule</defName>
+  <label>irrigation module</label>
+  <description>A water pump and pipe assembly. Keeps the machine's farm plots watered (visual water effects).</description>
+  <graphicData>
+    <texPath>Things/Item/AutoFarm/PC_IrrigationModule</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+  </graphicData>
+  <category>Item</category>
+  <thingClass>Thing</thingClass>
+  <statBases>
+    <MarketValue>180</MarketValue>
+    <Mass>5</Mass>
+    <MaxHitPoints>70</MaxHitPoints>
+  </statBases>
+  <techLevel>Industrial</techLevel>
+  <stackLimit>25</stackLimit>
+  <selectable>true</selectable>
+  <useHitPoints>true</useHitPoints>
+  <drawGUIOverlay>true</drawGUIOverlay>
+  <tradeability>None</tradeability>
+  <thingCategories>
+    <li>Items</li>
+  </thingCategories>
+</ThingDef>
+
+<ThingDef>
+  <defName>PC_FertilizerModule</defName>
+  <label>fertilizer module</label>
+  <description>A chemical hopper with a spreader bar. Enriches the soil inside the machine's coverage area; the original ground is restored when the machine is removed.</description>
+  <graphicData>
+    <texPath>Things/Item/AutoFarm/PC_FertilizerModule</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+  </graphicData>
+  <category>Item</category>
+  <thingClass>Thing</thingClass>
+  <statBases>
+    <MarketValue>260</MarketValue>
+    <Mass>6</Mass>
+    <MaxHitPoints>70</MaxHitPoints>
+  </statBases>
+  <techLevel>Industrial</techLevel>
+  <stackLimit>25</stackLimit>
+  <selectable>true</selectable>
+  <useHitPoints>true</useHitPoints>
+  <drawGUIOverlay>true</drawGUIOverlay>
+  <tradeability>None</tradeability>
+  <thingCategories>
+    <li>Items</li>
+  </thingCategories>
+</ThingDef>
+
+<ThingDef>
+  <defName>PC_SowerModule</defName>
+  <label>sower module</label>
+  <description>A seed hopper with a dispenser wheel. Automatically sows crops in the machine's coverage area.</description>
+  <graphicData>
+    <texPath>Things/Item/AutoFarm/PC_SowerModule</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+  </graphicData>
+  <category>Item</category>
+  <thingClass>Thing</thingClass>
+  <statBases>
+    <MarketValue>200</MarketValue>
+    <Mass>5</Mass>
+    <MaxHitPoints>70</MaxHitPoints>
+  </statBases>
+  <techLevel>Industrial</techLevel>
+  <stackLimit>25</stackLimit>
+  <selectable>true</selectable>
+  <useHitPoints>true</useHitPoints>
+  <drawGUIOverlay>true</drawGUIOverlay>
+  <tradeability>None</tradeability>
+  <thingCategories>
+    <li>Items</li>
+  </thingCategories>
+</ThingDef>
+
+<ThingDef>
+  <defName>PC_HarvesterModule</defName>
+  <label>harvester module</label>
+  <description>An articulated cutting arm. Automatically harvests mature crops and drops the products beside the machine.</description>
+  <graphicData>
+    <texPath>Things/Item/AutoFarm/PC_HarvesterModule</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+  </graphicData>
+  <category>Item</category>
+  <thingClass>Thing</thingClass>
+  <statBases>
+    <MarketValue>240</MarketValue>
+    <Mass>6</Mass>
+    <MaxHitPoints>70</MaxHitPoints>
+  </statBases>
+  <techLevel>Industrial</techLevel>
+  <stackLimit>25</stackLimit>
+  <selectable>true</selectable>
+  <useHitPoints>true</useHitPoints>
+  <drawGUIOverlay>true</drawGUIOverlay>
+  <tradeability>None</tradeability>
+  <thingCategories>
+    <li>Items</li>
+  </thingCategories>
+</ThingDef>
+
+<ThingDef>
+  <defName>PC_PowerModule</defName>
+  <label>power module</label>
+  <description>A battery pack with a small solar strip. Equipping a farm machine with it lets the unit store grid energy and feed it back during shortages (emergency power); the large model also generates power from sunlight in daytime.</description>
+  <graphicData>
+    <texPath>Things/Item/AutoFarm/PC_PowerModule</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+  </graphicData>
+  <category>Item</category>
+  <thingClass>Thing</thingClass>
+  <statBases>
+    <MarketValue>340</MarketValue>
+    <Mass>8</Mass>
+    <MaxHitPoints>80</MaxHitPoints>
+  </statBases>
+  <techLevel>Industrial</techLevel>
+  <stackLimit>25</stackLimit>
+  <selectable>true</selectable>
+  <useHitPoints>true</useHitPoints>
+  <drawGUIOverlay>true</drawGUIOverlay>
+  <tradeability>None</tradeability>
+  <thingCategories>
+    <li>Items</li>
+  </thingCategories>
+</ThingDef>
+
+<RecipeDef>
+  <defName>PC_Make_FarmFrame</defName>
+  <label>make farm frame</label>
+  <description>Assemble a reinforced steel chassis frame for automated farm machines.</description>
+  <jobString>Making farm frame.</jobString>
+  <workAmount>800</workAmount>
+  <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+  <effectWorking>Smith</effectWorking>
+  <soundWorking>Recipe_Machining</soundWorking>
+  <ingredients>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>Steel</li>
+        </thingDefs>
+      </filter>
+      <count>40</count>
+    </li>
+  </ingredients>
+  <fixedIngredientFilter>
+    <thingDefs>
+      <li>Steel</li>
+    </thingDefs>
+  </fixedIngredientFilter>
+  <products>
+    <PC_FarmFrame>1</PC_FarmFrame>
+  </products>
+  <recipeUsers>
+    <!-- 原版 defName 是 TableMachining（不是 MachiningTable）；原版 recipeUsers 亦用此写法 -->
+    <li>TableMachining</li>
+    <li>FabricationBench</li>
+  </recipeUsers>
+  <researchPrerequisite>PC_Research_AutomationBasics</researchPrerequisite>
+</RecipeDef>
+
+<RecipeDef>
+  <defName>PC_Make_GrowLightModule</defName>
+  <label>make grow light module</label>
+  <description>Assemble a grow light module for automated farm machines.</description>
+  <jobString>Making grow light module.</jobString>
+  <workAmount>600</workAmount>
+  <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+  <effectWorking>Smith</effectWorking>
+  <soundWorking>Recipe_Machining</soundWorking>
+  <ingredients>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>Steel</li>
+        </thingDefs>
+      </filter>
+      <count>20</count>
+    </li>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>ComponentIndustrial</li>
+        </thingDefs>
+      </filter>
+      <count>2</count>
+    </li>
+  </ingredients>
+  <fixedIngredientFilter>
+    <thingDefs>
+      <li>Steel</li>
+      <li>ComponentIndustrial</li>
+    </thingDefs>
+  </fixedIngredientFilter>
+  <products>
+    <PC_GrowLightModule>1</PC_GrowLightModule>
+  </products>
+  <recipeUsers>
+    <!-- 原版 defName 是 TableMachining（不是 MachiningTable）；原版 recipeUsers 亦用此写法 -->
+    <li>TableMachining</li>
+    <li>FabricationBench</li>
+  </recipeUsers>
+  <researchPrerequisite>PC_Research_AutomationBasics</researchPrerequisite>
+</RecipeDef>
+
+<RecipeDef>
+  <defName>PC_Make_IrrigationModule</defName>
+  <label>make irrigation module</label>
+  <description>Assemble an irrigation pump module for automated farm machines.</description>
+  <jobString>Making irrigation module.</jobString>
+  <workAmount>600</workAmount>
+  <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+  <effectWorking>Smith</effectWorking>
+  <soundWorking>Recipe_Machining</soundWorking>
+  <ingredients>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>Steel</li>
+        </thingDefs>
+      </filter>
+      <count>20</count>
+    </li>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>ComponentIndustrial</li>
+        </thingDefs>
+      </filter>
+      <count>1</count>
+    </li>
+  </ingredients>
+  <fixedIngredientFilter>
+    <thingDefs>
+      <li>Steel</li>
+      <li>ComponentIndustrial</li>
+    </thingDefs>
+  </fixedIngredientFilter>
+  <products>
+    <PC_IrrigationModule>1</PC_IrrigationModule>
+  </products>
+  <recipeUsers>
+    <!-- 原版 defName 是 TableMachining（不是 MachiningTable）；原版 recipeUsers 亦用此写法 -->
+    <li>TableMachining</li>
+    <li>FabricationBench</li>
+  </recipeUsers>
+  <researchPrerequisite>PC_Research_AutomationBasics</researchPrerequisite>
+</RecipeDef>
+
+<RecipeDef>
+  <defName>PC_Make_FertilizerModule</defName>
+  <label>make fertilizer module</label>
+  <description>Assemble a chemical fertilizer spreader module for automated farm machines.</description>
+  <jobString>Making fertilizer module.</jobString>
+  <workAmount>750</workAmount>
+  <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+  <effectWorking>Smith</effectWorking>
+  <soundWorking>Recipe_Machining</soundWorking>
+  <ingredients>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>Steel</li>
+        </thingDefs>
+      </filter>
+      <count>25</count>
+    </li>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>ComponentIndustrial</li>
+        </thingDefs>
+      </filter>
+      <count>2</count>
+    </li>
+  </ingredients>
+  <fixedIngredientFilter>
+    <thingDefs>
+      <li>Steel</li>
+      <li>ComponentIndustrial</li>
+    </thingDefs>
+  </fixedIngredientFilter>
+  <products>
+    <PC_FertilizerModule>1</PC_FertilizerModule>
+  </products>
+  <recipeUsers>
+    <!-- 原版 defName 是 TableMachining（不是 MachiningTable）；原版 recipeUsers 亦用此写法 -->
+    <li>TableMachining</li>
+    <li>FabricationBench</li>
+  </recipeUsers>
+  <researchPrerequisite>PC_Research_AutomationAdvanced</researchPrerequisite>
+</RecipeDef>
+
+<RecipeDef>
+  <defName>PC_Make_SowerModule</defName>
+  <label>make sower module</label>
+  <description>Assemble a seed sower module for automated farm machines.</description>
+  <jobString>Making sower module.</jobString>
+  <workAmount>650</workAmount>
+  <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+  <effectWorking>Smith</effectWorking>
+  <soundWorking>Recipe_Machining</soundWorking>
+  <ingredients>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>Steel</li>
+        </thingDefs>
+      </filter>
+      <count>25</count>
+    </li>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>ComponentIndustrial</li>
+        </thingDefs>
+      </filter>
+      <count>1</count>
+    </li>
+  </ingredients>
+  <fixedIngredientFilter>
+    <thingDefs>
+      <li>Steel</li>
+      <li>ComponentIndustrial</li>
+    </thingDefs>
+  </fixedIngredientFilter>
+  <products>
+    <PC_SowerModule>1</PC_SowerModule>
+  </products>
+  <recipeUsers>
+    <!-- 原版 defName 是 TableMachining（不是 MachiningTable）；原版 recipeUsers 亦用此写法 -->
+    <li>TableMachining</li>
+    <li>FabricationBench</li>
+  </recipeUsers>
+  <researchPrerequisite>PC_Research_AutomationBasics</researchPrerequisite>
+</RecipeDef>
+
+<RecipeDef>
+  <defName>PC_Make_HarvesterModule</defName>
+  <label>make harvester module</label>
+  <description>Assemble a mechanical harvester arm module for automated farm machines.</description>
+  <jobString>Making harvester module.</jobString>
+  <workAmount>700</workAmount>
+  <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+  <effectWorking>Smith</effectWorking>
+  <soundWorking>Recipe_Machining</soundWorking>
+  <ingredients>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>Steel</li>
+        </thingDefs>
+      </filter>
+      <count>25</count>
+    </li>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>ComponentIndustrial</li>
+        </thingDefs>
+      </filter>
+      <count>2</count>
+    </li>
+  </ingredients>
+  <fixedIngredientFilter>
+    <thingDefs>
+      <li>Steel</li>
+      <li>ComponentIndustrial</li>
+    </thingDefs>
+  </fixedIngredientFilter>
+  <products>
+    <PC_HarvesterModule>1</PC_HarvesterModule>
+  </products>
+  <recipeUsers>
+    <!-- 原版 defName 是 TableMachining（不是 MachiningTable）；原版 recipeUsers 亦用此写法 -->
+    <li>TableMachining</li>
+    <li>FabricationBench</li>
+  </recipeUsers>
+  <researchPrerequisite>PC_Research_AutomationBasics</researchPrerequisite>
+</RecipeDef>
+
+<RecipeDef>
+  <defName>PC_Make_PowerModule</defName>
+  <label>make power module</label>
+  <description>Assemble a battery-and-solar power module for automated farm machines.</description>
+  <jobString>Making power module.</jobString>
+  <workAmount>900</workAmount>
+  <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+  <effectWorking>Smith</effectWorking>
+  <soundWorking>Recipe_Machining</soundWorking>
+  <ingredients>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>Steel</li>
+        </thingDefs>
+      </filter>
+      <count>30</count>
+    </li>
+    <li>
+      <filter>
+        <thingDefs>
+          <li>ComponentIndustrial</li>
+        </thingDefs>
+      </filter>
+      <count>3</count>
+    </li>
+  </ingredients>
+  <fixedIngredientFilter>
+    <thingDefs>
+      <li>Steel</li>
+      <li>ComponentIndustrial</li>
+    </thingDefs>
+  </fixedIngredientFilter>
+  <products>
+    <PC_PowerModule>1</PC_PowerModule>
+  </products>
+  <recipeUsers>
+    <!-- 原版 defName 是 TableMachining（不是 MachiningTable）；原版 recipeUsers 亦用此写法 -->
+    <li>TableMachining</li>
+    <li>FabricationBench</li>
+  </recipeUsers>
+  <researchPrerequisite>PC_Research_AutomationAdvanced</researchPrerequisite>
+</RecipeDef>
+</Defs>

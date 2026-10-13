@@ -102,16 +102,29 @@ namespace PersonalChronicle.Application
         public readonly long LastProductionTick;
         public readonly IReadOnlyList<ProductionTypeView> Types;
 
+        /// <summary>
+        /// 近 8 季**产出市值**滚动桶快照（段 0 = 最老、段 7 = 当前季）——「产出 · 工时」
+        /// 双轴图的柱序列（v5.x 落地，预览 capChart）。长度恒 8；旧档全 0 ⇒ 图画空态。
+        /// </summary>
+        public readonly float[] QuadrumMarketValue;
+
+        /// <summary>近 8 季**工时（h）**滚动桶快照——双轴图的线序列；null = 无工时口径。</summary>
+        public readonly float[] QuadrumWorkHours;
+
         public ProductionSummaryView(
             int totalQuantity,
             float totalMarketValue,
             long lastProductionTick,
-            IReadOnlyList<ProductionTypeView> types)
+            IReadOnlyList<ProductionTypeView> types,
+            float[] quadrumMarketValue = null,
+            float[] quadrumWorkHours = null)
         {
             TotalQuantity = totalQuantity;
             TotalMarketValue = totalMarketValue;
             LastProductionTick = lastProductionTick;
             Types = types ?? new List<ProductionTypeView>();
+            QuadrumMarketValue = quadrumMarketValue ?? new float[Domain.QuadrumBuckets.Slots];
+            QuadrumWorkHours = quadrumWorkHours;
         }
     }
 

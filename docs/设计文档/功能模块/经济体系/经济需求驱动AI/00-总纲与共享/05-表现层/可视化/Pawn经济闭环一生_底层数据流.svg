@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="1752" viewBox="0 0 1480 1752" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, Segoe UI, sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3d5266"/>
+    </marker>
+    <marker id="ahG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399"/>
+    </marker>
+    <style>
+      .bg{fill:#0d141c}
+      .title{fill:#e6edf3;font-size:25px;font-weight:700}
+      .sub{fill:#8fa3b6;font-size:12.5px}
+      .legend{fill:#9fb0c0;font-size:12px}
+      .stage{fill:#121b25;stroke:#1f2c3a;stroke-width:1}
+      .stageTitle{fill:#e6edf3;font-size:17px;font-weight:700}
+      .stageSub{fill:#7d92a6;font-size:11.5px}
+      .card{fill:#16202b;stroke:#243244;stroke-width:1}
+      .cardA{stroke:#38bdf8}.cardB{stroke:#a78bfa}.cardC{stroke:#34d399}.cardD{stroke:#fbbf24}.cardE{stroke:#fb7185}
+      .gate{fill:#2a1418;stroke:#ef4444;stroke-width:1.6}
+      .ct{fill:#e8eff6;font-size:13.5px;font-weight:700}
+      .code{fill:#6f8698;font-size:10.5px;font-family:Consolas, Microsoft YaHei, monospace}
+      .cb{fill:#a8b8c8;font-size:11.5px}
+      .red{fill:#fca5a5;font-size:11.5px}
+      .flow{stroke:#3d5266;stroke-width:1.6;fill:none;marker-end:url(#ah)}
+      .loop{stroke:#34d399;stroke-width:1.8;fill:none;stroke-dasharray:7 5;marker-end:url(#ahG)}
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1480" height="1752"/>
+
+  <!-- 标题 -->
+  <text class="title" x="40" y="50">一个 Pawn 的经济闭环一生 · 底层数据流</text>
+  <text class="sub" x="40" y="76">PersonalChronicle 经济需求驱动 AI · CHG-20261009-ECON-B6B7 实装态（2026-10-09）· 实机验收 0 通过，行动侧受制度门禁</text>
+  <line x1="40" y1="92" x2="1440" y2="92" stroke="#1f2c3a" stroke-width="1"/>
+
+  <!-- 图例 -->
+  <g>
+    <rect x="40" y="106" width="16" height="12" fill="#16202b" stroke="#38bdf8"/>
+    <text class="legend" x="66" y="117">实线卡 = 已代码实装并接线</text>
+    <rect x="298" y="106" width="16" height="12" fill="#141b23" stroke="#556a7d" stroke-dasharray="3 2"/>
+    <text class="legend" x="324" y="117">虚线 = 未接线 / 未开放 / 待验收</text>
+    <rect x="590" y="106" width="16" height="12" fill="#2a1418" stroke="#ef4444"/>
+    <text class="legend" x="616" y="117">红框 = 制度门禁（当前阻塞点）</text>
+    <line x1="884" y1="112" x2="884" y2="118" stroke="#34d399" stroke-width="1.8" stroke-dasharray="4 3"/>
+    <text class="legend" x="898" y="117">左侧绿色虚线 = 重评回流（250 tick / 事实变化 / 需求回落）</text>
+  </g>
+
+  <!-- ===================== A 感知层 ===================== -->
+  <rect class="stage" x="40" y="160" width="1400" height="184"/>
+  <text class="stageTitle" x="64" y="188">A 感知层</text>
+  <text class="stageSub" x="176" y="188">只读事实采集 —— Unknown 不等于 0；事实缓存不写存档，读档换会话重建</text>
+
+  <rect class="card cardA" x="64" y="204" width="400" height="120"/>
+  <text class="ct" x="80" y="228">人口目录 · B1.2</text>
+  <text class="code" x="352" y="228">PerceptionCoordinator</text>
+  <text class="cb" x="80" y="252">覆盖 spawned 与 held；婴儿/儿童/倒地/征召都在观察范围</text>
+  <text class="cb" x="80" y="272">只读采集；死亡终止、离图显式 OutOfScope</text>
+  <text class="cb" x="80" y="292">分片预算：快组 150 / 慢组 250 / 人口 600 tick</text>
+
+  <rect class="card cardA" x="494" y="204" width="400" height="120"/>
+  <text class="ct" x="510" y="228">事实采集 · B1.1</text>
+  <text class="code" x="790" y="228">Fact&lt;T&gt; · 五态</text>
+  <text class="cb" x="510" y="252">Needs（Food/Rest/Joy）· 控制 · 健康 · 衣着 · 环境 · 关系</text>
+  <text class="cb" x="510" y="272">第三方 getter 失败按项隔离；拒反射猜测</text>
+  <text class="cb" x="510" y="292">Known / Unknown / NotApplicable / Unsupported / Error</text>
+
+  <rect class="card cardA" x="924" y="204" width="400" height="120"/>
+  <text class="ct" x="940" y="228">缺口与目标 · B1.1 / B3</text>
+  <text class="code" x="1170" y="228">CurrentNeedProjector</text>
+  <text class="cb" x="940" y="252">生活标准与目标由特质推导（Food .85± / Rest .90 / Joy .70）</text>
+  <text class="cb" x="940" y="272">产出 CurrentNeedGap：实际比例 × 目标比例</text>
+  <text class="cb" x="940" y="292">进入阈值 .55/.45/.35；安全线 .35/.25 优先原版</text>
+
+  <path class="flow" d="M740,346 L740,362"/>
+
+  <!-- ===================== B 影子规划层 ===================== -->
+  <rect class="stage" x="40" y="366" width="1400" height="184"/>
+  <text class="stageTitle" x="64" y="394">B 影子规划层</text>
+  <text class="stageSub" x="176" y="394">只读推演：说明「想做什么、为什么、缺什么前提」—— 不准备订单、不占资源、不派 Job</text>
+
+  <rect class="card cardB" x="64" y="410" width="400" height="120"/>
+  <text class="ct" x="80" y="434">九态仲裁 · B3</text>
+  <text class="code" x="330" y="434">ShadowPlanBuilder</text>
+  <text class="cb" x="80" y="458">先让原版：紧急/征召/倒地/精神/玩家强制 → NativeYield</text>
+  <text class="cb" x="80" y="478">基础需求优先 → NativeNeed；非成人/未许可 → NativeYield</text>
+  <text class="cb" x="80" y="498">WaitingFacts / WaitingBudget / NoIncomeNeeded / SeekWork</text>
+
+  <rect class="card cardB" x="494" y="410" width="400" height="120"/>
+  <text class="ct" x="510" y="434">预算内核 · B3</text>
+  <text class="code" x="770" y="434">LifeBudgetPlanner</text>
+  <text class="cb" x="510" y="458">账户快照（结算审计）＋ 食品报价 ＋ 覆盖 ⇒ BudgetState</text>
+  <text class="cb" x="510" y="478">无真实报价 ⇒ WaitingQuote，不用 MarketValue 顶替</text>
+  <text class="cb" x="510" y="498">跨会话滞回 latch 只在 Ready 回写（防抖动）</text>
+
+  <rect class="card cardB" x="924" y="410" width="400" height="120"/>
+  <text class="ct" x="940" y="434">机会闸门 · M10</text>
+  <text class="code" x="1196" y="434">Opportunity.Eligible</text>
+  <text class="cb" x="940" y="458">Capable ∧ Executable ∧ Funded ∧ Reachable ∧ 时间窗</text>
+  <text class="cb" x="940" y="478">工资 ≥ 窗口内最小支付（累计缺口 − 现金）</text>
+  <text class="cb" x="940" y="498">工作优先级 0 = 玩家分配状态，不是能力禁用</text>
+
+  <path class="flow" d="M740,552 L740,568"/>
+
+  <!-- ===================== C 行动闭环 ===================== -->
+  <rect class="stage" x="40" y="572" width="1400" height="460"/>
+  <text class="stageTitle" x="64" y="600">C 行动闭环</text>
+  <text class="stageSub" x="176" y="600">真实资金与真实劳动 —— 全程受制度门禁；本 Mod 不抢原版控制权</text>
+
+  <rect class="gate" x="64" y="612" width="400" height="120"/>
+  <text class="ct red" x="80" y="636">制度门禁（当前阻塞点）</text>
+  <text class="code" x="336" y="636">NewCommitmentsAllowed</text>
+  <text class="red" x="80" y="660">Off → Preparing → Active → Draining；仅 Active 允许新承诺</text>
+  <text class="red" x="80" y="680">实机：恒 Preparing ⇒ 签约与购买通道关闭</text>
+  <text class="red" x="80" y="700">结论：行动侧全部未在游戏内验证（ECON-AUTOEMPLOY-001）</text>
+
+  <rect class="card cardC" x="494" y="612" width="400" height="120"/>
+  <text class="ct" x="510" y="636">签约 · B4</text>
+  <text class="code" x="790" y="636">TrySignForOpportunity</text>
+  <text class="cb" x="510" y="660">政策 Revision 入 contractId；重复签同岗不重复建合同</text>
+  <text class="cb" x="510" y="680">合同固定该岗位声明的工种与工资上限</text>
+  <text class="cb" x="510" y="700">换岗：先终止旧合同并还原工作类型</text>
+
+  <rect class="card cardC" x="924" y="612" width="400" height="120"/>
+  <text class="ct" x="940" y="636">工种接管 · B4</text>
+  <text class="code" x="1218" y="636">EXC-2026-028 所有权通道</text>
+  <text class="cb" x="940" y="660">合同 Active 才开启所需工作类型</text>
+  <text class="cb" x="940" y="680">终止/换岗即还原（不残留玩家设置）</text>
+  <text class="cb" x="940" y="700">只改工作类型开关，不派 Job</text>
+
+  <rect class="card cardC" x="64" y="752" width="400" height="120"/>
+  <text class="ct" x="80" y="776">原版劳动 · B4</text>
+  <text class="code" x="286" y="776">原版 ThinkTree / JobDriver</text>
+  <text class="cb" x="80" y="800">本 Mod 不派 Job、不抢控制权</text>
+  <text class="cb" x="80" y="820">工单完成才是劳动；Job 结束不算产出</text>
+  <text class="cb" x="80" y="840">每轮配方产出一条独立证据（含完成序号）</text>
+
+  <rect class="card cardC" x="494" y="752" width="400" height="120"/>
+  <text class="ct" x="510" y="776">劳动证据 · B4</text>
+  <text class="code" x="748" y="776">WorkEvidence 去重键</text>
+  <text class="cb" x="510" y="800">合同 | 工单实例 | 阶段 | 完成序号</text>
+  <text class="cb" x="510" y="820">同一通知重复到达 ⇒ 同一证据，不重复计件</text>
+  <text class="cb" x="510" y="840">证据派生应付 —— 工资凭据的唯一来源</text>
+
+  <rect class="card cardC" x="924" y="752" width="400" height="120"/>
+  <text class="ct" x="940" y="776">工资结算 · B4 / M11</text>
+  <text class="code" x="1180" y="776">TrySettlePayable</text>
+  <text class="cb" x="940" y="800">内部转账：国库 → 工人（真实资金，零赠币）</text>
+  <text class="cb" x="940" y="820">命令 id 派生自证据 ⇒ 重放不重复付款</text>
+  <text class="cb" x="940" y="840">资金不足 ⇒ 保留应付并收缩岗位（不抹账）</text>
+
+  <rect class="card" x="494" y="892" width="400" height="120" stroke-dasharray="5 3" stroke="#556a7d" fill="#141b23"/>
+  <text class="ct" x="510" y="916">学习记账 · U5（虚线 = 尚不参与决策）</text>
+  <text class="code" x="838" y="916">ExperienceLedger</text>
+  <text class="cb" x="510" y="940">折入真实结算结果：成功/失败 ＋ 延迟（有界 32×64）</text>
+  <text class="cb" x="510" y="960">样本 &lt; 8 不声明可信度；裁剪不裁财务防重凭据</text>
+  <text class="cb" x="510" y="980">可信度仅展示：不参与支付与发布判定，未持久化</text>
+
+  <path class="flow" d="M740,1034 L740,1050"/>
+
+  <!-- ===================== D 消费与服务 ===================== -->
+  <rect class="stage" x="40" y="1054" width="1400" height="328"/>
+  <text class="stageTitle" x="64" y="1082">D 消费与服务</text>
+  <text class="stageSub" x="176" y="1082">真实交付才算数 —— 只有原版过程可证的类别才进入收费；其余保持原版公共免费</text>
+
+  <rect class="card cardD" x="64" y="1094" width="400" height="120"/>
+  <text class="ct" x="80" y="1118">食品闭环 · B4</text>
+  <text class="code" x="278" y="1118">TryPurchaseFoodAtCounter</text>
+  <text class="cb" x="80" y="1142">报价 × 营养缺口 ⇒ 扣款 ⇒ 真实商品交付</text>
+  <text class="cb" x="80" y="1162">原版吃 → 需求回落 → 回到感知层重评（闭环）</text>
+  <text class="cb" x="80" y="1182">当前消费口径：food-only</text>
+
+  <rect class="card cardD" x="494" y="1094" width="400" height="120"/>
+  <text class="ct" x="510" y="1118">照护授权 · B5</text>
+  <text class="code" x="760" y="1118">CareAuthorization</text>
+  <text class="cb" x="510" y="1142">受益者 / 监护人 / 执行者 / 付款方 四个独立身份</text>
+  <text class="cb" x="510" y="1162">亲属关系本身不授权扣款；付款方须显式指定</text>
+  <text class="cb" x="510" y="1182">到期与上限逐笔校验；超限拒绝并反馈</text>
+
+  <rect class="card cardD" x="924" y="1094" width="400" height="120"/>
+  <text class="ct" x="940" y="1118">服务能力七门 · B5</text>
+  <text class="code" x="1178" y="1118">ServiceCapabilityRules</text>
+  <text class="cb" x="940" y="1142">访问 · 交付证据 · 容量时段 · 价格 · 结算 · 恢复 · 解释</text>
+  <text class="cb" x="940" y="1162">七门齐 = ReadyPaid 才可报价；缺一项保持原版公共</text>
+  <text class="cb" x="940" y="1182">诊疗已代码级齐全（需玩家发布服务单价）</text>
+
+  <rect class="card cardD" x="64" y="1234" width="400" height="120"/>
+  <text class="ct" x="80" y="1258">真实交付才结算 · B5</text>
+  <text class="code" x="322" y="1258">DoTend 只读上报 · EXC-2026-029</text>
+  <text class="cb" x="80" y="1282">原版治疗过程 → 证据 → 授权闸门 → 账本结算（幂等）</text>
+  <text class="cb" x="80" y="1302">按实际过程结算，不按治愈承诺收费</text>
+  <text class="cb" x="80" y="1322">急救不被商业队列阻塞；中断不生成完成报告</text>
+
+  <rect class="card" x="494" y="1234" width="400" height="120" stroke-dasharray="5 3" stroke="#556a7d" fill="#141b23"/>
+  <text class="ct" x="510" y="1258">未接线 / 未开放（虚线）</text>
+  <text class="code" x="798" y="1258">如实标注，不报价</text>
+  <text class="cb" x="510" y="1282">体检 · 床位 · 托育 · 教育：原版无交付过程 ⇒ 取证中</text>
+  <text class="cb" x="510" y="1302">生产读数四输入：需求/目标/出口/未开工 ⇒ Unknown</text>
+  <text class="cb" x="510" y="1322">机构级读数绑定 · 政策草稿/趋势面：未做</text>
+
+  <rect class="card" x="924" y="1234" width="400" height="120" stroke-dasharray="5 3" stroke="#556a7d" fill="#141b23"/>
+  <text class="ct" x="940" y="1258">车间侧（B6 收口，只读）</text>
+  <text class="code" x="1216" y="1258">ExecutorContract</text>
+  <text class="cb" x="940" y="1282">库存 = 原版资源计数；在制 = 工单 ShouldDoNow × 配方产出</text>
+  <text class="cb" x="940" y="1302">执行器契约只读 + 提案记账：零建单、零排班写</text>
+  <text class="cb" x="940" y="1322">既有车间执行器仍是唯一执行者（不设第二运行器）</text>
+
+  <path class="flow" d="M740,1384 L740,1400"/>
+
+  <!-- ===================== E 再评与终局 ===================== -->
+  <rect class="stage" x="40" y="1404" width="1400" height="184"/>
+  <text class="stageTitle" x="64" y="1432">E 再评与终局</text>
+  <text class="stageSub" x="176" y="1432">闭环收敛与退出 —— 权利与账目可追溯，不静默抹除</text>
+
+  <rect class="card cardE" x="64" y="1448" width="400" height="120"/>
+  <text class="ct" x="80" y="1472">再评与储备 · B3 / B6</text>
+  <text class="code" x="356" y="1472">滞回 latch</text>
+  <text class="cb" x="80" y="1496">缺口回落 ＋ 储备达标 ⇒ NoIncomeNeeded，交回原版生活</text>
+  <text class="cb" x="80" y="1516">补货缺口 = 需求＋目标＋出口 − 库存 − 在制 − 已授权</text>
+  <text class="cb" x="80" y="1536">四个输入域未接线 ⇒ 显式 Unknown，不给缺口数字</text>
+
+  <rect class="card cardE" x="494" y="1448" width="400" height="120"/>
+  <text class="ct" x="510" y="1472">死亡 / 离图 · B1.2</text>
+  <text class="code" x="816" y="1472">OutOfScope</text>
+  <text class="cb" x="510" y="1496">观察显式终止，不再产生新承诺</text>
+  <text class="cb" x="510" y="1516">合同 / 证据 / 应付保留可追溯（不静默抹除）</text>
+  <text class="cb" x="510" y="1536">已交付权利不被回收</text>
+
+  <rect class="card cardE" x="924" y="1448" width="400" height="120"/>
+  <text class="ct" x="940" y="1472">旧账与权益 · B2</text>
+  <text class="code" x="1232" y="1472">LegacyReference · Draining</text>
+  <text class="cb" x="940" y="1496">schema1 旧账只读对账：先生成报告，后逐项承接</text>
+  <text class="cb" x="940" y="1516">未匹配权益隔离，禁止静默归零或重复赠币</text>
+  <text class="cb" x="940" y="1536">退出制度走 Draining：对账完成才关闭</text>
+
+  <!-- 重评回流（左走廊） -->
+  <path class="loop" d="M46,1218 L30,1218 L30,258 L46,258"/>
+
+  <!-- ===================== 贯穿约束 ===================== -->
+  <rect class="stage" x="40" y="1610" width="1400" height="126" stroke="#2a3a4c"/>
+  <text class="stageTitle" x="64" y="1638">贯穿约束（不变量）</text>
+  <text class="cb" x="64" y="1664">依赖：Domain 纯净（零 Verse/RimWorld）← Application 端口 ← Economy 适配（只读 / 记账）</text>
+  <text class="cb" x="64" y="1686">资金：M11 唯一资金写入 · 金额 checked long · 命令幂等 · 零赠币 · 不伪造读数</text>
+  <text class="cb" x="64" y="1708">UI：只读快照（60 tick）· 不写钱包与存档 · 可信度不参与支付</text>
+  <text class="cb" x="64" y="1730">诚实边界：实机验收 0 通过 · 制度未 Active · ECON-AUTOEMPLOY-001 仍 Open</text>
+
+  <!-- 署名 -->
+  <text class="code" x="1150" y="1746">AI 署名：CodeBuddy（DeepSeek-V4.1-Flash）2026-10-09</text>
+</svg>

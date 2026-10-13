@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 唯一主入口：总控中心。档案内容由人员系统中心内部面板承载。 -->
+  <MainButtonDef>
+    <defName>PersonalChronicleMasterControl</defName>
+    <label>总控中心</label>
+    <tabWindowClass>PersonalChronicle.MasterControl.MasterControlTabWindow</tabWindowClass>
+    <order>79</order>
+    <validWithoutMap>true</validWithoutMap>
+    <minimized>false</minimized>
+    <iconPath>UI/ManagementIcon</iconPath>
+  </MainButtonDef>
+</Defs>

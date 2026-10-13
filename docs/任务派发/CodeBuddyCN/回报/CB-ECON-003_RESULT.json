@@ -1,0 +1,1318 @@
+{
+  "taskId": "CB-ECON-003",
+  "changeId": "CHG-20261011-LABOR-VISUAL",
+  "executor": "CodeBuddy CN",
+  "model": "DeepSeek-V4.1-Flash",
+  "status": "ReadyForReview",
+  "revision": 1,
+  "deliveredAt": "2026-10-12T00:45:00+08:00",
+  "binary": {
+    "artifact": "Assemblies/PersonalChronicle.dll",
+    "bytes": 2364416,
+    "buildStampUtc": "2026-10-11T16:38:00Z",
+    "compile": {
+      "errors": 0,
+      "warnings": 0,
+      "toolchain": "_scripts/compile_with_sdk.ps1"
+    }
+  },
+  "tests": {
+    "runner": "dotnet test Tests/PersonalChronicle.Tests.csproj -c Release",
+    "passed": 1568,
+    "failed": 0,
+    "skipped": 1,
+    "total": 1569,
+    "durationSeconds": 4,
+    "newTests": 40,
+    "newTestFiles": [
+      "Tests/LaborFlowTests.cs",
+      "Tests/EmploymentLaborGateTests.cs",
+      "Tests/LaborFlowScribeTests.cs"
+    ],
+    "note": "1 项跳过为既有 Measure_Content_vs_Viewport。"
+  },
+  "negativeControls": {
+    "harness": ".codebuddy/tmp/cb-econ-003/negative-controls.ps1",
+    "log": ".codebuddy/tmp/cb-econ-003/negative-controls.txt",
+    "cases": [
+      {
+        "id": "NC-A",
+        "mutation": "LaborFlowRules.PaymentAllowed 恒 true（付款门失效）",
+        "expectedFailure": "PaymentGateBlocksUnsubmittedAndUnknown",
+        "detected": true
+      },
+      {
+        "id": "NC-B",
+        "mutation": "SumOutstandingCommitments 排除已赚未付（提前释放资金）",
+        "expectedFailure": "OutstandingCommitmentsIncludeUnpaidEarned",
+        "detected": true
+      },
+      {
+        "id": "NC-C",
+        "mutation": "ApplyDocument 允许代次倒退（旧纸复活）",
+        "expectedFailure": "ApplyDocumentIsMonotonicAndIdempotent",
+        "detected": true
+      },
+      {
+        "id": "NC-D",
+        "mutation": "LaborFlowService.Authoritative 改用调用方陈旧实例",
+        "expectedFailure": "RoundTripPreservesWorkflowSubmissionAndBatch",
+        "detected": true
+      },
+      {
+        "id": "NC-E",
+        "mutation": "GrantSubmission 不校验现有资格",
+        "expectedFailure": "GrantIsRejectedForLegacyAndForUnknownEligibility",
+        "detected": true
+      }
+    ],
+    "summary": "5/5 变异均被对应断言抓到（非未运行/非编译失败）",
+    "productionRestore": "结束源码逐文件 SHA-256 与变异前一致；生产终态未被污染（DLL 哈希随 BuildStamp 变化属预期）"
+  },
+  "gates": [
+    {
+      "gate": "ARCH",
+      "reviewSeat": "pc-arch-gatekeeper",
+      "initialVerdict": "BLOCKED",
+      "afterFix": "PASS",
+      "blockers": [
+        "P0-1 新模式从未写入合同（起草2处+承接1处皆默认旧模式）",
+        "P1-1 交付物筛选与批次查询语义互斥（恒 false）",
+        "P1-2 递交凭证未扣门",
+        "P1-3 阶段链在 Working→AwaitingPayment 断裂",
+        "P1-4 新 Harmony 补丁未登记 EXC"
+      ]
+    },
+    {
+      "gate": "DATA",
+      "reviewSeat": "pc-data-steward",
+      "initialVerdict": "PASS",
+      "afterFix": "PASS"
+    },
+    {
+      "gate": "SAVE",
+      "reviewSeat": "pc-data-steward",
+      "initialVerdict": "PASS WITH EXCEPTION",
+      "afterFix": "PASS",
+      "exceptions": [
+        "存档实为平铺挂载（与独立节点声称不符）",
+        "交付资格门只判存在性不核对件数",
+        "submissions 整段截断未按未结引用保护"
+      ]
+    },
+    {
+      "gate": "TEST",
+      "reviewSeat": "主 Agent 实测",
+      "initialVerdict": "PASS",
+      "afterFix": "PASS"
+    },
+    {
+      "gate": "DELTA",
+      "reviewSeat": "主 Agent 实测",
+      "initialVerdict": "PASS",
+      "afterFix": "PASS",
+      "command": "gate-runner.ps1 -Base HEAD -ExcludeFromFile .codebuddy/tmp/cb-econ-003/out-of-scope.txt -StrictSchema -Blocking",
+      "filesCovered": 35,
+      "hints": 0
+    },
+    {
+      "gate": "COMP",
+      "reviewSeat": "N/A",
+      "initialVerdict": "N/A",
+      "reason": "无第三方 Mod 接入、无 DLC 条件分支；新增 Harmony 已登记 EXC-2026-001 #26"
+    },
+    {
+      "gate": "UI/LOC",
+      "reviewSeat": "N/A（附遗留）",
+      "initialVerdict": "N/A",
+      "reason": "未派独立席；键族双语齐备、整键回落；风险已在回报 §8 登记"
+    },
+    {
+      "gate": "PERF",
+      "reviewSeat": "NOT RUN",
+      "initialVerdict": "NOT RUN",
+      "reason": "需实机 profiler；不允许以静态分析替代实测"
+    },
+    {
+      "gate": "REL",
+      "reviewSeat": "NOT RUN",
+      "initialVerdict": "NOT RUN",
+      "reason": "未部署、未发布"
+    }
+  ],
+  "roundClosure": {
+    "script": ".codebuddy/audit/round-closure.ps1",
+    "stdoutLine": "收尾结论: PASS（机器项 通过=5 / N/A=1 / WARN=1 / BLOCKED=0 · 人工项 8 项待确认）",
+    "evidence": ".codebuddy/tmp/round-closure/20261011T163712Z.json"
+  },
+  "changedFiles": {
+    "total": 35,
+    "added": [
+      "Source/PersonalChronicle/Domain/PawnEconomy/Employment/LaborFlow.cs",
+      "Source/PersonalChronicle/Data/PawnEconomy/LaborFlowSaveData.cs",
+      "Source/PersonalChronicle/Application/PawnEconomy/Employment/LaborFlowService.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborFlow.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborOutputs.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/Thing_WorkContractDocument.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/LaborVisualText.cs",
+      "Source/PersonalChronicle/Capture/Patch_GenPlaceOutput.cs",
+      "Defs/PawnEconomy_WorkContract.xml",
+      "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_LaborFlow.xml",
+      "Languages/English/DefInjected/JobDef/PawnEconomy_LaborFlow.xml",
+      "Languages/ChineseSimplified/DefInjected/ThingDef/PawnEconomy_WorkContract.xml",
+      "Languages/English/DefInjected/ThingDef/PawnEconomy_WorkContract.xml",
+      "Textures/Things/Item/PawnEconomy/PC_PEA_WorkContract.png",
+      "Tools/make_labor_contract_icon.py",
+      "Tests/LaborFlowTests.cs",
+      "Tests/EmploymentLaborGateTests.cs",
+      "Tests/LaborFlowScribeTests.cs",
+      "docs/changelog/v1.4.x_2026-10-12_劳务履约可视化与实体合同.md"
+    ],
+    "modified": [
+      "Source/PersonalChronicle/Domain/PawnEconomy/Employment/EmploymentContracts.cs",
+      "Source/PersonalChronicle/Data/PawnEconomy/EmploymentSaveData.cs",
+      "Source/PersonalChronicle/Application/PawnEconomy/Employment/EmploymentService.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorld.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyEmployment.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorkOrders.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyVanillaWork.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedSpeech.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedDashboard.cs",
+      "Source/PersonalChronicle/Economy/PawnEconomy/ShadowPlanPresenter.AccountModel.cs",
+      "Languages/ChineseSimplified/Keyed/PawnEconomy.xml",
+      "Languages/English/Keyed/PawnEconomy.xml",
+      "docs/设计文档/架构/EXC-2026-001.md",
+      "docs/任务派发/CodeBuddyCN/CB-ECON-003_劳务履约过程可视化与实体合同_需求单.md",
+      "docs/README.md"
+    ],
+    "annotation": "docs/设计文档/架构/变更标注/变更标注_CHG-20261011-LABOR-VISUAL.md"
+  },
+  "invariants": [
+    "不存在远程先签（意图阶段无合同身份）",
+    "三个完成入口 + 自动补付共用一个付款资格门（旧档缺键语义不变）",
+    "完成一件不释放资金占用（承诺→负债只转移）",
+    "合同纸代次单调、补发使旧纸失效",
+    "批次数量守恒（Produced = Remaining + Accepted + Lost）",
+    "流程阶段不可跳阶亦不停滞（逐阶补记 PathTo）",
+    "幂等回执（提交行）不参与载入裁剪"
+  ],
+  "notRun": [
+    "GameVerified：需求单 §10.3 G01–G14（真实地图连续流程、存读档实机、录像、多人竞争、缺钱/拆站等）",
+    "性能测量与 profiler 证据",
+    "本地部署（deploy-to-game.ps1）",
+    "Steam 工坊发布"
+  ],
+  "rollback": {
+    "code": "删除 8 个新增源文件 + 还原 11 个修改文件 ⇒ 回到改动前行为（旧链零依赖新类型）",
+    "save": "新增节点与字段均为加性；旧版本 DLL 载入忽略未知节点/字段。新模式产生的未付欠薪/未核销批次降级后不可识别，须以升级前存档恢复（不承诺降级后新债保留）",
+    "asset": "删贴图仅致合同纸缺图；Def 缺失时实现显式降级为无纸呈递，业务不受影响"
+  },
+  "aiSignature": "AI: CodeBuddy CN / DeepSeek-V4.1-Flash",
+  "signedAt": "2026-10-12T00:45:00+08:00",
+  "managerReview": {
+    "reviewer": "Codex",
+    "reviewedAt": "2026-10-12T18:08:13.8704326+08:00",
+    "status": "ChangesRequired",
+    "acceptance": "BLOCKED",
+    "implementationClosed": false,
+    "executorStatusPreserved": "ReadyForReview",
+    "scope": "Code audit, read-only product verification, audit documents only",
+    "report": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-003_执行回报.md#12",
+    "gateRecord": ".codebuddy/audit/gate-records/GR-CHG-20261011-LABOR-VISUAL-MANAGER-AUDIT.md",
+    "evidenceManifest": ".codebuddy/tmp/cb-econ-003-manager-audit/audit-evidence.json",
+    "requirementSha256": "776A9B57A752AC697ED1394ACFD4752B0AAFB7DA99AEFAEFBFFEF1091E8F223B",
+    "binarySha256": "280BD166F9F7D03FCAD062448B884386E5D962523005356477C247F63C920E99",
+    "testBinarySha256": "6CFF000E5CCBB91948728FFA260C704CBFCDC5EF814DEBCFBE8864E8A1B2F781",
+    "independentRegression": {
+      "command": "dotnet test Tests/PersonalChronicle.Tests.csproj -c Release --no-build --no-restore --logger \"trx;LogFileName=manager-audit.trx\" --results-directory \".codebuddy/tmp/cb-econ-003-manager-audit\"",
+      "passed": 1568,
+      "failed": 0,
+      "skipped": 1,
+      "total": 1569,
+      "trx": ".codebuddy/tmp/cb-econ-003-manager-audit/manager-audit.trx",
+      "trxSha256": "5AAAF62ADDB112939A969A19AF1CCD97C4C2A77B33D92731186F1D99402C0E5C",
+      "meaning": "Existing tests pass; requirement acceptance blocked by independently reproduced defects"
+    },
+    "findings": [
+      {
+        "id": "CA-01",
+        "priority": "P0",
+        "title": "来源核验失效",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-02",
+        "priority": "P0",
+        "title": "先给资格后搬货",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-03",
+        "priority": "P0",
+        "title": "虚构已入库凭据",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-04",
+        "priority": "P1",
+        "title": "接收失败留下半提交",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-05",
+        "priority": "P1",
+        "title": "未知版本原始载荷丢失",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-06",
+        "priority": "P1",
+        "title": "实体纸核验不一致",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-07",
+        "priority": "P1",
+        "title": "无自主收货链",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-08",
+        "priority": "P1",
+        "title": "捕获来源及重放错误",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-09",
+        "priority": "P1",
+        "title": "第二轮接单死锁",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-10",
+        "priority": "P1",
+        "title": "终止后缺纸无法恢复",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-11",
+        "priority": "P1",
+        "title": "SignCommit复验不足",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-12",
+        "priority": "P1",
+        "title": "Bills主链未覆盖",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-13",
+        "priority": "P1",
+        "title": "玩家阶段与界面缺接线",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-14",
+        "priority": "P1",
+        "title": "气泡丢事件",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-15",
+        "priority": "P2",
+        "title": "运行本地化裸键",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-16",
+        "priority": "P1",
+        "title": "超限裁掉未终态",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-17",
+        "priority": "P1",
+        "title": "接收仓未进入标准holder链",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      },
+      {
+        "id": "CA-18",
+        "priority": "P1",
+        "title": "缺Def跳过实体门",
+        "status": "Open",
+        "evidence": "CB-ECON-003_执行回报.md §12.2"
+      }
+    ],
+    "findingCounts": {
+      "total": 18,
+      "P1": 14,
+      "P0": 3,
+      "P2": 1
+    },
+    "gates": {
+      "LOC": "BLOCKED",
+      "Game": "NOT RUN",
+      "DATA": "BLOCKED",
+      "SAVE": "BLOCKED",
+      "PERF": "NOT RUN",
+      "UI": "BLOCKED",
+      "COMP": "BLOCKED",
+      "TEST": "BLOCKED",
+      "REL": "NOT RUN",
+      "ARCH": "BLOCKED",
+      "DELTA": "PASS",
+      "DocGuard": "BLOCKED: 11 existing out-of-scope metadata issues"
+    },
+    "productCodeModified": false,
+    "productRebuilt": false,
+    "deployed": false,
+    "requiredNextStep": "Fix CA-01 through CA-18 within original task; provide real host and isolated fault/recovery evidence, then manager re-audit",
+    "openVerificationQuestion": "T31 cross-map/issuer funding pools and already Reserved obligations need host proof; source concern not yet behavior-reproduced",
+    "postAuditProductVerification": {
+      "filesChecked": 31,
+      "changedFiles": 0,
+      "productionBinaryUnchanged": true
+    },
+    "receiptDelivery": {
+      "receiptFile": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-003_经理审计回执_20261012.md",
+      "receiptSha256": "AA22CED968069F5C9C65B062DDDC1C4FB009DCB3ECED554E550E7B6AD844E107",
+      "status": "Accepted",
+      "recipient": "CodeBuddy CN",
+      "acceptedAt": "2026-10-12T18:20:48.6951724+08:00",
+      "acceptanceVerified": true,
+      "implementationStarted": false,
+      "dispatchEvidence": ".codebuddy/tmp/cb-econ-003-manager-audit/receipt-dispatch.json",
+      "acknowledgementEvidence": ".codebuddy/tmp/cb-econ-003-manager-audit/receipt-codebuddy-ack.json",
+      "rawResponseEvidence": ".codebuddy/tmp/cb-econ-003-manager-audit/receipt-codebuddy-response-r2.json",
+      "sessionId": "cb-econ-003-manager-review-20261012"
+    },
+    "visualCompletenessReview": {
+      "reviewer": "Codex",
+      "reviewedAt": "2026-10-12T20:11:12.9099049+08:00",
+      "status": "ChangesRequired",
+      "acceptance": "BLOCKED",
+      "scope": "Player visual completeness for frozen 19:49 rework; original financial/data findings not generally closed",
+      "report": "docs/任务派发/CodeBuddyCN/回报/CB-ECON-003_执行回报.md#14",
+      "snapshotManifest": ".codebuddy\\tmp\\cb-econ-003-visual-completeness-20261012\\snapshot-manifest.json",
+      "snapshotManifestSha256": "2C91A16F8CE79947A0C06A73EB4BE9E582C580B2BA3ECD0C101F1D5A3BC2569F",
+      "matrixEvidence": ".codebuddy\\tmp\\cb-econ-003-visual-completeness-20261012\\visual-matrix.json",
+      "matrixSha256": "B3D070A4794EFBE3ADF3A4A65A609B14ECC3D9B0D279594FCA1AC9A5E26D9651",
+      "binarySha256": "6C90007986F433FC0A7B80E2C2EE1C0024C4664AD62FF00305A217B25F3C81C7",
+      "testBinarySha256": "910B46EBB0769B03520B13AA2E21BEA22D18C63D0EBA89FCA579A3A58EB4874F",
+      "deploymentBinaryMatches": true,
+      "assetEvidence": {
+        "capturedAt": "2026-10-12T20:06:17.0571115+08:00",
+        "path": "Textures/Things/Item/PawnEconomy/PC_PEA_WorkContract.png",
+        "sha256": "96E2451CE626077E1C346265A7484398E9A1E90098E46B5A6F7C7F6EFAC76CEC",
+        "snapshotSha256": "96E2451CE626077E1C346265A7484398E9A1E90098E46B5A6F7C7F6EFAC76CEC",
+        "deployedSha256": "96E2451CE626077E1C346265A7484398E9A1E90098E46B5A6F7C7F6EFAC76CEC",
+        "width": 128,
+        "height": 128,
+        "pngColorType": 6,
+        "visualRuntime": "NOT RUN"
+      },
+      "counts": {
+        "checkpoints": 20,
+        "wired": 3,
+        "partial": 13,
+        "missing": 4,
+        "gameVerified": 0
+      },
+      "countMeaning": "Composite source checkpoints, not implementation percentage or game acceptance",
+      "checkpoints": [
+        {
+          "id": "VC-01",
+          "sourceStatus": "Wired",
+          "item": "无窗自主Job入口",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-02",
+          "sourceStatus": "Missing",
+          "item": "指定Pawn右键机构办理",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Additional interaction capability; not independent original-requirement blocker"
+        },
+        {
+          "id": "VC-03",
+          "sourceStatus": "Partial",
+          "item": "劳务站真实寻路与途中状态",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-04",
+          "sourceStatus": "Partial",
+          "item": "四向站位、朝向与办理进度",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-05",
+          "sourceStatus": "Partial",
+          "item": "预约排队与拥挤反馈",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-06",
+          "sourceStatus": "Partial",
+          "item": "洽谈、签领与事件气泡",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-07",
+          "sourceStatus": "Partial",
+          "item": "实体合同检查、持有与定位",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-08",
+          "sourceStatus": "Partial",
+          "item": "劳动动作与合同内循环状态",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-09",
+          "sourceStatus": "Wired",
+          "item": "真实实例产品收集Job",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-10",
+          "sourceStatus": "Partial",
+          "item": "多趟搬运与可见交货",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-11",
+          "sourceStatus": "Wired",
+          "item": "前往工资处的真实寻路Job",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-12",
+          "sourceStatus": "Partial",
+          "item": "核验时段与真实交接反馈",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-13",
+          "sourceStatus": "Partial",
+          "item": "到账金额与结果反馈",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-14",
+          "sourceStatus": "Partial",
+          "item": "中断、暂停原因与恢复",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-15",
+          "sourceStatus": "Missing",
+          "item": "个人账户主组件紧凑履约行",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-16",
+          "sourceStatus": "Partial",
+          "item": "劳务站主表交付与阶段",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-17",
+          "sourceStatus": "Missing",
+          "item": "工资处分组与本站当前流程",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-18",
+          "sourceStatus": "Missing",
+          "item": "只读履约事件时间链",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-19",
+          "sourceStatus": "Partial",
+          "item": "诊断、定位与逐项对账交互",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        },
+        {
+          "id": "VC-20",
+          "sourceStatus": "Partial",
+          "item": "双语、资产、缩放与呈现健壮性",
+          "gameVerified": "NOT RUN",
+          "requirementScope": "Original requirement"
+        }
+      ],
+      "findings": [
+        {
+          "id": "VFC-01",
+          "priority": "P1",
+          "title": "真实阶段时点错位",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-02",
+          "priority": "P1",
+          "title": "同合同分批循环显示失效",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-03",
+          "priority": "P1",
+          "title": "真实Job中断缺暂停原因",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-04",
+          "priority": "P1",
+          "title": "账户和两站主UI缺接线",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-05",
+          "priority": "P1",
+          "title": "工资站本站筛选身份错误",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-06",
+          "priority": "P1",
+          "title": "气泡去重/时间/可见性/优先级不完整",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-07",
+          "priority": "P1",
+          "title": "付款金额与等待/缺款事实混用",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-08",
+          "priority": "P1",
+          "title": "库存纸定位与结束合同补领缺口",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-09",
+          "priority": "P1",
+          "title": "对账确认与命令范围不一致",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-10",
+          "priority": "P1",
+          "title": "缺只读履约事件链",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-11",
+          "priority": "P2",
+          "title": "重复本地化键及动态映射缺失",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        },
+        {
+          "id": "VFC-12",
+          "priority": "P1",
+          "title": "办理进度/朝向/动态报告不完整",
+          "status": "Open",
+          "evidence": "CB-ECON-003_执行回报.md §14.3"
+        }
+      ],
+      "gates": {
+        "ASSET": "Static PNG and hashes verified; runtime appearance NOT RUN",
+        "Game": "NOT RUN",
+        "PERF": "NOT RUN",
+        "UI": "BLOCKED",
+        "PlayerFlowARCH": "BLOCKED",
+        "TEST": "Current review not run; existing coverage insufficient for new process",
+        "LOC": "BLOCKED"
+      },
+      "productCodeModified": false,
+      "productRebuilt": false,
+      "testsRun": false,
+      "gameRun": false,
+      "deployedThisReview": false,
+      "postSnapshotVerification": {
+        "changedProductFiles": [],
+        "binaryUnchanged": true
+      },
+      "handoff": "Recorded in original report and RESULT; not yet separately delivered to executor",
+      "governance": {
+        "DELTA": {
+          "status": "PASS",
+          "coveredFiles": 40,
+          "hints": 0,
+          "log": ".codebuddy/tmp/cb-econ-003-visual-completeness-20261012/gate-delta.txt",
+          "sha256": "F63732A81839F07838E0C2840328976FB7F74614916B4E5BC25F8ADBB50FF3A1"
+        },
+        "DocGuard": {
+          "status": "BLOCKED",
+          "existingBlockers": 11,
+          "newBlockers": 0,
+          "exitCode": 2,
+          "baselineModified": false,
+          "log": ".codebuddy/tmp/cb-econ-003-visual-completeness-20261012/doc-guard.txt",
+          "sha256": "2199B08C00A05F7982CBB65EEF0C95241D8AF2036BA9157FC5B9D85BBA195A47"
+        }
+      }
+    },
+    "visualRepair": {
+      "taskId": "CB-ECON-003",
+      "changeId": "CHG-20261011-LABOR-VISUAL",
+      "executor": "Codex",
+      "updatedAt": "2026-10-12T21:36:53.349711+08:00",
+      "status": "VisualCodeRepairVerified_RuntimeAcceptancePending",
+      "codeVerified": true,
+      "testVerified": true,
+      "gameVerified": false,
+      "released": false,
+      "deployedFilesSynced": true,
+      "tests": {
+        "passed": 1609,
+        "failed": 0,
+        "skipped": 1,
+        "newCasesVs1573": 36,
+        "trx": ".codebuddy\\tmp\\cb-econ-003-visual-repair-20261012\\visual-repair-final.trx"
+      },
+      "manifest": ".codebuddy\\tmp\\cb-econ-003-visual-repair-20261012\\final-manifest.json",
+      "diff": ".codebuddy\\tmp\\cb-econ-003-visual-repair-20261012\\source-diff.patch",
+      "bindings": [
+        {
+          "path": "Assemblies/PersonalChronicle.dll",
+          "sha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+          "bytes": 2451456
+        },
+        {
+          "path": "Tests/bin/Release/net48/PersonalChronicle.dll",
+          "sha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+          "bytes": 2451456
+        },
+        {
+          "path": "Tests/bin/Release/net48/PersonalChronicle.Tests.dll",
+          "sha256": "BB3E58C1132F9D63F2B78067A985F71C47FE59700E8D84D65211D99DBE2B3B9C",
+          "bytes": 674304
+        },
+        {
+          "path": "Textures/Things/Item/PawnEconomy/PC_PEA_WorkContract.png",
+          "sha256": "96E2451CE626077E1C346265A7484398E9A1E90098E46B5A6F7C7F6EFAC76CEC",
+          "bytes": 914
+        },
+        {
+          "path": ".codebuddy\\tmp\\cb-econ-003-visual-repair-20261012\\visual-repair-final.trx",
+          "sha256": "04CC38B447BA2382A5EEBCACB959F103191B0FCAEC7D16A95393B34757498063",
+          "bytes": 2144254
+        },
+        {
+          "path": ".codebuddy\\tmp\\cb-econ-003-visual-repair-20261012\\source-diff.patch",
+          "sha256": "176BFF1C46283004FA6378ECF8A0B33803485BD9B45227ED9BEAF6BC3A5256B4",
+          "bytes": 281686
+        }
+      ],
+      "deploy": {
+        "taskId": "CB-ECON-003",
+        "completedAt": "2026-10-12T21:33:28.169091+08:00",
+        "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+        "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_visual_repair_20261012_213327",
+        "files": [
+          {
+            "path": "Assemblies/PersonalChronicle.dll",
+            "changed": true,
+            "beforeSha256": "E6D9CE28553BB705A3BF77BDE44F21768B23914A689E14C458338A37391ABC00",
+            "sourceSha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+            "deployedSha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+            "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_visual_repair_20261012_213327\\Assemblies\\PersonalChronicle.dll",
+            "bytes": 2451456
+          },
+          {
+            "path": "Defs/PawnEconomy_Institutions.xml",
+            "changed": false,
+            "beforeSha256": "528E63D09CE86ADADE172BFF5170ACA13FB1AE6F5EB64808002AFC58E127037B",
+            "sourceSha256": "528E63D09CE86ADADE172BFF5170ACA13FB1AE6F5EB64808002AFC58E127037B",
+            "deployedSha256": "528E63D09CE86ADADE172BFF5170ACA13FB1AE6F5EB64808002AFC58E127037B",
+            "backup": null,
+            "bytes": 6398
+          },
+          {
+            "path": "Languages/ChineseSimplified/DefInjected/JobDef/PawnEconomy_LaborFlow.xml",
+            "changed": false,
+            "beforeSha256": "0CEAB13AAB46A497F01004B7AD5453F3E35663DE4D6BCEA121D84955B40BAF18",
+            "sourceSha256": "0CEAB13AAB46A497F01004B7AD5453F3E35663DE4D6BCEA121D84955B40BAF18",
+            "deployedSha256": "0CEAB13AAB46A497F01004B7AD5453F3E35663DE4D6BCEA121D84955B40BAF18",
+            "backup": null,
+            "bytes": 405
+          },
+          {
+            "path": "Languages/ChineseSimplified/Keyed/PawnEconomy.xml",
+            "changed": false,
+            "beforeSha256": "2D50A21322E09D60EC14C583F33FFCADA0071D430A4100B4A39FC9BA55E0CD24",
+            "sourceSha256": "2D50A21322E09D60EC14C583F33FFCADA0071D430A4100B4A39FC9BA55E0CD24",
+            "deployedSha256": "2D50A21322E09D60EC14C583F33FFCADA0071D430A4100B4A39FC9BA55E0CD24",
+            "backup": null,
+            "bytes": 54759
+          },
+          {
+            "path": "Languages/English/DefInjected/JobDef/PawnEconomy_LaborFlow.xml",
+            "changed": false,
+            "beforeSha256": "508F51BEEE06558E99E7637735A775135ACD3DA766705D8B0F54C7F14CB2C8BE",
+            "sourceSha256": "508F51BEEE06558E99E7637735A775135ACD3DA766705D8B0F54C7F14CB2C8BE",
+            "deployedSha256": "508F51BEEE06558E99E7637735A775135ACD3DA766705D8B0F54C7F14CB2C8BE",
+            "backup": null,
+            "bytes": 441
+          },
+          {
+            "path": "Languages/English/Keyed/PawnEconomy.xml",
+            "changed": false,
+            "beforeSha256": "8194B21803761EB2F18762FA63525282DCBCD98CA9623C81643B1F4D13A73575",
+            "sourceSha256": "8194B21803761EB2F18762FA63525282DCBCD98CA9623C81643B1F4D13A73575",
+            "deployedSha256": "8194B21803761EB2F18762FA63525282DCBCD98CA9623C81643B1F4D13A73575",
+            "backup": null,
+            "bytes": 56884
+          },
+          {
+            "path": "Defs/PawnEconomy_WorkContract.xml",
+            "changed": false,
+            "beforeSha256": "0B2B25C5F9FF4752F6EC6DC63369C02A37D505BBD653DFBCBAC7558651BAFF7B",
+            "sourceSha256": "0B2B25C5F9FF4752F6EC6DC63369C02A37D505BBD653DFBCBAC7558651BAFF7B",
+            "deployedSha256": "0B2B25C5F9FF4752F6EC6DC63369C02A37D505BBD653DFBCBAC7558651BAFF7B",
+            "backup": null,
+            "bytes": 2820
+          },
+          {
+            "path": "Textures/Things/Item/PawnEconomy/PC_PEA_WorkContract.png",
+            "changed": false,
+            "beforeSha256": "96E2451CE626077E1C346265A7484398E9A1E90098E46B5A6F7C7F6EFAC76CEC",
+            "sourceSha256": "96E2451CE626077E1C346265A7484398E9A1E90098E46B5A6F7C7F6EFAC76CEC",
+            "deployedSha256": "96E2451CE626077E1C346265A7484398E9A1E90098E46B5A6F7C7F6EFAC76CEC",
+            "backup": null,
+            "bytes": 914
+          },
+          {
+            "path": "Languages/ChineseSimplified/DefInjected/ThingDef/PawnEconomy_WorkContract.xml",
+            "changed": false,
+            "beforeSha256": "CD2D9C681CD24A40380C5B7C04C141953767AF8BB2E7287B4951C1BD87E25125",
+            "sourceSha256": "CD2D9C681CD24A40380C5B7C04C141953767AF8BB2E7287B4951C1BD87E25125",
+            "deployedSha256": "CD2D9C681CD24A40380C5B7C04C141953767AF8BB2E7287B4951C1BD87E25125",
+            "backup": null,
+            "bytes": 403
+          },
+          {
+            "path": "Languages/English/DefInjected/ThingDef/PawnEconomy_WorkContract.xml",
+            "changed": false,
+            "beforeSha256": "5865D1EBE9CBA1146FA50D7E17EB96787A8AEF1A7A5B5A0938F898B9C64D1E1F",
+            "sourceSha256": "5865D1EBE9CBA1146FA50D7E17EB96787A8AEF1A7A5B5A0938F898B9C64D1E1F",
+            "deployedSha256": "5865D1EBE9CBA1146FA50D7E17EB96787A8AEF1A7A5B5A0938F898B9C64D1E1F",
+            "backup": null,
+            "bytes": 421
+          }
+        ],
+        "changedCount": 1,
+        "verifiedCount": 10,
+        "gameRestarted": false,
+        "gameVerified": false,
+        "scope": "Only explicit DLL/Def/localization/paper payload; no unrelated project sync"
+      },
+      "findings": [
+        {
+          "id": "VFC-01",
+          "status": "CodeRepaired",
+          "area": "实际阶段时点",
+          "files": "EconomyLaborInteraction.cs / EconomyWorld.cs",
+          "change": "出发 Toil 写前往；真正候位写排队；洽谈、签领、核验各自开始时写阶段，不再到站补走历史。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-02",
+          "status": "CodeRepaired",
+          "area": "同合同重复履约",
+          "files": "LaborFlow.cs / LaborFlowService.cs",
+          "change": "允许签约后的工作—收集—交验—到账循环，未签约和归档保持严格边界；中断洽谈可重启。同合同两证据、部分趟和重放有测试。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-03",
+          "status": "CodeRepaired",
+          "area": "中断恢复",
+          "files": "EconomyLaborInteraction.cs / EconomyLaborFlow.cs",
+          "change": "统一 Driver FinishAction 记录征召、倒地、精神状态、饥饿、疲劳、站点失效、断路和拥挤；保存恢复阶段/下一步；未交验权利优先于后来的合同意图。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-04",
+          "status": "CodeRepaired",
+          "area": "主界面履约事实",
+          "files": "NeedsCyclePanel.Account.cs / EconomyLaborPresentation.cs / Window_InstitutionWorkspace.Table.cs",
+          "change": "账户主卡追加阶段、交货/剩余、工资、当前站和下一步；劳务主表扩为12列；工资处按待交验/待付款/欠薪/到账分组，明确当前地图殖民者应付范围。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-05",
+          "status": "CodeRepaired",
+          "area": "本站实际流程",
+          "files": "LaborFlowSaveData.cs / EconomyLaborInteraction.cs",
+          "change": "新增 CurrentStationKey / AtStation 与 schema3 加性持久化，本站在办/候位由实际目标与 Toil 查询，工资站不再拿签约劳务站身份冒充。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-06",
+          "status": "CodeRepaired",
+          "area": "气泡队列",
+          "files": "LaborSpeechQueue.cs / EconomyNeedSpeech.cs",
+          "change": "稳定业务 EventId、每Pawn8条/全局64Pawn/2048去重；支付与签领关键事件有优先级；活跃泡4.5实时秒、候选可显示累计TTL90秒，隐藏时不错误出队，死亡/销毁显式清理。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-07",
+          "status": "CodeRepaired",
+          "area": "实际付款反馈",
+          "files": "EmploymentService.cs / EconomyEmployment.cs",
+          "change": "普通待付款与真实支付失败分开；失败保留权利及欠薪事实，成功以实际支付 minor 金额显示 +X.XX，重复完成不重报到账。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-08",
+          "status": "CodeRepaired",
+          "area": "合同纸与未结权利",
+          "files": "Thing_WorkContractDocument.cs / EconomyLaborFlow.cs",
+          "change": "沿真实 holder / MapHeld / PositionHeld 定位；纸显示应交/已交/剩余、已付/未付和实际日期；结束合同仍有权利可补纸，已有正本先拾取，真正持有后才说签领成功。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-09",
+          "status": "CodeRepaired",
+          "area": "逐项对账",
+          "files": "EconomyLaborCounterPresentation.cs",
+          "change": "建筑按钮先选一条 Workflow，再确认短号与未结影响，命令仅作用于该流程并显示结果；不隐藏地处置全图其他流程。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-10",
+          "status": "CodeRepaired",
+          "area": "只读事件链",
+          "files": "LaborFlowService.cs / LaborFlowSaveData.cs / Window_LaborRecord.cs",
+          "change": "每流程64事实有界历史：时间、阶段、动作、物资、金额、结果与稳定追踪ID；原权利/提交幂等不依赖被裁剪的显示历史。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-11",
+          "status": "CodeRepaired",
+          "area": "双语与正确前缀",
+          "files": "PawnEconomy.xml / verify-pawn-economy.ps1",
+          "change": "消除重复、补齐原因/动作/Next映射与实际金额；216组LaborVisual键双语一致。修正检查器对Presenter partial和完整纸面键的命名空间，真实缺键仍阻断，不增无消费者别名。",
+          "gameVerified": false
+        },
+        {
+          "id": "VFC-12",
+          "status": "CodeRepaired",
+          "area": "地图互动与办理可见性",
+          "files": "EconomyLaborInteraction.cs / EconomyLaborCounterPresentation.cs / EconomyLaborCarryPresentation.cs / PawnEconomy_Institutions.xml",
+          "change": "右键实际建筑接约/继续/补纸/提交走同一 Job；合法旋转 InteractionCell、单服务位/最多4人候位、1200tick拥挤退避；30/90tick办理有朝向和进度，动态报告区分行走/等候/洽谈/签领/核验。纸货图标绑定实际持有 Thing，柜台呈递仅实际服务格。",
+          "gameVerified": false
+        }
+      ],
+      "remaining": [
+        "G01-G14 real-game acceptance, Job resume and actual pawn inventory save/load",
+        "Bills actual production authorization/delivery chain CA-12",
+        "Hunt/slaughter/haul authoritative delivery receipts CA-03",
+        "Generic third-party split/merge lineage beyond tracked collector CA-08",
+        "Cross-map funding T31 host evidence",
+        "Actual Unity map UI / four rotations / zoom / profiler / fault-injection acceptance"
+      ],
+      "governance": {
+        "DELTA": {
+          "status": "PASS",
+          "coveredFiles": 60,
+          "hints": 0,
+          "excludedUnrelatedFiles": 2526,
+          "log": ".codebuddy\\tmp\\cb-econ-003-visual-repair-20261012\\gate-delta.txt",
+          "sha256": "604F2CC47A04F42F2C973C387D0701E23A966365D3A06D8A167AD26084980777",
+          "strictSchema": true,
+          "blocking": true
+        },
+        "DocGuard": {
+          "status": "BLOCKED",
+          "existingBlockers": 11,
+          "newBlockers": 0,
+          "baselineModified": false,
+          "log": ".codebuddy\\tmp\\cb-econ-003-visual-repair-20261012\\doc-guard-final.txt",
+          "sha256": "C6E4634C41B9BD441856241B083AAB2FF5A0D354BDAFA8408575C59C2D7E8303",
+          "existingBlockerPaths": [
+            "docs/参考资料/DLC接口参考包_20261011/01_原版加载与解析链路.md",
+            "docs/参考资料/DLC接口参考包_20261011/02_当前项目接入地图.md",
+            "docs/参考资料/DLC接口参考包_20261011/03_未来接口方案.md",
+            "docs/参考资料/DLC接口参考包_20261011/04_工具复现与验证.md",
+            "docs/参考资料/DLC接口参考包_20261011/README.md",
+            "docs/参考资料/DLC接口参考包_20261011/examples/DlcContracts.cs.txt",
+            "docs/参考资料/DLC接口参考包_20261011/snapshot/project-source/DlcStatus.cs.txt",
+            "docs/参考资料/DLC接口参考包_20261011/snapshot/project-source/IdeologyAdapter.cs.txt",
+            "docs/参考资料/DLC接口参考包_20261011/snapshot/project-source/PawnLifeBiotechAdapter.cs.txt",
+            "docs/参考资料/DLC接口参考包_20261011/snapshot/runtime-api-index.md",
+            "docs/验证/公有资产与机构资金贯通_20261011/体系链路与修复方案.md"
+          ],
+          "newBlockerPaths": [],
+          "exitCode": 2
+        },
+        "EconomyVerifier": {
+          "status": "PASS",
+          "defNodes": 12,
+          "institutions": 5,
+          "jobs": 4,
+          "literalReferences": 266
+        },
+        "NeedsUIVerifier": {
+          "status": "PASS",
+          "bilingualKeys": 384,
+          "gameAcceptance": "NOT RUN"
+        },
+        "LOC": {
+          "status": "PASS",
+          "laborVisualKeysPerLanguage": 216,
+          "modelRequiredKeys": 78,
+          "modelParameterKeys": 15
+        },
+        "AssetMapAcceptance": "NOT RUN",
+        "Game": "NOT RUN",
+        "PERF": "OfflineBoundedFixturesPassed; actual game profiler NOT RUN"
+      },
+      "postFreezeVerification": {
+        "changedProductFiles": [],
+        "allBindingsMatched": true,
+        "deployedFilesMatched": 10,
+        "requirementUnchanged": true,
+        "receiptUnchanged": true,
+        "playerLog": {
+          "path": "C:\\Users\\Administrator\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Player.log",
+          "exists": true,
+          "gameVerified": false,
+          "lastWriteTime": "2026-10-12T18:17:40.846943+08:00",
+          "sha256": "5082BF76E57A050E5940EE8092EE8C062DD69FA307E0CBD5182060CD8038450D",
+          "bytes": 36903
+        }
+      }
+    },
+    "institutionDefHotfix": {
+      "at": "2026-10-12T21:56:32.425592+08:00",
+      "status": "DefHotfixDeployed_GameRecoveryPending",
+      "rootCause": "MapMeshAndRealtime is not exact Verse.DrawerType enum member; actual MapMeshAndRealTime",
+      "causedBy": "Codex §15 change",
+      "runtimeEvidence": {
+        "log": ".codebuddy\\tmp\\cb-econ-003-institution-hotfix-20261012\\Player.before.log",
+        "sha256": "A3F53E3C81225067D11E8FCC292F3FD62E9CE6C8702B188F431EE33D214A3ABA",
+        "fiveDefFailures": true,
+        "loadedBuild": "2026-10-12 13:31 UTC"
+      },
+      "modifiedFiles": [
+        {
+          "path": "Defs/PawnEconomy_Institutions.xml",
+          "beforeSha256": "528E63D09CE86ADADE172BFF5170ACA13FB1AE6F5EB64808002AFC58E127037B",
+          "afterSha256": "70CA1271142342885EE8370F1112101C2643B5C6433C27282E3EFB48EC9AE8BA"
+        },
+        {
+          "path": "Defs/PawnEconomy_WorkContract.xml",
+          "beforeSha256": "0B2B25C5F9FF4752F6EC6DC63369C02A37D505BBD653DFBCBAC7558651BAFF7B",
+          "afterSha256": "D166F00A366D85352363DC34239826F243E9A6E917F616599F6DAED707EAD29E"
+        },
+        {
+          "path": "_scripts/verify-pawn-economy.ps1",
+          "beforeSha256": "46DD045F0ACD437BEB6F3E6902F59BCC575F3ED0E095707EBF17162CD4B52503",
+          "afterSha256": "5513F6123E47C79D47F71C1CB837199132DA96D9AE5FA943368B6CE1381F72E9"
+        }
+      ],
+      "verification": {
+        "negativeControls": [
+          {
+            "case": "bad-drawer",
+            "exitCode": 1,
+            "expectedFailureObserved": true,
+            "expectedMessage": "Invalid enum value: drawerType=MapMeshAndRealtime"
+          },
+          {
+            "case": "bad-paper",
+            "exitCode": 1,
+            "expectedFailureObserved": true,
+            "expectedMessage": "Flammable contract paper must have hitpoints."
+          }
+        ],
+        "save": {
+          "path": "C:\\Users\\Administrator\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Saves\\新移民1.rws",
+          "sha256": "1617FFCEBCAB8665C417CAFCCE3196975FEB167FDB576839A8AD1F26851C9A14",
+          "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\save-safety\\institution_def_hotfix_20261012\\新移民1.rws",
+          "backedUpSha256": "1617FFCEBCAB8665C417CAFCCE3196975FEB167FDB576839A8AD1F26851C9A14",
+          "institutions": [
+            {
+              "def": "PC_PEA_LaborOffice",
+              "id": "PC_PEA_LaborOffice45842",
+              "pos": "(132, 0, 138)",
+              "health": "120"
+            },
+            {
+              "def": "PC_PEA_WorkshopOffice",
+              "id": "PC_PEA_WorkshopOffice45843",
+              "pos": "(133, 0, 138)",
+              "health": "120"
+            },
+            {
+              "def": "PC_PEA_SettlementOffice",
+              "id": "PC_PEA_SettlementOffice45844",
+              "pos": "(134, 0, 138)",
+              "health": "120"
+            },
+            {
+              "def": "PC_PEA_Shop",
+              "id": "PC_PEA_Shop45845",
+              "pos": "(135, 0, 138)",
+              "health": "120"
+            },
+            {
+              "def": "PC_PEA_ExamCenter",
+              "id": "PC_PEA_ExamCenter45846",
+              "pos": "(136, 0, 138)",
+              "health": "120"
+            }
+          ],
+          "originalUnmodified": true
+        },
+        "positiveCheck": "16 Def nodes / 6 exact-case enum values / paper HP PASS",
+        "scope": "top-level enum members in two economy Def files; not all XML parsing",
+        "gameRecoveryVerified": false
+      },
+      "deployment": {
+        "at": "2026-10-12T21:52:31.165139+08:00",
+        "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+        "files": [
+          {
+            "path": "Defs/PawnEconomy_Institutions.xml",
+            "beforeSha256": "528E63D09CE86ADADE172BFF5170ACA13FB1AE6F5EB64808002AFC58E127037B",
+            "afterSha256": "70CA1271142342885EE8370F1112101C2643B5C6433C27282E3EFB48EC9AE8BA",
+            "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_institution_def_hotfix_20261012_215231\\Defs\\PawnEconomy_Institutions.xml"
+          },
+          {
+            "path": "Defs/PawnEconomy_WorkContract.xml",
+            "beforeSha256": "0B2B25C5F9FF4752F6EC6DC63369C02A37D505BBD653DFBCBAC7558651BAFF7B",
+            "afterSha256": "D166F00A366D85352363DC34239826F243E9A6E917F616599F6DAED707EAD29E",
+            "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_institution_def_hotfix_20261012_215231\\Defs\\PawnEconomy_WorkContract.xml"
+          }
+        ],
+        "unchangedDllSha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+        "gameRestarted": false,
+        "recoveredInGame": false
+      },
+      "sourceChanged": false,
+      "dllChanged": false,
+      "fullTestsRerun": false,
+      "negativeControlsPassed": 2,
+      "defVerifier": "PASS: 16 Def nodes / 6 actual exact-case enums / flammable paper HP",
+      "gameRecoveryVerified": false,
+      "scope": "Hotfix 2 Def files and verifier. Source helper tests remain historical, not proof of XML load success.",
+      "governance": {
+        "DELTA": {
+          "status": "PASS",
+          "coveredFiles": 60,
+          "hints": 0,
+          "sha256": "604F2CC47A04F42F2C973C387D0701E23A966365D3A06D8A167AD26084980777",
+          "log": ".codebuddy\\tmp\\cb-econ-003-institution-hotfix-20261012\\gate-delta.txt"
+        },
+        "DocGuard": {
+          "status": "BLOCKED",
+          "existingBlockers": 11,
+          "newBlockers": 0,
+          "baselineChanged": false,
+          "sha256": "DF9858D2AE550D9D4AE5566B5BD87CE8002957A52B97730BA5EE3EBB72E8BA28",
+          "log": ".codebuddy\\tmp\\cb-econ-003-institution-hotfix-20261012\\doc-guard.txt"
+        }
+      }
+    },
+    "latestReview": "laborOutputCollectRepair",
+    "laborOutputCollectRepair": {
+      "at": "2026-10-12T22:41:25.813442+08:00",
+      "reportSection": 17,
+      "status": "CodeVerified_TestVerified_Deployed_GamePending",
+      "tests": {
+        "passed": 1629,
+        "failed": 0,
+        "skipped": 1,
+        "newCasesVs1609": 20,
+        "trx": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\output-collect-final.trx"
+      },
+      "sourceManifest": {
+        "taskId": "CB-ECON-003",
+        "changeId": "CHG-20261011-LABOR-VISUAL",
+        "at": "2026-10-12T22:39:13.225980+08:00",
+        "files": [
+          {
+            "path": "Source/PersonalChronicle/Capture/Patch_GenPlaceOutput.cs",
+            "beforeSha256": "5CEA32C82E5DE562FA07987F5672CFFC357FF28260AEDC2B7D9039982BCCB674",
+            "afterSha256": "85248B4E65A00217F930DCFECFBDD2DBF4F25CAF8FD4E8F2FD851DCBD84EFDE3"
+          },
+          {
+            "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborOutputs.cs",
+            "beforeSha256": "542E6A788076793736A24E28CC32427DD15CEEFAC5F6B0FFAE899C4D766015B5",
+            "afterSha256": "038C623BD513C812FDC943E97E8CBFB6550415FFCF283E813C2605066F0ED92C"
+          },
+          {
+            "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyRuntime.cs",
+            "beforeSha256": "11002C59690719C8737CEFC3DC956D4B5745686AC0C8ECB4E47700033EE5A382",
+            "afterSha256": "3E82BFE60648655369702860D9CE1BD7C0E16E5E84DD31009A9A9768AE9C9BD4"
+          },
+          {
+            "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyWorld.cs",
+            "beforeSha256": "120579BAC75D3E2D73A28C362AA9D7DF7ECDB8C194134258AA56069C469918ED",
+            "afterSha256": "C86FE253845AB0F648E44890039A511144B3B1420C4ECF7C8B543D1654EC0D35"
+          },
+          {
+            "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyLaborFlow.cs",
+            "beforeSha256": "1732414FFECEB5F45A4E7E817175BCE778AF166F6C9D4597D0C6BA5A82D6D5B6",
+            "afterSha256": "AAEED1B25A0D51409F24E53339EABAC9F5F41FF5E2043F39676729199C226CCC"
+          },
+          {
+            "path": "Source/PersonalChronicle/Domain/PawnEconomy/Employment/LaborFlow.cs",
+            "beforeSha256": "1830A5AA117A635707967ADA5C35C1A912DA774588392C5D0904749AAEE7D597",
+            "afterSha256": "69233FF6565DB8E1F5D9FCC6EDB055178E3EED3DA35B7828B6CA588F8F410236"
+          },
+          {
+            "path": "Source/PersonalChronicle/BuildStamp.g.cs",
+            "beforeSha256": "15F4216B5DF12E00F6DD330596A50A948FE5EB6E3DE2A120F6C8BA865DC2C2A7",
+            "afterSha256": "A0724F8AB2AD5972332712CFD0E22A7DD71F34E9D23E8F215B7555E1AD6BC0E6"
+          },
+          {
+            "path": "Tests/LaborOutputCaptureTests.cs",
+            "beforeSha256": null,
+            "afterSha256": "B9610E2E72B3787AF0FE6BF86F9891787F989DE284936B279684B1B75B1BF694"
+          },
+          {
+            "path": "Tests/LaborFulfillmentSchedulingTests.cs",
+            "beforeSha256": null,
+            "afterSha256": "DA1474794699F72DCF487DE79FB033429C74389496E945067A6FC18C26408012"
+          },
+          {
+            "path": "docs/设计文档/架构/EXC-2026-001.md",
+            "beforeSha256": "50485720F54BA0FF3CA536594EFE5EA6257F8A9E887E3FB5890A423AED65E872",
+            "afterSha256": "920ED5171E3A2F1A80E23718C0B1E78219ECB35FDAE2BA40F008BB23827F9C37"
+          }
+        ],
+        "mainDllSha256": "4730FE67FE1293FF1C76E8E3A81AD3F5C419E191A75B3DA877007E6AED6FFD22",
+        "testReferenceSha256": "4730FE67FE1293FF1C76E8E3A81AD3F5C419E191A75B3DA877007E6AED6FFD22",
+        "testDllSha256": "8F1703E16BE979149E4A90FCAE4886CE82BA129C075E4ADF20075A5CCA726515",
+        "trxSha256": "B928A3F299BFA7145776E0C1BBA1370A6401D9931013F905845840C88C52C989",
+        "diffSha256": "D9BCB4B547B3EBC6675D8C37ACFC6DA2C39936F8DB9836A0321CDCE1C764FCA8"
+      },
+      "deployment": {
+        "at": "2026-10-12T22:39:13.225980+08:00",
+        "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+        "path": "Assemblies/PersonalChronicle.dll",
+        "beforeSha256": "8DD291696C6E06222076EE6392B1508C4BE3B58B9FA13C10188B3FD9CF146A01",
+        "afterSha256": "4730FE67FE1293FF1C76E8E3A81AD3F5C419E191A75B3DA877007E6AED6FFD22",
+        "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\release-deploy\\cb_econ_003_output_collect_fix_20261012_223913\\Assemblies\\PersonalChronicle.dll",
+        "bytes": 2455040,
+        "gameRestarted": false,
+        "gameVerified": false
+      },
+      "gameVerified": false,
+      "runtimeAcceptance": "NOT RUN",
+      "legacyUnregisteredOutputs": "ReconciliationRequired; never guess nearby inventory",
+      "remainingOriginalAcceptance": true,
+      "governance": {
+        "DELTA": {
+          "status": "PASS",
+          "coveredFiles": 62,
+          "hints": 0,
+          "log": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\gate-delta.txt",
+          "sha256": "C2CFE8685EF1928C1334097A041702F1E5AF87CFFEADA34C001D0C1910E0B6A1"
+        },
+        "DocGuard": {
+          "status": "BLOCKED",
+          "existingBlockers": 11,
+          "newBlockers": 0,
+          "warnings": 2,
+          "baselineChanged": false,
+          "log": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\doc-guard.txt",
+          "sha256": "BEE0DE21D490674A7C684288CA07A3EC0D4AC85E35F990BE02EF3DAE38492841"
+        }
+      },
+      "closure": {
+        "at": "2026-10-12T22:43:15.290064+08:00",
+        "governance": {
+          "DELTA": {
+            "status": "PASS",
+            "coveredFiles": 62,
+            "hints": 0,
+            "log": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\gate-delta.txt",
+            "sha256": "C2CFE8685EF1928C1334097A041702F1E5AF87CFFEADA34C001D0C1910E0B6A1"
+          },
+          "DocGuard": {
+            "status": "BLOCKED",
+            "existingBlockers": 11,
+            "newBlockers": 0,
+            "warnings": 2,
+            "baselineChanged": false,
+            "log": ".codebuddy\\tmp\\cb-econ-003-output-collect-fix-20261012\\doc-guard.txt",
+            "sha256": "BEE0DE21D490674A7C684288CA07A3EC0D4AC85E35F990BE02EF3DAE38492841"
+          }
+        },
+        "sourceFreezeMatches": true,
+        "mainTestDeployedDllMatch": true,
+        "requirementUnchanged": true,
+        "managerReceiptUnchanged": true,
+        "defHashes": {
+          "Defs/PawnEconomy_Institutions.xml": "70CA1271142342885EE8370F1112101C2643B5C6433C27282E3EFB48EC9AE8BA",
+          "Defs/PawnEconomy_WorkContract.xml": "D166F00A366D85352363DC34239826F243E9A6E917F616599F6DAED707EAD29E"
+        },
+        "save": {
+          "path": "C:\\Users\\Administrator\\AppData\\LocalLow\\Ludeon Studios\\RimWorld by Ludeon Studios\\Saves\\新移民1.rws",
+          "sha256": "1617FFCEBCAB8665C417CAFCCE3196975FEB167FDB576839A8AD1F26851C9A14",
+          "originalExpectedSha256": "1617FFCEBCAB8665C417CAFCCE3196975FEB167FDB576839A8AD1F26851C9A14",
+          "modifiedByThisRepair": false,
+          "matchesPreviousSnapshot": true
+        },
+        "gameVerified": false
+      }
+    }
+  }
+}

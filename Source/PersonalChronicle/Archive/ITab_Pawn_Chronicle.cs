@@ -1,7 +1,8 @@
+using PersonalChronicle.MasterControl.Population;
 using System;
 using System.Collections.Generic;
 using PersonalChronicle.Application;
-using PersonalChronicle.Archive.ReadModels;
+using PersonalChronicle.Application.ReadModels;
 using PersonalChronicle.Archive.UI;
 using PersonalChronicle.Domain;
 using RimWorld;
@@ -18,7 +19,7 @@ namespace PersonalChronicle.Archive
     /// Boundary contract (architecture §3.1 / UI standards §5):
     ///   * This tab NEVER queries + sorts + null-guards on its own. It consumes a
     ///     <see cref="DetailSnapshot"/> produced by <see cref="IArchiveUiDataProvider"/>,
-    ///     exactly like <see cref="ArchiveMainTabWindow"/> does.
+    ///     exactly like <see cref="PersonnelArchivePanel"/> does.
     ///   * The snapshot is rebuilt only when the selected pawn changes or the
     ///     service data revision moves, never per-frame in the draw path.
     ///   * All drawing goes through <see cref="UIComponents"/> + <see cref="UITheme"/>;
@@ -42,6 +43,10 @@ namespace PersonalChronicle.Archive
         private DetailSnapshot cachedSnapshot;
         private string cachedPawnId;
         private long cachedRevision = -1L;
+        // 性能体检 P0-1：快照已按 pawnId+revision 缓存，但 BuildCells 原本每帧重跑
+        // （34 次 Translate + 2 次 Sort + 2 次 DefDatabase 查表）。cells 与快照同源，
+        // 用同一套键缓存，随快照一起失效即可。
+        private UIComponents.KpiCell[] cachedCells;
         // v4.15 (extend): the six-cell KPI grid scrolls vertically when more than
         // the visible rows are present (e.g. enriched + added metric cells).
         private Vector2 sixScroll;
@@ -113,10 +118,13 @@ namespace PersonalChronicle.Archive
 
         protected override void FillTab()
         {
-            // v4.17 体检：Tab 尺寸屏幕自适应（与 ITab_Pawn_Career 同款兜底）——
-            // 低分辨率/高 UI 缩放下固定 560×640 会把顶边推出屏幕。
+            // v1.1.5 前端修复：Tab 尺寸屏幕自适应。高度上限改用 ITab.PaneTopY
+            // （信息栏实际顶部 y，逻辑坐标），跟随 RimHUD/Baal 等撑高信息栏的
+            // 动态 UI，保证面板顶部不被顶出屏幕（面板内顶部是 3 卡布局区）。
+            // 原 screenHeight - 240 假设信息栏高度固定，撑高后会失准致顶边被遮。
             float w = Mathf.Min(TabWidth, Verse.UI.screenWidth - 24f);
-            float h = Mathf.Min(TabHeight, Verse.UI.screenHeight - 240f);
+            float paneTopY = PaneTopY;
+            float h = Mathf.Min(TabHeight, Mathf.Max(320f, paneTopY - 8f));
             if (Mathf.Abs(size.x - w) > 1f || Mathf.Abs(size.y - h) > 1f)
             {
                 size = new Vector2(w, h);
@@ -163,7 +171,14 @@ namespace PersonalChronicle.Archive
             float footerY = outer.yMax - ButtonH;
             float gridTop = y;
             float gridH = Mathf.Max(0f, footerY - y - UITheme.SpaceXs);
-            UIComponents.KpiCell[] cells = BuildCells(snap);
+            // 性能体检 P0-1：视图随快照缓存，不再每帧重建。
+            if (cachedCells == null)
+            {
+                long perf = PerfProbe.Start();
+                cachedCells = BuildCells(snap);
+                PerfProbe.End("ui.buildCells", perf);
+            }
+            UIComponents.KpiCell[] cells = cachedCells;
             UIComponents.SixGrid(new Rect(outer.x, gridTop, outer.width, gridH), cells, ref sixScroll);
 
             DrawFooter(new Rect(outer.x, footerY, outer.width, ButtonH), pawn);
@@ -189,9 +204,12 @@ namespace PersonalChronicle.Archive
                 {
                     sixScroll = Vector2.zero;
                 }
+                long perf = PerfProbe.Start();
                 cachedSnapshot = uiDataProvider.BuildDetail(service, stableId, revision);
+                PerfProbe.End("ui.snapshot", perf);
                 cachedPawnId = stableId;
                 cachedRevision = revision;
+                cachedCells = null; // 快照变了 → 视图重建（惰性，首次绘制时算）。
             }
             catch (Exception ex)
             {
@@ -208,7 +226,7 @@ namespace PersonalChronicle.Archive
         // 坐标本身不显示给玩家（隐藏 v1.1.4 用户要求），▶ 暗示可点击跳转。
         // 左色条语义：房间=Alive 绿、工坊=PillGold、类型=Accent。
         // 卡间距与下方 SixGrid 的 KpiGap 一致（10f），保证 3 卡与六宫格列线对齐。
-        private static readonly float ResidenceBarH = 44f;
+        private static readonly float ResidenceBarH = 52f;  // 三卡高度（原 44f 偏矮，加高改善可读性）
 
         private float DrawResidenceBar(Rect outer, float y, Pawn pawn, DetailSnapshot snap)
         {
@@ -222,9 +240,14 @@ namespace PersonalChronicle.Archive
                 && !string.IsNullOrEmpty(snap.Residence.RoomTypeName);
 
             string homeLabel = homeOk ? snap.Residence.RoomRoleLabel : noRec;
-            string workLabel = (workOk && !string.IsNullOrEmpty(snap.Workplace.BuildingLabel))
-                ? snap.Workplace.BuildingLabel
-                : noRec;
+            // v6 修复：工作场所卡展示设备「所在房间角色」(RoomRoleLabel)，而非设备自身
+            // (BuildingLabel)。数据层两者均已解析，此前错用了设备名，与用户预期（显示房间）不符。
+            // 房间未知/户外时回落显示设备名，保证总有可读标签。
+            string workLabel = (workOk && !string.IsNullOrEmpty(snap.Workplace.RoomRoleLabel))
+                ? snap.Workplace.RoomRoleLabel
+                : (workOk && !string.IsNullOrEmpty(snap.Workplace.BuildingLabel)
+                    ? snap.Workplace.BuildingLabel
+                    : noRec);
             string typeLabel = typeOk ? snap.Residence.RoomTypeName : noRec;
 
             // 位置副行文案：有坐标显示 "x,y"（可点击跳转），无坐标显示 "--"（不可点击）。
@@ -265,19 +288,24 @@ namespace PersonalChronicle.Archive
                 JumpTo(snap.Residence.MapIndex, snap.Residence.Cell);
             }
 
-            // 工坊卡：点击改名（BuildingAliases），位置副行点击跳转工坊。
+            // 工坊卡（v1.1.6）：左键 → 弹「全部工作 room」列表（改名/定位/设为当前）；
+            // 右键 ▶ → 跳转工坊坐标（CameraJumper.TryJump，与现有 workSub 跳转一致）。
             if (UIComponents.ClickableCard(workRect,
                 "PersonalChronicle.UI.Workplace.Label".Translate().ToString(),
                 workLabel, workSub, UITheme.PillGold, workSubClick, out bool workJump))
             {
-                if (workOk && service != null && !string.IsNullOrEmpty(snap.Workplace.BuildingStableId))
+                if (workOk && service != null)
                 {
                     cachedRevision = -1L;
-                    Find.WindowStack.Add(new Dialog_RenameWorkplace(
-                        "PersonalChronicle.UI.RenameWorkplace.Title",
-                        "PersonalChronicle.UI.RenameWorkplace.Hint",
-                        workLabel,
-                        name => service.SetBuildingAlias(snap.Workplace.BuildingStableId, name)));
+                    PawnObject workPawnObj = (!string.IsNullOrEmpty(pawnId))
+                        ? service.GetObject(pawnId) as PawnObject : null;
+                    IReadOnlyList<WorkplaceChoiceView> choices = ArchiveUiDataProvider.BuildWorkplaceChoices(
+                        service, workPawnObj, pawn);
+                    Find.WindowStack.Add(new Dialog_WorkplaceList(
+                        "PersonalChronicle.UI.WorkplaceList.Title",
+                        "PersonalChronicle.UI.WorkplaceList.Hint",
+                        service, pawnId, choices,
+                        () => { cachedRevision = -1L; }));
                 }
             }
             if (workJump)
@@ -359,9 +387,13 @@ namespace PersonalChronicle.Archive
             // 通过主菜单「档案馆」按钮直达。
             if (Prefs.DevMode && pawn != null)
             {
-                float testW = Mathf.Min(rect.width * 0.32f, 130f);
-                Rect testRect = new Rect(rect.x, rect.y, testW, rect.height);
+                // 左：注入测试数据（当前选中 pawn）；右：全量覆盖自检（殖民地级，只读）。
+                float btnW = Mathf.Min(rect.width * 0.46f, 150f);
+                float gap = 4f;
+                Rect testRect = new Rect(rect.x, rect.y, btnW, rect.height);
                 DevTestButtons.DrawButton(testRect, pawn);
+                Rect probeRect = new Rect(rect.x + btnW + gap, rect.y, btnW, rect.height);
+                DevCoverageProbe.DrawButton(probeRect);
             }
         }
 
@@ -404,7 +436,11 @@ namespace PersonalChronicle.Archive
                         if (b == null) continue;
                         string tag = b.IsPrimary ? "PersonalChronicle.UI.Kpi.Career".Translate().ToString()
                             : (b.IsSecondary ? "PersonalChronicle.UI.SecondaryWork".Translate().ToString() : string.Empty);
-                        float hours = (float)b.Ticks / 2500f;
+                        // ⚠ 2026-09-19：原为字面量 `2500f` —— **数值恰好正确**，但本工程自己在
+                        // PawnOverview.cs 声明过「禁止硬编码 2500」（该值应随原版常量走）。
+                        // 改用 `GenDate.TicksPerHour` 后，此处与 Career.cs / PawnMedal.cs 三处**同源**，
+                        // 原版一旦调整时间刻度也不会漏改（CHG-20260919-ECON-UI-009）。
+                        float hours = (float)b.Ticks / GenDate.TicksPerHour;
                         bars.Add(new UIComponents.KpiBar
                         {
                             Caption = b.WorkTypeLabel + " · " + Mathf.RoundToInt(hours).ToString() + "h · " + (int)(b.Share01 * 100f) + "%",
@@ -425,15 +461,30 @@ namespace PersonalChronicle.Archive
             bool prodOk = snap.ProductionTotal > 0 || snap.ProductionSilverValue > 0f;
             string prodVal = prodOk ? Mathf.RoundToInt(snap.ProductionSilverValue).ToString() : "--";
             // inline 指标：维持产量(件) + 新增种类数(类)，均来自真实累加器累计。
+            // ⚠ 2026-09-19（CHG-20260919-ECON-UI-011）：原实现无产出时写死 `0 类`，
+            // 而**同一格**的大值 `prodVal` 用的是 `--` ⇒ **自相矛盾**（一个说"没数据"、一个说"就是 0"）。
+            // 统一判据：无产出（`!prodOk`）时两者都用 `--`（LAND-009：0 与"没数据"不可混同）。
+            // 有产出但恰好没有分类视图时，`0 类` 才是**真计数**，仍照常显示。
+            string catUnit = "PersonalChronicle.UI.Kpi.Cat".Translate().ToString();
             string prodKinds = (snap.ProductionTypeViews != null && snap.ProductionTypeViews.Count > 0)
-                ? snap.ProductionTypeViews.Count.ToString() + " " + "PersonalChronicle.UI.Kpi.Cat".Translate().ToString()
-                : "0 " + "PersonalChronicle.UI.Kpi.Cat".Translate().ToString();
+                ? snap.ProductionTypeViews.Count.ToString() + " " + catUnit
+                : (prodOk ? "0 " + catUnit : "--");
             string prodInline = (prodOk && snap.ProductionTotal > 0)
                 ? snap.ProductionTotal + " " + pieces + " · " + prodKinds
                 : prodKinds;
-            // 周产出/净值：近 7 / 30 天滚动窗口的折算银币。无数据时显示 0 银。
-            string weekVal = Mathf.RoundToInt(snap.WeeklyProductionSilver).ToString() + " " + silver;
-            string monthVal = Mathf.RoundToInt(snap.MonthlyProductionSilver).ToString() + " " + silver;
+            // 周产出 / 月产出：近 7 / 30 天滚动窗口的折算银币。
+            //
+            // ⚠ 2026-09-19（CHG-20260919-ECON-UI-011）：原注释写「无数据时显示 0 银」并把
+            // `0 银` 直接画出来 —— 那是**用 0 冒充空态**（屏幕上"这周真没产出"与"读数拿不到"同形）。
+            // 现统一用 `prodOk` 判据：从未有产出 ⇒ `--`；有产出但窗口内为 0 ⇒ `0 银`（**这是真值**）。
+            // 另：标签 `Kpi.NetValue` 此前叫「净值」但装的是 30 天产出（未扣任何成本），
+            // 已改名「月产出」，与真扣成本的「净收益」不再撞名（CHG-20260919-ECON-UI-009）。
+            string weekVal = prodOk
+                ? Mathf.RoundToInt(snap.WeeklyProductionSilver).ToString() + " " + silver
+                : "--";
+            string monthVal = prodOk
+                ? Mathf.RoundToInt(snap.MonthlyProductionSilver).ToString() + " " + silver
+                : "--";
             UIComponents.KpiRow[] prodRows = new UIComponents.KpiRow[]
             {
                 new UIComponents.KpiRow { Label = "PersonalChronicle.UI.Kpi.WeekOutput".Translate().ToString(), Value = weekVal },

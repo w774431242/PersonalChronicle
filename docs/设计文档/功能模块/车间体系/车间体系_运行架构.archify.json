@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "车间体系 · 运行架构",
+    "output": "docs/设计文档/功能模块/车间体系/车间体系_运行架构.html",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [1240, 560]
+  },
+  "components": [
+    { "id": "takeover", "type": "security", "label": "原版工作接管", "sublabel": "三闸门 · 默认关", "tag": "WorkTakeover", "pos": [40, 60], "size": [150, 68] },
+    { "id": "effects", "type": "cloud", "label": "加成 StatPart", "sublabel": "工时 / 研究 / 成品", "tag": "Effects/ ×5", "pos": [290, 60], "size": [150, 68] },
+    { "id": "meal", "type": "backend", "label": "三餐联动", "sublabel": "班次窗口 ∩ 三餐", "tag": "MealSchedule", "pos": [540, 60], "size": [150, 68] },
+    { "id": "capture", "type": "messagebus", "label": "Capture Harmony", "sublabel": "产出归账 · 唤醒", "tag": "Capture/ ×2", "pos": [790, 60], "size": [150, 68] },
+
+    { "id": "vanilla", "type": "external", "label": "原版 RimWorld", "sublabel": "时钟 · 管制表", "tag": "external", "pos": [40, 246], "size": [150, 68] },
+    { "id": "manager", "type": "backend", "label": "Manager 调度", "sublabel": "60 tick 对账", "tag": "Automation/", "pos": [290, 246], "size": [150, 68] },
+    { "id": "schedule", "type": "backend", "label": "排班引擎", "sublabel": "固定班 > 班组", "tag": "Schedule.cs", "pos": [540, 246], "size": [150, 68] },
+    { "id": "duty", "type": "backend", "label": "值勤链", "sublabel": "下发 → 站岗 → 结算", "tag": "Automation/", "pos": [790, 246], "size": [150, 68] },
+    { "id": "ledger", "type": "database", "label": "台账", "sublabel": "设备 7 天 · 人时 15 天", "tag": "Data/", "pos": [1040, 246], "size": [150, 68] },
+
+    { "id": "zone", "type": "database", "label": "Zone_Workshop", "sublabel": "14 键 · 存档真源", "tag": "Zone_Workshop.cs", "pos": [290, 432], "size": [150, 68] },
+    { "id": "ui", "type": "frontend", "label": "车间管理面板", "sublabel": "7 页 · 直写字段", "tag": "WorkshopManageView", "pos": [540, 432], "size": [150, 68] },
+    { "id": "floor", "type": "frontend", "label": "制造中心", "sublabel": "俯视图 · 编排画布", "tag": "Manufacturing/", "pos": [790, 432], "size": [150, 68] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Automation / Domain 运行引擎", "wraps": ["manager", "schedule", "duty"], "pad": 24 }
+  ],
+  "connections": [
+    { "from": "vanilla", "to": "manager", "label": "60 tick", "variant": "emphasis" },
+    { "from": "manager", "to": "schedule", "label": "RebuildDutyPlan", "variant": "emphasis" },
+    { "from": "schedule", "to": "duty", "label": "TryGetDutyJob", "variant": "emphasis" },
+    { "from": "duty", "to": "ledger", "label": "考勤入账", "variant": "emphasis" },
+    { "from": "ledger", "to": "floor", "label": "俯视设备卡", "variant": "emphasis", "fromSide": "bottom", "toSide": "right", "via": [[1115, 390], [970, 390], [970, 466]], "labelAt": [1042, 390] },
+
+    { "from": "takeover", "to": "vanilla", "label": "三闸门提权", "variant": "security", "fromSide": "bottom", "toSide": "top", "labelAt": [115, 187] },
+    { "from": "effects", "to": "vanilla", "label": "注入 StatPart", "fromSide": "bottom", "toSide": "left", "via": [[365, 170], [10, 170], [10, 280]], "labelAt": [280, 170] },
+    { "from": "manager", "to": "zone", "label": "排班配置落盘", "variant": "dashed", "fromSide": "left", "toSide": "left", "via": [[250, 280], [250, 466]], "labelAt": [250, 373] },
+    { "from": "zone", "to": "schedule", "label": "班次 / 班组", "fromSide": "top", "toSide": "bottom", "via": [[365, 380], [615, 380]], "labelAt": [490, 380] },
+    { "from": "schedule", "to": "meal", "label": "班次窗口 ∩ 三餐", "labelAt": [615, 187] },
+    { "from": "capture", "to": "ledger", "label": "产出归账", "fromSide": "bottom", "toSide": "top" },
+    { "from": "capture", "to": "meal", "label": "用餐格唤醒", "variant": "dashed" },
+    { "from": "zone", "to": "ui", "label": "7 页读数" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "三条主链",
+      "items": [
+        "排班链：班次 / 班组 / 固定班 → RebuildDutyPlan（固定班 > 班组 > 轮岗）→ TryGetDutyJob → JobDriver 站岗 → 到点结算",
+        "作息链：班次窗口 + 摸鱼 + 三餐 → SyncVanillaTimetables（唯一 timetable 写入口）→ 原版管制表 → WorkGiver_Meal",
+        "数据链：60 tick 设备扫描 → WorkshopDeviceLedger（运行 / 产出 / 产值 / 窗口计数）→ 设备页 / 概览 KPI / 俯视设备卡"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "落地规模（2026-10-05 封版基线）",
+      "items": [
+        "约 136 个文件 / 3.5 万行，另有 4 份车间 Def XML（Posts / Types / Processes / RestPolicies）",
+        "Automation/ 65 文件 19,410 行为主战场；Domain/ 23 文件为零 Verse 依赖的纯逻辑，可离线单测",
+        "Manufacturing/ 16 文件承载俯视图与自由编排画布；Capture/ 仅 2 个 Harmony 补丁"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "数据 · 边界 · 已登记偏离",
+      "items": [
+        "Zone_Workshop 14 键与 Manager 的排班 / 台账键是存档真源；面板读快照，配置编辑直写字段（无命令层）",
+        "台账有界化：拆除即淘汰、7 / 15 天窗口、成品登记表 512 条上限（ARC-008 进程级）；设备别名一经落盘固定",
+        "农业自动化与物流管道同目录但属其它域；接管通道默认关，降档通道已移除，只剩「只提权 + 旧档迁移还原」",
+        "已登记残留：技能门槛选择器未接线、胜任度评分未参与派工、降档台账无生产调用方"
+      ]
+    }
+  ]
+}

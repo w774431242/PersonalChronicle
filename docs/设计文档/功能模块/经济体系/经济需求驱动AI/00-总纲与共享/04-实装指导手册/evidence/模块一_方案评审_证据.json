@@ -1,0 +1,168 @@
+{
+  "checkedUtc": "2026-10-08T05:08:57.7980116Z",
+  "scope": "Design audit, current DLL metadata, local source and previously rerun document arithmetic checks.",
+  "assembly": {
+    "path": "E:/SteamLibrary/steamapps/common/RimWorld/RimWorldWin64_Data/Managed/Assembly-CSharp.dll",
+    "sha256": "5CF1B5BE399D5B1C9C56CA72C9D35B4ECF307FEACF5859D04AC5A1AA5926356A",
+    "mvid": "61e41735-6189-4da4-9d21-0260257b5097"
+  },
+  "types": [
+    {
+      "type": "RimWorld.Need",
+      "baseType": "System.Object",
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need::get_CurInstantLevel()",
+          "public": true,
+          "protected": false
+        },
+        {
+          "signature": "System.Boolean RimWorld.Need::get_IsFrozen()",
+          "public": false,
+          "protected": true
+        },
+        {
+          "signature": "System.Void RimWorld.Need::NeedInterval()",
+          "public": true,
+          "protected": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Seeker",
+      "baseType": "RimWorld.Need",
+      "methods": [
+        {
+          "signature": "System.Void RimWorld.Need_Seeker::NeedInterval()",
+          "public": true,
+          "protected": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Beauty",
+      "baseType": "RimWorld.Need_Seeker",
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_Beauty::get_CurInstantLevel()",
+          "public": true,
+          "protected": false
+        },
+        {
+          "signature": "RimWorld.BeautyCategory RimWorld.Need_Beauty::get_CurCategory()",
+          "public": true,
+          "protected": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Comfort",
+      "baseType": "RimWorld.Need_Seeker",
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_Comfort::get_CurInstantLevel()",
+          "public": true,
+          "protected": false
+        },
+        {
+          "signature": "RimWorld.ComfortCategory RimWorld.Need_Comfort::get_CurCategory()",
+          "public": true,
+          "protected": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_RoomSize",
+      "baseType": "RimWorld.Need_Seeker",
+      "methods": [
+        {
+          "signature": "System.Single RimWorld.Need_RoomSize::get_CurInstantLevel()",
+          "public": true,
+          "protected": false
+        },
+        {
+          "signature": "RimWorld.RoomSizeCategory RimWorld.Need_RoomSize::get_CurCategory()",
+          "public": true,
+          "protected": false
+        },
+        {
+          "signature": "System.Single RimWorld.Need_RoomSize::SpacePerceptibleNow()",
+          "public": true,
+          "protected": false
+        }
+      ]
+    },
+    {
+      "type": "RimWorld.Need_Deathrest",
+      "baseType": "RimWorld.Need",
+      "methods": [
+        {
+          "signature": "System.Boolean RimWorld.Need_Deathrest::get_Deathresting()",
+          "public": true,
+          "protected": false
+        },
+        {
+          "signature": "System.Void RimWorld.Need_Deathrest::NeedInterval()",
+          "public": true,
+          "protected": false
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\游戏代码设计\\01-状态与需求感知_代码设计方案.md",
+      "sha256": "041D8E7BD80B5586AF9A2CAB3684E2B8A74E69E1DE85B8AA64C89FD28DE1553E"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\docs\\设计文档\\功能模块\\经济体系\\经济需求驱动AI\\模块化实装指导手册\\07-需求驾驶舱与政策反馈.md",
+      "sha256": "21A6C4BC63CBBAE592A7AC5FEFF912AFC38C23C227848EA80D304153910AFD13"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\Source\\PersonalChronicle\\Application\\PawnEconomy\\EconomyService.cs",
+      "sha256": "B70313BD863639CA9C4C19D0BC8FBC47092D361692F4752A283EFE76D13AAD6C"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need.cs",
+      "sha256": "17954C2B9B5CA939E38BD94476B363EBEA02502818864190288AB5545783AB60"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Seeker.cs",
+      "sha256": "CF19F91D3420A551C0FD54AB03844B12BD0CC1894DB9145432E9006154C6A317"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Beauty.cs",
+      "sha256": "6ADECBBE44C8F1AAF7912B81BE699F14050A85FD25368B0C076A91AD6360B0A4"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Comfort.cs",
+      "sha256": "E6926BE5DC13DF3E42366D4402D85CA7F6D7F6011FCD915BD50D7E57F22A21EF"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_RoomSize.cs",
+      "sha256": "E584BA662C82B28ABC7FF641D490C6512FD5D46553ABF7799F01E70EB0CC052A"
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_research\\vanilla\\Assembly-CSharp\\RimWorld\\Need_Deathrest.cs",
+      "sha256": "6DA6F9848D82EE1F18F393B78494CC72CAB57470F70FECA9D9F7AFC4CEECE796"
+    }
+  ],
+  "findings": {
+    "highPriority": [
+      "M1-01",
+      "M1-02"
+    ],
+    "mediumPriority": [
+      "M1-03",
+      "M1-04",
+      "M1-05",
+      "M1-06",
+      "M1-07"
+    ],
+    "fixed": false
+  },
+  "runtimeCompiled": false,
+  "runtimeTestsExecuted": false,
+  "performanceMeasured": false,
+  "gameValidated": false
+}

@@ -1,0 +1,28 @@
+<LanguageData>
+  <PC_ConveyorSegment.label>conveyor segment</PC_ConveyorSegment.label>
+  <PC_ConveyorSegment.description>A short industrial conveyor segment for workshop production lines. Pawns can haul items onto it, and it periodically pushes items forward along its facing direction onto the next connected segment facing the same way. Pawns can stand on it.</PC_ConveyorSegment.description>
+  <PC_FarmFrame.label>farm frame</PC_FarmFrame.label>
+  <PC_FarmFrame.description>A reinforced steel chassis frame. The base component every automated farm machine is assembled onto.</PC_FarmFrame.description>
+  <PC_GrowLightModule.label>grow light module</PC_GrowLightModule.label>
+  <PC_GrowLightModule.description>A long grow lamp tube on a mounting bracket. Provides the light plants need to grow in the machine's coverage area.</PC_GrowLightModule.description>
+  <PC_IrrigationModule.label>irrigation module</PC_IrrigationModule.label>
+  <PC_IrrigationModule.description>A water pump and pipe assembly. Keeps the machine's farm plots watered (visual water effects).</PC_IrrigationModule.description>
+  <PC_FertilizerModule.label>fertilizer module</PC_FertilizerModule.label>
+  <PC_FertilizerModule.description>A chemical hopper with a spreader bar. Enriches the soil inside the machine's coverage area; the original ground is restored when the machine is removed.</PC_FertilizerModule.description>
+  <PC_SowerModule.label>sower module</PC_SowerModule.label>
+  <PC_SowerModule.description>A seed hopper with a dispenser wheel. Automatically sows crops in the machine's coverage area.</PC_SowerModule.description>
+  <PC_HarvesterModule.label>harvester module</PC_HarvesterModule.label>
+  <PC_HarvesterModule.description>An articulated cutting arm. Automatically harvests mature crops and drops the products beside the machine.</PC_HarvesterModule.description>
+  <PC_PowerModule.label>power module</PC_PowerModule.label>
+  <PC_PowerModule.description>A battery pack with a small solar strip. Equipping a farm machine with it lets the unit store grid energy and feed it back during shortages (emergency power); the large model also generates power from sunlight in daytime.</PC_PowerModule.description>
+  <PC_AutoFarm_S.label>auto farm (small)</PC_AutoFarm_S.label>
+  <PC_AutoFarm_S.description>A small automated farm machine. It automatically tends a 9x9 square centred on itself: inside your growing zones it sows the zone's designated crop (no seeds or resources used) and harvests ripe plants, dropping the goods beside the plants for haulers or conveyor belts.\n\nHOW TO USE: draw a growing zone inside the coverage and pick a crop.\nRUNS ONLY WHILE: powered AND fueled (chemfuel) AND switched on.\nNOTE: machine labour does not count as colonist work.</PC_AutoFarm_S.description>
+  <PC_AutoFarm_M.label>auto farm (medium)</PC_AutoFarm_M.label>
+  <PC_AutoFarm_M.description>A medium automated farm machine. It automatically tends a 15x15 square centred on itself, sowing growing-zone crops and harvesting ripe plants like the small model. Its integrated grow lights let crops grow around the clock (including at night), and it plays an irrigation water effect.\n\nHOW TO USE: draw a growing zone inside the coverage and pick a crop.\nRUNS ONLY WHILE: powered AND fueled (chemfuel) AND switched on.\nNOTE: machine labour does not count as colonist work.</PC_AutoFarm_M.description>
+  <PC_AutoFarm_L.label>auto farm (large)</PC_AutoFarm_L.label>
+  <PC_AutoFarm_L.description>A large automated farm machine. It automatically tends a 21x21 square centred on itself, with everything the medium model does (round-the-clock grow lights, irrigation effect). UNIQUE - FERTILIZER: natural ground with some fertility inside the area is enriched into rich soil (+40% growth speed). Player-built floors are never altered, and the original ground is restored whenever the machine is uninstalled, destroyed or moved.\n\nHOW TO USE: draw a growing zone inside the coverage and pick a crop.\nRUNS ONLY WHILE: powered AND fueled (chemfuel) AND switched on.\nNOTE: machine labour does not count as colonist work.</PC_AutoFarm_L.description>
+  <PC_PipeSegment.label>logistics pipe</PC_PipeSegment.label>
+  <PC_PipeSegment.description>A floor-level logistics pipe for automated production lines. Connect it to a machine equipped with an item output port and bind a target storage cell: goods travel through the pipe network as virtual cargo and materialise only at the destination, landing directly in any vanilla or modded storage that accepts them - no receiving building required. If the target cell's filter rejects the goods, the pipe backs up instead of losing them. Pawns can walk over it.</PC_PipeSegment.description>
+  <PC_PipeSegmentHidden.label>hidden logistics pipe</PC_PipeSegmentHidden.label>
+  <PC_PipeSegmentHidden.description>A logistics pipe buried under the floor. Nearly invisible (just a faint line with a small junction node), for players who don't want pipes cluttering the look of the base. Works exactly like the visible logistics pipe: same network, same throughput, same backpressure.</PC_PipeSegmentHidden.description>
+</LanguageData>

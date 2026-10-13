@@ -1,19 +1,97 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <LangVersion>9.0</LangVersion>
-    <RootNamespace>PersonalChronicle</RootNamespace>
-    <AssemblyName>PersonalChronicle</AssemblyName>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <!-- csproj sits at Source/ root: ..\Assemblies\ = <mod>/Assemblies (NOT ..\..\Assemblies\) -->
-    <OutputPath>..\Assemblies\</OutputPath>
-    <Nullable>disable</Nullable>
-    <!-- net48 + SDK 8 emits duplicate assembly attributes (AssemblyInfo.cs and
-         the auto .NETFramework attributes file); disable auto-gen to avoid CS0579. -->
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
+      <TargetFramework>net48</TargetFramework>
+      <LangVersion>9.0</LangVersion>
+      <RootNamespace>PersonalChronicle</RootNamespace>
+      <AssemblyName>PersonalChronicle</AssemblyName>
+      <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+      <!-- csproj 实际在 Source/PersonalChronicle/，但 MSBuild SDK 8.0 + net48 + Sdk attribute
+           把它父目录 Source/ 推断为 ProjectDir（DefiningProjectDirectory）。这导致 Source/ProjectDir
+           加上 PersonalChronicle/Archive/xxx.cs 这种 SDK glob 展开前缀（正确路径），但同时 csproj
+           显式 Include 的 Source/ChronicleMod.cs 路径解析到 Source/ChronicleMod.cs（不存在）。
+           修复：直接用 MSBuild 提供的 <MSBuildProjectDirectory>（csproj 所在目录）作为基准，
+           路径基于 csproj 位置而非 ProjectDir。 -->
+      <SourceRoot>$(MSBuildProjectDirectory)\PersonalChronicle\</SourceRoot>
+          <ProjectRoot>$(MSBuildProjectDirectory)\PersonalChronicle\</ProjectRoot>
+          <OutputPath>$(MSBuildProjectDirectory)..\..\1.6\Assemblies\</OutputPath>
+      <Nullable>disable</Nullable>
+      <!-- net48 + SDK 8 emits duplicate assembly attributes (AssemblyInfo.cs and
+           the auto .NETFramework attributes file); disable auto-gen to avoid CS0579. -->
+      <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+      <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+      <Deterministic>true</Deterministic>
+      <!-- 关闭 SDK 默认 Compile glob（其展开路径带项目名前缀 PersonalChronicle\，
+           导致 csc 收到的相对路径指向不存在的文件，静默跳过编译）。
+           改为显式 glob，确保路径基于 ProjectDir 正确无前缀。 -->
+      <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    </PropertyGroup>
+
+    <!-- 深度检测（2026-10-01）：构建身份注入 —— Prepatcher/PurePatcher 内存加载导致
+         Assembly.Location 为空、Version 0.0.0.0 ⇒ 运行时无法用 Location/版本核对
+         "游戏加载的是哪份构建"。改为**每次构建重写** BuildStamp.g.cs（UTC 构建时间常量），
+         运行时 FloorDeviceDetailWindow/ChronicleStartup 读取并上屏/写日志。 -->
+    <Target Name="WriteBuildStamp" BeforeTargets="BeforeBuild">
+      <WriteLinesToFile
+          File="$(MSBuildProjectDirectory)\PersonalChronicle\BuildStamp.g.cs"
+          Lines="namespace PersonalChronicle%0D%0A{%0D%0A    internal static class BuildInfo%0D%0A    {%0D%0A        internal const string BuildTimeUtc = &quot;$([System.DateTime]::UtcNow.ToString('yyyy-MM-dd HH:mm'))&quot;%3B%0D%0A    }%0D%0A}"
+          Overwrite="true"
+          Encoding="UTF-8" />
+      <ItemGroup>
+        <Compile Include="$(MSBuildProjectDirectory)\PersonalChronicle\BuildStamp.g.cs" />
+      </ItemGroup>
+    </Target>
+
+      <ItemGroup>
+          <!-- 基于 csproj 实际位置 (MSBuildThisFileDirectory) 显式按子目录列出所有 .cs 文件。
+               SourceRoot=$(MSBuildThisFileDirectory)\ 即 Source/PersonalChronicle\，
+               加上 PersonalChronicle\Archive\xxx.cs 即 Source/PersonalChronicle\PersonalChronicle\Archive\xxx.cs —— 错。
+               应当去掉重复 PersonalChronicle\ 前缀：SourceRoot\Archive\**\*.cs → Source\PersonalChronicle\Archive\**\*.cs -->
+          <!-- RUIF = **前置依赖（硬依赖）**（2026-09-15 · 用户要求一）：
+               ① 组件方向内容**必须引用 RUIF**，禁止自研组件；
+               ② 已去掉 `Condition` ⇒ RUIF 缺失时**编译期即失败**（而非静默退化）；
+               ③ `Private=false` —— RUIF.dll 由游戏按其自身 Mod 加载，PC 不重复携带（避免双份程序集）；
+               ④ About.xml 已同步声明 modDependencies + loadAfter（packageId = PersonalChronicle.RUIFramework）。 -->
+          <Reference Include="RUIF">
+              <HintPath>$(RimWorldPath)\Mods\RUIF\Assemblies\RUIF.dll</HintPath>
+              <Private>false</Private>
+          </Reference>
+          <Compile Include="$(SourceRoot)Archive\**\*.cs" />
+          <Compile Include="$(SourceRoot)Api\**\*.cs" />
+          <Compile Include="$(SourceRoot)Application\**\*.cs" />
+          <!-- ⚠ 测试可见性**不能用** `<AssemblyAttribute>` 项：本工程
+               `GenerateAssemblyInfo=false`，该 MSBuild 项属于被禁用的属性生成管线，
+               加了**完全不生效且不报错**（实测 DLL 里搜不到 InternalsVisibleTo）。
+               正解 = 显式源文件 `AssemblyInfo.Visibility.cs`。
+               ⚠ 不追加下面这行 Compile ⇒ 该文件被静默跳过（EnableDefaultCompileItems=false）。 -->
+          <Compile Include="$(SourceRoot)AssemblyInfo.Visibility.cs" />
+          <Compile Include="$(SourceRoot)AssemblyInfo.Branding.cs" />
+          <!-- 兼容层（DLC / 第三方 Mod 适配器）：DLC 类型只允许出现在这里（GOV-008 / COMP-001）。
+               ⚠ 2026-09-15 补登记：`Compatibility\Dlc\IdeologyAdapter.cs` 此前**漏在本 glob 之外**
+               ⇒ 编译报 `CS0103: 当前上下文中不存在名称 "Compatibility"`（Provider 侧 4 处），
+               且报错位置全在**既有业务代码**上 —— 先查本行，不要改业务代码。 -->
+          <Compile Include="$(SourceRoot)Compatibility\**\*.cs" />
+          <!-- ⚠ 2026-09-20（CHG-LCE-001）：MVS 市场体系整体删除 ⇒ 原四条 MVS glob 同步移除
+               （「删文件但留 glob」会留下空匹配；恢复路径 = git 历史 + `_backups/lce_cleanup_20260920/` 快照）。 -->
+          <!-- 自动化车间体系（Zone_Workshop / 加工设备 / 传送带） -->
+          <Compile Include="$(SourceRoot)Automation\**\*.cs" />
+          <Compile Include="$(SourceRoot)Capture\**\*.cs" />
+          <Compile Include="$(SourceRoot)Data\**\*.cs" />
+          <Compile Include="$(SourceRoot)Domain\**\*.cs" />
+          <!-- 经济域共享件（殖民地经济中心重建期保留：面板 chrome / 通用格式化；CHG-LCE-001）。
+               ⚠ 保留显式 glob（EnableDefaultCompileItems=false）；误删 = 整棵 Economy 子树静默跳过编译。 -->
+          <Compile Include="$(SourceRoot)Economy\**\*.cs" />
+          <Compile Include="$(SourceRoot)Settings\**\*.cs" />
+          <!-- 终局管理系统 · 总控制中心（系统中心注册表观测面） -->
+          <Compile Include="$(SourceRoot)MasterControl\**\*.cs" />
+          <!-- 制造域业务视图（② 车间俯视：框架常量 / 运行期贴图 / 平面图组件） -->
+          <Compile Include="$(SourceRoot)Manufacturing\**\*.cs" />
+          <Compile Include="$(SourceRoot)Effects\**\*.cs" />
+          <Compile Include="$(SourceRoot)PerfProbe.cs" />
+          <Compile Include="$(SourceRoot)ChronicleLog.cs" />
+          <Compile Include="$(SourceRoot)ChronicleMod.cs" />
+          <Compile Include="$(SourceRoot)ChronicleSettings.cs" />
+          <Compile Include="$(SourceRoot)WorkAuthority.cs" />
+        </ItemGroup>
 
   <ItemGroup>
     <!-- Lets `dotnet build` work without Visual Studio installed. -->

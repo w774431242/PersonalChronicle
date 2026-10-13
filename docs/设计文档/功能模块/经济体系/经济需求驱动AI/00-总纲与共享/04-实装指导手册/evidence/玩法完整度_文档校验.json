@@ -1,0 +1,13 @@
+{
+  "result": "Passed",
+  "checks": [
+    "UTF-8",
+    "local links",
+    "7 blocker and 4 depth IDs",
+    "6 gate criteria",
+    "source anchors and SHA-256",
+    "4 synthetic arithmetic counterexamples"
+  ],
+  "codeDesignGate": "NotPassed",
+  "scope": "Document and evidence consistency only; no implementation or gameplay validation"
+}

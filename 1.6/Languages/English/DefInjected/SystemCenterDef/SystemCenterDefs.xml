@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  English overrides for SystemCenterDef.
+  Base Def text in Defs/SystemCenterDefs.xml is Chinese; ids (defName) never change.
+  Field keys follow DefInjected list syntax: <defName.fieldName.index>.
+-->
+<LanguageData>
+  <manufacturing_center.label>Manufacturing Center</manufacturing_center.label>
+  <manufacturing_center.nameEn>Manufacturing</manufacturing_center.nameEn>
+  <manufacturing_center.responsible.0>Recipe management</manufacturing_center.responsible.0>
+  <manufacturing_center.responsible.1>Line scheduling</manufacturing_center.responsible.1>
+  <manufacturing_center.responsible.2>Capacity planning</manufacturing_center.responsible.2>
+  <manufacturing_center.responsible.3>Material consumption</manufacturing_center.responsible.3>
+  <manufacturing_center.responsible.4>Finished goods intake</manufacturing_center.responsible.4>
+  <manufacturing_center.delegated.0>Hauling to storage → Logistics Center</manufacturing_center.delegated.0>
+  <manufacturing_center.delegated.1>Trade settlement → Colony Economy</manufacturing_center.delegated.1>
+
+  <logistics_center.label>Logistics Center</logistics_center.label>
+  <logistics_center.nameEn>Logistics</logistics_center.nameEn>
+  <logistics_center.responsible.0>Storage management</logistics_center.responsible.0>
+  <logistics_center.responsible.1>Hauling dispatch</logistics_center.responsible.1>
+  <logistics_center.responsible.2>Resource allocation</logistics_center.responsible.2>
+  <logistics_center.responsible.3>Cleaning and upkeep</logistics_center.responsible.3>
+  <logistics_center.responsible.4>Internal operations</logistics_center.responsible.4>
+  <logistics_center.delegated.0>Production → Manufacturing Center</logistics_center.delegated.0>
+  <logistics_center.delegated.1>Patient care → Medical Center</logistics_center.delegated.1>
+
+  <economy_center.label>Colony Economy</economy_center.label>
+  <economy_center.nameEn>Economy</economy_center.nameEn>
+  <economy_center.responsible.0>Inventory and goods</economy_center.responsible.0>
+  <economy_center.responsible.1>Production and consumption</economy_center.responsible.1>
+  <economy_center.responsible.2>Income and wealth</economy_center.responsible.2>
+  <economy_center.responsible.3>Labor observation</economy_center.responsible.3>
+  <economy_center.delegated.0>Production → Manufacturing Center</economy_center.delegated.0>
+  <economy_center.delegated.1>Hauling to storage → Logistics Center</economy_center.delegated.1>
+  <economy_center.delegated.2>Medical payments → Medical Center</economy_center.delegated.2>
+
+  <medical_center.label>Medical Center</medical_center.label>
+  <medical_center.nameEn>Medical</medical_center.nameEn>
+  <medical_center.responsible.0>Injury and illness care</medical_center.responsible.0>
+  <medical_center.responsible.1>Treatment scheduling</medical_center.responsible.1>
+  <medical_center.responsible.2>Medicine management</medical_center.responsible.2>
+  <medical_center.responsible.3>Epidemic control</medical_center.responsible.3>
+  <medical_center.delegated.0>Carrying patients → Logistics Center</medical_center.delegated.0>
+  <medical_center.delegated.1>Medical payments → Colony Economy</medical_center.delegated.1>
+
+  <policy_center.label>Policy Center</policy_center.label>
+  <policy_center.nameEn>Policy</policy_center.nameEn>
+  <policy_center.responsible.0>Law making</policy_center.responsible.0>
+  <policy_center.responsible.1>Ration policy</policy_center.responsible.1>
+  <policy_center.responsible.2>Permissions</policy_center.responsible.2>
+  <policy_center.responsible.3>Incentives</policy_center.responsible.3>
+  <policy_center.delegated.0>Execution scheduling → all operational centers</policy_center.delegated.0>
+
+  <population_center.label>Personnel Center</population_center.label>
+  <population_center.nameEn>Personnel</population_center.nameEn>
+  <population_center.responsible.0>Individual records</population_center.responsible.0>
+  <population_center.responsible.1>Needs</population_center.responsible.1>
+  <population_center.responsible.2>Mood</population_center.responsible.2>
+  <population_center.responsible.3>Growth</population_center.responsible.3>
+
+  <diplomacy_center.label>Diplomacy Center</diplomacy_center.label>
+  <diplomacy_center.nameEn>Diplomacy</diplomacy_center.nameEn>
+  <diplomacy_center.responsible.0>Factions</diplomacy_center.responsible.0>
+  <diplomacy_center.responsible.1>Goodwill</diplomacy_center.responsible.1>
+  <diplomacy_center.responsible.2>Treaties</diplomacy_center.responsible.2>
+
+  <research_center.label>Research Center</research_center.label>
+  <research_center.nameEn>Research</research_center.nameEn>
+  <research_center.responsible.0>Projects</research_center.responsible.0>
+  <research_center.responsible.1>Progress</research_center.responsible.1>
+  <research_center.responsible.2>Unlocks</research_center.responsible.2>
+
+  <defense_center.label>Defense Center</defense_center.label>
+  <defense_center.nameEn>Defense</defense_center.nameEn>
+  <defense_center.responsible.0>Threats</defense_center.responsible.0>
+  <defense_center.responsible.1>Defense layout</defense_center.responsible.1>
+  <defense_center.responsible.2>Conscription</defense_center.responsible.2>
+
+  <environment_center.label>Environment Center</environment_center.label>
+  <environment_center.nameEn>Environment</environment_center.nameEn>
+  <environment_center.responsible.0>Climate</environment_center.responsible.0>
+  <environment_center.responsible.1>Disasters</environment_center.responsible.1>
+  <environment_center.responsible.2>Resource sites</environment_center.responsible.2>
+
+</LanguageData>

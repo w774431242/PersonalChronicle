@@ -149,10 +149,34 @@ namespace PersonalChronicle.Domain
         /// <summary>
         /// 枚举当前所有殖民地人口——地图 + 商队两源合并，按 thingIDNumber 去重
         /// （同一 pawn 可同时被地图与商队引用；VF 双注册防御）。
-        /// 返回每帧新列表（调用方拥有）。未通过 TryClassify 的 pawn 不入列。
+        /// 未通过 TryClassify 的 pawn 不入列。
+        ///
+        /// ⚠️ 性能 P1-1/P1-4：返回的是**同一 tick 内共享**的列表，调用方**只读**、勿修改勿持有。
+        /// 原本每次调用都重新遍历全地图 + 全商队，而同一 tick 内结果必然相同：
+        /// reconcile 一趟里被调 3 次（Sampling/勋章/资格），社交关系又是每个 pawn 调一次
+        /// （O(n²)）。同 tick 缓存后：3 次 → 1 次，O(n²) → O(n)。
         /// </summary>
         public static List<ColonyMember> EnumerateCurrentPeople()
         {
+            // 暂停时 tick 不推进、也不会有死亡/离场事件，缓存安全。
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (tickCache != null && tickCacheTick == now)
+            {
+                return tickCache;
+            }
+            tickCache = BuildCurrentPeople();
+            tickCacheTick = now;
+            return tickCache;
+        }
+
+        /// <summary>同 tick 人口快照缓存（见 <see cref="EnumerateCurrentPeople"/>）。</summary>
+        private static List<ColonyMember> tickCache;
+        private static int tickCacheTick = int.MinValue;
+
+        private static List<ColonyMember> BuildCurrentPeople()
+        {
+            // 性能探针：真实人口扫描成本（同 tick 缓存未命中时才走到这里）。
+            long perf = PerfProbe.Start();
             List<ColonyMember> result = new List<ColonyMember>();
             HashSet<int> seen = new HashSet<int>();
 
@@ -201,6 +225,7 @@ namespace PersonalChronicle.Domain
                 }
             }
 
+            PerfProbe.End("scan.people", perf);
             return result;
         }
 

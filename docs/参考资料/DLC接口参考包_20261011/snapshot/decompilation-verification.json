@@ -1,0 +1,91 @@
+{
+  "verification": "LocalDecompilationToolVerified",
+  "gameVerified": false,
+  "typeCount": 16,
+  "assemblySha256": "5cf1b5be399d5b1c9c56ca72c9d35b4ecf307feacf5859d04ac5a1aa5926356a",
+  "tool": "ilspycmd 8.2.0.7535",
+  "scriptSha256": "bd275a9f6e6896d2791db6468ca3e7615963ff7b961aa151e61f5ba010cafea3",
+  "generatedFiles": [
+    {
+      "file": "RimWorld.ExpansionDef.decompiled.cs.txt",
+      "bytes": 3247,
+      "sha256": "64e81aae20c959ab4773700133cb8bcab217acdcc640bb89e0ce0cec1cfe4fa6"
+    },
+    {
+      "file": "Verse.DefDatabase_1.decompiled.cs.txt",
+      "bytes": 5846,
+      "sha256": "c7358a47cf2fe367c67dce1f66d8685d84ff21bb24fa61ffe3651408d29b6c80"
+    },
+    {
+      "file": "Verse.DirectXmlCrossRefLoader.decompiled.cs.txt",
+      "bytes": 14825,
+      "sha256": "bc526198939d3ff678103dd34d8a98812153ea0b928a3794091ddb9f793ee0fc"
+    },
+    {
+      "file": "Verse.DirectXmlLoader.decompiled.cs.txt",
+      "bytes": 7615,
+      "sha256": "720f40c9edf069d5281d7a6b9115eb16e49f30a42f6dd6928267f82685111360"
+    },
+    {
+      "file": "Verse.DirectXmlToObject.decompiled.cs.txt",
+      "bytes": 12812,
+      "sha256": "0f35f11e95b9c0fae2750c6cd46dec474533c34a0e157a45119463732201213a"
+    },
+    {
+      "file": "Verse.DirectXmlToObjectNew.decompiled.cs.txt",
+      "bytes": 59155,
+      "sha256": "632aedc49f0407ad91ca1951bf7f6367305e01d1c2ec5a0fe4d19a5b94b05679"
+    },
+    {
+      "file": "Verse.LoadedModManager.decompiled.cs.txt",
+      "bytes": 14073,
+      "sha256": "a8ba7575957b931bd1ae218cf0072a133ba0bfe6952a570ca5237ea81f35b41e"
+    },
+    {
+      "file": "Verse.LoadFolder.decompiled.cs.txt",
+      "bytes": 2011,
+      "sha256": "8e1b08b30d7a6489c1a5d78d1fdb4b047641082c673579c4d2ff67d38e582731"
+    },
+    {
+      "file": "Verse.ModContentPack.decompiled.cs.txt",
+      "bytes": 14067,
+      "sha256": "ef7d10c68bb8f724cddaa909a2c67564e7f59009f9566bc63859624d758d9826"
+    },
+    {
+      "file": "Verse.ModLister.decompiled.cs.txt",
+      "bytes": 12865,
+      "sha256": "6acb987c1405b08d32a3141176bcc0898a8360a107bf26aec115bda877fdb5b1"
+    },
+    {
+      "file": "Verse.ModLoadFolders.decompiled.cs.txt",
+      "bytes": 4560,
+      "sha256": "217cd3c2ecadbce3268d4b616ca2fd57c3ca8a6551bba47d071a108facb78482"
+    },
+    {
+      "file": "Verse.ModMetaData.decompiled.cs.txt",
+      "bytes": 19403,
+      "sha256": "04166c5fb849374dec93f676c5b73a566b49539160fe3643c4e0cd6f3da5da5b"
+    },
+    {
+      "file": "Verse.ModsConfig.decompiled.cs.txt",
+      "bytes": 19725,
+      "sha256": "1a38a97fda6168844a6647da7bc23b4f726a3dabfdc2bdd2c1cb6bdc3f656bd4"
+    },
+    {
+      "file": "Verse.PatchOperationFindMod.decompiled.cs.txt",
+      "bytes": 868,
+      "sha256": "5a001ef7b0ceb4bab2170098f1d6ae3e2d016cc498845a54890802f6cf8f6634"
+    },
+    {
+      "file": "Verse.PlayDataLoader.decompiled.cs.txt",
+      "bytes": 17194,
+      "sha256": "5dad2ce50bc922b647381614de8e750a0bf2d5b2d0333a07d3a369b8b207bd3e"
+    },
+    {
+      "file": "Verse.XmlInheritance.decompiled.cs.txt",
+      "bytes": 12343,
+      "sha256": "6db2848597f0d3fbf909c7d7a17ee91f256e60e5b3e54afc2222aa69e0d0fbf4"
+    }
+  ],
+  "includedInZip": false
+}

@@ -1,0 +1,554 @@
+{
+  "changeId": "CHG-20261008-ECON-DELIVERY",
+  "componentBatch": "B1.3",
+  "originalChangeId": "CHG-20261008-ECON-NEEDS-UI",
+  "evidenceScope": "Current revalidation of B1.3; not its original historical fingerprint",
+  "checkedUtc": "2026-10-08T10:15:40.7659948Z",
+  "modSha256": "F72561366C7959388678D27CE4C61DB23EE2E84B87AB365F96885E4E84FF5FEE",
+  "ruifSha256": "E9C0ED7C4B027F3F6C3F656C0737311DBCD21603FA94138D38C7105842C0ACAC",
+  "ruifVersion": "1.3.0.0",
+  "compiledChecks": {
+    "pureApplicationTypes": 4,
+    "ruifOnlyNewPage": true,
+    "returnsBeforeLegacyQuery": true,
+    "readOnlyFacade": true,
+    "newUiCalls": [
+      "Verse.TickManager Verse.Find::get_TickManager()",
+      "System.Int32 Verse.TickManager::get_TicksGame()",
+      "UnityEngine.Vector2 UnityEngine.Vector2::get_zero()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::InvalidateNeeds()",
+      "System.Boolean PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::IsPerceptionMapAvailable(Verse.Map)",
+      "PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Snapshot()",
+      "System.Int64 PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot::get_Epoch()",
+      "System.Int64 PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_PerceptionSessionEpoch()",
+      "PersonalChronicle.Economy.PawnEconomy.NeedDashboardView PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::QueryNeedDashboard(Verse.Map,System.Int32,System.String)",
+      "PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Snapshot()",
+      "System.Int32 PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot::get_PageIndex()",
+      "PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Snapshot()",
+      "System.String PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot::get_SelectedId()",
+      "System.Single UnityEngine.Rect::get_width()",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+      "System.Single UnityEngine.Rect::get_width()",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+      "System.Single UnityEngine.Rect::get_width()",
+      "System.Single UnityEngine.Rect::get_height()",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.Single UnityEngine.Rect::get_width()",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "System.Boolean Verse.Text::get_WordWrap()",
+      "System.Void Verse.Text::set_WordWrap(System.Boolean)",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::MeasureNeeds(System.Single)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Roster()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine>::get_Count()",
+      "System.Double System.Math::Ceiling(System.Double)",
+      "System.Single RUIF.Measure::ControlHeight(Verse.GameFont)",
+      "UnityEngine.Rect RUIF.Layout::BeginScroll(UnityEngine.Rect,System.Single,UnityEngine.Vector2&,System.Boolean)",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::DrawNeedsContent(System.Single,System.Int32,System.Single,System.Single)",
+      "System.Void RUIF.Layout::EndScroll()",
+      "System.Void Verse.Text::set_WordWrap(System.Boolean)",
+      "Verse.GameFont Verse.Text::get_Font()",
+      "System.Void Verse.Text::set_Font(Verse.GameFont)",
+      "System.Single RUIF.Measure::RowHeight(Verse.GameFont)",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "System.Single Verse.Text::CalcHeight(System.String,System.Single)",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "System.Void Verse.Text::set_Font(Verse.GameFont)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy/<>c__DisplayClass66_0::.ctor()",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy/<>c__DisplayClass66_0::<Flow>b__0(System.String)",
+      "System.Void System.Func`2<System.String,System.Single>::.ctor(System.Object,System.IntPtr)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedDashboardTextFlow::Wrap(System.String,System.Single,System.Func`2<System.String,System.Single>)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Coverage()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Selection()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_SelectionState()",
+      "System.String System.String::Concat(System.String,System.String,System.String)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "System.Single RUIF.Measure::ControlHeight(Verse.GameFont)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Roster()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine>::get_Count()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Roster()",
+      "!0 System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine>::get_Item(System.Int32)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedRosterLine::get_Text()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.Single RUIF.Measure::RowHeight(Verse.GameFont)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Count()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Count()",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Count()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Count()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "!0 System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Item(System.Int32)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTableLine::get_Name()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTableLine::get_Current()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTableLine::get_Target()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTableLine::get_Gap()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTableLine::get_Source()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTableLine::get_Age()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTableLine::get_Status()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTableLine::get_Name()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Wrapped(System.String,System.Single,Verse.GameFont)",
+      "System.Single System.Math::Max(System.Single,System.Single)",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::StatHeight(System.String,System.String,System.Single)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Count()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Facts()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow>::get_Count()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Facts()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow>::get_Count()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Facts()",
+      "!0 System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow>::get_Item(System.Int32)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTextRow::get_Label()",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Facts()",
+      "!0 System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow>::get_Item(System.Int32)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTextRow::get_Value()",
+      "Verse.GameFont RUIF.Tokens::get_FontLabel()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::Flow(System.String,System.Single,Verse.GameFont)",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.NeedTextRow::.ctor(System.String,System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTextRow::get_Label()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTextRow::get_Value()",
+      "System.Single PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::StatHeight(System.String,System.String,System.Single)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Count()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Count()",
+      "System.Single RUIF.Measure::ControlHeight(Verse.GameFont)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Roster()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine>::get_Count()",
+      "System.Double System.Math::Ceiling(System.Double)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.Boolean RUIF.FeedbackAtoms::AlertBanner(UnityEngine.Rect,RUIF.AlertPriority,System.String,System.String)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+      "System.Single RUIF.Measure::ControlHeight(Verse.GameFont)",
+      "System.Single System.Math::Min(System.Single,System.Single)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.Boolean RUIF.ButtonAtoms::PrimaryButton(UnityEngine.Rect,System.String,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::InvalidateNeeds()",
+      "UnityEngine.Vector2 UnityEngine.Vector2::get_zero()",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Snapshot()",
+      "System.Int32 PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot::get_PageCount()",
+      "System.Boolean RUIF.ButtonAtoms::PrimaryButton(UnityEngine.Rect,System.String,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::InvalidateNeeds()",
+      "UnityEngine.Vector2 UnityEngine.Vector2::get_zero()",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Snapshot()",
+      "System.Int32 PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot::get_PageCount()",
+      "System.String System.String::Format(System.String,System.Object,System.Object)",
+      "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Roster()",
+      "!0 System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine>::get_Item(System.Int32)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.Boolean RUIF.ButtonAtoms::PrimaryButton(UnityEngine.Rect,System.String,System.Boolean,RUIF.ButtonTone,System.Boolean,System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedRosterLine::get_Id()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::InvalidateNeeds()",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Roster()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedRosterLine>::get_Count()",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Snapshot()",
+      "PersonalChronicle.Domain.PawnEconomy.Perception.ObservationQueryResult PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot::get_Selected()",
+      "PersonalChronicle.Domain.PawnEconomy.Perception.FactQueryResult PersonalChronicle.Domain.PawnEconomy.Perception.ObservationQueryResult::get_Facts()",
+      "System.Boolean PersonalChronicle.Domain.PawnEconomy.Perception.FactQueryResult::get_RequiredGroupsUsable()",
+      "System.Boolean RUIF.FeedbackAtoms::AlertBanner(UnityEngine.Rect,RUIF.AlertPriority,System.String,System.String)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Needs()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTableLine>::get_Count()",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.Dialog_PawnEconomy::N(System.String)",
+      "System.Boolean RUIF.FeedbackAtoms::EmptyState(UnityEngine.Rect,System.String,System.String,System.String)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.Void RUIF.DataAtoms::StatTable(UnityEngine.Rect,System.String[],System.String[][],System.Single[],System.Single)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.Void RUIF.Draw::Label(UnityEngine.Rect,System.String,Verse.GameFont,UnityEngine.Color,UnityEngine.TextAnchor)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.Void RUIF.PanelAtoms::StatRow(UnityEngine.Rect,System.String,System.String,System.Nullable`1<System.Single>,System.Nullable`1<UnityEngine.Color>)",
+      "System.Void UnityEngine.Rect::.ctor(System.Single,System.Single,System.Single,System.Single)",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTextRow::get_Label()",
+      "System.String PersonalChronicle.Economy.PawnEconomy.NeedTextRow::get_Value()",
+      "System.Void RUIF.PanelAtoms::StatRow(UnityEngine.Rect,System.String,System.String,System.Nullable`1<System.Single>,System.Nullable`1<UnityEngine.Color>)",
+      "System.Collections.Generic.IReadOnlyList`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow> PersonalChronicle.Economy.PawnEconomy.NeedDashboardView::get_Facts()",
+      "System.Int32 System.Collections.Generic.IReadOnlyCollection`1<PersonalChronicle.Economy.PawnEconomy.NeedTextRow>::get_Count()"
+    ],
+    "facadeCalls": [
+      "Verse.TickManager Verse.Find::get_TickManager()",
+      "System.Int32 Verse.TickManager::get_TicksGame()",
+      "System.Boolean PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::IsPerceptionMapAvailable(Verse.Map)",
+      "System.Int64 PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_PerceptionSessionEpoch()",
+      "PersonalChronicle.Application.PawnEconomy.Perception.PerceptionDiagnostics PersonalChronicle.Economy.PawnEconomy.GameComponent_PawnEconomy::get_PerceptionDiagnostics()",
+      "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.FactQueryResult::.ctor(PersonalChronicle.Domain.PawnEconomy.Perception.PerceptionReadiness,System.String,System.Boolean,PersonalChronicle.Domain.PawnEconomy.Perception.PawnFactSnapshot,System.Collections.Generic.IEnumerable`1<PersonalChronicle.Domain.PawnEconomy.Perception.GroupReadStatus>)",
+      "System.Void PersonalChronicle.Domain.PawnEconomy.Perception.ObservationQueryResult::.ctor(PersonalChronicle.Domain.PawnEconomy.Perception.FactQueryResult,System.Collections.Generic.IEnumerable`1<PersonalChronicle.Domain.PawnEconomy.Perception.CurrentNeedGap>)",
+      "System.Void PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot::.ctor(System.Int64,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,PersonalChronicle.Application.PawnEconomy.Perception.PerceptionDiagnostics,System.Collections.Generic.IEnumerable`1<PersonalChronicle.Application.PawnEconomy.Perception.PawnNeedSummary>,System.String,PersonalChronicle.Domain.PawnEconomy.Perception.ObservationQueryResult)",
+      "PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardBuilder::Build(PersonalChronicle.Application.PawnEconomy.Perception.INeedDashboardSource,System.Int32,System.Int32,System.Int32,System.String,System.Collections.Generic.IReadOnlyDictionary`2<System.String,PersonalChronicle.Domain.PawnEconomy.Perception.NeedTarget>)",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.VanillaNeedDashboardText::.ctor()",
+      "System.Void PersonalChronicle.Economy.PawnEconomy.NeedDashboardPresenter::.ctor(PersonalChronicle.Economy.PawnEconomy.INeedDashboardText)",
+      "PersonalChronicle.Economy.PawnEconomy.NeedDashboardView PersonalChronicle.Economy.PawnEconomy.NeedDashboardPresenter::Build(PersonalChronicle.Application.PawnEconomy.Perception.NeedDashboardSnapshot)"
+    ]
+  },
+  "localization": {
+    "keysPerLanguage": 77,
+    "utf8NoBom": true,
+    "placeholdersMatch": true,
+    "noKeyCollisions": true
+  },
+  "tests": {
+    "path": "Tests/TestResults/EconomyLanding-B242-Full.trx",
+    "sha256": "CEED377CB5D958ADE17C4E4335A7B3614D5697BCF666A8C021DA8C2A27B4614D",
+    "passed": 904,
+    "failed": 0,
+    "skipped": 1,
+    "skippedNames": [
+      "Measure_Content_vs_Viewport"
+    ],
+    "newCases": 32
+  },
+  "files": [
+    {
+      "path": "Source/PersonalChronicle/Application/PawnEconomy/Perception/NeedDashboard.cs",
+      "sha256": "4E6FB199EC5E09B2AED0299D521A8AE14053C61CCF925D7C02BF9A20CEBE5687",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "internal interface INeedDashboardSource"
+        },
+        {
+          "line": 15,
+          "text": "internal sealed class PawnNeedSummary"
+        },
+        {
+          "line": 23,
+          "text": "internal sealed class NeedDashboardSnapshot"
+        },
+        {
+          "line": 42,
+          "text": "internal static class NeedDashboardBuilder"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Domain/PawnEconomy/Perception/PawnFactSnapshot.cs",
+      "sha256": "B61776FAD264F51C734FC04AC32C9F366ECCEB90CD527261A7DCAB137FAB8AA9",
+      "anchors": [
+        {
+          "line": 12,
+          "text": "internal static class PerceptionCollections"
+        },
+        {
+          "line": 18,
+          "text": "internal sealed class FactGroup<T> where T : class"
+        },
+        {
+          "line": 39,
+          "text": "internal sealed class PawnContextFact"
+        },
+        {
+          "line": 65,
+          "text": "internal sealed class NeedFactSet"
+        },
+        {
+          "line": 81,
+          "text": "internal sealed class VisibleHediffFact"
+        },
+        {
+          "line": 91,
+          "text": "internal sealed class ApparelFact"
+        },
+        {
+          "line": 99,
+          "text": "internal sealed class NeedConditionFact"
+        },
+        {
+          "line": 108,
+          "text": "internal sealed class BedFact"
+        },
+        {
+          "line": 114,
+          "text": "internal sealed class BodyLifeFactSet"
+        },
+        {
+          "line": 144,
+          "text": "internal sealed class RelationshipFact"
+        },
+        {
+          "line": 152,
+          "text": "internal sealed class RelationshipFactSet"
+        },
+        {
+          "line": 158,
+          "text": "internal sealed class PawnFactSnapshot"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Perception/VanillaPawnFactCapture.cs",
+      "sha256": "CDBD4C0DACD4A8FA83B71503D539C4BDAA3420CA38730825C679FF3DA62A5A6B",
+      "anchors": [
+        {
+          "line": 11,
+          "text": "internal sealed partial class VanillaPawnFactCapture : IPawnPerceptionSource"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/EconomyNeedDashboard.cs",
+      "sha256": "4DFECEC76735CAE910DCFF981BCCDC288BFB9B7DDC0F841550A5EC8C9D4CF6BC",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "public sealed partial class GameComponent_PawnEconomy : INeedDashboardSource"
+        },
+        {
+          "line": 18,
+          "text": "internal bool IsPerceptionMapAvailable(Map map) => map != null && Find.Maps.Contains(map);"
+        },
+        {
+          "line": 19,
+          "text": "internal NeedDashboardView QueryNeedDashboard(Map map, int page, string selectedId)"
+        },
+        {
+          "line": 30,
+          "text": "internal sealed class VanillaNeedDashboardText : INeedDashboardText"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedDashboardPresenter.cs",
+      "sha256": "676C321110686A78D579023F5642397E702C1B948407ACDE011AF49BE5869081",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "internal interface INeedDashboardText"
+        },
+        {
+          "line": 14,
+          "text": "internal sealed class NeedTextRow"
+        },
+        {
+          "line": 20,
+          "text": "internal sealed class NeedTableLine"
+        },
+        {
+          "line": 32,
+          "text": "internal sealed class NeedRosterLine"
+        },
+        {
+          "line": 38,
+          "text": "internal sealed class NeedDashboardView"
+        },
+        {
+          "line": 54,
+          "text": "internal sealed class NeedDashboardPresenter"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/NeedDashboardTextFlow.cs",
+      "sha256": "B545A7B25AA19A94B3C4A5825C97A0E63A1C2CF3A5121BF165F912EC2F149DDB",
+      "anchors": [
+        {
+          "line": 10,
+          "text": "internal static class NeedDashboardTextFlow"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Dialog_PawnEconomy.cs",
+      "sha256": "D3A6515A10DA589ACA83E5D6AA003E420766A5246419BD1DB0B30D983DEA5D25",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "public sealed partial class Dialog_PawnEconomy : Window"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/Economy/PawnEconomy/Dialog_PawnEconomy.Needs.cs",
+      "sha256": "4977AF3F0B836A227F9036687407CC6335447A3614E0D3F988E9822F99EFE4CC",
+      "anchors": [
+        {
+          "line": 7,
+          "text": "public sealed partial class Dialog_PawnEconomy"
+        },
+        {
+          "line": 31,
+          "text": "private void DrawNeeds(Rect rect, GameComponent_PawnEconomy runtime)"
+        },
+        {
+          "line": 76,
+          "text": "private void MeasureNeeds(float width)"
+        },
+        {
+          "line": 144,
+          "text": "private void DrawNeedsContent(float width, int columns, float rosterHeight, float detailsY)"
+        }
+      ]
+    },
+    {
+      "path": "Source/PersonalChronicle/MasterControl/MasterControlTabWindow.Economy.cs",
+      "sha256": "D4BEDAA72EEA95A067F2FC659FCFD4AF0D76CEB7E0BEA8660255990884281D4E",
+      "anchors": [
+        {
+          "line": 28,
+          "text": "public sealed partial class MasterControlTabWindow"
+        }
+      ]
+    },
+    {
+      "path": "Languages/ChineseSimplified/Keyed/PawnEconomyNeeds.xml",
+      "sha256": "E4FCF8ABD63EFA412DCBA5DD79432D2DEF3B1209B3E11831692C06636B886DA9",
+      "anchors": []
+    },
+    {
+      "path": "Languages/English/Keyed/PawnEconomyNeeds.xml",
+      "sha256": "CD34133BA539548841BEB8C2E35D24327A9F1B98EB5F07E361D0464F9EDF3B45",
+      "anchors": []
+    },
+    {
+      "path": "Tests/PawnNeedDashboardTests.cs",
+      "sha256": "BB15F645CCD6A14E8A03238A4669F5AB49F031C79A623F726E5E3985A14E9B5B",
+      "anchors": [
+        {
+          "line": 15,
+          "text": "public sealed class PawnNeedDashboardTests"
+        }
+      ]
+    },
+    {
+      "path": "_scripts/verify-pawn-needs-ui.ps1",
+      "sha256": "C55042543ED493520A358726BE82370026AD4CDDB831BE1BE1AD39EA6B323656",
+      "anchors": []
+    },
+    {
+      "path": "_scripts/verify-pawn-economy.ps1",
+      "sha256": "EB2F66C937EF4E67C3F4C3D1C3FD4012C12C42302EB96DD3DCCD4BD0CE318AAD",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/03-B1.3_RUIF需求页_实装记录.md",
+      "sha256": "B94D9A275728366965F2DFD428EE5501D02692EAFD9DFA39B785C57830EA13DA",
+      "anchors": [
+        {
+          "line": 5,
+          "text": "## 1. Intake / ADR（编码前）"
+        },
+        {
+          "line": 17,
+          "text": "## 2. 本批实际结果"
+        },
+        {
+          "line": 35,
+          "text": "## 3. 验证与 Gate"
+        },
+        {
+          "line": 54,
+          "text": "## 4. 变更与回滚"
+        }
+      ]
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/03-实装批次与状态/实施批次状态.json",
+      "sha256": "1C8CEA6675E5622224C2002E68D7886C4D9022A67546F2826912DF7DCC7CA6F8",
+      "anchors": []
+    },
+    {
+      "path": "docs/设计文档/功能模块/经济体系/经济需求驱动AI/00-总纲与共享/04-实装指导手册/00-总册与实施路线.md",
+      "sha256": "301D4815AFAF35EC5760CB51EDB15B2BC713D87D52C91EC5CBD1B85054DE9BE0",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "## 1. 本手册回答什么"
+        },
+        {
+          "line": 18,
+          "text": "## 2. 阅读与交付索引"
+        },
+        {
+          "line": 57,
+          "text": "## 3. 当前核验基线"
+        },
+        {
+          "line": 70,
+          "text": "## 4. 模块划分"
+        },
+        {
+          "line": 89,
+          "text": "## 5. 架构和数据流"
+        },
+        {
+          "line": 117,
+          "text": "## 6. 首版具体闭环"
+        },
+        {
+          "line": 135,
+          "text": "## 7. 实施里程碑和退出条件"
+        },
+        {
+          "line": 147,
+          "text": "## 8. 开发工作包写法"
+        }
+      ]
+    },
+    {
+      "path": "docs/changelog/v1.4.x_2026-10-08_经济AI需求观察页.md",
+      "sha256": "0895845D7EAAE8431A799DE77F0F54FC58BDDCE32252BB541E5BFB38A2670A2B",
+      "anchors": []
+    }
+  ],
+  "limits": [
+    "No game process, rendering, clicks, save/load, resolution or profiling acceptance executed.",
+    "RUIF layout is compiled and text-measured in code; offline presenter tests do not prove actual Chinese glyphs or visual layout.",
+    "Life targets are not connected: runtime passes no target policy; no budget, order, enrollment, trade or AI job is created.",
+    "No deployment. Build updates only the workspace assembly. Historical B1.1/B1.2 fingerprints remain historical."
+  ]
+}

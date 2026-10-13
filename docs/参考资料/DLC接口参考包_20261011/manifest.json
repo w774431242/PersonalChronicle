@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "01_原版加载与解析链路.md",
+      "sha256": "1126978c17173b5f2ab4e6d1a3f1f1bdc861f5591664bd2ea7f1df753fdb7b42",
+      "bytes": 7540
+    },
+    {
+      "path": "02_当前项目接入地图.md",
+      "sha256": "691db1ad4e48ace964f5dc921539d030cc52c5eb62a642b3b327db5bc4f23371",
+      "bytes": 3894
+    },
+    {
+      "path": "03_未来接口方案.md",
+      "sha256": "9320056622185a13b2d44a05aae882619354ab270ceec2cd6b66b8a036896b90",
+      "bytes": 4419
+    },
+    {
+      "path": "04_工具复现与验证.md",
+      "sha256": "8e1027d9f845b3eb8c835cf5dcf5368a422364236312c3e3d66d0a1906e63afc",
+      "bytes": 4159
+    },
+    {
+      "path": "examples/DlcContracts.cs.txt",
+      "sha256": "1ec8a6045718d6e4955fc94393ae9d3b7554742802797bb87a99d49b93054f9c",
+      "bytes": 3765
+    },
+    {
+      "path": "README.md",
+      "sha256": "b4b295b31c18d557044b0735d482b76e2fe26bc850f41571b05a48d970ff8498",
+      "bytes": 2983
+    },
+    {
+      "path": "snapshot/decompilation-verification.json",
+      "sha256": "26fbd3345680f18f2fdf332e36e481ccf6bf398f5559019b8ceb7d418fa96b98",
+      "bytes": 3236
+    },
+    {
+      "path": "snapshot/inventory.json",
+      "sha256": "0dcc575bc98b94555cc47fcaf9eb9ec26bdc3cdbd69e45e9e32fe9d28e2bfdb5",
+      "bytes": 8941829
+    },
+    {
+      "path": "snapshot/project-source/DlcStatus.cs.txt",
+      "sha256": "ede28379d588e16a11bc54dcb5f539cc57fce0caf9c304316300f0540f4548b0",
+      "bytes": 2200
+    },
+    {
+      "path": "snapshot/project-source/IdeologyAdapter.cs.txt",
+      "sha256": "7f3ace535e693ed78c113e0ac55071d0bb03043206e2a32ab4dabd6914b65729",
+      "bytes": 5832
+    },
+    {
+      "path": "snapshot/project-source/PawnLifeBiotechAdapter.cs.txt",
+      "sha256": "f7a0eb9ecda113bf2037aad0c50414414fee1245f4814411de35c4cfbee622ba",
+      "bytes": 1120
+    },
+    {
+      "path": "snapshot/raw-def-index.tsv",
+      "sha256": "b60a24404dcb9b99ffd8dc059de8578a5e25bba6062d333102340b2df156165d",
+      "bytes": 1456341
+    },
+    {
+      "path": "snapshot/runtime-api-and-il.json",
+      "sha256": "d17fc88e4c38789fb9b01bb13f3011bdb1ee15d197cb2edf13150b4d14e33e28",
+      "bytes": 1311316
+    },
+    {
+      "path": "snapshot/runtime-api-index.md",
+      "sha256": "23848ed840600b729cdb2f2db8296a536fdc929497db7cfbfc7a3316a7cc8b1f",
+      "bytes": 21210
+    },
+    {
+      "path": "snapshot/validation.json",
+      "sha256": "0d9f2031503b6289168f237a194645ddf78ef8875354d1102273c2efcf920ae7",
+      "bytes": 6517
+    },
+    {
+      "path": "tools/collect-reference.py",
+      "sha256": "7172073bef12133e662f7d37f8294f9a5f4f1126c30efdcd8bdda6ffb54aa949",
+      "bytes": 10457
+    },
+    {
+      "path": "tools/decompile-local.ps1",
+      "sha256": "bd275a9f6e6896d2791db6468ca3e7615963ff7b961aa151e61f5ba010cafea3",
+      "bytes": 1200
+    },
+    {
+      "path": "tools/inspect-runtime.ps1",
+      "sha256": "c4ba8c7d3bbaea25a12567714664191f88e98bb0cea1ee61c16949b15bbaece6",
+      "bytes": 3834
+    },
+    {
+      "path": "tools/validate-reference.py",
+      "sha256": "3a5f53932398c837b37e5b15671e0408854ad2ce1d9baadbc0f89aa447fcf7bd",
+      "bytes": 9010
+    }
+  ]
+}

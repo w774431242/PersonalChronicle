@@ -1,0 +1,61 @@
+{
+  "changeId": "ART-20261010-ECONOMY-STORAGE",
+  "verifiedUtc": "2026-10-10T10:36:47.7012046Z",
+  "source": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\殖民地综合管理系统",
+  "backup": "E:\\SteamLibrary\\steamapps\\common\\RimWorld\\11\\殖民地综合管理系统\\_backups\\economy-storage-art_20261010_183647_567",
+  "files": [
+    {
+      "path": "Defs/PawnEconomy_Storage.xml",
+      "sha256": "9DF7A7D92E2DD6E6FA1A2690547D1B5848972CA01A1B00F5F49296D32268F027",
+      "previousSha256": "9DF7A7D92E2DD6E6FA1A2690547D1B5848972CA01A1B00F5F49296D32268F027"
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PublicStorage_north.png",
+      "sha256": "F2E36E876989CA78B609880D0944DBE4708051D952DBB1EC8A5615740450291D",
+      "previousSha256": null
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PublicStorage_east.png",
+      "sha256": "818204F59439FCC647CE42553D2D40903B8BE7CFD80E28BBEF04B80C76DD4A1B",
+      "previousSha256": null
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PublicStorage_south.png",
+      "sha256": "41F8F48682AEDA4E9C1BC5EA99DB4DC7E38E5E18C3CFC76A3EA7E6C24AE8E848",
+      "previousSha256": null
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PublicStorage_west.png",
+      "sha256": "305C36C70BE7EDF8287F7032638589A147A29B152CA25CC739D0CE89685B5C70",
+      "previousSha256": null
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PrivateStorage_north.png",
+      "sha256": "CC2C8AA61E10DBD1DFF859F5B95A256815A1486DC3D962DEE8DC01E28449CC26",
+      "previousSha256": null
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PrivateStorage_east.png",
+      "sha256": "FCE260F28736B53B4C0B05819F902756C6B4263DFBFEBD9AB3B745025501B36B",
+      "previousSha256": null
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PrivateStorage_south.png",
+      "sha256": "7D2B3C5077EA85AFDA4AD597C70DAF0A5FC19C97E08C8824F4C3119C118671DB",
+      "previousSha256": null
+    },
+    {
+      "path": "Textures/Things/Building/PawnEconomy/PC_PrivateStorage_west.png",
+      "sha256": "4C52CCF508C6C3B0FDC58E6502AFF445FA5E85D15B4682AFBB2166CD1D6325D8",
+      "previousSha256": null
+    }
+  ],
+  "unchangedFilesVerified": 239,
+  "runtimeDllSha256": "6C0D7E0C7230CDA95D9CA1F72A284D3928F238F07F15207B9C214340DDCCDE54",
+  "runtimePreserved": true,
+  "runtimeMatchesHistoricalTests": false,
+  "deployed": true,
+  "gameVerified": false,
+  "historicalTestedRuntimeDllSha256": "D703AE003A5050E829DB2383E642A6685FEB085A9FB25E02303E467A98877D2B"
+}
