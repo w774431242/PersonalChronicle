@@ -50,6 +50,10 @@ docs/ui-preview/_verify.cjs
 $null
 _dotnet/
 _playwright-cli/
+# 2026-10-13 修正拼写不匹配：实际目录名带点（.dotnet / .playwright-cli），
+# 旧规则写的是下划线版本 ⇒ 两个目录被误入库（.dotnet 达 714 MB / 5127 文件）。
+.dotnet/
+.playwright-cli/
 
 # RUIF 已独立成库并移出本仓库（2026-09-12）
 #   仓库：https://github.com/w774431242/RUIF
