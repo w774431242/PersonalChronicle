@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<loadFolders>
+  <!-- 版本键必须恰好 2 段（major.minor），写 1.6.4871 会触发 MalformedVersion 告警。
+       default 键在 1.6 已废弃（ModLoadFolderDefaultDeprecated），禁止使用。
+       列表越靠后优先级越高（ModContentPack.AddFolders 逆序添加）⇒ 1.6/ 覆盖 mod 根。
+       本文件与「无 LoadFolders.xml 时引擎兜底结果」完全同序，落地即零行为变更。
+       1.7 侧本轮只建目录、不声明：等 1.7 程序集到位并核实加载机制后再追加 v1.7 块。 -->
+  <v1.6>
+    <li>/</li>
+    <li>1.6</li>
+  </v1.6>
+</loadFolders>
